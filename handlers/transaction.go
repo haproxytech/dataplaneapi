@@ -1,0 +1,90 @@
+package handlers
+
+import (
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/haproxytech/client-native"
+	"github.com/haproxytech/controller/haproxy"
+	"github.com/haproxytech/controller/misc"
+	"github.com/haproxytech/controller/operations/transactions"
+)
+
+//StartTransactionHandlerImpl implementation of the StartTransactionHandler interface using client-native client
+type StartTransactionHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+//DeleteTransactionHandlerImpl implementation of the DeleteTransactionHandler interface using client-native client
+type DeleteTransactionHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+//GetTransactionHandlerImpl implementation of the GetTransactionHandler interface using client-native client
+type GetTransactionHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+//GetTransactionsHandlerImpl implementation of the GetTransactionsHandler interface using client-native client
+type GetTransactionsHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+//CommitTransactionHandlerImpl implementation of the CommitTransactionHandlerImpl interface using client-native client
+type CommitTransactionHandlerImpl struct {
+	Client      *client_native.HAProxyClient
+	ReloadAgent *haproxy.ReloadAgent
+}
+
+//Handle executing the request and returning a response
+func (th *StartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
+	t, err := th.Client.Configuration.StartTransaction(params.Version)
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewStartTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	return transactions.NewStartTransactionCreated().WithPayload(t)
+}
+
+//Handle executing the request and returning a response
+func (th *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
+	err := th.Client.Configuration.DeleteTransaction(params.ID)
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	return transactions.NewDeleteTransactionNoContent()
+}
+
+//Handle executing the request and returning a response
+func (th *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
+	t, err := th.Client.Configuration.GetTransaction(params.ID)
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	return transactions.NewGetTransactionOK().WithPayload(t)
+}
+
+//Handle executing the request and returning a response
+func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
+	s := ""
+	if params.Status != nil {
+		s = *params.Status
+	}
+	ts, err := th.Client.Configuration.GetTransactions(s)
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	return transactions.NewGetTransactionsOK().WithPayload(*ts)
+}
+
+//Handle executing the request and returning a response
+func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
+	err := th.Client.Configuration.CommitTransaction(params.ID)
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	th.ReloadAgent.Reload()
+	return transactions.NewCommitTransactionOK()
+}
