@@ -88,7 +88,7 @@ func configureAPI(api *operations.ControllerAPI) http.Handler {
 
 	// Initialize HAProxy native client
 	confClient := &configuration.LBCTLClient{}
-	err := confClient.Init(haproxyOptions.ConfigFile, haproxyOptions.GlobalConfigFile, haproxyOptions.HAProxy, haproxyOptions.LbctlPath, haproxyOptions.LbctlTransactionDir)
+	err := confClient.Init(haproxyOptions.ConfigFile, haproxyOptions.GlobalConfigFile, haproxyOptions.HAProxy, false, haproxyOptions.LbctlPath, haproxyOptions.LbctlTransactionDir)
 	if err != nil {
 		fmt.Println("Error setting up configuration client, using default one")
 		confClient, err = configuration.DefaultLBCTLClient()
