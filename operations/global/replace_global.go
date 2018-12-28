@@ -11,42 +11,42 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 )
 
-// CreateGlobalHandlerFunc turns a function with the right signature into a create global handler
-type CreateGlobalHandlerFunc func(CreateGlobalParams, interface{}) middleware.Responder
+// ReplaceGlobalHandlerFunc turns a function with the right signature into a replace global handler
+type ReplaceGlobalHandlerFunc func(ReplaceGlobalParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn CreateGlobalHandlerFunc) Handle(params CreateGlobalParams, principal interface{}) middleware.Responder {
+func (fn ReplaceGlobalHandlerFunc) Handle(params ReplaceGlobalParams, principal interface{}) middleware.Responder {
 	return fn(params, principal)
 }
 
-// CreateGlobalHandler interface for that can handle valid create global params
-type CreateGlobalHandler interface {
-	Handle(CreateGlobalParams, interface{}) middleware.Responder
+// ReplaceGlobalHandler interface for that can handle valid replace global params
+type ReplaceGlobalHandler interface {
+	Handle(ReplaceGlobalParams, interface{}) middleware.Responder
 }
 
-// NewCreateGlobal creates a new http.Handler for the create global operation
-func NewCreateGlobal(ctx *middleware.Context, handler CreateGlobalHandler) *CreateGlobal {
-	return &CreateGlobal{Context: ctx, Handler: handler}
+// NewReplaceGlobal creates a new http.Handler for the replace global operation
+func NewReplaceGlobal(ctx *middleware.Context, handler ReplaceGlobalHandler) *ReplaceGlobal {
+	return &ReplaceGlobal{Context: ctx, Handler: handler}
 }
 
-/*CreateGlobal swagger:route PUT /services/haproxy/configuration/global Global createGlobal
+/*ReplaceGlobal swagger:route PUT /services/haproxy/configuration/global Global replaceGlobal
 
 Replace global
 
 Replace global part of config
 
 */
-type CreateGlobal struct {
+type ReplaceGlobal struct {
 	Context *middleware.Context
-	Handler CreateGlobalHandler
+	Handler ReplaceGlobalHandler
 }
 
-func (o *CreateGlobal) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *ReplaceGlobal) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		r = rCtx
 	}
-	var Params = NewCreateGlobalParams()
+	var Params = NewReplaceGlobalParams()
 
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {

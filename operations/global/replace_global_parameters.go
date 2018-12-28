@@ -19,18 +19,18 @@ import (
 	"github.com/haproxytech/models"
 )
 
-// NewCreateGlobalParams creates a new CreateGlobalParams object
+// NewReplaceGlobalParams creates a new ReplaceGlobalParams object
 // no default values defined in spec.
-func NewCreateGlobalParams() CreateGlobalParams {
+func NewReplaceGlobalParams() ReplaceGlobalParams {
 
-	return CreateGlobalParams{}
+	return ReplaceGlobalParams{}
 }
 
-// CreateGlobalParams contains all the bound params for the create global operation
+// ReplaceGlobalParams contains all the bound params for the replace global operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters createGlobal
-type CreateGlobalParams struct {
+// swagger:parameters replaceGlobal
+type ReplaceGlobalParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -53,8 +53,8 @@ type CreateGlobalParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewCreateGlobalParams() beforehand.
-func (o *CreateGlobalParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewReplaceGlobalParams() beforehand.
+func (o *ReplaceGlobalParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -100,7 +100,7 @@ func (o *CreateGlobalParams) BindRequest(r *http.Request, route *middleware.Matc
 	return nil
 }
 
-func (o *CreateGlobalParams) bindTransactionID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *ReplaceGlobalParams) bindTransactionID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -117,7 +117,7 @@ func (o *CreateGlobalParams) bindTransactionID(rawData []string, hasKey bool, fo
 	return nil
 }
 
-func (o *CreateGlobalParams) bindVersion(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *ReplaceGlobalParams) bindVersion(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]

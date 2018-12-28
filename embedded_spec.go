@@ -1142,7 +1142,7 @@ func init() {
           "HAProxy configuration management"
         ],
         "summary": "Replace global",
-        "operationId": "createGlobal",
+        "operationId": "replaceGlobal",
         "parameters": [
           {
             "name": "data",
@@ -7848,7 +7848,7 @@ func init() {
           "HAProxy configuration management"
         ],
         "summary": "Replace global",
-        "operationId": "createGlobal",
+        "operationId": "replaceGlobal",
         "parameters": [
           {
             "name": "data",

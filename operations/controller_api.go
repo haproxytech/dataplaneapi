@@ -75,9 +75,6 @@ func NewControllerAPI(spec *loads.Document) *ControllerAPI {
 		FrontendCreateFrontendHandler: frontend.CreateFrontendHandlerFunc(func(params frontend.CreateFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FrontendCreateFrontend has not yet been implemented")
 		}),
-		GlobalCreateGlobalHandler: global.CreateGlobalHandlerFunc(func(params global.CreateGlobalParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation GlobalCreateGlobal has not yet been implemented")
-		}),
 		HTTPRequestRuleCreateHTTPRequestRuleHandler: http_request_rule.CreateHTTPRequestRuleHandlerFunc(func(params http_request_rule.CreateHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPRequestRuleCreateHTTPRequestRule has not yet been implemented")
 		}),
@@ -285,6 +282,9 @@ func NewControllerAPI(spec *loads.Document) *ControllerAPI {
 		FrontendReplaceFrontendHandler: frontend.ReplaceFrontendHandlerFunc(func(params frontend.ReplaceFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FrontendReplaceFrontend has not yet been implemented")
 		}),
+		GlobalReplaceGlobalHandler: global.ReplaceGlobalHandlerFunc(func(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation GlobalReplaceGlobal has not yet been implemented")
+		}),
 		HTTPRequestRuleReplaceHTTPRequestRuleHandler: http_request_rule.ReplaceHTTPRequestRuleHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPRequestRuleReplaceHTTPRequestRule has not yet been implemented")
 		}),
@@ -380,8 +380,6 @@ type ControllerAPI struct {
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
 	FrontendCreateFrontendHandler frontend.CreateFrontendHandler
-	// GlobalCreateGlobalHandler sets the operation handler for the create global operation
-	GlobalCreateGlobalHandler global.CreateGlobalHandler
 	// HTTPRequestRuleCreateHTTPRequestRuleHandler sets the operation handler for the create HTTP request rule operation
 	HTTPRequestRuleCreateHTTPRequestRuleHandler http_request_rule.CreateHTTPRequestRuleHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleHandler sets the operation handler for the create HTTP response rule operation
@@ -520,6 +518,8 @@ type ControllerAPI struct {
 	FilterReplaceFilterHandler filter.ReplaceFilterHandler
 	// FrontendReplaceFrontendHandler sets the operation handler for the replace frontend operation
 	FrontendReplaceFrontendHandler frontend.ReplaceFrontendHandler
+	// GlobalReplaceGlobalHandler sets the operation handler for the replace global operation
+	GlobalReplaceGlobalHandler global.ReplaceGlobalHandler
 	// HTTPRequestRuleReplaceHTTPRequestRuleHandler sets the operation handler for the replace HTTP request rule operation
 	HTTPRequestRuleReplaceHTTPRequestRuleHandler http_request_rule.ReplaceHTTPRequestRuleHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleHandler sets the operation handler for the replace HTTP response rule operation
@@ -635,10 +635,6 @@ func (o *ControllerAPI) Validate() error {
 
 	if o.FrontendCreateFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.CreateFrontendHandler")
-	}
-
-	if o.GlobalCreateGlobalHandler == nil {
-		unregistered = append(unregistered, "global.CreateGlobalHandler")
 	}
 
 	if o.HTTPRequestRuleCreateHTTPRequestRuleHandler == nil {
@@ -917,6 +913,10 @@ func (o *ControllerAPI) Validate() error {
 		unregistered = append(unregistered, "frontend.ReplaceFrontendHandler")
 	}
 
+	if o.GlobalReplaceGlobalHandler == nil {
+		unregistered = append(unregistered, "global.ReplaceGlobalHandler")
+	}
+
 	if o.HTTPRequestRuleReplaceHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleHandler")
 	}
@@ -1099,11 +1099,6 @@ func (o *ControllerAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/frontends"] = frontend.NewCreateFrontend(o.context, o.FrontendCreateFrontendHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/global"] = global.NewCreateGlobal(o.context, o.GlobalCreateGlobalHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1449,6 +1444,11 @@ func (o *ControllerAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{name}"] = frontend.NewReplaceFrontend(o.context, o.FrontendReplaceFrontendHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/global"] = global.NewReplaceGlobal(o.context, o.GlobalReplaceGlobalHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
