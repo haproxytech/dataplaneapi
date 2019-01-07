@@ -8,26 +8,22 @@ import (
 	"time"
 
 	log "github.com/sirupsen/logrus"
-
-	"github.com/haproxytech/client-native/runtime"
 )
 
 // ReloadAgent handles all reloads, scheduled or forced
 type ReloadAgent struct {
-	reloadDelay   int
-	reloads       chan int
-	needsReload   bool
-	reloadCmd     string
-	runtimeClient *runtime.Client
+	reloadDelay int
+	reloads     chan int
+	needsReload bool
+	reloadCmd   string
 }
 
 // Init a new reload agent
-func (ra *ReloadAgent) Init(delay int, cmd string, cli *runtime.Client) {
+func (ra *ReloadAgent) Init(delay int, cmd string) {
 	ra.reloadDelay = delay
 	ra.needsReload = false
 	ra.reloads = make(chan int)
 	ra.reloadCmd = cmd
-	ra.runtimeClient = cli
 	go ra.handleReloads()
 }
 
