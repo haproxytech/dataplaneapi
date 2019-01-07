@@ -87,11 +87,20 @@ func configureAPI(api *operations.ControllerAPI) http.Handler {
 	}
 
 	// Initialize HAProxy native client
-	confClient := &configuration.LBCTLClient{}
-	err := confClient.Init(haproxyOptions.ConfigFile, haproxyOptions.GlobalConfigFile, haproxyOptions.HAProxy, false, true, haproxyOptions.LbctlPath, haproxyOptions.LbctlTransactionDir)
+	confClient := &configuration.Client{}
+	confParams := configuration.ClientParams{
+		ConfigurationFile:       haproxyOptions.ConfigFile,
+		GlobalConfigurationFile: haproxyOptions.GlobalConfigFile,
+		Haproxy:                 haproxyOptions.HAProxy,
+		UseValidation:           false,
+		UseCache:                true,
+		LBCTLPath:               haproxyOptions.LbctlPath,
+		LBCTLTmpPath:            haproxyOptions.LbctlTransactionDir,
+	}
+	err := confClient.Init(confParams)
 	if err != nil {
 		fmt.Println("Error setting up configuration client, using default one")
-		confClient, err = configuration.DefaultLBCTLClient()
+		confClient, err = configuration.DefaultClient()
 		if err != nil {
 			fmt.Println("Error setting up default configuration client, exiting...")
 			api.ServerShutdown()
@@ -99,7 +108,7 @@ func configureAPI(api *operations.ControllerAPI) http.Handler {
 	}
 
 	runtimeClient := &runtime_api.Client{}
-	err = confClient.GlobalParser.LoadData(confClient.GlobalConfigurationFile())
+	err = confClient.GlobalParser.LoadData(confClient.GlobalConfigurationFile)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -147,7 +156,7 @@ func configureAPI(api *operations.ControllerAPI) http.Handler {
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
-	ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd, runtimeClient)
+	ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd)
 
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
