@@ -117,11 +117,23 @@ func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParam
 		v = *params.Version
 	}
 
-	err := h.Client.Configuration.EditFrontend(params.Name, params.Data, t, v)
+	ondisk, err := h.Client.Configuration.GetFrontend(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
+
+	reload := changeThroughRuntimeAPI(*params.Data, *ondisk.Data, "", "", h.Client)
+
+	err = h.Client.Configuration.EditFrontend(params.Name, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if reload {
+		h.ReloadAgent.Reload()
+	}
+
 	return frontend.NewReplaceFrontendOK().WithPayload(params.Data)
 }

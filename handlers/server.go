@@ -117,11 +117,22 @@ func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, pri
 		v = *params.Version
 	}
 
-	err := h.Client.Configuration.EditServer(params.Name, params.Backend, params.Data, t, v)
+	ondisk, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
+
+	reload := changeThroughRuntimeAPI(*params.Data, *ondisk.Data, params.Backend, "", h.Client)
+
+	err = h.Client.Configuration.EditServer(params.Name, params.Backend, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if reload {
+		h.ReloadAgent.Reload()
+	}
 	return server.NewReplaceServerOK().WithPayload(params.Data)
 }
