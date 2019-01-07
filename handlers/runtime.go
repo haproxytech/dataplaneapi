@@ -14,7 +14,7 @@ import (
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
 	"frontend": []string{"MaxConnections"},
-	"server":   []string{"Weigth", "Address", "Port"},
+	"server":   []string{"Weigth", "Address", "Port", "Maintenance"},
 }
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
@@ -35,7 +35,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 	if client.Runtime == nil {
 		return true
 	}
-	
+
 	// objects are the same, do nothing and don't reload
 	diff := compareObjects(data, ondisk)
 	if len(diff) == 0 {
@@ -99,6 +99,18 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 								return true
 							}
 							addrPortChanged = true
+						}
+					case "Maintenance":
+						maint := fieldValue.String()
+						if maint == "enabled" {
+							maint = "maint"
+						} else {
+							maint = "ready"
+						}
+						err := client.Runtime.SetServerState(parentName, vData.Name, maint)
+						if err != nil {
+							// we have error's in runtime API changes, bail and reload
+							return true
 						}
 					}
 				}
