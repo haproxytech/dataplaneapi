@@ -16,6 +16,8 @@ import (
 
 	"github.com/haproxytech/config-parser/parsers/simple"
 	"github.com/haproxytech/config-parser/parsers/stats"
+	"github.com/haproxytech/config-parser/parsers/userlist"
+
 	"github.com/haproxytech/controller/misc"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -43,6 +45,7 @@ import (
 var haproxyOptions struct {
 	ConfigFile          string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
 	GlobalConfigFile    string `short:"g" long:"global-config-file" description:"Path to the haproxy global section configuration file" default:"/etc/haproxy/haproxy-global.cfg"`
+	Userlist            string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
 	HAProxy             string `short:"h" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
 	ReloadDelay         int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
 	ReloadCmd           string `short:"r" long:"reload-cmd" description:"Reload command"`
@@ -78,13 +81,6 @@ func configureAPI(api *operations.ControllerAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.TxtProducer = runtime.TextProducer()
-
-	// TODO auth
-	// Applies when the Authorization header is set with the Basic scheme
-	api.BasicAuthAuth = func(user string, pass string) (interface{}, error) {
-		return user, nil
-		//return nil, errors.NotImplemented("basic auth  (basic_auth) has not yet been implemented")
-	}
 
 	// Initialize HAProxy native client
 	confClient := &configuration.Client{}
@@ -157,6 +153,11 @@ func configureAPI(api *operations.ControllerAPI) http.Handler {
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
 	ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd)
+
+	// Applies when the Authorization header is set with the Basic scheme
+	api.BasicAuthAuth = func(user string, pass string) (interface{}, error) {
+		return authenticateUser(user, pass, client)
+	}
 
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
@@ -359,4 +360,33 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	mw := negronilogrus.NewMiddlewareFromLogger(log.StandardLogger(), "controller")
 	logViaLogrus := adaptors.FromNegroni(mw)
 	return recovery(logViaLogrus(handleCORS(handler)))
+}
+
+func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
+	ul, ok := cli.Configuration.GlobalParser.UserLists[haproxyOptions.Userlist]
+	if !ok {
+		return nil, fmt.Errorf("Userlist %v does not exist in the global conf", haproxyOptions.Userlist)
+	}
+
+	data, err := ul.Get("user")
+	if err != nil {
+		return nil, err
+	}
+	users, ok := data.(*userlist.UserLines)
+	if !ok {
+		return nil, fmt.Errorf("Error reading users from %v userlist in global conf", haproxyOptions.Userlist)
+	}
+	if len(users.UserLines) == 0 {
+		return nil, fmt.Errorf("No users configured in %v userlist in global conf", haproxyOptions.Userlist)
+	}
+
+	for _, u := range users.UserLines {
+		if u.Name == user {
+			if u.Password == pass {
+				return user, nil
+			}
+			return nil, errors.New(401, "Invalid password")
+		}
+	}
+	return nil, errors.New(401, "User does not exist")
 }
