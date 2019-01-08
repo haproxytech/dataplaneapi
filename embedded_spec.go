@@ -4210,12 +4210,14 @@ func init() {
         },
         "adv_check_http_uri": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "adv_check": "http"
           }
         },
         "adv_check_http_version": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "adv_check": "http"
           }
@@ -4263,7 +4265,8 @@ func init() {
           "x-nullable": true
         },
         "connect_source": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "connect_timeout": {
           "type": "integer",
@@ -4317,6 +4320,7 @@ func init() {
         },
         "http_cookie_name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "http_cookie": "enabled"
           }
@@ -4353,6 +4357,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
         "protocol": {
@@ -4399,6 +4404,7 @@ func init() {
         },
         "stick_table_peers": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": "stick_table"
         },
         "stick_table_size": {
@@ -4449,6 +4455,7 @@ func init() {
         },
         "target_farm": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         }
       },
@@ -4543,10 +4550,12 @@ func init() {
           "x-nullable": false
         },
         "spoe_config": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "spoe_engine": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "trace_hexdump": {
           "type": "string",
@@ -4555,7 +4564,8 @@ func init() {
           ]
         },
         "trace_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "trace_rnd_forwarding": {
           "type": "string",
@@ -4614,6 +4624,7 @@ func init() {
         },
         "default_farm": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-dynamic-enum": "getBackends",
           "x-dynamic-propery": "name"
         },
@@ -4672,6 +4683,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
         "protocol": {
@@ -4721,7 +4733,8 @@ func init() {
           "type": "integer"
         },
         "runtime_api": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "runtime_api_level": {
           "type": "string",
@@ -4732,7 +4745,8 @@ func init() {
           ]
         },
         "runtime_api_mode": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "ssl_default_bind_ciphers": {
           "type": "string"
@@ -4756,7 +4770,8 @@ func init() {
       ],
       "properties": {
         "auth_realm": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "cond": {
           "type": "string",
@@ -4769,16 +4784,20 @@ func init() {
           "type": "string"
         },
         "hdr_format": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_match": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_value": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "id": {
           "type": "integer",
@@ -4807,7 +4826,8 @@ func init() {
           ]
         },
         "redir_to": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "redir_type": {
           "type": "string",
@@ -4818,13 +4838,16 @@ func init() {
           ]
         },
         "spoe_engine": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "spoe_group": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "svc_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "type": {
           "type": "string",
@@ -4846,10 +4869,12 @@ func init() {
           "x-nullable": false
         },
         "var_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "var_pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         }
       },
       "example": {
@@ -4889,16 +4914,20 @@ func init() {
           "type": "string"
         },
         "hdr_format": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_match": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_value": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "id": {
           "type": "integer",
@@ -4919,10 +4948,12 @@ func init() {
           ]
         },
         "spoe_engine": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "spoe_group": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "status_group": {
           "type": "integer",
@@ -4945,10 +4976,12 @@ func init() {
           "x-nullable": false
         },
         "var_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "var_pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         }
       },
       "example": {
@@ -4978,10 +5011,12 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "port": {
@@ -4991,7 +5026,8 @@ func init() {
           "x-nullable": true
         },
         "process": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "ssl": {
           "type": "string",
@@ -5001,12 +5037,14 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
         },
         "ssl_certificate": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
@@ -5765,7 +5803,7 @@ func init() {
           "address": "127.0.0.1",
           "pid": 1234,
           "processes": 4,
-          "release_date": "2016/03/11",
+          "release_date": "2016-03-11",
           "time": "2018-07-02T12:00:00.124Z",
           "uptime": 8,
           "version": "1.7-dev1-868ab3-148"
@@ -5782,6 +5820,7 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "check": {
@@ -5791,7 +5830,8 @@ func init() {
           ]
         },
         "http-cookie-id": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "maintenance": {
           "type": "string",
@@ -5805,6 +5845,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "port": {
@@ -5827,12 +5868,14 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
         },
         "ssl_certificate": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
@@ -5883,6 +5926,7 @@ func init() {
         },
         "target_server": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         }
       },
@@ -5965,6 +6009,7 @@ func init() {
               },
               "name": {
                 "type": "string",
+                "pattern": "^[A-Za-z0-9-_.:]+$",
                 "x-nullable": false
               },
               "protocol": {
@@ -5986,10 +6031,12 @@ func init() {
                   "properties": {
                     "address": {
                       "type": "string",
+                      "pattern": "^[^\\s]+$",
                       "x-nullable": false
                     },
                     "name": {
                       "type": "string",
+                      "pattern": "^[^\\s]+$",
                       "x-nullable": false
                     },
                     "port": {
@@ -6050,10 +6097,12 @@ func init() {
                 "properties": {
                   "address": {
                     "type": "string",
+                    "pattern": "^[^\\s]+$",
                     "x-nullable": false
                   },
                   "name": {
                     "type": "string",
+                    "pattern": "^[^\\s]+$",
                     "x-nullable": false
                   },
                   "port": {
@@ -6070,6 +6119,7 @@ func init() {
                   },
                   "ssl_certificate": {
                     "type": "string",
+                    "pattern": "^[^\\s]+$",
                     "x-dependency": {
                       "ssl": "enabled"
                     }
@@ -6098,6 +6148,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         }
       },
@@ -6178,10 +6229,12 @@ func init() {
           "x-nullable": false
         },
         "pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "table": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "type": {
           "type": "string",
@@ -6231,10 +6284,12 @@ func init() {
           "x-nullable": false
         },
         "pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "table": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "type": {
           "type": "string",
@@ -6314,7 +6369,8 @@ func init() {
           "type": "integer"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "operations": {
           "type": "array",
@@ -6326,7 +6382,8 @@ func init() {
                 "additionalProperties": true
               },
               "operation": {
-                "type": "string"
+                "type": "string",
+                "pattern": "^[^\\s]+$"
               },
               "response": {
                 "type": "string"
@@ -11465,12 +11522,14 @@ func init() {
         },
         "adv_check_http_uri": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "adv_check": "http"
           }
         },
         "adv_check_http_version": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "adv_check": "http"
           }
@@ -11518,7 +11577,8 @@ func init() {
           "x-nullable": true
         },
         "connect_source": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "connect_timeout": {
           "type": "integer",
@@ -11572,6 +11632,7 @@ func init() {
         },
         "http_cookie_name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "http_cookie": "enabled"
           }
@@ -11608,6 +11669,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
         "protocol": {
@@ -11654,6 +11716,7 @@ func init() {
         },
         "stick_table_peers": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": "stick_table"
         },
         "stick_table_size": {
@@ -11704,6 +11767,7 @@ func init() {
         },
         "target_farm": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         }
       },
@@ -11798,10 +11862,12 @@ func init() {
           "x-nullable": false
         },
         "spoe_config": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "spoe_engine": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "trace_hexdump": {
           "type": "string",
@@ -11810,7 +11876,8 @@ func init() {
           ]
         },
         "trace_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "trace_rnd_forwarding": {
           "type": "string",
@@ -11869,6 +11936,7 @@ func init() {
         },
         "default_farm": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-dynamic-enum": "getBackends",
           "x-dynamic-propery": "name"
         },
@@ -11927,6 +11995,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
         "protocol": {
@@ -12336,7 +12405,8 @@ func init() {
           "type": "integer"
         },
         "runtime_api": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "runtime_api_level": {
           "type": "string",
@@ -12347,7 +12417,8 @@ func init() {
           ]
         },
         "runtime_api_mode": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "ssl_default_bind_ciphers": {
           "type": "string"
@@ -12371,7 +12442,8 @@ func init() {
       ],
       "properties": {
         "auth_realm": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "cond": {
           "type": "string",
@@ -12384,16 +12456,20 @@ func init() {
           "type": "string"
         },
         "hdr_format": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_match": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_value": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "id": {
           "type": "integer",
@@ -12422,7 +12498,8 @@ func init() {
           ]
         },
         "redir_to": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "redir_type": {
           "type": "string",
@@ -12433,13 +12510,16 @@ func init() {
           ]
         },
         "spoe_engine": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "spoe_group": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "svc_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "type": {
           "type": "string",
@@ -12461,10 +12541,12 @@ func init() {
           "x-nullable": false
         },
         "var_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "var_pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         }
       },
       "example": {
@@ -12504,16 +12586,20 @@ func init() {
           "type": "string"
         },
         "hdr_format": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_match": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "hdr_value": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "id": {
           "type": "integer",
@@ -12534,10 +12620,12 @@ func init() {
           ]
         },
         "spoe_engine": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "spoe_group": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "status_group": {
           "type": "integer",
@@ -12560,10 +12648,12 @@ func init() {
           "x-nullable": false
         },
         "var_name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "var_pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         }
       },
       "example": {
@@ -12593,10 +12683,12 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "port": {
@@ -12606,7 +12698,8 @@ func init() {
           "x-nullable": true
         },
         "process": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "ssl": {
           "type": "string",
@@ -12616,12 +12709,14 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
         },
         "ssl_certificate": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
@@ -13392,7 +13487,7 @@ func init() {
           "address": "127.0.0.1",
           "pid": 1234,
           "processes": 4,
-          "release_date": "2016/03/11",
+          "release_date": "2016-03-11",
           "time": "2018-07-02T12:00:00.124Z",
           "uptime": 8,
           "version": "1.7-dev1-868ab3-148"
@@ -13409,6 +13504,7 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "check": {
@@ -13418,7 +13514,8 @@ func init() {
           ]
         },
         "http-cookie-id": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "maintenance": {
           "type": "string",
@@ -13432,6 +13529,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "port": {
@@ -13454,12 +13552,14 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
         },
         "ssl_certificate": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
@@ -13510,6 +13610,7 @@ func init() {
         },
         "target_server": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         }
       },
@@ -13555,6 +13656,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         }
       },
@@ -13649,6 +13751,7 @@ func init() {
         },
         "name": {
           "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
         "protocol": {
@@ -13685,10 +13788,12 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "port": {
@@ -13762,10 +13867,12 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "name": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
         "port": {
@@ -13782,6 +13889,7 @@ func init() {
         },
         "ssl_certificate": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": "enabled"
           }
@@ -13821,10 +13929,12 @@ func init() {
           "x-nullable": false
         },
         "pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "table": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "type": {
           "type": "string",
@@ -13874,10 +13984,12 @@ func init() {
           "x-nullable": false
         },
         "pattern": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "table": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "type": {
           "type": "string",
@@ -13957,7 +14069,8 @@ func init() {
           "type": "integer"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "operations": {
           "type": "array",
@@ -14005,7 +14118,8 @@ func init() {
           "additionalProperties": true
         },
         "operation": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "response": {
           "type": "string"
