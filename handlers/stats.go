@@ -3,8 +3,8 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/client-native"
-	"github.com/haproxytech/controller/misc"
-	"github.com/haproxytech/controller/operations/stats"
+	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/stats"
 	"github.com/haproxytech/models"
 )
 

@@ -3,9 +3,9 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/client-native"
-	"github.com/haproxytech/controller/haproxy"
-	"github.com/haproxytech/controller/misc"
-	"github.com/haproxytech/controller/operations/server"
+	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/server"
 )
 
 //CreateServerHandlerImpl implementation of the CreateServerHandler interface using client-native client

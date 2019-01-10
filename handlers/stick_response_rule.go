@@ -3,9 +3,9 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/client-native"
-	"github.com/haproxytech/controller/haproxy"
-	"github.com/haproxytech/controller/misc"
-	"github.com/haproxytech/controller/operations/stick_response_rule"
+	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/stick_response_rule"
 )
 
 //CreateStickResponseRuleHandlerImpl implementation of the CreateStickResponseRuleHandler interface using client-native client

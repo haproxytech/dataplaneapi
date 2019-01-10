@@ -4,9 +4,9 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/client-native"
 
-	"github.com/haproxytech/controller/haproxy"
-	"github.com/haproxytech/controller/misc"
-	"github.com/haproxytech/controller/operations/configuration"
+	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/configuration"
 )
 
 //GetRawConfigurationHandlerImpl implementation of the GetHAProxyConfigurationHandler interface
