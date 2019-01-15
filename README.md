@@ -131,7 +131,7 @@ HAProxy options:
   -c, --config-file=           Path to the haproxy configuration file (default: /etc/haproxy/haproxy.cfg)
   -g, --global-config-file=    Path to the haproxy global section configuration file (default: /etc/haproxy/haproxy-global.cfg)
   -u, --userlist=              Userlist in HAProxy configuration to use for API Basic Authentication (default: controller)
-  -h, --haproxy-bin=           Path to the haproxy binary file (default: haproxy)
+  -b, --haproxy-bin=           Path to the haproxy binary file (default: haproxy)
   -d, --reload-delay=          Minimum delay between two reloads (in s)
   -r, --reload-cmd=            Reload command
   -l, --lbctl-path=            Path to the lbctl script (default: lbctl)
