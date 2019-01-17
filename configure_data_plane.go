@@ -8,13 +8,14 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/haproxytech/config-parser/parsers/global"
+
 	log "github.com/sirupsen/logrus"
 
 	"github.com/carbocation/interpose/adaptors"
 
 	"github.com/meatballhat/negroni-logrus"
 
-	"github.com/haproxytech/config-parser/parsers/simple"
 	"github.com/haproxytech/config-parser/parsers/stats"
 	"github.com/haproxytech/config-parser/parsers/userlist"
 
@@ -114,8 +115,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	if err != nil {
 		nbproc = int64(1)
 	} else {
-		d := data.(*simple.SimpleNumber)
-		nbproc = d.Value
+		d := data.(*global.NbProc)
+		if d.Enabled {
+			nbproc = d.Value
+		} else {
+			nbproc = int64(1)
+		}
 	}
 
 	statsSocket := ""

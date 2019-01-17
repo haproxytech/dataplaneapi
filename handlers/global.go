@@ -32,7 +32,13 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 
 //Handle executing the request and returning a response
 func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
-	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, *params.Version)
+	v := int64(0)
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, v)
+
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
