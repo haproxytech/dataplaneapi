@@ -4,6 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/operations/global"
+	"github.com/haproxytech/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -33,8 +34,10 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 //Handle executing the request and returning a response
 func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
 	v := int64(0)
-	if params.Version != nil {
-		v = *params.Version
+	if params.Version == nil {
+		msg := "Version not specified"
+		code := misc.ErrHTTPBadRequest
+		return global.NewReplaceGlobalBadRequest().WithPayload(&models.Error{Code: &code, Message: &msg})
 	}
 
 	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, v)
