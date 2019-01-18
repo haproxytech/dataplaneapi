@@ -13,6 +13,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -40,14 +41,11 @@ type ReplaceGlobalParams struct {
 	  In: body
 	*/
 	Data *models.Global
-	/*ID of the transaction where we want to add the operation
-	  In: query
-	*/
-	TransactionID *string
 	/*Version used for checking configuration version
+	  Required: true
 	  In: query
 	*/
-	Version *int64
+	Version int64
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -84,11 +82,6 @@ func (o *ReplaceGlobalParams) BindRequest(r *http.Request, route *middleware.Mat
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
-	qTransactionID, qhkTransactionID, _ := qs.GetOK("transaction_id")
-	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	qVersion, qhkVersion, _ := qs.GetOK("version")
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
@@ -100,40 +93,26 @@ func (o *ReplaceGlobalParams) BindRequest(r *http.Request, route *middleware.Mat
 	return nil
 }
 
-func (o *ReplaceGlobalParams) bindTransactionID(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: false
-	// AllowEmptyValue: false
-	if raw == "" { // empty values pass all other validations
-		return nil
-	}
-
-	o.TransactionID = &raw
-
-	return nil
-}
-
 func (o *ReplaceGlobalParams) bindVersion(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	if !hasKey {
+		return errors.Required("version", "query")
+	}
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
-	// Required: false
+	// Required: true
 	// AllowEmptyValue: false
-	if raw == "" { // empty values pass all other validations
-		return nil
+	if err := validate.RequiredString("version", "query", raw); err != nil {
+		return err
 	}
 
 	value, err := swag.ConvertInt64(raw)
 	if err != nil {
 		return errors.InvalidType("version", "query", "int64", raw)
 	}
-	o.Version = &value
+	o.Version = value
 
 	return nil
 }
