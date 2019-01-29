@@ -8,16 +8,14 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/haproxytech/config-parser/parsers/global"
+	parser "github.com/haproxytech/config-parser"
+	"github.com/haproxytech/config-parser/types"
 
 	log "github.com/sirupsen/logrus"
 
 	"github.com/carbocation/interpose/adaptors"
 
 	"github.com/meatballhat/negroni-logrus"
-
-	"github.com/haproxytech/config-parser/parsers/stats"
-	"github.com/haproxytech/config-parser/parsers/userlist"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 
@@ -110,40 +108,28 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		fmt.Println(err.Error())
 	}
 
-	var nbproc int64
-	data, err := confClient.GlobalParser.GetGlobalAttr("nbproc")
+	globalConf, err := confClient.GetGlobalConfiguration()
+
 	if err != nil {
-		nbproc = int64(1)
-	} else {
-		d := data.(*global.NbProc)
-		if d.Enabled {
-			nbproc = d.Value
-		} else {
-			nbproc = int64(1)
-		}
-	}
-
-	statsSocket := ""
-	data, err = confClient.GlobalParser.GetGlobalAttr("stats socket")
-	if err == nil {
-		statsSockets := data.(*stats.SocketLines)
-		statsSocket = statsSockets.SocketLines[0].Path
-	} else {
-		fmt.Println("Error getting stats socket")
-		fmt.Println(err.Error())
-	}
-
-	if statsSocket == "" {
 		fmt.Println("Stats socket not configured, no runtime client initiated")
-		runtimeClient = nil
+	}
+
+	nbproc := globalConf.Data.Nbproc
+	if nbproc == 0 {
+		nbproc = 1
+	}
+
+	runtimeAPI := globalConf.Data.RuntimeAPI
+	if runtimeAPI == "" {
+		fmt.Println("Stats socket not configured, no runtime client initiated")
 	} else {
 		socketList := make([]string, 0, 1)
 		if nbproc > 1 {
 			for i := int64(0); i < nbproc; i++ {
-				socketList = append(socketList, fmt.Sprintf("%v.%v", statsSocket, i))
+				socketList = append(socketList, fmt.Sprintf("%v.%v", runtimeAPI, i))
 			}
 		} else {
-			socketList = append(socketList, statsSocket)
+			socketList = append(socketList, runtimeAPI)
 		}
 		err := runtimeClient.Init(socketList)
 		if err != nil {
@@ -368,24 +354,19 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 }
 
 func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
-	ul, ok := cli.Configuration.GlobalParser.UserLists[haproxyOptions.Userlist]
-	if !ok {
-		return nil, fmt.Errorf("Userlist %v does not exist in the global conf", haproxyOptions.Userlist)
-	}
-
-	data, err := ul.Get("user")
+	data, err := cli.Configuration.GlobalParser.Get(parser.UserList, haproxyOptions.Userlist, "user")
 	if err != nil {
 		return nil, err
 	}
-	users, ok := data.(*userlist.UserLines)
+	users, ok := data.([]types.User)
 	if !ok {
 		return nil, fmt.Errorf("Error reading users from %v userlist in global conf", haproxyOptions.Userlist)
 	}
-	if len(users.UserLines) == 0 {
+	if len(users) == 0 {
 		return nil, fmt.Errorf("No users configured in %v userlist in global conf", haproxyOptions.Userlist)
 	}
 
-	for _, u := range users.UserLines {
+	for _, u := range users {
 		if u.Name == user {
 			if u.Password == pass {
 				return user, nil

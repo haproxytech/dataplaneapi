@@ -32,7 +32,7 @@ func (ra *ReloadAgent) handleReloads() {
 		select {
 		case <-ra.reloads:
 			ra.needsReload = true
-		case <-time.After(time.Duration(10) * time.Second):
+		case <-time.After(time.Duration(ra.reloadDelay) * time.Second):
 			if ra.needsReload {
 				err := ra.reloadHAProxy()
 				if err != nil {
