@@ -42,14 +42,14 @@ import (
 //go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Listener --tags Server --tags TCPContentRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPConnectionRule --skip-models --exclude-main
 
 var haproxyOptions struct {
-	ConfigFile          string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
-	GlobalConfigFile    string `short:"g" long:"global-config-file" description:"Path to the haproxy global section configuration file" default:"/etc/haproxy/haproxy-global.cfg"`
-	Userlist            string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
-	HAProxy             string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
-	ReloadDelay         int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
-	ReloadCmd           string `short:"r" long:"reload-cmd" description:"Reload command"`
-	LbctlPath           string `short:"l" long:"lbctl-path" description:"Path to the lbctl script" default:"lbctl"`
-	LbctlTransactionDir string `short:"t" long:"lbctl-transaction-dir" description:"Path to the lbctl transaction directory" default:"/tmp/lbctl"`
+	ConfigFile       string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
+	GlobalConfigFile string `short:"g" long:"global-config-file" description:"Path to the haproxy global section configuration file" default:"/etc/haproxy/haproxy-global.cfg"`
+	Userlist         string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
+	HAProxy          string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
+	ReloadDelay      int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
+	ReloadCmd        string `short:"r" long:"reload-cmd" description:"Reload command"`
+	LbctlPath        string `short:"l" long:"lbctl-path" description:"Path to the lbctl script" default:"lbctl"`
+	TransactionDir   string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
 }
 
 func configureFlags(api *operations.DataPlaneAPI) {
@@ -90,7 +90,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		UseValidation:           false,
 		UseCache:                true,
 		LBCTLPath:               haproxyOptions.LbctlPath,
-		LBCTLTmpPath:            haproxyOptions.LbctlTransactionDir,
+		TransactionDir:          haproxyOptions.TransactionDir,
 	}
 	err := confClient.Init(confParams)
 	if err != nil {

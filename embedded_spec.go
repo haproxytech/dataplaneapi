@@ -6374,25 +6374,6 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "operations": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "object",
-                "additionalProperties": true
-              },
-              "operation": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "response": {
-                "type": "string"
-              }
-            }
-          }
-        },
         "status": {
           "type": "string",
           "enum": [
@@ -6403,25 +6384,7 @@ func init() {
       },
       "example": {
         "_version": 2,
-        "id": "1uoJ7uXt7G",
-        "operations": [
-          {
-            "data": {
-              "balance": "roundrobin",
-              "name": "test_bck",
-              "protocol": "http"
-            },
-            "operation": "createBackend"
-          },
-          {
-            "data": {
-              "address": "192.168.1.1",
-              "name": "test_srv",
-              "port": 80
-            },
-            "operation": "createServer"
-          }
-        ],
+        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
         "status": "in_progress"
       }
     },
@@ -14068,12 +14031,6 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "operations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/transactionOperationsItems"
-          }
-        },
         "status": {
           "type": "string",
           "enum": [
@@ -14084,44 +14041,9 @@ func init() {
       },
       "example": {
         "_version": 2,
-        "id": "1uoJ7uXt7G",
-        "operations": [
-          {
-            "data": {
-              "balance": "roundrobin",
-              "name": "test_bck",
-              "protocol": "http"
-            },
-            "operation": "createBackend"
-          },
-          {
-            "data": {
-              "address": "192.168.1.1",
-              "name": "test_srv",
-              "port": 80
-            },
-            "operation": "createServer"
-          }
-        ],
+        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
         "status": "in_progress"
       }
-    },
-    "transactionOperationsItems": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "object",
-          "additionalProperties": true
-        },
-        "operation": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "response": {
-          "type": "string"
-        }
-      },
-      "x-go-gen-location": "models"
     },
     "transactions": {
       "description": "Configuration transactions array",

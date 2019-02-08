@@ -129,8 +129,8 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 // return string of field names that have a diff
 func compareObjects(data, ondisk interface{}) []string {
 	diff := make([]string, 0, 0)
-	dataVal := reflect.ValueOf(data).Elem()
-	ondiskVal := reflect.ValueOf(ondisk).Elem()
+	dataVal := reflect.ValueOf(data)
+	ondiskVal := reflect.ValueOf(ondisk)
 	for i := 0; i < dataVal.NumField(); i++ {
 		fName := dataVal.Type().Field(i).Name
 		dataField := dataVal.FieldByName(fName)
