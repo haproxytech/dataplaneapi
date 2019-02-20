@@ -22,7 +22,7 @@ type ReplaceGlobalHandlerImpl struct {
 
 //Handle executing the request and returning a response
 func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal interface{}) middleware.Responder {
-	data, err := h.Client.Configuration.GetGlobalConfiguration()
+	data, err := h.Client.Configuration.GetGlobalConfiguration(*params.TransactionID)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
@@ -32,7 +32,7 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 
 //Handle executing the request and returning a response
 func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
-	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, params.Version)
+	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, *params.TransactionID, params.Version)
 
 	if err != nil {
 		e := misc.HandleError(err)

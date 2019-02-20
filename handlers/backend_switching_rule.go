@@ -83,12 +83,12 @@ func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rul
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetBackendSwitchingRule(params.ID, params.Frontend, t)
+	bckRule, err := h.Client.Configuration.GetBackendSwitchingRule(params.ID, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewGetBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend_switching_rule.NewGetBackendSwitchingRuleOK().WithPayload(bck)
+	return backend_switching_rule.NewGetBackendSwitchingRuleOK().WithPayload(bckRule)
 }
 
 //Handle executing the request and returning a response
@@ -98,12 +98,12 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetBackendSwitchingRules(params.Frontend, t)
+	bckRules, err := h.Client.Configuration.GetBackendSwitchingRules(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(bcks)
+	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(bckRules)
 }
 
 //Handle executing the request and returning a response

@@ -83,12 +83,12 @@ func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal i
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetFilter(params.ID, params.ParentType, params.ParentName, t)
+	f, err := h.Client.Configuration.GetFilter(params.ID, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewGetFilterDefault(int(*e.Code)).WithPayload(e)
 	}
-	return filter.NewGetFilterOK().WithPayload(bck)
+	return filter.NewGetFilterOK().WithPayload(f)
 }
 
 //Handle executing the request and returning a response
@@ -98,12 +98,12 @@ func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetFilters(params.ParentType, params.ParentName, t)
+	fs, err := h.Client.Configuration.GetFilters(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewGetFiltersDefault(int(*e.Code)).WithPayload(e)
 	}
-	return filter.NewGetFiltersOK().WithPayload(bcks)
+	return filter.NewGetFiltersOK().WithPayload(fs)
 }
 
 //Handle executing the request and returning a response

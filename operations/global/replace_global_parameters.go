@@ -41,6 +41,10 @@ type ReplaceGlobalParams struct {
 	  In: body
 	*/
 	Data *models.Global
+	/*ID of the transaction where we want to add the operation
+	  In: query
+	*/
+	TransactionID *string
 	/*Version used for checking configuration version
 	  Required: true
 	  In: query
@@ -82,6 +86,11 @@ func (o *ReplaceGlobalParams) BindRequest(r *http.Request, route *middleware.Mat
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
+	qTransactionID, qhkTransactionID, _ := qs.GetOK("transaction_id")
+	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qVersion, qhkVersion, _ := qs.GetOK("version")
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
@@ -90,6 +99,23 @@ func (o *ReplaceGlobalParams) BindRequest(r *http.Request, route *middleware.Mat
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (o *ReplaceGlobalParams) bindTransactionID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.TransactionID = &raw
+
 	return nil
 }
 

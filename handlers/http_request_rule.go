@@ -83,12 +83,12 @@ func (h *GetHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.GetHTTPR
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetHTTPRequestRule(params.ID, params.ParentType, params.ParentName, t)
+	rule, err := h.Client.Configuration.GetHTTPRequestRule(params.ID, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_request_rule.NewGetHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_request_rule.NewGetHTTPRequestRuleOK().WithPayload(bck)
+	return http_request_rule.NewGetHTTPRequestRuleOK().WithPayload(rule)
 }
 
 //Handle executing the request and returning a response
@@ -98,12 +98,12 @@ func (h *GetHTTPRequestRulesHandlerImpl) Handle(params http_request_rule.GetHTTP
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetHTTPRequestRules(params.ParentType, params.ParentName, t)
+	rules, err := h.Client.Configuration.GetHTTPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_request_rule.NewGetHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_request_rule.NewGetHTTPRequestRulesOK().WithPayload(bcks)
+	return http_request_rule.NewGetHTTPRequestRulesOK().WithPayload(rules)
 }
 
 //Handle executing the request and returning a response

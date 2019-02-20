@@ -83,12 +83,12 @@ func (h *GetFrontendHandlerImpl) Handle(params frontend.GetFrontendParams, princ
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetFrontend(params.Name, t)
+	f, err := h.Client.Configuration.GetFrontend(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewGetFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return frontend.NewGetFrontendOK().WithPayload(bck)
+	return frontend.NewGetFrontendOK().WithPayload(f)
 }
 
 //Handle executing the request and returning a response
@@ -98,12 +98,12 @@ func (h *GetFrontendsHandlerImpl) Handle(params frontend.GetFrontendsParams, pri
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetFrontends(t)
+	fs, err := h.Client.Configuration.GetFrontends(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewGetFrontendsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return frontend.NewGetFrontendsOK().WithPayload(bcks)
+	return frontend.NewGetFrontendsOK().WithPayload(fs)
 }
 
 //Handle executing the request and returning a response

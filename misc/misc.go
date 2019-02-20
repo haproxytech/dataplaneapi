@@ -24,7 +24,7 @@ func HandleError(err error) *models.Error {
 	switch t := err.(type) {
 	case *configuration.LBCTLError:
 		msg := t.Error()
-		httpCode := ErrHTTPBadRequest
+		httpCode := ErrHTTPInternalServerError
 		switch t.Code() {
 		case configuration.ErrTransactionDoesNotExist, configuration.ErrObjectDoesNotExist:
 			httpCode = ErrHTTPNotFound
@@ -36,19 +36,19 @@ func HandleError(err error) *models.Error {
 		return &models.Error{Code: &httpCode, Message: &msg}
 	case *configuration.ConfError:
 		msg := t.Error()
-		httpCode := ErrHTTPBadRequest
+		httpCode := ErrHTTPInternalServerError
 		switch t.Code() {
 		case configuration.ErrTransactionDoesNotExist, configuration.ErrObjectDoesNotExist:
 			httpCode = ErrHTTPNotFound
 		case configuration.ErrObjectAlreadyExists, configuration.ErrVersionMismatch:
 			httpCode = ErrHTTPConflict
-		case configuration.ErrValidationError, configuration.ErrBothVersionTransaction, configuration.ErrNoVersionTransaction:
+		case configuration.ErrObjectIndexOutOfRange, configuration.ErrValidationError, configuration.ErrBothVersionTransaction, configuration.ErrNoVersionTransaction:
 			httpCode = ErrHTTPBadRequest
 		}
 		return &models.Error{Code: &httpCode, Message: &msg}
 	default:
 		msg := "Internal server error"
-		code := ErrHTTPBadRequest
+		code := ErrHTTPInternalServerError
 		return &models.Error{Code: &code, Message: &msg}
 	}
 }

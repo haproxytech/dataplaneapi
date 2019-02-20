@@ -83,12 +83,12 @@ func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetServerSwitchingRule(params.ID, params.Backend, t)
+	rule, err := h.Client.Configuration.GetServerSwitchingRule(params.ID, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(bck)
+	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(rule)
 }
 
 //Handle executing the request and returning a response
@@ -98,12 +98,12 @@ func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
+	rules, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(bcks)
+	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(rules)
 }
 
 //Handle executing the request and returning a response

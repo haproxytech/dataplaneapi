@@ -589,6 +589,252 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/binds": {
+      "get": {
+        "description": "Returns an array of all binds that are configured in specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Return an array of binds",
+        "operationId": "getBinds",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/binds"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new bind in the specified frontend in the configuration file.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Add a new bind",
+        "operationId": "createBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Bind created",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/binds/{name}": {
+      "get": {
+        "description": "Returns one bind configuration by it's name in the specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Return one bind",
+        "operationId": "getBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/bind"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a bind configuration by it's name in the specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Replace a bind",
+        "operationId": "replaceBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bind replaced",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a bind configuration by it's name in the specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Delete a bind",
+        "operationId": "deleteBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Bind deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -1159,6 +1405,9 @@ func init() {
             "name": "version",
             "in": "query",
             "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
           }
         ],
         "responses": {
@@ -1789,252 +2038,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/listeners": {
-      "get": {
-        "description": "Returns an array of all listeners that are configured in specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Return an array of listeners",
-        "operationId": "getListeners",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/listeners"
-                }
-              }
-            }
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "post": {
-        "description": "Adds a new listener in the specified frontend in the configuration file.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Add a new listener",
-        "operationId": "createListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Listener created",
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "409": {
-            "$ref": "#/responses/AlreadyExists"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      }
-    },
-    "/services/haproxy/configuration/listeners/{name}": {
-      "get": {
-        "description": "Returns one listener configuration by it's name in the specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Return one listener",
-        "operationId": "getListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Listener name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/listener"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/AlreadyExists"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "put": {
-        "description": "Replaces a listener configuration by it's name in the specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Replace a listener",
-        "operationId": "replaceListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Listener name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Listener replaced",
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "delete": {
-        "description": "Deletes a listener configuration by it's name in the specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Delete a listener",
-        "operationId": "deleteListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Listener name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Listener deleted"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      }
-    },
     "/services/haproxy/configuration/raw": {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
@@ -2605,16 +2608,16 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_request_rules": {
+    "/services/haproxy/configuration/stick_rules": {
       "get": {
-        "description": "Returns all Stick Request Rules that are configured in specified backend.",
+        "description": "Returns all Stick Rules that are configured in specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Return an array of all Stick Request Rules",
-        "operationId": "getStickRequestRules",
+        "summary": "Return an array of all Stick Rules",
+        "operationId": "getStickRules",
         "parameters": [
           {
             "type": "string",
@@ -2637,7 +2640,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/stick_request_rules"
+                  "$ref": "#/definitions/stick_rules"
                 }
               }
             }
@@ -2648,14 +2651,14 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new Stick Request Rule of the specified type in the specified backend.",
+        "description": "Adds a new Stick Rule of the specified type in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Add a new Stick Request Rule",
-        "operationId": "createStickRequestRule",
+        "summary": "Add a new Stick Rule",
+        "operationId": "createStickRule",
         "parameters": [
           {
             "type": "string",
@@ -2669,7 +2672,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           {
@@ -2681,9 +2684,9 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "Stick Request Rule created",
+            "description": "Stick Rule created",
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           "400": {
@@ -2698,20 +2701,20 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_request_rules/{id}": {
+    "/services/haproxy/configuration/stick_rules/{id}": {
       "get": {
-        "description": "Returns one Stick Request Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one Stick Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Return one Stick Request Rule",
-        "operationId": "getStickRequestRule",
+        "summary": "Return one Stick Rule",
+        "operationId": "getStickRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Request Rule ID",
+            "description": "Stick Rule ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -2737,7 +2740,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/stick_request_rule"
+                  "$ref": "#/definitions/stick_rule"
                 }
               }
             }
@@ -2751,18 +2754,18 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Stick Request Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a Stick Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Replace a Stick Request Rule",
-        "operationId": "replaceStickRequestRule",
+        "summary": "Replace a Stick Rule",
+        "operationId": "replaceStickRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Request Rule ID",
+            "description": "Stick Rule ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -2779,7 +2782,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           {
@@ -2791,9 +2794,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Stick Request Rule replaced",
+            "description": "Stick Rule replaced",
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           "400": {
@@ -2808,18 +2811,18 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Stick Request Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a Stick Rule configuration by it's ID from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Delete a Stick Request Rule",
-        "operationId": "deleteStickRequestRule",
+        "summary": "Delete a Stick Rule",
+        "operationId": "deleteStickRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Request Rule ID",
+            "description": "Stick Rule ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -2840,7 +2843,7 @@ func init() {
         ],
         "responses": {
           "204": {
-            "description": "Stick Request Rule deleted"
+            "description": "Stick Rule deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -2851,21 +2854,33 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_response_rules": {
+    "/services/haproxy/configuration/tcp_request_rules": {
       "get": {
-        "description": "Returns all Stick Response Rules that are configured in specified backend.",
+        "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Return an array of all Stick Response Rules",
-        "operationId": "getStickResponseRules",
+        "summary": "Return an array of all TCP Request Rules",
+        "operationId": "getTCPRequestRules",
         "parameters": [
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -2883,7 +2898,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/stick_response_rules"
+                  "$ref": "#/definitions/tcp_request_rules"
                 }
               }
             }
@@ -2894,19 +2909,31 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new Stick Response Rule of the specified type in the specified backend.",
+        "description": "Adds a new TCP Request Rule of the specified type in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Add a new Stick Response Rule",
-        "operationId": "createStickResponseRule",
+        "summary": "Add a new TCP Request Rule",
+        "operationId": "createTCPRequestRule",
         "parameters": [
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -2915,7 +2942,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           {
@@ -2927,9 +2954,9 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "Stick Response Rule created",
+            "description": "TCP Request Rule created",
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           "400": {
@@ -2944,28 +2971,40 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_response_rules/{id}": {
+    "/services/haproxy/configuration/tcp_request_rules/{id}": {
       "get": {
-        "description": "Returns one Stick Response Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one TCP Request Rule configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Return one Stick Response Rule",
-        "operationId": "getStickResponseRule",
+        "summary": "Return one TCP Request Rule",
+        "operationId": "getTCPRequestRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Response Rule ID",
+            "description": "TCP Request Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -2983,7 +3022,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/stick_response_rule"
+                  "$ref": "#/definitions/tcp_request_rule"
                 }
               }
             }
@@ -2997,26 +3036,38 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Stick Response Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a TCP Request Rule configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Replace a Stick Response Rule",
-        "operationId": "replaceStickResponseRule",
+        "summary": "Replace a TCP Request Rule",
+        "operationId": "replaceTCPRequestRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Response Rule ID",
+            "description": "TCP Request Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -3025,7 +3076,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           {
@@ -3037,9 +3088,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Stick Response Rule replaced",
+            "description": "TCP Request Rule replaced",
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           "400": {
@@ -3054,26 +3105,38 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Stick Response Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a TCP Request Rule configuration by it's ID from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Delete a Stick Response Rule",
-        "operationId": "deleteStickResponseRule",
+        "summary": "Delete a TCP Request Rule",
+        "operationId": "deleteTCPRequestRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Response Rule ID",
+            "description": "TCP Request Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -3086,7 +3149,7 @@ func init() {
         ],
         "responses": {
           "204": {
-            "description": "Stick Response Rule deleted"
+            "description": "TCP Request Rule deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -3097,21 +3160,22 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_connection_rules": {
+    "/services/haproxy/configuration/tcp_response_rules": {
       "get": {
-        "description": "Returns all TCP Connection Rules that are configured in specified frontend.",
+        "description": "Returns all TCP Response Rules that are configured in specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Return an array of all TCP Connection Rules",
-        "operationId": "getTCPConnectionRules",
+        "summary": "Return an array of all TCP Response Rules",
+        "operationId": "getTCPResponseRules",
         "parameters": [
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -3129,7 +3193,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/tcp_rules"
+                  "$ref": "#/definitions/tcp_response_rules"
                 }
               }
             }
@@ -3140,19 +3204,20 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new TCP Connection Rule of the specified type in the specified frontend.",
+        "description": "Adds a new TCP Response Rule of the specified type in the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Add a new TCP Connection Rule",
-        "operationId": "createTCPConnectionRule",
+        "summary": "Add a new TCP Response Rule",
+        "operationId": "createTCPResponseRule",
         "parameters": [
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -3161,7 +3226,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           {
@@ -3173,9 +3238,9 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "TCP Connection Rule created",
+            "description": "TCP Response Rule created",
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           "400": {
@@ -3190,28 +3255,29 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_connection_rules/{id}": {
+    "/services/haproxy/configuration/tcp_response_rules/{id}": {
       "get": {
-        "description": "Returns one TCP Connection Rule configuration by it's ID in the specified frontend.",
+        "description": "Returns one TCP Response Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Return one TCP Connection Rule",
-        "operationId": "getTCPConnectionRule",
+        "summary": "Return one TCP Response Rule",
+        "operationId": "getTCPResponseRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Connection Rule ID",
+            "description": "TCP Response Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -3229,7 +3295,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/tcp_rule"
+                  "$ref": "#/definitions/tcp_response_rule"
                 }
               }
             }
@@ -3243,26 +3309,27 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a TCP Connection Rule configuration by it's ID in the specified frontend.",
+        "description": "Replaces a TCP Response Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Replace a TCP Connection Rule",
-        "operationId": "replaceTCPConnectionRule",
+        "summary": "Replace a TCP Response Rule",
+        "operationId": "replaceTCPResponseRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Connection Rule ID",
+            "description": "TCP Response Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -3271,7 +3338,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           {
@@ -3283,9 +3350,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "TCP Connection Rule replaced",
+            "description": "TCP Response Rule replaced",
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           "400": {
@@ -3300,26 +3367,27 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a TCP Connection Rule configuration by it's ID from the specified frontend.",
+        "description": "Deletes a TCP Response Rule configuration by it's ID from the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Delete a TCP Connection Rule",
-        "operationId": "deleteTCPConnectionRule",
+        "summary": "Delete a TCP Response Rule",
+        "operationId": "deleteTCPResponseRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Connection Rule IF",
+            "description": "TCP Response Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -3332,368 +3400,7 @@ func init() {
         ],
         "responses": {
           "204": {
-            "description": "TCP Connection Rule deleted"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      }
-    },
-    "/services/haproxy/configuration/tcp_content_rules": {
-      "get": {
-        "description": "Returns all TCP Content Rules that are configured in specified parent and parent type. TCP Content Rules can be request rules or response rules if parent is backend, and only request if parent is frontend.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Return an array of all TCP Content Rules",
-        "operationId": "getTCPContentRules",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_rules"
-                }
-              }
-            }
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "post": {
-        "description": "Adds a new TCP Content Rule of the specified type in the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Add a new TCP Content Rule",
-        "operationId": "createTCPContentRule",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "TCP Content Rule created",
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "409": {
-            "$ref": "#/responses/AlreadyExists"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      }
-    },
-    "/services/haproxy/configuration/tcp_content_rules/{id}": {
-      "get": {
-        "description": "Returns one TCP Content Rule configuration by it's ID in the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Return one TCP Content Rule",
-        "operationId": "getTCPContentRule",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "TCP Content Rule ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_rule"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "put": {
-        "description": "Replaces a TCP Content Rule configuration by it's ID in the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Replace a TCP Content Rule",
-        "operationId": "replaceTCPContentRule",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "TCP Content Rule ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "TCP Content Rule replaced",
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "delete": {
-        "description": "Deletes a TCP Content Rule configuration by it's ID from the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Delete a TCP Content Rule",
-        "operationId": "deleteTCPContentRule",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "TCP Content Rule ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
-          },
-          {
-            "$ref": "#/parameters/version"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "TCP Content Rule deleted"
+            "description": "TCP Response Rule deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -4186,102 +3893,82 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "http",
-            "ssl-hello",
-            "smtp",
-            "ldap",
-            "mysql",
-            "pgsql",
-            "tcp",
-            "redis"
+            "ssl-hello-check",
+            "smtpchk",
+            "ldap-check",
+            "mysql-check",
+            "pgsql-check",
+            "tcp-check",
+            "redis-check"
           ]
-        },
-        "adv_check_http_method": {
-          "type": "string",
-          "enum": [
-            "HEAD",
-            "PUT",
-            "POST",
-            "GET",
-            "TRACE",
-            "PATCH"
-          ],
-          "x-dependency": {
-            "adv_check": "http"
-          }
-        },
-        "adv_check_http_uri": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "adv_check": "http"
-          }
-        },
-        "adv_check_http_version": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "adv_check": "http"
-          }
         },
         "balance": {
-          "type": "string",
-          "enum": [
-            "roundrobin",
-            "least-connections",
-            "hash-uri",
-            "hash-source"
-          ]
-        },
-        "check_fall": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "check_interval": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "check_port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 0,
-          "x-nullable": true
-        },
-        "check_rise": {
-          "type": "integer",
-          "x-nullable": true
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "enum": [
+                "roundrobin",
+                "static-rr",
+                "leastconn",
+                "first",
+                "source",
+                "uri",
+                "url_param",
+                "random"
+              ]
+            },
+            "arguments": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            }
+          }
         },
         "check_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "connect_failure_redispatch": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "connect_retries": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "connect_source": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "connect_transparent": {
+        "contstats": {
           "type": "string",
           "enum": [
-            "enabled",
-            "disabled"
+            "enabled"
           ]
         },
-        "continuous_statistics": {
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "default_server": {
+          "type": "object",
+          "properties": {
+            "fall": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "inter": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 0,
+              "x-nullable": true
+            },
+            "rise": {
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        },
+        "forwardfor": {
           "type": "string",
           "enum": [
             "enabled"
@@ -4290,58 +3977,36 @@ func init() {
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "tunnel",
-            "passive-close",
+            "http-tunnel",
+            "httpclose",
             "forced-close",
-            "server-close",
-            "keep-alive"
+            "http-server-close",
+            "http-keep-alive"
           ]
         },
-        "http_cookie": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
-        "http_cookie_mode": {
-          "type": "string",
-          "enum": [
-            "passive",
-            "passive-silent",
-            "reset",
-            "set",
-            "set-silent",
-            "session-prefix",
-            "insert-only",
-            "insert-only-silent",
-            "passive-session-prefix"
-          ],
-          "x-dependency": {
-            "http_cookie": "enabled"
+        "httpchk": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": [
+                "HEAD",
+                "PUT",
+                "POST",
+                "GET",
+                "TRACE",
+                "PATCH"
+              ]
+            },
+            "uri": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            }
           }
-        },
-        "http_cookie_name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "http_cookie": "enabled"
-          }
-        },
-        "http_cookie_nocache": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "http_cookie": "enabled"
-          }
-        },
-        "http_xff_header_insert": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
         },
         "log": {
           "type": "string",
@@ -4357,79 +4022,90 @@ func init() {
             "clf"
           ]
         },
-        "name": {
-          "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false
-        },
-        "protocol": {
+        "mode": {
           "type": "string",
           "enum": [
             "http",
             "tcp"
           ]
         },
-        "queued_timeout": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "queue_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "server_inactivity_timeout": {
+        "redispatch": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "retries": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "server_timeout": {
           "type": "integer",
           "x-nullable": true
         },
         "stick_table": {
-          "type": "string",
-          "enum": [
-            "ip",
-            "ipv6",
-            "integer",
-            "string",
-            "binary"
-          ]
-        },
-        "stick_table_expire": {
-          "type": "integer",
-          "x-dependency": "stick_table",
-          "x-nullable": true
-        },
-        "stick_table_keylen": {
-          "type": "integer",
-          "x-dependency": "stick_table",
-          "x-nullable": true
-        },
-        "stick_table_nopurge": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ],
-          "x-dependency": "stick_table"
-        },
-        "stick_table_peers": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": "stick_table"
-        },
-        "stick_table_size": {
-          "type": "integer",
-          "x-dependency": "stick_table",
-          "x-nullable": true
-        },
-        "tcpreq_inspect_delay": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "tcprsp_inspect_delay": {
-          "type": "integer",
-          "x-nullable": true
+          "type": "object",
+          "properties": {
+            "expire": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "keylen": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "nopurge": {
+              "type": "string",
+              "enum": [
+                "enabled"
+              ]
+            },
+            "peers": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            },
+            "size": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "store": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "ip",
+                "ipv6",
+                "integer",
+                "string",
+                "binary"
+              ]
+            }
+          }
         }
       },
       "example": {
-        "adv_check": "http",
         "balance": "roundrobin",
-        "http_xff_header_insert": "enabled",
+        "forwardfor": "enabled",
+        "httpchk": {
+          "method": "OPTIONS",
+          "uri": "/check",
+          "version": "HTTP/1.1"
+        },
         "log_format": "http",
-        "name": "test_backend",
-        "protocol": "http"
+        "mode": "http",
+        "name": "test_backend"
       }
     },
     "backend_switching_rule": {
@@ -4438,7 +4114,7 @@ func init() {
       "title": "Backend Switching Rule",
       "required": [
         "id",
-        "target_farm"
+        "name"
       ],
       "properties": {
         "cond": {
@@ -4453,9 +4129,9 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
-        "target_farm": {
+        "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
@@ -4465,7 +4141,7 @@ func init() {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
         "id": 0,
-        "target_farm": "test_backend"
+        "name": "test_backend"
       }
     },
     "backend_switching_rules": {
@@ -4482,6 +4158,66 @@ func init() {
       "title": "Backends",
       "items": {
         "$ref": "#/definitions/backend"
+      }
+    },
+    "bind": {
+      "description": "HAProxy frontend bind configuration",
+      "type": "object",
+      "title": "Bind",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ssl": {
+          "type": "boolean"
+        },
+        "ssl_cafile": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "tcp_user_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "transparent": {
+          "type": "boolean"
+        }
+      },
+      "example": {
+        "address": "127.0.0.1",
+        "name": "http",
+        "port": 80
+      }
+    },
+    "binds": {
+      "description": "HAProxy frontend binds array (corresponds to bind directives)",
+      "type": "array",
+      "title": "Binds",
+      "items": {
+        "$ref": "#/definitions/bind"
       }
     },
     "endpoint": {
@@ -4547,9 +4283,13 @@ func init() {
         "type"
       ],
       "properties": {
+        "cache_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "spoe_config": {
           "type": "string",
@@ -4560,33 +4300,25 @@ func init() {
           "pattern": "^[^\\s]+$"
         },
         "trace_hexdump": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "trace_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
         "trace_rnd_forwarding": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "trace_rnd_parsing": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "type": {
           "type": "string",
           "enum": [
             "trace",
             "compression",
-            "spoe"
+            "spoe",
+            "cache"
           ],
           "x-nullable": false
         }
@@ -4614,33 +4346,54 @@ func init() {
         "name"
       ],
       "properties": {
-        "client_inactivity_timeout": {
+        "client_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "continuous_statistics": {
+        "clitcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "contstats": {
           "type": "string",
           "enum": [
             "enabled"
           ]
         },
-        "default_farm": {
+        "default_backend": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-dynamic-enum": "getBackends",
           "x-dynamic-propery": "name"
         },
+        "dontlognull": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "http-use-htx": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "tunnel",
-            "passive-close",
+            "http-tunnel",
+            "httpclose",
             "forced-close",
-            "server-close",
-            "keep-alive"
+            "http-server-close",
+            "http-keep-alive"
           ]
         },
-        "http_keepalive_timeout": {
+        "http_keep_alive_timeout": {
           "type": "integer",
           "x-dependency": {
             "protocol": "http"
@@ -4672,38 +4425,38 @@ func init() {
             "clf"
           ]
         },
-        "log_ignore_null": {
+        "log_separate_errors": {
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
           ]
         },
-        "max_connections": {
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "maxconn": {
           "type": "integer",
           "x-nullable": true
         },
-        "name": {
-          "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false
-        },
-        "protocol": {
+        "mode": {
           "type": "string",
           "enum": [
             "http",
             "tcp"
           ]
         },
-        "tcpreq_inspect_delay": {
-          "type": "integer",
-          "x-nullable": true
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
         }
       },
       "example": {
-        "default_farm": "test_backend",
-        "http_connection_mode": "keep-alive",
-        "max_connections": 2000,
+        "default_backend": "test_backend",
+        "http_connection_mode": "http-keep-alive",
+        "maxconn": 2000,
         "name": "test_frontend",
         "protocol": "http"
       }
@@ -4771,6 +4524,14 @@ func init() {
         "type"
       ],
       "properties": {
+        "acl_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "acl_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "auth_realm": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -4785,6 +4546,10 @@ func init() {
         "cond_test": {
           "type": "string"
         },
+        "deny_status": {
+          "type": "integer",
+          "x-nullable": false
+        },
         "hdr_format": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -4797,13 +4562,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "hdr_value": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "log_level": {
           "type": "string",
@@ -4827,9 +4588,8 @@ func init() {
             303
           ]
         },
-        "redir_to": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+        "redir_option": {
+          "type": "string"
         },
         "redir_type": {
           "type": "string",
@@ -4839,15 +4599,15 @@ func init() {
             "scheme"
           ]
         },
+        "redir_value": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "spoe_engine": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
         "spoe_group": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "svc_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
@@ -4866,15 +4626,20 @@ func init() {
             "send-spoe-group",
             "replace-header",
             "replace-value",
-            "use-service"
+            "add-acl",
+            "del-acl",
+            "del-header"
           ],
           "x-nullable": false
+        },
+        "var_expr": {
+          "type": "string"
         },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "var_pattern": {
+        "var_scope": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         }
@@ -4882,8 +4647,8 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
+        "hdr_fmt": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "hdr_value": "%T",
         "id": 0,
         "type": "add-header"
       }
@@ -4905,6 +4670,14 @@ func init() {
         "type"
       ],
       "properties": {
+        "acl_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "acl_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -4927,13 +4700,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "hdr_value": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "log_level": {
           "type": "string",
@@ -4949,6 +4718,29 @@ func init() {
             "silent"
           ]
         },
+        "redir_code": {
+          "type": "integer",
+          "enum": [
+            301,
+            302,
+            303
+          ]
+        },
+        "redir_option": {
+          "type": "string"
+        },
+        "redir_type": {
+          "type": "string",
+          "enum": [
+            "location",
+            "prefix",
+            "scheme"
+          ]
+        },
+        "redir_value": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "spoe_engine": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -4957,31 +4749,43 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "status_group": {
+        "status": {
           "type": "integer",
+          "maximum": 999,
+          "minimum": 100,
           "x-nullable": false
+        },
+        "status_reason": {
+          "type": "string"
         },
         "type": {
           "type": "string",
           "enum": [
             "allow",
             "deny",
+            "redirect",
             "add-header",
             "set-header",
+            "del-header",
             "set-log-level",
             "set-var",
             "set-status",
             "send-spoe-group",
             "replace-header",
-            "replace-value"
+            "replace-value",
+            "add-acl",
+            "del-acl"
           ],
           "x-nullable": false
+        },
+        "var_expr": {
+          "type": "string"
         },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "var_pattern": {
+        "var_scope": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         }
@@ -4989,8 +4793,8 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
+        "hdr_fmt": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "hdr_value": "%T",
         "id": 0,
         "type": "add-header"
       }
@@ -5001,79 +4805,6 @@ func init() {
       "title": "HTTP Response Rules Array",
       "items": {
         "$ref": "#/definitions/http_response_rule"
-      }
-    },
-    "listener": {
-      "description": "HAProxy frontend listener configuration (corresponds to bind directives)",
-      "type": "object",
-      "title": "Listener",
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 0,
-          "x-nullable": true
-        },
-        "process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
-        "ssl_cafile": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
-        },
-        "ssl_certificate": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
-        },
-        "tcp_user_timeout": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "transparent": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        }
-      },
-      "example": {
-        "address": "127.0.0.1",
-        "name": "http",
-        "port": 80
-      }
-    },
-    "listeners": {
-      "description": "HAProxy frontend listeners array (corresponds to bind directives)",
-      "type": "array",
-      "title": "Listeners",
-      "items": {
-        "$ref": "#/definitions/listener"
       }
     },
     "native_stats": {
@@ -5825,23 +5556,32 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "check": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
-        "http-cookie-id": {
+        "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
         "maintenance": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
-        "max-connections": {
+        "maxconn": {
           "type": "integer",
           "x-nullable": true
         },
@@ -5856,31 +5596,20 @@ func init() {
           "minimum": 0,
           "x-nullable": true
         },
-        "sorry": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
         "ssl": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "ssl_cafile": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
+          "pattern": "^[^\\s]+$"
         },
         "ssl_certificate": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
+          "pattern": "^[^\\s]+$"
         },
         "tls_tickets": {
           "type": "string",
@@ -5924,7 +5653,7 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "target_server": {
           "type": "string",
@@ -5956,14 +5685,14 @@ func init() {
       }
     },
     "site": {
-      "description": "Site configuration. Sites are considered as one frontend and all backends connected to that frontend.\nBackends are connected to frontend using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Site configuration. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
       "type": "object",
       "title": "Site",
       "required": [
         "name"
       ],
       "properties": {
-        "backends": {
+        "farms": {
           "type": "array",
           "items": {
             "type": "object",
@@ -5973,13 +5702,29 @@ func init() {
             ],
             "properties": {
               "balance": {
-                "type": "string",
-                "enum": [
-                  "roundrobin",
-                  "least-connections",
-                  "hash-uri",
-                  "hash-source"
-                ]
+                "type": "object",
+                "properties": {
+                  "algorithm": {
+                    "type": "string",
+                    "enum": [
+                      "roundrobin",
+                      "static-rr",
+                      "leastconn",
+                      "first",
+                      "source",
+                      "uri",
+                      "url_param",
+                      "random"
+                    ]
+                  },
+                  "arguments": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[^\\s]+$"
+                    }
+                  }
+                }
               },
               "cond": {
                 "type": "string",
@@ -5997,29 +5742,26 @@ func init() {
                   "use_as": "conditional"
                 }
               },
-              "http_xff_header_insert": {
+              "forwardfor": {
                 "type": "string",
                 "enum": [
                   "enabled"
                 ]
               },
               "log": {
+                "type": "boolean"
+              },
+              "mode": {
                 "type": "string",
                 "enum": [
-                  "enabled"
+                  "http",
+                  "tcp"
                 ]
               },
               "name": {
                 "type": "string",
                 "pattern": "^[A-Za-z0-9-_.:]+$",
                 "x-nullable": false
-              },
-              "protocol": {
-                "type": "string",
-                "enum": [
-                  "http",
-                  "tcp"
-                ]
               },
               "servers": {
                 "type": "array",
@@ -6053,6 +5795,13 @@ func init() {
                         "enabled"
                       ]
                     },
+                    "ssl_certificate": {
+                      "type": "string",
+                      "pattern": "^[^\\s]+$",
+                      "x-dependency": {
+                        "ssl": "enabled"
+                      }
+                    },
                     "weight": {
                       "type": "integer",
                       "x-nullable": true
@@ -6071,7 +5820,12 @@ func init() {
             }
           }
         },
-        "frontend": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "service": {
           "type": "object",
           "properties": {
             "http_connection_mode": {
@@ -6084,7 +5838,7 @@ func init() {
                 "keep-alive"
               ],
               "x-dependency": {
-                "protocol": "http"
+                "mode": "http"
               }
             },
             "listeners": {
@@ -6135,11 +5889,11 @@ func init() {
                 "enabled"
               ]
             },
-            "max_connections": {
+            "maxconn": {
               "type": "integer",
               "x-nullable": true
             },
-            "protocol": {
+            "mode": {
               "type": "string",
               "enum": [
                 "http",
@@ -6147,20 +5901,17 @@ func init() {
               ]
             }
           }
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false
         }
       },
       "example": {
-        "backends": [
+        "farms": [
           {
-            "balance": "hash-uri",
+            "balance": {
+              "algorithm": "roundrobin"
+            },
             "log": "enabled",
+            "mode": "http",
             "name": "www_backend",
-            "protocol": "http",
             "servers": [
               {
                 "address": "127.0.1.1",
@@ -6178,7 +5929,8 @@ func init() {
             "use_as": "default"
           }
         ],
-        "frontend": {
+        "name": "test_site",
+        "service": {
           "http_connection_mode": "server-close",
           "listeners": [
             {
@@ -6193,10 +5945,9 @@ func init() {
             }
           ],
           "log": "enabled",
-          "max_connections": 2000,
-          "protocol": "http"
-        },
-        "name": "test_site"
+          "maxconn": 2000,
+          "mode": "http"
+        }
       }
     },
     "sites": {
@@ -6207,10 +5958,10 @@ func init() {
         "$ref": "#/definitions/site"
       }
     },
-    "stick_request_rule": {
-      "description": "Define a request pattern matching condition to stick a user to a server or to create an entry in a stickiness table.",
+    "stick_rule": {
+      "description": "Define a pattern used to create an entry in a stickiness table or matching condition or associate a user to a server.",
       "type": "object",
-      "title": "Stick Request Rule",
+      "title": "Stick Rule",
       "required": [
         "id",
         "type"
@@ -6228,7 +5979,7 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "pattern": {
           "type": "string",
@@ -6241,9 +5992,10 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
-            "matchandstore",
-            "matchonly",
-            "storeonly"
+            "match",
+            "on",
+            "store-request",
+            "store-response"
           ],
           "x-nullable": false
         }
@@ -6254,95 +6006,57 @@ func init() {
         "type": "storeonly"
       }
     },
-    "stick_request_rules": {
-      "description": "HAProxy backend stick request rules array (corresponds to stick store-request or stick match)",
+    "stick_rules": {
+      "description": "HAProxy backend stick rules array (corresponds to stick store-request, stick match, stick on, stick store-response)",
       "type": "array",
-      "title": "Stick Request Rules Array",
+      "title": "Stick Rules Array",
       "items": {
-        "$ref": "#/definitions/stick_request_rule"
+        "$ref": "#/definitions/stick_rule"
       }
     },
-    "stick_response_rule": {
-      "description": "Define a response pattern matching condition to create an entry in a stickiness table.",
+    "tcp_request_rule": {
+      "description": "HAProxy TCP Request Rule configuration (corresponds to tcp-request)",
       "type": "object",
-      "title": "Stick Response Rule",
+      "title": "TCP Request Rule",
       "required": [
         "id",
-        "type"
+        "type",
+        "action"
       ],
       "properties": {
-        "cond": {
-          "type": "string",
-          "enum": [
-            "if",
-            "unless"
-          ]
-        },
-        "cond_test": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": false
-        },
-        "pattern": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "storeonly"
-          ],
-          "x-nullable": false
-        }
-      },
-      "example": {
-        "id": 0,
-        "pattern": "src",
-        "type": "storeonly"
-      }
-    },
-    "stick_response_rules": {
-      "description": "HAProxy backend stick response rules array (corresponds to stick store-response)",
-      "type": "array",
-      "title": "Stick Response Rules Array",
-      "items": {
-        "$ref": "#/definitions/stick_response_rule"
-      }
-    },
-    "tcp_rule": {
-      "description": "HAProxy TCP rule configuration (corresponds to tcp-request and tcp-response directive)",
-      "type": "object",
-      "title": "TCP Rule",
-      "required": [
-        "id",
-        "type"
-      ],
-      "properties": {
-        "cond": {
-          "type": "string",
-          "enum": [
-            "if",
-            "unless"
-          ]
-        },
-        "cond_test": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": false
-        },
-        "type": {
+        "action": {
           "type": "string",
           "enum": [
             "accept",
             "reject"
+          ],
+          "x-nullable": false
+        },
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ]
+        },
+        "cond_test": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "connection",
+            "content",
+            "inspect-delay",
+            "session"
           ],
           "x-nullable": false
         }
@@ -6354,12 +6068,72 @@ func init() {
         "type": "accept"
       }
     },
-    "tcp_rules": {
-      "description": "HAProxy TCP rules array (corresponds to tcp-request and tcp-response directives)",
+    "tcp_request_rules": {
+      "description": "HAProxy TCP Request Rules array (corresponds to tcp-request directive)",
       "type": "array",
-      "title": "TCP Rules Array",
+      "title": "TCP Request Rules Array",
       "items": {
-        "$ref": "#/definitions/tcp_rule"
+        "$ref": "#/definitions/tcp_request_rule"
+      }
+    },
+    "tcp_response_rule": {
+      "description": "HAProxy TCP Response Rule configuration (corresponds to tcp-response)",
+      "type": "object",
+      "title": "TCP Response Rule",
+      "required": [
+        "id",
+        "type",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "accept",
+            "reject"
+          ],
+          "x-nullable": false
+        },
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ]
+        },
+        "cond_test": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "content",
+            "inspect-delay"
+          ],
+          "x-nullable": false
+        }
+      },
+      "example": {
+        "cond": "if",
+        "cond_test": "{ src 192.168.0.0/16 }",
+        "id": 0,
+        "type": "accept"
+      }
+    },
+    "tcp_response_rules": {
+      "description": "HAProxy TCP Response Rules array (corresponds to tcp-response directive)",
+      "type": "array",
+      "title": "TCP Response Rules Array",
+      "items": {
+        "$ref": "#/definitions/tcp_response_rule"
       }
     },
     "transaction": {
@@ -6483,7 +6257,7 @@ func init() {
     },
     {
       "description": "Managing frontend bind configurations (advanced mode)",
-      "name": "Listener"
+      "name": "Bind"
     },
     {
       "description": "Managing backend server configurations (advanced mode)",
@@ -7220,6 +6994,301 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/binds": {
+      "get": {
+        "description": "Returns an array of all binds that are configured in specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Return an array of binds",
+        "operationId": "getBinds",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/getBindsOKBody"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new bind in the specified frontend in the configuration file.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Add a new bind",
+        "operationId": "createBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Bind created",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/binds/{name}": {
+      "get": {
+        "description": "Returns one bind configuration by it's name in the specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Return one bind",
+        "operationId": "getBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/getBindOKBody"
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a bind configuration by it's name in the specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Replace a bind",
+        "operationId": "replaceBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bind replaced",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a bind configuration by it's name in the specified frontend.",
+        "tags": [
+          "Bind",
+          "HAProxy configuration management",
+          "Frontend options"
+        ],
+        "summary": "Delete a bind",
+        "operationId": "deleteBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Bind deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -7887,6 +7956,13 @@ func init() {
             "name": "version",
             "in": "query",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
           }
         ],
         "responses": {
@@ -8621,301 +8697,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/listeners": {
-      "get": {
-        "description": "Returns an array of all listeners that are configured in specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Return an array of listeners",
-        "operationId": "getListeners",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/getListenersOKBody"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Adds a new listener in the specified frontend in the configuration file.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Add a new listener",
-        "operationId": "createListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Listener created",
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "The specified resource already exists",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      }
-    },
-    "/services/haproxy/configuration/listeners/{name}": {
-      "get": {
-        "description": "Returns one listener configuration by it's name in the specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Return one listener",
-        "operationId": "getListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Listener name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/getListenerOKBody"
-            }
-          },
-          "404": {
-            "description": "The specified resource already exists",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "Replaces a listener configuration by it's name in the specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Replace a listener",
-        "operationId": "replaceListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Listener name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Listener replaced",
-            "schema": {
-              "$ref": "#/definitions/listener"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "Deletes a listener configuration by it's name in the specified frontend.",
-        "tags": [
-          "Listener",
-          "HAProxy configuration management",
-          "Frontend options"
-        ],
-        "summary": "Delete a listener",
-        "operationId": "deleteListener",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Listener name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Listener deleted"
-          },
-          "404": {
-            "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      }
-    },
     "/services/haproxy/configuration/raw": {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
@@ -9593,16 +9374,16 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_request_rules": {
+    "/services/haproxy/configuration/stick_rules": {
       "get": {
-        "description": "Returns all Stick Request Rules that are configured in specified backend.",
+        "description": "Returns all Stick Rules that are configured in specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Return an array of all Stick Request Rules",
-        "operationId": "getStickRequestRules",
+        "summary": "Return an array of all Stick Rules",
+        "operationId": "getStickRules",
         "parameters": [
           {
             "type": "string",
@@ -9623,7 +9404,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/getStickRequestRulesOKBody"
+              "$ref": "#/definitions/getStickRulesOKBody"
             }
           },
           "default": {
@@ -9635,14 +9416,14 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new Stick Request Rule of the specified type in the specified backend.",
+        "description": "Adds a new Stick Rule of the specified type in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Add a new Stick Request Rule",
-        "operationId": "createStickRequestRule",
+        "summary": "Add a new Stick Rule",
+        "operationId": "createStickRule",
         "parameters": [
           {
             "type": "string",
@@ -9656,7 +9437,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           {
@@ -9676,9 +9457,9 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "Stick Request Rule created",
+            "description": "Stick Rule created",
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           "400": {
@@ -9702,20 +9483,20 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_request_rules/{id}": {
+    "/services/haproxy/configuration/stick_rules/{id}": {
       "get": {
-        "description": "Returns one Stick Request Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one Stick Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Return one Stick Request Rule",
-        "operationId": "getStickRequestRule",
+        "summary": "Return one Stick Rule",
+        "operationId": "getStickRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Request Rule ID",
+            "description": "Stick Rule ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -9739,7 +9520,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/getStickRequestRuleOKBody"
+              "$ref": "#/definitions/getStickRuleOKBody"
             }
           },
           "404": {
@@ -9757,18 +9538,18 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Stick Request Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a Stick Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Replace a Stick Request Rule",
-        "operationId": "replaceStickRequestRule",
+        "summary": "Replace a Stick Rule",
+        "operationId": "replaceStickRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Request Rule ID",
+            "description": "Stick Rule ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -9785,7 +9566,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           {
@@ -9805,9 +9586,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Stick Request Rule replaced",
+            "description": "Stick Rule replaced",
             "schema": {
-              "$ref": "#/definitions/stick_request_rule"
+              "$ref": "#/definitions/stick_rule"
             }
           },
           "400": {
@@ -9831,18 +9612,18 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Stick Request Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a Stick Rule configuration by it's ID from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickRequestRule"
+          "StickRule"
         ],
-        "summary": "Delete a Stick Request Rule",
-        "operationId": "deleteStickRequestRule",
+        "summary": "Delete a Stick Rule",
+        "operationId": "deleteStickRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Request Rule ID",
+            "description": "Stick Rule ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -9871,7 +9652,7 @@ func init() {
         ],
         "responses": {
           "204": {
-            "description": "Stick Request Rule deleted"
+            "description": "Stick Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -9888,21 +9669,33 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_response_rules": {
+    "/services/haproxy/configuration/tcp_request_rules": {
       "get": {
-        "description": "Returns all Stick Response Rules that are configured in specified backend.",
+        "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Return an array of all Stick Response Rules",
-        "operationId": "getStickResponseRules",
+        "summary": "Return an array of all TCP Request Rules",
+        "operationId": "getTCPRequestRules",
         "parameters": [
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -9918,7 +9711,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/getStickResponseRulesOKBody"
+              "$ref": "#/definitions/getTcpRequestRulesOKBody"
             }
           },
           "default": {
@@ -9930,19 +9723,31 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new Stick Response Rule of the specified type in the specified backend.",
+        "description": "Adds a new TCP Request Rule of the specified type in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Add a new Stick Response Rule",
-        "operationId": "createStickResponseRule",
+        "summary": "Add a new TCP Request Rule",
+        "operationId": "createTCPRequestRule",
         "parameters": [
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -9951,7 +9756,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           {
@@ -9971,9 +9776,9 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "Stick Response Rule created",
+            "description": "TCP Request Rule created",
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           "400": {
@@ -9997,28 +9802,40 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_response_rules/{id}": {
+    "/services/haproxy/configuration/tcp_request_rules/{id}": {
       "get": {
-        "description": "Returns one Stick Response Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one TCP Request Rule configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Return one Stick Response Rule",
-        "operationId": "getStickResponseRule",
+        "summary": "Return one TCP Request Rule",
+        "operationId": "getTCPRequestRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Response Rule ID",
+            "description": "TCP Request Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -10034,7 +9851,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/getStickResponseRuleOKBody"
+              "$ref": "#/definitions/getTcpRequestRuleOKBody"
             }
           },
           "404": {
@@ -10052,26 +9869,38 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Stick Response Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a TCP Request Rule configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Replace a Stick Response Rule",
-        "operationId": "replaceStickResponseRule",
+        "summary": "Replace a TCP Request Rule",
+        "operationId": "replaceTCPRequestRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Response Rule ID",
+            "description": "TCP Request Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -10080,7 +9909,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           {
@@ -10100,9 +9929,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Stick Response Rule replaced",
+            "description": "TCP Request Rule replaced",
             "schema": {
-              "$ref": "#/definitions/stick_response_rule"
+              "$ref": "#/definitions/tcp_request_rule"
             }
           },
           "400": {
@@ -10126,26 +9955,38 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Stick Response Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a TCP Request Rule configuration by it's ID from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
-          "StickResponseRule"
+          "Frontend options",
+          "TCPRequestRule"
         ],
-        "summary": "Delete a Stick Response Rule",
-        "operationId": "deleteStickResponseRule",
+        "summary": "Delete a TCP Request Rule",
+        "operationId": "deleteTCPRequestRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Response Rule ID",
+            "description": "TCP Request Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Backend name",
-            "name": "backend",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
             "in": "query",
             "required": true
           },
@@ -10166,7 +10007,7 @@ func init() {
         ],
         "responses": {
           "204": {
-            "description": "Stick Response Rule deleted"
+            "description": "TCP Request Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -10183,21 +10024,22 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_connection_rules": {
+    "/services/haproxy/configuration/tcp_response_rules": {
       "get": {
-        "description": "Returns all TCP Connection Rules that are configured in specified frontend.",
+        "description": "Returns all TCP Response Rules that are configured in specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Return an array of all TCP Connection Rules",
-        "operationId": "getTCPConnectionRules",
+        "summary": "Return an array of all TCP Response Rules",
+        "operationId": "getTCPResponseRules",
         "parameters": [
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -10213,7 +10055,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/getTcpConnectionRulesOKBody"
+              "$ref": "#/definitions/getTcpResponseRulesOKBody"
             }
           },
           "default": {
@@ -10225,19 +10067,20 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new TCP Connection Rule of the specified type in the specified frontend.",
+        "description": "Adds a new TCP Response Rule of the specified type in the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Add a new TCP Connection Rule",
-        "operationId": "createTCPConnectionRule",
+        "summary": "Add a new TCP Response Rule",
+        "operationId": "createTCPResponseRule",
         "parameters": [
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -10246,7 +10089,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           {
@@ -10266,9 +10109,9 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "TCP Connection Rule created",
+            "description": "TCP Response Rule created",
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           "400": {
@@ -10292,28 +10135,29 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_connection_rules/{id}": {
+    "/services/haproxy/configuration/tcp_response_rules/{id}": {
       "get": {
-        "description": "Returns one TCP Connection Rule configuration by it's ID in the specified frontend.",
+        "description": "Returns one TCP Response Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Return one TCP Connection Rule",
-        "operationId": "getTCPConnectionRule",
+        "summary": "Return one TCP Response Rule",
+        "operationId": "getTCPResponseRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Connection Rule ID",
+            "description": "TCP Response Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -10329,7 +10173,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/getTcpConnectionRuleOKBody"
+              "$ref": "#/definitions/getTcpResponseRuleOKBody"
             }
           },
           "404": {
@@ -10347,26 +10191,27 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a TCP Connection Rule configuration by it's ID in the specified frontend.",
+        "description": "Replaces a TCP Response Rule configuration by it's ID in the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Replace a TCP Connection Rule",
-        "operationId": "replaceTCPConnectionRule",
+        "summary": "Replace a TCP Response Rule",
+        "operationId": "replaceTCPResponseRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Connection Rule ID",
+            "description": "TCP Response Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -10375,7 +10220,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           {
@@ -10395,9 +10240,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "TCP Connection Rule replaced",
+            "description": "TCP Response Rule replaced",
             "schema": {
-              "$ref": "#/definitions/tcp_rule"
+              "$ref": "#/definitions/tcp_response_rule"
             }
           },
           "400": {
@@ -10421,26 +10266,27 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a TCP Connection Rule configuration by it's ID from the specified frontend.",
+        "description": "Deletes a TCP Response Rule configuration by it's ID from the specified backend.",
         "tags": [
           "HAProxy configuration management",
+          "Backend options",
           "Frontend options",
-          "TCPConnectionRule"
+          "TCPResponseRule"
         ],
-        "summary": "Delete a TCP Connection Rule",
-        "operationId": "deleteTCPConnectionRule",
+        "summary": "Delete a TCP Response Rule",
+        "operationId": "deleteTCPResponseRule",
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Connection Rule IF",
+            "description": "TCP Response Rule ID",
             "name": "id",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
-            "description": "Parent frontend name",
-            "name": "frontend",
+            "description": "Parent backend name",
+            "name": "backend",
             "in": "query",
             "required": true
           },
@@ -10461,417 +10307,7 @@ func init() {
         ],
         "responses": {
           "204": {
-            "description": "TCP Connection Rule deleted"
-          },
-          "404": {
-            "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      }
-    },
-    "/services/haproxy/configuration/tcp_content_rules": {
-      "get": {
-        "description": "Returns all TCP Content Rules that are configured in specified parent and parent type. TCP Content Rules can be request rules or response rules if parent is backend, and only request if parent is frontend.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Return an array of all TCP Content Rules",
-        "operationId": "getTCPContentRules",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/getTcpContentRulesOKBody"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Adds a new TCP Content Rule of the specified type in the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Add a new TCP Content Rule",
-        "operationId": "createTCPContentRule",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "TCP Content Rule created",
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "The specified resource already exists",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      }
-    },
-    "/services/haproxy/configuration/tcp_content_rules/{id}": {
-      "get": {
-        "description": "Returns one TCP Content Rule configuration by it's ID in the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Return one TCP Content Rule",
-        "operationId": "getTCPContentRule",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "TCP Content Rule ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/getTcpContentRuleOKBody"
-            }
-          },
-          "404": {
-            "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "Replaces a TCP Content Rule configuration by it's ID in the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Replace a TCP Content Rule",
-        "operationId": "replaceTCPContentRule",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "TCP Content Rule ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "TCP Content Rule replaced",
-            "schema": {
-              "$ref": "#/definitions/tcp_rule"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "Deletes a TCP Content Rule configuration by it's ID from the specified parent.",
-        "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
-          "TCPContentRule"
-        ],
-        "summary": "Delete a TCP Content Rule",
-        "operationId": "deleteTCPContentRule",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "TCP Content Rule ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "enum": [
-              "request",
-              "response"
-            ],
-            "type": "string",
-            "description": "TCP Content Rule type",
-            "name": "type",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
-            "name": "transaction_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "TCP Content Rule deleted"
+            "description": "TCP Response Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -11455,102 +10891,40 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "http",
-            "ssl-hello",
-            "smtp",
-            "ldap",
-            "mysql",
-            "pgsql",
-            "tcp",
-            "redis"
+            "ssl-hello-check",
+            "smtpchk",
+            "ldap-check",
+            "mysql-check",
+            "pgsql-check",
+            "tcp-check",
+            "redis-check"
           ]
-        },
-        "adv_check_http_method": {
-          "type": "string",
-          "enum": [
-            "HEAD",
-            "PUT",
-            "POST",
-            "GET",
-            "TRACE",
-            "PATCH"
-          ],
-          "x-dependency": {
-            "adv_check": "http"
-          }
-        },
-        "adv_check_http_uri": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "adv_check": "http"
-          }
-        },
-        "adv_check_http_version": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "adv_check": "http"
-          }
         },
         "balance": {
-          "type": "string",
-          "enum": [
-            "roundrobin",
-            "least-connections",
-            "hash-uri",
-            "hash-source"
-          ]
-        },
-        "check_fall": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "check_interval": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "check_port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 0,
-          "x-nullable": true
-        },
-        "check_rise": {
-          "type": "integer",
-          "x-nullable": true
+          "$ref": "#/definitions/backendBalance"
         },
         "check_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "connect_failure_redispatch": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "connect_retries": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "connect_source": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "connect_transparent": {
+        "contstats": {
           "type": "string",
           "enum": [
-            "enabled",
-            "disabled"
+            "enabled"
           ]
         },
-        "continuous_statistics": {
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "default_server": {
+          "$ref": "#/definitions/backendDefaultServer"
+        },
+        "forwardfor": {
           "type": "string",
           "enum": [
             "enabled"
@@ -11559,58 +10933,15 @@ func init() {
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "tunnel",
-            "passive-close",
+            "http-tunnel",
+            "httpclose",
             "forced-close",
-            "server-close",
-            "keep-alive"
+            "http-server-close",
+            "http-keep-alive"
           ]
         },
-        "http_cookie": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
-        "http_cookie_mode": {
-          "type": "string",
-          "enum": [
-            "passive",
-            "passive-silent",
-            "reset",
-            "set",
-            "set-silent",
-            "session-prefix",
-            "insert-only",
-            "insert-only-silent",
-            "passive-session-prefix"
-          ],
-          "x-dependency": {
-            "http_cookie": "enabled"
-          }
-        },
-        "http_cookie_name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "http_cookie": "enabled"
-          }
-        },
-        "http_cookie_nocache": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "http_cookie": "enabled"
-          }
-        },
-        "http_xff_header_insert": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+        "httpchk": {
+          "$ref": "#/definitions/backendHttpchk"
         },
         "log": {
           "type": "string",
@@ -11626,27 +10957,159 @@ func init() {
             "clf"
           ]
         },
-        "name": {
-          "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false
-        },
-        "protocol": {
+        "mode": {
           "type": "string",
           "enum": [
             "http",
             "tcp"
           ]
         },
-        "queued_timeout": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "queue_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "server_inactivity_timeout": {
+        "redispatch": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "retries": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "server_timeout": {
           "type": "integer",
           "x-nullable": true
         },
         "stick_table": {
+          "$ref": "#/definitions/backendStickTable"
+        }
+      },
+      "example": {
+        "balance": "roundrobin",
+        "forwardfor": "enabled",
+        "httpchk": {
+          "method": "OPTIONS",
+          "uri": "/check",
+          "version": "HTTP/1.1"
+        },
+        "log_format": "http",
+        "mode": "http",
+        "name": "test_backend"
+      }
+    },
+    "backendBalance": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "roundrobin",
+            "static-rr",
+            "leastconn",
+            "first",
+            "source",
+            "uri",
+            "url_param",
+            "random"
+          ]
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        }
+      },
+      "x-go-gen-location": "models"
+    },
+    "backendDefaultServer": {
+      "type": "object",
+      "properties": {
+        "fall": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "rise": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "models"
+    },
+    "backendHttpchk": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "HEAD",
+            "PUT",
+            "POST",
+            "GET",
+            "TRACE",
+            "PATCH"
+          ]
+        },
+        "uri": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-gen-location": "models"
+    },
+    "backendStickTable": {
+      "type": "object",
+      "properties": {
+        "expire": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "keylen": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "nopurge": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ]
+        },
+        "peers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "size": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "store": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "type": {
           "type": "string",
           "enum": [
             "ip",
@@ -11655,51 +11118,9 @@ func init() {
             "string",
             "binary"
           ]
-        },
-        "stick_table_expire": {
-          "type": "integer",
-          "x-dependency": "stick_table",
-          "x-nullable": true
-        },
-        "stick_table_keylen": {
-          "type": "integer",
-          "x-dependency": "stick_table",
-          "x-nullable": true
-        },
-        "stick_table_nopurge": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ],
-          "x-dependency": "stick_table"
-        },
-        "stick_table_peers": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": "stick_table"
-        },
-        "stick_table_size": {
-          "type": "integer",
-          "x-dependency": "stick_table",
-          "x-nullable": true
-        },
-        "tcpreq_inspect_delay": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "tcprsp_inspect_delay": {
-          "type": "integer",
-          "x-nullable": true
         }
       },
-      "example": {
-        "adv_check": "http",
-        "balance": "roundrobin",
-        "http_xff_header_insert": "enabled",
-        "log_format": "http",
-        "name": "test_backend",
-        "protocol": "http"
-      }
+      "x-go-gen-location": "models"
     },
     "backend_switching_rule": {
       "description": "HAProxy backend switching rule configuration (corresponds to use_backend directive)",
@@ -11707,7 +11128,7 @@ func init() {
       "title": "Backend Switching Rule",
       "required": [
         "id",
-        "target_farm"
+        "name"
       ],
       "properties": {
         "cond": {
@@ -11722,9 +11143,9 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
-        "target_farm": {
+        "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
@@ -11734,7 +11155,7 @@ func init() {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
         "id": 0,
-        "target_farm": "test_backend"
+        "name": "test_backend"
       }
     },
     "backend_switching_rules": {
@@ -11751,6 +11172,66 @@ func init() {
       "title": "Backends",
       "items": {
         "$ref": "#/definitions/backend"
+      }
+    },
+    "bind": {
+      "description": "HAProxy frontend bind configuration",
+      "type": "object",
+      "title": "Bind",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ssl": {
+          "type": "boolean"
+        },
+        "ssl_cafile": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "tcp_user_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "transparent": {
+          "type": "boolean"
+        }
+      },
+      "example": {
+        "address": "127.0.0.1",
+        "name": "http",
+        "port": 80
+      }
+    },
+    "binds": {
+      "description": "HAProxy frontend binds array (corresponds to bind directives)",
+      "type": "array",
+      "title": "Binds",
+      "items": {
+        "$ref": "#/definitions/bind"
       }
     },
     "endpoint": {
@@ -11816,9 +11297,13 @@ func init() {
         "type"
       ],
       "properties": {
+        "cache_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "spoe_config": {
           "type": "string",
@@ -11829,33 +11314,25 @@ func init() {
           "pattern": "^[^\\s]+$"
         },
         "trace_hexdump": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "trace_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
         "trace_rnd_forwarding": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "trace_rnd_parsing": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "type": {
           "type": "string",
           "enum": [
             "trace",
             "compression",
-            "spoe"
+            "spoe",
+            "cache"
           ],
           "x-nullable": false
         }
@@ -11883,33 +11360,54 @@ func init() {
         "name"
       ],
       "properties": {
-        "client_inactivity_timeout": {
+        "client_timeout": {
           "type": "integer",
           "x-nullable": true
         },
-        "continuous_statistics": {
+        "clitcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "contstats": {
           "type": "string",
           "enum": [
             "enabled"
           ]
         },
-        "default_farm": {
+        "default_backend": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-dynamic-enum": "getBackends",
           "x-dynamic-propery": "name"
         },
+        "dontlognull": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "http-use-htx": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "tunnel",
-            "passive-close",
+            "http-tunnel",
+            "httpclose",
             "forced-close",
-            "server-close",
-            "keep-alive"
+            "http-server-close",
+            "http-keep-alive"
           ]
         },
-        "http_keepalive_timeout": {
+        "http_keep_alive_timeout": {
           "type": "integer",
           "x-dependency": {
             "protocol": "http"
@@ -11941,38 +11439,38 @@ func init() {
             "clf"
           ]
         },
-        "log_ignore_null": {
+        "log_separate_errors": {
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
           ]
         },
-        "max_connections": {
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "maxconn": {
           "type": "integer",
           "x-nullable": true
         },
-        "name": {
-          "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false
-        },
-        "protocol": {
+        "mode": {
           "type": "string",
           "enum": [
             "http",
             "tcp"
           ]
         },
-        "tcpreq_inspect_delay": {
-          "type": "integer",
-          "x-nullable": true
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
         }
       },
       "example": {
-        "default_farm": "test_backend",
-        "http_connection_mode": "keep-alive",
-        "max_connections": 2000,
+        "default_backend": "test_backend",
+        "http_connection_mode": "http-keep-alive",
+        "maxconn": 2000,
         "name": "test_frontend",
         "protocol": "http"
       }
@@ -12029,6 +11527,30 @@ func init() {
         },
         "data": {
           "$ref": "#/definitions/backends"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getBindOKBody": {
+      "type": "object",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "data": {
+          "$ref": "#/definitions/bind"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getBindsOKBody": {
+      "type": "object",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "data": {
+          "$ref": "#/definitions/binds"
         }
       },
       "x-go-gen-location": "operations"
@@ -12153,30 +11675,6 @@ func init() {
       },
       "x-go-gen-location": "operations"
     },
-    "getListenerOKBody": {
-      "type": "object",
-      "properties": {
-        "_version": {
-          "type": "integer"
-        },
-        "data": {
-          "$ref": "#/definitions/listener"
-        }
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getListenersOKBody": {
-      "type": "object",
-      "properties": {
-        "_version": {
-          "type": "integer"
-        },
-        "data": {
-          "$ref": "#/definitions/listeners"
-        }
-      },
-      "x-go-gen-location": "operations"
-    },
     "getServerOKBody": {
       "type": "object",
       "properties": {
@@ -12249,98 +11747,74 @@ func init() {
       },
       "x-go-gen-location": "operations"
     },
-    "getStickRequestRuleOKBody": {
+    "getStickRuleOKBody": {
       "type": "object",
       "properties": {
         "_version": {
           "type": "integer"
         },
         "data": {
-          "$ref": "#/definitions/stick_request_rule"
+          "$ref": "#/definitions/stick_rule"
         }
       },
       "x-go-gen-location": "operations"
     },
-    "getStickRequestRulesOKBody": {
+    "getStickRulesOKBody": {
       "type": "object",
       "properties": {
         "_version": {
           "type": "integer"
         },
         "data": {
-          "$ref": "#/definitions/stick_request_rules"
+          "$ref": "#/definitions/stick_rules"
         }
       },
       "x-go-gen-location": "operations"
     },
-    "getStickResponseRuleOKBody": {
+    "getTcpRequestRuleOKBody": {
       "type": "object",
       "properties": {
         "_version": {
           "type": "integer"
         },
         "data": {
-          "$ref": "#/definitions/stick_response_rule"
+          "$ref": "#/definitions/tcp_request_rule"
         }
       },
       "x-go-gen-location": "operations"
     },
-    "getStickResponseRulesOKBody": {
+    "getTcpRequestRulesOKBody": {
       "type": "object",
       "properties": {
         "_version": {
           "type": "integer"
         },
         "data": {
-          "$ref": "#/definitions/stick_response_rules"
+          "$ref": "#/definitions/tcp_request_rules"
         }
       },
       "x-go-gen-location": "operations"
     },
-    "getTcpConnectionRuleOKBody": {
+    "getTcpResponseRuleOKBody": {
       "type": "object",
       "properties": {
         "_version": {
           "type": "integer"
         },
         "data": {
-          "$ref": "#/definitions/tcp_rule"
+          "$ref": "#/definitions/tcp_response_rule"
         }
       },
       "x-go-gen-location": "operations"
     },
-    "getTcpConnectionRulesOKBody": {
+    "getTcpResponseRulesOKBody": {
       "type": "object",
       "properties": {
         "_version": {
           "type": "integer"
         },
         "data": {
-          "$ref": "#/definitions/tcp_rules"
-        }
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getTcpContentRuleOKBody": {
-      "type": "object",
-      "properties": {
-        "_version": {
-          "type": "integer"
-        },
-        "data": {
-          "$ref": "#/definitions/tcp_rule"
-        }
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getTcpContentRulesOKBody": {
-      "type": "object",
-      "properties": {
-        "_version": {
-          "type": "integer"
-        },
-        "data": {
-          "$ref": "#/definitions/tcp_rules"
+          "$ref": "#/definitions/tcp_response_rules"
         }
       },
       "x-go-gen-location": "operations"
@@ -12400,6 +11874,14 @@ func init() {
         "type"
       ],
       "properties": {
+        "acl_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "acl_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "auth_realm": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -12414,6 +11896,10 @@ func init() {
         "cond_test": {
           "type": "string"
         },
+        "deny_status": {
+          "type": "integer",
+          "x-nullable": false
+        },
         "hdr_format": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -12426,13 +11912,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "hdr_value": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "log_level": {
           "type": "string",
@@ -12456,9 +11938,8 @@ func init() {
             303
           ]
         },
-        "redir_to": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+        "redir_option": {
+          "type": "string"
         },
         "redir_type": {
           "type": "string",
@@ -12468,15 +11949,15 @@ func init() {
             "scheme"
           ]
         },
+        "redir_value": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "spoe_engine": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
         "spoe_group": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "svc_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
@@ -12495,15 +11976,20 @@ func init() {
             "send-spoe-group",
             "replace-header",
             "replace-value",
-            "use-service"
+            "add-acl",
+            "del-acl",
+            "del-header"
           ],
           "x-nullable": false
+        },
+        "var_expr": {
+          "type": "string"
         },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "var_pattern": {
+        "var_scope": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         }
@@ -12511,8 +11997,8 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
+        "hdr_fmt": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "hdr_value": "%T",
         "id": 0,
         "type": "add-header"
       }
@@ -12534,6 +12020,14 @@ func init() {
         "type"
       ],
       "properties": {
+        "acl_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "acl_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -12556,13 +12050,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "hdr_value": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "log_level": {
           "type": "string",
@@ -12578,6 +12068,29 @@ func init() {
             "silent"
           ]
         },
+        "redir_code": {
+          "type": "integer",
+          "enum": [
+            301,
+            302,
+            303
+          ]
+        },
+        "redir_option": {
+          "type": "string"
+        },
+        "redir_type": {
+          "type": "string",
+          "enum": [
+            "location",
+            "prefix",
+            "scheme"
+          ]
+        },
+        "redir_value": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "spoe_engine": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -12586,31 +12099,43 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "status_group": {
+        "status": {
           "type": "integer",
+          "maximum": 999,
+          "minimum": 100,
           "x-nullable": false
+        },
+        "status_reason": {
+          "type": "string"
         },
         "type": {
           "type": "string",
           "enum": [
             "allow",
             "deny",
+            "redirect",
             "add-header",
             "set-header",
+            "del-header",
             "set-log-level",
             "set-var",
             "set-status",
             "send-spoe-group",
             "replace-header",
-            "replace-value"
+            "replace-value",
+            "add-acl",
+            "del-acl"
           ],
           "x-nullable": false
+        },
+        "var_expr": {
+          "type": "string"
         },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
-        "var_pattern": {
+        "var_scope": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         }
@@ -12618,8 +12143,8 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
+        "hdr_fmt": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "hdr_value": "%T",
         "id": 0,
         "type": "add-header"
       }
@@ -12630,79 +12155,6 @@ func init() {
       "title": "HTTP Response Rules Array",
       "items": {
         "$ref": "#/definitions/http_response_rule"
-      }
-    },
-    "listener": {
-      "description": "HAProxy frontend listener configuration (corresponds to bind directives)",
-      "type": "object",
-      "title": "Listener",
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 0,
-          "x-nullable": true
-        },
-        "process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
-        "ssl_cafile": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
-        },
-        "ssl_certificate": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
-        },
-        "tcp_user_timeout": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "transparent": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        }
-      },
-      "example": {
-        "address": "127.0.0.1",
-        "name": "http",
-        "port": 80
-      }
-    },
-    "listeners": {
-      "description": "HAProxy frontend listeners array (corresponds to bind directives)",
-      "type": "array",
-      "title": "Listeners",
-      "items": {
-        "$ref": "#/definitions/listener"
       }
     },
     "nativeStatsItems": {
@@ -13466,23 +12918,32 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "check": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
-        "http-cookie-id": {
+        "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
         "maintenance": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
-        "max-connections": {
+        "maxconn": {
           "type": "integer",
           "x-nullable": true
         },
@@ -13497,31 +12958,20 @@ func init() {
           "minimum": 0,
           "x-nullable": true
         },
-        "sorry": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
         "ssl": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "ssl_cafile": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
+          "pattern": "^[^\\s]+$"
         },
         "ssl_certificate": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": "enabled"
-          }
+          "pattern": "^[^\\s]+$"
         },
         "tls_tickets": {
           "type": "string",
@@ -13565,7 +13015,7 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "target_server": {
           "type": "string",
@@ -13597,35 +13047,37 @@ func init() {
       }
     },
     "site": {
-      "description": "Site configuration. Sites are considered as one frontend and all backends connected to that frontend.\nBackends are connected to frontend using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Site configuration. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
       "type": "object",
       "title": "Site",
       "required": [
         "name"
       ],
       "properties": {
-        "backends": {
+        "farms": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/siteBackendsItems"
+            "$ref": "#/definitions/siteFarmsItems"
           }
-        },
-        "frontend": {
-          "$ref": "#/definitions/siteFrontend"
         },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "service": {
+          "$ref": "#/definitions/siteService"
         }
       },
       "example": {
-        "backends": [
+        "farms": [
           {
-            "balance": "hash-uri",
+            "balance": {
+              "algorithm": "roundrobin"
+            },
             "log": "enabled",
+            "mode": "http",
             "name": "www_backend",
-            "protocol": "http",
             "servers": [
               {
                 "address": "127.0.1.1",
@@ -13643,7 +13095,8 @@ func init() {
             "use_as": "default"
           }
         ],
-        "frontend": {
+        "name": "test_site",
+        "service": {
           "http_connection_mode": "server-close",
           "listeners": [
             {
@@ -13658,13 +13111,12 @@ func init() {
             }
           ],
           "log": "enabled",
-          "max_connections": 2000,
-          "protocol": "http"
-        },
-        "name": "test_site"
+          "maxconn": 2000,
+          "mode": "http"
+        }
       }
     },
-    "siteBackendsItems": {
+    "siteFarmsItems": {
       "type": "object",
       "required": [
         "name",
@@ -13672,13 +13124,7 @@ func init() {
       ],
       "properties": {
         "balance": {
-          "type": "string",
-          "enum": [
-            "roundrobin",
-            "least-connections",
-            "hash-uri",
-            "hash-source"
-          ]
+          "$ref": "#/definitions/siteFarmsItemsBalance"
         },
         "cond": {
           "type": "string",
@@ -13696,16 +13142,20 @@ func init() {
             "use_as": "conditional"
           }
         },
-        "http_xff_header_insert": {
+        "forwardfor": {
           "type": "string",
           "enum": [
             "enabled"
           ]
         },
         "log": {
+          "type": "boolean"
+        },
+        "mode": {
           "type": "string",
           "enum": [
-            "enabled"
+            "http",
+            "tcp"
           ]
         },
         "name": {
@@ -13713,17 +13163,10 @@ func init() {
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
-        "protocol": {
-          "type": "string",
-          "enum": [
-            "http",
-            "tcp"
-          ]
-        },
         "servers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/siteBackendsItemsServersItems"
+            "$ref": "#/definitions/siteFarmsItemsServersItems"
           }
         },
         "use_as": {
@@ -13737,7 +13180,33 @@ func init() {
       },
       "x-go-gen-location": "models"
     },
-    "siteBackendsItemsServersItems": {
+    "siteFarmsItemsBalance": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "roundrobin",
+            "static-rr",
+            "leastconn",
+            "first",
+            "source",
+            "uri",
+            "url_param",
+            "random"
+          ]
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        }
+      },
+      "x-go-gen-location": "models"
+    },
+    "siteFarmsItemsServersItems": {
       "type": "object",
       "required": [
         "name",
@@ -13767,6 +13236,13 @@ func init() {
             "enabled"
           ]
         },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": "enabled"
+          }
+        },
         "weight": {
           "type": "integer",
           "x-nullable": true
@@ -13774,7 +13250,7 @@ func init() {
       },
       "x-go-gen-location": "models"
     },
-    "siteFrontend": {
+    "siteService": {
       "type": "object",
       "properties": {
         "http_connection_mode": {
@@ -13787,13 +13263,13 @@ func init() {
             "keep-alive"
           ],
           "x-dependency": {
-            "protocol": "http"
+            "mode": "http"
           }
         },
         "listeners": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/siteFrontendListenersItems"
+            "$ref": "#/definitions/siteServiceListenersItems"
           }
         },
         "log": {
@@ -13802,11 +13278,11 @@ func init() {
             "enabled"
           ]
         },
-        "max_connections": {
+        "maxconn": {
           "type": "integer",
           "x-nullable": true
         },
-        "protocol": {
+        "mode": {
           "type": "string",
           "enum": [
             "http",
@@ -13816,7 +13292,7 @@ func init() {
       },
       "x-go-gen-location": "models"
     },
-    "siteFrontendListenersItems": {
+    "siteServiceListenersItems": {
       "type": "object",
       "required": [
         "name",
@@ -13864,10 +13340,10 @@ func init() {
         "$ref": "#/definitions/site"
       }
     },
-    "stick_request_rule": {
-      "description": "Define a request pattern matching condition to stick a user to a server or to create an entry in a stickiness table.",
+    "stick_rule": {
+      "description": "Define a pattern used to create an entry in a stickiness table or matching condition or associate a user to a server.",
       "type": "object",
-      "title": "Stick Request Rule",
+      "title": "Stick Rule",
       "required": [
         "id",
         "type"
@@ -13885,7 +13361,7 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "pattern": {
           "type": "string",
@@ -13898,9 +13374,10 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
-            "matchandstore",
-            "matchonly",
-            "storeonly"
+            "match",
+            "on",
+            "store-request",
+            "store-response"
           ],
           "x-nullable": false
         }
@@ -13911,95 +13388,57 @@ func init() {
         "type": "storeonly"
       }
     },
-    "stick_request_rules": {
-      "description": "HAProxy backend stick request rules array (corresponds to stick store-request or stick match)",
+    "stick_rules": {
+      "description": "HAProxy backend stick rules array (corresponds to stick store-request, stick match, stick on, stick store-response)",
       "type": "array",
-      "title": "Stick Request Rules Array",
+      "title": "Stick Rules Array",
       "items": {
-        "$ref": "#/definitions/stick_request_rule"
+        "$ref": "#/definitions/stick_rule"
       }
     },
-    "stick_response_rule": {
-      "description": "Define a response pattern matching condition to create an entry in a stickiness table.",
+    "tcp_request_rule": {
+      "description": "HAProxy TCP Request Rule configuration (corresponds to tcp-request)",
       "type": "object",
-      "title": "Stick Response Rule",
+      "title": "TCP Request Rule",
       "required": [
         "id",
-        "type"
+        "type",
+        "action"
       ],
       "properties": {
-        "cond": {
-          "type": "string",
-          "enum": [
-            "if",
-            "unless"
-          ]
-        },
-        "cond_test": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": false
-        },
-        "pattern": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "storeonly"
-          ],
-          "x-nullable": false
-        }
-      },
-      "example": {
-        "id": 0,
-        "pattern": "src",
-        "type": "storeonly"
-      }
-    },
-    "stick_response_rules": {
-      "description": "HAProxy backend stick response rules array (corresponds to stick store-response)",
-      "type": "array",
-      "title": "Stick Response Rules Array",
-      "items": {
-        "$ref": "#/definitions/stick_response_rule"
-      }
-    },
-    "tcp_rule": {
-      "description": "HAProxy TCP rule configuration (corresponds to tcp-request and tcp-response directive)",
-      "type": "object",
-      "title": "TCP Rule",
-      "required": [
-        "id",
-        "type"
-      ],
-      "properties": {
-        "cond": {
-          "type": "string",
-          "enum": [
-            "if",
-            "unless"
-          ]
-        },
-        "cond_test": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": false
-        },
-        "type": {
+        "action": {
           "type": "string",
           "enum": [
             "accept",
             "reject"
+          ],
+          "x-nullable": false
+        },
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ]
+        },
+        "cond_test": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "connection",
+            "content",
+            "inspect-delay",
+            "session"
           ],
           "x-nullable": false
         }
@@ -14011,12 +13450,72 @@ func init() {
         "type": "accept"
       }
     },
-    "tcp_rules": {
-      "description": "HAProxy TCP rules array (corresponds to tcp-request and tcp-response directives)",
+    "tcp_request_rules": {
+      "description": "HAProxy TCP Request Rules array (corresponds to tcp-request directive)",
       "type": "array",
-      "title": "TCP Rules Array",
+      "title": "TCP Request Rules Array",
       "items": {
-        "$ref": "#/definitions/tcp_rule"
+        "$ref": "#/definitions/tcp_request_rule"
+      }
+    },
+    "tcp_response_rule": {
+      "description": "HAProxy TCP Response Rule configuration (corresponds to tcp-response)",
+      "type": "object",
+      "title": "TCP Response Rule",
+      "required": [
+        "id",
+        "type",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "accept",
+            "reject"
+          ],
+          "x-nullable": false
+        },
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ]
+        },
+        "cond_test": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "content",
+            "inspect-delay"
+          ],
+          "x-nullable": false
+        }
+      },
+      "example": {
+        "cond": "if",
+        "cond_test": "{ src 192.168.0.0/16 }",
+        "id": 0,
+        "type": "accept"
+      }
+    },
+    "tcp_response_rules": {
+      "description": "HAProxy TCP Response Rules array (corresponds to tcp-response directive)",
+      "type": "array",
+      "title": "TCP Response Rules Array",
+      "items": {
+        "$ref": "#/definitions/tcp_response_rule"
       }
     },
     "transaction": {
@@ -14140,7 +13639,7 @@ func init() {
     },
     {
       "description": "Managing frontend bind configurations (advanced mode)",
-      "name": "Listener"
+      "name": "Bind"
     },
     {
       "description": "Managing backend server configurations (advanced mode)",

@@ -83,12 +83,12 @@ func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal i
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
+	srv, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetServerDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server.NewGetServerOK().WithPayload(bck)
+	return server.NewGetServerOK().WithPayload(srv)
 }
 
 //Handle executing the request and returning a response
@@ -98,12 +98,12 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetServers(params.Backend, t)
+	srvs, err := h.Client.Configuration.GetServers(params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server.NewGetServersOK().WithPayload(bcks)
+	return server.NewGetServersOK().WithPayload(srvs)
 }
 
 //Handle executing the request and returning a response

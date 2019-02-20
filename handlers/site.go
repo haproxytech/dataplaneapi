@@ -83,12 +83,12 @@ func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interf
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetSite(params.Name, t)
+	site, err := h.Client.Configuration.GetSite(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewGetSiteDefault(int(*e.Code)).WithPayload(e)
 	}
-	return sites.NewGetSiteOK().WithPayload(bck)
+	return sites.NewGetSiteOK().WithPayload(site)
 }
 
 //Handle executing the request and returning a response
@@ -98,12 +98,12 @@ func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal inte
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetSites(t)
+	s, err := h.Client.Configuration.GetSites(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewGetSitesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return sites.NewGetSitesOK().WithPayload(bcks)
+	return sites.NewGetSitesOK().WithPayload(s)
 }
 
 //Handle executing the request and returning a response

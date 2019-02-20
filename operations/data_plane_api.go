@@ -21,6 +21,7 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
+	"github.com/haproxytech/dataplaneapi/operations/bind"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
@@ -29,15 +30,13 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
-	"github.com/haproxytech/dataplaneapi/operations/listener"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
-	"github.com/haproxytech/dataplaneapi/operations/stick_request_rule"
-	"github.com/haproxytech/dataplaneapi/operations/stick_response_rule"
-	"github.com/haproxytech/dataplaneapi/operations/tcp_connection_rule"
-	"github.com/haproxytech/dataplaneapi/operations/tcp_content_rule"
+	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
+	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
+	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
 )
 
@@ -69,6 +68,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BackendSwitchingRuleCreateBackendSwitchingRuleHandler: backend_switching_rule.CreateBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.CreateBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendSwitchingRuleCreateBackendSwitchingRule has not yet been implemented")
 		}),
+		BindCreateBindHandler: bind.CreateBindHandlerFunc(func(params bind.CreateBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation BindCreateBind has not yet been implemented")
+		}),
 		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FilterCreateFilter has not yet been implemented")
 		}),
@@ -81,9 +83,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPResponseRuleCreateHTTPResponseRuleHandler: http_response_rule.CreateHTTPResponseRuleHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPResponseRuleCreateHTTPResponseRule has not yet been implemented")
 		}),
-		ListenerCreateListenerHandler: listener.CreateListenerHandlerFunc(func(params listener.CreateListenerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ListenerCreateListener has not yet been implemented")
-		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerCreateServer has not yet been implemented")
 		}),
@@ -93,23 +92,23 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SitesCreateSiteHandler: sites.CreateSiteHandlerFunc(func(params sites.CreateSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation SitesCreateSite has not yet been implemented")
 		}),
-		StickRequestRuleCreateStickRequestRuleHandler: stick_request_rule.CreateStickRequestRuleHandlerFunc(func(params stick_request_rule.CreateStickRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRequestRuleCreateStickRequestRule has not yet been implemented")
+		StickRuleCreateStickRuleHandler: stick_rule.CreateStickRuleHandlerFunc(func(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickRuleCreateStickRule has not yet been implemented")
 		}),
-		StickResponseRuleCreateStickResponseRuleHandler: stick_response_rule.CreateStickResponseRuleHandlerFunc(func(params stick_response_rule.CreateStickResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickResponseRuleCreateStickResponseRule has not yet been implemented")
+		TCPRequestRuleCreateTCPRequestRuleHandler: tcp_request_rule.CreateTCPRequestRuleHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPRequestRuleCreateTCPRequestRule has not yet been implemented")
 		}),
-		TCPConnectionRuleCreateTCPConnectionRuleHandler: tcp_connection_rule.CreateTCPConnectionRuleHandlerFunc(func(params tcp_connection_rule.CreateTCPConnectionRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPConnectionRuleCreateTCPConnectionRule has not yet been implemented")
-		}),
-		TCPContentRuleCreateTCPContentRuleHandler: tcp_content_rule.CreateTCPContentRuleHandlerFunc(func(params tcp_content_rule.CreateTCPContentRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPContentRuleCreateTCPContentRule has not yet been implemented")
+		TCPResponseRuleCreateTCPResponseRuleHandler: tcp_response_rule.CreateTCPResponseRuleHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPResponseRuleCreateTCPResponseRule has not yet been implemented")
 		}),
 		BackendDeleteBackendHandler: backend.DeleteBackendHandlerFunc(func(params backend.DeleteBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendDeleteBackend has not yet been implemented")
 		}),
 		BackendSwitchingRuleDeleteBackendSwitchingRuleHandler: backend_switching_rule.DeleteBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.DeleteBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendSwitchingRuleDeleteBackendSwitchingRule has not yet been implemented")
+		}),
+		BindDeleteBindHandler: bind.DeleteBindHandlerFunc(func(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation BindDeleteBind has not yet been implemented")
 		}),
 		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FilterDeleteFilter has not yet been implemented")
@@ -123,9 +122,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPResponseRuleDeleteHTTPResponseRuleHandler: http_response_rule.DeleteHTTPResponseRuleHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPResponseRuleDeleteHTTPResponseRule has not yet been implemented")
 		}),
-		ListenerDeleteListenerHandler: listener.DeleteListenerHandlerFunc(func(params listener.DeleteListenerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ListenerDeleteListener has not yet been implemented")
-		}),
 		ServerDeleteServerHandler: server.DeleteServerHandlerFunc(func(params server.DeleteServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerDeleteServer has not yet been implemented")
 		}),
@@ -135,17 +131,14 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SitesDeleteSiteHandler: sites.DeleteSiteHandlerFunc(func(params sites.DeleteSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation SitesDeleteSite has not yet been implemented")
 		}),
-		StickRequestRuleDeleteStickRequestRuleHandler: stick_request_rule.DeleteStickRequestRuleHandlerFunc(func(params stick_request_rule.DeleteStickRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRequestRuleDeleteStickRequestRule has not yet been implemented")
+		StickRuleDeleteStickRuleHandler: stick_rule.DeleteStickRuleHandlerFunc(func(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickRuleDeleteStickRule has not yet been implemented")
 		}),
-		StickResponseRuleDeleteStickResponseRuleHandler: stick_response_rule.DeleteStickResponseRuleHandlerFunc(func(params stick_response_rule.DeleteStickResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickResponseRuleDeleteStickResponseRule has not yet been implemented")
+		TCPRequestRuleDeleteTCPRequestRuleHandler: tcp_request_rule.DeleteTCPRequestRuleHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPRequestRuleDeleteTCPRequestRule has not yet been implemented")
 		}),
-		TCPConnectionRuleDeleteTCPConnectionRuleHandler: tcp_connection_rule.DeleteTCPConnectionRuleHandlerFunc(func(params tcp_connection_rule.DeleteTCPConnectionRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPConnectionRuleDeleteTCPConnectionRule has not yet been implemented")
-		}),
-		TCPContentRuleDeleteTCPContentRuleHandler: tcp_content_rule.DeleteTCPContentRuleHandlerFunc(func(params tcp_content_rule.DeleteTCPContentRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPContentRuleDeleteTCPContentRule has not yet been implemented")
+		TCPResponseRuleDeleteTCPResponseRuleHandler: tcp_response_rule.DeleteTCPResponseRuleHandlerFunc(func(params tcp_response_rule.DeleteTCPResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPResponseRuleDeleteTCPResponseRule has not yet been implemented")
 		}),
 		TransactionsDeleteTransactionHandler: transactions.DeleteTransactionHandlerFunc(func(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsDeleteTransaction has not yet been implemented")
@@ -164,6 +157,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BackendGetBackendsHandler: backend.GetBackendsHandlerFunc(func(params backend.GetBackendsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendGetBackends has not yet been implemented")
+		}),
+		BindGetBindHandler: bind.GetBindHandlerFunc(func(params bind.GetBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation BindGetBind has not yet been implemented")
+		}),
+		BindGetBindsHandler: bind.GetBindsHandlerFunc(func(params bind.GetBindsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation BindGetBinds has not yet been implemented")
 		}),
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetConfigurationEndpoints has not yet been implemented")
@@ -204,12 +203,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		InformationGetHaproxyProcessInfoHandler: information.GetHaproxyProcessInfoHandlerFunc(func(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation InformationGetHaproxyProcessInfo has not yet been implemented")
 		}),
-		ListenerGetListenerHandler: listener.GetListenerHandlerFunc(func(params listener.GetListenerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ListenerGetListener has not yet been implemented")
-		}),
-		ListenerGetListenersHandler: listener.GetListenersHandlerFunc(func(params listener.GetListenersParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ListenerGetListeners has not yet been implemented")
-		}),
 		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerGetServer has not yet been implemented")
 		}),
@@ -237,29 +230,23 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DiscoveryGetStatsEndpointsHandler: discovery.GetStatsEndpointsHandlerFunc(func(params discovery.GetStatsEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetStatsEndpoints has not yet been implemented")
 		}),
-		StickRequestRuleGetStickRequestRuleHandler: stick_request_rule.GetStickRequestRuleHandlerFunc(func(params stick_request_rule.GetStickRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRequestRuleGetStickRequestRule has not yet been implemented")
+		StickRuleGetStickRuleHandler: stick_rule.GetStickRuleHandlerFunc(func(params stick_rule.GetStickRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickRuleGetStickRule has not yet been implemented")
 		}),
-		StickRequestRuleGetStickRequestRulesHandler: stick_request_rule.GetStickRequestRulesHandlerFunc(func(params stick_request_rule.GetStickRequestRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRequestRuleGetStickRequestRules has not yet been implemented")
+		StickRuleGetStickRulesHandler: stick_rule.GetStickRulesHandlerFunc(func(params stick_rule.GetStickRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickRuleGetStickRules has not yet been implemented")
 		}),
-		StickResponseRuleGetStickResponseRuleHandler: stick_response_rule.GetStickResponseRuleHandlerFunc(func(params stick_response_rule.GetStickResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickResponseRuleGetStickResponseRule has not yet been implemented")
+		TCPRequestRuleGetTCPRequestRuleHandler: tcp_request_rule.GetTCPRequestRuleHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPRequestRuleGetTCPRequestRule has not yet been implemented")
 		}),
-		StickResponseRuleGetStickResponseRulesHandler: stick_response_rule.GetStickResponseRulesHandlerFunc(func(params stick_response_rule.GetStickResponseRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickResponseRuleGetStickResponseRules has not yet been implemented")
+		TCPRequestRuleGetTCPRequestRulesHandler: tcp_request_rule.GetTCPRequestRulesHandlerFunc(func(params tcp_request_rule.GetTCPRequestRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPRequestRuleGetTCPRequestRules has not yet been implemented")
 		}),
-		TCPConnectionRuleGetTCPConnectionRuleHandler: tcp_connection_rule.GetTCPConnectionRuleHandlerFunc(func(params tcp_connection_rule.GetTCPConnectionRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPConnectionRuleGetTCPConnectionRule has not yet been implemented")
+		TCPResponseRuleGetTCPResponseRuleHandler: tcp_response_rule.GetTCPResponseRuleHandlerFunc(func(params tcp_response_rule.GetTCPResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPResponseRuleGetTCPResponseRule has not yet been implemented")
 		}),
-		TCPConnectionRuleGetTCPConnectionRulesHandler: tcp_connection_rule.GetTCPConnectionRulesHandlerFunc(func(params tcp_connection_rule.GetTCPConnectionRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPConnectionRuleGetTCPConnectionRules has not yet been implemented")
-		}),
-		TCPContentRuleGetTCPContentRuleHandler: tcp_content_rule.GetTCPContentRuleHandlerFunc(func(params tcp_content_rule.GetTCPContentRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPContentRuleGetTCPContentRule has not yet been implemented")
-		}),
-		TCPContentRuleGetTCPContentRulesHandler: tcp_content_rule.GetTCPContentRulesHandlerFunc(func(params tcp_content_rule.GetTCPContentRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPContentRuleGetTCPContentRules has not yet been implemented")
+		TCPResponseRuleGetTCPResponseRulesHandler: tcp_response_rule.GetTCPResponseRulesHandlerFunc(func(params tcp_response_rule.GetTCPResponseRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPResponseRuleGetTCPResponseRules has not yet been implemented")
 		}),
 		TransactionsGetTransactionHandler: transactions.GetTransactionHandlerFunc(func(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsGetTransaction has not yet been implemented")
@@ -276,6 +263,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BackendSwitchingRuleReplaceBackendSwitchingRuleHandler: backend_switching_rule.ReplaceBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.ReplaceBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendSwitchingRuleReplaceBackendSwitchingRule has not yet been implemented")
 		}),
+		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation BindReplaceBind has not yet been implemented")
+		}),
 		FilterReplaceFilterHandler: filter.ReplaceFilterHandlerFunc(func(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FilterReplaceFilter has not yet been implemented")
 		}),
@@ -291,9 +281,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPResponseRuleReplaceHTTPResponseRuleHandler: http_response_rule.ReplaceHTTPResponseRuleHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPResponseRuleReplaceHTTPResponseRule has not yet been implemented")
 		}),
-		ListenerReplaceListenerHandler: listener.ReplaceListenerHandlerFunc(func(params listener.ReplaceListenerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ListenerReplaceListener has not yet been implemented")
-		}),
 		ServerReplaceServerHandler: server.ReplaceServerHandlerFunc(func(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerReplaceServer has not yet been implemented")
 		}),
@@ -303,17 +290,14 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SitesReplaceSiteHandler: sites.ReplaceSiteHandlerFunc(func(params sites.ReplaceSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation SitesReplaceSite has not yet been implemented")
 		}),
-		StickRequestRuleReplaceStickRequestRuleHandler: stick_request_rule.ReplaceStickRequestRuleHandlerFunc(func(params stick_request_rule.ReplaceStickRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRequestRuleReplaceStickRequestRule has not yet been implemented")
+		StickRuleReplaceStickRuleHandler: stick_rule.ReplaceStickRuleHandlerFunc(func(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickRuleReplaceStickRule has not yet been implemented")
 		}),
-		StickResponseRuleReplaceStickResponseRuleHandler: stick_response_rule.ReplaceStickResponseRuleHandlerFunc(func(params stick_response_rule.ReplaceStickResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickResponseRuleReplaceStickResponseRule has not yet been implemented")
+		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPRequestRuleReplaceTCPRequestRule has not yet been implemented")
 		}),
-		TCPConnectionRuleReplaceTCPConnectionRuleHandler: tcp_connection_rule.ReplaceTCPConnectionRuleHandlerFunc(func(params tcp_connection_rule.ReplaceTCPConnectionRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPConnectionRuleReplaceTCPConnectionRule has not yet been implemented")
-		}),
-		TCPContentRuleReplaceTCPContentRuleHandler: tcp_content_rule.ReplaceTCPContentRuleHandlerFunc(func(params tcp_content_rule.ReplaceTCPContentRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPContentRuleReplaceTCPContentRule has not yet been implemented")
+		TCPResponseRuleReplaceTCPResponseRuleHandler: tcp_response_rule.ReplaceTCPResponseRuleHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation TCPResponseRuleReplaceTCPResponseRule has not yet been implemented")
 		}),
 		TransactionsStartTransactionHandler: transactions.StartTransactionHandlerFunc(func(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsStartTransaction has not yet been implemented")
@@ -376,6 +360,8 @@ type DataPlaneAPI struct {
 	BackendCreateBackendHandler backend.CreateBackendHandler
 	// BackendSwitchingRuleCreateBackendSwitchingRuleHandler sets the operation handler for the create backend switching rule operation
 	BackendSwitchingRuleCreateBackendSwitchingRuleHandler backend_switching_rule.CreateBackendSwitchingRuleHandler
+	// BindCreateBindHandler sets the operation handler for the create bind operation
+	BindCreateBindHandler bind.CreateBindHandler
 	// FilterCreateFilterHandler sets the operation handler for the create filter operation
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
@@ -384,26 +370,24 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleCreateHTTPRequestRuleHandler http_request_rule.CreateHTTPRequestRuleHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleHandler sets the operation handler for the create HTTP response rule operation
 	HTTPResponseRuleCreateHTTPResponseRuleHandler http_response_rule.CreateHTTPResponseRuleHandler
-	// ListenerCreateListenerHandler sets the operation handler for the create listener operation
-	ListenerCreateListenerHandler listener.CreateListenerHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
 	ServerSwitchingRuleCreateServerSwitchingRuleHandler server_switching_rule.CreateServerSwitchingRuleHandler
 	// SitesCreateSiteHandler sets the operation handler for the create site operation
 	SitesCreateSiteHandler sites.CreateSiteHandler
-	// StickRequestRuleCreateStickRequestRuleHandler sets the operation handler for the create stick request rule operation
-	StickRequestRuleCreateStickRequestRuleHandler stick_request_rule.CreateStickRequestRuleHandler
-	// StickResponseRuleCreateStickResponseRuleHandler sets the operation handler for the create stick response rule operation
-	StickResponseRuleCreateStickResponseRuleHandler stick_response_rule.CreateStickResponseRuleHandler
-	// TCPConnectionRuleCreateTCPConnectionRuleHandler sets the operation handler for the create TCP connection rule operation
-	TCPConnectionRuleCreateTCPConnectionRuleHandler tcp_connection_rule.CreateTCPConnectionRuleHandler
-	// TCPContentRuleCreateTCPContentRuleHandler sets the operation handler for the create TCP content rule operation
-	TCPContentRuleCreateTCPContentRuleHandler tcp_content_rule.CreateTCPContentRuleHandler
+	// StickRuleCreateStickRuleHandler sets the operation handler for the create stick rule operation
+	StickRuleCreateStickRuleHandler stick_rule.CreateStickRuleHandler
+	// TCPRequestRuleCreateTCPRequestRuleHandler sets the operation handler for the create TCP request rule operation
+	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
+	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
+	TCPResponseRuleCreateTCPResponseRuleHandler tcp_response_rule.CreateTCPResponseRuleHandler
 	// BackendDeleteBackendHandler sets the operation handler for the delete backend operation
 	BackendDeleteBackendHandler backend.DeleteBackendHandler
 	// BackendSwitchingRuleDeleteBackendSwitchingRuleHandler sets the operation handler for the delete backend switching rule operation
 	BackendSwitchingRuleDeleteBackendSwitchingRuleHandler backend_switching_rule.DeleteBackendSwitchingRuleHandler
+	// BindDeleteBindHandler sets the operation handler for the delete bind operation
+	BindDeleteBindHandler bind.DeleteBindHandler
 	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
 	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
@@ -412,22 +396,18 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleDeleteHTTPRequestRuleHandler http_request_rule.DeleteHTTPRequestRuleHandler
 	// HTTPResponseRuleDeleteHTTPResponseRuleHandler sets the operation handler for the delete HTTP response rule operation
 	HTTPResponseRuleDeleteHTTPResponseRuleHandler http_response_rule.DeleteHTTPResponseRuleHandler
-	// ListenerDeleteListenerHandler sets the operation handler for the delete listener operation
-	ListenerDeleteListenerHandler listener.DeleteListenerHandler
 	// ServerDeleteServerHandler sets the operation handler for the delete server operation
 	ServerDeleteServerHandler server.DeleteServerHandler
 	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
 	ServerSwitchingRuleDeleteServerSwitchingRuleHandler server_switching_rule.DeleteServerSwitchingRuleHandler
 	// SitesDeleteSiteHandler sets the operation handler for the delete site operation
 	SitesDeleteSiteHandler sites.DeleteSiteHandler
-	// StickRequestRuleDeleteStickRequestRuleHandler sets the operation handler for the delete stick request rule operation
-	StickRequestRuleDeleteStickRequestRuleHandler stick_request_rule.DeleteStickRequestRuleHandler
-	// StickResponseRuleDeleteStickResponseRuleHandler sets the operation handler for the delete stick response rule operation
-	StickResponseRuleDeleteStickResponseRuleHandler stick_response_rule.DeleteStickResponseRuleHandler
-	// TCPConnectionRuleDeleteTCPConnectionRuleHandler sets the operation handler for the delete TCP connection rule operation
-	TCPConnectionRuleDeleteTCPConnectionRuleHandler tcp_connection_rule.DeleteTCPConnectionRuleHandler
-	// TCPContentRuleDeleteTCPContentRuleHandler sets the operation handler for the delete TCP content rule operation
-	TCPContentRuleDeleteTCPContentRuleHandler tcp_content_rule.DeleteTCPContentRuleHandler
+	// StickRuleDeleteStickRuleHandler sets the operation handler for the delete stick rule operation
+	StickRuleDeleteStickRuleHandler stick_rule.DeleteStickRuleHandler
+	// TCPRequestRuleDeleteTCPRequestRuleHandler sets the operation handler for the delete TCP request rule operation
+	TCPRequestRuleDeleteTCPRequestRuleHandler tcp_request_rule.DeleteTCPRequestRuleHandler
+	// TCPResponseRuleDeleteTCPResponseRuleHandler sets the operation handler for the delete TCP response rule operation
+	TCPResponseRuleDeleteTCPResponseRuleHandler tcp_response_rule.DeleteTCPResponseRuleHandler
 	// TransactionsDeleteTransactionHandler sets the operation handler for the delete transaction operation
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
@@ -440,6 +420,10 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleGetBackendSwitchingRulesHandler backend_switching_rule.GetBackendSwitchingRulesHandler
 	// BackendGetBackendsHandler sets the operation handler for the get backends operation
 	BackendGetBackendsHandler backend.GetBackendsHandler
+	// BindGetBindHandler sets the operation handler for the get bind operation
+	BindGetBindHandler bind.GetBindHandler
+	// BindGetBindsHandler sets the operation handler for the get binds operation
+	BindGetBindsHandler bind.GetBindsHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
 	// FilterGetFilterHandler sets the operation handler for the get filter operation
@@ -466,10 +450,6 @@ type DataPlaneAPI struct {
 	DiscoveryGetHaproxyEndpointsHandler discovery.GetHaproxyEndpointsHandler
 	// InformationGetHaproxyProcessInfoHandler sets the operation handler for the get haproxy process info operation
 	InformationGetHaproxyProcessInfoHandler information.GetHaproxyProcessInfoHandler
-	// ListenerGetListenerHandler sets the operation handler for the get listener operation
-	ListenerGetListenerHandler listener.GetListenerHandler
-	// ListenerGetListenersHandler sets the operation handler for the get listeners operation
-	ListenerGetListenersHandler listener.GetListenersHandler
 	// ServerGetServerHandler sets the operation handler for the get server operation
 	ServerGetServerHandler server.GetServerHandler
 	// ServerSwitchingRuleGetServerSwitchingRuleHandler sets the operation handler for the get server switching rule operation
@@ -488,22 +468,18 @@ type DataPlaneAPI struct {
 	StatsGetStatsHandler stats.GetStatsHandler
 	// DiscoveryGetStatsEndpointsHandler sets the operation handler for the get stats endpoints operation
 	DiscoveryGetStatsEndpointsHandler discovery.GetStatsEndpointsHandler
-	// StickRequestRuleGetStickRequestRuleHandler sets the operation handler for the get stick request rule operation
-	StickRequestRuleGetStickRequestRuleHandler stick_request_rule.GetStickRequestRuleHandler
-	// StickRequestRuleGetStickRequestRulesHandler sets the operation handler for the get stick request rules operation
-	StickRequestRuleGetStickRequestRulesHandler stick_request_rule.GetStickRequestRulesHandler
-	// StickResponseRuleGetStickResponseRuleHandler sets the operation handler for the get stick response rule operation
-	StickResponseRuleGetStickResponseRuleHandler stick_response_rule.GetStickResponseRuleHandler
-	// StickResponseRuleGetStickResponseRulesHandler sets the operation handler for the get stick response rules operation
-	StickResponseRuleGetStickResponseRulesHandler stick_response_rule.GetStickResponseRulesHandler
-	// TCPConnectionRuleGetTCPConnectionRuleHandler sets the operation handler for the get TCP connection rule operation
-	TCPConnectionRuleGetTCPConnectionRuleHandler tcp_connection_rule.GetTCPConnectionRuleHandler
-	// TCPConnectionRuleGetTCPConnectionRulesHandler sets the operation handler for the get TCP connection rules operation
-	TCPConnectionRuleGetTCPConnectionRulesHandler tcp_connection_rule.GetTCPConnectionRulesHandler
-	// TCPContentRuleGetTCPContentRuleHandler sets the operation handler for the get TCP content rule operation
-	TCPContentRuleGetTCPContentRuleHandler tcp_content_rule.GetTCPContentRuleHandler
-	// TCPContentRuleGetTCPContentRulesHandler sets the operation handler for the get TCP content rules operation
-	TCPContentRuleGetTCPContentRulesHandler tcp_content_rule.GetTCPContentRulesHandler
+	// StickRuleGetStickRuleHandler sets the operation handler for the get stick rule operation
+	StickRuleGetStickRuleHandler stick_rule.GetStickRuleHandler
+	// StickRuleGetStickRulesHandler sets the operation handler for the get stick rules operation
+	StickRuleGetStickRulesHandler stick_rule.GetStickRulesHandler
+	// TCPRequestRuleGetTCPRequestRuleHandler sets the operation handler for the get TCP request rule operation
+	TCPRequestRuleGetTCPRequestRuleHandler tcp_request_rule.GetTCPRequestRuleHandler
+	// TCPRequestRuleGetTCPRequestRulesHandler sets the operation handler for the get TCP request rules operation
+	TCPRequestRuleGetTCPRequestRulesHandler tcp_request_rule.GetTCPRequestRulesHandler
+	// TCPResponseRuleGetTCPResponseRuleHandler sets the operation handler for the get TCP response rule operation
+	TCPResponseRuleGetTCPResponseRuleHandler tcp_response_rule.GetTCPResponseRuleHandler
+	// TCPResponseRuleGetTCPResponseRulesHandler sets the operation handler for the get TCP response rules operation
+	TCPResponseRuleGetTCPResponseRulesHandler tcp_response_rule.GetTCPResponseRulesHandler
 	// TransactionsGetTransactionHandler sets the operation handler for the get transaction operation
 	TransactionsGetTransactionHandler transactions.GetTransactionHandler
 	// TransactionsGetTransactionsHandler sets the operation handler for the get transactions operation
@@ -514,6 +490,8 @@ type DataPlaneAPI struct {
 	BackendReplaceBackendHandler backend.ReplaceBackendHandler
 	// BackendSwitchingRuleReplaceBackendSwitchingRuleHandler sets the operation handler for the replace backend switching rule operation
 	BackendSwitchingRuleReplaceBackendSwitchingRuleHandler backend_switching_rule.ReplaceBackendSwitchingRuleHandler
+	// BindReplaceBindHandler sets the operation handler for the replace bind operation
+	BindReplaceBindHandler bind.ReplaceBindHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
 	FilterReplaceFilterHandler filter.ReplaceFilterHandler
 	// FrontendReplaceFrontendHandler sets the operation handler for the replace frontend operation
@@ -524,22 +502,18 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleReplaceHTTPRequestRuleHandler http_request_rule.ReplaceHTTPRequestRuleHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleHandler sets the operation handler for the replace HTTP response rule operation
 	HTTPResponseRuleReplaceHTTPResponseRuleHandler http_response_rule.ReplaceHTTPResponseRuleHandler
-	// ListenerReplaceListenerHandler sets the operation handler for the replace listener operation
-	ListenerReplaceListenerHandler listener.ReplaceListenerHandler
 	// ServerReplaceServerHandler sets the operation handler for the replace server operation
 	ServerReplaceServerHandler server.ReplaceServerHandler
 	// ServerSwitchingRuleReplaceServerSwitchingRuleHandler sets the operation handler for the replace server switching rule operation
 	ServerSwitchingRuleReplaceServerSwitchingRuleHandler server_switching_rule.ReplaceServerSwitchingRuleHandler
 	// SitesReplaceSiteHandler sets the operation handler for the replace site operation
 	SitesReplaceSiteHandler sites.ReplaceSiteHandler
-	// StickRequestRuleReplaceStickRequestRuleHandler sets the operation handler for the replace stick request rule operation
-	StickRequestRuleReplaceStickRequestRuleHandler stick_request_rule.ReplaceStickRequestRuleHandler
-	// StickResponseRuleReplaceStickResponseRuleHandler sets the operation handler for the replace stick response rule operation
-	StickResponseRuleReplaceStickResponseRuleHandler stick_response_rule.ReplaceStickResponseRuleHandler
-	// TCPConnectionRuleReplaceTCPConnectionRuleHandler sets the operation handler for the replace TCP connection rule operation
-	TCPConnectionRuleReplaceTCPConnectionRuleHandler tcp_connection_rule.ReplaceTCPConnectionRuleHandler
-	// TCPContentRuleReplaceTCPContentRuleHandler sets the operation handler for the replace TCP content rule operation
-	TCPContentRuleReplaceTCPContentRuleHandler tcp_content_rule.ReplaceTCPContentRuleHandler
+	// StickRuleReplaceStickRuleHandler sets the operation handler for the replace stick rule operation
+	StickRuleReplaceStickRuleHandler stick_rule.ReplaceStickRuleHandler
+	// TCPRequestRuleReplaceTCPRequestRuleHandler sets the operation handler for the replace TCP request rule operation
+	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
+	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
+	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
 	// TransactionsStartTransactionHandler sets the operation handler for the start transaction operation
 	TransactionsStartTransactionHandler transactions.StartTransactionHandler
 
@@ -629,6 +603,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "backend_switching_rule.CreateBackendSwitchingRuleHandler")
 	}
 
+	if o.BindCreateBindHandler == nil {
+		unregistered = append(unregistered, "bind.CreateBindHandler")
+	}
+
 	if o.FilterCreateFilterHandler == nil {
 		unregistered = append(unregistered, "filter.CreateFilterHandler")
 	}
@@ -645,10 +623,6 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleHandler")
 	}
 
-	if o.ListenerCreateListenerHandler == nil {
-		unregistered = append(unregistered, "listener.CreateListenerHandler")
-	}
-
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
 	}
@@ -661,20 +635,16 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "sites.CreateSiteHandler")
 	}
 
-	if o.StickRequestRuleCreateStickRequestRuleHandler == nil {
-		unregistered = append(unregistered, "stick_request_rule.CreateStickRequestRuleHandler")
+	if o.StickRuleCreateStickRuleHandler == nil {
+		unregistered = append(unregistered, "stick_rule.CreateStickRuleHandler")
 	}
 
-	if o.StickResponseRuleCreateStickResponseRuleHandler == nil {
-		unregistered = append(unregistered, "stick_response_rule.CreateStickResponseRuleHandler")
+	if o.TCPRequestRuleCreateTCPRequestRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleHandler")
 	}
 
-	if o.TCPConnectionRuleCreateTCPConnectionRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_connection_rule.CreateTCPConnectionRuleHandler")
-	}
-
-	if o.TCPContentRuleCreateTCPContentRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_content_rule.CreateTCPContentRuleHandler")
+	if o.TCPResponseRuleCreateTCPResponseRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleHandler")
 	}
 
 	if o.BackendDeleteBackendHandler == nil {
@@ -683,6 +653,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "backend_switching_rule.DeleteBackendSwitchingRuleHandler")
+	}
+
+	if o.BindDeleteBindHandler == nil {
+		unregistered = append(unregistered, "bind.DeleteBindHandler")
 	}
 
 	if o.FilterDeleteFilterHandler == nil {
@@ -701,10 +675,6 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleHandler")
 	}
 
-	if o.ListenerDeleteListenerHandler == nil {
-		unregistered = append(unregistered, "listener.DeleteListenerHandler")
-	}
-
 	if o.ServerDeleteServerHandler == nil {
 		unregistered = append(unregistered, "server.DeleteServerHandler")
 	}
@@ -717,20 +687,16 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "sites.DeleteSiteHandler")
 	}
 
-	if o.StickRequestRuleDeleteStickRequestRuleHandler == nil {
-		unregistered = append(unregistered, "stick_request_rule.DeleteStickRequestRuleHandler")
+	if o.StickRuleDeleteStickRuleHandler == nil {
+		unregistered = append(unregistered, "stick_rule.DeleteStickRuleHandler")
 	}
 
-	if o.StickResponseRuleDeleteStickResponseRuleHandler == nil {
-		unregistered = append(unregistered, "stick_response_rule.DeleteStickResponseRuleHandler")
+	if o.TCPRequestRuleDeleteTCPRequestRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleHandler")
 	}
 
-	if o.TCPConnectionRuleDeleteTCPConnectionRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_connection_rule.DeleteTCPConnectionRuleHandler")
-	}
-
-	if o.TCPContentRuleDeleteTCPContentRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_content_rule.DeleteTCPContentRuleHandler")
+	if o.TCPResponseRuleDeleteTCPResponseRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.DeleteTCPResponseRuleHandler")
 	}
 
 	if o.TransactionsDeleteTransactionHandler == nil {
@@ -755,6 +721,14 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.BackendGetBackendsHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendsHandler")
+	}
+
+	if o.BindGetBindHandler == nil {
+		unregistered = append(unregistered, "bind.GetBindHandler")
+	}
+
+	if o.BindGetBindsHandler == nil {
+		unregistered = append(unregistered, "bind.GetBindsHandler")
 	}
 
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
@@ -809,14 +783,6 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "information.GetHaproxyProcessInfoHandler")
 	}
 
-	if o.ListenerGetListenerHandler == nil {
-		unregistered = append(unregistered, "listener.GetListenerHandler")
-	}
-
-	if o.ListenerGetListenersHandler == nil {
-		unregistered = append(unregistered, "listener.GetListenersHandler")
-	}
-
 	if o.ServerGetServerHandler == nil {
 		unregistered = append(unregistered, "server.GetServerHandler")
 	}
@@ -853,36 +819,28 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "discovery.GetStatsEndpointsHandler")
 	}
 
-	if o.StickRequestRuleGetStickRequestRuleHandler == nil {
-		unregistered = append(unregistered, "stick_request_rule.GetStickRequestRuleHandler")
+	if o.StickRuleGetStickRuleHandler == nil {
+		unregistered = append(unregistered, "stick_rule.GetStickRuleHandler")
 	}
 
-	if o.StickRequestRuleGetStickRequestRulesHandler == nil {
-		unregistered = append(unregistered, "stick_request_rule.GetStickRequestRulesHandler")
+	if o.StickRuleGetStickRulesHandler == nil {
+		unregistered = append(unregistered, "stick_rule.GetStickRulesHandler")
 	}
 
-	if o.StickResponseRuleGetStickResponseRuleHandler == nil {
-		unregistered = append(unregistered, "stick_response_rule.GetStickResponseRuleHandler")
+	if o.TCPRequestRuleGetTCPRequestRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleHandler")
 	}
 
-	if o.StickResponseRuleGetStickResponseRulesHandler == nil {
-		unregistered = append(unregistered, "stick_response_rule.GetStickResponseRulesHandler")
+	if o.TCPRequestRuleGetTCPRequestRulesHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRulesHandler")
 	}
 
-	if o.TCPConnectionRuleGetTCPConnectionRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_connection_rule.GetTCPConnectionRuleHandler")
+	if o.TCPResponseRuleGetTCPResponseRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRuleHandler")
 	}
 
-	if o.TCPConnectionRuleGetTCPConnectionRulesHandler == nil {
-		unregistered = append(unregistered, "tcp_connection_rule.GetTCPConnectionRulesHandler")
-	}
-
-	if o.TCPContentRuleGetTCPContentRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_content_rule.GetTCPContentRuleHandler")
-	}
-
-	if o.TCPContentRuleGetTCPContentRulesHandler == nil {
-		unregistered = append(unregistered, "tcp_content_rule.GetTCPContentRulesHandler")
+	if o.TCPResponseRuleGetTCPResponseRulesHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRulesHandler")
 	}
 
 	if o.TransactionsGetTransactionHandler == nil {
@@ -905,6 +863,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "backend_switching_rule.ReplaceBackendSwitchingRuleHandler")
 	}
 
+	if o.BindReplaceBindHandler == nil {
+		unregistered = append(unregistered, "bind.ReplaceBindHandler")
+	}
+
 	if o.FilterReplaceFilterHandler == nil {
 		unregistered = append(unregistered, "filter.ReplaceFilterHandler")
 	}
@@ -925,10 +887,6 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleHandler")
 	}
 
-	if o.ListenerReplaceListenerHandler == nil {
-		unregistered = append(unregistered, "listener.ReplaceListenerHandler")
-	}
-
 	if o.ServerReplaceServerHandler == nil {
 		unregistered = append(unregistered, "server.ReplaceServerHandler")
 	}
@@ -941,20 +899,16 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "sites.ReplaceSiteHandler")
 	}
 
-	if o.StickRequestRuleReplaceStickRequestRuleHandler == nil {
-		unregistered = append(unregistered, "stick_request_rule.ReplaceStickRequestRuleHandler")
+	if o.StickRuleReplaceStickRuleHandler == nil {
+		unregistered = append(unregistered, "stick_rule.ReplaceStickRuleHandler")
 	}
 
-	if o.StickResponseRuleReplaceStickResponseRuleHandler == nil {
-		unregistered = append(unregistered, "stick_response_rule.ReplaceStickResponseRuleHandler")
+	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
 	}
 
-	if o.TCPConnectionRuleReplaceTCPConnectionRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_connection_rule.ReplaceTCPConnectionRuleHandler")
-	}
-
-	if o.TCPContentRuleReplaceTCPContentRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_content_rule.ReplaceTCPContentRuleHandler")
+	if o.TCPResponseRuleReplaceTCPResponseRuleHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleHandler")
 	}
 
 	if o.TransactionsStartTransactionHandler == nil {
@@ -1093,6 +1047,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/binds"] = bind.NewCreateBind(o.context, o.BindCreateBindHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
 
 	if o.handlers["POST"] == nil {
@@ -1113,11 +1072,6 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/listeners"] = listener.NewCreateListener(o.context, o.ListenerCreateListenerHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
 	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
 
 	if o.handlers["POST"] == nil {
@@ -1133,22 +1087,17 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/stick_request_rules"] = stick_request_rule.NewCreateStickRequestRule(o.context, o.StickRequestRuleCreateStickRequestRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewCreateStickRule(o.context, o.StickRuleCreateStickRuleHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/stick_response_rules"] = stick_response_rule.NewCreateStickResponseRule(o.context, o.StickResponseRuleCreateStickResponseRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewCreateTCPRequestRule(o.context, o.TCPRequestRuleCreateTCPRequestRuleHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/tcp_connection_rules"] = tcp_connection_rule.NewCreateTCPConnectionRule(o.context, o.TCPConnectionRuleCreateTCPConnectionRuleHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/tcp_content_rules"] = tcp_content_rule.NewCreateTCPContentRule(o.context, o.TCPContentRuleCreateTCPContentRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1159,6 +1108,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backend_switching_rules/{id}"] = backend_switching_rule.NewDeleteBackendSwitchingRule(o.context, o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/binds/{name}"] = bind.NewDeleteBind(o.context, o.BindDeleteBindHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1183,11 +1137,6 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/listeners/{name}"] = listener.NewDeleteListener(o.context, o.ListenerDeleteListenerHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/servers/{name}"] = server.NewDeleteServer(o.context, o.ServerDeleteServerHandler)
 
 	if o.handlers["DELETE"] == nil {
@@ -1203,22 +1152,17 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/stick_request_rules/{id}"] = stick_request_rule.NewDeleteStickRequestRule(o.context, o.StickRequestRuleDeleteStickRequestRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewDeleteStickRule(o.context, o.StickRuleDeleteStickRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/stick_response_rules/{id}"] = stick_response_rule.NewDeleteStickResponseRule(o.context, o.StickResponseRuleDeleteStickResponseRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewDeleteTCPRequestRule(o.context, o.TCPRequestRuleDeleteTCPRequestRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_connection_rules/{id}"] = tcp_connection_rule.NewDeleteTCPConnectionRule(o.context, o.TCPConnectionRuleDeleteTCPConnectionRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_content_rules/{id}"] = tcp_content_rule.NewDeleteTCPContentRule(o.context, o.TCPContentRuleDeleteTCPContentRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewDeleteTCPResponseRule(o.context, o.TCPResponseRuleDeleteTCPResponseRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1249,6 +1193,16 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends"] = backend.NewGetBackends(o.context, o.BackendGetBackendsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/binds/{name}"] = bind.NewGetBind(o.context, o.BindGetBindHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/binds"] = bind.NewGetBinds(o.context, o.BindGetBindsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1318,16 +1272,6 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/listeners/{name}"] = listener.NewGetListener(o.context, o.ListenerGetListenerHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/listeners"] = listener.NewGetListeners(o.context, o.ListenerGetListenersHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/services/haproxy/configuration/servers/{name}"] = server.NewGetServer(o.context, o.ServerGetServerHandler)
 
 	if o.handlers["GET"] == nil {
@@ -1373,42 +1317,32 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/stick_request_rules/{id}"] = stick_request_rule.NewGetStickRequestRule(o.context, o.StickRequestRuleGetStickRequestRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewGetStickRule(o.context, o.StickRuleGetStickRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/stick_request_rules"] = stick_request_rule.NewGetStickRequestRules(o.context, o.StickRequestRuleGetStickRequestRulesHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewGetStickRules(o.context, o.StickRuleGetStickRulesHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/stick_response_rules/{id}"] = stick_response_rule.NewGetStickResponseRule(o.context, o.StickResponseRuleGetStickResponseRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewGetTCPRequestRule(o.context, o.TCPRequestRuleGetTCPRequestRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/stick_response_rules"] = stick_response_rule.NewGetStickResponseRules(o.context, o.StickResponseRuleGetStickResponseRulesHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewGetTCPRequestRules(o.context, o.TCPRequestRuleGetTCPRequestRulesHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_connection_rules/{id}"] = tcp_connection_rule.NewGetTCPConnectionRule(o.context, o.TCPConnectionRuleGetTCPConnectionRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewGetTCPResponseRule(o.context, o.TCPResponseRuleGetTCPResponseRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_connection_rules"] = tcp_connection_rule.NewGetTCPConnectionRules(o.context, o.TCPConnectionRuleGetTCPConnectionRulesHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_content_rules/{id}"] = tcp_content_rule.NewGetTCPContentRule(o.context, o.TCPContentRuleGetTCPContentRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_content_rules"] = tcp_content_rule.NewGetTCPContentRules(o.context, o.TCPContentRuleGetTCPContentRulesHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewGetTCPResponseRules(o.context, o.TCPResponseRuleGetTCPResponseRulesHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1438,6 +1372,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/binds/{name}"] = bind.NewReplaceBind(o.context, o.BindReplaceBindHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/filters/{id}"] = filter.NewReplaceFilter(o.context, o.FilterReplaceFilterHandler)
 
 	if o.handlers["PUT"] == nil {
@@ -1463,11 +1402,6 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/listeners/{name}"] = listener.NewReplaceListener(o.context, o.ListenerReplaceListenerHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
 	o.handlers["PUT"]["/services/haproxy/configuration/servers/{name}"] = server.NewReplaceServer(o.context, o.ServerReplaceServerHandler)
 
 	if o.handlers["PUT"] == nil {
@@ -1483,22 +1417,17 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/stick_request_rules/{id}"] = stick_request_rule.NewReplaceStickRequestRule(o.context, o.StickRequestRuleReplaceStickRequestRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/stick_response_rules/{id}"] = stick_response_rule.NewReplaceStickResponseRule(o.context, o.StickResponseRuleReplaceStickResponseRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewReplaceTCPRequestRule(o.context, o.TCPRequestRuleReplaceTCPRequestRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/tcp_connection_rules/{id}"] = tcp_connection_rule.NewReplaceTCPConnectionRule(o.context, o.TCPConnectionRuleReplaceTCPConnectionRuleHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/tcp_content_rules/{id}"] = tcp_content_rule.NewReplaceTCPContentRule(o.context, o.TCPContentRuleReplaceTCPContentRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

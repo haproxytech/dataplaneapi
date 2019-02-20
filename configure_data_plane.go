@@ -39,17 +39,15 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations"
 )
 
-//go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Listener --tags Server --tags TCPContentRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPConnectionRule --skip-models --exclude-main
+//go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
 
 var haproxyOptions struct {
-	ConfigFile       string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
-	GlobalConfigFile string `short:"g" long:"global-config-file" description:"Path to the haproxy global section configuration file" default:"/etc/haproxy/haproxy-global.cfg"`
-	Userlist         string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
-	HAProxy          string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
-	ReloadDelay      int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
-	ReloadCmd        string `short:"r" long:"reload-cmd" description:"Reload command"`
-	LbctlPath        string `short:"l" long:"lbctl-path" description:"Path to the lbctl script" default:"lbctl"`
-	TransactionDir   string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
+	ConfigFile     string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
+	Userlist       string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
+	HAProxy        string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
+	ReloadDelay    int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
+	ReloadCmd      string `short:"r" long:"reload-cmd" description:"Reload command"`
+	TransactionDir string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
 }
 
 func configureFlags(api *operations.DataPlaneAPI) {
@@ -84,13 +82,11 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// Initialize HAProxy native client
 	confClient := &configuration.Client{}
 	confParams := configuration.ClientParams{
-		ConfigurationFile:       haproxyOptions.ConfigFile,
-		GlobalConfigurationFile: haproxyOptions.GlobalConfigFile,
-		Haproxy:                 haproxyOptions.HAProxy,
-		UseValidation:           false,
-		UseCache:                true,
-		LBCTLPath:               haproxyOptions.LbctlPath,
-		TransactionDir:          haproxyOptions.TransactionDir,
+		ConfigurationFile: haproxyOptions.ConfigFile,
+		Haproxy:           haproxyOptions.HAProxy,
+		UseValidation:     false,
+		UseCache:          true,
+		TransactionDir:    haproxyOptions.TransactionDir,
 	}
 	err := confClient.Init(confParams)
 	if err != nil {
@@ -103,12 +99,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 
 	runtimeClient := &runtime_api.Client{}
-	err = confClient.GlobalParser.LoadData(confClient.GlobalConfigurationFile)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	globalConf, err := confClient.GetGlobalConfiguration()
+	globalConf, err := confClient.GetGlobalConfiguration("")
 
 	if err != nil {
 		fmt.Println("Stats socket not configured, no runtime client initiated")
@@ -232,12 +223,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.ServerGetServersHandler = &handlers.GetServersHandlerImpl{Client: client}
 	api.ServerReplaceServerHandler = &handlers.ReplaceServerHandlerImpl{Client: client, ReloadAgent: ra}
 
-	// setup listener handlers
-	api.ListenerCreateListenerHandler = &handlers.CreateListenerHandlerImpl{Client: client, ReloadAgent: ra}
-	api.ListenerDeleteListenerHandler = &handlers.DeleteListenerHandlerImpl{Client: client, ReloadAgent: ra}
-	api.ListenerGetListenerHandler = &handlers.GetListenerHandlerImpl{Client: client}
-	api.ListenerGetListenersHandler = &handlers.GetListenersHandlerImpl{Client: client}
-	api.ListenerReplaceListenerHandler = &handlers.ReplaceListenerHandlerImpl{Client: client, ReloadAgent: ra}
+	// setup bind handlers
+	api.BindCreateBindHandler = &handlers.CreateBindHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindDeleteBindHandler = &handlers.DeleteBindHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindGetBindHandler = &handlers.GetBindHandlerImpl{Client: client}
+	api.BindGetBindsHandler = &handlers.GetBindsHandlerImpl{Client: client}
+	api.BindReplaceBindHandler = &handlers.ReplaceBindHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http request rule handlers
 	api.HTTPRequestRuleCreateHTTPRequestRuleHandler = &handlers.CreateHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -254,18 +245,18 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.HTTPResponseRuleReplaceHTTPResponseRuleHandler = &handlers.ReplaceHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp content rule handlers
-	api.TCPContentRuleCreateTCPContentRuleHandler = &handlers.CreateTCPContentRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPContentRuleDeleteTCPContentRuleHandler = &handlers.DeleteTCPContentRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPContentRuleGetTCPContentRuleHandler = &handlers.GetTCPContentRuleHandlerImpl{Client: client}
-	api.TCPContentRuleGetTCPContentRulesHandler = &handlers.GetTCPContentRulesHandlerImpl{Client: client}
-	api.TCPContentRuleReplaceTCPContentRuleHandler = &handlers.ReplaceTCPContentRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleCreateTCPRequestRuleHandler = &handlers.CreateTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleDeleteTCPRequestRuleHandler = &handlers.DeleteTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleGetTCPRequestRuleHandler = &handlers.GetTCPRequestRuleHandlerImpl{Client: client}
+	api.TCPRequestRuleGetTCPRequestRulesHandler = &handlers.GetTCPRequestRulesHandlerImpl{Client: client}
+	api.TCPRequestRuleReplaceTCPRequestRuleHandler = &handlers.ReplaceTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp connection rule handlers
-	api.TCPConnectionRuleCreateTCPConnectionRuleHandler = &handlers.CreateTCPConnectionRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPConnectionRuleDeleteTCPConnectionRuleHandler = &handlers.DeleteTCPConnectionRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPConnectionRuleGetTCPConnectionRuleHandler = &handlers.GetTCPConnectionRuleHandlerImpl{Client: client}
-	api.TCPConnectionRuleGetTCPConnectionRulesHandler = &handlers.GetTCPConnectionRulesHandlerImpl{Client: client}
-	api.TCPConnectionRuleReplaceTCPConnectionRuleHandler = &handlers.ReplaceTCPConnectionRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleCreateTCPResponseRuleHandler = &handlers.CreateTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleDeleteTCPResponseRuleHandler = &handlers.DeleteTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleGetTCPResponseRuleHandler = &handlers.GetTCPResponseRuleHandlerImpl{Client: client}
+	api.TCPResponseRuleGetTCPResponseRulesHandler = &handlers.GetTCPResponseRulesHandlerImpl{Client: client}
+	api.TCPResponseRuleReplaceTCPResponseRuleHandler = &handlers.ReplaceTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup backend switching rule handlers
 	api.BackendSwitchingRuleCreateBackendSwitchingRuleHandler = &handlers.CreateBackendSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -288,19 +279,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.FilterGetFiltersHandler = &handlers.GetFiltersHandlerImpl{Client: client}
 	api.FilterReplaceFilterHandler = &handlers.ReplaceFilterHandlerImpl{Client: client, ReloadAgent: ra}
 
-	// setup stick request rule handlers
-	api.StickRequestRuleCreateStickRequestRuleHandler = &handlers.CreateStickRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.StickRequestRuleDeleteStickRequestRuleHandler = &handlers.DeleteStickRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.StickRequestRuleGetStickRequestRuleHandler = &handlers.GetStickRequestRuleHandlerImpl{Client: client}
-	api.StickRequestRuleGetStickRequestRulesHandler = &handlers.GetStickRequestRulesHandlerImpl{Client: client}
-	api.StickRequestRuleReplaceStickRequestRuleHandler = &handlers.ReplaceStickRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-
-	// setup stick response rule handlers
-	api.StickResponseRuleCreateStickResponseRuleHandler = &handlers.CreateStickResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.StickResponseRuleDeleteStickResponseRuleHandler = &handlers.DeleteStickResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.StickResponseRuleGetStickResponseRuleHandler = &handlers.GetStickResponseRuleHandlerImpl{Client: client}
-	api.StickResponseRuleGetStickResponseRulesHandler = &handlers.GetStickResponseRulesHandlerImpl{Client: client}
-	api.StickResponseRuleReplaceStickResponseRuleHandler = &handlers.ReplaceStickResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	// setup stick rule handlers
+	api.StickRuleCreateStickRuleHandler = &handlers.CreateStickRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.StickRuleDeleteStickRuleHandler = &handlers.DeleteStickRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.StickRuleGetStickRuleHandler = &handlers.GetStickRuleHandlerImpl{Client: client}
+	api.StickRuleGetStickRulesHandler = &handlers.GetStickRulesHandlerImpl{Client: client}
+	api.StickRuleReplaceStickRuleHandler = &handlers.ReplaceStickRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup stats handler
 	api.StatsGetStatsHandler = &handlers.GetStatsHandlerImpl{Client: client}
@@ -354,16 +338,19 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 }
 
 func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
-	data, err := cli.Configuration.GlobalParser.Get(parser.UserList, haproxyOptions.Userlist, "user")
+	if err := cli.Configuration.ConfigParser.LoadData(cli.Configuration.ConfigurationFile); err != nil {
+		return nil, fmt.Errorf("Error reading users from %v userlist in conf", haproxyOptions.Userlist)
+	}
+	data, err := cli.Configuration.ConfigParser.Get(parser.UserList, haproxyOptions.Userlist, "user")
 	if err != nil {
 		return nil, err
 	}
 	users, ok := data.([]types.User)
 	if !ok {
-		return nil, fmt.Errorf("Error reading users from %v userlist in global conf", haproxyOptions.Userlist)
+		return nil, fmt.Errorf("Error reading users from %v userlist in conf", haproxyOptions.Userlist)
 	}
 	if len(users) == 0 {
-		return nil, fmt.Errorf("No users configured in %v userlist in global conf", haproxyOptions.Userlist)
+		return nil, fmt.Errorf("No users configured in %v userlist in conf", haproxyOptions.Userlist)
 	}
 
 	for _, u := range users {

@@ -24,18 +24,17 @@ Data Plane API is built using [go-swagger](https://github.com/go-swagger/go-swag
     --tags=Global \
     --tags=Frontend \
     --tags=Backend \
-    --tags=Listener \
+    --tags=Bind \
     --tags=Server \
     --tags=Configuration \
-    --tags=TCPContentRule \
     --tags=HTTPRequestRule \
     --tags=HTTPResponseRule \
     --tags=BackendSwitchingRule \
     --tags=ServerSwitchingRule \
-    --tags=TCPConnectionRule \
+    --tags=TCPResponseRule \
+    --tags=TCPRequestRule \
     --tags=Filter \
-    --tags=StickRequestRule \
-    --tags=StickResponseRule
+    --tags=StickRule \
 ```
 
 This command generates some of the files in this project, which are marked with //DO NOT EDIT comments at the top of the files. These are not to be edited, as they are overwritten when specification is changed and the above-mentioned command is run.
