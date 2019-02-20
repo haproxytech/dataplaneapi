@@ -143,7 +143,14 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
-		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
+		uriSlice := strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)
+		rURI := ""
+		if len(uriSlice) < 2 {
+			rURI = "/"
+		} else {
+			rURI = "/" + uriSlice[1]
+		}
+
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
 		if err != nil {
 			e := misc.HandleError(err)
