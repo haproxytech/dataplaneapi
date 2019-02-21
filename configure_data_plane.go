@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/haproxytech/dataplaneapi/operations/specification"
+
 	parser "github.com/haproxytech/config-parser"
 	"github.com/haproxytech/config-parser/types"
 
@@ -293,6 +295,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StickRuleGetStickRulesHandler = &handlers.GetStickRulesHandlerImpl{Client: client}
 	api.StickRuleReplaceStickRuleHandler = &handlers.ReplaceStickRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup log target handlers
+	api.LogTargetCreateLogTargetHandler = &handlers.CreateLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetDeleteLogTargetHandler = &handlers.DeleteLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetGetLogTargetHandler = &handlers.GetLogTargetHandlerImpl{Client: client}
+	api.LogTargetGetLogTargetsHandler = &handlers.GetLogTargetsHandlerImpl{Client: client}
+	api.LogTargetReplaceLogTargetHandler = &handlers.ReplaceLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup stats handler
 	api.StatsGetStatsHandler = &handlers.GetStatsHandlerImpl{Client: client}
 
@@ -306,6 +315,11 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup global configuration handlers
 	api.GlobalGetGlobalHandler = &handlers.GetGlobalHandlerImpl{Client: client}
 	api.GlobalReplaceGlobalHandler = &handlers.ReplaceGlobalHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup specification handler
+	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
+		return specification.NewGetSpecificationOK().WithPayload(string(SwaggerJSON))
+	})
 
 	api.ServerShutdown = func() {}
 

@@ -2038,6 +2038,312 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/log_targets": {
+      "get": {
+        "description": "Returns all Log Targets that are configured in specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Return an array of all Log Targets",
+        "operationId": "getLogTargets",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/log_targets"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Log Target of the specified type in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Add a new Log Target",
+        "operationId": "createLogTarget",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Target created",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_targets/{id}": {
+      "get": {
+        "description": "Returns one Log Target configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Return one Log Target",
+        "operationId": "getLogTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Log Target ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/log_target"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Log Target configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Replace a Log Target",
+        "operationId": "replaceLogTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Log Target ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log Target replaced",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Log Target configuration by it's ID from the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Delete a Log Target",
+        "operationId": "deleteLogTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Log Target ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Log Target deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/raw": {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
@@ -3879,6 +4185,30 @@ func init() {
           }
         }
       }
+    },
+    "/specification": {
+      "get": {
+        "description": "Return Dataplane API OpenAPI specification",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Specification"
+        ],
+        "summary": "Dataplane API Specification",
+        "operationId": "getSpecification",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -3938,7 +4268,8 @@ func init() {
         "contstats": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "cookie": {
@@ -3971,7 +4302,8 @@ func init() {
         "forwardfor": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "http_connection_mode": {
@@ -4008,19 +4340,9 @@ func init() {
             }
           }
         },
-        "log": {
+        "log_tag": {
           "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
-        "log_format": {
-          "type": "string",
-          "enum": [
-            "tcp",
-            "http",
-            "clf"
-          ]
+          "pattern": "^[^\\s]+$"
         },
         "mode": {
           "type": "string",
@@ -4065,10 +4387,7 @@ func init() {
               "x-nullable": true
             },
             "nopurge": {
-              "type": "string",
-              "enum": [
-                "enabled"
-              ]
+              "type": "boolean"
             },
             "peers": {
               "type": "string",
@@ -4103,7 +4422,6 @@ func init() {
           "uri": "/check",
           "version": "HTTP/1.1"
         },
-        "log_format": "http",
         "mode": "http",
         "name": "test_backend"
       }
@@ -4346,6 +4664,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "clflog": {
+          "type": "boolean"
+        },
         "client_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -4360,7 +4681,8 @@ func init() {
         "contstats": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "default_backend": {
@@ -4411,19 +4733,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
-        "log": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+        "httplog": {
+          "type": "boolean"
         },
         "log_format": {
-          "type": "string",
-          "enum": [
-            "tcp",
-            "http",
-            "clf"
-          ]
+          "type": "string"
+        },
+        "log_format_sd": {
+          "type": "string"
         },
         "log_separate_errors": {
           "type": "string",
@@ -4451,6 +4768,9 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "tcplog": {
+          "type": "boolean"
         }
       },
       "example": {
@@ -4805,6 +5125,105 @@ func init() {
       "title": "HTTP Response Rules Array",
       "items": {
         "$ref": "#/definitions/http_response_rule"
+      }
+    },
+    "log_target": {
+      "description": "Per-instance logging of events and traffic.",
+      "type": "object",
+      "title": "Log Target",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "facility": {
+          "type": "string",
+          "enum": [
+            "kern",
+            "user",
+            "mail",
+            "daemon",
+            "auth",
+            "syslog",
+            "lpr",
+            "news",
+            "uucp",
+            "cron",
+            "auth2",
+            "ftp",
+            "ntp",
+            "audit",
+            "alert",
+            "cron2",
+            "local0",
+            "local1",
+            "local2",
+            "local3",
+            "local4",
+            "local5",
+            "local6",
+            "local7"
+          ]
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "rfc3164",
+            "rfc5424",
+            "short",
+            "raw"
+          ]
+        },
+        "global": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "length": {
+          "type": "integer"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+          ]
+        },
+        "minlevel": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+          ]
+        },
+        "nolog": {
+          "type": "boolean"
+        }
+      }
+    },
+    "log_targets": {
+      "description": "HAProxy Log Target array (corresponds to log directives)",
+      "type": "array",
+      "title": "Log Target Array",
+      "items": {
+        "$ref": "#/definitions/log_target"
       }
     },
     "native_stats": {
@@ -5743,12 +6162,6 @@ func init() {
                 }
               },
               "forwardfor": {
-                "type": "string",
-                "enum": [
-                  "enabled"
-                ]
-              },
-              "log": {
                 "type": "boolean"
               },
               "mode": {
@@ -5790,16 +6203,13 @@ func init() {
                       "x-nullable": true
                     },
                     "ssl": {
-                      "type": "string",
-                      "enum": [
-                        "enabled"
-                      ]
+                      "type": "boolean"
                     },
                     "ssl_certificate": {
                       "type": "string",
                       "pattern": "^[^\\s]+$",
                       "x-dependency": {
-                        "ssl": "enabled"
+                        "ssl": true
                       }
                     },
                     "weight": {
@@ -5868,26 +6278,17 @@ func init() {
                     "x-nullable": true
                   },
                   "ssl": {
-                    "type": "string",
-                    "enum": [
-                      "enabled"
-                    ]
+                    "type": "boolean"
                   },
                   "ssl_certificate": {
                     "type": "string",
                     "pattern": "^[^\\s]+$",
                     "x-dependency": {
-                      "ssl": "enabled"
+                      "ssl": true
                     }
                   }
                 }
               }
-            },
-            "log": {
-              "type": "string",
-              "enum": [
-                "enabled"
-              ]
             },
             "maxconn": {
               "type": "integer",
@@ -5909,7 +6310,6 @@ func init() {
             "balance": {
               "algorithm": "roundrobin"
             },
-            "log": "enabled",
             "mode": "http",
             "name": "www_backend",
             "servers": [
@@ -5944,7 +6344,6 @@ func init() {
               "port": 8080
             }
           ],
-          "log": "enabled",
           "maxconn": 2000,
           "mode": "http"
         }
@@ -6020,8 +6419,7 @@ func init() {
       "title": "TCP Request Rule",
       "required": [
         "id",
-        "type",
-        "action"
+        "type"
       ],
       "properties": {
         "action": {
@@ -6082,8 +6480,7 @@ func init() {
       "title": "TCP Response Rule",
       "required": [
         "id",
-        "type",
-        "action"
+        "type"
       ],
       "properties": {
         "action": {
@@ -6232,6 +6629,9 @@ func init() {
       "name": "Information"
     },
     {
+      "name": "Specification"
+    },
+    {
       "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the \ntransaction with trasactions POST, and call the configuration changes you need with parameter \ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id, \ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
     },
@@ -6280,7 +6680,7 @@ func init() {
       "name": "HAProxy configuration management"
     },
     {
-      "name": "TCPContentRule"
+      "name": "TCPRequestRule"
     },
     {
       "name": "HTTPRequestRule"
@@ -6295,16 +6695,16 @@ func init() {
       "name": "ServerSwitchingRule"
     },
     {
-      "name": "TCPConnectionRule"
+      "name": "TCPResponseRule"
     },
     {
       "name": "Filter"
     },
     {
-      "name": "StickRequestRule"
+      "name": "StickRule"
     },
     {
-      "name": "StickResponseRule"
+      "name": "LogTarget"
     }
   ],
   "externalDocs": {
@@ -8697,6 +9097,361 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/log_targets": {
+      "get": {
+        "description": "Returns all Log Targets that are configured in specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Return an array of all Log Targets",
+        "operationId": "getLogTargets",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/getLogTargetsOKBody"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Log Target of the specified type in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Add a new Log Target",
+        "operationId": "createLogTarget",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Target created",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_targets/{id}": {
+      "get": {
+        "description": "Returns one Log Target configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Return one Log Target",
+        "operationId": "getLogTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Log Target ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/getLogTargetOKBody"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Log Target configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Replace a Log Target",
+        "operationId": "replaceLogTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Log Target ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log Target replaced",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Log Target configuration by it's ID from the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "LogTarget"
+        ],
+        "summary": "Delete a Log Target",
+        "operationId": "deleteLogTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Log Target ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Log Target deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/raw": {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
@@ -10877,6 +11632,33 @@ func init() {
           }
         }
       }
+    },
+    "/specification": {
+      "get": {
+        "description": "Return Dataplane API OpenAPI specification",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Specification"
+        ],
+        "summary": "Dataplane API Specification",
+        "operationId": "getSpecification",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -10914,7 +11696,8 @@ func init() {
         "contstats": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "cookie": {
@@ -10927,7 +11710,8 @@ func init() {
         "forwardfor": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "http_connection_mode": {
@@ -10943,19 +11727,9 @@ func init() {
         "httpchk": {
           "$ref": "#/definitions/backendHttpchk"
         },
-        "log": {
+        "log_tag": {
           "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
-        "log_format": {
-          "type": "string",
-          "enum": [
-            "tcp",
-            "http",
-            "clf"
-          ]
+          "pattern": "^[^\\s]+$"
         },
         "mode": {
           "type": "string",
@@ -11000,7 +11774,6 @@ func init() {
           "uri": "/check",
           "version": "HTTP/1.1"
         },
-        "log_format": "http",
         "mode": "http",
         "name": "test_backend"
       }
@@ -11092,10 +11865,7 @@ func init() {
           "x-nullable": true
         },
         "nopurge": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "peers": {
           "type": "string",
@@ -11360,6 +12130,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "clflog": {
+          "type": "boolean"
+        },
         "client_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -11374,7 +12147,8 @@ func init() {
         "contstats": {
           "type": "string",
           "enum": [
-            "enabled"
+            "enabled",
+            "disabled"
           ]
         },
         "default_backend": {
@@ -11425,19 +12199,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
-        "log": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+        "httplog": {
+          "type": "boolean"
         },
         "log_format": {
-          "type": "string",
-          "enum": [
-            "tcp",
-            "http",
-            "clf"
-          ]
+          "type": "string"
+        },
+        "log_format_sd": {
+          "type": "string"
         },
         "log_separate_errors": {
           "type": "string",
@@ -11465,6 +12234,9 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "tcplog": {
+          "type": "boolean"
         }
       },
       "example": {
@@ -11671,6 +12443,30 @@ func init() {
         },
         "data": {
           "$ref": "#/definitions/http_response_rules"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getLogTargetOKBody": {
+      "type": "object",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "data": {
+          "$ref": "#/definitions/log_target"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getLogTargetsOKBody": {
+      "type": "object",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "data": {
+          "$ref": "#/definitions/log_targets"
         }
       },
       "x-go-gen-location": "operations"
@@ -12155,6 +12951,105 @@ func init() {
       "title": "HTTP Response Rules Array",
       "items": {
         "$ref": "#/definitions/http_response_rule"
+      }
+    },
+    "log_target": {
+      "description": "Per-instance logging of events and traffic.",
+      "type": "object",
+      "title": "Log Target",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "facility": {
+          "type": "string",
+          "enum": [
+            "kern",
+            "user",
+            "mail",
+            "daemon",
+            "auth",
+            "syslog",
+            "lpr",
+            "news",
+            "uucp",
+            "cron",
+            "auth2",
+            "ftp",
+            "ntp",
+            "audit",
+            "alert",
+            "cron2",
+            "local0",
+            "local1",
+            "local2",
+            "local3",
+            "local4",
+            "local5",
+            "local6",
+            "local7"
+          ]
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "rfc3164",
+            "rfc5424",
+            "short",
+            "raw"
+          ]
+        },
+        "global": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "length": {
+          "type": "integer"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+          ]
+        },
+        "minlevel": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+          ]
+        },
+        "nolog": {
+          "type": "boolean"
+        }
+      }
+    },
+    "log_targets": {
+      "description": "HAProxy Log Target array (corresponds to log directives)",
+      "type": "array",
+      "title": "Log Target Array",
+      "items": {
+        "$ref": "#/definitions/log_target"
       }
     },
     "nativeStatsItems": {
@@ -13075,7 +13970,6 @@ func init() {
             "balance": {
               "algorithm": "roundrobin"
             },
-            "log": "enabled",
             "mode": "http",
             "name": "www_backend",
             "servers": [
@@ -13110,7 +14004,6 @@ func init() {
               "port": 8080
             }
           ],
-          "log": "enabled",
           "maxconn": 2000,
           "mode": "http"
         }
@@ -13143,12 +14036,6 @@ func init() {
           }
         },
         "forwardfor": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
-        },
-        "log": {
           "type": "boolean"
         },
         "mode": {
@@ -13231,16 +14118,13 @@ func init() {
           "x-nullable": true
         },
         "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "ssl_certificate": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "ssl": "enabled"
+            "ssl": true
           }
         },
         "weight": {
@@ -13271,12 +14155,6 @@ func init() {
           "items": {
             "$ref": "#/definitions/siteServiceListenersItems"
           }
-        },
-        "log": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
         },
         "maxconn": {
           "type": "integer",
@@ -13317,16 +14195,13 @@ func init() {
           "x-nullable": true
         },
         "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled"
-          ]
+          "type": "boolean"
         },
         "ssl_certificate": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "ssl": "enabled"
+            "ssl": true
           }
         }
       },
@@ -13402,8 +14277,7 @@ func init() {
       "title": "TCP Request Rule",
       "required": [
         "id",
-        "type",
-        "action"
+        "type"
       ],
       "properties": {
         "action": {
@@ -13464,8 +14338,7 @@ func init() {
       "title": "TCP Response Rule",
       "required": [
         "id",
-        "type",
-        "action"
+        "type"
       ],
       "properties": {
         "action": {
@@ -13614,6 +14487,9 @@ func init() {
       "name": "Information"
     },
     {
+      "name": "Specification"
+    },
+    {
       "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the \ntransaction with trasactions POST, and call the configuration changes you need with parameter \ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id, \ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
     },
@@ -13662,7 +14538,7 @@ func init() {
       "name": "HAProxy configuration management"
     },
     {
-      "name": "TCPContentRule"
+      "name": "TCPRequestRule"
     },
     {
       "name": "HTTPRequestRule"
@@ -13677,16 +14553,16 @@ func init() {
       "name": "ServerSwitchingRule"
     },
     {
-      "name": "TCPConnectionRule"
+      "name": "TCPResponseRule"
     },
     {
       "name": "Filter"
     },
     {
-      "name": "StickRequestRule"
+      "name": "StickRule"
     },
     {
-      "name": "StickResponseRule"
+      "name": "LogTarget"
     }
   ],
   "externalDocs": {

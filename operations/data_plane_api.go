@@ -30,9 +30,11 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
+	"github.com/haproxytech/dataplaneapi/operations/log_target"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
+	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
@@ -83,6 +85,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPResponseRuleCreateHTTPResponseRuleHandler: http_response_rule.CreateHTTPResponseRuleHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPResponseRuleCreateHTTPResponseRule has not yet been implemented")
 		}),
+		LogTargetCreateLogTargetHandler: log_target.CreateLogTargetHandlerFunc(func(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation LogTargetCreateLogTarget has not yet been implemented")
+		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerCreateServer has not yet been implemented")
 		}),
@@ -121,6 +126,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleDeleteHTTPResponseRuleHandler: http_response_rule.DeleteHTTPResponseRuleHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPResponseRuleDeleteHTTPResponseRule has not yet been implemented")
+		}),
+		LogTargetDeleteLogTargetHandler: log_target.DeleteLogTargetHandlerFunc(func(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation LogTargetDeleteLogTarget has not yet been implemented")
 		}),
 		ServerDeleteServerHandler: server.DeleteServerHandlerFunc(func(params server.DeleteServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerDeleteServer has not yet been implemented")
@@ -203,6 +211,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		InformationGetHaproxyProcessInfoHandler: information.GetHaproxyProcessInfoHandlerFunc(func(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation InformationGetHaproxyProcessInfo has not yet been implemented")
 		}),
+		LogTargetGetLogTargetHandler: log_target.GetLogTargetHandlerFunc(func(params log_target.GetLogTargetParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation LogTargetGetLogTarget has not yet been implemented")
+		}),
+		LogTargetGetLogTargetsHandler: log_target.GetLogTargetsHandlerFunc(func(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation LogTargetGetLogTargets has not yet been implemented")
+		}),
 		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerGetServer has not yet been implemented")
 		}),
@@ -223,6 +237,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		SitesGetSitesHandler: sites.GetSitesHandlerFunc(func(params sites.GetSitesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation SitesGetSites has not yet been implemented")
+		}),
+		SpecificationGetSpecificationHandler: specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation SpecificationGetSpecification has not yet been implemented")
 		}),
 		StatsGetStatsHandler: stats.GetStatsHandlerFunc(func(params stats.GetStatsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation StatsGetStats has not yet been implemented")
@@ -280,6 +297,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleReplaceHTTPResponseRuleHandler: http_response_rule.ReplaceHTTPResponseRuleHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation HTTPResponseRuleReplaceHTTPResponseRule has not yet been implemented")
+		}),
+		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation LogTargetReplaceLogTarget has not yet been implemented")
 		}),
 		ServerReplaceServerHandler: server.ReplaceServerHandlerFunc(func(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerReplaceServer has not yet been implemented")
@@ -370,6 +390,8 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleCreateHTTPRequestRuleHandler http_request_rule.CreateHTTPRequestRuleHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleHandler sets the operation handler for the create HTTP response rule operation
 	HTTPResponseRuleCreateHTTPResponseRuleHandler http_response_rule.CreateHTTPResponseRuleHandler
+	// LogTargetCreateLogTargetHandler sets the operation handler for the create log target operation
+	LogTargetCreateLogTargetHandler log_target.CreateLogTargetHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
@@ -396,6 +418,8 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleDeleteHTTPRequestRuleHandler http_request_rule.DeleteHTTPRequestRuleHandler
 	// HTTPResponseRuleDeleteHTTPResponseRuleHandler sets the operation handler for the delete HTTP response rule operation
 	HTTPResponseRuleDeleteHTTPResponseRuleHandler http_response_rule.DeleteHTTPResponseRuleHandler
+	// LogTargetDeleteLogTargetHandler sets the operation handler for the delete log target operation
+	LogTargetDeleteLogTargetHandler log_target.DeleteLogTargetHandler
 	// ServerDeleteServerHandler sets the operation handler for the delete server operation
 	ServerDeleteServerHandler server.DeleteServerHandler
 	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
@@ -450,6 +474,10 @@ type DataPlaneAPI struct {
 	DiscoveryGetHaproxyEndpointsHandler discovery.GetHaproxyEndpointsHandler
 	// InformationGetHaproxyProcessInfoHandler sets the operation handler for the get haproxy process info operation
 	InformationGetHaproxyProcessInfoHandler information.GetHaproxyProcessInfoHandler
+	// LogTargetGetLogTargetHandler sets the operation handler for the get log target operation
+	LogTargetGetLogTargetHandler log_target.GetLogTargetHandler
+	// LogTargetGetLogTargetsHandler sets the operation handler for the get log targets operation
+	LogTargetGetLogTargetsHandler log_target.GetLogTargetsHandler
 	// ServerGetServerHandler sets the operation handler for the get server operation
 	ServerGetServerHandler server.GetServerHandler
 	// ServerSwitchingRuleGetServerSwitchingRuleHandler sets the operation handler for the get server switching rule operation
@@ -464,6 +492,8 @@ type DataPlaneAPI struct {
 	SitesGetSiteHandler sites.GetSiteHandler
 	// SitesGetSitesHandler sets the operation handler for the get sites operation
 	SitesGetSitesHandler sites.GetSitesHandler
+	// SpecificationGetSpecificationHandler sets the operation handler for the get specification operation
+	SpecificationGetSpecificationHandler specification.GetSpecificationHandler
 	// StatsGetStatsHandler sets the operation handler for the get stats operation
 	StatsGetStatsHandler stats.GetStatsHandler
 	// DiscoveryGetStatsEndpointsHandler sets the operation handler for the get stats endpoints operation
@@ -502,6 +532,8 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleReplaceHTTPRequestRuleHandler http_request_rule.ReplaceHTTPRequestRuleHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleHandler sets the operation handler for the replace HTTP response rule operation
 	HTTPResponseRuleReplaceHTTPResponseRuleHandler http_response_rule.ReplaceHTTPResponseRuleHandler
+	// LogTargetReplaceLogTargetHandler sets the operation handler for the replace log target operation
+	LogTargetReplaceLogTargetHandler log_target.ReplaceLogTargetHandler
 	// ServerReplaceServerHandler sets the operation handler for the replace server operation
 	ServerReplaceServerHandler server.ReplaceServerHandler
 	// ServerSwitchingRuleReplaceServerSwitchingRuleHandler sets the operation handler for the replace server switching rule operation
@@ -623,6 +655,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleHandler")
 	}
 
+	if o.LogTargetCreateLogTargetHandler == nil {
+		unregistered = append(unregistered, "log_target.CreateLogTargetHandler")
+	}
+
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
 	}
@@ -673,6 +709,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.HTTPResponseRuleDeleteHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleHandler")
+	}
+
+	if o.LogTargetDeleteLogTargetHandler == nil {
+		unregistered = append(unregistered, "log_target.DeleteLogTargetHandler")
 	}
 
 	if o.ServerDeleteServerHandler == nil {
@@ -783,6 +823,14 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "information.GetHaproxyProcessInfoHandler")
 	}
 
+	if o.LogTargetGetLogTargetHandler == nil {
+		unregistered = append(unregistered, "log_target.GetLogTargetHandler")
+	}
+
+	if o.LogTargetGetLogTargetsHandler == nil {
+		unregistered = append(unregistered, "log_target.GetLogTargetsHandler")
+	}
+
 	if o.ServerGetServerHandler == nil {
 		unregistered = append(unregistered, "server.GetServerHandler")
 	}
@@ -809,6 +857,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.SitesGetSitesHandler == nil {
 		unregistered = append(unregistered, "sites.GetSitesHandler")
+	}
+
+	if o.SpecificationGetSpecificationHandler == nil {
+		unregistered = append(unregistered, "specification.GetSpecificationHandler")
 	}
 
 	if o.StatsGetStatsHandler == nil {
@@ -885,6 +937,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.HTTPResponseRuleReplaceHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleHandler")
+	}
+
+	if o.LogTargetReplaceLogTargetHandler == nil {
+		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
 	}
 
 	if o.ServerReplaceServerHandler == nil {
@@ -1072,6 +1128,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/log_targets"] = log_target.NewCreateLogTarget(o.context, o.LogTargetCreateLogTargetHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
 
 	if o.handlers["POST"] == nil {
@@ -1133,6 +1194,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewDeleteHTTPResponseRule(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewDeleteLogTarget(o.context, o.LogTargetDeleteLogTargetHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1272,6 +1338,16 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewGetLogTarget(o.context, o.LogTargetGetLogTargetHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/log_targets"] = log_target.NewGetLogTargets(o.context, o.LogTargetGetLogTargetsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/servers/{name}"] = server.NewGetServer(o.context, o.ServerGetServerHandler)
 
 	if o.handlers["GET"] == nil {
@@ -1303,6 +1379,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/sites"] = sites.NewGetSites(o.context, o.SitesGetSitesHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/specification"] = specification.NewGetSpecification(o.context, o.SpecificationGetSpecificationHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1398,6 +1479,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewReplaceHTTPResponseRule(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
