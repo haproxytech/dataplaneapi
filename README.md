@@ -48,8 +48,6 @@ The project depends on the following internal projects:
 - [client-native](http://github.com/haproxytech/client-native)
 - [config-parser](http://github.com/haproxytech/config-parser)
 
-**client-native** project currently depends on an internal bash/awk project that manipulates HAProxy configuration: [lbctl](http://github.com/HAPEE/lbctl). This is planned to be fully replaced by native golang parser **config-parser** in the near future.
-
 External dependecies:
 - [interpose](https://github.com/carbocation/interpose)
 - [martini](https://github.com/go-martini/martini)
@@ -71,30 +69,26 @@ External dependecies:
 
 Following steps are required for building:
 
+1. Set your GOPATH variable
+2. Clone dataplaneapi repository into $GOPATH/src
+
 ```
 cd $GOPATH/src
 git clone git@github.com:haproxy-controller/dataplaneapi.git
-git clone git@github.com:haproxy-controller/models.git
-git clone git@github.com:haproxy-controller/client-native.git
-git clone git@github.com:haproxy-controller/config-parser.git
-
-cd dataplaneapi
-go get -v -insecure
-
-cd cmd/dataplaneapi
-go build
 ```
 
-Currently you should also clone **lbctl** project (controller-dev branch) somewhere and install it:
+3. Add following lines to your ~/.gitconfig:
+```
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+```
+4. Run make build:
 
 ```
-git clone git@github.com:HAPEE/lbctl.git
-cd lbctl
-git checkout controller-dev
-make install
-cd /opt/lbctl/scripts/
-chmod +x lbctl
+make build
 ```
+
+5. You can find the built binary in cmd/dataplaneapi/ directory.
 
 ## Running the Data Plane API
 
@@ -108,38 +102,36 @@ Usage:
 API for editing and managing HAPEE instances
 
 Application Options:
-      --scheme=                the listeners to enable, this can be repeated and defaults to the schemes in the swagger spec
-      --cleanup-timeout=       grace period for which to wait before shutting down the server (default: 10s)
-      --max-header-size=       controls the maximum number of bytes the server will read parsing the request header's keys and values, including the request line. It does not limit the size of the request body. (default: 1MiB)
-      --socket-path=           the unix socket to listen on (default: /var/run/dataplaneapi.sock)
-      --host=                  the IP to listen on (default: localhost) [$HOST]
-      --port=                  the port to listen on for insecure connections, defaults to a random value [$PORT]
-      --listen-limit=          limit the number of outstanding requests
-      --keep-alive=            sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download) (default: 3m)
-      --read-timeout=          maximum duration before timing out read of the request (default: 30s)
-      --write-timeout=         maximum duration before timing out write of the response (default: 60s)
-      --tls-host=              the IP to listen on for tls, when not specified it's the same as --host [$TLS_HOST]
-      --tls-port=              the port to listen on for secure connections, defaults to a random value [$TLS_PORT]
-      --tls-certificate=       the certificate to use for secure connections [$TLS_CERTIFICATE]
-      --tls-key=               the private key to use for secure conections [$TLS_PRIVATE_KEY]
-      --tls-ca=                the certificate authority file to be used with mutual tls auth [$TLS_CA_CERTIFICATE]
-      --tls-listen-limit=      limit the number of outstanding requests
-      --tls-keep-alive=        sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download)
-      --tls-read-timeout=      maximum duration before timing out read of the request
-      --tls-write-timeout=     maximum duration before timing out write of the response
+      --scheme=            the listeners to enable, this can be repeated and defaults to the schemes in the swagger spec
+      --cleanup-timeout=   grace period for which to wait before shutting down the server (default: 10s)
+      --max-header-size=   controls the maximum number of bytes the server will read parsing the request header's keys and values, including the request line. It does not limit the size of the request body. (default: 1MiB)
+      --socket-path=       the unix socket to listen on (default: /var/run/data-plane.sock)
+      --host=              the IP to listen on (default: localhost) [$HOST]
+      --port=              the port to listen on for insecure connections, defaults to a random value [$PORT]
+      --listen-limit=      limit the number of outstanding requests
+      --keep-alive=        sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download) (default: 3m)
+      --read-timeout=      maximum duration before timing out read of the request (default: 30s)
+      --write-timeout=     maximum duration before timing out write of the response (default: 60s)
+      --tls-host=          the IP to listen on for tls, when not specified it's the same as --host [$TLS_HOST]
+      --tls-port=          the port to listen on for secure connections, defaults to a random value [$TLS_PORT]
+      --tls-certificate=   the certificate to use for secure connections [$TLS_CERTIFICATE]
+      --tls-key=           the private key to use for secure conections [$TLS_PRIVATE_KEY]
+      --tls-ca=            the certificate authority file to be used with mutual tls auth [$TLS_CA_CERTIFICATE]
+      --tls-listen-limit=  limit the number of outstanding requests
+      --tls-keep-alive=    sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download)
+      --tls-read-timeout=  maximum duration before timing out read of the request
+      --tls-write-timeout= maximum duration before timing out write of the response
 
 HAProxy options:
-  -c, --config-file=           Path to the haproxy configuration file (default: /etc/haproxy/haproxy.cfg)
-  -g, --global-config-file=    Path to the haproxy global section configuration file (default: /etc/haproxy/haproxy-global.cfg)
-  -u, --userlist=              Userlist in HAProxy configuration to use for API Basic Authentication (default: controller)
-  -b, --haproxy-bin=           Path to the haproxy binary file (default: haproxy)
-  -d, --reload-delay=          Minimum delay between two reloads (in s)
-  -r, --reload-cmd=            Reload command
-  -l, --lbctl-path=            Path to the lbctl script (default: lbctl)
-  -t, --lbctl-transaction-dir= Path to the lbctl transaction directory (default: /tmp/lbctl)
+  -c, --config-file=       Path to the haproxy configuration file (default: /etc/haproxy/haproxy.cfg)
+  -u, --userlist=          Userlist in HAProxy configuration to use for API Basic Authentication (default: controller)
+  -b, --haproxy-bin=       Path to the haproxy binary file (default: haproxy)
+  -d, --reload-delay=      Minimum delay between two reloads (in s)
+  -r, --reload-cmd=        Reload command
+  -t, --transaction-dir=   Path to the transaction directory (default: /tmp/haproxy)
 
 Help Options:
-  -h, --help                   Show this help message
+  -h, --help               Show this help message
 ```
 
 ## Example 
@@ -147,7 +139,7 @@ Help Options:
 You can test it by simply running:
 
 ```
-./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -g /etc/haproxy/global.cfg -d 5 -r "service reload haproxy" -u dataplaneapi -l /opt/lbctl/scripts/lbctl -t /tmp/lbctl
+./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -d 5 -r "service reload haproxy" -u dataplaneapi -t /tmp/haproxy
 ```
 
 Test it out with curl, note that you need user/pass combination setup in HAProxy userlist in global.cfg (in above example: /etc/haproxy/global.cfg, userlist controller):
