@@ -82,7 +82,7 @@ git clone git@github.com:haproxy-controller/dataplaneapi.git
 
 ```
 [url "git@github.com:"]
-    insteadOf = https://github.com/
+    insteadOf = http://github.com/
 ```
 
 4\. Run make build:
