@@ -69,26 +69,29 @@ External dependecies:
 
 Following steps are required for building:
 
-1. Set your GOPATH variable
-2. Clone dataplaneapi repository into $GOPATH/src
+1\. Set your GOPATH variable
+
+2\. Clone dataplaneapi repository into $GOPATH/src
 
 ```
 cd $GOPATH/src
 git clone git@github.com:haproxy-controller/dataplaneapi.git
 ```
 
-3. Add following lines to your ~/.gitconfig:
+3\. Add following lines to your ~/.gitconfig:
+
 ```
 [url "git@github.com:"]
     insteadOf = https://github.com/
 ```
-4. Run make build:
+
+4\. Run make build:
 
 ```
 make build
 ```
 
-5. You can find the built binary in cmd/dataplaneapi/ directory.
+5\. You can find the built binary in cmd/dataplaneapi/ directory.
 
 ## Running the Data Plane API
 
