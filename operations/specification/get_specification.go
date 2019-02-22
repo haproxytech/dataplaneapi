@@ -71,3 +71,7 @@ func (o *GetSpecification) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
+
+// GetSpecificationOKBody get specification o k body
+// swagger:model GetSpecificationOKBody
+type GetSpecificationOKBody interface{}

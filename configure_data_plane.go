@@ -4,6 +4,7 @@ package dataplaneapi
 
 import (
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -318,7 +319,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// setup specification handler
 	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
-		return specification.NewGetSpecificationOK().WithPayload(string(SwaggerJSON))
+		var m map[string]interface{}
+		if err := json.Unmarshal(SwaggerJSON, &m); err != nil {
+			e := misc.HandleError(err)
+			return specification.NewGetSpecificationDefault(int(*e.Code)).WithPayload(e)
+		}
+		return specification.NewGetSpecificationOK().WithPayload(&m)
 	})
 
 	api.ServerShutdown = func() {}

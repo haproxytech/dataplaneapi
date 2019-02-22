@@ -25,7 +25,7 @@ type GetSpecificationOK struct {
 	/*
 	  In: Body
 	*/
-	Payload string `json:"body,omitempty"`
+	Payload GetSpecificationOKBody `json:"body,omitempty"`
 }
 
 // NewGetSpecificationOK creates GetSpecificationOK with default headers values
@@ -35,13 +35,13 @@ func NewGetSpecificationOK() *GetSpecificationOK {
 }
 
 // WithPayload adds the payload to the get specification o k response
-func (o *GetSpecificationOK) WithPayload(payload string) *GetSpecificationOK {
+func (o *GetSpecificationOK) WithPayload(payload GetSpecificationOKBody) *GetSpecificationOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get specification o k response
-func (o *GetSpecificationOK) SetPayload(payload string) {
+func (o *GetSpecificationOK) SetPayload(payload GetSpecificationOKBody) {
 	o.Payload = payload
 }
 

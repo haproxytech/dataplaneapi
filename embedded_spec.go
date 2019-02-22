@@ -4201,7 +4201,7 @@ func init() {
           "200": {
             "description": "Success",
             "schema": {
-              "type": "string"
+              "type": "object"
             }
           },
           "default": {
@@ -11648,7 +11648,7 @@ func init() {
           "200": {
             "description": "Success",
             "schema": {
-              "type": "string"
+              "type": "object"
             }
           },
           "default": {

@@ -67,7 +67,6 @@ func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, pr
 		v = *params.Version
 	}
 
-	
 	err := h.Client.Configuration.DeleteBackend(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
