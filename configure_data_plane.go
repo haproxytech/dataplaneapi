@@ -370,7 +370,7 @@ func authenticateUser(user string, pass string, cli *client_native.HAProxyClient
 	}
 	data, err := cli.Configuration.ConfigParser.Get(parser.UserList, haproxyOptions.Userlist, "user")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Error reading userlist %v userlist in conf: %s", haproxyOptions.Userlist, err.Error())
 	}
 	users, ok := data.([]types.User)
 	if !ok {
