@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
+	"github.com/haproxytech/models"
 )
 
 //CreateHTTPResponseRuleHandlerImpl implementation of the CreateHTTPResponseRuleHandler interface using client-native client
@@ -47,13 +48,35 @@ func (h *CreateHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.Cre
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return http_response_rule.NewCreateHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateHTTPResponseRule(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_response_rule.NewCreateHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return http_response_rule.NewCreateHTTPResponseRuleCreated().WithPayload(params.Data)
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return http_response_rule.NewCreateHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+			}
+			return http_response_rule.NewCreateHTTPResponseRuleCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return http_response_rule.NewCreateHTTPResponseRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return http_response_rule.NewCreateHTTPResponseRuleAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +90,34 @@ func (h *DeleteHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.Del
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return http_response_rule.NewDeleteHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteHTTPResponseRule(params.ID, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_response_rule.NewDeleteHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return http_response_rule.NewDeleteHTTPResponseRuleNoContent()
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return http_response_rule.NewDeleteHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+			}
+			return http_response_rule.NewDeleteHTTPResponseRuleNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return http_response_rule.NewDeleteHTTPResponseRuleAccepted().WithReloadID(rID)
+	}
+	return http_response_rule.NewDeleteHTTPResponseRuleAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,11 +161,32 @@ func (h *ReplaceHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.Re
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return http_response_rule.NewReplaceHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.EditHTTPResponseRule(params.ID, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_response_rule.NewReplaceHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return http_response_rule.NewReplaceHTTPResponseRuleOK().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return http_response_rule.NewReplaceHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+			}
+			return http_response_rule.NewReplaceHTTPResponseRuleOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return http_response_rule.NewReplaceHTTPResponseRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return http_response_rule.NewReplaceHTTPResponseRuleAccepted().WithPayload(params.Data)
 }

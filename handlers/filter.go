@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
+	"github.com/haproxytech/models"
 )
 
 //CreateFilterHandlerImpl implementation of the CreateFilterHandler interface using client-native client
@@ -47,13 +48,34 @@ func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, princ
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return filter.NewCreateFilterDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateFilter(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewCreateFilterDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return filter.NewCreateFilterCreated().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return filter.NewCreateFilterDefault(int(*e.Code)).WithPayload(e)
+			}
+			return filter.NewCreateFilterCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return filter.NewCreateFilterAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return filter.NewCreateFilterAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +89,34 @@ func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, princ
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return filter.NewDeleteFilterDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteFilter(params.ID, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewDeleteFilterDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return filter.NewDeleteFilterNoContent()
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return filter.NewDeleteFilterDefault(int(*e.Code)).WithPayload(e)
+			}
+			return filter.NewDeleteFilterNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return filter.NewDeleteFilterAccepted().WithReloadID(rID)
+	}
+	return filter.NewDeleteFilterAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,11 +160,32 @@ func (h *ReplaceFilterHandlerImpl) Handle(params filter.ReplaceFilterParams, pri
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return filter.NewReplaceFilterDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.EditFilter(params.ID, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewReplaceFilterDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return filter.NewReplaceFilterOK().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return filter.NewReplaceFilterDefault(int(*e.Code)).WithPayload(e)
+			}
+			return filter.NewReplaceFilterOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return filter.NewReplaceFilterAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return filter.NewReplaceFilterAccepted().WithPayload(params.Data)
 }

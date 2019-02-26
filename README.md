@@ -131,6 +131,7 @@ HAProxy options:
   -b, --haproxy-bin=       Path to the haproxy binary file (default: haproxy)
   -d, --reload-delay=      Minimum delay between two reloads (in s)
   -r, --reload-cmd=        Reload command
+      --reload-retention=  Reload retention in days, every older reload id will be deleted (default: 1)
   -t, --transaction-dir=   Path to the transaction directory (default: /tmp/haproxy)
 
 Help Options:

@@ -57,6 +57,72 @@ func (o *CreateHTTPResponseRuleCreated) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
+// CreateHTTPResponseRuleAcceptedCode is the HTTP code returned for type CreateHTTPResponseRuleAccepted
+const CreateHTTPResponseRuleAcceptedCode int = 202
+
+/*CreateHTTPResponseRuleAccepted Configuration change accepted and reload requested
+
+swagger:response createHttpResponseRuleAccepted
+*/
+type CreateHTTPResponseRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.HTTPResponseRule `json:"body,omitempty"`
+}
+
+// NewCreateHTTPResponseRuleAccepted creates CreateHTTPResponseRuleAccepted with default headers values
+func NewCreateHTTPResponseRuleAccepted() *CreateHTTPResponseRuleAccepted {
+
+	return &CreateHTTPResponseRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the create Http response rule accepted response
+func (o *CreateHTTPResponseRuleAccepted) WithReloadID(reloadID string) *CreateHTTPResponseRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the create Http response rule accepted response
+func (o *CreateHTTPResponseRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the create Http response rule accepted response
+func (o *CreateHTTPResponseRuleAccepted) WithPayload(payload *models.HTTPResponseRule) *CreateHTTPResponseRuleAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the create Http response rule accepted response
+func (o *CreateHTTPResponseRuleAccepted) SetPayload(payload *models.HTTPResponseRule) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *CreateHTTPResponseRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // CreateHTTPResponseRuleBadRequestCode is the HTTP code returned for type CreateHTTPResponseRuleBadRequest
 const CreateHTTPResponseRuleBadRequestCode int = 400
 

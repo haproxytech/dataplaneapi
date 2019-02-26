@@ -57,6 +57,72 @@ func (o *ReplaceBindOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 }
 
+// ReplaceBindAcceptedCode is the HTTP code returned for type ReplaceBindAccepted
+const ReplaceBindAcceptedCode int = 202
+
+/*ReplaceBindAccepted Configuration change accepted and reload requested
+
+swagger:response replaceBindAccepted
+*/
+type ReplaceBindAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Bind `json:"body,omitempty"`
+}
+
+// NewReplaceBindAccepted creates ReplaceBindAccepted with default headers values
+func NewReplaceBindAccepted() *ReplaceBindAccepted {
+
+	return &ReplaceBindAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace bind accepted response
+func (o *ReplaceBindAccepted) WithReloadID(reloadID string) *ReplaceBindAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace bind accepted response
+func (o *ReplaceBindAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace bind accepted response
+func (o *ReplaceBindAccepted) WithPayload(payload *models.Bind) *ReplaceBindAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace bind accepted response
+func (o *ReplaceBindAccepted) SetPayload(payload *models.Bind) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceBindAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceBindBadRequestCode is the HTTP code returned for type ReplaceBindBadRequest
 const ReplaceBindBadRequestCode int = 400
 

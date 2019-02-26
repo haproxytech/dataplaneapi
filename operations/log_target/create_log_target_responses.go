@@ -57,6 +57,72 @@ func (o *CreateLogTargetCreated) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
+// CreateLogTargetAcceptedCode is the HTTP code returned for type CreateLogTargetAccepted
+const CreateLogTargetAcceptedCode int = 202
+
+/*CreateLogTargetAccepted Configuration change accepted and reload requested
+
+swagger:response createLogTargetAccepted
+*/
+type CreateLogTargetAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.LogTarget `json:"body,omitempty"`
+}
+
+// NewCreateLogTargetAccepted creates CreateLogTargetAccepted with default headers values
+func NewCreateLogTargetAccepted() *CreateLogTargetAccepted {
+
+	return &CreateLogTargetAccepted{}
+}
+
+// WithReloadID adds the reloadId to the create log target accepted response
+func (o *CreateLogTargetAccepted) WithReloadID(reloadID string) *CreateLogTargetAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the create log target accepted response
+func (o *CreateLogTargetAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the create log target accepted response
+func (o *CreateLogTargetAccepted) WithPayload(payload *models.LogTarget) *CreateLogTargetAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the create log target accepted response
+func (o *CreateLogTargetAccepted) SetPayload(payload *models.LogTarget) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *CreateLogTargetAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // CreateLogTargetBadRequestCode is the HTTP code returned for type CreateLogTargetBadRequest
 const CreateLogTargetBadRequestCode int = 400
 

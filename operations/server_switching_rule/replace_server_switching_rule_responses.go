@@ -57,6 +57,72 @@ func (o *ReplaceServerSwitchingRuleOK) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
+// ReplaceServerSwitchingRuleAcceptedCode is the HTTP code returned for type ReplaceServerSwitchingRuleAccepted
+const ReplaceServerSwitchingRuleAcceptedCode int = 202
+
+/*ReplaceServerSwitchingRuleAccepted Configuration change accepted and reload requested
+
+swagger:response replaceServerSwitchingRuleAccepted
+*/
+type ReplaceServerSwitchingRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ServerSwitchingRule `json:"body,omitempty"`
+}
+
+// NewReplaceServerSwitchingRuleAccepted creates ReplaceServerSwitchingRuleAccepted with default headers values
+func NewReplaceServerSwitchingRuleAccepted() *ReplaceServerSwitchingRuleAccepted {
+
+	return &ReplaceServerSwitchingRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace server switching rule accepted response
+func (o *ReplaceServerSwitchingRuleAccepted) WithReloadID(reloadID string) *ReplaceServerSwitchingRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace server switching rule accepted response
+func (o *ReplaceServerSwitchingRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace server switching rule accepted response
+func (o *ReplaceServerSwitchingRuleAccepted) WithPayload(payload *models.ServerSwitchingRule) *ReplaceServerSwitchingRuleAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace server switching rule accepted response
+func (o *ReplaceServerSwitchingRuleAccepted) SetPayload(payload *models.ServerSwitchingRule) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceServerSwitchingRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceServerSwitchingRuleBadRequestCode is the HTTP code returned for type ReplaceServerSwitchingRuleBadRequest
 const ReplaceServerSwitchingRuleBadRequestCode int = 400
 

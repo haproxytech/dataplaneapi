@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
+	"github.com/haproxytech/models"
 )
 
 //CreateSiteHandlerImpl implementation of the CreateSiteHandler interface using client-native client
@@ -47,13 +48,34 @@ func (h *CreateSiteHandlerImpl) Handle(params sites.CreateSiteParams, principal 
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return sites.NewCreateSiteDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateSite(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewCreateSiteDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return sites.NewCreateSiteCreated().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return sites.NewCreateSiteDefault(int(*e.Code)).WithPayload(e)
+			}
+			return sites.NewCreateSiteCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return sites.NewCreateSiteAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return sites.NewCreateSiteAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +89,34 @@ func (h *DeleteSiteHandlerImpl) Handle(params sites.DeleteSiteParams, principal 
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return sites.NewDeleteSiteDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteSite(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewDeleteSiteDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return sites.NewDeleteSiteNoContent()
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return sites.NewDeleteSiteDefault(int(*e.Code)).WithPayload(e)
+			}
+			return sites.NewDeleteSiteNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return sites.NewDeleteSiteAccepted().WithReloadID(rID)
+	}
+	return sites.NewDeleteSiteAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,11 +160,32 @@ func (h *ReplaceSiteHandlerImpl) Handle(params sites.ReplaceSiteParams, principa
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return sites.NewReplaceSiteDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.EditSite(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewReplaceSiteDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return sites.NewReplaceSiteOK().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return sites.NewReplaceSiteDefault(int(*e.Code)).WithPayload(e)
+			}
+			return sites.NewReplaceSiteOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return sites.NewReplaceSiteAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return sites.NewReplaceSiteAccepted().WithPayload(params.Data)
 }

@@ -13,6 +13,52 @@ import (
 	"github.com/haproxytech/models"
 )
 
+// DeleteLogTargetAcceptedCode is the HTTP code returned for type DeleteLogTargetAccepted
+const DeleteLogTargetAcceptedCode int = 202
+
+/*DeleteLogTargetAccepted Configuration change accepted and reload requested
+
+swagger:response deleteLogTargetAccepted
+*/
+type DeleteLogTargetAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+}
+
+// NewDeleteLogTargetAccepted creates DeleteLogTargetAccepted with default headers values
+func NewDeleteLogTargetAccepted() *DeleteLogTargetAccepted {
+
+	return &DeleteLogTargetAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete log target accepted response
+func (o *DeleteLogTargetAccepted) WithReloadID(reloadID string) *DeleteLogTargetAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete log target accepted response
+func (o *DeleteLogTargetAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WriteResponse to the client
+func (o *DeleteLogTargetAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(202)
+}
+
 // DeleteLogTargetNoContentCode is the HTTP code returned for type DeleteLogTargetNoContent
 const DeleteLogTargetNoContentCode int = 204
 

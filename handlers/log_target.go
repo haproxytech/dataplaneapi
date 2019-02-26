@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
+	"github.com/haproxytech/models"
 )
 
 //CreateLogTargetHandlerImpl implementation of the CreateLogTargetHandler interface using client-native client
@@ -47,13 +48,35 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateLogTarget(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return log_target.NewCreateLogTargetCreated().WithPayload(params.Data)
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+			}
+			return log_target.NewCreateLogTargetCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return log_target.NewCreateLogTargetAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return log_target.NewCreateLogTargetAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +90,35 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteLogTarget(params.ID, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return log_target.NewDeleteLogTargetNoContent()
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
+			}
+			return log_target.NewDeleteLogTargetNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return log_target.NewDeleteLogTargetAccepted().WithReloadID(rID)
+	}
+	return log_target.NewDeleteLogTargetAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,11 +162,32 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.EditLogTarget(params.ID, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return log_target.NewReplaceLogTargetOK().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
+			}
+			return log_target.NewReplaceLogTargetOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return log_target.NewReplaceLogTargetAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return log_target.NewReplaceLogTargetAccepted().WithPayload(params.Data)
 }

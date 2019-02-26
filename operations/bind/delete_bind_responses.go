@@ -13,6 +13,52 @@ import (
 	"github.com/haproxytech/models"
 )
 
+// DeleteBindAcceptedCode is the HTTP code returned for type DeleteBindAccepted
+const DeleteBindAcceptedCode int = 202
+
+/*DeleteBindAccepted Configuration change accepted and reload requested
+
+swagger:response deleteBindAccepted
+*/
+type DeleteBindAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+}
+
+// NewDeleteBindAccepted creates DeleteBindAccepted with default headers values
+func NewDeleteBindAccepted() *DeleteBindAccepted {
+
+	return &DeleteBindAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete bind accepted response
+func (o *DeleteBindAccepted) WithReloadID(reloadID string) *DeleteBindAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete bind accepted response
+func (o *DeleteBindAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WriteResponse to the client
+func (o *DeleteBindAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(202)
+}
+
 // DeleteBindNoContentCode is the HTTP code returned for type DeleteBindNoContent
 const DeleteBindNoContentCode int = 204
 

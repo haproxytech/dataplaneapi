@@ -57,6 +57,72 @@ func (o *ReplaceGlobalOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
+// ReplaceGlobalAcceptedCode is the HTTP code returned for type ReplaceGlobalAccepted
+const ReplaceGlobalAcceptedCode int = 202
+
+/*ReplaceGlobalAccepted Configuration change accepted and reload requested
+
+swagger:response replaceGlobalAccepted
+*/
+type ReplaceGlobalAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Global `json:"body,omitempty"`
+}
+
+// NewReplaceGlobalAccepted creates ReplaceGlobalAccepted with default headers values
+func NewReplaceGlobalAccepted() *ReplaceGlobalAccepted {
+
+	return &ReplaceGlobalAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace global accepted response
+func (o *ReplaceGlobalAccepted) WithReloadID(reloadID string) *ReplaceGlobalAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace global accepted response
+func (o *ReplaceGlobalAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace global accepted response
+func (o *ReplaceGlobalAccepted) WithPayload(payload *models.Global) *ReplaceGlobalAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace global accepted response
+func (o *ReplaceGlobalAccepted) SetPayload(payload *models.Global) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceGlobalAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceGlobalBadRequestCode is the HTTP code returned for type ReplaceGlobalBadRequest
 const ReplaceGlobalBadRequestCode int = 400
 

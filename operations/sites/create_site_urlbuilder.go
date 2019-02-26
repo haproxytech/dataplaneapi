@@ -15,6 +15,7 @@ import (
 
 // CreateSiteURL generates an URL for the create site operation
 type CreateSiteURL struct {
+	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
 
@@ -51,6 +52,14 @@ func (o *CreateSiteURL) Build() (*url.URL, error) {
 	result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var forceReload string
+	if o.ForceReload != nil {
+		forceReload = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReload != "" {
+		qs.Set("force_reload", forceReload)
+	}
 
 	var transactionID string
 	if o.TransactionID != nil {

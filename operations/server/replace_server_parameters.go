@@ -21,10 +21,18 @@ import (
 )
 
 // NewReplaceServerParams creates a new ReplaceServerParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewReplaceServerParams() ReplaceServerParams {
 
-	return ReplaceServerParams{}
+	var (
+		// initialize parameters with default values
+
+		forceReloadDefault = bool(false)
+	)
+
+	return ReplaceServerParams{
+		ForceReload: &forceReloadDefault,
+	}
 }
 
 // ReplaceServerParams contains all the bound params for the replace server operation
@@ -46,16 +54,21 @@ type ReplaceServerParams struct {
 	  In: body
 	*/
 	Data *models.Server
+	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	  In: query
+	  Default: false
+	*/
+	ForceReload *bool
 	/*Server name
 	  Required: true
 	  In: path
 	*/
 	Name string
-	/*ID of the transaction where we want to add the operation
+	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
 	TransactionID *string
-	/*Version used for checking configuration version
+	/*Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.
 	  In: query
 	*/
 	Version *int64
@@ -100,6 +113,11 @@ func (o *ReplaceServerParams) BindRequest(r *http.Request, route *middleware.Mat
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
+	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
+	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
@@ -137,6 +155,28 @@ func (o *ReplaceServerParams) bindBackend(rawData []string, hasKey bool, formats
 	}
 
 	o.Backend = raw
+
+	return nil
+}
+
+func (o *ReplaceServerParams) bindForceReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewReplaceServerParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_reload", "query", "bool", raw)
+	}
+	o.ForceReload = &value
 
 	return nil
 }

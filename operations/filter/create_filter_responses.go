@@ -57,6 +57,72 @@ func (o *CreateFilterCreated) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
+// CreateFilterAcceptedCode is the HTTP code returned for type CreateFilterAccepted
+const CreateFilterAcceptedCode int = 202
+
+/*CreateFilterAccepted Configuration change accepted and reload requested
+
+swagger:response createFilterAccepted
+*/
+type CreateFilterAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Filter `json:"body,omitempty"`
+}
+
+// NewCreateFilterAccepted creates CreateFilterAccepted with default headers values
+func NewCreateFilterAccepted() *CreateFilterAccepted {
+
+	return &CreateFilterAccepted{}
+}
+
+// WithReloadID adds the reloadId to the create filter accepted response
+func (o *CreateFilterAccepted) WithReloadID(reloadID string) *CreateFilterAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the create filter accepted response
+func (o *CreateFilterAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the create filter accepted response
+func (o *CreateFilterAccepted) WithPayload(payload *models.Filter) *CreateFilterAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the create filter accepted response
+func (o *CreateFilterAccepted) SetPayload(payload *models.Filter) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *CreateFilterAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // CreateFilterBadRequestCode is the HTTP code returned for type CreateFilterBadRequest
 const CreateFilterBadRequestCode int = 400
 

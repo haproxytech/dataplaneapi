@@ -57,6 +57,72 @@ func (o *ReplaceBackendOK) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 }
 
+// ReplaceBackendAcceptedCode is the HTTP code returned for type ReplaceBackendAccepted
+const ReplaceBackendAcceptedCode int = 202
+
+/*ReplaceBackendAccepted Configuration change accepted and reload requested
+
+swagger:response replaceBackendAccepted
+*/
+type ReplaceBackendAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Backend `json:"body,omitempty"`
+}
+
+// NewReplaceBackendAccepted creates ReplaceBackendAccepted with default headers values
+func NewReplaceBackendAccepted() *ReplaceBackendAccepted {
+
+	return &ReplaceBackendAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace backend accepted response
+func (o *ReplaceBackendAccepted) WithReloadID(reloadID string) *ReplaceBackendAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace backend accepted response
+func (o *ReplaceBackendAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace backend accepted response
+func (o *ReplaceBackendAccepted) WithPayload(payload *models.Backend) *ReplaceBackendAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace backend accepted response
+func (o *ReplaceBackendAccepted) SetPayload(payload *models.Backend) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceBackendAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceBackendBadRequestCode is the HTTP code returned for type ReplaceBackendBadRequest
 const ReplaceBackendBadRequestCode int = 400
 

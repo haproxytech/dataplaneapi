@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server"
+	"github.com/haproxytech/models"
 )
 
 //CreateServerHandlerImpl implementation of the CreateServerHandler interface using client-native client
@@ -47,13 +48,34 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateServer(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return server.NewCreateServerCreated().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+			}
+			return server.NewCreateServerCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return server.NewCreateServerAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return server.NewCreateServerAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +89,35 @@ func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, princ
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteServer(params.Name, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return server.NewDeleteServerNoContent()
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
+			}
+			return server.NewDeleteServerNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return server.NewDeleteServerAccepted().WithReloadID(rID)
+	}
+	return server.NewDeleteServerAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,22 +161,42 @@ func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, pri
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	ondisk, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	reload := changeThroughRuntimeAPI(*params.Data, *ondisk.Data, params.Backend, "", h.Client)
-
 	err = h.Client.Configuration.EditServer(params.Name, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
 	}
-
-	if reload {
-		h.ReloadAgent.Reload()
+	if params.TransactionID == nil {
+		reload := changeThroughRuntimeAPI(*params.Data, *ondisk.Data, params.Backend, "", h.Client)
+		if reload {
+			if *params.ForceReload {
+				err := h.ReloadAgent.ForceReload()
+				if err != nil {
+					e := misc.HandleError(err)
+					return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+				}
+				return server.NewReplaceServerOK().WithPayload(params.Data)
+			}
+			rID := h.ReloadAgent.Reload()
+			return server.NewReplaceServerAccepted().WithReloadID(rID).WithPayload(params.Data)
+		}
+		return server.NewReplaceServerOK().WithPayload(params.Data)
 	}
-	return server.NewReplaceServerOK().WithPayload(params.Data)
+	return server.NewReplaceServerAccepted().WithPayload(params.Data)
 }

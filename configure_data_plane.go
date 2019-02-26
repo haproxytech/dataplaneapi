@@ -45,12 +45,13 @@ import (
 //go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
 
 var haproxyOptions struct {
-	ConfigFile     string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
-	Userlist       string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
-	HAProxy        string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
-	ReloadDelay    int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
-	ReloadCmd      string `short:"r" long:"reload-cmd" description:"Reload command"`
-	TransactionDir string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
+	ConfigFile      string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
+	Userlist        string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
+	HAProxy         string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
+	ReloadDelay     int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
+	ReloadCmd       string `short:"r" long:"reload-cmd" description:"Reload command"`
+	ReloadRetention int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1"`
+	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
 }
 
 func configureFlags(api *operations.DataPlaneAPI) {
@@ -137,7 +138,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
-	ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd)
+	ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd, haproxyOptions.ReloadRetention)
 
 	// Applies when the Authorization header is set with the Basic scheme
 	api.BasicAuthAuth = func(user string, pass string) (interface{}, error) {
@@ -316,6 +317,10 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup global configuration handlers
 	api.GlobalGetGlobalHandler = &handlers.GetGlobalHandlerImpl{Client: client}
 	api.GlobalReplaceGlobalHandler = &handlers.ReplaceGlobalHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup reload handlers
+	api.ReloadsGetReloadHandler = &handlers.GetReloadHandlerImpl{ReloadAgent: ra}
+	api.ReloadsGetReloadsHandler = &handlers.GetReloadsHandlerImpl{ReloadAgent: ra}
 
 	// setup specification handler
 	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {

@@ -56,6 +56,71 @@ func (o *PostHAProxyConfigurationCreated) WriteResponse(rw http.ResponseWriter, 
 
 }
 
+// PostHAProxyConfigurationAcceptedCode is the HTTP code returned for type PostHAProxyConfigurationAccepted
+const PostHAProxyConfigurationAcceptedCode int = 202
+
+/*PostHAProxyConfigurationAccepted Configuration change accepted and reload requested
+
+swagger:response postHAProxyConfigurationAccepted
+*/
+type PostHAProxyConfigurationAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload string `json:"body,omitempty"`
+}
+
+// NewPostHAProxyConfigurationAccepted creates PostHAProxyConfigurationAccepted with default headers values
+func NewPostHAProxyConfigurationAccepted() *PostHAProxyConfigurationAccepted {
+
+	return &PostHAProxyConfigurationAccepted{}
+}
+
+// WithReloadID adds the reloadId to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) WithReloadID(reloadID string) *PostHAProxyConfigurationAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) WithPayload(payload string) *PostHAProxyConfigurationAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) SetPayload(payload string) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostHAProxyConfigurationAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	payload := o.Payload
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
+	}
+
+}
+
 // PostHAProxyConfigurationBadRequestCode is the HTTP code returned for type PostHAProxyConfigurationBadRequest
 const PostHAProxyConfigurationBadRequestCode int = 400
 

@@ -32,11 +32,24 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 
 //Handle executing the request and returning a response
 func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
-	err := h.Client.Configuration.PostRawConfiguration(params.Configuration, *params.Version)
+	v := int64(0)
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	err := h.Client.Configuration.PostRawConfiguration(params.Configuration, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return configuration.NewPostHAProxyConfigurationCreated().WithPayload(*params.Configuration)
+	if *params.ForceReload {
+		err := h.ReloadAgent.ForceReload()
+		if err != nil {
+			e := misc.HandleError(err)
+			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		}
+		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(*params.Configuration)
+	}
+	rID := h.ReloadAgent.Reload()
+	return configuration.NewPostHAProxyConfigurationAccepted().WithReloadID(rID).WithPayload(*params.Configuration)
 }

@@ -57,6 +57,72 @@ func (o *ReplaceLogTargetOK) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
+// ReplaceLogTargetAcceptedCode is the HTTP code returned for type ReplaceLogTargetAccepted
+const ReplaceLogTargetAcceptedCode int = 202
+
+/*ReplaceLogTargetAccepted Configuration change accepted and reload requested
+
+swagger:response replaceLogTargetAccepted
+*/
+type ReplaceLogTargetAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.LogTarget `json:"body,omitempty"`
+}
+
+// NewReplaceLogTargetAccepted creates ReplaceLogTargetAccepted with default headers values
+func NewReplaceLogTargetAccepted() *ReplaceLogTargetAccepted {
+
+	return &ReplaceLogTargetAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace log target accepted response
+func (o *ReplaceLogTargetAccepted) WithReloadID(reloadID string) *ReplaceLogTargetAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace log target accepted response
+func (o *ReplaceLogTargetAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace log target accepted response
+func (o *ReplaceLogTargetAccepted) WithPayload(payload *models.LogTarget) *ReplaceLogTargetAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace log target accepted response
+func (o *ReplaceLogTargetAccepted) SetPayload(payload *models.LogTarget) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceLogTargetAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceLogTargetBadRequestCode is the HTTP code returned for type ReplaceLogTargetBadRequest
 const ReplaceLogTargetBadRequestCode int = 400
 

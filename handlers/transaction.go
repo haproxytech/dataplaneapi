@@ -59,7 +59,7 @@ func (th *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionPa
 	t, err := th.Client.Configuration.GetTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
-		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return transactions.NewGetTransactionOK().WithPayload(t)
 }
@@ -73,7 +73,7 @@ func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactions
 	ts, err := th.Client.Configuration.GetTransactions(s)
 	if err != nil {
 		e := misc.HandleError(err)
-		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return transactions.NewGetTransactionsOK().WithPayload(*ts)
 }
@@ -83,8 +83,16 @@ func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransac
 	err := th.Client.Configuration.CommitTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
-		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
-	th.ReloadAgent.Reload()
-	return transactions.NewCommitTransactionOK()
+	if *params.ForceReload {
+		err := th.ReloadAgent.ForceReload()
+		if err != nil {
+			e := misc.HandleError(err)
+			return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
+		}
+		return transactions.NewCommitTransactionOK()
+	}
+	rID := th.ReloadAgent.Reload()
+	return transactions.NewCommitTransactionAccepted().WithReloadID(rID)
 }

@@ -18,10 +18,18 @@ import (
 )
 
 // NewDeleteBackendSwitchingRuleParams creates a new DeleteBackendSwitchingRuleParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewDeleteBackendSwitchingRuleParams() DeleteBackendSwitchingRuleParams {
 
-	return DeleteBackendSwitchingRuleParams{}
+	var (
+		// initialize parameters with default values
+
+		forceReloadDefault = bool(false)
+	)
+
+	return DeleteBackendSwitchingRuleParams{
+		ForceReload: &forceReloadDefault,
+	}
 }
 
 // DeleteBackendSwitchingRuleParams contains all the bound params for the delete backend switching rule operation
@@ -33,6 +41,11 @@ type DeleteBackendSwitchingRuleParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	  In: query
+	  Default: false
+	*/
+	ForceReload *bool
 	/*Frontend name
 	  Required: true
 	  In: query
@@ -43,11 +56,11 @@ type DeleteBackendSwitchingRuleParams struct {
 	  In: path
 	*/
 	ID int64
-	/*ID of the transaction where we want to add the operation
+	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
 	TransactionID *string
-	/*Version used for checking configuration version
+	/*Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.
 	  In: query
 	*/
 	Version *int64
@@ -63,6 +76,11 @@ func (o *DeleteBackendSwitchingRuleParams) BindRequest(r *http.Request, route *m
 	o.HTTPRequest = r
 
 	qs := runtime.Values(r.URL.Query())
+
+	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
+	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
 
 	qFrontend, qhkFrontend, _ := qs.GetOK("frontend")
 	if err := o.bindFrontend(qFrontend, qhkFrontend, route.Formats); err != nil {
@@ -87,6 +105,28 @@ func (o *DeleteBackendSwitchingRuleParams) BindRequest(r *http.Request, route *m
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (o *DeleteBackendSwitchingRuleParams) bindForceReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewDeleteBackendSwitchingRuleParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_reload", "query", "bool", raw)
+	}
+	o.ForceReload = &value
+
 	return nil
 }
 

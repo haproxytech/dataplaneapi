@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
+	"github.com/haproxytech/models"
 )
 
 //CreateFrontendHandlerImpl implementation of the CreateFrontendHandler interface using client-native client
@@ -47,13 +48,34 @@ func (h *CreateFrontendHandlerImpl) Handle(params frontend.CreateFrontendParams,
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return frontend.NewCreateFrontendDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateFrontend(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewCreateFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return frontend.NewCreateFrontendCreated().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return frontend.NewCreateFrontendDefault(int(*e.Code)).WithPayload(e)
+			}
+			return frontend.NewCreateFrontendCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return frontend.NewCreateFrontendAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return frontend.NewCreateFrontendAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +89,34 @@ func (h *DeleteFrontendHandlerImpl) Handle(params frontend.DeleteFrontendParams,
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return frontend.NewDeleteFrontendDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteFrontend(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewDeleteFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return frontend.NewDeleteFrontendNoContent()
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return frontend.NewDeleteFrontendDefault(int(*e.Code)).WithPayload(e)
+			}
+			return frontend.NewDeleteFrontendNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return frontend.NewDeleteFrontendAccepted().WithReloadID(rID)
+	}
+	return frontend.NewDeleteFrontendAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,23 +160,42 @@ func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParam
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	ondisk, err := h.Client.Configuration.GetFrontend(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	reload := changeThroughRuntimeAPI(*params.Data, *ondisk.Data, "", "", h.Client)
-
 	err = h.Client.Configuration.EditFrontend(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
-
-	if reload {
-		h.ReloadAgent.Reload()
+	if params.TransactionID == nil {
+		reload := changeThroughRuntimeAPI(*params.Data, *ondisk.Data, "", "", h.Client)
+		if reload {
+			if *params.ForceReload {
+				err := h.ReloadAgent.ForceReload()
+				if err != nil {
+					e := misc.HandleError(err)
+					return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
+				}
+				return frontend.NewReplaceFrontendOK().WithPayload(params.Data)
+			}
+			rID := h.ReloadAgent.Reload()
+			return frontend.NewReplaceFrontendAccepted().WithReloadID(rID).WithPayload(params.Data)
+		}
+		return frontend.NewReplaceFrontendOK().WithPayload(params.Data)
 	}
-
-	return frontend.NewReplaceFrontendOK().WithPayload(params.Data)
+	return frontend.NewReplaceFrontendAccepted().WithPayload(params.Data)
 }

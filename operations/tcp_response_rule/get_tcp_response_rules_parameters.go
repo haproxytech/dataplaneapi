@@ -37,7 +37,7 @@ type GetTCPResponseRulesParams struct {
 	  In: query
 	*/
 	Backend string
-	/*ID of the transaction where we want to add the operation
+	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
 	TransactionID *string

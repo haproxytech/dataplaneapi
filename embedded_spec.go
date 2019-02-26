@@ -209,6 +209,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -216,6 +219,18 @@ func init() {
             "description": "Backend Switching Rule created",
             "schema": {
               "$ref": "#/definitions/backend_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -319,6 +334,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -326,6 +344,18 @@ func init() {
             "description": "Backend Switching Rule replaced",
             "schema": {
               "$ref": "#/definitions/backend_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -368,9 +398,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Backend Switching Rule deleted"
           },
@@ -439,6 +481,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -446,6 +491,18 @@ func init() {
             "description": "Backend created",
             "schema": {
               "$ref": "#/definitions/backend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -533,6 +590,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -540,6 +600,18 @@ func init() {
             "description": "Backend replaced",
             "schema": {
               "$ref": "#/definitions/backend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -574,9 +646,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Backend deleted"
           },
@@ -661,6 +745,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -668,6 +755,18 @@ func init() {
             "description": "Bind created",
             "schema": {
               "$ref": "#/definitions/bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -771,6 +870,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -778,6 +880,18 @@ func init() {
             "description": "Bind replaced",
             "schema": {
               "$ref": "#/definitions/bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -820,9 +934,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Bind deleted"
           },
@@ -931,6 +1057,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -938,6 +1067,18 @@ func init() {
             "description": "Filter created",
             "schema": {
               "$ref": "#/definitions/filter"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1065,6 +1206,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1072,6 +1216,18 @@ func init() {
             "description": "Filter replaced",
             "schema": {
               "$ref": "#/definitions/filter"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1126,9 +1282,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Filter deleted"
           },
@@ -1197,6 +1365,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1204,6 +1375,18 @@ func init() {
             "description": "Frontend created",
             "schema": {
               "$ref": "#/definitions/frontend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/frontend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1291,6 +1474,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1298,6 +1484,18 @@ func init() {
             "description": "Frontend replaced",
             "schema": {
               "$ref": "#/definitions/frontend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/frontend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1332,9 +1530,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Frontend deleted"
           },
@@ -1399,15 +1609,13 @@ func init() {
             }
           },
           {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query",
-            "required": true
+            "$ref": "#/parameters/transaction_id"
           },
           {
-            "$ref": "#/parameters/transaction_id"
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1415,6 +1623,18 @@ func init() {
             "description": "Global replaced",
             "schema": {
               "$ref": "#/definitions/global"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/global"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1522,6 +1742,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1529,6 +1752,18 @@ func init() {
             "description": "HTTP Request Rule created",
             "schema": {
               "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1656,6 +1891,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1663,6 +1901,18 @@ func init() {
             "description": "HTTP Request Rule replaced",
             "schema": {
               "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1717,9 +1967,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "HTTP Request Rule deleted"
           },
@@ -1828,6 +2090,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1835,6 +2100,18 @@ func init() {
             "description": "HTTP Response Rule created",
             "schema": {
               "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -1962,6 +2239,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -1969,6 +2249,18 @@ func init() {
             "description": "HTTP Response Rule replaced",
             "schema": {
               "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2023,9 +2315,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "HTTP Response Rule deleted"
           },
@@ -2134,6 +2438,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2141,6 +2448,18 @@ func init() {
             "description": "Log Target created",
             "schema": {
               "$ref": "#/definitions/log_target"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2268,6 +2587,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2275,6 +2597,18 @@ func init() {
             "description": "Log Target replaced",
             "schema": {
               "$ref": "#/definitions/log_target"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2329,9 +2663,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Log Target deleted"
           },
@@ -2404,6 +2750,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2411,6 +2760,18 @@ func init() {
             "description": "New HAProxy configuration pushed",
             "schema": {
               "type": "string"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2494,6 +2855,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2501,6 +2865,18 @@ func init() {
             "description": "Server Switching Rule created",
             "schema": {
               "$ref": "#/definitions/server_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2604,6 +2980,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2611,6 +2990,18 @@ func init() {
             "description": "Server Switching Rule replaced",
             "schema": {
               "$ref": "#/definitions/server_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2653,9 +3044,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Server Switching Rule deleted"
           },
@@ -2740,6 +3143,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2747,6 +3153,18 @@ func init() {
             "description": "Server created",
             "schema": {
               "$ref": "#/definitions/server"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2850,6 +3268,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2857,6 +3278,18 @@ func init() {
             "description": "Server replaced",
             "schema": {
               "$ref": "#/definitions/server"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -2899,9 +3332,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Server deleted"
           },
@@ -2986,6 +3431,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -2993,6 +3441,18 @@ func init() {
             "description": "Stick Rule created",
             "schema": {
               "$ref": "#/definitions/stick_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/stick_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3096,6 +3556,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -3103,6 +3566,18 @@ func init() {
             "description": "Stick Rule replaced",
             "schema": {
               "$ref": "#/definitions/stick_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/stick_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3145,9 +3620,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Stick Rule deleted"
           },
@@ -3256,6 +3743,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -3263,6 +3753,18 @@ func init() {
             "description": "TCP Request Rule created",
             "schema": {
               "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3390,6 +3892,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -3397,6 +3902,18 @@ func init() {
             "description": "TCP Request Rule replaced",
             "schema": {
               "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3451,9 +3968,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "TCP Request Rule deleted"
           },
@@ -3540,6 +4069,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -3547,6 +4079,18 @@ func init() {
             "description": "TCP Response Rule created",
             "schema": {
               "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3652,6 +4196,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -3659,6 +4206,18 @@ func init() {
             "description": "TCP Response Rule replaced",
             "schema": {
               "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3702,9 +4261,21 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "TCP Response Rule deleted"
           },
@@ -3734,6 +4305,63 @@ func init() {
             "schema": {
               "$ref": "#/definitions/process_info"
             }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/reloads": {
+      "get": {
+        "description": "Returns a list of HAProxy reloads.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Reloads"
+        ],
+        "summary": "Return list of HAProxy Reloads.",
+        "operationId": "getReloads",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/reloads"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/reloads/{id}": {
+      "get": {
+        "description": "Returns one HAProxy reload status.",
+        "tags": [
+          "Reloads"
+        ],
+        "summary": "Return one HAProxy reload status",
+        "operationId": "getReload",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Reload id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/reload"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -3795,6 +4423,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -3802,6 +4433,18 @@ func init() {
             "description": "Site created",
             "schema": {
               "$ref": "#/definitions/site"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/site"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3887,6 +4530,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -3894,6 +4540,18 @@ func init() {
             "description": "Site replaced",
             "schema": {
               "$ref": "#/definitions/site"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/site"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -3927,9 +4585,24 @@ func init() {
           },
           {
             "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/site"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Site deleted"
           },
@@ -4137,6 +4810,9 @@ func init() {
             "name": "id",
             "in": "path",
             "required": true
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -4144,6 +4820,18 @@ func init() {
             "description": "Transaction succesfully commited",
             "schema": {
               "$ref": "#/definitions/transaction"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -5962,6 +6650,43 @@ func init() {
         }
       }
     },
+    "reload": {
+      "description": "HAProxy reload",
+      "type": "object",
+      "title": "HAProxy reload",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "reload_timestamp": {
+          "type": "integer"
+        },
+        "response": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "failed",
+            "in_progress",
+            "succeeded"
+          ]
+        }
+      },
+      "example": {
+        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
+        "status": "in_progress"
+      }
+    },
+    "reloads": {
+      "description": "HAProxy reloads array",
+      "type": "array",
+      "title": "HAProxy reloads array",
+      "items": {
+        "$ref": "#/definitions/reload"
+      }
+    },
     "server": {
       "description": "HAProxy backend server configuration",
       "type": "object",
@@ -6569,17 +7294,24 @@ func init() {
     }
   },
   "parameters": {
+    "force_reload": {
+      "type": "boolean",
+      "default": false,
+      "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+      "name": "force_reload",
+      "in": "query"
+    },
     "transaction_id": {
       "type": "string",
       "x-nullable": false,
-      "description": "ID of the transaction where we want to add the operation",
+      "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
       "name": "transaction_id",
       "in": "query"
     },
     "version": {
       "type": "integer",
       "x-nullable": false,
-      "description": "Version used for checking configuration version",
+      "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
       "name": "version",
       "in": "query"
     }
@@ -6634,6 +7366,10 @@ func init() {
     {
       "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the \ntransaction with trasactions POST, and call the configuration changes you need with parameter \ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id, \ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
+    },
+    {
+      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string \nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
+      "name": "Reloads"
     },
     {
       "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends \nconnected to it via default_backend or use-backend directives.\n",
@@ -6865,7 +7601,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -6913,15 +7649,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -6930,6 +7673,18 @@ func init() {
             "description": "Backend Switching Rule created",
             "schema": {
               "$ref": "#/definitions/backend_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -6981,7 +7736,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -7042,15 +7797,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -7059,6 +7821,18 @@ func init() {
             "description": "Backend Switching Rule replaced",
             "schema": {
               "$ref": "#/definitions/backend_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -7108,19 +7882,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Backend Switching Rule deleted"
           },
@@ -7152,7 +7942,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -7192,15 +7982,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -7209,6 +8006,18 @@ func init() {
             "description": "Backend created",
             "schema": {
               "$ref": "#/definitions/backend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -7252,7 +8061,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -7305,15 +8114,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -7322,6 +8138,18 @@ func init() {
             "description": "Backend replaced",
             "schema": {
               "$ref": "#/definitions/backend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/backend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -7363,19 +8191,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Backend deleted"
           },
@@ -7415,7 +8259,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -7463,15 +8307,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -7480,6 +8331,18 @@ func init() {
             "description": "Bind created",
             "schema": {
               "$ref": "#/definitions/bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -7531,7 +8394,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -7592,15 +8455,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -7609,6 +8479,18 @@ func init() {
             "description": "Bind replaced",
             "schema": {
               "$ref": "#/definitions/bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -7658,19 +8540,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Bind deleted"
           },
@@ -7722,7 +8620,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -7782,15 +8680,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -7799,6 +8704,18 @@ func init() {
             "description": "Filter created",
             "schema": {
               "$ref": "#/definitions/filter"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -7862,7 +8779,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -7935,15 +8852,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -7952,6 +8876,18 @@ func init() {
             "description": "Filter replaced",
             "schema": {
               "$ref": "#/definitions/filter"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/filter"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -8013,19 +8949,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Filter deleted"
           },
@@ -8057,7 +9009,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -8097,15 +9049,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -8114,6 +9073,18 @@ func init() {
             "description": "Frontend created",
             "schema": {
               "$ref": "#/definitions/frontend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/frontend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -8157,7 +9128,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -8210,15 +9181,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -8227,6 +9205,18 @@ func init() {
             "description": "Frontend replaced",
             "schema": {
               "$ref": "#/definitions/frontend"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/frontend"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -8268,19 +9258,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Frontend deleted"
           },
@@ -8312,7 +9318,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -8350,18 +9356,24 @@ func init() {
             }
           },
           {
-            "type": "integer",
-            "x-nullable": false,
-            "description": "Version used for checking configuration version",
-            "name": "version",
-            "in": "query",
-            "required": true
-          },
-          {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -8370,6 +9382,18 @@ func init() {
             "description": "Global replaced",
             "schema": {
               "$ref": "#/definitions/global"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/global"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -8420,7 +9444,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -8480,15 +9504,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -8497,6 +9528,18 @@ func init() {
             "description": "HTTP Request Rule created",
             "schema": {
               "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -8560,7 +9603,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -8633,15 +9676,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -8650,6 +9700,18 @@ func init() {
             "description": "HTTP Request Rule replaced",
             "schema": {
               "$ref": "#/definitions/http_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -8711,19 +9773,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "HTTP Request Rule deleted"
           },
@@ -8775,7 +9853,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -8835,15 +9913,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -8852,6 +9937,18 @@ func init() {
             "description": "HTTP Response Rule created",
             "schema": {
               "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -8915,7 +10012,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -8988,15 +10085,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -9005,6 +10109,18 @@ func init() {
             "description": "HTTP Response Rule replaced",
             "schema": {
               "$ref": "#/definitions/http_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9066,19 +10182,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "HTTP Response Rule deleted"
           },
@@ -9130,7 +10262,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -9190,15 +10322,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -9207,6 +10346,18 @@ func init() {
             "description": "Log Target created",
             "schema": {
               "$ref": "#/definitions/log_target"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9270,7 +10421,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -9343,15 +10494,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -9360,6 +10518,18 @@ func init() {
             "description": "Log Target replaced",
             "schema": {
               "$ref": "#/definitions/log_target"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_target"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9421,19 +10591,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Log Target deleted"
           },
@@ -9505,15 +10691,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -9522,6 +10715,18 @@ func init() {
             "description": "New HAProxy configuration pushed",
             "schema": {
               "type": "string"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9560,7 +10765,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -9608,15 +10813,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -9625,6 +10837,18 @@ func init() {
             "description": "Server Switching Rule created",
             "schema": {
               "$ref": "#/definitions/server_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9676,7 +10900,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -9737,15 +10961,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -9754,6 +10985,18 @@ func init() {
             "description": "Server Switching Rule replaced",
             "schema": {
               "$ref": "#/definitions/server_switching_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_switching_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9803,19 +11046,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Server Switching Rule deleted"
           },
@@ -9855,7 +11114,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -9903,15 +11162,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -9920,6 +11186,18 @@ func init() {
             "description": "Server created",
             "schema": {
               "$ref": "#/definitions/server"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9971,7 +11249,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -10032,15 +11310,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -10049,6 +11334,18 @@ func init() {
             "description": "Server replaced",
             "schema": {
               "$ref": "#/definitions/server"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -10098,19 +11395,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Server deleted"
           },
@@ -10150,7 +11463,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -10198,15 +11511,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -10215,6 +11535,18 @@ func init() {
             "description": "Stick Rule created",
             "schema": {
               "$ref": "#/definitions/stick_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/stick_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -10266,7 +11598,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -10327,15 +11659,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -10344,6 +11683,18 @@ func init() {
             "description": "Stick Rule replaced",
             "schema": {
               "$ref": "#/definitions/stick_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/stick_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -10393,19 +11744,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Stick Rule deleted"
           },
@@ -10457,7 +11824,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -10517,15 +11884,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -10534,6 +11908,18 @@ func init() {
             "description": "TCP Request Rule created",
             "schema": {
               "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -10597,7 +11983,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -10670,15 +12056,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -10687,6 +12080,18 @@ func init() {
             "description": "TCP Request Rule replaced",
             "schema": {
               "$ref": "#/definitions/tcp_request_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_request_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -10748,19 +12153,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "TCP Request Rule deleted"
           },
@@ -10801,7 +12222,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -10850,15 +12271,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -10867,6 +12295,18 @@ func init() {
             "description": "TCP Response Rule created",
             "schema": {
               "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -10919,7 +12359,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -10981,15 +12421,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -10998,6 +12445,18 @@ func init() {
             "description": "TCP Response Rule replaced",
             "schema": {
               "$ref": "#/definitions/tcp_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -11048,19 +12507,35 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "TCP Response Rule deleted"
           },
@@ -11106,6 +12581,72 @@ func init() {
         }
       }
     },
+    "/services/haproxy/reloads": {
+      "get": {
+        "description": "Returns a list of HAProxy reloads.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Reloads"
+        ],
+        "summary": "Return list of HAProxy Reloads.",
+        "operationId": "getReloads",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/reloads"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/reloads/{id}": {
+      "get": {
+        "description": "Returns one HAProxy reload status.",
+        "tags": [
+          "Reloads"
+        ],
+        "summary": "Return one HAProxy reload status",
+        "operationId": "getReload",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Reload id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/reload"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/sites": {
       "get": {
         "description": "Returns an array of all configured sites.",
@@ -11118,7 +12659,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -11157,15 +12698,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -11174,6 +12722,18 @@ func init() {
             "description": "Site created",
             "schema": {
               "$ref": "#/definitions/site"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/site"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -11216,7 +12776,7 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           }
@@ -11268,15 +12828,22 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
@@ -11285,6 +12852,18 @@ func init() {
             "description": "Site replaced",
             "schema": {
               "$ref": "#/definitions/site"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/site"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -11325,19 +12904,38 @@ func init() {
           {
             "type": "string",
             "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation",
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
             "x-nullable": false,
-            "description": "Version used for checking configuration version",
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
             "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/site"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "Site deleted"
           },
@@ -11569,6 +13167,13 @@ func init() {
             "name": "id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
           }
         ],
         "responses": {
@@ -11576,6 +13181,18 @@ func init() {
             "description": "Transaction succesfully commited",
             "schema": {
               "$ref": "#/definitions/transaction"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -13800,6 +15417,43 @@ func init() {
         }
       }
     },
+    "reload": {
+      "description": "HAProxy reload",
+      "type": "object",
+      "title": "HAProxy reload",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "reload_timestamp": {
+          "type": "integer"
+        },
+        "response": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "failed",
+            "in_progress",
+            "succeeded"
+          ]
+        }
+      },
+      "example": {
+        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
+        "status": "in_progress"
+      }
+    },
+    "reloads": {
+      "description": "HAProxy reloads array",
+      "type": "array",
+      "title": "HAProxy reloads array",
+      "items": {
+        "$ref": "#/definitions/reload"
+      }
+    },
     "server": {
       "description": "HAProxy backend server configuration",
       "type": "object",
@@ -14427,17 +16081,24 @@ func init() {
     }
   },
   "parameters": {
+    "force_reload": {
+      "type": "boolean",
+      "default": false,
+      "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+      "name": "force_reload",
+      "in": "query"
+    },
     "transaction_id": {
       "type": "string",
       "x-nullable": false,
-      "description": "ID of the transaction where we want to add the operation",
+      "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
       "name": "transaction_id",
       "in": "query"
     },
     "version": {
       "type": "integer",
       "x-nullable": false,
-      "description": "Version used for checking configuration version",
+      "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
       "name": "version",
       "in": "query"
     }
@@ -14492,6 +16153,10 @@ func init() {
     {
       "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the \ntransaction with trasactions POST, and call the configuration changes you need with parameter \ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id, \ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
+    },
+    {
+      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string \nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
+      "name": "Reloads"
     },
     {
       "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends \nconnected to it via default_backend or use-backend directives.\n",

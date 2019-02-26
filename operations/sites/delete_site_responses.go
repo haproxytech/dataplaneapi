@@ -13,6 +13,72 @@ import (
 	"github.com/haproxytech/models"
 )
 
+// DeleteSiteAcceptedCode is the HTTP code returned for type DeleteSiteAccepted
+const DeleteSiteAcceptedCode int = 202
+
+/*DeleteSiteAccepted Configuration change accepted and reload requested
+
+swagger:response deleteSiteAccepted
+*/
+type DeleteSiteAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Site `json:"body,omitempty"`
+}
+
+// NewDeleteSiteAccepted creates DeleteSiteAccepted with default headers values
+func NewDeleteSiteAccepted() *DeleteSiteAccepted {
+
+	return &DeleteSiteAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete site accepted response
+func (o *DeleteSiteAccepted) WithReloadID(reloadID string) *DeleteSiteAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete site accepted response
+func (o *DeleteSiteAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the delete site accepted response
+func (o *DeleteSiteAccepted) WithPayload(payload *models.Site) *DeleteSiteAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the delete site accepted response
+func (o *DeleteSiteAccepted) SetPayload(payload *models.Site) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *DeleteSiteAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // DeleteSiteNoContentCode is the HTTP code returned for type DeleteSiteNoContent
 const DeleteSiteNoContentCode int = 204
 

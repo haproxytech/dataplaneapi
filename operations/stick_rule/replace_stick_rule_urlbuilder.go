@@ -19,6 +19,7 @@ type ReplaceStickRuleURL struct {
 	ID int64
 
 	Backend       string
+	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
 
@@ -66,6 +67,14 @@ func (o *ReplaceStickRuleURL) Build() (*url.URL, error) {
 	backend := o.Backend
 	if backend != "" {
 		qs.Set("backend", backend)
+	}
+
+	var forceReload string
+	if o.ForceReload != nil {
+		forceReload = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReload != "" {
+		qs.Set("force_reload", forceReload)
 	}
 
 	var transactionID string

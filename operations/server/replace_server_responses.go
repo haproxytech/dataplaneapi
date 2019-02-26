@@ -57,6 +57,72 @@ func (o *ReplaceServerOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
+// ReplaceServerAcceptedCode is the HTTP code returned for type ReplaceServerAccepted
+const ReplaceServerAcceptedCode int = 202
+
+/*ReplaceServerAccepted Configuration change accepted and reload requested
+
+swagger:response replaceServerAccepted
+*/
+type ReplaceServerAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Server `json:"body,omitempty"`
+}
+
+// NewReplaceServerAccepted creates ReplaceServerAccepted with default headers values
+func NewReplaceServerAccepted() *ReplaceServerAccepted {
+
+	return &ReplaceServerAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace server accepted response
+func (o *ReplaceServerAccepted) WithReloadID(reloadID string) *ReplaceServerAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace server accepted response
+func (o *ReplaceServerAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace server accepted response
+func (o *ReplaceServerAccepted) WithPayload(payload *models.Server) *ReplaceServerAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace server accepted response
+func (o *ReplaceServerAccepted) SetPayload(payload *models.Server) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceServerAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceServerBadRequestCode is the HTTP code returned for type ReplaceServerBadRequest
 const ReplaceServerBadRequestCode int = 400
 

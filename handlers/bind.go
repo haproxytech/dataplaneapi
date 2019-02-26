@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
+	"github.com/haproxytech/models"
 )
 
 //CreateBindHandlerImpl implementation of the CreateBindHandler interface using client-native client
@@ -47,13 +48,34 @@ func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal i
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateBind(params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return bind.NewCreateBindCreated().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
+			}
+			return bind.NewCreateBindCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return bind.NewCreateBindAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return bind.NewCreateBindAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +89,34 @@ func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal i
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteBind(params.Name, params.Frontend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return bind.NewDeleteBindNoContent()
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
+			}
+			return bind.NewDeleteBindNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return bind.NewDeleteBindAccepted().WithReloadID(rID)
+	}
+	return bind.NewDeleteBindAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,11 +160,32 @@ func (h *ReplaceBindHandlerImpl) Handle(params bind.ReplaceBindParams, principal
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.EditBind(params.Name, params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return bind.NewReplaceBindOK().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
+			}
+			return bind.NewReplaceBindOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return bind.NewReplaceBindAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return bind.NewReplaceBindAccepted().WithPayload(params.Data)
 }

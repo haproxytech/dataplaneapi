@@ -13,6 +13,52 @@ import (
 	"github.com/haproxytech/models"
 )
 
+// DeleteFilterAcceptedCode is the HTTP code returned for type DeleteFilterAccepted
+const DeleteFilterAcceptedCode int = 202
+
+/*DeleteFilterAccepted Configuration change accepted and reload requested
+
+swagger:response deleteFilterAccepted
+*/
+type DeleteFilterAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+}
+
+// NewDeleteFilterAccepted creates DeleteFilterAccepted with default headers values
+func NewDeleteFilterAccepted() *DeleteFilterAccepted {
+
+	return &DeleteFilterAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete filter accepted response
+func (o *DeleteFilterAccepted) WithReloadID(reloadID string) *DeleteFilterAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete filter accepted response
+func (o *DeleteFilterAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WriteResponse to the client
+func (o *DeleteFilterAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(202)
+}
+
 // DeleteFilterNoContentCode is the HTTP code returned for type DeleteFilterNoContent
 const DeleteFilterNoContentCode int = 204
 

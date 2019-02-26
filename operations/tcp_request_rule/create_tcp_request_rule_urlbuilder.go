@@ -15,6 +15,7 @@ import (
 
 // CreateTCPRequestRuleURL generates an URL for the create TCP request rule operation
 type CreateTCPRequestRuleURL struct {
+	ForceReload   *bool
 	ParentName    string
 	ParentType    string
 	TransactionID *string
@@ -53,6 +54,14 @@ func (o *CreateTCPRequestRuleURL) Build() (*url.URL, error) {
 	result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var forceReload string
+	if o.ForceReload != nil {
+		forceReload = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReload != "" {
+		qs.Set("force_reload", forceReload)
+	}
 
 	parentName := o.ParentName
 	if parentName != "" {

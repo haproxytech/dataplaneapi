@@ -13,6 +13,52 @@ import (
 	"github.com/haproxytech/models"
 )
 
+// DeleteServerSwitchingRuleAcceptedCode is the HTTP code returned for type DeleteServerSwitchingRuleAccepted
+const DeleteServerSwitchingRuleAcceptedCode int = 202
+
+/*DeleteServerSwitchingRuleAccepted Configuration change accepted and reload requested
+
+swagger:response deleteServerSwitchingRuleAccepted
+*/
+type DeleteServerSwitchingRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+}
+
+// NewDeleteServerSwitchingRuleAccepted creates DeleteServerSwitchingRuleAccepted with default headers values
+func NewDeleteServerSwitchingRuleAccepted() *DeleteServerSwitchingRuleAccepted {
+
+	return &DeleteServerSwitchingRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete server switching rule accepted response
+func (o *DeleteServerSwitchingRuleAccepted) WithReloadID(reloadID string) *DeleteServerSwitchingRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete server switching rule accepted response
+func (o *DeleteServerSwitchingRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WriteResponse to the client
+func (o *DeleteServerSwitchingRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(202)
+}
+
 // DeleteServerSwitchingRuleNoContentCode is the HTTP code returned for type DeleteServerSwitchingRuleNoContent
 const DeleteServerSwitchingRuleNoContentCode int = 204
 

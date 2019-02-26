@@ -57,6 +57,72 @@ func (o *ReplaceStickRuleOK) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
+// ReplaceStickRuleAcceptedCode is the HTTP code returned for type ReplaceStickRuleAccepted
+const ReplaceStickRuleAcceptedCode int = 202
+
+/*ReplaceStickRuleAccepted Configuration change accepted and reload requested
+
+swagger:response replaceStickRuleAccepted
+*/
+type ReplaceStickRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.StickRule `json:"body,omitempty"`
+}
+
+// NewReplaceStickRuleAccepted creates ReplaceStickRuleAccepted with default headers values
+func NewReplaceStickRuleAccepted() *ReplaceStickRuleAccepted {
+
+	return &ReplaceStickRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace stick rule accepted response
+func (o *ReplaceStickRuleAccepted) WithReloadID(reloadID string) *ReplaceStickRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace stick rule accepted response
+func (o *ReplaceStickRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace stick rule accepted response
+func (o *ReplaceStickRuleAccepted) WithPayload(payload *models.StickRule) *ReplaceStickRuleAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace stick rule accepted response
+func (o *ReplaceStickRuleAccepted) SetPayload(payload *models.StickRule) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceStickRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceStickRuleBadRequestCode is the HTTP code returned for type ReplaceStickRuleBadRequest
 const ReplaceStickRuleBadRequestCode int = 400
 

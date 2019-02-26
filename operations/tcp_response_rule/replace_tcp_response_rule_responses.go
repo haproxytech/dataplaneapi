@@ -57,6 +57,72 @@ func (o *ReplaceTCPResponseRuleOK) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
+// ReplaceTCPResponseRuleAcceptedCode is the HTTP code returned for type ReplaceTCPResponseRuleAccepted
+const ReplaceTCPResponseRuleAcceptedCode int = 202
+
+/*ReplaceTCPResponseRuleAccepted Configuration change accepted and reload requested
+
+swagger:response replaceTcpResponseRuleAccepted
+*/
+type ReplaceTCPResponseRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.TCPResponseRule `json:"body,omitempty"`
+}
+
+// NewReplaceTCPResponseRuleAccepted creates ReplaceTCPResponseRuleAccepted with default headers values
+func NewReplaceTCPResponseRuleAccepted() *ReplaceTCPResponseRuleAccepted {
+
+	return &ReplaceTCPResponseRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace Tcp response rule accepted response
+func (o *ReplaceTCPResponseRuleAccepted) WithReloadID(reloadID string) *ReplaceTCPResponseRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace Tcp response rule accepted response
+func (o *ReplaceTCPResponseRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace Tcp response rule accepted response
+func (o *ReplaceTCPResponseRuleAccepted) WithPayload(payload *models.TCPResponseRule) *ReplaceTCPResponseRuleAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace Tcp response rule accepted response
+func (o *ReplaceTCPResponseRuleAccepted) SetPayload(payload *models.TCPResponseRule) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceTCPResponseRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceTCPResponseRuleBadRequestCode is the HTTP code returned for type ReplaceTCPResponseRuleBadRequest
 const ReplaceTCPResponseRuleBadRequestCode int = 400
 

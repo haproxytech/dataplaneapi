@@ -57,6 +57,72 @@ func (o *CreateBackendSwitchingRuleCreated) WriteResponse(rw http.ResponseWriter
 	}
 }
 
+// CreateBackendSwitchingRuleAcceptedCode is the HTTP code returned for type CreateBackendSwitchingRuleAccepted
+const CreateBackendSwitchingRuleAcceptedCode int = 202
+
+/*CreateBackendSwitchingRuleAccepted Configuration change accepted and reload requested
+
+swagger:response createBackendSwitchingRuleAccepted
+*/
+type CreateBackendSwitchingRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.BackendSwitchingRule `json:"body,omitempty"`
+}
+
+// NewCreateBackendSwitchingRuleAccepted creates CreateBackendSwitchingRuleAccepted with default headers values
+func NewCreateBackendSwitchingRuleAccepted() *CreateBackendSwitchingRuleAccepted {
+
+	return &CreateBackendSwitchingRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the create backend switching rule accepted response
+func (o *CreateBackendSwitchingRuleAccepted) WithReloadID(reloadID string) *CreateBackendSwitchingRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the create backend switching rule accepted response
+func (o *CreateBackendSwitchingRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the create backend switching rule accepted response
+func (o *CreateBackendSwitchingRuleAccepted) WithPayload(payload *models.BackendSwitchingRule) *CreateBackendSwitchingRuleAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the create backend switching rule accepted response
+func (o *CreateBackendSwitchingRuleAccepted) SetPayload(payload *models.BackendSwitchingRule) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *CreateBackendSwitchingRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // CreateBackendSwitchingRuleBadRequestCode is the HTTP code returned for type CreateBackendSwitchingRuleBadRequest
 const CreateBackendSwitchingRuleBadRequestCode int = 400
 

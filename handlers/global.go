@@ -4,6 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/operations/global"
+	"github.com/haproxytech/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -22,7 +23,12 @@ type ReplaceGlobalHandlerImpl struct {
 
 //Handle executing the request and returning a response
 func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal interface{}) middleware.Responder {
-	data, err := h.Client.Configuration.GetGlobalConfiguration(*params.TransactionID)
+	t := ""
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+
+	data, err := h.Client.Configuration.GetGlobalConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
@@ -32,12 +38,43 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 
 //Handle executing the request and returning a response
 func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
-	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, *params.TransactionID, params.Version)
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, t, v)
 
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return global.NewReplaceGlobalOK().WithPayload(params.Data)
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
+			}
+			return global.NewReplaceGlobalOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return global.NewReplaceGlobalAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return global.NewReplaceGlobalAccepted().WithPayload(params.Data)
 }

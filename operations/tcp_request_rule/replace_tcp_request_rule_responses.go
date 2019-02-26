@@ -57,6 +57,72 @@ func (o *ReplaceTCPRequestRuleOK) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
+// ReplaceTCPRequestRuleAcceptedCode is the HTTP code returned for type ReplaceTCPRequestRuleAccepted
+const ReplaceTCPRequestRuleAcceptedCode int = 202
+
+/*ReplaceTCPRequestRuleAccepted Configuration change accepted and reload requested
+
+swagger:response replaceTcpRequestRuleAccepted
+*/
+type ReplaceTCPRequestRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.TCPRequestRule `json:"body,omitempty"`
+}
+
+// NewReplaceTCPRequestRuleAccepted creates ReplaceTCPRequestRuleAccepted with default headers values
+func NewReplaceTCPRequestRuleAccepted() *ReplaceTCPRequestRuleAccepted {
+
+	return &ReplaceTCPRequestRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace Tcp request rule accepted response
+func (o *ReplaceTCPRequestRuleAccepted) WithReloadID(reloadID string) *ReplaceTCPRequestRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace Tcp request rule accepted response
+func (o *ReplaceTCPRequestRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace Tcp request rule accepted response
+func (o *ReplaceTCPRequestRuleAccepted) WithPayload(payload *models.TCPRequestRule) *ReplaceTCPRequestRuleAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace Tcp request rule accepted response
+func (o *ReplaceTCPRequestRuleAccepted) SetPayload(payload *models.TCPRequestRule) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceTCPRequestRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceTCPRequestRuleBadRequestCode is the HTTP code returned for type ReplaceTCPRequestRuleBadRequest
 const ReplaceTCPRequestRuleBadRequestCode int = 400
 

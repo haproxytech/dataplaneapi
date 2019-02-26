@@ -15,6 +15,7 @@ import (
 
 // CreateBackendSwitchingRuleURL generates an URL for the create backend switching rule operation
 type CreateBackendSwitchingRuleURL struct {
+	ForceReload   *bool
 	Frontend      string
 	TransactionID *string
 	Version       *int64
@@ -52,6 +53,14 @@ func (o *CreateBackendSwitchingRuleURL) Build() (*url.URL, error) {
 	result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var forceReload string
+	if o.ForceReload != nil {
+		forceReload = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReload != "" {
+		qs.Set("force_reload", forceReload)
+	}
 
 	frontend := o.Frontend
 	if frontend != "" {

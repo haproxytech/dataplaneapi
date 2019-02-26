@@ -13,6 +13,52 @@ import (
 	"github.com/haproxytech/models"
 )
 
+// DeleteStickRuleAcceptedCode is the HTTP code returned for type DeleteStickRuleAccepted
+const DeleteStickRuleAcceptedCode int = 202
+
+/*DeleteStickRuleAccepted Configuration change accepted and reload requested
+
+swagger:response deleteStickRuleAccepted
+*/
+type DeleteStickRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+}
+
+// NewDeleteStickRuleAccepted creates DeleteStickRuleAccepted with default headers values
+func NewDeleteStickRuleAccepted() *DeleteStickRuleAccepted {
+
+	return &DeleteStickRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete stick rule accepted response
+func (o *DeleteStickRuleAccepted) WithReloadID(reloadID string) *DeleteStickRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete stick rule accepted response
+func (o *DeleteStickRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WriteResponse to the client
+func (o *DeleteStickRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(202)
+}
+
 // DeleteStickRuleNoContentCode is the HTTP code returned for type DeleteStickRuleNoContent
 const DeleteStickRuleNoContentCode int = 204
 

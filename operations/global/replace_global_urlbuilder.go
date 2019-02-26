@@ -15,8 +15,9 @@ import (
 
 // ReplaceGlobalURL generates an URL for the replace global operation
 type ReplaceGlobalURL struct {
+	ForceReload   *bool
 	TransactionID *string
-	Version       int64
+	Version       *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -52,6 +53,14 @@ func (o *ReplaceGlobalURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
+	var forceReload string
+	if o.ForceReload != nil {
+		forceReload = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReload != "" {
+		qs.Set("force_reload", forceReload)
+	}
+
 	var transactionID string
 	if o.TransactionID != nil {
 		transactionID = *o.TransactionID
@@ -60,7 +69,10 @@ func (o *ReplaceGlobalURL) Build() (*url.URL, error) {
 		qs.Set("transaction_id", transactionID)
 	}
 
-	version := swag.FormatInt64(o.Version)
+	var version string
+	if o.Version != nil {
+		version = swag.FormatInt64(*o.Version)
+	}
 	if version != "" {
 		qs.Set("version", version)
 	}

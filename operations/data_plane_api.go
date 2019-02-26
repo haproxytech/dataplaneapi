@@ -31,6 +31,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
+	"github.com/haproxytech/dataplaneapi/operations/reloads"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
@@ -216,6 +217,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		LogTargetGetLogTargetsHandler: log_target.GetLogTargetsHandlerFunc(func(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation LogTargetGetLogTargets has not yet been implemented")
+		}),
+		ReloadsGetReloadHandler: reloads.GetReloadHandlerFunc(func(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ReloadsGetReload has not yet been implemented")
+		}),
+		ReloadsGetReloadsHandler: reloads.GetReloadsHandlerFunc(func(params reloads.GetReloadsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ReloadsGetReloads has not yet been implemented")
 		}),
 		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerGetServer has not yet been implemented")
@@ -478,6 +485,10 @@ type DataPlaneAPI struct {
 	LogTargetGetLogTargetHandler log_target.GetLogTargetHandler
 	// LogTargetGetLogTargetsHandler sets the operation handler for the get log targets operation
 	LogTargetGetLogTargetsHandler log_target.GetLogTargetsHandler
+	// ReloadsGetReloadHandler sets the operation handler for the get reload operation
+	ReloadsGetReloadHandler reloads.GetReloadHandler
+	// ReloadsGetReloadsHandler sets the operation handler for the get reloads operation
+	ReloadsGetReloadsHandler reloads.GetReloadsHandler
 	// ServerGetServerHandler sets the operation handler for the get server operation
 	ServerGetServerHandler server.GetServerHandler
 	// ServerSwitchingRuleGetServerSwitchingRuleHandler sets the operation handler for the get server switching rule operation
@@ -829,6 +840,14 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.LogTargetGetLogTargetsHandler == nil {
 		unregistered = append(unregistered, "log_target.GetLogTargetsHandler")
+	}
+
+	if o.ReloadsGetReloadHandler == nil {
+		unregistered = append(unregistered, "reloads.GetReloadHandler")
+	}
+
+	if o.ReloadsGetReloadsHandler == nil {
+		unregistered = append(unregistered, "reloads.GetReloadsHandler")
 	}
 
 	if o.ServerGetServerHandler == nil {
@@ -1344,6 +1363,16 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/log_targets"] = log_target.NewGetLogTargets(o.context, o.LogTargetGetLogTargetsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/reloads/{id}"] = reloads.NewGetReload(o.context, o.ReloadsGetReloadHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/reloads"] = reloads.NewGetReloads(o.context, o.ReloadsGetReloadsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

@@ -13,6 +13,52 @@ import (
 	"github.com/haproxytech/models"
 )
 
+// DeleteBackendSwitchingRuleAcceptedCode is the HTTP code returned for type DeleteBackendSwitchingRuleAccepted
+const DeleteBackendSwitchingRuleAcceptedCode int = 202
+
+/*DeleteBackendSwitchingRuleAccepted Configuration change accepted and reload requested
+
+swagger:response deleteBackendSwitchingRuleAccepted
+*/
+type DeleteBackendSwitchingRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+}
+
+// NewDeleteBackendSwitchingRuleAccepted creates DeleteBackendSwitchingRuleAccepted with default headers values
+func NewDeleteBackendSwitchingRuleAccepted() *DeleteBackendSwitchingRuleAccepted {
+
+	return &DeleteBackendSwitchingRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete backend switching rule accepted response
+func (o *DeleteBackendSwitchingRuleAccepted) WithReloadID(reloadID string) *DeleteBackendSwitchingRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete backend switching rule accepted response
+func (o *DeleteBackendSwitchingRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WriteResponse to the client
+func (o *DeleteBackendSwitchingRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(202)
+}
+
 // DeleteBackendSwitchingRuleNoContentCode is the HTTP code returned for type DeleteBackendSwitchingRuleNoContent
 const DeleteBackendSwitchingRuleNoContentCode int = 204
 

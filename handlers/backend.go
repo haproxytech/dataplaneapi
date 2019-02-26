@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
+	"github.com/haproxytech/models"
 )
 
 //CreateBackendHandlerImpl implementation of the CreateBackendHandler interface using client-native client
@@ -47,13 +48,35 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.CreateBackend(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return backend.NewCreateBackendCreated().WithPayload(params.Data)
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
+			}
+			return backend.NewCreateBackendCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return backend.NewCreateBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return backend.NewCreateBackendAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +90,34 @@ func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, pr
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return backend.NewDeleteBackendDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteBackend(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewDeleteBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return backend.NewDeleteBackendNoContent()
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return backend.NewDeleteBackendDefault(int(*e.Code)).WithPayload(e)
+			}
+			return backend.NewDeleteBackendNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return backend.NewDeleteBackendAccepted().WithReloadID(rID)
+	}
+	return backend.NewDeleteBackendAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,11 +161,33 @@ func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, 
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.EditBackend(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return backend.NewReplaceBackendOK().WithPayload(params.Data)
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)
+			}
+			return backend.NewReplaceBackendOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return backend.NewReplaceBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return backend.NewReplaceBackendAccepted().WithPayload(params.Data)
 }

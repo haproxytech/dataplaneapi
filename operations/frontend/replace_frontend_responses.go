@@ -57,6 +57,72 @@ func (o *ReplaceFrontendOK) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
+// ReplaceFrontendAcceptedCode is the HTTP code returned for type ReplaceFrontendAccepted
+const ReplaceFrontendAcceptedCode int = 202
+
+/*ReplaceFrontendAccepted Configuration change accepted and reload requested
+
+swagger:response replaceFrontendAccepted
+*/
+type ReplaceFrontendAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Frontend `json:"body,omitempty"`
+}
+
+// NewReplaceFrontendAccepted creates ReplaceFrontendAccepted with default headers values
+func NewReplaceFrontendAccepted() *ReplaceFrontendAccepted {
+
+	return &ReplaceFrontendAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace frontend accepted response
+func (o *ReplaceFrontendAccepted) WithReloadID(reloadID string) *ReplaceFrontendAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace frontend accepted response
+func (o *ReplaceFrontendAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace frontend accepted response
+func (o *ReplaceFrontendAccepted) WithPayload(payload *models.Frontend) *ReplaceFrontendAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace frontend accepted response
+func (o *ReplaceFrontendAccepted) SetPayload(payload *models.Frontend) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceFrontendAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceFrontendBadRequestCode is the HTTP code returned for type ReplaceFrontendBadRequest
 const ReplaceFrontendBadRequestCode int = 400
 

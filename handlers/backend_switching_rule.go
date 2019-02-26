@@ -6,6 +6,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
+	"github.com/haproxytech/models"
 )
 
 //CreateBackendSwitchingRuleHandlerImpl implementation of the CreateBackendSwitchingRuleHandler interface using client-native client
@@ -46,14 +47,34 @@ func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 	if params.Version != nil {
 		v = *params.Version
 	}
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+	}
 
 	err := h.Client.Configuration.CreateBackendSwitchingRule(params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return backend_switching_rule.NewCreateBackendSwitchingRuleCreated().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+			}
+			return backend_switching_rule.NewCreateBackendSwitchingRuleCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return backend_switching_rule.NewCreateBackendSwitchingRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return backend_switching_rule.NewCreateBackendSwitchingRuleAccepted().WithPayload(params.Data)
 }
 
 //Handle executing the request and returning a response
@@ -67,13 +88,35 @@ func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.DeleteBackendSwitchingRule(params.ID, params.Frontend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return backend_switching_rule.NewDeleteBackendSwitchingRuleNoContent()
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+			}
+			return backend_switching_rule.NewDeleteBackendSwitchingRuleNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return backend_switching_rule.NewDeleteBackendSwitchingRuleAccepted().WithReloadID(rID)
+	}
+	return backend_switching_rule.NewDeleteBackendSwitchingRuleAccepted()
 }
 
 //Handle executing the request and returning a response
@@ -117,11 +160,32 @@ func (h *ReplaceBackendSwitchingRuleHandlerImpl) Handle(params backend_switching
 		v = *params.Version
 	}
 
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	err := h.Client.Configuration.EditBackendSwitchingRule(params.ID, params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	h.ReloadAgent.Reload()
-	return backend_switching_rule.NewReplaceBackendSwitchingRuleOK().WithPayload(params.Data)
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+			}
+			return backend_switching_rule.NewReplaceBackendSwitchingRuleOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return backend_switching_rule.NewReplaceBackendSwitchingRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return backend_switching_rule.NewReplaceBackendSwitchingRuleAccepted().WithPayload(params.Data)
 }

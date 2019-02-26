@@ -57,6 +57,72 @@ func (o *CreateTCPRequestRuleCreated) WriteResponse(rw http.ResponseWriter, prod
 	}
 }
 
+// CreateTCPRequestRuleAcceptedCode is the HTTP code returned for type CreateTCPRequestRuleAccepted
+const CreateTCPRequestRuleAcceptedCode int = 202
+
+/*CreateTCPRequestRuleAccepted Configuration change accepted and reload requested
+
+swagger:response createTcpRequestRuleAccepted
+*/
+type CreateTCPRequestRuleAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.TCPRequestRule `json:"body,omitempty"`
+}
+
+// NewCreateTCPRequestRuleAccepted creates CreateTCPRequestRuleAccepted with default headers values
+func NewCreateTCPRequestRuleAccepted() *CreateTCPRequestRuleAccepted {
+
+	return &CreateTCPRequestRuleAccepted{}
+}
+
+// WithReloadID adds the reloadId to the create Tcp request rule accepted response
+func (o *CreateTCPRequestRuleAccepted) WithReloadID(reloadID string) *CreateTCPRequestRuleAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the create Tcp request rule accepted response
+func (o *CreateTCPRequestRuleAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the create Tcp request rule accepted response
+func (o *CreateTCPRequestRuleAccepted) WithPayload(payload *models.TCPRequestRule) *CreateTCPRequestRuleAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the create Tcp request rule accepted response
+func (o *CreateTCPRequestRuleAccepted) SetPayload(payload *models.TCPRequestRule) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *CreateTCPRequestRuleAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // CreateTCPRequestRuleBadRequestCode is the HTTP code returned for type CreateTCPRequestRuleBadRequest
 const CreateTCPRequestRuleBadRequestCode int = 400
 

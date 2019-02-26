@@ -57,6 +57,72 @@ func (o *ReplaceSiteOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 }
 
+// ReplaceSiteAcceptedCode is the HTTP code returned for type ReplaceSiteAccepted
+const ReplaceSiteAcceptedCode int = 202
+
+/*ReplaceSiteAccepted Configuration change accepted and reload requested
+
+swagger:response replaceSiteAccepted
+*/
+type ReplaceSiteAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Site `json:"body,omitempty"`
+}
+
+// NewReplaceSiteAccepted creates ReplaceSiteAccepted with default headers values
+func NewReplaceSiteAccepted() *ReplaceSiteAccepted {
+
+	return &ReplaceSiteAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace site accepted response
+func (o *ReplaceSiteAccepted) WithReloadID(reloadID string) *ReplaceSiteAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace site accepted response
+func (o *ReplaceSiteAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace site accepted response
+func (o *ReplaceSiteAccepted) WithPayload(payload *models.Site) *ReplaceSiteAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace site accepted response
+func (o *ReplaceSiteAccepted) SetPayload(payload *models.Site) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceSiteAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceSiteBadRequestCode is the HTTP code returned for type ReplaceSiteBadRequest
 const ReplaceSiteBadRequestCode int = 400
 

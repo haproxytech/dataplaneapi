@@ -18,6 +18,7 @@ import (
 type DeleteBackendSwitchingRuleURL struct {
 	ID int64
 
+	ForceReload   *bool
 	Frontend      string
 	TransactionID *string
 	Version       *int64
@@ -62,6 +63,14 @@ func (o *DeleteBackendSwitchingRuleURL) Build() (*url.URL, error) {
 	result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var forceReload string
+	if o.ForceReload != nil {
+		forceReload = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReload != "" {
+		qs.Set("force_reload", forceReload)
+	}
 
 	frontend := o.Frontend
 	if frontend != "" {

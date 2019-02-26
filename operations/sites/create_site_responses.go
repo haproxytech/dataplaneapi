@@ -57,6 +57,72 @@ func (o *CreateSiteCreated) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
+// CreateSiteAcceptedCode is the HTTP code returned for type CreateSiteAccepted
+const CreateSiteAcceptedCode int = 202
+
+/*CreateSiteAccepted Configuration change accepted and reload requested
+
+swagger:response createSiteAccepted
+*/
+type CreateSiteAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Site `json:"body,omitempty"`
+}
+
+// NewCreateSiteAccepted creates CreateSiteAccepted with default headers values
+func NewCreateSiteAccepted() *CreateSiteAccepted {
+
+	return &CreateSiteAccepted{}
+}
+
+// WithReloadID adds the reloadId to the create site accepted response
+func (o *CreateSiteAccepted) WithReloadID(reloadID string) *CreateSiteAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the create site accepted response
+func (o *CreateSiteAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the create site accepted response
+func (o *CreateSiteAccepted) WithPayload(payload *models.Site) *CreateSiteAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the create site accepted response
+func (o *CreateSiteAccepted) SetPayload(payload *models.Site) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *CreateSiteAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // CreateSiteBadRequestCode is the HTTP code returned for type CreateSiteBadRequest
 const CreateSiteBadRequestCode int = 400
 

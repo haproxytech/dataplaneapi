@@ -57,6 +57,72 @@ func (o *ReplaceFilterOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
+// ReplaceFilterAcceptedCode is the HTTP code returned for type ReplaceFilterAccepted
+const ReplaceFilterAcceptedCode int = 202
+
+/*ReplaceFilterAccepted Configuration change accepted and reload requested
+
+swagger:response replaceFilterAccepted
+*/
+type ReplaceFilterAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Filter `json:"body,omitempty"`
+}
+
+// NewReplaceFilterAccepted creates ReplaceFilterAccepted with default headers values
+func NewReplaceFilterAccepted() *ReplaceFilterAccepted {
+
+	return &ReplaceFilterAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace filter accepted response
+func (o *ReplaceFilterAccepted) WithReloadID(reloadID string) *ReplaceFilterAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace filter accepted response
+func (o *ReplaceFilterAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WithPayload adds the payload to the replace filter accepted response
+func (o *ReplaceFilterAccepted) WithPayload(payload *models.Filter) *ReplaceFilterAccepted {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the replace filter accepted response
+func (o *ReplaceFilterAccepted) SetPayload(payload *models.Filter) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *ReplaceFilterAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // ReplaceFilterBadRequestCode is the HTTP code returned for type ReplaceFilterBadRequest
 const ReplaceFilterBadRequestCode int = 400
 
