@@ -2711,7 +2711,7 @@ func init() {
                 "_version": {
                   "type": "integer"
                 },
-                "configuration": {
+                "data": {
                   "type": "string"
                 }
               }
@@ -2738,15 +2738,12 @@ func init() {
         "operationId": "postHAProxyConfiguration",
         "parameters": [
           {
-            "name": "configuration",
+            "name": "data",
             "in": "body",
             "required": true,
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "$ref": "#/parameters/transaction_id"
           },
           {
             "$ref": "#/parameters/version"
@@ -10681,19 +10678,12 @@ func init() {
         "operationId": "postHAProxyConfiguration",
         "parameters": [
           {
-            "name": "configuration",
+            "name": "data",
             "in": "body",
             "required": true,
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "type": "string",
-            "x-nullable": false,
-            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
-            "name": "transaction_id",
-            "in": "query"
           },
           {
             "type": "integer",
@@ -14010,7 +14000,7 @@ func init() {
         "_version": {
           "type": "integer"
         },
-        "configuration": {
+        "data": {
           "type": "string"
         }
       },

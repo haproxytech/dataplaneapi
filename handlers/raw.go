@@ -37,7 +37,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		v = *params.Version
 	}
 
-	err := h.Client.Configuration.PostRawConfiguration(params.Configuration, v)
+	err := h.Client.Configuration.PostRawConfiguration(params.Data, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
@@ -48,8 +48,8 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 			e := misc.HandleError(err)
 			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 		}
-		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(*params.Configuration)
+		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(*params.Data)
 	}
 	rID := h.ReloadAgent.Reload()
-	return configuration.NewPostHAProxyConfigurationAccepted().WithReloadID(rID).WithPayload(*params.Configuration)
+	return configuration.NewPostHAProxyConfigurationAccepted().WithReloadID(rID).WithPayload(*params.Data)
 }

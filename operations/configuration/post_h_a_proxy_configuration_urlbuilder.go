@@ -15,9 +15,8 @@ import (
 
 // PostHAProxyConfigurationURL generates an URL for the post h a proxy configuration operation
 type PostHAProxyConfigurationURL struct {
-	ForceReload   *bool
-	TransactionID *string
-	Version       *int64
+	ForceReload *bool
+	Version     *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -59,14 +58,6 @@ func (o *PostHAProxyConfigurationURL) Build() (*url.URL, error) {
 	}
 	if forceReload != "" {
 		qs.Set("force_reload", forceReload)
-	}
-
-	var transactionID string
-	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
-	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
 	}
 
 	var version string
