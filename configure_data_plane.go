@@ -89,7 +89,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		ConfigurationFile: haproxyOptions.ConfigFile,
 		Haproxy:           haproxyOptions.HAProxy,
 		UseValidation:     false,
-		UseCache:          true,
 		TransactionDir:    haproxyOptions.TransactionDir,
 	}
 	err := confClient.Init(confParams)
@@ -370,10 +369,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 }
 
 func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
-	if err := cli.Configuration.ConfigParser.LoadData(cli.Configuration.ConfigurationFile); err != nil {
-		return nil, fmt.Errorf("Error reading users from %v userlist in conf", haproxyOptions.Userlist)
-	}
-	data, err := cli.Configuration.ConfigParser.Get(parser.UserList, haproxyOptions.Userlist, "user")
+	data, err := cli.Configuration.Parser.Get(parser.UserList, haproxyOptions.Userlist, "user")
 	if err != nil {
 		return nil, fmt.Errorf("Error reading userlist %v userlist in conf: %s", haproxyOptions.Userlist, err.Error())
 	}
