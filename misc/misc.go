@@ -28,11 +28,13 @@ func HandleError(err error) *models.Error {
 		msg := t.Error()
 		httpCode := ErrHTTPInternalServerError
 		switch t.Code() {
-		case configuration.ErrTransactionDoesNotExist, configuration.ErrObjectDoesNotExist:
+		case configuration.ErrObjectDoesNotExist:
 			httpCode = ErrHTTPNotFound
-		case configuration.ErrObjectAlreadyExists, configuration.ErrVersionMismatch:
+		case configuration.ErrObjectAlreadyExists, configuration.ErrVersionMismatch, configuration.ErrTransactionAlredyExists:
 			httpCode = ErrHTTPConflict
-		case configuration.ErrObjectIndexOutOfRange, configuration.ErrValidationError, configuration.ErrBothVersionTransaction, configuration.ErrNoVersionTransaction:
+		case configuration.ErrObjectIndexOutOfRange, configuration.ErrValidationError, configuration.ErrBothVersionTransaction,
+			configuration.ErrNoVersionTransaction, configuration.ErrNoParentSpecified, configuration.ErrParentDoesNotExist,
+			configuration.ErrTransactionDoesNotExist:
 			httpCode = ErrHTTPBadRequest
 		}
 		return &models.Error{Code: &httpCode, Message: &msg}
