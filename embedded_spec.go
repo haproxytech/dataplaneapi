@@ -4343,6 +4343,7 @@ func init() {
         "operationId": "getReload",
         "parameters": [
           {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}-\\d+$",
             "type": "string",
             "description": "Reload id",
             "name": "id",
@@ -6654,7 +6655,7 @@ func init() {
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}-\\d+$"
         },
         "reload_timestamp": {
           "type": "integer"
@@ -6672,7 +6673,7 @@ func init() {
         }
       },
       "example": {
-        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
+        "id": "2019-01-03-44",
         "status": "in_progress"
       }
     },
@@ -12608,6 +12609,7 @@ func init() {
         "operationId": "getReload",
         "parameters": [
           {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}-\\d+$",
             "type": "string",
             "description": "Reload id",
             "name": "id",
@@ -15414,7 +15416,7 @@ func init() {
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}-\\d+$"
         },
         "reload_timestamp": {
           "type": "integer"
@@ -15432,7 +15434,7 @@ func init() {
         }
       },
       "example": {
-        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
+        "id": "2019-01-03-44",
         "status": "in_progress"
       }
     },

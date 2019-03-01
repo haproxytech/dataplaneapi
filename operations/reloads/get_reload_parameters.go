@@ -10,6 +10,7 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -32,6 +33,7 @@ type GetReloadParams struct {
 
 	/*Reload id
 	  Required: true
+	  Pattern: ^\d{4}-\d{2}-\d{2}-\d+$
 	  In: path
 	*/
 	ID string
@@ -67,6 +69,19 @@ func (o *GetReloadParams) bindID(rawData []string, hasKey bool, formats strfmt.R
 	// Parameter is provided by construction from the route
 
 	o.ID = raw
+
+	if err := o.validateID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetReloadParams) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Pattern("id", "path", o.ID, `^\d{4}-\d{2}-\d{2}-\d+$`); err != nil {
+		return err
+	}
 
 	return nil
 }
