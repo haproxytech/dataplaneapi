@@ -2,7 +2,7 @@
 
 ## HAProxy Data Plane API
 
-**Data Plane API** is a sidecar process that runs next to HAProxy and provides API endpoints for managing HAProxy.
+**Data Plane API** is a sidecar process that runs next to HAProxy and provides API endpoints for managing HAProxy. It requires HAProxy version 1.8.0 or higher.
 
 ## API Specification
 
