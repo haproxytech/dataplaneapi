@@ -13,7 +13,6 @@ import (
 
 // GetStatsURL generates an URL for the get stats operation
 type GetStatsURL struct {
-	Fields *string
 	Name   *string
 	Parent *string
 	Type   *string
@@ -51,14 +50,6 @@ func (o *GetStatsURL) Build() (*url.URL, error) {
 	result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	var fields string
-	if o.Fields != nil {
-		fields = *o.Fields
-	}
-	if fields != "" {
-		qs.Set("fields", fields)
-	}
 
 	var name string
 	if o.Name != nil {

@@ -4674,12 +4674,6 @@ func init() {
             "description": "Object parent name to get stats for, in case the object is a server",
             "name": "parent",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Comma-separated list of fields to return",
-            "name": "fields",
-            "in": "query"
           }
         ],
         "responses": {
@@ -5101,7 +5095,9 @@ func init() {
         }
       },
       "example": {
-        "balance": "roundrobin",
+        "balance": {
+          "algorithm": "roundrobin"
+        },
         "forwardfor": "enabled",
         "httpchk": {
           "method": "OPTIONS",
@@ -6964,11 +6960,11 @@ func init() {
             "http_connection_mode": {
               "type": "string",
               "enum": [
-                "tunnel",
-                "passive-close",
+                "http-tunnel",
+                "httpclose",
                 "forced-close",
-                "server-close",
-                "keep-alive"
+                "http-server-close",
+                "http-keep-alive"
               ],
               "x-dependency": {
                 "mode": "http"
@@ -7054,7 +7050,7 @@ func init() {
         ],
         "name": "test_site",
         "service": {
-          "http_connection_mode": "server-close",
+          "http_connection_mode": "httpclose",
           "listeners": [
             {
               "address": "127.0.0.1",
@@ -13010,12 +13006,6 @@ func init() {
             "description": "Object parent name to get stats for, in case the object is a server",
             "name": "parent",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Comma-separated list of fields to return",
-            "name": "fields",
-            "in": "query"
           }
         ],
         "responses": {
@@ -13376,7 +13366,9 @@ func init() {
         }
       },
       "example": {
-        "balance": "roundrobin",
+        "balance": {
+          "algorithm": "roundrobin"
+        },
         "forwardfor": "enabled",
         "httpchk": {
           "method": "OPTIONS",
@@ -15637,7 +15629,7 @@ func init() {
         ],
         "name": "test_site",
         "service": {
-          "http_connection_mode": "server-close",
+          "http_connection_mode": "httpclose",
           "listeners": [
             {
               "address": "127.0.0.1",
@@ -15786,11 +15778,11 @@ func init() {
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "tunnel",
-            "passive-close",
+            "http-tunnel",
+            "httpclose",
             "forced-close",
-            "server-close",
-            "keep-alive"
+            "http-server-close",
+            "http-keep-alive"
           ],
           "x-dependency": {
             "mode": "http"

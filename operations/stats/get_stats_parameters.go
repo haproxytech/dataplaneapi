@@ -32,10 +32,6 @@ type GetStatsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Comma-separated list of fields to return
-	  In: query
-	*/
-	Fields *string
 	/*Object name to get stats for
 	  In: query
 	*/
@@ -61,11 +57,6 @@ func (o *GetStatsParams) BindRequest(r *http.Request, route *middleware.MatchedR
 
 	qs := runtime.Values(r.URL.Query())
 
-	qFields, qhkFields, _ := qs.GetOK("fields")
-	if err := o.bindFields(qFields, qhkFields, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	qName, qhkName, _ := qs.GetOK("name")
 	if err := o.bindName(qName, qhkName, route.Formats); err != nil {
 		res = append(res, err)
@@ -84,23 +75,6 @@ func (o *GetStatsParams) BindRequest(r *http.Request, route *middleware.MatchedR
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (o *GetStatsParams) bindFields(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: false
-	// AllowEmptyValue: false
-	if raw == "" { // empty values pass all other validations
-		return nil
-	}
-
-	o.Fields = &raw
-
 	return nil
 }
 
