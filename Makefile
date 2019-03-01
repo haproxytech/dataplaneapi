@@ -5,5 +5,5 @@ update:
 
 build:
 	make update
-	cd ${DATAPLANEAPI_PATH}/cmd/dataplaneapi && go build
+	cd ${DATAPLANEAPI_PATH}/cmd/dataplaneapi && go build -a
 
