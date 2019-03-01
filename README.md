@@ -143,7 +143,7 @@ Help Options:
 You can test it by simply running:
 
 ```
-./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -d 5 -r "service reload haproxy" -u dataplaneapi -t /tmp/haproxy
+./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -d 5 -r "service haproxy reload" -u dataplaneapi -t /tmp/haproxy
 ```
 
 Test it out with curl, note that you need user/pass combination setup in HAProxy userlist in global.cfg (in above example: /etc/haproxy/global.cfg, userlist controller):
