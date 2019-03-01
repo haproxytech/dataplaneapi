@@ -87,7 +87,7 @@ func (ra *ReloadAgent) Reload() string {
 func (ra *ReloadAgent) ForceReload() error {
 	r, err := ra.reloadHAProxy()
 	if err != nil {
-		return fmt.Errorf("Reload failed: %v, %v", err, r)
+		return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
 	}
 	return nil
 }
@@ -238,4 +238,19 @@ func getTimeIndexFromID(id string) (time.Time, int64, error) {
 	}
 
 	return date, index, nil
+}
+
+// ReloadError general configuration client error
+type ReloadError struct {
+	msg string
+}
+
+// Error implementation for ConfError
+func (e *ReloadError) Error() string {
+	return fmt.Sprintf(e.msg)
+}
+
+// NewReloadError contstructor for ReloadError
+func NewReloadError(msg string) *ReloadError {
+	return &ReloadError{msg: msg}
 }

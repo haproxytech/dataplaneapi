@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"strings"
 
+	"github.com/haproxytech/dataplaneapi/haproxy"
+
 	"github.com/haproxytech/client-native/configuration"
 	"github.com/haproxytech/models"
 )
@@ -22,18 +24,6 @@ const (
 // HandleError translates error codes from client native into models.Error with appropriate http status code
 func HandleError(err error) *models.Error {
 	switch t := err.(type) {
-	case *configuration.LBCTLError:
-		msg := t.Error()
-		httpCode := ErrHTTPInternalServerError
-		switch t.Code() {
-		case configuration.ErrTransactionDoesNotExist, configuration.ErrObjectDoesNotExist:
-			httpCode = ErrHTTPNotFound
-		case configuration.ErrObjectAlreadyExists, configuration.ErrVersionMismatch:
-			httpCode = ErrHTTPConflict
-		case configuration.ErrValidationError, configuration.ErrBothVersionTransaction, configuration.ErrNoVersionTransaction:
-			httpCode = ErrHTTPBadRequest
-		}
-		return &models.Error{Code: &httpCode, Message: &msg}
 	case *configuration.ConfError:
 		msg := t.Error()
 		httpCode := ErrHTTPInternalServerError
@@ -46,8 +36,12 @@ func HandleError(err error) *models.Error {
 			httpCode = ErrHTTPBadRequest
 		}
 		return &models.Error{Code: &httpCode, Message: &msg}
+	case *haproxy.ReloadError:
+		httpCode := ErrHTTPBadRequest
+		msg := t.Error()
+		return &models.Error{Code: &httpCode, Message: &msg}
 	default:
-		msg := "Internal server error"
+		msg := t.Error()
 		code := ErrHTTPInternalServerError
 		return &models.Error{Code: &code, Message: &msg}
 	}
