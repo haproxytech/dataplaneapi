@@ -9,16 +9,13 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 
 	parser "github.com/haproxytech/config-parser"
 	"github.com/haproxytech/config-parser/types"
 
 	log "github.com/sirupsen/logrus"
-
-	"github.com/carbocation/interpose/adaptors"
-
-	"github.com/meatballhat/negroni-logrus"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 
@@ -32,7 +29,6 @@ import (
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 
-	"github.com/dre1080/recover"
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
 	swag "github.com/go-openapi/swag"
@@ -358,14 +354,9 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	handleCORS := cors.AllowAll().Handler
-
-	recovery := recover.New(&recover.Options{
-		Log: log.Print,
-	})
-
-	mw := negronilogrus.NewMiddlewareFromLogger(log.StandardLogger(), "controller")
-	logViaLogrus := adaptors.FromNegroni(mw)
-	return recovery(logViaLogrus(handleCORS(handler)))
+	recovery := adapters.RecoverMiddleware(log.StandardLogger())
+	logViaLogrus := adapters.LoggingMiddleware(log.StandardLogger())
+	return (logViaLogrus(handleCORS(recovery(handler))))
 }
 
 func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {

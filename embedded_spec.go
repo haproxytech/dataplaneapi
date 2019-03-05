@@ -5094,6 +5094,7 @@ func init() {
           }
         }
       },
+      "additionalProperties": false,
       "example": {
         "balance": {
           "algorithm": "roundrobin"
@@ -5137,6 +5138,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
@@ -5206,6 +5208,7 @@ func init() {
           "type": "boolean"
         }
       },
+      "additionalProperties": false,
       "example": {
         "address": "127.0.0.1",
         "name": "http",
@@ -5323,6 +5326,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "id": 0,
         "trace_name": "name",
@@ -5455,12 +5459,13 @@ func init() {
           "type": "boolean"
         }
       },
+      "additionalProperties": false,
       "example": {
         "default_backend": "test_backend",
         "http_connection_mode": "http-keep-alive",
         "maxconn": 2000,
-        "name": "test_frontend",
-        "protocol": "http"
+        "mode": "http",
+        "name": "test_frontend"
       }
     },
     "frontends": {
@@ -5646,6 +5651,7 @@ func init() {
           "pattern": "^[^\\s]+$"
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
@@ -5792,6 +5798,7 @@ func init() {
           "pattern": "^[^\\s]+$"
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
@@ -5898,7 +5905,8 @@ func init() {
         "nolog": {
           "type": "boolean"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "log_targets": {
       "description": "HAProxy Log Target array (corresponds to log directives)",
@@ -6761,6 +6769,7 @@ func init() {
           "x-nullable": true
         }
       },
+      "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
         "check": "enabled",
@@ -6799,6 +6808,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
@@ -7023,6 +7033,7 @@ func init() {
           }
         }
       },
+      "additionalProperties": false,
       "example": {
         "farms": [
           {
@@ -7118,6 +7129,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "id": 0,
         "pattern": "src",
@@ -7178,6 +7190,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",
@@ -7237,6 +7250,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",
@@ -13365,6 +13379,7 @@ func init() {
           "$ref": "#/definitions/backendStickTable"
         }
       },
+      "additionalProperties": false,
       "example": {
         "balance": {
           "algorithm": "roundrobin"
@@ -13522,6 +13537,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
@@ -13591,6 +13607,7 @@ func init() {
           "type": "boolean"
         }
       },
+      "additionalProperties": false,
       "example": {
         "address": "127.0.0.1",
         "name": "http",
@@ -13708,6 +13725,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "id": 0,
         "trace_name": "name",
@@ -13840,12 +13858,13 @@ func init() {
           "type": "boolean"
         }
       },
+      "additionalProperties": false,
       "example": {
         "default_backend": "test_backend",
         "http_connection_mode": "http-keep-alive",
         "maxconn": 2000,
-        "name": "test_frontend",
-        "protocol": "http"
+        "mode": "http",
+        "name": "test_frontend"
       }
     },
     "frontends": {
@@ -14391,6 +14410,7 @@ func init() {
           "pattern": "^[^\\s]+$"
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
@@ -14537,6 +14557,7 @@ func init() {
           "pattern": "^[^\\s]+$"
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
@@ -14643,7 +14664,8 @@ func init() {
         "nolog": {
           "type": "boolean"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "log_targets": {
       "description": "HAProxy Log Target array (corresponds to log directives)",
@@ -15518,6 +15540,7 @@ func init() {
           "x-nullable": true
         }
       },
+      "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
         "check": "enabled",
@@ -15556,6 +15579,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
@@ -15602,6 +15626,7 @@ func init() {
           "$ref": "#/definitions/siteService"
         }
       },
+      "additionalProperties": false,
       "example": {
         "farms": [
           {
@@ -15895,6 +15920,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "id": 0,
         "pattern": "src",
@@ -15955,6 +15981,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",
@@ -16014,6 +16041,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "additionalProperties": false,
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",

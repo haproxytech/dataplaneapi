@@ -49,21 +49,17 @@ The project depends on the following internal projects:
 - [config-parser](http://github.com/haproxytech/config-parser)
 
 External dependecies:
-- [interpose](https://github.com/carbocation/interpose)
-- [martini](https://github.com/go-martini/martini)
-- [inject](https://github.com/codegangsta/inject)
-- [negroni](https://github.com/urfave/negroni)
-- [recover](https://github.com/dre1080/recover)
-- [stack](https://github.com/facebookgo/stack)
-- [color](github.com/fatih/color)
-- [go-openapi errors](https://github.com/go-openapi/errors)
-- [go-openapi runtime](https://github.com/go-openapi/runtime)
-- [go-openapi strfmt](https://github.com/go-openapi/strfmt)
+- [go-openapi](https://github.com/go-openapi)
+- [go-units](https://github.com/docker/go-units)
+- [go-flags](https://github.com/jessevdk/go-flags)
+- [cors] (https://github.com/rs/cors)
+- [graceful] (https://github.com/tylerb/graceful)
+- [logrus] (https://github.com/sirupsen/logrus)
+- [uuid] (https://github.com/google/uuid)
 - [govalidator](https://github.com/asaskevich/govalidator)
 - [mgo](https://github.com/globalsign/mgo)
 - [easyjson](https://github.com/mailru/easyjson)
 - [mapstructure](https://github.com/mitchellh/mapstructure)
-- [go-openapi swag](https://github.com/go-openapi/swag)
 
 ## Building
 
