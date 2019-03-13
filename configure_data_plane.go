@@ -62,6 +62,11 @@ func configureFlags(api *operations.DataPlaneAPI) {
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Fatalf("Error starting dataplane API: %s", err)
+		}
+	}()
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -104,23 +109,15 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		fmt.Println("Stats socket not configured, no runtime client initiated")
 	}
 
-	nbproc := globalConf.Data.Nbproc
-	if nbproc == 0 {
-		nbproc = 1
-	}
-
-	runtimeAPI := globalConf.Data.RuntimeAPI
-	if runtimeAPI == "" {
+	runtimeAPIs := globalConf.Data.RuntimeApis
+	if len(runtimeAPIs) == 0 {
 		fmt.Println("Stats socket not configured, no runtime client initiated")
 	} else {
 		socketList := make([]string, 0, 1)
-		if nbproc > 1 {
-			for i := int64(0); i < nbproc; i++ {
-				socketList = append(socketList, fmt.Sprintf("%v.%v", runtimeAPI, i))
-			}
-		} else {
-			socketList = append(socketList, runtimeAPI)
+		for _, r := range runtimeAPIs {
+			socketList = append(socketList, *r.Address)
 		}
+
 		err := runtimeClient.Init(socketList)
 		if err != nil {
 			fmt.Println("Error setting up runtime client, not using one")
