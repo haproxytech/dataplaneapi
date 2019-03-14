@@ -84,6 +84,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.TxtProducer = runtime.TextProducer()
 
+	api.ServerShutdown = func() {}
+
 	// Initialize HAProxy native client
 	confClient := &configuration.Client{}
 	confParams := configuration.ClientParams{
@@ -94,24 +96,19 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 	err := confClient.Init(confParams)
 	if err != nil {
-		fmt.Println("Error setting up configuration client, using default one")
-		confClient, err = configuration.DefaultClient()
-		if err != nil {
-			fmt.Println("Error setting up default configuration client, exiting...")
-			api.ServerShutdown()
-		}
+		log.Fatalf("Error setting up configuration client: %s", err.Error())
 	}
 
 	runtimeClient := &runtime_api.Client{}
 	globalConf, err := confClient.GetGlobalConfiguration("")
 
 	if err != nil {
-		fmt.Println("Stats socket not configured, no runtime client initiated")
+		log.Warning("Stats socket not configured, no runtime client initiated")
 	}
 
 	runtimeAPIs := globalConf.Data.RuntimeApis
 	if len(runtimeAPIs) == 0 {
-		fmt.Println("Stats socket not configured, no runtime client initiated")
+		log.Warning("Stats socket not configured, no runtime client initiated")
 	} else {
 		socketList := make([]string, 0, 1)
 		for _, r := range runtimeAPIs {
@@ -120,7 +117,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 		err := runtimeClient.Init(socketList)
 		if err != nil {
-			fmt.Println("Error setting up runtime client, not using one")
+			log.Warning("Error setting up runtime client, not using one")
 			runtimeClient = nil
 		}
 	}
@@ -323,8 +320,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 		return specification.NewGetSpecificationOK().WithPayload(&m)
 	})
-
-	api.ServerShutdown = func() {}
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }
