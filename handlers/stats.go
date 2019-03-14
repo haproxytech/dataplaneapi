@@ -43,10 +43,9 @@ func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal inte
 	}
 
 	nativeStats := models.NativeStats{}
-	for i, nStat := range s {
+	for _, nStat := range s {
 		for _, item := range nStat {
 			nativeStatItem := *item
-			nativeStatItem.Process = int64(i)
 			if params.Name != nil {
 				if item.Type == "server" {
 					if item.Name == *params.Name && item.Type == *params.Type && item.BackendName == *params.Parent {
