@@ -37,6 +37,7 @@ Data Plane API is built using [go-swagger](https://github.com/go-swagger/go-swag
     --tags=Filter \
     --tags=StickRule \
     --tags=LogTarget \
+    --tags=Reloads \
     --tags=ACL
 ```
 
