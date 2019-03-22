@@ -293,6 +293,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.LogTargetGetLogTargetsHandler = &handlers.GetLogTargetsHandlerImpl{Client: client}
 	api.LogTargetReplaceLogTargetHandler = &handlers.ReplaceLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup log target handlers
+	api.ACLCreateACLHandler = &handlers.CreateACLHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLDeleteACLHandler = &handlers.DeleteACLHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLGetACLHandler = &handlers.GetACLHandlerImpl{Client: client}
+	api.ACLGetAclsHandler = &handlers.GetAclsHandlerImpl{Client: client}
+	api.ACLReplaceACLHandler = &handlers.ReplaceACLHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup stats handler
 	api.StatsGetStatsHandler = &handlers.GetStatsHandlerImpl{Client: client}
 

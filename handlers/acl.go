@@ -1,0 +1,192 @@
+package handlers
+
+import (
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/haproxytech/client-native"
+	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/acl"
+	"github.com/haproxytech/models"
+)
+
+//CreateACLHandlerImpl implementation of the CreateACLHandler interface using client-native client
+type CreateACLHandlerImpl struct {
+	Client      *client_native.HAProxyClient
+	ReloadAgent *haproxy.ReloadAgent
+}
+
+//DeleteACLHandlerImpl implementation of the DeleteACLHandler interface using client-native client
+type DeleteACLHandlerImpl struct {
+	Client      *client_native.HAProxyClient
+	ReloadAgent *haproxy.ReloadAgent
+}
+
+//GetACLHandlerImpl implementation of the GetACLHandler interface using client-native client
+type GetACLHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+//GetAclsHandlerImpl implementation of the GetAclsHandler interface using client-native client
+type GetAclsHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+//ReplaceACLHandlerImpl implementation of the ReplaceACLHandler interface using client-native client
+type ReplaceACLHandlerImpl struct {
+	Client      *client_native.HAProxyClient
+	ReloadAgent *haproxy.ReloadAgent
+}
+
+//Handle executing the request and returning a response
+func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err := h.Client.Configuration.CreateACL(params.ParentType, params.ParentName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+			}
+			return acl.NewCreateACLCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return acl.NewCreateACLAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return acl.NewCreateACLAccepted().WithPayload(params.Data)
+}
+
+//Handle executing the request and returning a response
+func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err := h.Client.Configuration.DeleteACL(params.ID, params.ParentType, params.ParentName, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+	}
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+			}
+			return acl.NewDeleteACLNoContent()
+		}
+		rID := h.ReloadAgent.Reload()
+		return acl.NewDeleteACLAccepted().WithReloadID(rID)
+	}
+	return acl.NewDeleteACLAccepted()
+}
+
+//Handle executing the request and returning a response
+func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{}) middleware.Responder {
+	t := ""
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+
+	rule, err := h.Client.Configuration.GetACL(params.ID, params.ParentType, params.ParentName, t)
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
+	}
+	return acl.NewGetACLOK().WithPayload(rule)
+}
+
+//Handle executing the request and returning a response
+func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interface{}) middleware.Responder {
+	t := ""
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+
+	rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t)
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewGetAclsDefault(int(*e.Code)).WithPayload(e)
+	}
+	return acl.NewGetAclsOK().WithPayload(rules)
+}
+
+//Handle executing the request and returning a response
+func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err := h.Client.Configuration.EditACL(params.ID, params.ParentType, params.ParentName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+	}
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+			}
+			return acl.NewReplaceACLOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return acl.NewReplaceACLAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return acl.NewReplaceACLAccepted().WithPayload(params.Data)
+}

@@ -137,6 +137,354 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/acls": {
+      "get": {
+        "description": "Returns all ACL Rules that are configured in specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Return an array of all ACL Rules",
+        "operationId": "getAcls",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/acls"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new ACL Rule of the specified type in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Add a new ACL Rule",
+        "operationId": "createAcl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL Rule created",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/acls/{id}": {
+      "get": {
+        "description": "Returns one ACL Rule configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Return one ACL Rule",
+        "operationId": "getAcl",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL Rule ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/acl"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a ACL Rule configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Replace a ACL Rule",
+        "operationId": "replaceAcl",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL Rule ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ACL Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a ACL Rule configuration by it's ID from the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Delete a ACL Rule",
+        "operationId": "deleteAcl",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL Rule ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "ACL Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/backend_switching_rules": {
       "get": {
         "description": "Returns all Backend Switching Rules that are configured in specified frontend.",
@@ -4892,6 +5240,40 @@ func init() {
     }
   },
   "definitions": {
+    "acl": {
+      "description": "The use of Access Control Lists (ACL) provides a flexible solution to perform\ncontent switching and generally to take decisions based on content extracted\nfrom the request, the response or any environmental status.\n",
+      "type": "object",
+      "title": "ACL Rules",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "acl_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "criterion": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "acls": {
+      "description": "HAProxy ACL Rules array (corresponds to acl directives)",
+      "type": "array",
+      "title": "ACL Rules Array",
+      "items": {
+        "$ref": "#/definitions/acl"
+      }
+    },
     "backend": {
       "description": "HAProxy backend configuration",
       "type": "object",
@@ -4980,11 +5362,30 @@ func init() {
           }
         },
         "forwardfor": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "object",
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ]
+            },
+            "except": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            },
+            "header": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            },
+            "ifnone": {
+              "type": "boolean"
+            }
+          }
         },
         "http_connection_mode": {
           "type": "string",
@@ -5041,11 +5442,23 @@ func init() {
           "x-nullable": true
         },
         "redispatch": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "object",
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ]
+            },
+            "interval": {
+              "type": "integer",
+              "x-nullable": false
+            }
+          }
         },
         "retries": {
           "type": "integer",
@@ -5099,7 +5512,9 @@ func init() {
         "balance": {
           "algorithm": "roundrobin"
         },
-        "forwardfor": "enabled",
+        "forwardfor": {
+          "enabled": true
+        },
         "httpchk": {
           "method": "OPTIONS",
           "uri": "/check",
@@ -5481,6 +5896,24 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "cpu_maps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
         "daemon": {
           "type": "string",
           "enum": [
@@ -5488,33 +5921,64 @@ func init() {
             "disabled"
           ]
         },
+        "master-worker": {
+          "type": "boolean"
+        },
         "maxconn": {
           "type": "integer"
         },
         "nbproc": {
           "type": "integer"
         },
-        "runtime_api": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+        "nbthread": {
+          "type": "integer"
         },
-        "runtime_api_level": {
-          "type": "string",
-          "enum": [
-            "user",
-            "operator",
-            "admin"
-          ]
+        "pidfile": {
+          "type": "string"
         },
-        "runtime_api_mode": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+        "runtime_apis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              },
+              "exposeFdListeners": {
+                "type": "boolean"
+              },
+              "level": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "operator",
+                  "admin"
+                ]
+              },
+              "mode": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              },
+              "process": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            }
+          }
         },
         "ssl_default_bind_ciphers": {
           "type": "string"
         },
         "ssl_default_bind_options": {
           "type": "string"
+        },
+        "stats_timeout": {
+          "type": "integer",
+          "x-nullable": true
         },
         "tune_ssl_default_dh_param": {
           "type": "integer"
@@ -5934,8 +6398,8 @@ func init() {
           "name": {
             "type": "string"
           },
-          "process": {
-            "type": "integer"
+          "runtimeApi": {
+            "type": "string"
           },
           "stats": {
             "type": "object",
@@ -6891,7 +7355,30 @@ func init() {
                 }
               },
               "forwardfor": {
-                "type": "boolean"
+                "type": "object",
+                "required": [
+                  "enabled"
+                ],
+                "properties": {
+                  "enabled": {
+                    "type": "string",
+                    "enum": [
+                      "enabled",
+                      "disabled"
+                    ]
+                  },
+                  "except": {
+                    "type": "string",
+                    "pattern": "^[^\\s]+$"
+                  },
+                  "header": {
+                    "type": "string",
+                    "pattern": "^[^\\s]+$"
+                  },
+                  "ifnone": {
+                    "type": "boolean"
+                  }
+                }
               },
               "mode": {
                 "type": "string",
@@ -7449,6 +7936,9 @@ func init() {
     },
     {
       "name": "LogTarget"
+    },
+    {
+      "name": "ACL"
     }
   ],
   "externalDocs": {
@@ -7577,6 +8067,415 @@ func init() {
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/endpoints"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/acls": {
+      "get": {
+        "description": "Returns all ACL Rules that are configured in specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Return an array of all ACL Rules",
+        "operationId": "getAcls",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/getAclsOKBody"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new ACL Rule of the specified type in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Add a new ACL Rule",
+        "operationId": "createAcl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL Rule created",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/acls/{id}": {
+      "get": {
+        "description": "Returns one ACL Rule configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Return one ACL Rule",
+        "operationId": "getAcl",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL Rule ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/getAclOKBody"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a ACL Rule configuration by it's ID in the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Replace a ACL Rule",
+        "operationId": "replaceAcl",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL Rule ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ACL Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/acl"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a ACL Rule configuration by it's ID from the specified parent.",
+        "tags": [
+          "HAProxy configuration management",
+          "Backend options",
+          "Frontend options",
+          "ACL"
+        ],
+        "summary": "Delete a ACL Rule",
+        "operationId": "deleteAcl",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ACL Rule ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "ACL Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
             }
           },
           "default": {
@@ -13275,6 +14174,40 @@ func init() {
     }
   },
   "definitions": {
+    "acl": {
+      "description": "The use of Access Control Lists (ACL) provides a flexible solution to perform\ncontent switching and generally to take decisions based on content extracted\nfrom the request, the response or any environmental status.\n",
+      "type": "object",
+      "title": "ACL Rules",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "acl_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "criterion": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "acls": {
+      "description": "HAProxy ACL Rules array (corresponds to acl directives)",
+      "type": "array",
+      "title": "ACL Rules Array",
+      "items": {
+        "$ref": "#/definitions/acl"
+      }
+    },
     "backend": {
       "description": "HAProxy backend configuration",
       "type": "object",
@@ -13321,11 +14254,7 @@ func init() {
           "$ref": "#/definitions/backendDefaultServer"
         },
         "forwardfor": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "$ref": "#/definitions/backendForwardfor"
         },
         "http_connection_mode": {
           "type": "string",
@@ -13361,11 +14290,7 @@ func init() {
           "x-nullable": true
         },
         "redispatch": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "$ref": "#/definitions/backendRedispatch"
         },
         "retries": {
           "type": "integer",
@@ -13384,7 +14309,9 @@ func init() {
         "balance": {
           "algorithm": "roundrobin"
         },
-        "forwardfor": "enabled",
+        "forwardfor": {
+          "enabled": true
+        },
         "httpchk": {
           "method": "OPTIONS",
           "uri": "/check",
@@ -13444,6 +14371,33 @@ func init() {
       },
       "x-go-gen-location": "models"
     },
+    "backendForwardfor": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "except": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "header": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ifnone": {
+          "type": "boolean"
+        }
+      },
+      "x-go-gen-location": "models"
+    },
     "backendHttpchk": {
       "type": "object",
       "properties": {
@@ -13465,6 +14419,26 @@ func init() {
         "version": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-gen-location": "models"
+    },
+    "backendRedispatch": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "interval": {
+          "type": "integer",
+          "x-nullable": false
         }
       },
       "x-go-gen-location": "models"
@@ -13875,6 +14849,30 @@ func init() {
         "$ref": "#/definitions/frontend"
       }
     },
+    "getAclOKBody": {
+      "type": "object",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "data": {
+          "$ref": "#/definitions/acl"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getAclsOKBody": {
+      "type": "object",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "data": {
+          "$ref": "#/definitions/acls"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
     "getBackendOKBody": {
       "type": "object",
       "properties": {
@@ -14240,6 +15238,12 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "cpu_maps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/globalCpuMapsItems"
+          }
+        },
         "daemon": {
           "type": "string",
           "enum": [
@@ -14247,27 +15251,26 @@ func init() {
             "disabled"
           ]
         },
+        "master-worker": {
+          "type": "boolean"
+        },
         "maxconn": {
           "type": "integer"
         },
         "nbproc": {
           "type": "integer"
         },
-        "runtime_api": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+        "nbthread": {
+          "type": "integer"
         },
-        "runtime_api_level": {
-          "type": "string",
-          "enum": [
-            "user",
-            "operator",
-            "admin"
-          ]
+        "pidfile": {
+          "type": "string"
         },
-        "runtime_api_mode": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+        "runtime_apis": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/globalRuntimeApisItems"
+          }
         },
         "ssl_default_bind_ciphers": {
           "type": "string"
@@ -14275,11 +15278,63 @@ func init() {
         "ssl_default_bind_options": {
           "type": "string"
         },
+        "stats_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "tune_ssl_default_dh_param": {
           "type": "integer"
         }
       },
       "additionalProperties": false
+    },
+    "globalCpuMapsItems": {
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "x-go-gen-location": "models"
+    },
+    "globalRuntimeApisItems": {
+      "type": "object",
+      "required": [
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "exposeFdListeners": {
+          "type": "boolean"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "user",
+            "operator",
+            "admin"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-gen-location": "models"
     },
     "http_request_rule": {
       "description": "HAProxy HTTP request rule configuration (corresponds to http-request directives)",
@@ -14689,8 +15744,8 @@ func init() {
         "name": {
           "type": "string"
         },
-        "process": {
-          "type": "integer"
+        "runtimeApi": {
+          "type": "string"
         },
         "stats": {
           "$ref": "#/definitions/nativeStatsItemsStats"
@@ -15699,7 +16754,7 @@ func init() {
           }
         },
         "forwardfor": {
-          "type": "boolean"
+          "$ref": "#/definitions/siteFarmsItemsForwardfor"
         },
         "mode": {
           "type": "string",
@@ -15752,6 +16807,33 @@ func init() {
             "type": "string",
             "pattern": "^[^\\s]+$"
           }
+        }
+      },
+      "x-go-gen-location": "models"
+    },
+    "siteFarmsItemsForwardfor": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "except": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "header": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ifnone": {
+          "type": "boolean"
         }
       },
       "x-go-gen-location": "models"
@@ -16240,6 +17322,9 @@ func init() {
     },
     {
       "name": "LogTarget"
+    },
+    {
+      "name": "ACL"
     }
   ],
   "externalDocs": {

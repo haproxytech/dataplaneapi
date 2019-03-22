@@ -19,6 +19,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
@@ -65,6 +66,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TransactionsCommitTransactionHandler: transactions.CommitTransactionHandlerFunc(func(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsCommitTransaction has not yet been implemented")
 		}),
+		ACLCreateACLHandler: acl.CreateACLHandlerFunc(func(params acl.CreateACLParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ACLCreateACL has not yet been implemented")
+		}),
 		BackendCreateBackendHandler: backend.CreateBackendHandlerFunc(func(params backend.CreateBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendCreateBackend has not yet been implemented")
 		}),
@@ -106,6 +110,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPResponseRuleCreateTCPResponseRuleHandler: tcp_response_rule.CreateTCPResponseRuleHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TCPResponseRuleCreateTCPResponseRule has not yet been implemented")
+		}),
+		ACLDeleteACLHandler: acl.DeleteACLHandlerFunc(func(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ACLDeleteACL has not yet been implemented")
 		}),
 		BackendDeleteBackendHandler: backend.DeleteBackendHandlerFunc(func(params backend.DeleteBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendDeleteBackend has not yet been implemented")
@@ -154,6 +161,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DiscoveryGetAPIEndpointsHandler: discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetAPIEndpoints has not yet been implemented")
+		}),
+		ACLGetACLHandler: acl.GetACLHandlerFunc(func(params acl.GetACLParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ACLGetACL has not yet been implemented")
+		}),
+		ACLGetAclsHandler: acl.GetAclsHandlerFunc(func(params acl.GetAclsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ACLGetAcls has not yet been implemented")
 		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendGetBackend has not yet been implemented")
@@ -281,6 +294,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ConfigurationPostHAProxyConfigurationHandler: configuration.PostHAProxyConfigurationHandlerFunc(func(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ConfigurationPostHAProxyConfiguration has not yet been implemented")
 		}),
+		ACLReplaceACLHandler: acl.ReplaceACLHandlerFunc(func(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ACLReplaceACL has not yet been implemented")
+		}),
 		BackendReplaceBackendHandler: backend.ReplaceBackendHandlerFunc(func(params backend.ReplaceBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendReplaceBackend has not yet been implemented")
 		}),
@@ -383,6 +399,8 @@ type DataPlaneAPI struct {
 
 	// TransactionsCommitTransactionHandler sets the operation handler for the commit transaction operation
 	TransactionsCommitTransactionHandler transactions.CommitTransactionHandler
+	// ACLCreateACLHandler sets the operation handler for the create Acl operation
+	ACLCreateACLHandler acl.CreateACLHandler
 	// BackendCreateBackendHandler sets the operation handler for the create backend operation
 	BackendCreateBackendHandler backend.CreateBackendHandler
 	// BackendSwitchingRuleCreateBackendSwitchingRuleHandler sets the operation handler for the create backend switching rule operation
@@ -411,6 +429,8 @@ type DataPlaneAPI struct {
 	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
 	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
 	TCPResponseRuleCreateTCPResponseRuleHandler tcp_response_rule.CreateTCPResponseRuleHandler
+	// ACLDeleteACLHandler sets the operation handler for the delete Acl operation
+	ACLDeleteACLHandler acl.DeleteACLHandler
 	// BackendDeleteBackendHandler sets the operation handler for the delete backend operation
 	BackendDeleteBackendHandler backend.DeleteBackendHandler
 	// BackendSwitchingRuleDeleteBackendSwitchingRuleHandler sets the operation handler for the delete backend switching rule operation
@@ -443,6 +463,10 @@ type DataPlaneAPI struct {
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
 	DiscoveryGetAPIEndpointsHandler discovery.GetAPIEndpointsHandler
+	// ACLGetACLHandler sets the operation handler for the get Acl operation
+	ACLGetACLHandler acl.GetACLHandler
+	// ACLGetAclsHandler sets the operation handler for the get acls operation
+	ACLGetAclsHandler acl.GetAclsHandler
 	// BackendGetBackendHandler sets the operation handler for the get backend operation
 	BackendGetBackendHandler backend.GetBackendHandler
 	// BackendSwitchingRuleGetBackendSwitchingRuleHandler sets the operation handler for the get backend switching rule operation
@@ -527,6 +551,8 @@ type DataPlaneAPI struct {
 	TransactionsGetTransactionsHandler transactions.GetTransactionsHandler
 	// ConfigurationPostHAProxyConfigurationHandler sets the operation handler for the post h a proxy configuration operation
 	ConfigurationPostHAProxyConfigurationHandler configuration.PostHAProxyConfigurationHandler
+	// ACLReplaceACLHandler sets the operation handler for the replace Acl operation
+	ACLReplaceACLHandler acl.ReplaceACLHandler
 	// BackendReplaceBackendHandler sets the operation handler for the replace backend operation
 	BackendReplaceBackendHandler backend.ReplaceBackendHandler
 	// BackendSwitchingRuleReplaceBackendSwitchingRuleHandler sets the operation handler for the replace backend switching rule operation
@@ -638,6 +664,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "transactions.CommitTransactionHandler")
 	}
 
+	if o.ACLCreateACLHandler == nil {
+		unregistered = append(unregistered, "acl.CreateACLHandler")
+	}
+
 	if o.BackendCreateBackendHandler == nil {
 		unregistered = append(unregistered, "backend.CreateBackendHandler")
 	}
@@ -692,6 +722,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.TCPResponseRuleCreateTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleHandler")
+	}
+
+	if o.ACLDeleteACLHandler == nil {
+		unregistered = append(unregistered, "acl.DeleteACLHandler")
 	}
 
 	if o.BackendDeleteBackendHandler == nil {
@@ -756,6 +790,14 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.DiscoveryGetAPIEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetAPIEndpointsHandler")
+	}
+
+	if o.ACLGetACLHandler == nil {
+		unregistered = append(unregistered, "acl.GetACLHandler")
+	}
+
+	if o.ACLGetAclsHandler == nil {
+		unregistered = append(unregistered, "acl.GetAclsHandler")
 	}
 
 	if o.BackendGetBackendHandler == nil {
@@ -924,6 +966,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.ConfigurationPostHAProxyConfigurationHandler == nil {
 		unregistered = append(unregistered, "configuration.PostHAProxyConfigurationHandler")
+	}
+
+	if o.ACLReplaceACLHandler == nil {
+		unregistered = append(unregistered, "acl.ReplaceACLHandler")
 	}
 
 	if o.BackendReplaceBackendHandler == nil {
@@ -1112,6 +1158,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/acls"] = acl.NewCreateACL(o.context, o.ACLCreateACLHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends"] = backend.NewCreateBackend(o.context, o.BackendCreateBackendHandler)
 
 	if o.handlers["POST"] == nil {
@@ -1178,6 +1229,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/acls/{id}"] = acl.NewDeleteACL(o.context, o.ACLDeleteACLHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1258,6 +1314,16 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"][""] = discovery.NewGetAPIEndpoints(o.context, o.DiscoveryGetAPIEndpointsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/acls/{id}"] = acl.NewGetACL(o.context, o.ACLGetACLHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/acls"] = acl.NewGetAcls(o.context, o.ACLGetAclsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1468,6 +1534,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/raw"] = configuration.NewPostHAProxyConfiguration(o.context, o.ConfigurationPostHAProxyConfigurationHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/acls/{id}"] = acl.NewReplaceACL(o.context, o.ACLReplaceACLHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
