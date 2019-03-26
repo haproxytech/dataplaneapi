@@ -31,9 +31,9 @@ func NewDeleteACL(ctx *middleware.Context, handler DeleteACLHandler) *DeleteACL 
 
 /*DeleteACL swagger:route DELETE /services/haproxy/configuration/acls/{id} ACL deleteAcl
 
-Delete a ACL Rule
+Delete a ACL line
 
-Deletes a ACL Rule configuration by it's ID from the specified parent.
+Deletes a ACL line configuration by it's ID from the specified parent.
 
 */
 type DeleteACL struct {

@@ -33,7 +33,7 @@ type GetACLParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*ACL Rule ID
+	/*ACL line ID
 	  Required: true
 	  In: path
 	*/

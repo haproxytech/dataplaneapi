@@ -16,7 +16,7 @@ import (
 // CreateACLCreatedCode is the HTTP code returned for type CreateACLCreated
 const CreateACLCreatedCode int = 201
 
-/*CreateACLCreated ACL Rule created
+/*CreateACLCreated ACL line created
 
 swagger:response createAclCreated
 */

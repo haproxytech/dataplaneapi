@@ -38,7 +38,6 @@ func init() {
     },
     "version": "0.1"
   },
-  "host": "api.haproxy.com",
   "basePath": "/v1",
   "paths": {
     "/": {
@@ -139,14 +138,14 @@ func init() {
     },
     "/services/haproxy/configuration/acls": {
       "get": {
-        "description": "Returns all ACL Rules that are configured in specified parent.",
+        "description": "Returns all ACL lines that are configured in specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Return an array of all ACL Rules",
+        "summary": "Return an array of all ACL lines",
         "operationId": "getAcls",
         "parameters": [
           {
@@ -192,14 +191,14 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new ACL Rule of the specified type in the specified parent.",
+        "description": "Adds a new ACL line of the specified type in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Add a new ACL Rule",
+        "summary": "Add a new ACL line",
         "operationId": "createAcl",
         "parameters": [
           {
@@ -240,7 +239,7 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "ACL Rule created",
+            "description": "ACL line created",
             "schema": {
               "$ref": "#/definitions/acl"
             }
@@ -271,19 +270,19 @@ func init() {
     },
     "/services/haproxy/configuration/acls/{id}": {
       "get": {
-        "description": "Returns one ACL Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one ACL line configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Return one ACL Rule",
+        "summary": "Return one ACL line",
         "operationId": "getAcl",
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL Rule ID",
+            "description": "ACL line ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -334,19 +333,19 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a ACL Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a ACL line configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Replace a ACL Rule",
+        "summary": "Replace a ACL line",
         "operationId": "replaceAcl",
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL Rule ID",
+            "description": "ACL line ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -389,7 +388,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "ACL Rule replaced",
+            "description": "ACL line replaced",
             "schema": {
               "$ref": "#/definitions/acl"
             }
@@ -418,19 +417,19 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a ACL Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a ACL line configuration by it's ID from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Delete a ACL Rule",
+        "summary": "Delete a ACL line",
         "operationId": "deleteAcl",
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL Rule ID",
+            "description": "ACL line ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -474,7 +473,7 @@ func init() {
             }
           },
           "204": {
-            "description": "ACL Rule deleted"
+            "description": "ACL line deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -5243,7 +5242,7 @@ func init() {
     "acl": {
       "description": "The use of Access Control Lists (ACL) provides a flexible solution to perform\ncontent switching and generally to take decisions based on content extracted\nfrom the request, the response or any environmental status.\n",
       "type": "object",
-      "title": "ACL Rules",
+      "title": "ACL Lines",
       "required": [
         "id"
       ],
@@ -5267,9 +5266,9 @@ func init() {
       "additionalProperties": false
     },
     "acls": {
-      "description": "HAProxy ACL Rules array (corresponds to acl directives)",
+      "description": "HAProxy ACL lines array (corresponds to acl directives)",
       "type": "array",
-      "title": "ACL Rules Array",
+      "title": "ACL Lines Array",
       "items": {
         "$ref": "#/definitions/acl"
       }
@@ -5750,7 +5749,7 @@ func init() {
       }
     },
     "filters": {
-      "description": "HAProxy filters",
+      "description": "HAProxy filters array (corresponds to filter directive)",
       "type": "array",
       "title": "Filters Array",
       "items": {
@@ -6373,7 +6372,7 @@ func init() {
       "additionalProperties": false
     },
     "log_targets": {
-      "description": "HAProxy Log Target array (corresponds to log directives)",
+      "description": "HAProxy log target array (corresponds to log directives)",
       "type": "array",
       "title": "Log Target Array",
       "items": {
@@ -7148,7 +7147,7 @@ func init() {
     "reloads": {
       "description": "HAProxy reloads array",
       "type": "array",
-      "title": "HAProxy reloads array",
+      "title": "HAProxy Reloads Array",
       "items": {
         "$ref": "#/definitions/reload"
       }
@@ -7567,7 +7566,7 @@ func init() {
       }
     },
     "sites": {
-      "description": "Sites array. Sites are considered as one frontend and all backends connected to that frontend.\nBackends are connected to frontend using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Sites array. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
       "type": "array",
       "title": "Sites",
       "items": {
@@ -7686,7 +7685,7 @@ func init() {
       }
     },
     "tcp_request_rules": {
-      "description": "HAProxy TCP Request Rules array (corresponds to tcp-request directive)",
+      "description": "HAProxy TCP request rules array (corresponds to tcp-request directive)",
       "type": "array",
       "title": "TCP Request Rules Array",
       "items": {
@@ -7746,7 +7745,7 @@ func init() {
       }
     },
     "tcp_response_rules": {
-      "description": "HAProxy TCP Response Rules array (corresponds to tcp-response directive)",
+      "description": "HAProxy TCP response rules array (corresponds to tcp-response directive)",
       "type": "array",
       "title": "TCP Response Rules Array",
       "items": {
@@ -7967,7 +7966,6 @@ func init() {
     },
     "version": "0.1"
   },
-  "host": "api.haproxy.com",
   "basePath": "/v1",
   "paths": {
     "/": {
@@ -8080,14 +8078,14 @@ func init() {
     },
     "/services/haproxy/configuration/acls": {
       "get": {
-        "description": "Returns all ACL Rules that are configured in specified parent.",
+        "description": "Returns all ACL lines that are configured in specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Return an array of all ACL Rules",
+        "summary": "Return an array of all ACL lines",
         "operationId": "getAcls",
         "parameters": [
           {
@@ -8132,14 +8130,14 @@ func init() {
         }
       },
       "post": {
-        "description": "Adds a new ACL Rule of the specified type in the specified parent.",
+        "description": "Adds a new ACL line of the specified type in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Add a new ACL Rule",
+        "summary": "Add a new ACL line",
         "operationId": "createAcl",
         "parameters": [
           {
@@ -8192,7 +8190,7 @@ func init() {
         ],
         "responses": {
           "201": {
-            "description": "ACL Rule created",
+            "description": "ACL line created",
             "schema": {
               "$ref": "#/definitions/acl"
             }
@@ -8232,19 +8230,19 @@ func init() {
     },
     "/services/haproxy/configuration/acls/{id}": {
       "get": {
-        "description": "Returns one ACL Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one ACL line configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Return one ACL Rule",
+        "summary": "Return one ACL line",
         "operationId": "getAcl",
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL Rule ID",
+            "description": "ACL line ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -8297,19 +8295,19 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a ACL Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a ACL line configuration by it's ID in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Replace a ACL Rule",
+        "summary": "Replace a ACL line",
         "operationId": "replaceAcl",
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL Rule ID",
+            "description": "ACL line ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -8364,7 +8362,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "ACL Rule replaced",
+            "description": "ACL line replaced",
             "schema": {
               "$ref": "#/definitions/acl"
             }
@@ -8402,19 +8400,19 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a ACL Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a ACL line configuration by it's ID from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
           "Frontend options",
           "ACL"
         ],
-        "summary": "Delete a ACL Rule",
+        "summary": "Delete a ACL line",
         "operationId": "deleteAcl",
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL Rule ID",
+            "description": "ACL line ID",
             "name": "id",
             "in": "path",
             "required": true
@@ -8470,7 +8468,7 @@ func init() {
             }
           },
           "204": {
-            "description": "ACL Rule deleted"
+            "description": "ACL line deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -14177,7 +14175,7 @@ func init() {
     "acl": {
       "description": "The use of Access Control Lists (ACL) provides a flexible solution to perform\ncontent switching and generally to take decisions based on content extracted\nfrom the request, the response or any environmental status.\n",
       "type": "object",
-      "title": "ACL Rules",
+      "title": "ACL Lines",
       "required": [
         "id"
       ],
@@ -14201,9 +14199,9 @@ func init() {
       "additionalProperties": false
     },
     "acls": {
-      "description": "HAProxy ACL Rules array (corresponds to acl directives)",
+      "description": "HAProxy ACL lines array (corresponds to acl directives)",
       "type": "array",
-      "title": "ACL Rules Array",
+      "title": "ACL Lines Array",
       "items": {
         "$ref": "#/definitions/acl"
       }
@@ -14708,7 +14706,7 @@ func init() {
       }
     },
     "filters": {
-      "description": "HAProxy filters",
+      "description": "HAProxy filters array (corresponds to filter directive)",
       "type": "array",
       "title": "Filters Array",
       "items": {
@@ -15723,7 +15721,7 @@ func init() {
       "additionalProperties": false
     },
     "log_targets": {
-      "description": "HAProxy Log Target array (corresponds to log directives)",
+      "description": "HAProxy log target array (corresponds to log directives)",
       "type": "array",
       "title": "Log Target Array",
       "items": {
@@ -16510,7 +16508,7 @@ func init() {
     "reloads": {
       "description": "HAProxy reloads array",
       "type": "array",
-      "title": "HAProxy reloads array",
+      "title": "HAProxy Reloads Array",
       "items": {
         "$ref": "#/definitions/reload"
       }
@@ -16953,7 +16951,7 @@ func init() {
       "x-go-gen-location": "models"
     },
     "sites": {
-      "description": "Sites array. Sites are considered as one frontend and all backends connected to that frontend.\nBackends are connected to frontend using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Sites array. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
       "type": "array",
       "title": "Sites",
       "items": {
@@ -17072,7 +17070,7 @@ func init() {
       }
     },
     "tcp_request_rules": {
-      "description": "HAProxy TCP Request Rules array (corresponds to tcp-request directive)",
+      "description": "HAProxy TCP request rules array (corresponds to tcp-request directive)",
       "type": "array",
       "title": "TCP Request Rules Array",
       "items": {
@@ -17132,7 +17130,7 @@ func init() {
       }
     },
     "tcp_response_rules": {
-      "description": "HAProxy TCP Response Rules array (corresponds to tcp-response directive)",
+      "description": "HAProxy TCP response rules array (corresponds to tcp-response directive)",
       "type": "array",
       "title": "TCP Response Rules Array",
       "items": {

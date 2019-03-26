@@ -62,7 +62,7 @@ func (o *DeleteACLAccepted) WriteResponse(rw http.ResponseWriter, producer runti
 // DeleteACLNoContentCode is the HTTP code returned for type DeleteACLNoContent
 const DeleteACLNoContentCode int = 204
 
-/*DeleteACLNoContent ACL Rule deleted
+/*DeleteACLNoContent ACL line deleted
 
 swagger:response deleteAclNoContent
 */

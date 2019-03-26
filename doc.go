@@ -9,7 +9,7 @@ haproxy stats and logs.
 
     Schemes:
       http
-    Host: api.haproxy.com
+    Host: localhost
     BasePath: /v1
     Version: 0.1
     Contact: HAProxy Support<support@haproxy.com> https://my.haproxy.com/portal/cust/login

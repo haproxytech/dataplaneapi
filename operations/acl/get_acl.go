@@ -31,9 +31,9 @@ func NewGetACL(ctx *middleware.Context, handler GetACLHandler) *GetACL {
 
 /*GetACL swagger:route GET /services/haproxy/configuration/acls/{id} ACL getAcl
 
-Return one ACL Rule
+Return one ACL line
 
-Returns one ACL Rule configuration by it's ID in the specified parent.
+Returns one ACL line configuration by it's ID in the specified parent.
 
 */
 type GetACL struct {

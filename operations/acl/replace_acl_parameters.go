@@ -54,7 +54,7 @@ type ReplaceACLParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
-	/*ACL Rule ID
+	/*ACL line ID
 	  Required: true
 	  In: path
 	*/

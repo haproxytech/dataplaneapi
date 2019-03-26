@@ -16,7 +16,7 @@ import (
 // ReplaceACLOKCode is the HTTP code returned for type ReplaceACLOK
 const ReplaceACLOKCode int = 200
 
-/*ReplaceACLOK ACL Rule replaced
+/*ReplaceACLOK ACL line replaced
 
 swagger:response replaceAclOK
 */

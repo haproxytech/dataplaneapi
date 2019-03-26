@@ -31,9 +31,9 @@ func NewReplaceACL(ctx *middleware.Context, handler ReplaceACLHandler) *ReplaceA
 
 /*ReplaceACL swagger:route PUT /services/haproxy/configuration/acls/{id} ACL replaceAcl
 
-Replace a ACL Rule
+Replace a ACL line
 
-Replaces a ACL Rule configuration by it's ID in the specified parent.
+Replaces a ACL line configuration by it's ID in the specified parent.
 
 */
 type ReplaceACL struct {
