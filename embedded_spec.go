@@ -5391,7 +5391,7 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forced-close",
+            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ]
@@ -5540,7 +5540,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -5549,6 +5554,10 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-dynamic-enum": {
+            "operation": "getBackends",
+            "property": "name"
+          },
           "x-nullable": false
         }
       },
@@ -5788,8 +5797,10 @@ func init() {
         "default_backend": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-dynamic-enum": "getBackends",
-          "x-dynamic-propery": "name"
+          "x-dynamic-enum": {
+            "operation": "getBackends",
+            "property": "name"
+          }
         },
         "dontlognull": {
           "type": "string",
@@ -5810,7 +5821,7 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forced-close",
+            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ]
@@ -6014,7 +6025,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "deny_status": {
           "type": "integer",
@@ -6157,7 +6173,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "hdr_format": {
           "type": "string",
@@ -7259,7 +7280,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -7268,6 +7294,10 @@ func init() {
         "target_server": {
           "type": "string",
           "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getServers",
+            "property": "name"
+          },
           "x-nullable": false
         }
       },
@@ -7590,7 +7620,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -7655,7 +7690,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -7717,7 +7757,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -14259,7 +14304,7 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forced-close",
+            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ]
@@ -14497,7 +14542,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -14506,6 +14556,10 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-dynamic-enum": {
+            "operation": "getBackends",
+            "property": "name"
+          },
           "x-nullable": false
         }
       },
@@ -14745,8 +14799,10 @@ func init() {
         "default_backend": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-dynamic-enum": "getBackends",
-          "x-dynamic-propery": "name"
+          "x-dynamic-enum": {
+            "operation": "getBackends",
+            "property": "name"
+          }
         },
         "dontlognull": {
           "type": "string",
@@ -14767,7 +14823,7 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forced-close",
+            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ]
@@ -15363,7 +15419,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "deny_status": {
           "type": "integer",
@@ -15506,7 +15567,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "hdr_format": {
           "type": "string",
@@ -16620,7 +16686,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -16629,6 +16700,10 @@ func init() {
         "target_server": {
           "type": "string",
           "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getServers",
+            "property": "name"
+          },
           "x-nullable": false
         }
       },
@@ -16975,7 +17050,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -17040,7 +17120,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
@@ -17102,7 +17187,12 @@ func init() {
           ]
         },
         "cond_test": {
-          "type": "string"
+          "type": "string",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
         },
         "id": {
           "type": "integer",
