@@ -80,7 +80,7 @@ func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactions
 
 //Handle executing the request and returning a response
 func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
-	err := th.Client.Configuration.CommitTransaction(params.ID)
+	t, err := th.Client.Configuration.CommitTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -91,8 +91,8 @@ func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransac
 			e := misc.HandleError(err)
 			return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 		}
-		return transactions.NewCommitTransactionOK()
+		return transactions.NewCommitTransactionOK().WithPayload(t)
 	}
 	rID := th.ReloadAgent.Reload()
-	return transactions.NewCommitTransactionAccepted().WithReloadID(rID)
+	return transactions.NewCommitTransactionAccepted().WithReloadID(rID).WithPayload(t)
 }

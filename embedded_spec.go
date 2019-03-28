@@ -7820,7 +7820,8 @@ func init() {
           "type": "string",
           "enum": [
             "failed",
-            "in_progress"
+            "in_progress",
+            "success"
           ]
         }
       },
@@ -17257,7 +17258,8 @@ func init() {
           "type": "string",
           "enum": [
             "failed",
-            "in_progress"
+            "in_progress",
+            "success"
           ]
         }
       },
