@@ -5386,6 +5386,13 @@ func init() {
             }
           }
         },
+        "http-use-htx": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "http_connection_mode": {
           "type": "string",
           "enum": [
@@ -14298,6 +14305,13 @@ func init() {
         },
         "forwardfor": {
           "$ref": "#/definitions/backendForwardfor"
+        },
+        "http-use-htx": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "http_connection_mode": {
           "type": "string",
