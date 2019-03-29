@@ -5284,7 +5284,7 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "ssl-hello-check",
+            "ssl-hello-chk",
             "smtpchk",
             "ldap-check",
             "mysql-check",
@@ -14270,7 +14270,7 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "ssl-hello-check",
+            "ssl-hello-chk",
             "smtpchk",
             "ldap-check",
             "mysql-check",

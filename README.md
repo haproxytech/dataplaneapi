@@ -73,7 +73,7 @@ Following steps are required for building:
 
 ```
 cd $GOPATH/src/github.com/haproxy/controller
-git clone http://github.com:haproxy-controller/dataplaneapi.git
+git clone http://github.com/haproxytech/dataplaneapi.git
 ```
 
 3\. Run make build:
