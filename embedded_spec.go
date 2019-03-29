@@ -5314,6 +5314,12 @@ func init() {
               "items": {
                 "type": "string",
                 "pattern": "^[^\\s]+$"
+              },
+              "x-dependency": {
+                "algorithm": [
+                  "uri",
+                  "url_param"
+                ]
               }
             }
           }
@@ -5835,9 +5841,6 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
-          "x-dependency": {
-            "protocol": "http"
-          },
           "x-nullable": true
         },
         "http_pretend_keepalive": {
@@ -14400,6 +14403,12 @@ func init() {
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
+          },
+          "x-dependency": {
+            "algorithm": [
+              "uri",
+              "url_param"
+            ]
           }
         }
       },
@@ -14845,9 +14854,6 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
-          "x-dependency": {
-            "protocol": "http"
-          },
           "x-nullable": true
         },
         "http_pretend_keepalive": {
