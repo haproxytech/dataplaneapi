@@ -5766,7 +5766,7 @@ func init() {
       "example": {
         "id": 0,
         "trace_name": "name",
-        "trace_rnd_parsing": "enabled",
+        "trace_rnd_parsing": true,
         "type": "trace"
       }
     },
@@ -5921,14 +5921,14 @@ func init() {
           "items": {
             "type": "object",
             "required": [
-              "name",
-              "value"
+              "process",
+              "cpu_set"
             ],
             "properties": {
-              "name": {
+              "cpu_set": {
                 "type": "string"
               },
-              "value": {
+              "process": {
                 "type": "string"
               }
             }
@@ -6144,7 +6144,7 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "hdr_fmt": "%T",
+        "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
         "id": 0,
         "type": "add-header"
@@ -6296,7 +6296,7 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "hdr_fmt": "%T",
+        "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
         "id": 0,
         "type": "add-header"
@@ -14779,7 +14779,7 @@ func init() {
       "example": {
         "id": 0,
         "trace_name": "name",
-        "trace_rnd_parsing": "enabled",
+        "trace_rnd_parsing": true,
         "type": "trace"
       }
     },
@@ -15366,14 +15366,14 @@ func init() {
     "globalCpuMapsItems": {
       "type": "object",
       "required": [
-        "name",
-        "value"
+        "process",
+        "cpu_set"
       ],
       "properties": {
-        "name": {
+        "cpu_set": {
           "type": "string"
         },
-        "value": {
+        "process": {
           "type": "string"
         }
       },
@@ -15549,7 +15549,7 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "hdr_fmt": "%T",
+        "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
         "id": 0,
         "type": "add-header"
@@ -15701,7 +15701,7 @@ func init() {
       "example": {
         "cond": "unless",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "hdr_fmt": "%T",
+        "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
         "id": 0,
         "type": "add-header"
