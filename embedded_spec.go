@@ -5244,7 +5244,10 @@ func init() {
       "type": "object",
       "title": "ACL Lines",
       "required": [
-        "id"
+        "id",
+        "acl_name",
+        "criterion",
+        "value"
       ],
       "properties": {
         "acl_name": {
@@ -5291,7 +5294,8 @@ func init() {
             "pgsql-check",
             "tcp-check",
             "redis-check"
-          ]
+          ],
+          "x-display-name": "Advanced Check"
         },
         "balance": {
           "type": "object",
@@ -5316,10 +5320,12 @@ func init() {
                 "pattern": "^[^\\s]+$"
               },
               "x-dependency": {
-                "algorithm": [
-                  "uri",
-                  "url_param"
-                ]
+                "algorithm": {
+                  "value": [
+                    "uri",
+                    "url_param"
+                  ]
+                }
               }
             }
           }
@@ -5337,11 +5343,17 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-display-name": "Continous Statistics"
         },
         "cookie": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "default_server": {
           "type": "object",
@@ -5390,14 +5402,25 @@ func init() {
             "ifnone": {
               "type": "boolean"
             }
-          }
+          },
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "ForwardFor"
         },
         "http-use-htx": {
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "http_connection_mode": {
           "type": "string",
@@ -5407,7 +5430,12 @@ func init() {
             "forceclose",
             "http-server-close",
             "http-keep-alive"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "httpchk": {
           "type": "object",
@@ -5431,7 +5459,13 @@ func init() {
               "type": "string",
               "pattern": "^[^\\s]+$"
             }
-          }
+          },
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP Check"
         },
         "log_tag": {
           "type": "string",
@@ -5489,10 +5523,12 @@ func init() {
             },
             "keylen": {
               "type": "integer",
+              "x-display-name": "Key Length",
               "x-nullable": true
             },
             "nopurge": {
-              "type": "boolean"
+              "type": "boolean",
+              "x-display-name": "No Purge"
             },
             "peers": {
               "type": "string",
@@ -5550,10 +5586,17 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -5630,11 +5673,22 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          },
+          "x-display-name": "SSL CA File"
         },
         "ssl_certificate": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "tcp_user_timeout": {
           "type": "integer",
@@ -5724,7 +5778,13 @@ func init() {
       "properties": {
         "cache_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "cache"
+            }
+          }
         },
         "id": {
           "type": "integer",
@@ -5732,24 +5792,57 @@ func init() {
         },
         "spoe_config": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "spoe"
+            }
+          }
         },
         "spoe_engine": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "spoe"
+            }
+          }
         },
         "trace_hexdump": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          }
         },
         "trace_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          }
         },
         "trace_rnd_forwarding": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Forwarding"
         },
         "trace_rnd_parsing": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Parsing"
         },
         "type": {
           "type": "string",
@@ -5787,7 +5880,13 @@ func init() {
       ],
       "properties": {
         "clflog": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "CLF Log"
         },
         "client_timeout": {
           "type": "integer",
@@ -5798,14 +5897,21 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "Client TCP Keep Alive"
         },
         "contstats": {
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-display-name": "Continous Statistics"
         },
         "default_backend": {
           "type": "string",
@@ -5820,14 +5926,21 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-display-name": "Don't Log Null"
         },
         "http-use-htx": {
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -5837,10 +5950,20 @@ func init() {
             "forceclose",
             "http-server-close",
             "http-keep-alive"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-nullable": true
         },
         "http_pretend_keepalive": {
@@ -5848,20 +5971,37 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "http_request_timeout": {
           "type": "integer",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-nullable": true
         },
         "httplog": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP Log"
         },
         "log_format": {
           "type": "string"
         },
         "log_format_sd": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "Log Format SD"
         },
         "log_separate_errors": {
           "type": "string",
@@ -5876,6 +6016,7 @@ func init() {
         },
         "maxconn": {
           "type": "integer",
+          "x-display-name": "Max Connections",
           "x-nullable": true
         },
         "mode": {
@@ -5891,7 +6032,13 @@ func init() {
           "x-nullable": false
         },
         "tcplog": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP Log"
         }
       },
       "additionalProperties": false,
@@ -5926,13 +6073,16 @@ func init() {
             ],
             "properties": {
               "cpu_set": {
-                "type": "string"
+                "type": "string",
+                "x-display-name": "CPU Set"
               },
               "process": {
-                "type": "string"
+                "type": "string",
+                "x-display-name": "Process/Thread Set"
               }
             }
-          }
+          },
+          "x-display-name": "CPU Maps"
         },
         "daemon": {
           "type": "string",
@@ -5942,19 +6092,24 @@ func init() {
           ]
         },
         "master-worker": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-display-name": "Master Worker Mode"
         },
         "maxconn": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "Max Connections"
         },
         "nbproc": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "Number of Processes"
         },
         "nbthread": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "Number of Threads"
         },
         "pidfile": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "PID File"
         },
         "runtime_apis": {
           "type": "array",
@@ -5969,7 +6124,8 @@ func init() {
                 "pattern": "^[^\\s]+$"
               },
               "exposeFdListeners": {
-                "type": "boolean"
+                "type": "boolean",
+                "x-display-name": "Expose FD Listeners"
               },
               "level": {
                 "type": "string",
@@ -5988,20 +6144,24 @@ func init() {
                 "pattern": "^[^\\s]+$"
               }
             }
-          }
+          },
+          "x-display-name": "Runtime APIs"
         },
         "ssl_default_bind_ciphers": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphers"
         },
         "ssl_default_bind_options": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "SSL Default Bind Options"
         },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
         },
         "tune_ssl_default_dh_param": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "SSL Default DH Parameter Size"
         }
       },
       "additionalProperties": false
@@ -6017,25 +6177,58 @@ func init() {
       "properties": {
         "acl_file": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACL File"
         },
         "acl_keyfmt": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACL Key Format"
         },
         "auth_realm": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "auth"
+            }
+          },
+          "x-display-name": "Authentication Realm"
         },
         "cond": {
           "type": "string",
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -6044,19 +6237,62 @@ func init() {
         },
         "deny_status": {
           "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "deny",
+                "tarpit"
+              ]
+            }
+          },
           "x-nullable": false
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value",
+                "set-header",
+                "add-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Format"
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Match"
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-header",
+                "replace-header",
+                "del-header",
+                "set-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Name"
         },
         "id": {
           "type": "integer",
@@ -6074,7 +6310,13 @@ func init() {
             "info",
             "debug",
             "silent"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-log-level"
+            }
+          }
         },
         "redir_code": {
           "type": "integer",
@@ -6082,10 +6324,23 @@ func init() {
             301,
             302,
             303
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Code"
         },
         "redir_option": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Option"
         },
         "redir_type": {
           "type": "string",
@@ -6093,19 +6348,47 @@ func init() {
             "location",
             "prefix",
             "scheme"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Type"
         },
         "redir_value": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Value"
         },
         "spoe_engine": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          },
+          "x-display-name": "SPOE Engine"
         },
         "spoe_group": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          },
+          "x-display-name": "SPOE Group"
         },
         "type": {
           "type": "string",
@@ -6116,28 +6399,47 @@ func init() {
             "redirect",
             "tarpit",
             "add-header",
+            "replace-header",
+            "replace-value",
+            "del-header",
             "set-header",
             "set-log-level",
             "set-var",
             "send-spoe-group",
-            "replace-header",
-            "replace-value",
             "add-acl",
-            "del-acl",
-            "del-header"
+            "del-acl"
           ],
           "x-nullable": false
         },
         "var_expr": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          },
+          "x-display-name": "Var Expression"
         },
         "var_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         },
         "var_scope": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         }
       },
       "additionalProperties": false,
@@ -6169,21 +6471,47 @@ func init() {
       "properties": {
         "acl_file": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          }
         },
         "acl_keyfmt": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACK Key Format"
         },
         "cond": {
           "type": "string",
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -6192,15 +6520,50 @@ func init() {
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value",
+                "set-header",
+                "add-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Format"
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Match"
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-header",
+                "replace-header",
+                "del-header",
+                "set-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Name"
         },
         "id": {
           "type": "integer",
@@ -6218,7 +6581,13 @@ func init() {
             "info",
             "debug",
             "silent"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-log-level"
+            }
+          }
         },
         "redir_code": {
           "type": "integer",
@@ -6226,10 +6595,23 @@ func init() {
             301,
             302,
             303
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Code"
         },
         "redir_option": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Option"
         },
         "redir_type": {
           "type": "string",
@@ -6237,28 +6619,65 @@ func init() {
             "location",
             "prefix",
             "scheme"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Type"
         },
         "redir_value": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Value"
         },
         "spoe_engine": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          }
         },
         "spoe_group": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          }
         },
         "status": {
           "type": "integer",
           "maximum": 999,
           "minimum": 100,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-status"
+            }
+          },
           "x-nullable": false
         },
         "status_reason": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-status"
+            }
+          }
         },
         "type": {
           "type": "string",
@@ -6281,15 +6700,34 @@ func init() {
           "x-nullable": false
         },
         "var_expr": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          },
+          "x-display-name": "Var Expression"
         },
         "var_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         },
         "var_scope": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         }
       },
       "additionalProperties": false,
@@ -6320,7 +6758,17 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "global": {
+              "required": true,
+              "value": false
+            },
+            "nolog": {
+              "required": true,
+              "value": false
+            }
+          }
         },
         "facility": {
           "type": "string",
@@ -6349,7 +6797,17 @@ func init() {
             "local5",
             "local6",
             "local7"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "required": true,
+              "value": false
+            },
+            "nolog": {
+              "required": true,
+              "value": false
+            }
+          }
         },
         "format": {
           "type": "string",
@@ -6358,7 +6816,15 @@ func init() {
             "rfc5424",
             "short",
             "raw"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "global": {
           "type": "boolean"
@@ -6368,7 +6834,15 @@ func init() {
           "x-nullable": true
         },
         "length": {
-          "type": "integer"
+          "type": "integer",
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "level": {
           "type": "string",
@@ -6381,7 +6855,15 @@ func init() {
             "notice",
             "info",
             "debug"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "minlevel": {
           "type": "string",
@@ -6394,7 +6876,18 @@ func init() {
             "notice",
             "info",
             "debug"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "level": {
+              "required": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "nolog": {
           "type": "boolean"
@@ -7223,6 +7716,7 @@ func init() {
         },
         "maxconn": {
           "type": "integer",
+          "x-display-name": "Max Connections",
           "x-nullable": true
         },
         "name": {
@@ -7245,11 +7739,22 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          },
+          "x-display-name": "SSL CA File"
         },
         "ssl_certificate": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "tls_tickets": {
           "type": "string",
@@ -7287,10 +7792,17 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -7384,14 +7896,22 @@ func init() {
                   "unless"
                 ],
                 "x-dependency": {
-                  "use_as": "conditional"
-                }
+                  "use_as": {
+                    "required": true,
+                    "value": "conditional"
+                  }
+                },
+                "x-display-name": "Condition"
               },
               "cond_test": {
                 "type": "string",
                 "x-dependency": {
-                  "use_as": "conditional"
-                }
+                  "use_as": {
+                    "required": true,
+                    "value": "conditional"
+                  }
+                },
+                "x-display-name": "Condition Test"
               },
               "forwardfor": {
                 "type": "object",
@@ -7417,7 +7937,8 @@ func init() {
                   "ifnone": {
                     "type": "boolean"
                   }
-                }
+                },
+                "x-display-name": "ForwardFor"
               },
               "mode": {
                 "type": "string",
@@ -7464,7 +7985,9 @@ func init() {
                       "type": "string",
                       "pattern": "^[^\\s]+$",
                       "x-dependency": {
-                        "ssl": true
+                        "ssl": {
+                          "value": true
+                        }
                       }
                     },
                     "weight": {
@@ -7503,8 +8026,11 @@ func init() {
                 "http-keep-alive"
               ],
               "x-dependency": {
-                "mode": "http"
-              }
+                "mode": {
+                  "value": "http"
+                }
+              },
+              "x-display-name": "HTTP Connection Mode"
             },
             "listeners": {
               "type": "array",
@@ -7539,7 +8065,9 @@ func init() {
                     "type": "string",
                     "pattern": "^[^\\s]+$",
                     "x-dependency": {
-                      "ssl": true
+                      "ssl": {
+                        "value": true
+                      }
                     }
                   }
                 }
@@ -7547,6 +8075,7 @@ func init() {
             },
             "maxconn": {
               "type": "integer",
+              "x-display-name": "Max Connections",
               "x-nullable": true
             },
             "mode": {
@@ -7619,7 +8148,8 @@ func init() {
       "title": "Stick Rule",
       "required": [
         "id",
-        "type"
+        "type",
+        "pattern"
       ],
       "properties": {
         "cond": {
@@ -7627,10 +8157,17 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -7690,6 +8227,16 @@ func init() {
             "accept",
             "reject"
           ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
           "x-nullable": false
         },
         "cond": {
@@ -7697,10 +8244,26 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -7713,6 +8276,12 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "inspect-delay"
+            }
+          },
           "x-nullable": true
         },
         "type": {
@@ -7757,6 +8326,12 @@ func init() {
             "accept",
             "reject"
           ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "content"
+            }
+          },
           "x-nullable": false
         },
         "cond": {
@@ -7764,10 +8339,22 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -7780,6 +8367,12 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "inspect-delay"
+            }
+          },
           "x-nullable": true
         },
         "type": {
@@ -14233,7 +14826,10 @@ func init() {
       "type": "object",
       "title": "ACL Lines",
       "required": [
-        "id"
+        "id",
+        "acl_name",
+        "criterion",
+        "value"
       ],
       "properties": {
         "acl_name": {
@@ -14280,7 +14876,8 @@ func init() {
             "pgsql-check",
             "tcp-check",
             "redis-check"
-          ]
+          ],
+          "x-display-name": "Advanced Check"
         },
         "balance": {
           "$ref": "#/definitions/backendBalance"
@@ -14298,11 +14895,17 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-display-name": "Continous Statistics"
         },
         "cookie": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "default_server": {
           "$ref": "#/definitions/backendDefaultServer"
@@ -14315,7 +14918,12 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "http_connection_mode": {
           "type": "string",
@@ -14325,7 +14933,12 @@ func init() {
             "forceclose",
             "http-server-close",
             "http-keep-alive"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "httpchk": {
           "$ref": "#/definitions/backendHttpchk"
@@ -14405,10 +15018,12 @@ func init() {
             "pattern": "^[^\\s]+$"
           },
           "x-dependency": {
-            "algorithm": [
-              "uri",
-              "url_param"
-            ]
+            "algorithm": {
+              "value": [
+                "uri",
+                "url_param"
+              ]
+            }
           }
         }
       },
@@ -14463,6 +15078,12 @@ func init() {
           "type": "boolean"
         }
       },
+      "x-dependency": {
+        "mode": {
+          "value": "http"
+        }
+      },
+      "x-display-name": "ForwardFor",
       "x-go-gen-location": "models"
     },
     "backendHttpchk": {
@@ -14488,6 +15109,12 @@ func init() {
           "pattern": "^[^\\s]+$"
         }
       },
+      "x-dependency": {
+        "mode": {
+          "value": "http"
+        }
+      },
+      "x-display-name": "HTTP Check",
       "x-go-gen-location": "models"
     },
     "backendRedispatch": {
@@ -14519,10 +15146,12 @@ func init() {
         },
         "keylen": {
           "type": "integer",
+          "x-display-name": "Key Length",
           "x-nullable": true
         },
         "nopurge": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-display-name": "No Purge"
         },
         "peers": {
           "type": "string",
@@ -14563,10 +15192,17 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -14643,11 +15279,22 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          },
+          "x-display-name": "SSL CA File"
         },
         "ssl_certificate": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "tcp_user_timeout": {
           "type": "integer",
@@ -14737,7 +15384,13 @@ func init() {
       "properties": {
         "cache_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "cache"
+            }
+          }
         },
         "id": {
           "type": "integer",
@@ -14745,24 +15398,57 @@ func init() {
         },
         "spoe_config": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "spoe"
+            }
+          }
         },
         "spoe_engine": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "spoe"
+            }
+          }
         },
         "trace_hexdump": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          }
         },
         "trace_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          }
         },
         "trace_rnd_forwarding": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Forwarding"
         },
         "trace_rnd_parsing": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "trace"
+            }
+          },
+          "x-display-name": "Trace Random Parsing"
         },
         "type": {
           "type": "string",
@@ -14800,7 +15486,13 @@ func init() {
       ],
       "properties": {
         "clflog": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "CLF Log"
         },
         "client_timeout": {
           "type": "integer",
@@ -14811,14 +15503,21 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "Client TCP Keep Alive"
         },
         "contstats": {
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-display-name": "Continous Statistics"
         },
         "default_backend": {
           "type": "string",
@@ -14833,14 +15532,21 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-display-name": "Don't Log Null"
         },
         "http-use-htx": {
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP Use HTX"
         },
         "http_connection_mode": {
           "type": "string",
@@ -14850,10 +15556,20 @@ func init() {
             "forceclose",
             "http-server-close",
             "http-keep-alive"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-nullable": true
         },
         "http_pretend_keepalive": {
@@ -14861,20 +15577,37 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "http_request_timeout": {
           "type": "integer",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-nullable": true
         },
         "httplog": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP Log"
         },
         "log_format": {
           "type": "string"
         },
         "log_format_sd": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "Log Format SD"
         },
         "log_separate_errors": {
           "type": "string",
@@ -14889,6 +15622,7 @@ func init() {
         },
         "maxconn": {
           "type": "integer",
+          "x-display-name": "Max Connections",
           "x-nullable": true
         },
         "mode": {
@@ -14904,7 +15638,13 @@ func init() {
           "x-nullable": false
         },
         "tcplog": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP Log"
         }
       },
       "additionalProperties": false,
@@ -15317,7 +16057,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/globalCpuMapsItems"
-          }
+          },
+          "x-display-name": "CPU Maps"
         },
         "daemon": {
           "type": "string",
@@ -15327,38 +16068,47 @@ func init() {
           ]
         },
         "master-worker": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-display-name": "Master Worker Mode"
         },
         "maxconn": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "Max Connections"
         },
         "nbproc": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "Number of Processes"
         },
         "nbthread": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "Number of Threads"
         },
         "pidfile": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "PID File"
         },
         "runtime_apis": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/globalRuntimeApisItems"
-          }
+          },
+          "x-display-name": "Runtime APIs"
         },
         "ssl_default_bind_ciphers": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphers"
         },
         "ssl_default_bind_options": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "SSL Default Bind Options"
         },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
         },
         "tune_ssl_default_dh_param": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "SSL Default DH Parameter Size"
         }
       },
       "additionalProperties": false
@@ -15371,10 +16121,12 @@ func init() {
       ],
       "properties": {
         "cpu_set": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "CPU Set"
         },
         "process": {
-          "type": "string"
+          "type": "string",
+          "x-display-name": "Process/Thread Set"
         }
       },
       "x-go-gen-location": "models"
@@ -15390,7 +16142,8 @@ func init() {
           "pattern": "^[^\\s]+$"
         },
         "exposeFdListeners": {
-          "type": "boolean"
+          "type": "boolean",
+          "x-display-name": "Expose FD Listeners"
         },
         "level": {
           "type": "string",
@@ -15422,25 +16175,58 @@ func init() {
       "properties": {
         "acl_file": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACL File"
         },
         "acl_keyfmt": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACL Key Format"
         },
         "auth_realm": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "auth"
+            }
+          },
+          "x-display-name": "Authentication Realm"
         },
         "cond": {
           "type": "string",
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -15449,19 +16235,62 @@ func init() {
         },
         "deny_status": {
           "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "deny",
+                "tarpit"
+              ]
+            }
+          },
           "x-nullable": false
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value",
+                "set-header",
+                "add-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Format"
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Match"
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-header",
+                "replace-header",
+                "del-header",
+                "set-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Name"
         },
         "id": {
           "type": "integer",
@@ -15479,7 +16308,13 @@ func init() {
             "info",
             "debug",
             "silent"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-log-level"
+            }
+          }
         },
         "redir_code": {
           "type": "integer",
@@ -15487,10 +16322,23 @@ func init() {
             301,
             302,
             303
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Code"
         },
         "redir_option": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Option"
         },
         "redir_type": {
           "type": "string",
@@ -15498,19 +16346,47 @@ func init() {
             "location",
             "prefix",
             "scheme"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Type"
         },
         "redir_value": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Value"
         },
         "spoe_engine": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          },
+          "x-display-name": "SPOE Engine"
         },
         "spoe_group": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          },
+          "x-display-name": "SPOE Group"
         },
         "type": {
           "type": "string",
@@ -15521,28 +16397,47 @@ func init() {
             "redirect",
             "tarpit",
             "add-header",
+            "replace-header",
+            "replace-value",
+            "del-header",
             "set-header",
             "set-log-level",
             "set-var",
             "send-spoe-group",
-            "replace-header",
-            "replace-value",
             "add-acl",
-            "del-acl",
-            "del-header"
+            "del-acl"
           ],
           "x-nullable": false
         },
         "var_expr": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          },
+          "x-display-name": "Var Expression"
         },
         "var_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         },
         "var_scope": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         }
       },
       "additionalProperties": false,
@@ -15574,21 +16469,47 @@ func init() {
       "properties": {
         "acl_file": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          }
         },
         "acl_keyfmt": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-acl",
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACK Key Format"
         },
         "cond": {
           "type": "string",
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -15597,15 +16518,50 @@ func init() {
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value",
+                "set-header",
+                "add-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Format"
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Match"
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-header",
+                "replace-header",
+                "del-header",
+                "set-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Name"
         },
         "id": {
           "type": "integer",
@@ -15623,7 +16579,13 @@ func init() {
             "info",
             "debug",
             "silent"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-log-level"
+            }
+          }
         },
         "redir_code": {
           "type": "integer",
@@ -15631,10 +16593,23 @@ func init() {
             301,
             302,
             303
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Code"
         },
         "redir_option": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Option"
         },
         "redir_type": {
           "type": "string",
@@ -15642,28 +16617,65 @@ func init() {
             "location",
             "prefix",
             "scheme"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Type"
         },
         "redir_value": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "redirect"
+            }
+          },
+          "x-display-name": "Redirect Value"
         },
         "spoe_engine": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          }
         },
         "spoe_group": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "send-spoe-group"
+            }
+          }
         },
         "status": {
           "type": "integer",
           "maximum": 999,
           "minimum": 100,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-status"
+            }
+          },
           "x-nullable": false
         },
         "status_reason": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-status"
+            }
+          }
         },
         "type": {
           "type": "string",
@@ -15686,15 +16698,34 @@ func init() {
           "x-nullable": false
         },
         "var_expr": {
-          "type": "string"
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          },
+          "x-display-name": "Var Expression"
         },
         "var_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         },
         "var_scope": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          }
         }
       },
       "additionalProperties": false,
@@ -15725,7 +16756,17 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "global": {
+              "required": true,
+              "value": false
+            },
+            "nolog": {
+              "required": true,
+              "value": false
+            }
+          }
         },
         "facility": {
           "type": "string",
@@ -15754,7 +16795,17 @@ func init() {
             "local5",
             "local6",
             "local7"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "required": true,
+              "value": false
+            },
+            "nolog": {
+              "required": true,
+              "value": false
+            }
+          }
         },
         "format": {
           "type": "string",
@@ -15763,7 +16814,15 @@ func init() {
             "rfc5424",
             "short",
             "raw"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "global": {
           "type": "boolean"
@@ -15773,7 +16832,15 @@ func init() {
           "x-nullable": true
         },
         "length": {
-          "type": "integer"
+          "type": "integer",
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "level": {
           "type": "string",
@@ -15786,7 +16853,15 @@ func init() {
             "notice",
             "info",
             "debug"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "minlevel": {
           "type": "string",
@@ -15799,7 +16874,18 @@ func init() {
             "notice",
             "info",
             "debug"
-          ]
+          ],
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "level": {
+              "required": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
         },
         "nolog": {
           "type": "boolean"
@@ -16640,6 +17726,7 @@ func init() {
         },
         "maxconn": {
           "type": "integer",
+          "x-display-name": "Max Connections",
           "x-nullable": true
         },
         "name": {
@@ -16662,11 +17749,22 @@ func init() {
         },
         "ssl_cafile": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          },
+          "x-display-name": "SSL CA File"
         },
         "ssl_certificate": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "tls_tickets": {
           "type": "string",
@@ -16704,10 +17802,17 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -16838,14 +17943,22 @@ func init() {
             "unless"
           ],
           "x-dependency": {
-            "use_as": "conditional"
-          }
+            "use_as": {
+              "required": true,
+              "value": "conditional"
+            }
+          },
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
           "x-dependency": {
-            "use_as": "conditional"
-          }
+            "use_as": {
+              "required": true,
+              "value": "conditional"
+            }
+          },
+          "x-display-name": "Condition Test"
         },
         "forwardfor": {
           "$ref": "#/definitions/siteFarmsItemsForwardfor"
@@ -16930,6 +18043,7 @@ func init() {
           "type": "boolean"
         }
       },
+      "x-display-name": "ForwardFor",
       "x-go-gen-location": "models"
     },
     "siteFarmsItemsServersItems": {
@@ -16963,7 +18077,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "ssl": true
+            "ssl": {
+              "value": true
+            }
           }
         },
         "weight": {
@@ -16986,8 +18102,11 @@ func init() {
             "http-keep-alive"
           ],
           "x-dependency": {
-            "mode": "http"
-          }
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP Connection Mode"
         },
         "listeners": {
           "type": "array",
@@ -16997,6 +18116,7 @@ func init() {
         },
         "maxconn": {
           "type": "integer",
+          "x-display-name": "Max Connections",
           "x-nullable": true
         },
         "mode": {
@@ -17040,7 +18160,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "ssl": true
+            "ssl": {
+              "value": true
+            }
           }
         }
       },
@@ -17060,7 +18182,8 @@ func init() {
       "title": "Stick Rule",
       "required": [
         "id",
-        "type"
+        "type",
+        "pattern"
       ],
       "properties": {
         "cond": {
@@ -17068,10 +18191,17 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -17131,6 +18261,16 @@ func init() {
             "accept",
             "reject"
           ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
           "x-nullable": false
         },
         "cond": {
@@ -17138,10 +18278,26 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -17154,6 +18310,12 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "inspect-delay"
+            }
+          },
           "x-nullable": true
         },
         "type": {
@@ -17198,6 +18360,12 @@ func init() {
             "accept",
             "reject"
           ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "content"
+            }
+          },
           "x-nullable": false
         },
         "cond": {
@@ -17205,10 +18373,22 @@ func init() {
           "enum": [
             "if",
             "unless"
-          ]
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Condition"
         },
         "cond_test": {
           "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
           "x-dynamic-enum": {
             "freeFormat": true,
             "operation": "getACLs",
@@ -17221,6 +18401,12 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "inspect-delay"
+            }
+          },
           "x-nullable": true
         },
         "type": {
