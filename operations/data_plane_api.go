@@ -19,28 +19,14 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
-	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
-	"github.com/haproxytech/dataplaneapi/operations/bind"
-	"github.com/haproxytech/dataplaneapi/operations/configuration"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
-	"github.com/haproxytech/dataplaneapi/operations/filter"
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
 	"github.com/haproxytech/dataplaneapi/operations/global"
-	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
-	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
-	"github.com/haproxytech/dataplaneapi/operations/log_target"
-	"github.com/haproxytech/dataplaneapi/operations/reloads"
-	"github.com/haproxytech/dataplaneapi/operations/server"
-	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
-	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
-	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
-	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
 )
 
@@ -66,95 +52,23 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TransactionsCommitTransactionHandler: transactions.CommitTransactionHandlerFunc(func(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsCommitTransaction has not yet been implemented")
 		}),
-		ACLCreateACLHandler: acl.CreateACLHandlerFunc(func(params acl.CreateACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLCreateACL has not yet been implemented")
-		}),
 		BackendCreateBackendHandler: backend.CreateBackendHandlerFunc(func(params backend.CreateBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendCreateBackend has not yet been implemented")
-		}),
-		BackendSwitchingRuleCreateBackendSwitchingRuleHandler: backend_switching_rule.CreateBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.CreateBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleCreateBackendSwitchingRule has not yet been implemented")
-		}),
-		BindCreateBindHandler: bind.CreateBindHandlerFunc(func(params bind.CreateBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindCreateBind has not yet been implemented")
-		}),
-		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterCreateFilter has not yet been implemented")
 		}),
 		FrontendCreateFrontendHandler: frontend.CreateFrontendHandlerFunc(func(params frontend.CreateFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FrontendCreateFrontend has not yet been implemented")
 		}),
-		HTTPRequestRuleCreateHTTPRequestRuleHandler: http_request_rule.CreateHTTPRequestRuleHandlerFunc(func(params http_request_rule.CreateHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleCreateHTTPRequestRule has not yet been implemented")
-		}),
-		HTTPResponseRuleCreateHTTPResponseRuleHandler: http_response_rule.CreateHTTPResponseRuleHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleCreateHTTPResponseRule has not yet been implemented")
-		}),
-		LogTargetCreateLogTargetHandler: log_target.CreateLogTargetHandlerFunc(func(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetCreateLogTarget has not yet been implemented")
-		}),
-		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerCreateServer has not yet been implemented")
-		}),
-		ServerSwitchingRuleCreateServerSwitchingRuleHandler: server_switching_rule.CreateServerSwitchingRuleHandlerFunc(func(params server_switching_rule.CreateServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleCreateServerSwitchingRule has not yet been implemented")
-		}),
 		SitesCreateSiteHandler: sites.CreateSiteHandlerFunc(func(params sites.CreateSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation SitesCreateSite has not yet been implemented")
-		}),
-		StickRuleCreateStickRuleHandler: stick_rule.CreateStickRuleHandlerFunc(func(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleCreateStickRule has not yet been implemented")
-		}),
-		TCPRequestRuleCreateTCPRequestRuleHandler: tcp_request_rule.CreateTCPRequestRuleHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleCreateTCPRequestRule has not yet been implemented")
-		}),
-		TCPResponseRuleCreateTCPResponseRuleHandler: tcp_response_rule.CreateTCPResponseRuleHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleCreateTCPResponseRule has not yet been implemented")
-		}),
-		ACLDeleteACLHandler: acl.DeleteACLHandlerFunc(func(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLDeleteACL has not yet been implemented")
 		}),
 		BackendDeleteBackendHandler: backend.DeleteBackendHandlerFunc(func(params backend.DeleteBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendDeleteBackend has not yet been implemented")
 		}),
-		BackendSwitchingRuleDeleteBackendSwitchingRuleHandler: backend_switching_rule.DeleteBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.DeleteBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleDeleteBackendSwitchingRule has not yet been implemented")
-		}),
-		BindDeleteBindHandler: bind.DeleteBindHandlerFunc(func(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindDeleteBind has not yet been implemented")
-		}),
-		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterDeleteFilter has not yet been implemented")
-		}),
 		FrontendDeleteFrontendHandler: frontend.DeleteFrontendHandlerFunc(func(params frontend.DeleteFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FrontendDeleteFrontend has not yet been implemented")
 		}),
-		HTTPRequestRuleDeleteHTTPRequestRuleHandler: http_request_rule.DeleteHTTPRequestRuleHandlerFunc(func(params http_request_rule.DeleteHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleDeleteHTTPRequestRule has not yet been implemented")
-		}),
-		HTTPResponseRuleDeleteHTTPResponseRuleHandler: http_response_rule.DeleteHTTPResponseRuleHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleDeleteHTTPResponseRule has not yet been implemented")
-		}),
-		LogTargetDeleteLogTargetHandler: log_target.DeleteLogTargetHandlerFunc(func(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetDeleteLogTarget has not yet been implemented")
-		}),
-		ServerDeleteServerHandler: server.DeleteServerHandlerFunc(func(params server.DeleteServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerDeleteServer has not yet been implemented")
-		}),
-		ServerSwitchingRuleDeleteServerSwitchingRuleHandler: server_switching_rule.DeleteServerSwitchingRuleHandlerFunc(func(params server_switching_rule.DeleteServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleDeleteServerSwitchingRule has not yet been implemented")
-		}),
 		SitesDeleteSiteHandler: sites.DeleteSiteHandlerFunc(func(params sites.DeleteSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation SitesDeleteSite has not yet been implemented")
-		}),
-		StickRuleDeleteStickRuleHandler: stick_rule.DeleteStickRuleHandlerFunc(func(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleDeleteStickRule has not yet been implemented")
-		}),
-		TCPRequestRuleDeleteTCPRequestRuleHandler: tcp_request_rule.DeleteTCPRequestRuleHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleDeleteTCPRequestRule has not yet been implemented")
-		}),
-		TCPResponseRuleDeleteTCPResponseRuleHandler: tcp_response_rule.DeleteTCPResponseRuleHandlerFunc(func(params tcp_response_rule.DeleteTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleDeleteTCPResponseRule has not yet been implemented")
 		}),
 		TransactionsDeleteTransactionHandler: transactions.DeleteTransactionHandlerFunc(func(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsDeleteTransaction has not yet been implemented")
@@ -162,38 +76,14 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DiscoveryGetAPIEndpointsHandler: discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetAPIEndpoints has not yet been implemented")
 		}),
-		ACLGetACLHandler: acl.GetACLHandlerFunc(func(params acl.GetACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLGetACL has not yet been implemented")
-		}),
-		ACLGetAclsHandler: acl.GetAclsHandlerFunc(func(params acl.GetAclsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLGetAcls has not yet been implemented")
-		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendGetBackend has not yet been implemented")
-		}),
-		BackendSwitchingRuleGetBackendSwitchingRuleHandler: backend_switching_rule.GetBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.GetBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleGetBackendSwitchingRule has not yet been implemented")
-		}),
-		BackendSwitchingRuleGetBackendSwitchingRulesHandler: backend_switching_rule.GetBackendSwitchingRulesHandlerFunc(func(params backend_switching_rule.GetBackendSwitchingRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleGetBackendSwitchingRules has not yet been implemented")
 		}),
 		BackendGetBackendsHandler: backend.GetBackendsHandlerFunc(func(params backend.GetBackendsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendGetBackends has not yet been implemented")
 		}),
-		BindGetBindHandler: bind.GetBindHandlerFunc(func(params bind.GetBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindGetBind has not yet been implemented")
-		}),
-		BindGetBindsHandler: bind.GetBindsHandlerFunc(func(params bind.GetBindsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindGetBinds has not yet been implemented")
-		}),
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetConfigurationEndpoints has not yet been implemented")
-		}),
-		FilterGetFilterHandler: filter.GetFilterHandlerFunc(func(params filter.GetFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterGetFilter has not yet been implemented")
-		}),
-		FilterGetFiltersHandler: filter.GetFiltersHandlerFunc(func(params filter.GetFiltersParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterGetFilters has not yet been implemented")
 		}),
 		FrontendGetFrontendHandler: frontend.GetFrontendHandlerFunc(func(params frontend.GetFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FrontendGetFrontend has not yet been implemented")
@@ -204,50 +94,11 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		GlobalGetGlobalHandler: global.GetGlobalHandlerFunc(func(params global.GetGlobalParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation GlobalGetGlobal has not yet been implemented")
 		}),
-		ConfigurationGetHAProxyConfigurationHandler: configuration.GetHAProxyConfigurationHandlerFunc(func(params configuration.GetHAProxyConfigurationParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ConfigurationGetHAProxyConfiguration has not yet been implemented")
-		}),
-		HTTPRequestRuleGetHTTPRequestRuleHandler: http_request_rule.GetHTTPRequestRuleHandlerFunc(func(params http_request_rule.GetHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleGetHTTPRequestRule has not yet been implemented")
-		}),
-		HTTPRequestRuleGetHTTPRequestRulesHandler: http_request_rule.GetHTTPRequestRulesHandlerFunc(func(params http_request_rule.GetHTTPRequestRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleGetHTTPRequestRules has not yet been implemented")
-		}),
-		HTTPResponseRuleGetHTTPResponseRuleHandler: http_response_rule.GetHTTPResponseRuleHandlerFunc(func(params http_response_rule.GetHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleGetHTTPResponseRule has not yet been implemented")
-		}),
-		HTTPResponseRuleGetHTTPResponseRulesHandler: http_response_rule.GetHTTPResponseRulesHandlerFunc(func(params http_response_rule.GetHTTPResponseRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleGetHTTPResponseRules has not yet been implemented")
-		}),
 		DiscoveryGetHaproxyEndpointsHandler: discovery.GetHaproxyEndpointsHandlerFunc(func(params discovery.GetHaproxyEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetHaproxyEndpoints has not yet been implemented")
 		}),
 		InformationGetHaproxyProcessInfoHandler: information.GetHaproxyProcessInfoHandlerFunc(func(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation InformationGetHaproxyProcessInfo has not yet been implemented")
-		}),
-		LogTargetGetLogTargetHandler: log_target.GetLogTargetHandlerFunc(func(params log_target.GetLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetGetLogTarget has not yet been implemented")
-		}),
-		LogTargetGetLogTargetsHandler: log_target.GetLogTargetsHandlerFunc(func(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetGetLogTargets has not yet been implemented")
-		}),
-		ReloadsGetReloadHandler: reloads.GetReloadHandlerFunc(func(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ReloadsGetReload has not yet been implemented")
-		}),
-		ReloadsGetReloadsHandler: reloads.GetReloadsHandlerFunc(func(params reloads.GetReloadsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ReloadsGetReloads has not yet been implemented")
-		}),
-		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerGetServer has not yet been implemented")
-		}),
-		ServerSwitchingRuleGetServerSwitchingRuleHandler: server_switching_rule.GetServerSwitchingRuleHandlerFunc(func(params server_switching_rule.GetServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleGetServerSwitchingRule has not yet been implemented")
-		}),
-		ServerSwitchingRuleGetServerSwitchingRulesHandler: server_switching_rule.GetServerSwitchingRulesHandlerFunc(func(params server_switching_rule.GetServerSwitchingRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleGetServerSwitchingRules has not yet been implemented")
-		}),
-		ServerGetServersHandler: server.GetServersHandlerFunc(func(params server.GetServersParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerGetServers has not yet been implemented")
 		}),
 		DiscoveryGetServicesEndpointsHandler: discovery.GetServicesEndpointsHandlerFunc(func(params discovery.GetServicesEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetServicesEndpoints has not yet been implemented")
@@ -267,47 +118,14 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DiscoveryGetStatsEndpointsHandler: discovery.GetStatsEndpointsHandlerFunc(func(params discovery.GetStatsEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetStatsEndpoints has not yet been implemented")
 		}),
-		StickRuleGetStickRuleHandler: stick_rule.GetStickRuleHandlerFunc(func(params stick_rule.GetStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleGetStickRule has not yet been implemented")
-		}),
-		StickRuleGetStickRulesHandler: stick_rule.GetStickRulesHandlerFunc(func(params stick_rule.GetStickRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleGetStickRules has not yet been implemented")
-		}),
-		TCPRequestRuleGetTCPRequestRuleHandler: tcp_request_rule.GetTCPRequestRuleHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleGetTCPRequestRule has not yet been implemented")
-		}),
-		TCPRequestRuleGetTCPRequestRulesHandler: tcp_request_rule.GetTCPRequestRulesHandlerFunc(func(params tcp_request_rule.GetTCPRequestRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleGetTCPRequestRules has not yet been implemented")
-		}),
-		TCPResponseRuleGetTCPResponseRuleHandler: tcp_response_rule.GetTCPResponseRuleHandlerFunc(func(params tcp_response_rule.GetTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleGetTCPResponseRule has not yet been implemented")
-		}),
-		TCPResponseRuleGetTCPResponseRulesHandler: tcp_response_rule.GetTCPResponseRulesHandlerFunc(func(params tcp_response_rule.GetTCPResponseRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleGetTCPResponseRules has not yet been implemented")
-		}),
 		TransactionsGetTransactionHandler: transactions.GetTransactionHandlerFunc(func(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsGetTransaction has not yet been implemented")
 		}),
 		TransactionsGetTransactionsHandler: transactions.GetTransactionsHandlerFunc(func(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsGetTransactions has not yet been implemented")
 		}),
-		ConfigurationPostHAProxyConfigurationHandler: configuration.PostHAProxyConfigurationHandlerFunc(func(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ConfigurationPostHAProxyConfiguration has not yet been implemented")
-		}),
-		ACLReplaceACLHandler: acl.ReplaceACLHandlerFunc(func(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLReplaceACL has not yet been implemented")
-		}),
 		BackendReplaceBackendHandler: backend.ReplaceBackendHandlerFunc(func(params backend.ReplaceBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendReplaceBackend has not yet been implemented")
-		}),
-		BackendSwitchingRuleReplaceBackendSwitchingRuleHandler: backend_switching_rule.ReplaceBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.ReplaceBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleReplaceBackendSwitchingRule has not yet been implemented")
-		}),
-		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindReplaceBind has not yet been implemented")
-		}),
-		FilterReplaceFilterHandler: filter.ReplaceFilterHandlerFunc(func(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterReplaceFilter has not yet been implemented")
 		}),
 		FrontendReplaceFrontendHandler: frontend.ReplaceFrontendHandlerFunc(func(params frontend.ReplaceFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FrontendReplaceFrontend has not yet been implemented")
@@ -315,32 +133,8 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		GlobalReplaceGlobalHandler: global.ReplaceGlobalHandlerFunc(func(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation GlobalReplaceGlobal has not yet been implemented")
 		}),
-		HTTPRequestRuleReplaceHTTPRequestRuleHandler: http_request_rule.ReplaceHTTPRequestRuleHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleReplaceHTTPRequestRule has not yet been implemented")
-		}),
-		HTTPResponseRuleReplaceHTTPResponseRuleHandler: http_response_rule.ReplaceHTTPResponseRuleHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleReplaceHTTPResponseRule has not yet been implemented")
-		}),
-		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetReplaceLogTarget has not yet been implemented")
-		}),
-		ServerReplaceServerHandler: server.ReplaceServerHandlerFunc(func(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerReplaceServer has not yet been implemented")
-		}),
-		ServerSwitchingRuleReplaceServerSwitchingRuleHandler: server_switching_rule.ReplaceServerSwitchingRuleHandlerFunc(func(params server_switching_rule.ReplaceServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleReplaceServerSwitchingRule has not yet been implemented")
-		}),
 		SitesReplaceSiteHandler: sites.ReplaceSiteHandlerFunc(func(params sites.ReplaceSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation SitesReplaceSite has not yet been implemented")
-		}),
-		StickRuleReplaceStickRuleHandler: stick_rule.ReplaceStickRuleHandlerFunc(func(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleReplaceStickRule has not yet been implemented")
-		}),
-		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleReplaceTCPRequestRule has not yet been implemented")
-		}),
-		TCPResponseRuleReplaceTCPResponseRuleHandler: tcp_response_rule.ReplaceTCPResponseRuleHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleReplaceTCPResponseRule has not yet been implemented")
 		}),
 		TransactionsStartTransactionHandler: transactions.StartTransactionHandlerFunc(func(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsStartTransaction has not yet been implemented")
@@ -399,128 +193,38 @@ type DataPlaneAPI struct {
 
 	// TransactionsCommitTransactionHandler sets the operation handler for the commit transaction operation
 	TransactionsCommitTransactionHandler transactions.CommitTransactionHandler
-	// ACLCreateACLHandler sets the operation handler for the create Acl operation
-	ACLCreateACLHandler acl.CreateACLHandler
 	// BackendCreateBackendHandler sets the operation handler for the create backend operation
 	BackendCreateBackendHandler backend.CreateBackendHandler
-	// BackendSwitchingRuleCreateBackendSwitchingRuleHandler sets the operation handler for the create backend switching rule operation
-	BackendSwitchingRuleCreateBackendSwitchingRuleHandler backend_switching_rule.CreateBackendSwitchingRuleHandler
-	// BindCreateBindHandler sets the operation handler for the create bind operation
-	BindCreateBindHandler bind.CreateBindHandler
-	// FilterCreateFilterHandler sets the operation handler for the create filter operation
-	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
 	FrontendCreateFrontendHandler frontend.CreateFrontendHandler
-	// HTTPRequestRuleCreateHTTPRequestRuleHandler sets the operation handler for the create HTTP request rule operation
-	HTTPRequestRuleCreateHTTPRequestRuleHandler http_request_rule.CreateHTTPRequestRuleHandler
-	// HTTPResponseRuleCreateHTTPResponseRuleHandler sets the operation handler for the create HTTP response rule operation
-	HTTPResponseRuleCreateHTTPResponseRuleHandler http_response_rule.CreateHTTPResponseRuleHandler
-	// LogTargetCreateLogTargetHandler sets the operation handler for the create log target operation
-	LogTargetCreateLogTargetHandler log_target.CreateLogTargetHandler
-	// ServerCreateServerHandler sets the operation handler for the create server operation
-	ServerCreateServerHandler server.CreateServerHandler
-	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
-	ServerSwitchingRuleCreateServerSwitchingRuleHandler server_switching_rule.CreateServerSwitchingRuleHandler
 	// SitesCreateSiteHandler sets the operation handler for the create site operation
 	SitesCreateSiteHandler sites.CreateSiteHandler
-	// StickRuleCreateStickRuleHandler sets the operation handler for the create stick rule operation
-	StickRuleCreateStickRuleHandler stick_rule.CreateStickRuleHandler
-	// TCPRequestRuleCreateTCPRequestRuleHandler sets the operation handler for the create TCP request rule operation
-	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
-	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
-	TCPResponseRuleCreateTCPResponseRuleHandler tcp_response_rule.CreateTCPResponseRuleHandler
-	// ACLDeleteACLHandler sets the operation handler for the delete Acl operation
-	ACLDeleteACLHandler acl.DeleteACLHandler
 	// BackendDeleteBackendHandler sets the operation handler for the delete backend operation
 	BackendDeleteBackendHandler backend.DeleteBackendHandler
-	// BackendSwitchingRuleDeleteBackendSwitchingRuleHandler sets the operation handler for the delete backend switching rule operation
-	BackendSwitchingRuleDeleteBackendSwitchingRuleHandler backend_switching_rule.DeleteBackendSwitchingRuleHandler
-	// BindDeleteBindHandler sets the operation handler for the delete bind operation
-	BindDeleteBindHandler bind.DeleteBindHandler
-	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
-	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
 	FrontendDeleteFrontendHandler frontend.DeleteFrontendHandler
-	// HTTPRequestRuleDeleteHTTPRequestRuleHandler sets the operation handler for the delete HTTP request rule operation
-	HTTPRequestRuleDeleteHTTPRequestRuleHandler http_request_rule.DeleteHTTPRequestRuleHandler
-	// HTTPResponseRuleDeleteHTTPResponseRuleHandler sets the operation handler for the delete HTTP response rule operation
-	HTTPResponseRuleDeleteHTTPResponseRuleHandler http_response_rule.DeleteHTTPResponseRuleHandler
-	// LogTargetDeleteLogTargetHandler sets the operation handler for the delete log target operation
-	LogTargetDeleteLogTargetHandler log_target.DeleteLogTargetHandler
-	// ServerDeleteServerHandler sets the operation handler for the delete server operation
-	ServerDeleteServerHandler server.DeleteServerHandler
-	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
-	ServerSwitchingRuleDeleteServerSwitchingRuleHandler server_switching_rule.DeleteServerSwitchingRuleHandler
 	// SitesDeleteSiteHandler sets the operation handler for the delete site operation
 	SitesDeleteSiteHandler sites.DeleteSiteHandler
-	// StickRuleDeleteStickRuleHandler sets the operation handler for the delete stick rule operation
-	StickRuleDeleteStickRuleHandler stick_rule.DeleteStickRuleHandler
-	// TCPRequestRuleDeleteTCPRequestRuleHandler sets the operation handler for the delete TCP request rule operation
-	TCPRequestRuleDeleteTCPRequestRuleHandler tcp_request_rule.DeleteTCPRequestRuleHandler
-	// TCPResponseRuleDeleteTCPResponseRuleHandler sets the operation handler for the delete TCP response rule operation
-	TCPResponseRuleDeleteTCPResponseRuleHandler tcp_response_rule.DeleteTCPResponseRuleHandler
 	// TransactionsDeleteTransactionHandler sets the operation handler for the delete transaction operation
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
 	DiscoveryGetAPIEndpointsHandler discovery.GetAPIEndpointsHandler
-	// ACLGetACLHandler sets the operation handler for the get Acl operation
-	ACLGetACLHandler acl.GetACLHandler
-	// ACLGetAclsHandler sets the operation handler for the get acls operation
-	ACLGetAclsHandler acl.GetAclsHandler
 	// BackendGetBackendHandler sets the operation handler for the get backend operation
 	BackendGetBackendHandler backend.GetBackendHandler
-	// BackendSwitchingRuleGetBackendSwitchingRuleHandler sets the operation handler for the get backend switching rule operation
-	BackendSwitchingRuleGetBackendSwitchingRuleHandler backend_switching_rule.GetBackendSwitchingRuleHandler
-	// BackendSwitchingRuleGetBackendSwitchingRulesHandler sets the operation handler for the get backend switching rules operation
-	BackendSwitchingRuleGetBackendSwitchingRulesHandler backend_switching_rule.GetBackendSwitchingRulesHandler
 	// BackendGetBackendsHandler sets the operation handler for the get backends operation
 	BackendGetBackendsHandler backend.GetBackendsHandler
-	// BindGetBindHandler sets the operation handler for the get bind operation
-	BindGetBindHandler bind.GetBindHandler
-	// BindGetBindsHandler sets the operation handler for the get binds operation
-	BindGetBindsHandler bind.GetBindsHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
-	// FilterGetFilterHandler sets the operation handler for the get filter operation
-	FilterGetFilterHandler filter.GetFilterHandler
-	// FilterGetFiltersHandler sets the operation handler for the get filters operation
-	FilterGetFiltersHandler filter.GetFiltersHandler
 	// FrontendGetFrontendHandler sets the operation handler for the get frontend operation
 	FrontendGetFrontendHandler frontend.GetFrontendHandler
 	// FrontendGetFrontendsHandler sets the operation handler for the get frontends operation
 	FrontendGetFrontendsHandler frontend.GetFrontendsHandler
 	// GlobalGetGlobalHandler sets the operation handler for the get global operation
 	GlobalGetGlobalHandler global.GetGlobalHandler
-	// ConfigurationGetHAProxyConfigurationHandler sets the operation handler for the get h a proxy configuration operation
-	ConfigurationGetHAProxyConfigurationHandler configuration.GetHAProxyConfigurationHandler
-	// HTTPRequestRuleGetHTTPRequestRuleHandler sets the operation handler for the get HTTP request rule operation
-	HTTPRequestRuleGetHTTPRequestRuleHandler http_request_rule.GetHTTPRequestRuleHandler
-	// HTTPRequestRuleGetHTTPRequestRulesHandler sets the operation handler for the get HTTP request rules operation
-	HTTPRequestRuleGetHTTPRequestRulesHandler http_request_rule.GetHTTPRequestRulesHandler
-	// HTTPResponseRuleGetHTTPResponseRuleHandler sets the operation handler for the get HTTP response rule operation
-	HTTPResponseRuleGetHTTPResponseRuleHandler http_response_rule.GetHTTPResponseRuleHandler
-	// HTTPResponseRuleGetHTTPResponseRulesHandler sets the operation handler for the get HTTP response rules operation
-	HTTPResponseRuleGetHTTPResponseRulesHandler http_response_rule.GetHTTPResponseRulesHandler
 	// DiscoveryGetHaproxyEndpointsHandler sets the operation handler for the get haproxy endpoints operation
 	DiscoveryGetHaproxyEndpointsHandler discovery.GetHaproxyEndpointsHandler
 	// InformationGetHaproxyProcessInfoHandler sets the operation handler for the get haproxy process info operation
 	InformationGetHaproxyProcessInfoHandler information.GetHaproxyProcessInfoHandler
-	// LogTargetGetLogTargetHandler sets the operation handler for the get log target operation
-	LogTargetGetLogTargetHandler log_target.GetLogTargetHandler
-	// LogTargetGetLogTargetsHandler sets the operation handler for the get log targets operation
-	LogTargetGetLogTargetsHandler log_target.GetLogTargetsHandler
-	// ReloadsGetReloadHandler sets the operation handler for the get reload operation
-	ReloadsGetReloadHandler reloads.GetReloadHandler
-	// ReloadsGetReloadsHandler sets the operation handler for the get reloads operation
-	ReloadsGetReloadsHandler reloads.GetReloadsHandler
-	// ServerGetServerHandler sets the operation handler for the get server operation
-	ServerGetServerHandler server.GetServerHandler
-	// ServerSwitchingRuleGetServerSwitchingRuleHandler sets the operation handler for the get server switching rule operation
-	ServerSwitchingRuleGetServerSwitchingRuleHandler server_switching_rule.GetServerSwitchingRuleHandler
-	// ServerSwitchingRuleGetServerSwitchingRulesHandler sets the operation handler for the get server switching rules operation
-	ServerSwitchingRuleGetServerSwitchingRulesHandler server_switching_rule.GetServerSwitchingRulesHandler
-	// ServerGetServersHandler sets the operation handler for the get servers operation
-	ServerGetServersHandler server.GetServersHandler
 	// DiscoveryGetServicesEndpointsHandler sets the operation handler for the get services endpoints operation
 	DiscoveryGetServicesEndpointsHandler discovery.GetServicesEndpointsHandler
 	// SitesGetSiteHandler sets the operation handler for the get site operation
@@ -533,56 +237,18 @@ type DataPlaneAPI struct {
 	StatsGetStatsHandler stats.GetStatsHandler
 	// DiscoveryGetStatsEndpointsHandler sets the operation handler for the get stats endpoints operation
 	DiscoveryGetStatsEndpointsHandler discovery.GetStatsEndpointsHandler
-	// StickRuleGetStickRuleHandler sets the operation handler for the get stick rule operation
-	StickRuleGetStickRuleHandler stick_rule.GetStickRuleHandler
-	// StickRuleGetStickRulesHandler sets the operation handler for the get stick rules operation
-	StickRuleGetStickRulesHandler stick_rule.GetStickRulesHandler
-	// TCPRequestRuleGetTCPRequestRuleHandler sets the operation handler for the get TCP request rule operation
-	TCPRequestRuleGetTCPRequestRuleHandler tcp_request_rule.GetTCPRequestRuleHandler
-	// TCPRequestRuleGetTCPRequestRulesHandler sets the operation handler for the get TCP request rules operation
-	TCPRequestRuleGetTCPRequestRulesHandler tcp_request_rule.GetTCPRequestRulesHandler
-	// TCPResponseRuleGetTCPResponseRuleHandler sets the operation handler for the get TCP response rule operation
-	TCPResponseRuleGetTCPResponseRuleHandler tcp_response_rule.GetTCPResponseRuleHandler
-	// TCPResponseRuleGetTCPResponseRulesHandler sets the operation handler for the get TCP response rules operation
-	TCPResponseRuleGetTCPResponseRulesHandler tcp_response_rule.GetTCPResponseRulesHandler
 	// TransactionsGetTransactionHandler sets the operation handler for the get transaction operation
 	TransactionsGetTransactionHandler transactions.GetTransactionHandler
 	// TransactionsGetTransactionsHandler sets the operation handler for the get transactions operation
 	TransactionsGetTransactionsHandler transactions.GetTransactionsHandler
-	// ConfigurationPostHAProxyConfigurationHandler sets the operation handler for the post h a proxy configuration operation
-	ConfigurationPostHAProxyConfigurationHandler configuration.PostHAProxyConfigurationHandler
-	// ACLReplaceACLHandler sets the operation handler for the replace Acl operation
-	ACLReplaceACLHandler acl.ReplaceACLHandler
 	// BackendReplaceBackendHandler sets the operation handler for the replace backend operation
 	BackendReplaceBackendHandler backend.ReplaceBackendHandler
-	// BackendSwitchingRuleReplaceBackendSwitchingRuleHandler sets the operation handler for the replace backend switching rule operation
-	BackendSwitchingRuleReplaceBackendSwitchingRuleHandler backend_switching_rule.ReplaceBackendSwitchingRuleHandler
-	// BindReplaceBindHandler sets the operation handler for the replace bind operation
-	BindReplaceBindHandler bind.ReplaceBindHandler
-	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
-	FilterReplaceFilterHandler filter.ReplaceFilterHandler
 	// FrontendReplaceFrontendHandler sets the operation handler for the replace frontend operation
 	FrontendReplaceFrontendHandler frontend.ReplaceFrontendHandler
 	// GlobalReplaceGlobalHandler sets the operation handler for the replace global operation
 	GlobalReplaceGlobalHandler global.ReplaceGlobalHandler
-	// HTTPRequestRuleReplaceHTTPRequestRuleHandler sets the operation handler for the replace HTTP request rule operation
-	HTTPRequestRuleReplaceHTTPRequestRuleHandler http_request_rule.ReplaceHTTPRequestRuleHandler
-	// HTTPResponseRuleReplaceHTTPResponseRuleHandler sets the operation handler for the replace HTTP response rule operation
-	HTTPResponseRuleReplaceHTTPResponseRuleHandler http_response_rule.ReplaceHTTPResponseRuleHandler
-	// LogTargetReplaceLogTargetHandler sets the operation handler for the replace log target operation
-	LogTargetReplaceLogTargetHandler log_target.ReplaceLogTargetHandler
-	// ServerReplaceServerHandler sets the operation handler for the replace server operation
-	ServerReplaceServerHandler server.ReplaceServerHandler
-	// ServerSwitchingRuleReplaceServerSwitchingRuleHandler sets the operation handler for the replace server switching rule operation
-	ServerSwitchingRuleReplaceServerSwitchingRuleHandler server_switching_rule.ReplaceServerSwitchingRuleHandler
 	// SitesReplaceSiteHandler sets the operation handler for the replace site operation
 	SitesReplaceSiteHandler sites.ReplaceSiteHandler
-	// StickRuleReplaceStickRuleHandler sets the operation handler for the replace stick rule operation
-	StickRuleReplaceStickRuleHandler stick_rule.ReplaceStickRuleHandler
-	// TCPRequestRuleReplaceTCPRequestRuleHandler sets the operation handler for the replace TCP request rule operation
-	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
-	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
-	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
 	// TransactionsStartTransactionHandler sets the operation handler for the start transaction operation
 	TransactionsStartTransactionHandler transactions.StartTransactionHandler
 
@@ -664,124 +330,28 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "transactions.CommitTransactionHandler")
 	}
 
-	if o.ACLCreateACLHandler == nil {
-		unregistered = append(unregistered, "acl.CreateACLHandler")
-	}
-
 	if o.BackendCreateBackendHandler == nil {
 		unregistered = append(unregistered, "backend.CreateBackendHandler")
-	}
-
-	if o.BackendSwitchingRuleCreateBackendSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "backend_switching_rule.CreateBackendSwitchingRuleHandler")
-	}
-
-	if o.BindCreateBindHandler == nil {
-		unregistered = append(unregistered, "bind.CreateBindHandler")
-	}
-
-	if o.FilterCreateFilterHandler == nil {
-		unregistered = append(unregistered, "filter.CreateFilterHandler")
 	}
 
 	if o.FrontendCreateFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.CreateFrontendHandler")
 	}
 
-	if o.HTTPRequestRuleCreateHTTPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "http_request_rule.CreateHTTPRequestRuleHandler")
-	}
-
-	if o.HTTPResponseRuleCreateHTTPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleHandler")
-	}
-
-	if o.LogTargetCreateLogTargetHandler == nil {
-		unregistered = append(unregistered, "log_target.CreateLogTargetHandler")
-	}
-
-	if o.ServerCreateServerHandler == nil {
-		unregistered = append(unregistered, "server.CreateServerHandler")
-	}
-
-	if o.ServerSwitchingRuleCreateServerSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "server_switching_rule.CreateServerSwitchingRuleHandler")
-	}
-
 	if o.SitesCreateSiteHandler == nil {
 		unregistered = append(unregistered, "sites.CreateSiteHandler")
-	}
-
-	if o.StickRuleCreateStickRuleHandler == nil {
-		unregistered = append(unregistered, "stick_rule.CreateStickRuleHandler")
-	}
-
-	if o.TCPRequestRuleCreateTCPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleHandler")
-	}
-
-	if o.TCPResponseRuleCreateTCPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleHandler")
-	}
-
-	if o.ACLDeleteACLHandler == nil {
-		unregistered = append(unregistered, "acl.DeleteACLHandler")
 	}
 
 	if o.BackendDeleteBackendHandler == nil {
 		unregistered = append(unregistered, "backend.DeleteBackendHandler")
 	}
 
-	if o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "backend_switching_rule.DeleteBackendSwitchingRuleHandler")
-	}
-
-	if o.BindDeleteBindHandler == nil {
-		unregistered = append(unregistered, "bind.DeleteBindHandler")
-	}
-
-	if o.FilterDeleteFilterHandler == nil {
-		unregistered = append(unregistered, "filter.DeleteFilterHandler")
-	}
-
 	if o.FrontendDeleteFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.DeleteFrontendHandler")
 	}
 
-	if o.HTTPRequestRuleDeleteHTTPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "http_request_rule.DeleteHTTPRequestRuleHandler")
-	}
-
-	if o.HTTPResponseRuleDeleteHTTPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleHandler")
-	}
-
-	if o.LogTargetDeleteLogTargetHandler == nil {
-		unregistered = append(unregistered, "log_target.DeleteLogTargetHandler")
-	}
-
-	if o.ServerDeleteServerHandler == nil {
-		unregistered = append(unregistered, "server.DeleteServerHandler")
-	}
-
-	if o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "server_switching_rule.DeleteServerSwitchingRuleHandler")
-	}
-
 	if o.SitesDeleteSiteHandler == nil {
 		unregistered = append(unregistered, "sites.DeleteSiteHandler")
-	}
-
-	if o.StickRuleDeleteStickRuleHandler == nil {
-		unregistered = append(unregistered, "stick_rule.DeleteStickRuleHandler")
-	}
-
-	if o.TCPRequestRuleDeleteTCPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleHandler")
-	}
-
-	if o.TCPResponseRuleDeleteTCPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_response_rule.DeleteTCPResponseRuleHandler")
 	}
 
 	if o.TransactionsDeleteTransactionHandler == nil {
@@ -792,48 +362,16 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "discovery.GetAPIEndpointsHandler")
 	}
 
-	if o.ACLGetACLHandler == nil {
-		unregistered = append(unregistered, "acl.GetACLHandler")
-	}
-
-	if o.ACLGetAclsHandler == nil {
-		unregistered = append(unregistered, "acl.GetAclsHandler")
-	}
-
 	if o.BackendGetBackendHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendHandler")
-	}
-
-	if o.BackendSwitchingRuleGetBackendSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "backend_switching_rule.GetBackendSwitchingRuleHandler")
-	}
-
-	if o.BackendSwitchingRuleGetBackendSwitchingRulesHandler == nil {
-		unregistered = append(unregistered, "backend_switching_rule.GetBackendSwitchingRulesHandler")
 	}
 
 	if o.BackendGetBackendsHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendsHandler")
 	}
 
-	if o.BindGetBindHandler == nil {
-		unregistered = append(unregistered, "bind.GetBindHandler")
-	}
-
-	if o.BindGetBindsHandler == nil {
-		unregistered = append(unregistered, "bind.GetBindsHandler")
-	}
-
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
-	}
-
-	if o.FilterGetFilterHandler == nil {
-		unregistered = append(unregistered, "filter.GetFilterHandler")
-	}
-
-	if o.FilterGetFiltersHandler == nil {
-		unregistered = append(unregistered, "filter.GetFiltersHandler")
 	}
 
 	if o.FrontendGetFrontendHandler == nil {
@@ -848,64 +386,12 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "global.GetGlobalHandler")
 	}
 
-	if o.ConfigurationGetHAProxyConfigurationHandler == nil {
-		unregistered = append(unregistered, "configuration.GetHAProxyConfigurationHandler")
-	}
-
-	if o.HTTPRequestRuleGetHTTPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRuleHandler")
-	}
-
-	if o.HTTPRequestRuleGetHTTPRequestRulesHandler == nil {
-		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRulesHandler")
-	}
-
-	if o.HTTPResponseRuleGetHTTPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "http_response_rule.GetHTTPResponseRuleHandler")
-	}
-
-	if o.HTTPResponseRuleGetHTTPResponseRulesHandler == nil {
-		unregistered = append(unregistered, "http_response_rule.GetHTTPResponseRulesHandler")
-	}
-
 	if o.DiscoveryGetHaproxyEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetHaproxyEndpointsHandler")
 	}
 
 	if o.InformationGetHaproxyProcessInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetHaproxyProcessInfoHandler")
-	}
-
-	if o.LogTargetGetLogTargetHandler == nil {
-		unregistered = append(unregistered, "log_target.GetLogTargetHandler")
-	}
-
-	if o.LogTargetGetLogTargetsHandler == nil {
-		unregistered = append(unregistered, "log_target.GetLogTargetsHandler")
-	}
-
-	if o.ReloadsGetReloadHandler == nil {
-		unregistered = append(unregistered, "reloads.GetReloadHandler")
-	}
-
-	if o.ReloadsGetReloadsHandler == nil {
-		unregistered = append(unregistered, "reloads.GetReloadsHandler")
-	}
-
-	if o.ServerGetServerHandler == nil {
-		unregistered = append(unregistered, "server.GetServerHandler")
-	}
-
-	if o.ServerSwitchingRuleGetServerSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "server_switching_rule.GetServerSwitchingRuleHandler")
-	}
-
-	if o.ServerSwitchingRuleGetServerSwitchingRulesHandler == nil {
-		unregistered = append(unregistered, "server_switching_rule.GetServerSwitchingRulesHandler")
-	}
-
-	if o.ServerGetServersHandler == nil {
-		unregistered = append(unregistered, "server.GetServersHandler")
 	}
 
 	if o.DiscoveryGetServicesEndpointsHandler == nil {
@@ -932,30 +418,6 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "discovery.GetStatsEndpointsHandler")
 	}
 
-	if o.StickRuleGetStickRuleHandler == nil {
-		unregistered = append(unregistered, "stick_rule.GetStickRuleHandler")
-	}
-
-	if o.StickRuleGetStickRulesHandler == nil {
-		unregistered = append(unregistered, "stick_rule.GetStickRulesHandler")
-	}
-
-	if o.TCPRequestRuleGetTCPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleHandler")
-	}
-
-	if o.TCPRequestRuleGetTCPRequestRulesHandler == nil {
-		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRulesHandler")
-	}
-
-	if o.TCPResponseRuleGetTCPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRuleHandler")
-	}
-
-	if o.TCPResponseRuleGetTCPResponseRulesHandler == nil {
-		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRulesHandler")
-	}
-
 	if o.TransactionsGetTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionHandler")
 	}
@@ -964,28 +426,8 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "transactions.GetTransactionsHandler")
 	}
 
-	if o.ConfigurationPostHAProxyConfigurationHandler == nil {
-		unregistered = append(unregistered, "configuration.PostHAProxyConfigurationHandler")
-	}
-
-	if o.ACLReplaceACLHandler == nil {
-		unregistered = append(unregistered, "acl.ReplaceACLHandler")
-	}
-
 	if o.BackendReplaceBackendHandler == nil {
 		unregistered = append(unregistered, "backend.ReplaceBackendHandler")
-	}
-
-	if o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "backend_switching_rule.ReplaceBackendSwitchingRuleHandler")
-	}
-
-	if o.BindReplaceBindHandler == nil {
-		unregistered = append(unregistered, "bind.ReplaceBindHandler")
-	}
-
-	if o.FilterReplaceFilterHandler == nil {
-		unregistered = append(unregistered, "filter.ReplaceFilterHandler")
 	}
 
 	if o.FrontendReplaceFrontendHandler == nil {
@@ -996,40 +438,8 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "global.ReplaceGlobalHandler")
 	}
 
-	if o.HTTPRequestRuleReplaceHTTPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleHandler")
-	}
-
-	if o.HTTPResponseRuleReplaceHTTPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleHandler")
-	}
-
-	if o.LogTargetReplaceLogTargetHandler == nil {
-		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
-	}
-
-	if o.ServerReplaceServerHandler == nil {
-		unregistered = append(unregistered, "server.ReplaceServerHandler")
-	}
-
-	if o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler == nil {
-		unregistered = append(unregistered, "server_switching_rule.ReplaceServerSwitchingRuleHandler")
-	}
-
 	if o.SitesReplaceSiteHandler == nil {
 		unregistered = append(unregistered, "sites.ReplaceSiteHandler")
-	}
-
-	if o.StickRuleReplaceStickRuleHandler == nil {
-		unregistered = append(unregistered, "stick_rule.ReplaceStickRuleHandler")
-	}
-
-	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
-	}
-
-	if o.TCPResponseRuleReplaceTCPResponseRuleHandler == nil {
-		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleHandler")
 	}
 
 	if o.TransactionsStartTransactionHandler == nil {
@@ -1158,27 +568,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/acls"] = acl.NewCreateACL(o.context, o.ACLCreateACLHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends"] = backend.NewCreateBackend(o.context, o.BackendCreateBackendHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/backend_switching_rules"] = backend_switching_rule.NewCreateBackendSwitchingRule(o.context, o.BackendSwitchingRuleCreateBackendSwitchingRuleHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/binds"] = bind.NewCreateBind(o.context, o.BindCreateBindHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1188,52 +578,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/http_request_rules"] = http_request_rule.NewCreateHTTPRequestRule(o.context, o.HTTPRequestRuleCreateHTTPRequestRuleHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/http_response_rules"] = http_response_rule.NewCreateHTTPResponseRule(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/log_targets"] = log_target.NewCreateLogTarget(o.context, o.LogTargetCreateLogTargetHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/server_switching_rules"] = server_switching_rule.NewCreateServerSwitchingRule(o.context, o.ServerSwitchingRuleCreateServerSwitchingRuleHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
 	o.handlers["POST"]["/services/haproxy/sites"] = sites.NewCreateSite(o.context, o.SitesCreateSiteHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewCreateStickRule(o.context, o.StickRuleCreateStickRuleHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewCreateTCPRequestRule(o.context, o.TCPRequestRuleCreateTCPRequestRuleHandler)
-
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/acls/{id}"] = acl.NewDeleteACL(o.context, o.ACLDeleteACLHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1243,67 +588,12 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/backend_switching_rules/{id}"] = backend_switching_rule.NewDeleteBackendSwitchingRule(o.context, o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/binds/{name}"] = bind.NewDeleteBind(o.context, o.BindDeleteBindHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/filters/{id}"] = filter.NewDeleteFilter(o.context, o.FilterDeleteFilterHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{name}"] = frontend.NewDeleteFrontend(o.context, o.FrontendDeleteFrontendHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/http_request_rules/{id}"] = http_request_rule.NewDeleteHTTPRequestRule(o.context, o.HTTPRequestRuleDeleteHTTPRequestRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewDeleteHTTPResponseRule(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewDeleteLogTarget(o.context, o.LogTargetDeleteLogTargetHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/servers/{name}"] = server.NewDeleteServer(o.context, o.ServerDeleteServerHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/server_switching_rules/{id}"] = server_switching_rule.NewDeleteServerSwitchingRule(o.context, o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
 	o.handlers["DELETE"]["/services/haproxy/sites/{name}"] = sites.NewDeleteSite(o.context, o.SitesDeleteSiteHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewDeleteStickRule(o.context, o.StickRuleDeleteStickRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewDeleteTCPRequestRule(o.context, o.TCPRequestRuleDeleteTCPRequestRuleHandler)
-
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewDeleteTCPResponseRule(o.context, o.TCPResponseRuleDeleteTCPResponseRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1318,27 +608,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/acls/{id}"] = acl.NewGetACL(o.context, o.ACLGetACLHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/acls"] = acl.NewGetAcls(o.context, o.ACLGetAclsHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{name}"] = backend.NewGetBackend(o.context, o.BackendGetBackendHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/backend_switching_rules/{id}"] = backend_switching_rule.NewGetBackendSwitchingRule(o.context, o.BackendSwitchingRuleGetBackendSwitchingRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/backend_switching_rules"] = backend_switching_rule.NewGetBackendSwitchingRules(o.context, o.BackendSwitchingRuleGetBackendSwitchingRulesHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1348,27 +618,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/binds/{name}"] = bind.NewGetBind(o.context, o.BindGetBindHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/binds"] = bind.NewGetBinds(o.context, o.BindGetBindsHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/services/haproxy/configuration"] = discovery.NewGetConfigurationEndpoints(o.context, o.DiscoveryGetConfigurationEndpointsHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/filters/{id}"] = filter.NewGetFilter(o.context, o.FilterGetFilterHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/filters"] = filter.NewGetFilters(o.context, o.FilterGetFiltersHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1388,77 +638,12 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/raw"] = configuration.NewGetHAProxyConfiguration(o.context, o.ConfigurationGetHAProxyConfigurationHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/http_request_rules/{id}"] = http_request_rule.NewGetHTTPRequestRule(o.context, o.HTTPRequestRuleGetHTTPRequestRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/http_request_rules"] = http_request_rule.NewGetHTTPRequestRules(o.context, o.HTTPRequestRuleGetHTTPRequestRulesHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewGetHTTPResponseRule(o.context, o.HTTPResponseRuleGetHTTPResponseRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/http_response_rules"] = http_response_rule.NewGetHTTPResponseRules(o.context, o.HTTPResponseRuleGetHTTPResponseRulesHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/services/haproxy"] = discovery.NewGetHaproxyEndpoints(o.context, o.DiscoveryGetHaproxyEndpointsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/info"] = information.NewGetHaproxyProcessInfo(o.context, o.InformationGetHaproxyProcessInfoHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewGetLogTarget(o.context, o.LogTargetGetLogTargetHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/log_targets"] = log_target.NewGetLogTargets(o.context, o.LogTargetGetLogTargetsHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/reloads/{id}"] = reloads.NewGetReload(o.context, o.ReloadsGetReloadHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/reloads"] = reloads.NewGetReloads(o.context, o.ReloadsGetReloadsHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/servers/{name}"] = server.NewGetServer(o.context, o.ServerGetServerHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/server_switching_rules/{id}"] = server_switching_rule.NewGetServerSwitchingRule(o.context, o.ServerSwitchingRuleGetServerSwitchingRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/server_switching_rules"] = server_switching_rule.NewGetServerSwitchingRules(o.context, o.ServerSwitchingRuleGetServerSwitchingRulesHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/servers"] = server.NewGetServers(o.context, o.ServerGetServersHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1493,36 +678,6 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewGetStickRule(o.context, o.StickRuleGetStickRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewGetStickRules(o.context, o.StickRuleGetStickRulesHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewGetTCPRequestRule(o.context, o.TCPRequestRuleGetTCPRequestRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewGetTCPRequestRules(o.context, o.TCPRequestRuleGetTCPRequestRulesHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewGetTCPResponseRule(o.context, o.TCPResponseRuleGetTCPResponseRuleHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewGetTCPResponseRules(o.context, o.TCPResponseRuleGetTCPResponseRulesHandler)
-
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/services/haproxy/transactions/{id}"] = transactions.NewGetTransaction(o.context, o.TransactionsGetTransactionHandler)
 
 	if o.handlers["GET"] == nil {
@@ -1530,35 +685,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	}
 	o.handlers["GET"]["/services/haproxy/transactions"] = transactions.NewGetTransactions(o.context, o.TransactionsGetTransactionsHandler)
 
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/services/haproxy/configuration/raw"] = configuration.NewPostHAProxyConfiguration(o.context, o.ConfigurationPostHAProxyConfigurationHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/acls/{id}"] = acl.NewReplaceACL(o.context, o.ACLReplaceACLHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{name}"] = backend.NewReplaceBackend(o.context, o.BackendReplaceBackendHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/backend_switching_rules/{id}"] = backend_switching_rule.NewReplaceBackendSwitchingRule(o.context, o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/binds/{name}"] = bind.NewReplaceBind(o.context, o.BindReplaceBindHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/filters/{id}"] = filter.NewReplaceFilter(o.context, o.FilterReplaceFilterHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -1573,47 +703,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/http_request_rules/{id}"] = http_request_rule.NewReplaceHTTPRequestRule(o.context, o.HTTPRequestRuleReplaceHTTPRequestRuleHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewReplaceHTTPResponseRule(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/servers/{name}"] = server.NewReplaceServer(o.context, o.ServerReplaceServerHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/server_switching_rules/{id}"] = server_switching_rule.NewReplaceServerSwitchingRule(o.context, o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
 	o.handlers["PUT"]["/services/haproxy/sites/{name}"] = sites.NewReplaceSite(o.context, o.SitesReplaceSiteHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewReplaceTCPRequestRule(o.context, o.TCPRequestRuleReplaceTCPRequestRuleHandler)
-
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

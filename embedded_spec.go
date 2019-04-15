@@ -5252,18 +5252,21 @@ func init() {
       "properties": {
         "acl_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
         },
         "criterion": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
         },
         "id": {
           "type": "integer",
           "x-nullable": true
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         }
       },
       "additionalProperties": false
@@ -8180,7 +8183,8 @@ func init() {
         },
         "pattern": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
         },
         "table": {
           "type": "string",
@@ -14834,18 +14838,21 @@ func init() {
       "properties": {
         "acl_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
         },
         "criterion": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
         },
         "id": {
           "type": "integer",
           "x-nullable": true
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         }
       },
       "additionalProperties": false
@@ -18214,7 +18221,8 @@ func init() {
         },
         "pattern": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
         },
         "table": {
           "type": "string",
