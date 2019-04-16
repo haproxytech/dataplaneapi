@@ -7745,7 +7745,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": {
-              "value": true
+              "value": "enabled"
             }
           },
           "x-display-name": "SSL CA File"
@@ -7755,7 +7755,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": {
-              "value": true
+              "value": "enabled"
             }
           }
         },
@@ -7764,7 +7764,12 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
         },
         "weight": {
           "type": "integer",
@@ -7982,14 +7987,18 @@ func init() {
                       "x-nullable": true
                     },
                     "ssl": {
-                      "type": "boolean"
+                      "type": "string",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ]
                     },
                     "ssl_certificate": {
                       "type": "string",
                       "pattern": "^[^\\s]+$",
                       "x-dependency": {
                         "ssl": {
-                          "value": true
+                          "value": "enabled"
                         }
                       }
                     },
@@ -17759,7 +17768,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": {
-              "value": true
+              "value": "enabled"
             }
           },
           "x-display-name": "SSL CA File"
@@ -17769,7 +17778,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": {
-              "value": true
+              "value": "enabled"
             }
           }
         },
@@ -17778,7 +17787,12 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
         },
         "weight": {
           "type": "integer",
@@ -18078,14 +18092,18 @@ func init() {
           "x-nullable": true
         },
         "ssl": {
-          "type": "boolean"
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "ssl_certificate": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "ssl": {
-              "value": true
+              "value": "enabled"
             }
           }
         },
