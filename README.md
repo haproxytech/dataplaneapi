@@ -96,37 +96,43 @@ Usage:
 API for editing and managing HAPEE instances
 
 Application Options:
-      --scheme=            the listeners to enable, this can be repeated and defaults to the schemes in the swagger spec
-      --cleanup-timeout=   grace period for which to wait before shutting down the server (default: 10s)
-      --max-header-size=   controls the maximum number of bytes the server will read parsing the request header's keys and values, including the request line. It does not limit the size of the request body. (default: 1MiB)
-      --socket-path=       the unix socket to listen on (default: /var/run/data-plane.sock)
-      --host=              the IP to listen on (default: localhost) [$HOST]
-      --port=              the port to listen on for insecure connections, defaults to a random value [$PORT]
-      --listen-limit=      limit the number of outstanding requests
-      --keep-alive=        sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download) (default: 3m)
-      --read-timeout=      maximum duration before timing out read of the request (default: 30s)
-      --write-timeout=     maximum duration before timing out write of the response (default: 60s)
-      --tls-host=          the IP to listen on for tls, when not specified it's the same as --host [$TLS_HOST]
-      --tls-port=          the port to listen on for secure connections, defaults to a random value [$TLS_PORT]
-      --tls-certificate=   the certificate to use for secure connections [$TLS_CERTIFICATE]
-      --tls-key=           the private key to use for secure conections [$TLS_PRIVATE_KEY]
-      --tls-ca=            the certificate authority file to be used with mutual tls auth [$TLS_CA_CERTIFICATE]
-      --tls-listen-limit=  limit the number of outstanding requests
-      --tls-keep-alive=    sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download)
-      --tls-read-timeout=  maximum duration before timing out read of the request
-      --tls-write-timeout= maximum duration before timing out write of the response
+      --scheme=                                    the listeners to enable, this can be repeated and defaults to the schemes in the swagger spec
+      --cleanup-timeout=                           grace period for which to wait before shutting down the server (default: 10s)
+      --max-header-size=                           controls the maximum number of bytes the server will read parsing the request header's keys and values, including the request line. It does not limit the size of the request body. (default: 1MiB)
+      --socket-path=                               the unix socket to listen on (default: /var/run/data-plane.sock)
+      --host=                                      the IP to listen on (default: localhost) [$HOST]
+      --port=                                      the port to listen on for insecure connections, defaults to a random value [$PORT]
+      --listen-limit=                              limit the number of outstanding requests
+      --keep-alive=                                sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download) (default: 3m)
+      --read-timeout=                              maximum duration before timing out read of the request (default: 30s)
+      --write-timeout=                             maximum duration before timing out write of the response (default: 60s)
+      --tls-host=                                  the IP to listen on for tls, when not specified it's the same as --host [$TLS_HOST]
+      --tls-port=                                  the port to listen on for secure connections, defaults to a random value [$TLS_PORT]
+      --tls-certificate=                           the certificate to use for secure connections [$TLS_CERTIFICATE]
+      --tls-key=                                   the private key to use for secure conections [$TLS_PRIVATE_KEY]
+      --tls-ca=                                    the certificate authority file to be used with mutual tls auth [$TLS_CA_CERTIFICATE]
+      --tls-listen-limit=                          limit the number of outstanding requests
+      --tls-keep-alive=                            sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download)
+      --tls-read-timeout=                          maximum duration before timing out read of the request
+      --tls-write-timeout=                         maximum duration before timing out write of the response
 
 HAProxy options:
-  -c, --config-file=       Path to the haproxy configuration file (default: /etc/haproxy/haproxy.cfg)
-  -u, --userlist=          Userlist in HAProxy configuration to use for API Basic Authentication (default: controller)
-  -b, --haproxy-bin=       Path to the haproxy binary file (default: haproxy)
-  -d, --reload-delay=      Minimum delay between two reloads (in s)
-  -r, --reload-cmd=        Reload command
-      --reload-retention=  Reload retention in days, every older reload id will be deleted (default: 1)
-  -t, --transaction-dir=   Path to the transaction directory (default: /tmp/haproxy)
+  -c, --config-file=                               Path to the haproxy configuration file (default: /etc/haproxy/haproxy.cfg)
+  -u, --userlist=                                  Userlist in HAProxy configuration to use for API Basic Authentication (default: controller)
+  -b, --haproxy-bin=                               Path to the haproxy binary file (default: haproxy)
+  -d, --reload-delay=                              Minimum delay between two reloads (in s)
+  -r, --reload-cmd=                                Reload command
+      --reload-retention=                          Reload retention in days, every older reload id will be deleted (default: 1)
+  -t, --transaction-dir=                           Path to the transaction directory (default: /tmp/haproxy)
+
+Logging options:
+      --log-to=[stdout|file]                       Log target, can be stdout or file (default: stdout)
+      --log-file=                                  Location of the log file (default: /var/log/dataplaneapi/dataplaneapi.log)
+      --log-level=[trace|debug|info|warning|error] Logging level (default: warning)
+      --log-format=[text|JSON]                     Logging format (default: text)
 
 Help Options:
-  -h, --help               Show this help message
+  -h, --help                                       Show this help message
 ```
 
 ## Example 
