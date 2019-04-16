@@ -7,6 +7,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/haproxytech/dataplaneapi/adapters"
@@ -50,18 +52,36 @@ var haproxyOptions struct {
 	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
 }
 
+var loggingOptions struct {
+	LogTo     string `long:"log-to" description:"Log target, can be stdout or file" default:"stdout" choice:"stdout" choice:"file"`
+	LogFile   string `long:"log-file" description:"Location of the log file" default:"/var/log/dataplaneapi/dataplaneapi.log"`
+	LogLevel  string `long:"log-level" description:"Logging level" default:"warning" choice:"trace" choice:"debug" choice:"info" choice:"warning" choice:"error"`
+	LogFormat string `long:"log-format" description:"Logging format" default:"text" choice:"text" choice:"JSON"`
+}
+
+var logFile *os.File
+
 func configureFlags(api *operations.DataPlaneAPI) {
 	haproxyOptionsGroup := swag.CommandLineOptionsGroup{
 		ShortDescription: "HAProxy options",
-		LongDescription:  "Options for configuring haproxy locations",
+		LongDescription:  "Options for configuring haproxy locations.",
 		Options:          &haproxyOptions,
+	}
+
+	loggingOptionsGroup := swag.CommandLineOptionsGroup{
+		ShortDescription: "Logging options",
+		LongDescription:  "Options for configuring logging.",
+		Options:          &loggingOptions,
 	}
 
 	api.CommandLineOptionsGroups = make([]swag.CommandLineOptionsGroup, 0, 1)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, haproxyOptionsGroup)
+	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, loggingOptionsGroup)
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
+	configureLogging()
+
 	defer func() {
 		if err := recover(); err != nil {
 			log.Fatalf("Error starting dataplane API: %s", err)
@@ -84,7 +104,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.TxtProducer = runtime.TextProducer()
 
-	api.ServerShutdown = func() {}
+	api.ServerShutdown = serverShutdown
 
 	// Initialize HAProxy native client
 	confClient := &configuration.Client{}
@@ -380,4 +400,47 @@ func authenticateUser(user string, pass string, cli *client_native.HAProxyClient
 		}
 	}
 	return nil, errors.New(401, "User does not exist")
+}
+
+func configureLogging() {
+	switch loggingOptions.LogFormat {
+	case "text":
+		log.SetFormatter(&log.TextFormatter{
+			FullTimestamp: true,
+			DisableColors: true,
+		})
+	case "JSON":
+		log.SetFormatter(&log.JSONFormatter{})
+	}
+
+	switch loggingOptions.LogTo {
+	case "stdout":
+		log.SetOutput(os.Stdout)
+	case "file":
+		dir := filepath.Dir(loggingOptions.LogFile)
+		os.MkdirAll(dir, os.ModePerm)
+
+		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+		if err != nil {
+			log.Warning("Error opening log file, no logging implemented: %v", err)
+		}
+		log.SetOutput(logFile)
+	}
+
+	switch loggingOptions.LogLevel {
+	case "debug":
+		log.SetLevel(log.DebugLevel)
+	case "info":
+		log.SetLevel(log.InfoLevel)
+	case "warning":
+		log.SetLevel(log.WarnLevel)
+	case "error":
+		log.SetLevel(log.ErrorLevel)
+	}
+}
+
+func serverShutdown() {
+	if logFile != nil {
+		logFile.Close()
+	}
 }
