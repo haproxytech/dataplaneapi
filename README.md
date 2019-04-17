@@ -62,6 +62,7 @@ External dependecies:
 - [mgo](https://github.com/globalsign/mgo)
 - [easyjson](https://github.com/mailru/easyjson)
 - [mapstructure](https://github.com/mitchellh/mapstructure)
+- [crypt] (https://github.com/GehirnInc/crypt)
 
 ## Building
 
@@ -148,3 +149,5 @@ Test it out with curl, note that you need user/pass combination setup in HAProxy
 ```
 curl -u <user>:<pass> -H "Content-Type: application/json" "http://127.0.0.1:5555/v1/"
 ```
+
+If you are using secure passwords, supported algorithms are: md5, sha-256 and sha-512.

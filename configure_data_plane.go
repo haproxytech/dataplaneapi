@@ -38,6 +38,12 @@ import (
 	graceful "github.com/tylerb/graceful"
 
 	"github.com/haproxytech/dataplaneapi/operations"
+
+	"github.com/GehirnInc/crypt"
+	// import various crypting algorihtms
+	_ "github.com/GehirnInc/crypt/md5_crypt"
+	_ "github.com/GehirnInc/crypt/sha256_crypt"
+	_ "github.com/GehirnInc/crypt/sha512_crypt"
 )
 
 //go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
@@ -393,8 +399,14 @@ func authenticateUser(user string, pass string, cli *client_native.HAProxyClient
 
 	for _, u := range users {
 		if u.Name == user {
-			if u.Password == pass {
-				return user, nil
+			if u.IsInsecure {
+				if u.Password == pass {
+					return user, nil
+				}
+			} else {
+				if checkPassword(pass, u.Password) {
+					return user, nil
+				}
 			}
 			return nil, errors.New(401, "Invalid password")
 		}
@@ -437,6 +449,28 @@ func configureLogging() {
 	case "error":
 		log.SetLevel(log.ErrorLevel)
 	}
+}
+
+func checkPassword(pass, storedPass string) bool {
+	parts := strings.Split(storedPass, "$")
+	if len(parts) == 4 {
+		var c crypt.Crypter
+		switch parts[1] {
+		case "1":
+			c = crypt.MD5.New()
+		case "5":
+			c = crypt.SHA256.New()
+		case "6":
+			c = crypt.SHA512.New()
+		default:
+			return false
+		}
+		if err := c.Verify(storedPass, []byte(pass)); err == nil {
+			return true
+		}
+	}
+
+	return false
 }
 
 func serverShutdown() {
