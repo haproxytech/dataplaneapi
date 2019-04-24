@@ -49,7 +49,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 				fieldValue := reflect.ValueOf(vData).FieldByName(field)
 				if fieldValue.IsValid() {
 					switch field {
-					case "MaxConnections":
+					case "Maxconn":
 						maxConn := fieldValue.Elem().Int()
 						err := client.Runtime.SetFrontendMaxConn(vData.Name, int(maxConn))
 						if err != nil {
