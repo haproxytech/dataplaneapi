@@ -13,7 +13,7 @@ import (
 //RuntimeSupportedFields is a map of fields supported through the runtime API for
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
-	"frontend": []string{"MaxConnections"},
+	"frontend": []string{"Maxconn"},
 	"server":   []string{"Weigth", "Address", "Port", "Maintenance"},
 }
 
