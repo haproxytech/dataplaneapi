@@ -125,6 +125,7 @@ HAProxy options:
   -r, --reload-cmd=                                Reload command
       --reload-retention=                          Reload retention in days, every older reload id will be deleted (default: 1)
   -t, --transaction-dir=                           Path to the transaction directory (default: /tmp/haproxy)
+  -m, --master-runtime=                            Path to the master Runtime API socket
 
 Logging options:
       --log-to=[stdout|file]                       Log target, can be stdout or file (default: stdout)

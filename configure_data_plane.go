@@ -56,6 +56,7 @@ var haproxyOptions struct {
 	ReloadCmd       string `short:"r" long:"reload-cmd" description:"Reload command"`
 	ReloadRetention int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1"`
 	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
+	MasterRuntime   string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket"`
 }
 
 var loggingOptions struct {
@@ -112,44 +113,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.ServerShutdown = serverShutdown
 
-	// Initialize HAProxy native client
-	confClient := &configuration.Client{}
-	confParams := configuration.ClientParams{
-		ConfigurationFile: haproxyOptions.ConfigFile,
-		Haproxy:           haproxyOptions.HAProxy,
-		UseValidation:     false,
-		TransactionDir:    haproxyOptions.TransactionDir,
-	}
-	err := confClient.Init(confParams)
-	if err != nil {
-		log.Fatalf("Error setting up configuration client: %s", err.Error())
-	}
-
-	runtimeClient := &runtime_api.Client{}
-	globalConf, err := confClient.GetGlobalConfiguration("")
-
-	if err != nil {
-		log.Warning("Stats socket not configured, no runtime client initiated")
-	}
-
-	runtimeAPIs := globalConf.Data.RuntimeApis
-	if len(runtimeAPIs) == 0 {
-		log.Warning("Stats socket not configured, no runtime client initiated")
-	} else {
-		socketList := make([]string, 0, 1)
-		for _, r := range runtimeAPIs {
-			socketList = append(socketList, *r.Address)
-		}
-
-		err := runtimeClient.Init(socketList)
-		if err != nil {
-			log.Warning("Error setting up runtime client, not using one")
-			runtimeClient = nil
-		}
-	}
-
-	client := &client_native.HAProxyClient{}
-	client.Init(confClient, runtimeClient)
+	client := configureNativeClient()
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
@@ -477,4 +441,64 @@ func serverShutdown() {
 	if logFile != nil {
 		logFile.Close()
 	}
+}
+
+func configureNativeClient() *client_native.HAProxyClient {
+	// Initialize HAProxy native client
+	confClient := &configuration.Client{}
+	confParams := configuration.ClientParams{
+		ConfigurationFile: haproxyOptions.ConfigFile,
+		Haproxy:           haproxyOptions.HAProxy,
+		UseValidation:     false,
+		TransactionDir:    haproxyOptions.TransactionDir,
+	}
+	err := confClient.Init(confParams)
+	if err != nil {
+		log.Fatalf("Error setting up configuration client: %s", err.Error())
+	}
+
+	runtimeClient := &runtime_api.Client{}
+	globalConf, err := confClient.GetGlobalConfiguration("")
+	if err == nil {
+		statsSocketConfigured := false
+		socketList := make([]string, 0, 1)
+		runtimeAPIs := globalConf.Data.RuntimeApis
+
+		if len(runtimeAPIs) != 0 {
+			statsSocketConfigured = true
+			for _, r := range runtimeAPIs {
+				socketList = append(socketList, *r.Address)
+			}
+		}
+
+		masterSocket := ""
+		nbproc := 0
+		if haproxyOptions.MasterRuntime != "" {
+			if globalConf.Data.Nbproc > 0 {
+				statsSocketConfigured = true
+				nbproc = int(globalConf.Data.Nbproc)
+				masterSocket = haproxyOptions.MasterRuntime
+			}
+		}
+
+		if statsSocketConfigured {
+			if err := runtimeClient.Init(socketList, masterSocket, nbproc); err != nil {
+				log.Warning("Error setting up runtime client, not using one")
+				runtimeClient = nil
+			}
+		} else {
+			log.Warning("Runtime API not configured, not using it")
+			runtimeClient = nil
+		}
+	} else {
+		log.Warning("Cannot read runtime API configuration, not using it")
+		runtimeClient = nil
+	}
+
+	client := &client_native.HAProxyClient{}
+	if err := client.Init(confClient, runtimeClient); err != nil {
+		log.Fatalf("Error setting up native client: %s", err.Error())
+	}
+
+	return client
 }
