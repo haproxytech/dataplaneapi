@@ -6,7 +6,7 @@
 
 ## API Specification
 
-Data Plane API is built using [go-swagger](https://github.com/go-swagger/go-swagger) from the swagger spec found [here](https://github.com/haproxytech/haproxy-open-api-spec/blob/2.0/build/haproxy_spec.yaml) using the following command.
+Data Plane API is built using [go-swagger](https://github.com/go-swagger/go-swagger) from the swagger spec found [here]https://github.com/haproxytech/dataplaneapi-specification/blob/master/build/haproxy_spec.yaml) using the following command.
 
 ```
 ./swagger generate server -f ~/projects/haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml \
@@ -62,7 +62,7 @@ External dependecies:
 - [mgo](https://github.com/globalsign/mgo)
 - [easyjson](https://github.com/mailru/easyjson)
 - [mapstructure](https://github.com/mitchellh/mapstructure)
-- [crypt] (https://github.com/GehirnInc/crypt)
+- [crypt](https://github.com/GehirnInc/crypt)
 
 ## Building
 
