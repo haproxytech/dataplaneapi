@@ -1,4 +1,4 @@
-# ![HAProxy](../assets/images/haproxy-weblogo-210x49.png "HAProxy")
+# ![HAProxy](assets/images/haproxy-weblogo-210x49.png "HAProxy")
 
 ## HAProxy Data Plane API
 
@@ -6,7 +6,7 @@
 
 ## API Specification
 
-Data Plane API is built using [go-swagger](https://github.com/go-swagger/go-swagger) from the swagger spec found [here](http://github.com/haproxytech/haproxy-open-api-spec/blob/2.0/build/haproxy_spec.yaml) using the following command.
+Data Plane API is built using [go-swagger](https://github.com/go-swagger/go-swagger) from the swagger spec found [here](https://github.com/haproxytech/haproxy-open-api-spec/blob/2.0/build/haproxy_spec.yaml) using the following command.
 
 ```
 ./swagger generate server -f ~/projects/haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml \
@@ -46,9 +46,9 @@ This command generates some of the files in this project, which are marked with 
 ## Dependencies
 
 The project depends on the following internal projects:
-- [models](http://github.com/haproxytech/models)
-- [client-native](http://github.com/haproxytech/client-native)
-- [config-parser](http://github.com/haproxytech/config-parser)
+- [models](https://github.com/haproxytech/models)
+- [client-native](https://github.com/haproxytech/client-native)
+- [config-parser](https://github.com/haproxytech/config-parser)
 
 External dependecies:
 - [go-openapi](https://github.com/go-openapi)
@@ -70,11 +70,11 @@ Following steps are required for building:
 
 1\. Set your GOPATH variable
 
-2\. Clone dataplaneapi repository into $GOPATH/src/github.com/haproxy/controller
+2\. Clone dataplaneapi repository into $GOPATH/src/github.com/haproxytech
 
 ```
-cd $GOPATH/src/github.com/haproxy/controller
-git clone http://github.com/haproxytech/dataplaneapi.git
+cd $GOPATH/src/github.com/haproxytech
+git clone https://github.com/haproxytech/dataplaneapi.git
 ```
 
 3\. Run make build:
