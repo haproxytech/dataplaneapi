@@ -52,7 +52,7 @@ var haproxyOptions struct {
 	ConfigFile      string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
 	Userlist        string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
 	HAProxy         string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
-	ReloadDelay     int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)"`
+	ReloadDelay     int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5"`
 	ReloadCmd       string `short:"r" long:"reload-cmd" description:"Reload command"`
 	ReloadRetention int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1"`
 	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
