@@ -8,8 +8,10 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"strings"
+	"syscall"
 
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
@@ -444,6 +446,18 @@ func serverShutdown() {
 }
 
 func configureNativeClient() *client_native.HAProxyClient {
+	// Override options with env variables
+	if os.Getenv("HAPROXY_MWORKER") == "1" {
+		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
+		if masterRuntime != "" {
+			haproxyOptions.MasterRuntime = masterRuntime
+		}
+	}
+	cfgFiles := os.Getenv("HAPROXY_CFGFILES")
+	if cfgFiles != "" {
+		cfg := strings.Split(cfgFiles, ";")
+		haproxyOptions.ConfigFile = cfg[0]
+	}
 	// Initialize HAProxy native client
 	confClient := &configuration.Client{}
 	confParams := configuration.ClientParams{
@@ -457,6 +471,28 @@ func configureNativeClient() *client_native.HAProxyClient {
 		log.Fatalf("Error setting up configuration client: %s", err.Error())
 	}
 
+	runtimeClient := configureRuntimeClient(confClient)
+	client := &client_native.HAProxyClient{}
+	if err := client.Init(confClient, runtimeClient); err != nil {
+		log.Fatalf("Error setting up native client: %s", err.Error())
+	}
+
+	// Handle reload signals
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGUSR1)
+
+	go func() {
+		sig := <-sigs
+		if sig == syscall.SIGUSR1 {
+			client.Runtime = configureRuntimeClient(client.Configuration)
+			fmt.Println("Reloading")
+		}
+	}()
+
+	return client
+}
+
+func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Client {
 	runtimeClient := &runtime_api.Client{}
 	globalConf, err := confClient.GetGlobalConfiguration("")
 	if err == nil {
@@ -484,21 +520,15 @@ func configureNativeClient() *client_native.HAProxyClient {
 		if statsSocketConfigured {
 			if err := runtimeClient.Init(socketList, masterSocket, nbproc); err != nil {
 				log.Warning("Error setting up runtime client, not using one")
-				runtimeClient = nil
+				return nil
 			}
 		} else {
 			log.Warning("Runtime API not configured, not using it")
-			runtimeClient = nil
+			return nil
 		}
 	} else {
 		log.Warning("Cannot read runtime API configuration, not using it")
-		runtimeClient = nil
+		return nil
 	}
-
-	client := &client_native.HAProxyClient{}
-	if err := client.Init(confClient, runtimeClient); err != nil {
-		log.Fatalf("Error setting up native client: %s", err.Error())
-	}
-
-	return client
+	return runtimeClient
 }
