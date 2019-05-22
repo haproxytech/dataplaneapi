@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
@@ -128,12 +143,12 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 		t = *params.TransactionID
 	}
 
-	logTarget, err := h.Client.Configuration.GetLogTarget(params.ID, params.ParentType, params.ParentName, t)
+	v, logTarget, err := h.Client.Configuration.GetLogTarget(params.ID, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewGetLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
-	return log_target.NewGetLogTargetOK().WithPayload(logTarget)
+	return log_target.NewGetLogTargetOK().WithPayload(&log_target.GetLogTargetOKBody{Version: v, Data: logTarget})
 }
 
 //Handle executing the request and returning a response
@@ -143,12 +158,12 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 		t = *params.TransactionID
 	}
 
-	logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, params.ParentName, t)
+	v, logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewGetLogTargetsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return log_target.NewGetLogTargetsOK().WithPayload(logTargets)
+	return log_target.NewGetLogTargetsOK().WithPayload(&log_target.GetLogTargetsOKBody{Version: v, Data: logTargets})
 }
 
 //Handle executing the request and returning a response

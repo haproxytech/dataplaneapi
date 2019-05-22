@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
@@ -128,12 +143,12 @@ func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.
 		t = *params.TransactionID
 	}
 
-	rule, err := h.Client.Configuration.GetServerSwitchingRule(params.ID, params.Backend, t)
+	v, rule, err := h.Client.Configuration.GetServerSwitchingRule(params.ID, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(rule)
+	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(&server_switching_rule.GetServerSwitchingRuleOKBody{Version: v, Data: rule})
 }
 
 //Handle executing the request and returning a response
@@ -143,12 +158,12 @@ func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule
 		t = *params.TransactionID
 	}
 
-	rules, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
+	v, rules, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(rules)
+	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: rules})
 }
 
 //Handle executing the request and returning a response

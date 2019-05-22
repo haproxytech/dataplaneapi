@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/operations/global"
 	"github.com/haproxytech/models"
 
@@ -28,12 +43,12 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 		t = *params.TransactionID
 	}
 
-	data, err := h.Client.Configuration.GetGlobalConfiguration(t)
+	v, data, err := h.Client.Configuration.GetGlobalConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
-	return global.NewGetGlobalOK().WithPayload(data)
+	return global.NewGetGlobalOK().WithPayload(&global.GetGlobalOKBody{Version: v, Data: data})
 }
 
 //Handle executing the request and returning a response

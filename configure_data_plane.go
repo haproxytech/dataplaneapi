@@ -1,5 +1,20 @@
 // This file is safe to edit. Once it exists it will not be overwritten
 
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package dataplaneapi
 
 import (
@@ -26,7 +41,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 
 	"github.com/haproxytech/client-native/configuration"
 	runtime_api "github.com/haproxytech/client-native/runtime"
@@ -37,7 +52,6 @@ import (
 	runtime "github.com/go-openapi/runtime"
 	swag "github.com/go-openapi/swag"
 	"github.com/rs/cors"
-	graceful "github.com/tylerb/graceful"
 
 	"github.com/haproxytech/dataplaneapi/operations"
 
@@ -332,7 +346,7 @@ func configureTLS(tlsConfig *tls.Config) {
 // If you need to modify a config, store server instance to stop it individually later, this is the place.
 // This function can be called multiple times, depending on the number of serving schemes.
 // scheme value will be set accordingly: "http", "https" or "unix"
-func configureServer(s *graceful.Server, scheme, addr string) {
+func configureServer(s *http.Server, scheme, addr string) {
 }
 
 // The middleware configuration is for the handler executors. These do not apply to the swagger.json document.
@@ -400,7 +414,7 @@ func configureLogging() {
 
 		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
 		if err != nil {
-			log.Warning("Error opening log file, no logging implemented: %v", err)
+			log.Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
 		log.SetOutput(logFile)
 	}
@@ -494,11 +508,11 @@ func configureNativeClient() *client_native.HAProxyClient {
 
 func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Client {
 	runtimeClient := &runtime_api.Client{}
-	globalConf, err := confClient.GetGlobalConfiguration("")
+	_, globalConf, err := confClient.GetGlobalConfiguration("")
 	if err == nil {
 		statsSocketConfigured := false
 		socketList := make([]string, 0, 1)
-		runtimeAPIs := globalConf.Data.RuntimeApis
+		runtimeAPIs := globalConf.RuntimeApis
 
 		if len(runtimeAPIs) != 0 {
 			statsSocketConfigured = true
@@ -510,9 +524,9 @@ func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Clien
 		masterSocket := ""
 		nbproc := 0
 		if haproxyOptions.MasterRuntime != "" {
-			if globalConf.Data.Nbproc > 0 {
+			if globalConf.Nbproc > 0 {
 				statsSocketConfigured = true
-				nbproc = int(globalConf.Data.Nbproc)
+				nbproc = int(globalConf.Nbproc)
 				masterSocket = haproxyOptions.MasterRuntime
 			}
 		}

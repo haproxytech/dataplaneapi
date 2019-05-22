@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
@@ -128,12 +143,12 @@ func (h *GetTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.GetTCPRequ
 		t = *params.TransactionID
 	}
 
-	rule, err := h.Client.Configuration.GetTCPRequestRule(params.ID, params.ParentType, params.ParentName, t)
+	v, rule, err := h.Client.Configuration.GetTCPRequestRule(params.ID, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_request_rule.NewGetTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return tcp_request_rule.NewGetTCPRequestRuleOK().WithPayload(rule)
+	return tcp_request_rule.NewGetTCPRequestRuleOK().WithPayload(&tcp_request_rule.GetTCPRequestRuleOKBody{Version: v, Data: rule})
 }
 
 //Handle executing the request and returning a response
@@ -143,12 +158,12 @@ func (h *GetTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.GetTCPReq
 		t = *params.TransactionID
 	}
 
-	rules, err := h.Client.Configuration.GetTCPRequestRules(params.ParentType, params.ParentName, t)
+	v, rules, err := h.Client.Configuration.GetTCPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_request_rule.NewGetTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(rules)
+	return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(&tcp_request_rule.GetTCPRequestRulesOKBody{Version: v, Data: rules})
 }
 
 //Handle executing the request and returning a response

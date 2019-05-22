@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
@@ -126,12 +141,12 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 		t = *params.TransactionID
 	}
 
-	b, err := h.Client.Configuration.GetBind(params.Name, params.Frontend, t)
+	v, b, err := h.Client.Configuration.GetBind(params.Name, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
 	}
-	return bind.NewGetBindOK().WithPayload(b)
+	return bind.NewGetBindOK().WithPayload(&bind.GetBindOKBody{Version: v, Data: b})
 }
 
 //Handle executing the request and returning a response
@@ -141,12 +156,12 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 		t = *params.TransactionID
 	}
 
-	bs, err := h.Client.Configuration.GetBinds(params.Frontend, t)
+	v, bs, err := h.Client.Configuration.GetBinds(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return bind.NewGetBindsOK().WithPayload(bs)
+	return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: bs})
 }
 
 //Handle executing the request and returning a response

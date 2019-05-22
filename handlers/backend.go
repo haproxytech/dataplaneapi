@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
@@ -127,12 +142,12 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 		t = *params.TransactionID
 	}
 
-	bck, err := h.Client.Configuration.GetBackend(params.Name, t)
+	v, bck, err := h.Client.Configuration.GetBackend(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewGetBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend.NewGetBackendOK().WithPayload(bck)
+	return backend.NewGetBackendOK().WithPayload(&backend.GetBackendOKBody{Version: v, Data: bck})
 }
 
 //Handle executing the request and returning a response
@@ -142,12 +157,12 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 		t = *params.TransactionID
 	}
 
-	bcks, err := h.Client.Configuration.GetBackends(t)
+	v, bcks, err := h.Client.Configuration.GetBackends(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewGetBackendsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend.NewGetBackendsOK().WithPayload(bcks)
+	return backend.NewGetBackendsOK().WithPayload(&backend.GetBackendsOKBody{Version: v, Data: bcks})
 }
 
 //Handle executing the request and returning a response

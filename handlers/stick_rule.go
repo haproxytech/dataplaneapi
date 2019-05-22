@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
@@ -127,12 +142,12 @@ func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, p
 		t = *params.TransactionID
 	}
 
-	rule, err := h.Client.Configuration.GetStickRule(params.ID, params.Backend, t)
+	v, rule, err := h.Client.Configuration.GetStickRule(params.ID, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewGetStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return stick_rule.NewGetStickRuleOK().WithPayload(rule)
+	return stick_rule.NewGetStickRuleOK().WithPayload(&stick_rule.GetStickRuleOKBody{Version: v, Data: rule})
 }
 
 //Handle executing the request and returning a response
@@ -142,12 +157,12 @@ func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams,
 		t = *params.TransactionID
 	}
 
-	rules, err := h.Client.Configuration.GetStickRules(params.Backend, t)
+	v, rules, err := h.Client.Configuration.GetStickRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewGetStickRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return stick_rule.NewGetStickRulesOK().WithPayload(rules)
+	return stick_rule.NewGetStickRulesOK().WithPayload(&stick_rule.GetStickRulesOKBody{Version: v, Data: rules})
 }
 
 //Handle executing the request and returning a response

@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
@@ -127,12 +142,12 @@ func (h *GetHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.GetHTT
 		t = *params.TransactionID
 	}
 
-	f, err := h.Client.Configuration.GetHTTPResponseRule(params.ID, params.ParentType, params.ParentName, t)
+	v, rule, err := h.Client.Configuration.GetHTTPResponseRule(params.ID, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_response_rule.NewGetHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_response_rule.NewGetHTTPResponseRuleOK().WithPayload(f)
+	return http_response_rule.NewGetHTTPResponseRuleOK().WithPayload(&http_response_rule.GetHTTPResponseRuleOKBody{Version: v, Data: rule})
 }
 
 //Handle executing the request and returning a response
@@ -142,12 +157,12 @@ func (h *GetHTTPResponseRulesHandlerImpl) Handle(params http_response_rule.GetHT
 		t = *params.TransactionID
 	}
 
-	fs, err := h.Client.Configuration.GetHTTPResponseRules(params.ParentType, params.ParentName, t)
+	v, rules, err := h.Client.Configuration.GetHTTPResponseRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_response_rule.NewGetHTTPResponseRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(fs)
+	return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(&http_response_rule.GetHTTPResponseRulesOKBody{Version: v, Data: rules})
 }
 
 //Handle executing the request and returning a response

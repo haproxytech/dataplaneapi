@@ -1,8 +1,23 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this files except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/acl"
@@ -127,12 +142,13 @@ func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{
 		t = *params.TransactionID
 	}
 
-	rule, err := h.Client.Configuration.GetACL(params.ID, params.ParentType, params.ParentName, t)
+	v, rule, err := h.Client.Configuration.GetACL(params.ID, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
 	}
-	return acl.NewGetACLOK().WithPayload(rule)
+
+	return acl.NewGetACLOK().WithPayload(&acl.GetACLOKBody{Version: v, Data: rule})
 }
 
 //Handle executing the request and returning a response
@@ -142,12 +158,12 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 		t = *params.TransactionID
 	}
 
-	rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t)
+	v, rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewGetAclsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return acl.NewGetAclsOK().WithPayload(rules)
+	return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: rules})
 }
 
 //Handle executing the request and returning a response
