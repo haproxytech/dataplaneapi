@@ -51,7 +51,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "0.1"
+    "version": "1.0"
   },
   "basePath": "/v1",
   "paths": {
@@ -5627,6 +5627,7 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-display-name": "Backend Name",
           "x-dynamic-enum": {
             "operation": "getBackends",
             "property": "name"
@@ -6096,9 +6097,11 @@ func init() {
                 "type": "string",
                 "x-display-name": "Process/Thread Set"
               }
-            }
+            },
+            "x-go-name": "CPUMap"
           },
-          "x-display-name": "CPU Maps"
+          "x-display-name": "CPU Maps",
+          "x-go-name": "CPUMaps"
         },
         "daemon": {
           "type": "string",
@@ -6159,9 +6162,11 @@ func init() {
                 "type": "string",
                 "pattern": "^[^\\s]+$"
               }
-            }
+            },
+            "x-go-name": "RuntimeAPI"
           },
-          "x-display-name": "Runtime APIs"
+          "x-display-name": "Runtime APIs",
+          "x-go-name": "RuntimeAPIs"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",
@@ -7545,7 +7550,8 @@ func init() {
                 },
                 "x-nullable": true
               }
-            }
+            },
+            "x-go-name": "NativeStatStats"
           },
           "type": {
             "type": "string",
@@ -7556,6 +7562,7 @@ func init() {
             ]
           }
         },
+        "x-go-name": "NativeStat",
         "example": {
           "name": "frontend_test",
           "stats": {
@@ -7907,7 +7914,8 @@ func init() {
                       "pattern": "^[^\\s]+$"
                     }
                   }
-                }
+                },
+                "x-go-name": "SiteFarmBalance"
               },
               "cond": {
                 "type": "string",
@@ -7958,7 +7966,8 @@ func init() {
                     "type": "boolean"
                   }
                 },
-                "x-display-name": "ForwardFor"
+                "x-display-name": "ForwardFor",
+                "x-go-name": "SiteFarmForwardFor"
               },
               "mode": {
                 "type": "string",
@@ -8017,7 +8026,8 @@ func init() {
                       "type": "integer",
                       "x-nullable": true
                     }
-                  }
+                  },
+                  "x-go-name": "SiteServer"
                 }
               },
               "use_as": {
@@ -8028,7 +8038,8 @@ func init() {
                 ],
                 "x-nullable": false
               }
-            }
+            },
+            "x-go-name": "SiteFarm"
           }
         },
         "name": {
@@ -8092,7 +8103,8 @@ func init() {
                       }
                     }
                   }
-                }
+                },
+                "x-go-name": "SiteListener"
               }
             },
             "maxconn": {
@@ -8284,6 +8296,10 @@ func init() {
           "x-dependency": {
             "cond": {
               "required": true
+            },
+            "type": {
+              "required": true,
+              "value": "inspect-delay"
             }
           },
           "x-display-name": "Condition Test",
@@ -8375,6 +8391,9 @@ func init() {
           "x-dependency": {
             "cond": {
               "required": true
+            },
+            "type": {
+              "value": "content"
             }
           },
           "x-display-name": "Condition Test",
@@ -8636,7 +8655,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "0.1"
+    "version": "1.0"
   },
   "basePath": "/v1",
   "paths": {
@@ -15474,6 +15493,7 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-display-name": "Backend Name",
           "x-dynamic-enum": {
             "operation": "getBackends",
             "property": "name"
@@ -15944,9 +15964,11 @@ func init() {
                 "type": "string",
                 "x-display-name": "Process/Thread Set"
               }
-            }
+            },
+            "x-go-name": "CPUMap"
           },
-          "x-display-name": "CPU Maps"
+          "x-display-name": "CPU Maps",
+          "x-go-name": "CPUMaps"
         },
         "daemon": {
           "type": "string",
@@ -16007,9 +16029,11 @@ func init() {
                 "type": "string",
                 "pattern": "^[^\\s]+$"
               }
-            }
+            },
+            "x-go-name": "RuntimeAPI"
           },
-          "x-display-name": "Runtime APIs"
+          "x-display-name": "Runtime APIs",
+          "x-go-name": "RuntimeAPIs"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",
@@ -17393,7 +17417,8 @@ func init() {
                 },
                 "x-nullable": true
               }
-            }
+            },
+            "x-go-name": "NativeStatStats"
           },
           "type": {
             "type": "string",
@@ -17404,6 +17429,7 @@ func init() {
             ]
           }
         },
+        "x-go-name": "NativeStat",
         "example": {
           "name": "frontend_test",
           "stats": {
@@ -17756,7 +17782,8 @@ func init() {
                       "pattern": "^[^\\s]+$"
                     }
                   }
-                }
+                },
+                "x-go-name": "SiteFarmBalance"
               },
               "cond": {
                 "type": "string",
@@ -17807,7 +17834,8 @@ func init() {
                     "type": "boolean"
                   }
                 },
-                "x-display-name": "ForwardFor"
+                "x-display-name": "ForwardFor",
+                "x-go-name": "SiteFarmForwardFor"
               },
               "mode": {
                 "type": "string",
@@ -17867,7 +17895,8 @@ func init() {
                       "type": "integer",
                       "x-nullable": true
                     }
-                  }
+                  },
+                  "x-go-name": "SiteServer"
                 }
               },
               "use_as": {
@@ -17878,7 +17907,8 @@ func init() {
                 ],
                 "x-nullable": false
               }
-            }
+            },
+            "x-go-name": "SiteFarm"
           }
         },
         "name": {
@@ -17943,7 +17973,8 @@ func init() {
                       }
                     }
                   }
-                }
+                },
+                "x-go-name": "SiteListener"
               }
             },
             "maxconn": {
@@ -18135,6 +18166,10 @@ func init() {
           "x-dependency": {
             "cond": {
               "required": true
+            },
+            "type": {
+              "required": true,
+              "value": "inspect-delay"
             }
           },
           "x-display-name": "Condition Test",
@@ -18226,6 +18261,9 @@ func init() {
           "x-dependency": {
             "cond": {
               "required": true
+            },
+            "type": {
+              "value": "content"
             }
           },
           "x-display-name": "Condition Test",
