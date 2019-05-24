@@ -12,12 +12,13 @@ require (
 	github.com/go-openapi/strfmt v0.19.0
 	github.com/go-openapi/swag v0.19.0
 	github.com/go-openapi/validate v0.19.0
-	github.com/haproxytech/client-native v0.9.1
+	github.com/haproxytech/client-native v0.9.2
 	github.com/haproxytech/config-parser v0.9.0
-	github.com/haproxytech/models v0.9.1
+	github.com/haproxytech/models v0.9.2
 	github.com/jessevdk/go-flags v1.4.0
-	github.com/pkg/errors v0.8.1 // indirect
+	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/rs/cors v1.6.0
 	github.com/sirupsen/logrus v1.4.2
 	github.com/tylerb/graceful v1.2.15
+	golang.org/x/net v0.0.0-20190522155817-f3200d17e092
 )
