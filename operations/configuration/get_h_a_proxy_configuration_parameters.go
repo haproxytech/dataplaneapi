@@ -24,7 +24,10 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+
+	strfmt "github.com/go-openapi/strfmt"
 )
 
 // NewGetHAProxyConfigurationParams creates a new GetHAProxyConfigurationParams object
@@ -42,6 +45,11 @@ type GetHAProxyConfigurationParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
+
+	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
+	  In: query
+	*/
+	TransactionID *string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -53,8 +61,33 @@ func (o *GetHAProxyConfigurationParams) BindRequest(r *http.Request, route *midd
 
 	o.HTTPRequest = r
 
+	qs := runtime.Values(r.URL.Query())
+
+	qTransactionID, qhkTransactionID, _ := qs.GetOK("transaction_id")
+	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindTransactionID binds and validates parameter TransactionID from query.
+func (o *GetHAProxyConfigurationParams) bindTransactionID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.TransactionID = &raw
+
 	return nil
 }

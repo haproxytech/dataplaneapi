@@ -28,7 +28,11 @@ import (
 
 // GetHAProxyConfigurationURL generates an URL for the get h a proxy configuration operation
 type GetHAProxyConfigurationURL struct {
+	TransactionID *string
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -57,6 +61,18 @@ func (o *GetHAProxyConfigurationURL) Build() (*url.URL, error) {
 		_basePath = "/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var transactionID string
+	if o.TransactionID != nil {
+		transactionID = *o.TransactionID
+	}
+	if transactionID != "" {
+		qs.Set("transaction_id", transactionID)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

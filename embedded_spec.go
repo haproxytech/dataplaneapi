@@ -3064,6 +3064,11 @@ func init() {
         ],
         "summary": "Return HAProxy configuration",
         "operationId": "getHAProxyConfiguration",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Operation successful",
@@ -12398,6 +12403,15 @@ func init() {
         ],
         "summary": "Return HAProxy configuration",
         "operationId": "getHAProxyConfiguration",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Operation successful",

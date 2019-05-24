@@ -37,7 +37,12 @@ type PostRawConfigurationHandlerImpl struct {
 
 //Handle executing the request and returning a response
 func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyConfigurationParams, principal interface{}) middleware.Responder {
-	v, data, err := h.Client.Configuration.GetRawConfiguration()
+	t := ""
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+
+	v, data, err := h.Client.Configuration.GetRawConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
