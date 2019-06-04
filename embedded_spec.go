@@ -45,7 +45,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "API for editing and managing haproxy instances. Provides process information, configuration management,\nhaproxy stats and logs.\n",
-    "title": "HAProxy API",
+    "title": "HAProxy Data Plane API",
     "contact": {
       "name": "HAProxy Support",
       "url": "https://my.haproxy.com/portal/cust/login",
@@ -8755,7 +8755,7 @@ func init() {
     }
   ],
   "externalDocs": {
-    "description": "Offical HAProxy documentation",
+    "description": "HAProxy Documentation",
     "url": "https://cbonte.github.io/haproxy-dconv/"
   }
 }`))
@@ -8772,7 +8772,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "API for editing and managing haproxy instances. Provides process information, configuration management,\nhaproxy stats and logs.\n",
-    "title": "HAProxy API",
+    "title": "HAProxy Data Plane API",
     "contact": {
       "name": "HAProxy Support",
       "url": "https://my.haproxy.com/portal/cust/login",
@@ -18775,7 +18775,7 @@ func init() {
     }
   ],
   "externalDocs": {
-    "description": "Offical HAProxy documentation",
+    "description": "HAProxy Documentation",
     "url": "https://cbonte.github.io/haproxy-dconv/"
   }
 }`))

@@ -16,7 +16,7 @@
 //
 
 /*
-Package dataplaneapi HAProxy API
+Package dataplaneapi HAProxy Data Plane API
 API for editing and managing haproxy instances. Provides process information, configuration management,
 haproxy stats and logs.
 
