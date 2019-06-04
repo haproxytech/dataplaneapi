@@ -320,6 +320,10 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.GlobalGetGlobalHandler = &handlers.GetGlobalHandlerImpl{Client: client}
 	api.GlobalReplaceGlobalHandler = &handlers.ReplaceGlobalHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup defaults configuration handlers
+	api.DefaultsGetDefaultsHandler = &handlers.GetDefaultsHandlerImpl{Client: client}
+	api.DefaultsReplaceDefaultsHandler = &handlers.ReplaceDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup reload handlers
 	api.ReloadsGetReloadHandler = &handlers.GetReloadHandlerImpl{ReloadAgent: ra}
 	api.ReloadsGetReloadsHandler = &handlers.GetReloadsHandlerImpl{ReloadAgent: ra}

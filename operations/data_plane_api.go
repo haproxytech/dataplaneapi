@@ -39,6 +39,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
+	"github.com/haproxytech/dataplaneapi/operations/defaults"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
@@ -204,6 +205,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetConfigurationEndpoints has not yet been implemented")
 		}),
+		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation DefaultsGetDefaults has not yet been implemented")
+		}),
 		FilterGetFilterHandler: filter.GetFilterHandlerFunc(func(params filter.GetFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FilterGetFilter has not yet been implemented")
 		}),
@@ -320,6 +324,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BindReplaceBind has not yet been implemented")
+		}),
+		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation DefaultsReplaceDefaults has not yet been implemented")
 		}),
 		FilterReplaceFilterHandler: filter.ReplaceFilterHandlerFunc(func(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation FilterReplaceFilter has not yet been implemented")
@@ -496,6 +503,8 @@ type DataPlaneAPI struct {
 	BindGetBindsHandler bind.GetBindsHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
+	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
+	DefaultsGetDefaultsHandler defaults.GetDefaultsHandler
 	// FilterGetFilterHandler sets the operation handler for the get filter operation
 	FilterGetFilterHandler filter.GetFilterHandler
 	// FilterGetFiltersHandler sets the operation handler for the get filters operation
@@ -574,6 +583,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleReplaceBackendSwitchingRuleHandler backend_switching_rule.ReplaceBackendSwitchingRuleHandler
 	// BindReplaceBindHandler sets the operation handler for the replace bind operation
 	BindReplaceBindHandler bind.ReplaceBindHandler
+	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
+	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
 	FilterReplaceFilterHandler filter.ReplaceFilterHandler
 	// FrontendReplaceFrontendHandler sets the operation handler for the replace frontend operation
@@ -843,6 +854,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
 	}
 
+	if o.DefaultsGetDefaultsHandler == nil {
+		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
+	}
+
 	if o.FilterGetFilterHandler == nil {
 		unregistered = append(unregistered, "filter.GetFilterHandler")
 	}
@@ -997,6 +1012,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.BindReplaceBindHandler == nil {
 		unregistered = append(unregistered, "bind.ReplaceBindHandler")
+	}
+
+	if o.DefaultsReplaceDefaultsHandler == nil {
+		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
 	}
 
 	if o.FilterReplaceFilterHandler == nil {
@@ -1378,6 +1397,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults"] = defaults.NewGetDefaults(o.context, o.DefaultsGetDefaultsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/filters/{id}"] = filter.NewGetFilter(o.context, o.FilterGetFilterHandler)
 
 	if o.handlers["GET"] == nil {
@@ -1569,6 +1593,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/binds/{name}"] = bind.NewReplaceBind(o.context, o.BindReplaceBindHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults"] = defaults.NewReplaceDefaults(o.context, o.DefaultsReplaceDefaultsHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)

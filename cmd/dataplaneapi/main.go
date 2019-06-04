@@ -33,7 +33,6 @@ func init() {
 		DisableColors: true,
 	})
 	log.SetOutput(os.Stdout)
-	// log.SetReportCaller(true)
 }
 
 func main() {

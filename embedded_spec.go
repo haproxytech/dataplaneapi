@@ -1323,6 +1323,95 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults": {
+      "get": {
+        "description": "Returns defaults part of configuration.",
+        "tags": [
+          "Defaults",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return defaults part of configuration",
+        "operationId": "getDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/defaults"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replace defaults part of config",
+        "tags": [
+          "Defaults",
+          "HAProxy configuration management"
+        ],
+        "summary": "Replace defaults",
+        "operationId": "replaceDefaults",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/defaults"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Defaults replaced",
+            "schema": {
+              "$ref": "#/definitions/defaults"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/defaults"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -5321,37 +5410,7 @@ func init() {
           "x-display-name": "Advanced Check"
         },
         "balance": {
-          "type": "object",
-          "properties": {
-            "algorithm": {
-              "type": "string",
-              "enum": [
-                "roundrobin",
-                "static-rr",
-                "leastconn",
-                "first",
-                "source",
-                "uri",
-                "url_param",
-                "random"
-              ]
-            },
-            "arguments": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "x-dependency": {
-                "algorithm": {
-                  "value": [
-                    "uri",
-                    "url_param"
-                  ]
-                }
-              }
-            }
-          }
+          "$ref": "#/definitions/balance"
         },
         "check_timeout": {
           "type": "integer",
@@ -5379,58 +5438,15 @@ func init() {
           }
         },
         "default_server": {
-          "type": "object",
-          "properties": {
-            "fall": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "inter": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "port": {
-              "type": "integer",
-              "maximum": 65535,
-              "x-nullable": true
-            },
-            "rise": {
-              "type": "integer",
-              "x-nullable": true
-            }
-          }
+          "$ref": "#/definitions/default_server"
         },
         "forwardfor": {
-          "type": "object",
-          "required": [
-            "enabled"
-          ],
-          "properties": {
-            "enabled": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ]
-            },
-            "except": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "header": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "ifnone": {
-              "type": "boolean"
-            }
-          },
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
-          "x-display-name": "ForwardFor"
+          "$ref": "#/definitions/forwardfor"
         },
         "http-use-htx": {
           "type": "string",
@@ -5449,7 +5465,6 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ],
@@ -5497,7 +5512,8 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp"
+            "tcp",
+            "health"
           ]
         },
         "name": {
@@ -5664,6 +5680,39 @@ func init() {
         "$ref": "#/definitions/backend"
       }
     },
+    "balance": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "roundrobin",
+            "static-rr",
+            "leastconn",
+            "first",
+            "source",
+            "uri",
+            "url_param",
+            "random"
+          ]
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          },
+          "x-dependency": {
+            "algorithm": {
+              "value": [
+                "uri",
+                "url_param"
+              ]
+            }
+          }
+        }
+      }
+    },
     "bind": {
       "description": "HAProxy frontend bind configuration",
       "type": "object",
@@ -5735,6 +5784,141 @@ func init() {
         "$ref": "#/definitions/bind"
       }
     },
+    "default_server": {
+      "type": "object",
+      "properties": {
+        "fall": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-nullable": true
+        },
+        "rise": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "defaults": {
+      "description": "HAProxy defaults configuration",
+      "type": "object",
+      "title": "Defaults",
+      "properties": {
+        "balance": {
+          "$ref": "#/definitions/balance"
+        },
+        "check_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "clflog": {
+          "type": "boolean",
+          "x-display-name": "CLF Log"
+        },
+        "client_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "clitcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Client TCP Keep Alive"
+        },
+        "connect_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "default_backend": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-dynamic-enum": {
+            "operation": "getBackends",
+            "property": "name"
+          }
+        },
+        "default_server": {
+          "$ref": "#/definitions/default_server"
+        },
+        "dontlognull": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Don't Log Null"
+        },
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
+        },
+        "forwardfor": {
+          "$ref": "#/definitions/forwardfor"
+        },
+        "http-use-htx": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Use HTX"
+        },
+        "http_connection_mode": {
+          "type": "string",
+          "enum": [
+            "httpclose",
+            "http-server-close",
+            "http-keep-alive"
+          ]
+        },
+        "http_keep_alive_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_request_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "httplog": {
+          "type": "boolean",
+          "x-display-name": "HTTP Log"
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Connections",
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "http",
+            "health"
+          ]
+        },
+        "queue_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "server_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
     "endpoint": {
       "description": "Endpoint definition",
       "type": "object",
@@ -5788,6 +5972,31 @@ func init() {
       "additionalProperties": {
         "type": "string"
       }
+    },
+    "errorfile": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "enum": [
+            200,
+            400,
+            403,
+            405,
+            408,
+            425,
+            429,
+            500,
+            502,
+            503,
+            504
+          ]
+        },
+        "file": {
+          "type": "string"
+        }
+      },
+      "x-display-name": "Error File"
     },
     "filter": {
       "description": "HAProxy filters",
@@ -5893,6 +6102,33 @@ func init() {
         "$ref": "#/definitions/filter"
       }
     },
+    "forwardfor": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "except": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "header": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ifnone": {
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "ForwardFor"
+    },
     "frontend": {
       "description": "HAProxy frontend configuration",
       "type": "object",
@@ -5969,7 +6205,6 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ],
@@ -6045,7 +6280,8 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp"
+            "tcp",
+            "health"
           ]
         },
         "name": {
@@ -7735,6 +7971,10 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "maintenance": {
           "type": "string",
           "enum": [
@@ -7897,30 +8137,7 @@ func init() {
             ],
             "properties": {
               "balance": {
-                "type": "object",
-                "properties": {
-                  "algorithm": {
-                    "type": "string",
-                    "enum": [
-                      "roundrobin",
-                      "static-rr",
-                      "leastconn",
-                      "first",
-                      "source",
-                      "uri",
-                      "url_param",
-                      "random"
-                    ]
-                  },
-                  "arguments": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$"
-                    }
-                  }
-                },
-                "x-go-name": "SiteFarmBalance"
+                "$ref": "#/definitions/balance"
               },
               "cond": {
                 "type": "string",
@@ -7947,32 +8164,7 @@ func init() {
                 "x-display-name": "Condition Test"
               },
               "forwardfor": {
-                "type": "object",
-                "required": [
-                  "enabled"
-                ],
-                "properties": {
-                  "enabled": {
-                    "type": "string",
-                    "enum": [
-                      "enabled",
-                      "disabled"
-                    ]
-                  },
-                  "except": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$"
-                  },
-                  "header": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$"
-                  },
-                  "ifnone": {
-                    "type": "boolean"
-                  }
-                },
-                "x-display-name": "ForwardFor",
-                "x-go-name": "SiteFarmForwardFor"
+                "$ref": "#/definitions/forwardfor"
               },
               "mode": {
                 "type": "string",
@@ -7989,50 +8181,7 @@ func init() {
               "servers": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "required": [
-                    "name",
-                    "address",
-                    "port"
-                  ],
-                  "properties": {
-                    "address": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$",
-                      "x-nullable": false
-                    },
-                    "name": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$",
-                      "x-nullable": false
-                    },
-                    "port": {
-                      "type": "integer",
-                      "maximum": 65535,
-                      "x-nullable": true
-                    },
-                    "ssl": {
-                      "type": "string",
-                      "enum": [
-                        "enabled",
-                        "disabled"
-                      ]
-                    },
-                    "ssl_certificate": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$",
-                      "x-dependency": {
-                        "ssl": {
-                          "value": "enabled"
-                        }
-                      }
-                    },
-                    "weight": {
-                      "type": "integer",
-                      "x-nullable": true
-                    }
-                  },
-                  "x-go-name": "SiteServer"
+                  "$ref": "#/definitions/server"
                 }
               },
               "use_as": {
@@ -8074,42 +8223,7 @@ func init() {
             "listeners": {
               "type": "array",
               "items": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "address",
-                  "port"
-                ],
-                "properties": {
-                  "address": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$",
-                    "x-nullable": false
-                  },
-                  "name": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$",
-                    "x-nullable": false
-                  },
-                  "port": {
-                    "type": "integer",
-                    "maximum": 65535,
-                    "x-nullable": true
-                  },
-                  "ssl": {
-                    "type": "boolean"
-                  },
-                  "ssl_certificate": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$",
-                    "x-dependency": {
-                      "ssl": {
-                        "value": true
-                      }
-                    }
-                  }
-                },
-                "x-go-name": "SiteListener"
+                "$ref": "#/definitions/bind"
               }
             },
             "maxconn": {
@@ -8572,6 +8686,10 @@ func init() {
     {
       "description": "Managing global configuration (advanced mode)",
       "name": "Global"
+    },
+    {
+      "description": "Managing defaults configuration (advanced mode)",
+      "name": "Defaults"
     },
     {
       "description": "Managing frontend configuration (advanced mode)",
@@ -10252,6 +10370,120 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults": {
+      "get": {
+        "description": "Returns defaults part of configuration.",
+        "tags": [
+          "Defaults",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return defaults part of configuration",
+        "operationId": "getDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/defaults"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replace defaults part of config",
+        "tags": [
+          "Defaults",
+          "HAProxy configuration management"
+        ],
+        "summary": "Replace defaults",
+        "operationId": "replaceDefaults",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/defaults"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Defaults replaced",
+            "schema": {
+              "$ref": "#/definitions/defaults"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/defaults"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -15195,37 +15427,7 @@ func init() {
           "x-display-name": "Advanced Check"
         },
         "balance": {
-          "type": "object",
-          "properties": {
-            "algorithm": {
-              "type": "string",
-              "enum": [
-                "roundrobin",
-                "static-rr",
-                "leastconn",
-                "first",
-                "source",
-                "uri",
-                "url_param",
-                "random"
-              ]
-            },
-            "arguments": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "x-dependency": {
-                "algorithm": {
-                  "value": [
-                    "uri",
-                    "url_param"
-                  ]
-                }
-              }
-            }
-          }
+          "$ref": "#/definitions/balance"
         },
         "check_timeout": {
           "type": "integer",
@@ -15253,59 +15455,15 @@ func init() {
           }
         },
         "default_server": {
-          "type": "object",
-          "properties": {
-            "fall": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "inter": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "port": {
-              "type": "integer",
-              "maximum": 65535,
-              "minimum": 0,
-              "x-nullable": true
-            },
-            "rise": {
-              "type": "integer",
-              "x-nullable": true
-            }
-          }
+          "$ref": "#/definitions/default_server"
         },
         "forwardfor": {
-          "type": "object",
-          "required": [
-            "enabled"
-          ],
-          "properties": {
-            "enabled": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ]
-            },
-            "except": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "header": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "ifnone": {
-              "type": "boolean"
-            }
-          },
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
-          "x-display-name": "ForwardFor"
+          "$ref": "#/definitions/forwardfor"
         },
         "http-use-htx": {
           "type": "string",
@@ -15324,7 +15482,6 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ],
@@ -15372,7 +15529,8 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp"
+            "tcp",
+            "health"
           ]
         },
         "name": {
@@ -15539,6 +15697,39 @@ func init() {
         "$ref": "#/definitions/backend"
       }
     },
+    "balance": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "roundrobin",
+            "static-rr",
+            "leastconn",
+            "first",
+            "source",
+            "uri",
+            "url_param",
+            "random"
+          ]
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          },
+          "x-dependency": {
+            "algorithm": {
+              "value": [
+                "uri",
+                "url_param"
+              ]
+            }
+          }
+        }
+      }
+    },
     "bind": {
       "description": "HAProxy frontend bind configuration",
       "type": "object",
@@ -15611,6 +15802,142 @@ func init() {
         "$ref": "#/definitions/bind"
       }
     },
+    "default_server": {
+      "type": "object",
+      "properties": {
+        "fall": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "rise": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "defaults": {
+      "description": "HAProxy defaults configuration",
+      "type": "object",
+      "title": "Defaults",
+      "properties": {
+        "balance": {
+          "$ref": "#/definitions/balance"
+        },
+        "check_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "clflog": {
+          "type": "boolean",
+          "x-display-name": "CLF Log"
+        },
+        "client_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "clitcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Client TCP Keep Alive"
+        },
+        "connect_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "default_backend": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-dynamic-enum": {
+            "operation": "getBackends",
+            "property": "name"
+          }
+        },
+        "default_server": {
+          "$ref": "#/definitions/default_server"
+        },
+        "dontlognull": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Don't Log Null"
+        },
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
+        },
+        "forwardfor": {
+          "$ref": "#/definitions/forwardfor"
+        },
+        "http-use-htx": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Use HTX"
+        },
+        "http_connection_mode": {
+          "type": "string",
+          "enum": [
+            "httpclose",
+            "http-server-close",
+            "http-keep-alive"
+          ]
+        },
+        "http_keep_alive_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_request_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "httplog": {
+          "type": "boolean",
+          "x-display-name": "HTTP Log"
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Connections",
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "http",
+            "health"
+          ]
+        },
+        "queue_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "server_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
     "endpoint": {
       "description": "Endpoint definition",
       "type": "object",
@@ -15664,6 +15991,31 @@ func init() {
       "additionalProperties": {
         "type": "string"
       }
+    },
+    "errorfile": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "enum": [
+            200,
+            400,
+            403,
+            405,
+            408,
+            425,
+            429,
+            500,
+            502,
+            503,
+            504
+          ]
+        },
+        "file": {
+          "type": "string"
+        }
+      },
+      "x-display-name": "Error File"
     },
     "filter": {
       "description": "HAProxy filters",
@@ -15769,6 +16121,33 @@ func init() {
         "$ref": "#/definitions/filter"
       }
     },
+    "forwardfor": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "except": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "header": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "ifnone": {
+          "type": "boolean"
+        }
+      },
+      "x-display-name": "ForwardFor"
+    },
     "frontend": {
       "description": "HAProxy frontend configuration",
       "type": "object",
@@ -15845,7 +16224,6 @@ func init() {
           "enum": [
             "http-tunnel",
             "httpclose",
-            "forceclose",
             "http-server-close",
             "http-keep-alive"
           ],
@@ -15921,7 +16299,8 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp"
+            "tcp",
+            "health"
           ]
         },
         "name": {
@@ -17611,6 +17990,10 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "maintenance": {
           "type": "string",
           "enum": [
@@ -17774,30 +18157,7 @@ func init() {
             ],
             "properties": {
               "balance": {
-                "type": "object",
-                "properties": {
-                  "algorithm": {
-                    "type": "string",
-                    "enum": [
-                      "roundrobin",
-                      "static-rr",
-                      "leastconn",
-                      "first",
-                      "source",
-                      "uri",
-                      "url_param",
-                      "random"
-                    ]
-                  },
-                  "arguments": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$"
-                    }
-                  }
-                },
-                "x-go-name": "SiteFarmBalance"
+                "$ref": "#/definitions/balance"
               },
               "cond": {
                 "type": "string",
@@ -17824,32 +18184,7 @@ func init() {
                 "x-display-name": "Condition Test"
               },
               "forwardfor": {
-                "type": "object",
-                "required": [
-                  "enabled"
-                ],
-                "properties": {
-                  "enabled": {
-                    "type": "string",
-                    "enum": [
-                      "enabled",
-                      "disabled"
-                    ]
-                  },
-                  "except": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$"
-                  },
-                  "header": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$"
-                  },
-                  "ifnone": {
-                    "type": "boolean"
-                  }
-                },
-                "x-display-name": "ForwardFor",
-                "x-go-name": "SiteFarmForwardFor"
+                "$ref": "#/definitions/forwardfor"
               },
               "mode": {
                 "type": "string",
@@ -17866,51 +18201,7 @@ func init() {
               "servers": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "required": [
-                    "name",
-                    "address",
-                    "port"
-                  ],
-                  "properties": {
-                    "address": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$",
-                      "x-nullable": false
-                    },
-                    "name": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$",
-                      "x-nullable": false
-                    },
-                    "port": {
-                      "type": "integer",
-                      "maximum": 65535,
-                      "minimum": 0,
-                      "x-nullable": true
-                    },
-                    "ssl": {
-                      "type": "string",
-                      "enum": [
-                        "enabled",
-                        "disabled"
-                      ]
-                    },
-                    "ssl_certificate": {
-                      "type": "string",
-                      "pattern": "^[^\\s]+$",
-                      "x-dependency": {
-                        "ssl": {
-                          "value": "enabled"
-                        }
-                      }
-                    },
-                    "weight": {
-                      "type": "integer",
-                      "x-nullable": true
-                    }
-                  },
-                  "x-go-name": "SiteServer"
+                  "$ref": "#/definitions/server"
                 }
               },
               "use_as": {
@@ -17952,43 +18243,7 @@ func init() {
             "listeners": {
               "type": "array",
               "items": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "address",
-                  "port"
-                ],
-                "properties": {
-                  "address": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$",
-                    "x-nullable": false
-                  },
-                  "name": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$",
-                    "x-nullable": false
-                  },
-                  "port": {
-                    "type": "integer",
-                    "maximum": 65535,
-                    "minimum": 0,
-                    "x-nullable": true
-                  },
-                  "ssl": {
-                    "type": "boolean"
-                  },
-                  "ssl_certificate": {
-                    "type": "string",
-                    "pattern": "^[^\\s]+$",
-                    "x-dependency": {
-                      "ssl": {
-                        "value": true
-                      }
-                    }
-                  }
-                },
-                "x-go-name": "SiteListener"
+                "$ref": "#/definitions/bind"
               }
             },
             "maxconn": {
@@ -18451,6 +18706,10 @@ func init() {
     {
       "description": "Managing global configuration (advanced mode)",
       "name": "Global"
+    },
+    {
+      "description": "Managing defaults configuration (advanced mode)",
+      "name": "Defaults"
     },
     {
       "description": "Managing frontend configuration (advanced mode)",
