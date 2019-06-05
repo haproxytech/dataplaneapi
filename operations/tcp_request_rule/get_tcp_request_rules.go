@@ -27,6 +27,7 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 	strfmt "github.com/go-openapi/strfmt"
 	swag "github.com/go-openapi/swag"
+	validate "github.com/go-openapi/validate"
 
 	"github.com/haproxytech/models"
 )
@@ -100,7 +101,8 @@ type GetTCPRequestRulesOKBody struct {
 	Version int64 `json:"_version,omitempty"`
 
 	// data
-	Data models.TCPRequestRules `json:"data,omitempty"`
+	// Required: true
+	Data models.TCPRequestRules `json:"data"`
 }
 
 // Validate validates this get TCP request rules o k body
@@ -119,8 +121,8 @@ func (o *GetTCPRequestRulesOKBody) Validate(formats strfmt.Registry) error {
 
 func (o *GetTCPRequestRulesOKBody) validateData(formats strfmt.Registry) error {
 
-	if swag.IsZero(o.Data) { // not required
-		return nil
+	if err := validate.Required("getTcpRequestRulesOK"+"."+"data", "body", o.Data); err != nil {
+		return err
 	}
 
 	if err := o.Data.Validate(formats); err != nil {

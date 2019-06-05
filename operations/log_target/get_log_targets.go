@@ -27,6 +27,7 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 	strfmt "github.com/go-openapi/strfmt"
 	swag "github.com/go-openapi/swag"
+	validate "github.com/go-openapi/validate"
 
 	"github.com/haproxytech/models"
 )
@@ -100,7 +101,8 @@ type GetLogTargetsOKBody struct {
 	Version int64 `json:"_version,omitempty"`
 
 	// data
-	Data models.LogTargets `json:"data,omitempty"`
+	// Required: true
+	Data models.LogTargets `json:"data"`
 }
 
 // Validate validates this get log targets o k body
@@ -119,8 +121,8 @@ func (o *GetLogTargetsOKBody) Validate(formats strfmt.Registry) error {
 
 func (o *GetLogTargetsOKBody) validateData(formats strfmt.Registry) error {
 
-	if swag.IsZero(o.Data) { // not required
-		return nil
+	if err := validate.Required("getLogTargetsOK"+"."+"data", "body", o.Data); err != nil {
+		return err
 	}
 
 	if err := o.Data.Validate(formats); err != nil {

@@ -47,7 +47,7 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 		e := misc.HandleError(err)
 		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
-	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: data})
+	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: &data})
 }
 
 //Handle executing the request and returning a response

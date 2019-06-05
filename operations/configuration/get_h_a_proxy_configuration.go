@@ -23,9 +23,11 @@ package configuration
 import (
 	"net/http"
 
+	errors "github.com/go-openapi/errors"
 	middleware "github.com/go-openapi/runtime/middleware"
 	strfmt "github.com/go-openapi/strfmt"
 	swag "github.com/go-openapi/swag"
+	validate "github.com/go-openapi/validate"
 )
 
 // GetHAProxyConfigurationHandlerFunc turns a function with the right signature into a get h a proxy configuration handler
@@ -97,11 +99,30 @@ type GetHAProxyConfigurationOKBody struct {
 	Version int64 `json:"_version,omitempty"`
 
 	// data
-	Data string `json:"data,omitempty"`
+	// Required: true
+	Data *string `json:"data"`
 }
 
 // Validate validates this get h a proxy configuration o k body
 func (o *GetHAProxyConfigurationOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateData(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetHAProxyConfigurationOKBody) validateData(formats strfmt.Registry) error {
+
+	if err := validate.Required("getHAProxyConfigurationOK"+"."+"data", "body", o.Data); err != nil {
+		return err
+	}
+
 	return nil
 }
 

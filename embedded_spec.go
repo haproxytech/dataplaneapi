@@ -190,6 +190,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -526,6 +529,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -806,6 +812,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -1062,6 +1071,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -1451,6 +1463,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -1779,6 +1794,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -2136,6 +2154,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -2484,6 +2505,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -2832,6 +2856,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -3163,6 +3190,9 @@ func init() {
             "description": "Operation successful",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -3263,6 +3293,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -3551,6 +3584,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -3839,6 +3875,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -4139,6 +4178,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -4476,6 +4518,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -4841,6 +4886,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -8933,6 +8981,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -9346,6 +9397,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -9703,6 +9757,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -10036,6 +10093,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -10527,6 +10587,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -10932,6 +10995,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -11391,6 +11457,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -11816,6 +11885,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -12241,6 +12313,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -12649,6 +12724,9 @@ func init() {
             "description": "Operation successful",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -12770,6 +12848,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -13135,6 +13216,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -13500,6 +13584,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -13877,6 +13964,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -14291,6 +14381,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
@@ -14745,6 +14838,9 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "_version": {
                   "type": "integer"
