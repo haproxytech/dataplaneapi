@@ -129,7 +129,20 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.ServerShutdown = serverShutdown
 
-	client := configureNativeClient()
+	c := configureNativeClient()
+	client := &c
+
+	// Handle reload signals
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGUSR1)
+
+	go func() {
+		sig := <-sigs
+		if sig == syscall.SIGUSR1 {
+			c = configureNativeClient()
+			log.Info("Reloaded Data Plane API")
+		}
+	}()
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
@@ -463,7 +476,7 @@ func serverShutdown() {
 	}
 }
 
-func configureNativeClient() *client_native.HAProxyClient {
+func configureNativeClient() client_native.HAProxyClient {
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
@@ -495,19 +508,7 @@ func configureNativeClient() *client_native.HAProxyClient {
 		log.Fatalf("Error setting up native client: %s", err.Error())
 	}
 
-	// Handle reload signals
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGUSR1)
-
-	go func() {
-		sig := <-sigs
-		if sig == syscall.SIGUSR1 {
-			client.Runtime = configureRuntimeClient(client.Configuration)
-			fmt.Println("Reloading")
-		}
-	}()
-
-	return client
+	return *client
 }
 
 func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Client {
