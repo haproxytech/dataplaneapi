@@ -94,7 +94,7 @@ Basic usage:
 Usage:
   dataplaneapi [OPTIONS]
 
-API for editing and managing HAPEE instances
+API for editing and managing haproxy instances
 
 Application Options:
       --scheme=                                    the listeners to enable, this can be repeated and defaults to the schemes in the swagger spec

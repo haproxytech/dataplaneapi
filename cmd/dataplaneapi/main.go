@@ -45,8 +45,8 @@ func main() {
 	defer server.Shutdown()
 
 	parser := flags.NewParser(server, flags.Default)
-	parser.ShortDescription = "HAProxy API"
-	parser.LongDescription = "API for editing and managing HAPEE instances"
+	parser.ShortDescription = "HAProxy Data Plane API"
+	parser.LongDescription = "API for editing and managing haproxy instances"
 
 	server.ConfigureFlags()
 	for _, optsGroup := range api.CommandLineOptionsGroups {
