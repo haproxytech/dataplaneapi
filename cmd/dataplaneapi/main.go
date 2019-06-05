@@ -16,6 +16,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	log "github.com/sirupsen/logrus"
@@ -33,6 +34,10 @@ func init() {
 		DisableColors: true,
 	})
 	log.SetOutput(os.Stdout)
+}
+
+var cliOptions struct {
+	Version bool `short:"v" long:"version" description:"Version and build information"`
 }
 
 func main() {
@@ -56,6 +61,11 @@ func main() {
 		}
 	}
 
+	_, err = parser.AddGroup("Show version", "Show build and version information", &cliOptions)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	if _, err := parser.Parse(); err != nil {
 		if fe, ok := err.(*flags.Error); ok {
 			if fe.Type == flags.ErrHelp {
@@ -66,7 +76,18 @@ func main() {
 		}
 	}
 
+	if cliOptions.Version {
+		fmt.Printf("HAProxy Data Plane API %s %s%s\n\n", GitTag, GitCommit, GitDirty)
+		fmt.Printf("Build from: %s\n", GitRepo)
+		fmt.Printf("Build date: %s\n\n", BuildTime)
+		return
+	}
+
 	server.ConfigureAPI()
+
+	log.Infof("HAProxy Data Plane API %s %s%s\n\n", GitTag, GitCommit, GitDirty)
+	log.Infof("Build from: %s\n", GitRepo)
+	log.Infof("Build date: %s\n\n", BuildTime)
 
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
