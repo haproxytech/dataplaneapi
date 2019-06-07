@@ -11,12 +11,12 @@ BUILD_DATE=$(shell date '+%Y-%m-%dT%H:%M:%S')
 all: update clean build
 
 update:
-	go get -v -u
+	go get -v
 
 clean:
 	rm -rf ${DATAPLANEAPI_PATH}/build
 
 build:
 	mkdir ${DATAPLANEAPI_PATH}/build
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -gcflags "-N -l" -ldflags "-X main.GitRepo=${GIT_REPO} -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
+	CGO_ENABLED=0 go build -gcflags "-N -l" -ldflags "-X main.GitRepo=${GIT_REPO} -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
 
