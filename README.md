@@ -4,45 +4,6 @@
 
 **Data Plane API** is a sidecar process that runs next to HAProxy and provides API endpoints for managing HAProxy. It requires HAProxy version 1.9.0 or higher.
 
-## API Specification - Development guide
-
-Data Plane API is generated using [go-swagger](https://github.com/go-swagger/go-swagger) from the swagger spec found [here](https://github.com/haproxytech/dataplaneapi-specification/blob/master/build/haproxy_spec.yaml) using the following command.
-
-```
-./swagger generate server -f haproxy_spec.yaml \
-    -A "Data Plane" \
-    -t $GOPATH/src/github.com/haproxytech/ \
-    --existing-models github.com/haproxytech/models \
-    --exclude-main \
-    --skip-models \
-    -s dataplaneapi \
-    --tags=Discovery \
-    --tags=Information \
-    --tags=Specification \
-    --tags=Transactions \
-    --tags=Sites \
-    --tags=Stats \
-    --tags=Global \
-    --tags=Frontend \
-    --tags=Backend \
-    --tags=Bind \
-    --tags=Server \
-    --tags=Configuration \
-    --tags=HTTPRequestRule \
-    --tags=HTTPResponseRule \
-    --tags=BackendSwitchingRule \
-    --tags=ServerSwitchingRule \
-    --tags=TCPResponseRule \
-    --tags=TCPRequestRule \
-    --tags=Filter \
-    --tags=StickRule \
-    --tags=LogTarget \
-    --tags=Reloads \
-    --tags=ACL \
-    --tags=Defaults
-```
-
-This command generates some of the files in this project, which are marked with //DO NOT EDIT comments at the top of the files. These are not to be edited, as they are overwritten when specification is changed and the above-mentioned command is run. If you want to change those files, please change the specification and then generate them again.
 
 ## Dependencies
 
@@ -152,3 +113,7 @@ curl -u <user>:<pass> -H "Content-Type: application/json" "http://127.0.0.1:5555
 ```
 
 If you are using secure passwords, supported algorithms are: md5, sha-256 and sha-512.
+
+## Contributing
+
+If you wish to contribute to this project please check [Contributing Guide](CONTRIBUTING.md)
