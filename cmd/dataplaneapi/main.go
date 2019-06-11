@@ -85,9 +85,9 @@ func main() {
 
 	server.ConfigureAPI()
 
-	log.Infof("HAProxy Data Plane API %s %s%s\n\n", GitTag, GitCommit, GitDirty)
-	log.Infof("Build from: %s\n", GitRepo)
-	log.Infof("Build date: %s\n\n", BuildTime)
+	log.Infof("HAProxy Data Plane API %s %s%s", GitTag, GitCommit, GitDirty)
+	log.Infof("Build from: %s", GitRepo)
+	log.Infof("Build date: %s", BuildTime)
 
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
