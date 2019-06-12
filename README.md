@@ -4,28 +4,6 @@
 
 **Data Plane API** is a sidecar process that runs next to HAProxy and provides API endpoints for managing HAProxy. It requires HAProxy version 1.9.0 or higher.
 
-
-## Dependencies
-
-The project depends on the following internal projects:
-- [models](https://github.com/haproxytech/models)
-- [client-native](https://github.com/haproxytech/client-native)
-- [config-parser](https://github.com/haproxytech/config-parser)
-
-External dependecies:
-- [go-openapi](https://github.com/go-openapi)
-- [go-units](https://github.com/docker/go-units)
-- [go-flags](https://github.com/jessevdk/go-flags)
-- [cors](https://github.com/rs/cors)
-- [graceful](https://github.com/tylerb/graceful)
-- [logrus](https://github.com/sirupsen/logrus)
-- [uuid](https://github.com/google/uuid)
-- [govalidator](https://github.com/asaskevich/govalidator)
-- [mgo](https://github.com/globalsign/mgo)
-- [easyjson](https://github.com/mailru/easyjson)
-- [mapstructure](https://github.com/mitchellh/mapstructure)
-- [crypt](https://github.com/GehirnInc/crypt)
-
 ## Building the Data Plane API
 
 1\. Clone dataplaneapi repository into $GOPATH/src/github.com/haproxytech
