@@ -6,12 +6,11 @@
 
 ## Building the Data Plane API
 
-In order to build the Data Plane API you need go 1.12 installed on your system, and execute the following steps:
+In order to build the Data Plane API you need go 1.12 installed on your system with go modules support enabled, and execute the following steps:
 
-1\. Clone dataplaneapi repository into $GOPATH/src/github.com/haproxytech
+1\. Clone dataplaneapi repository
 
 ```
-cd $GOPATH/src/github.com/haproxytech
 git clone https://github.com/haproxytech/dataplaneapi.git
 ```
 
@@ -78,7 +77,7 @@ Help Options:
   -h, --help                                       Show this help message
 ```
 
-## Example 
+## Example
 
 You can test it by simply running:
 
