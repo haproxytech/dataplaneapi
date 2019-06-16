@@ -85,7 +85,7 @@ You can test it by simply running:
 ./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -d 5 -r "service haproxy reload" -u dataplaneapi -t /tmp/haproxy
 ```
 
-Test it out with curl, note that you need user/pass combination setup in HAProxy userlist in global.cfg (in above example: /etc/haproxy/global.cfg, userlist controller):
+Test it out with curl, note that you need user/pass combination setup in HAProxy userlist in haproxy configuration (in above example: /etc/haproxy/haproxy.cfg, userlist controller):
 
 ```
 curl -u <user>:<pass> -H "Content-Type: application/json" "http://127.0.0.1:5555/v1/"
