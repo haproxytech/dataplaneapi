@@ -23,7 +23,6 @@ make build
 3\. You can find the built binary in /build directory.
 
 ## Running the Data Plane API
-
 Basic usage:
 
 ```
@@ -92,6 +91,10 @@ curl -u <user>:<pass> -H "Content-Type: application/json" "http://127.0.0.1:5555
 ```
 
 If you are using secure passwords, supported algorithms are: md5, sha-256 and sha-512.
+
+## Using the Data Plane API
+
+For more docs how to use the Data Plane API check our [documentation](https://www.haproxy.com/documentation/hapee/1-9r1/configuration/dataplaneapi/)
 
 ## Contributing
 
