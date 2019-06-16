@@ -63,12 +63,12 @@ github.com/go-openapi/validate v0.19.0/go.mod h1:Uh4HdOzKt19xGIGm1qHf/ofbX1YQ4Y+
 github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native v0.9.5 h1:d/95Or5kRTdgaY1d5916VzPgTAJKzKUpetE/UdhYv/E=
-github.com/haproxytech/client-native v0.9.5/go.mod h1:cbuSsiaM6jGzK6HlJCjRV35HAe8GcfzKRcMvCgiUFPw=
+github.com/haproxytech/client-native v1.0.0 h1:JCH3kS9ehDCE65fwDq2uMs0JXNomMzQYYCM7jFrt8DY=
+github.com/haproxytech/client-native v1.0.0/go.mod h1:R4y+DNch1xuVC6m/UTi9FPrHGxZOAGhNJJphul+BkUc=
 github.com/haproxytech/config-parser v0.9.1 h1:eo1elsaiPKVdVP+njXDlltkaW70Stu+0sGzUBzsuMPE=
 github.com/haproxytech/config-parser v0.9.1/go.mod h1:se7v728KDunj+qz1kXFFFl+nDuoBdUaN5eYSi+gYjNM=
-github.com/haproxytech/models v0.9.3 h1:HIppGQ6VrBE4kyhrGTvpqlAgLDsp7FdOOTuIYAxdhX4=
-github.com/haproxytech/models v0.9.3/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.0.0 h1:ooShgeeRFpCdeMuDR5oZUllfAcKzJSlbv1P0JJ56bJ4=
+github.com/haproxytech/models v1.0.0/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
 github.com/jessevdk/go-flags v1.4.0 h1:4IU2WS7AumrZ/40jfhf4QVDMsQwqA7VEHozFRrGARJA=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
