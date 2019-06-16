@@ -107,7 +107,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	defer func() {
 		if err := recover(); err != nil {
-			log.Fatalf("Error starting dataplane API: %s", err)
+			log.Fatalf("Error starting Data Plane API: %s", err)
 		}
 	}()
 	// configure the api here

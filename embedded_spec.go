@@ -5372,14 +5372,14 @@ func init() {
     },
     "/specification": {
       "get": {
-        "description": "Return Dataplane API OpenAPI specification",
+        "description": "Return Data Plane API OpenAPI specification",
         "produces": [
           "application/json"
         ],
         "tags": [
           "Specification"
         ],
-        "summary": "Dataplane API Specification",
+        "summary": "Data Plane API Specification",
         "operationId": "getSpecification",
         "responses": {
           "200": {
@@ -15434,14 +15434,14 @@ func init() {
     },
     "/specification": {
       "get": {
-        "description": "Return Dataplane API OpenAPI specification",
+        "description": "Return Data Plane API OpenAPI specification",
         "produces": [
           "application/json"
         ],
         "tags": [
           "Specification"
         ],
-        "summary": "Dataplane API Specification",
+        "summary": "Data Plane API Specification",
         "operationId": "getSpecification",
         "responses": {
           "200": {
