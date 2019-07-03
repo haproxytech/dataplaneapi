@@ -5488,6 +5488,24 @@ func init() {
         "default_server": {
           "$ref": "#/definitions/default_server"
         },
+        "external_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "External Check"
+        },
+        "external_check_command": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Command"
+        },
+        "external_check_path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Path"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -5769,6 +5787,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "accept_proxy": {
+          "type": "boolean"
+        },
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -5815,6 +5836,22 @@ func init() {
         },
         "transparent": {
           "type": "boolean"
+        },
+        "v4v6": {
+          "type": "boolean"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "optional",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
         }
       },
       "additionalProperties": false,
@@ -5912,6 +5949,24 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "external_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "External Check"
+        },
+        "external_check_command": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Command"
+        },
+        "external_check_path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Path"
+        },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
@@ -5984,11 +6039,6 @@ func init() {
           "description": "Path to the endpoint",
           "type": "string"
         }
-      },
-      "example": {
-        "description": "Collection of all backends",
-        "title": "Backends",
-        "url": "/haproxy/backends"
       }
     },
     "endpoints": {
@@ -6398,6 +6448,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "external_check": {
+          "type": "boolean",
+          "x-display-name": "External Check"
         },
         "master-worker": {
           "type": "boolean",
@@ -8040,6 +8094,27 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
         "port": {
           "type": "integer",
           "maximum": 65535,
@@ -8076,6 +8151,18 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
           ],
           "x-dependency": {
             "ssl": {
@@ -8466,7 +8553,11 @@ func init() {
             },
             "type": {
               "required": true,
-              "value": "inspect-delay"
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
             }
           },
           "x-display-name": "Condition Test",
@@ -15553,6 +15644,24 @@ func init() {
         "default_server": {
           "$ref": "#/definitions/default_server"
         },
+        "external_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "External Check"
+        },
+        "external_check_command": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Command"
+        },
+        "external_check_path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Path"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -15834,6 +15943,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "accept_proxy": {
+          "type": "boolean"
+        },
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -15881,6 +15993,22 @@ func init() {
         },
         "transparent": {
           "type": "boolean"
+        },
+        "v4v6": {
+          "type": "boolean"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "optional",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
         }
       },
       "additionalProperties": false,
@@ -15979,6 +16107,24 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "external_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "External Check"
+        },
+        "external_check_command": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Command"
+        },
+        "external_check_path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "External Check Path"
+        },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
@@ -16051,11 +16197,6 @@ func init() {
           "description": "Path to the endpoint",
           "type": "string"
         }
-      },
-      "example": {
-        "description": "Collection of all backends",
-        "title": "Backends",
-        "url": "/haproxy/backends"
       }
     },
     "endpoints": {
@@ -16465,6 +16606,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "external_check": {
+          "type": "boolean",
+          "x-display-name": "External Check"
         },
         "master-worker": {
           "type": "boolean",
@@ -18107,6 +18252,27 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
         "port": {
           "type": "integer",
           "maximum": 65535,
@@ -18144,6 +18310,18 @@ func init() {
           "enum": [
             "enabled",
             "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
           ],
           "x-dependency": {
             "ssl": {
@@ -18534,7 +18712,11 @@ func init() {
             },
             "type": {
               "required": true,
-              "value": "inspect-delay"
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
             }
           },
           "x-display-name": "Condition Test",
