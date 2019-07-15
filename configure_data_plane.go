@@ -515,7 +515,7 @@ func configureConfigurationClient() (*configuration.Client, error) {
 		ConfigurationFile:      haproxyOptions.ConfigFile,
 		Haproxy:                haproxyOptions.HAProxy,
 		UseValidation:          false,
-		PersistentTransactions: false,
+		PersistentTransactions: true,
 		TransactionDir:         haproxyOptions.TransactionDir,
 	}
 	err := confClient.Init(confParams)
