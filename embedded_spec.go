@@ -51,7 +51,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "1.0"
+    "version": "1.1"
   },
   "basePath": "/v1",
   "paths": {
@@ -5468,14 +5468,6 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
-        "contstats": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Continous Statistics"
-        },
         "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -5529,7 +5521,6 @@ func init() {
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "http-tunnel",
             "httpclose",
             "http-server-close",
             "http-keep-alive"
@@ -5540,35 +5531,43 @@ func init() {
             }
           }
         },
-        "httpchk": {
-          "type": "object",
-          "properties": {
-            "method": {
-              "type": "string",
-              "enum": [
-                "HEAD",
-                "PUT",
-                "POST",
-                "GET",
-                "TRACE",
-                "PATCH"
-              ]
-            },
-            "uri": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "version": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            }
-          },
+        "http_keep_alive_timeout": {
+          "type": "integer",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
-          "x-display-name": "HTTP Check"
+          "x-nullable": true
+        },
+        "http_pretend_keepalive": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
+        },
+        "http_request_timeout": {
+          "type": "integer",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-nullable": true
+        },
+        "httpchk": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "$ref": "#/definitions/httpchk"
         },
         "log_tag": {
           "type": "string",
@@ -5578,8 +5577,7 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp",
-            "health"
+            "tcp"
           ]
         },
         "name": {
@@ -5592,23 +5590,7 @@ func init() {
           "x-nullable": true
         },
         "redispatch": {
-          "type": "object",
-          "required": [
-            "enabled"
-          ],
-          "properties": {
-            "enabled": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ]
-            },
-            "interval": {
-              "type": "integer",
-              "x-nullable": false
-            }
-          }
+          "$ref": "#/definitions/redispatch"
         },
         "retries": {
           "type": "integer",
@@ -5896,6 +5878,19 @@ func init() {
       "type": "object",
       "title": "Defaults",
       "properties": {
+        "adv_check": {
+          "type": "string",
+          "enum": [
+            "ssl-hello-chk",
+            "smtpchk",
+            "ldap-check",
+            "mysql-check",
+            "pgsql-check",
+            "tcp-check",
+            "redis-check"
+          ],
+          "x-display-name": "Advanced Check"
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -5922,6 +5917,17 @@ func init() {
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "contstats": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ],
+          "x-display-name": "Continous Statistics"
+        },
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "default_backend": {
           "type": "string",
@@ -5990,13 +5996,41 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "http_pretend_keepalive": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "http_request_timeout": {
           "type": "integer",
           "x-nullable": true
         },
+        "httpchk": {
+          "$ref": "#/definitions/httpchk"
+        },
         "httplog": {
           "type": "boolean",
           "x-display-name": "HTTP Log"
+        },
+        "log_format": {
+          "type": "string"
+        },
+        "log_format_sd": {
+          "type": "string",
+          "x-display-name": "Log Format SD"
+        },
+        "log_separate_errors": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "maxconn": {
           "type": "integer",
@@ -6007,17 +6041,27 @@ func init() {
           "type": "string",
           "enum": [
             "tcp",
-            "http",
-            "health"
+            "http"
           ]
         },
         "queue_timeout": {
           "type": "integer",
           "x-nullable": true
         },
+        "redispatch": {
+          "$ref": "#/definitions/redispatch"
+        },
+        "retries": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "tcplog": {
+          "type": "boolean",
+          "x-display-name": "TCP Log"
         }
       },
       "additionalProperties": false
@@ -6209,8 +6253,7 @@ func init() {
         "enabled": {
           "type": "string",
           "enum": [
-            "enabled",
-            "disabled"
+            "enabled"
           ]
         },
         "except": {
@@ -6264,8 +6307,7 @@ func init() {
         "contstats": {
           "type": "string",
           "enum": [
-            "enabled",
-            "disabled"
+            "enabled"
           ],
           "x-display-name": "Continous Statistics"
         },
@@ -6285,6 +6327,14 @@ func init() {
           ],
           "x-display-name": "Don't Log Null"
         },
+        "forwardfor": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "$ref": "#/definitions/forwardfor"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -6301,7 +6351,6 @@ func init() {
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "http-tunnel",
             "httpclose",
             "http-server-close",
             "http-keep-alive"
@@ -6320,18 +6369,6 @@ func init() {
             }
           },
           "x-nullable": true
-        },
-        "http_pretend_keepalive": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          }
         },
         "http_request_timeout": {
           "type": "integer",
@@ -6378,8 +6415,7 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp",
-            "health"
+            "tcp"
           ]
         },
         "name": {
@@ -7111,6 +7147,31 @@ func init() {
       "items": {
         "$ref": "#/definitions/http_response_rule"
       }
+    },
+    "httpchk": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "HEAD",
+            "PUT",
+            "POST",
+            "GET",
+            "TRACE",
+            "PATCH"
+          ]
+        },
+        "uri": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-display-name": "HTTP Check"
     },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
@@ -8002,6 +8063,25 @@ func init() {
           "time": "2018-07-02T12:00:00.124Z",
           "uptime": 8,
           "version": "1.7-dev1-868ab3-148"
+        }
+      }
+    },
+    "redispatch": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "interval": {
+          "type": "integer",
+          "x-nullable": false
         }
       }
     },
@@ -8917,7 +8997,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "1.0"
+    "version": "1.1"
   },
   "basePath": "/v1",
   "paths": {
@@ -15624,14 +15704,6 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
-        "contstats": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Continous Statistics"
-        },
         "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -15685,7 +15757,6 @@ func init() {
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "http-tunnel",
             "httpclose",
             "http-server-close",
             "http-keep-alive"
@@ -15696,35 +15767,43 @@ func init() {
             }
           }
         },
-        "httpchk": {
-          "type": "object",
-          "properties": {
-            "method": {
-              "type": "string",
-              "enum": [
-                "HEAD",
-                "PUT",
-                "POST",
-                "GET",
-                "TRACE",
-                "PATCH"
-              ]
-            },
-            "uri": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "version": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            }
-          },
+        "http_keep_alive_timeout": {
+          "type": "integer",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
-          "x-display-name": "HTTP Check"
+          "x-nullable": true
+        },
+        "http_pretend_keepalive": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
+        },
+        "http_request_timeout": {
+          "type": "integer",
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-nullable": true
+        },
+        "httpchk": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "$ref": "#/definitions/httpchk"
         },
         "log_tag": {
           "type": "string",
@@ -15734,8 +15813,7 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp",
-            "health"
+            "tcp"
           ]
         },
         "name": {
@@ -15748,23 +15826,7 @@ func init() {
           "x-nullable": true
         },
         "redispatch": {
-          "type": "object",
-          "required": [
-            "enabled"
-          ],
-          "properties": {
-            "enabled": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ]
-            },
-            "interval": {
-              "type": "integer",
-              "x-nullable": false
-            }
-          }
+          "$ref": "#/definitions/redispatch"
         },
         "retries": {
           "type": "integer",
@@ -16054,6 +16116,19 @@ func init() {
       "type": "object",
       "title": "Defaults",
       "properties": {
+        "adv_check": {
+          "type": "string",
+          "enum": [
+            "ssl-hello-chk",
+            "smtpchk",
+            "ldap-check",
+            "mysql-check",
+            "pgsql-check",
+            "tcp-check",
+            "redis-check"
+          ],
+          "x-display-name": "Advanced Check"
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -16080,6 +16155,17 @@ func init() {
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "contstats": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ],
+          "x-display-name": "Continous Statistics"
+        },
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "default_backend": {
           "type": "string",
@@ -16148,13 +16234,41 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "http_pretend_keepalive": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "http_request_timeout": {
           "type": "integer",
           "x-nullable": true
         },
+        "httpchk": {
+          "$ref": "#/definitions/httpchk"
+        },
         "httplog": {
           "type": "boolean",
           "x-display-name": "HTTP Log"
+        },
+        "log_format": {
+          "type": "string"
+        },
+        "log_format_sd": {
+          "type": "string",
+          "x-display-name": "Log Format SD"
+        },
+        "log_separate_errors": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "log_tag": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "maxconn": {
           "type": "integer",
@@ -16165,17 +16279,27 @@ func init() {
           "type": "string",
           "enum": [
             "tcp",
-            "http",
-            "health"
+            "http"
           ]
         },
         "queue_timeout": {
           "type": "integer",
           "x-nullable": true
         },
+        "redispatch": {
+          "$ref": "#/definitions/redispatch"
+        },
+        "retries": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "tcplog": {
+          "type": "boolean",
+          "x-display-name": "TCP Log"
         }
       },
       "additionalProperties": false
@@ -16367,8 +16491,7 @@ func init() {
         "enabled": {
           "type": "string",
           "enum": [
-            "enabled",
-            "disabled"
+            "enabled"
           ]
         },
         "except": {
@@ -16422,8 +16545,7 @@ func init() {
         "contstats": {
           "type": "string",
           "enum": [
-            "enabled",
-            "disabled"
+            "enabled"
           ],
           "x-display-name": "Continous Statistics"
         },
@@ -16443,6 +16565,14 @@ func init() {
           ],
           "x-display-name": "Don't Log Null"
         },
+        "forwardfor": {
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "$ref": "#/definitions/forwardfor"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -16459,7 +16589,6 @@ func init() {
         "http_connection_mode": {
           "type": "string",
           "enum": [
-            "http-tunnel",
             "httpclose",
             "http-server-close",
             "http-keep-alive"
@@ -16478,18 +16607,6 @@ func init() {
             }
           },
           "x-nullable": true
-        },
-        "http_pretend_keepalive": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          }
         },
         "http_request_timeout": {
           "type": "integer",
@@ -16536,8 +16653,7 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp",
-            "health"
+            "tcp"
           ]
         },
         "name": {
@@ -17269,6 +17385,31 @@ func init() {
       "items": {
         "$ref": "#/definitions/http_response_rule"
       }
+    },
+    "httpchk": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "HEAD",
+            "PUT",
+            "POST",
+            "GET",
+            "TRACE",
+            "PATCH"
+          ]
+        },
+        "uri": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-display-name": "HTTP Check"
     },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
@@ -18160,6 +18301,25 @@ func init() {
           "time": "2018-07-02T12:00:00.124Z",
           "uptime": 8,
           "version": "1.7-dev1-868ab3-148"
+        }
+      }
+    },
+    "redispatch": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "interval": {
+          "type": "integer",
+          "x-nullable": false
         }
       }
     },
