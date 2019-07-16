@@ -25,6 +25,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"runtime/debug"
 	"strings"
 	"syscall"
 
@@ -107,7 +108,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	defer func() {
 		if err := recover(); err != nil {
-			log.Fatalf("Error starting Data Plane API: %s", err)
+			log.Fatalf("Error starting Data Plane API: %s\n Stacktrace from panic: \n%s", err, string(debug.Stack()))
 		}
 	}()
 	// configure the api here
@@ -144,7 +145,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.BasicAuthAuth = func(user string, pass string) (interface{}, error) {
 		return authenticateUser(user, pass, client)
 	}
-
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 		uriSlice := strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)
