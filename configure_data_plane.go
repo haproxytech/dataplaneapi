@@ -378,6 +378,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 			http.MethodDelete,
 		},
 		AllowedHeaders:   []string{"*"},
+		ExposedHeaders:   []string{"Reload-ID"},
 		AllowCredentials: true,
 		MaxAge:           86400,
 	}).Handler
