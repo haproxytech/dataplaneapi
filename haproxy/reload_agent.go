@@ -18,6 +18,8 @@ package haproxy
 import (
 	"bytes"
 	"fmt"
+	"io"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -32,6 +34,7 @@ import (
 type reloadCache struct {
 	failedReloads map[string]*models.Reload
 	lastSuccess   *models.Reload
+	next          string
 	current       string
 	index         int64
 	retention     int
@@ -40,25 +43,40 @@ type reloadCache struct {
 
 // ReloadAgent handles all reloads, scheduled or forced
 type ReloadAgent struct {
-	delay int
-	cmd   string
-	cache reloadCache
+	delay         int
+	reloadCmd     string
+	restartCmd    string
+	configFile    string
+	lkgConfigFile string
+	cache         reloadCache
 }
 
 // Init a new reload agent
-func (ra *ReloadAgent) Init(delay int, cmd string, retention int) {
-	ra.cmd = cmd
+func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, configFile string, retention int) error {
+	ra.reloadCmd = reloadCmd
+	ra.restartCmd = restartCmd
+	ra.configFile = configFile
 	ra.delay = delay
+	ra.lkgConfigFile = configFile + ".lkg"
 
+	// create last known good file, assume it is valid when starting
+	if err := copyFile(ra.configFile, ra.lkgConfigFile); err != nil {
+		return err
+	}
 	ra.cache.Init(retention)
 	go ra.handleReloads()
+	return nil
 }
 
 func (ra *ReloadAgent) handleReloads() {
 	for {
 		select {
 		case <-time.After(time.Duration(ra.delay) * time.Second):
-			if ra.cache.current != "" {
+			if ra.cache.next != "" {
+				ra.cache.mu.Lock()
+				ra.cache.current = ra.cache.next
+				ra.cache.next = ""
+				ra.cache.mu.Unlock()
 				response, err := ra.reloadHAProxy()
 				if err != nil {
 					ra.cache.failReload(response)
@@ -72,30 +90,71 @@ func (ra *ReloadAgent) handleReloads() {
 }
 
 func (ra *ReloadAgent) reloadHAProxy() (string, error) {
-	strArr := strings.Split(ra.cmd, " ")
-	var cmd *exec.Cmd
+	// try the reload
+	log.Debug("Reload started...")
+	t := time.Now()
+	output, err := execCmd(ra.reloadCmd)
+	log.Debug("Reload finished.")
+	log.Debug("Time elapsed: ", time.Since(t))
+	if err != nil {
+		// if failed, return to last known good file and restart and return the original file
+		log.Info("Reload failed, restarting with last known good config...")
+		if err := copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
+			return fmt.Sprintf("Reload failed: %s, failed to backup original config file for restart.", output), err
+		}
+		defer func() {
+			copyFile(ra.configFile+".bck", ra.configFile)
+			os.Remove(ra.configFile+".bck")
+		}()
+		if err := copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
+			return fmt.Sprintf("Reload failed: %s, failed to revert to last known good config file", output), err
+		}
+		if err := ra.restartHAProxy(); err != nil {
+			log.Warn("Restart failed, please check the reason and restart manually: ", err)
+			return fmt.Sprintf("Reload failed: %s, failed to restart HAProxy, please check and start manually", output), err
+		}
+		log.Debug("HAProxy restarted with last known good config.")
+		return output, err
+	}
+	log.Debug("Reload succesful")
+	// if success, replace last known good file
+	copyFile(ra.configFile, ra.lkgConfigFile)
+	return output, nil
+}
+
+func (ra *ReloadAgent) restartHAProxy() error {
+	_, err := execCmd(ra.restartCmd)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func execCmd(cmd string) (string, error) {
+	strArr := strings.Split(cmd, " ")
+	var c *exec.Cmd
 	if len(strArr) == 1 {
-		cmd = exec.Command(strArr[0])
+		c = exec.Command(strArr[0])
 	} else {
-		cmd = exec.Command(strArr[0], strArr[1:]...)
+		c = exec.Command(strArr[0], strArr[1:]...)
 	}
 	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
+	c.Stdout = &stdout
+	c.Stderr = &stderr
 
-	err := cmd.Run()
+	err := c.Run()
 	if err != nil {
-		return string(stderr.Bytes()), err
+		return string(stderr.Bytes()), fmt.Errorf("Executing %s failed: %s", cmd, err)
 	}
 	return string(stdout.Bytes()), nil
 }
 
 // Reload schedules a reload
 func (ra *ReloadAgent) Reload() string {
-	if ra.cache.current == "" {
+	if ra.cache.next == "" {
 		ra.cache.newReload()
 	}
-	return ra.cache.current
+	return ra.cache.next
 }
 
 // ForceReload calls reload directly
@@ -112,6 +171,7 @@ func (rc *reloadCache) Init(retention int) {
 	defer rc.mu.Unlock()
 	rc.failedReloads = make(map[string]*models.Reload)
 	rc.current = ""
+	rc.next = ""
 	rc.lastSuccess = nil
 	rc.index = 0
 	rc.retention = retention
@@ -120,7 +180,7 @@ func (rc *reloadCache) Init(retention int) {
 func (rc *reloadCache) newReload() {
 	rc.mu.Lock()
 	defer rc.mu.Unlock()
-	rc.current = rc.generateID()
+	rc.next = rc.generateID()
 }
 
 func (rc *reloadCache) failReload(response string) {
@@ -184,6 +244,14 @@ func (ra *ReloadAgent) GetReloads() models.Reloads {
 		}
 		v = append(v, r)
 	}
+
+	if ra.cache.next != "" {
+		r := &models.Reload{
+			ID:     ra.cache.next,
+			Status: "in_progress",
+		}
+		v = append(v, r)
+	}
 	return v
 }
 
@@ -197,6 +265,13 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 			Status: "in_progress",
 		}
 	}
+	if ra.cache.next == id {
+		return &models.Reload{
+			ID:     ra.cache.current,
+			Status: "in_progress",
+		}
+	}
+
 	v, ok := ra.cache.failedReloads[id]
 	if ok {
 		return v
@@ -268,4 +343,24 @@ func (e *ReloadError) Error() string {
 // NewReloadError contstructor for ReloadError
 func NewReloadError(msg string) *ReloadError {
 	return &ReloadError{msg: msg}
+}
+
+func copyFile(src, dest string) error {
+	srcContent, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer srcContent.Close()
+
+	destContent, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	defer destContent.Close()
+
+	_, err = io.Copy(destContent, srcContent)
+	if err != nil {
+		return err
+	}
+	return destContent.Sync()
 }

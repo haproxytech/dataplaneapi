@@ -71,6 +71,7 @@ var haproxyOptions struct {
 	HAProxy         string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
 	ReloadDelay     int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5"`
 	ReloadCmd       string `short:"r" long:"reload-cmd" description:"Reload command"`
+	RestartCmd      string `short:"s" long:"restart-cmd" description:"Restart command"`
 	ReloadRetention int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1"`
 	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
 	MasterRuntime   string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket"`
@@ -139,7 +140,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
-	ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd, haproxyOptions.ReloadRetention)
+	if err := ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd, haproxyOptions.RestartCmd, haproxyOptions.ConfigFile, haproxyOptions.ReloadRetention); err != nil {
+		log.Fatalf("Cannot initialize reload agent: %v", err)
+	}
 
 	// Applies when the Authorization header is set with the Basic scheme
 	api.BasicAuthAuth = func(user string, pass string) (interface{}, error) {
@@ -498,13 +501,13 @@ func configureNativeClient() *client_native.HAProxyClient {
 	// Initialize HAProxy native client
 	confClient, err := configureConfigurationClient()
 	if err != nil {
-		log.Fatalf(err.Error())
+		log.Fatalf("Error initializing configuration client: %v", err)
 	}
 
 	runtimeClient := configureRuntimeClient(confClient)
 	client := &client_native.HAProxyClient{}
 	if err := client.Init(confClient, runtimeClient); err != nil {
-		log.Fatalf("Error setting up native client: %s", err.Error())
+		log.Fatalf("Error setting up native client: %v", err)
 	}
 
 	return client

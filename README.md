@@ -59,6 +59,7 @@ HAProxy options:
   -b, --haproxy-bin=                               Path to the haproxy binary file (default: haproxy)
   -d, --reload-delay=                              Minimum delay between two reloads (in s) (default: 5)
   -r, --reload-cmd=                                Reload command
+  -s, --restart-cmd=                               Restart command
       --reload-retention=                          Reload retention in days, every older reload id will be deleted (default: 1)
   -t, --transaction-dir=                           Path to the transaction directory (default: /tmp/haproxy)
   -m, --master-runtime=                            Path to the master Runtime API socket
@@ -81,7 +82,7 @@ Help Options:
 You can test it by simply running:
 
 ```
-./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -d 5 -r "service haproxy reload" -u dataplaneapi -t /tmp/haproxy
+./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -d 5 -r "service haproxy reload" -s "service haproxy restart" -u dataplaneapi -t /tmp/haproxy
 ```
 
 Test it out with curl, note that you need user/pass combination setup in HAProxy userlist in haproxy configuration (in above example: /etc/haproxy/haproxy.cfg, userlist controller):
