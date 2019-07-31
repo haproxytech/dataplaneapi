@@ -104,7 +104,7 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 		}
 		defer func() {
 			copyFile(ra.configFile+".bck", ra.configFile)
-			os.Remove(ra.configFile+".bck")
+			os.Remove(ra.configFile + ".bck")
 		}()
 		if err := copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
 			return fmt.Sprintf("Reload failed: %s, failed to revert to last known good config file", output), err
@@ -205,7 +205,7 @@ func (rc *reloadCache) succeedReload(response string) {
 
 	r := &models.Reload{
 		ID:              rc.current,
-		Status:          "succeded",
+		Status:          "succeeded",
 		Response:        response,
 		ReloadTimestamp: time.Now().Unix(),
 	}
@@ -294,14 +294,14 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 		if gDate.Before(sDate) {
 			return &models.Reload{
 				ID:     id,
-				Status: "succeded",
+				Status: "succeeded",
 			}
 		}
 
 		if sIndex > gIndex {
 			return &models.Reload{
 				ID:     id,
-				Status: "succeded",
+				Status: "succeeded",
 			}
 		}
 	}
