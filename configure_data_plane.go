@@ -489,7 +489,7 @@ func configureNativeClient() *client_native.HAProxyClient {
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
-		if masterRuntime != "" {
+		if masterRuntime != "" && !strings.HasPrefix(masterRuntime, "ipv4@") {
 			haproxyOptions.MasterRuntime = masterRuntime
 		}
 	}
@@ -540,13 +540,15 @@ func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Clien
 		if len(runtimeAPIs) != 0 {
 			statsSocketConfigured = true
 			for _, r := range runtimeAPIs {
-				socketList = append(socketList, *r.Address)
+				if !strings.HasPrefix(*r.Address, "ipv4@") {
+					socketList = append(socketList, *r.Address)
+				}
 			}
 		}
 
 		masterSocket := ""
 		nbproc := 0
-		if haproxyOptions.MasterRuntime != "" {
+		if haproxyOptions.MasterRuntime != "" && !strings.HasPrefix(haproxyOptions.MasterRuntime, "ipv4@") {
 			if globalConf.Nbproc > 0 {
 				statsSocketConfigured = true
 				nbproc = int(globalConf.Nbproc)

@@ -75,6 +75,53 @@ func (o *GetStatsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 }
 
+// GetStatsInternalServerErrorCode is the HTTP code returned for type GetStatsInternalServerError
+const GetStatsInternalServerErrorCode int = 500
+
+/*GetStatsInternalServerError Internal Server Error
+
+swagger:response getStatsInternalServerError
+*/
+type GetStatsInternalServerError struct {
+
+	/*
+	  In: Body
+	*/
+	Payload models.NativeStats `json:"body,omitempty"`
+}
+
+// NewGetStatsInternalServerError creates GetStatsInternalServerError with default headers values
+func NewGetStatsInternalServerError() *GetStatsInternalServerError {
+
+	return &GetStatsInternalServerError{}
+}
+
+// WithPayload adds the payload to the get stats internal server error response
+func (o *GetStatsInternalServerError) WithPayload(payload models.NativeStats) *GetStatsInternalServerError {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the get stats internal server error response
+func (o *GetStatsInternalServerError) SetPayload(payload models.NativeStats) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *GetStatsInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.NativeStats{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
+	}
+}
+
 /*GetStatsDefault General Error
 
 swagger:response getStatsDefault

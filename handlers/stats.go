@@ -17,7 +17,7 @@ package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
 	"github.com/haproxytech/models"
@@ -46,45 +46,44 @@ func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal inte
 		}
 	}
 
-	s, err := h.Client.Runtime.GetStats()
-	if err != nil {
-		code := misc.ErrHTTPInternalServerError
-		msg := err.Error()
-		e := &models.Error{
-			Code:    &code,
-			Message: &msg,
-		}
-		return stats.NewGetStatsDefault(int(misc.ErrHTTPInternalServerError)).WithPayload(e)
-	}
+	s := h.Client.Runtime.GetStats()
 
-	nativeStats := models.NativeStats{}
+	errorFound := false
 	for _, nStat := range s {
-		for _, item := range nStat {
-			nativeStatItem := *item
+		if nStat.Error != "" {
+			errorFound = true
+			continue
+		}
+		retVal := make([]*models.NativeStat, 0, len(nStat.Stats))
+		for _, item := range nStat.Stats {
 			if params.Name != nil {
 				if item.Type == "server" {
 					if item.Name == *params.Name && item.Type == *params.Type && item.BackendName == *params.Parent {
-						nativeStats = append(nativeStats, &nativeStatItem)
+						retVal = append(retVal, item)
 					}
 				} else if item.Name == *params.Name && item.Type == *params.Type {
-					nativeStats = append(nativeStats, &nativeStatItem)
+					retVal = append(retVal, item)
 				}
 			} else {
 				if params.Type != nil {
 					if *params.Type == "server" && params.Parent != nil {
 						if item.Type == *params.Type && item.BackendName == *params.Parent {
-							nativeStats = append(nativeStats, &nativeStatItem)
+							retVal = append(retVal, item)
 						}
 					} else {
 						if item.Type == *params.Type {
-							nativeStats = append(nativeStats, &nativeStatItem)
+							retVal = append(retVal, item)
 						}
 					}
 				} else {
-					nativeStats = append(nativeStats, &nativeStatItem)
+					retVal = append(retVal, item)
 				}
 			}
 		}
+		nStat.Stats = retVal
 	}
-	return stats.NewGetStatsOK().WithPayload(nativeStats)
+	if errorFound {
+		return stats.NewGetStatsInternalServerError().WithPayload(s)
+	}
+	return stats.NewGetStatsOK().WithPayload(s)
 }
