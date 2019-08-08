@@ -5782,6 +5782,11 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
         "name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -16041,6 +16046,11 @@ func init() {
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
         },
         "name": {
           "type": "string",
