@@ -3183,6 +3183,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
           }
         ],
         "responses": {
@@ -12913,6 +12916,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
             "in": "query"
           }
         ],

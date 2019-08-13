@@ -42,7 +42,12 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration.GetRawConfiguration(t)
+	v := int64(0)
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	v, data, err := h.Client.Configuration.GetRawConfiguration(t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)

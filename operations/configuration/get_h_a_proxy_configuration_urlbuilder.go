@@ -24,11 +24,14 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetHAProxyConfigurationURL generates an URL for the get h a proxy configuration operation
 type GetHAProxyConfigurationURL struct {
 	TransactionID *string
+	Version       *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -70,6 +73,14 @@ func (o *GetHAProxyConfigurationURL) Build() (*url.URL, error) {
 	}
 	if transactionID != "" {
 		qs.Set("transaction_id", transactionID)
+	}
+
+	var version string
+	if o.Version != nil {
+		version = swag.FormatInt64(*o.Version)
+	}
+	if version != "" {
+		qs.Set("version", version)
 	}
 
 	_result.RawQuery = qs.Encode()
