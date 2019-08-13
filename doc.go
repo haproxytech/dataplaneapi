@@ -26,7 +26,7 @@ haproxy stats and logs.
       http
     Host: localhost
     BasePath: /v1
-    Version: 1.1
+    Version: 1.2
     Contact: HAProxy Support<support@haproxy.com> https://my.haproxy.com/portal/cust/login
 
     Consumes:

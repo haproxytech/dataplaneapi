@@ -51,7 +51,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "1.1"
+    "version": "1.2"
   },
   "basePath": "/v1",
   "paths": {
@@ -9023,7 +9023,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "1.1"
+    "version": "1.2"
   },
   "basePath": "/v1",
   "paths": {
