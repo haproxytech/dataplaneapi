@@ -62,6 +62,7 @@ HAProxy options:
   -s, --restart-cmd=                               Restart command
       --reload-retention=                          Reload retention in days, every older reload id will be deleted (default: 1)
   -t, --transaction-dir=                           Path to the transaction directory (default: /tmp/haproxy)
+  -n, --backups-number=                            Number of backup configuration files you want to keep, stored in the config dir with version number suffix(default: 0)
   -m, --master-runtime=                            Path to the master Runtime API socket
 
 Logging options:

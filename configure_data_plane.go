@@ -74,6 +74,7 @@ var haproxyOptions struct {
 	RestartCmd      string `short:"s" long:"restart-cmd" description:"Restart command"`
 	ReloadRetention int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1"`
 	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
+	BackupsNumber   int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0"`
 	MasterRuntime   string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket"`
 }
 
@@ -518,6 +519,7 @@ func configureConfigurationClient() (*configuration.Client, error) {
 	confParams := configuration.ClientParams{
 		ConfigurationFile:      haproxyOptions.ConfigFile,
 		Haproxy:                haproxyOptions.HAProxy,
+		BackupsNumber:          haproxyOptions.BackupsNumber,
 		UseValidation:          false,
 		PersistentTransactions: true,
 		TransactionDir:         haproxyOptions.TransactionDir,
