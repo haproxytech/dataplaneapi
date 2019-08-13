@@ -5512,6 +5512,33 @@ func init() {
           },
           "$ref": "#/definitions/forwardfor"
         },
+        "hash_type": {
+          "type": "object",
+          "properties": {
+            "function": {
+              "type": "string",
+              "enum": [
+                "sdbm",
+                "djb2",
+                "wt6",
+                "crc32"
+              ]
+            },
+            "method": {
+              "type": "string",
+              "enum": [
+                "map-based",
+                "consistent"
+              ]
+            },
+            "modifier": {
+              "type": "string",
+              "enum": [
+                "avalanche"
+              ]
+            }
+          }
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -15780,6 +15807,33 @@ func init() {
             }
           },
           "$ref": "#/definitions/forwardfor"
+        },
+        "hash_type": {
+          "type": "object",
+          "properties": {
+            "function": {
+              "type": "string",
+              "enum": [
+                "sdbm",
+                "djb2",
+                "wt6",
+                "crc32"
+              ]
+            },
+            "method": {
+              "type": "string",
+              "enum": [
+                "map-based",
+                "consistent"
+              ]
+            },
+            "modifier": {
+              "type": "string",
+              "enum": [
+                "avalanche"
+              ]
+            }
+          }
         },
         "http-use-htx": {
           "type": "string",
