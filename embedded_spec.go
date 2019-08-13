@@ -5095,9 +5095,6 @@ func init() {
         "responses": {
           "202": {
             "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/site"
-            },
             "headers": {
               "Reload-ID": {
                 "type": "string",
@@ -15314,9 +15311,6 @@ func init() {
         "responses": {
           "202": {
             "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/site"
-            },
             "headers": {
               "Reload-ID": {
                 "type": "string",

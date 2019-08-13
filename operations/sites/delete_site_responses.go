@@ -40,11 +40,6 @@ type DeleteSiteAccepted struct {
 
 	 */
 	ReloadID string `json:"Reload-ID"`
-
-	/*
-	  In: Body
-	*/
-	Payload *models.Site `json:"body,omitempty"`
 }
 
 // NewDeleteSiteAccepted creates DeleteSiteAccepted with default headers values
@@ -64,17 +59,6 @@ func (o *DeleteSiteAccepted) SetReloadID(reloadID string) {
 	o.ReloadID = reloadID
 }
 
-// WithPayload adds the payload to the delete site accepted response
-func (o *DeleteSiteAccepted) WithPayload(payload *models.Site) *DeleteSiteAccepted {
-	o.Payload = payload
-	return o
-}
-
-// SetPayload sets the payload to the delete site accepted response
-func (o *DeleteSiteAccepted) SetPayload(payload *models.Site) {
-	o.Payload = payload
-}
-
 // WriteResponse to the client
 func (o *DeleteSiteAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
@@ -85,13 +69,9 @@ func (o *DeleteSiteAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 		rw.Header().Set("Reload-ID", reloadID)
 	}
 
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
 	rw.WriteHeader(202)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
-	}
 }
 
 // DeleteSiteNoContentCode is the HTTP code returned for type DeleteSiteNoContent
