@@ -35,7 +35,8 @@ Application Options:
       --scheme=                                    the listeners to enable, this can be repeated and defaults to the schemes in the swagger spec
       --cleanup-timeout=                           grace period for which to wait before killing idle connections (default: 10s)
       --graceful-timeout=                          grace period for which to wait before shutting down the server (default: 15s)
-      --max-header-size=                           controls the maximum number of bytes the server will read parsing the request header's keys and values, including the request line. It does not limit the size of the request body. (default: 1MiB)
+      --max-header-size=                           controls the maximum number of bytes the server will read parsing the request header's keys and values, including the request line. It does not limit the size
+                                                   of the request body. (default: 1MiB)
       --socket-path=                               the unix socket to listen on (default: /var/run/data-plane.sock)
       --host=                                      the IP to listen on (default: localhost) [$HOST]
       --port=                                      the port to listen on for insecure connections, defaults to a random value [$PORT]
@@ -62,8 +63,9 @@ HAProxy options:
   -s, --restart-cmd=                               Restart command
       --reload-retention=                          Reload retention in days, every older reload id will be deleted (default: 1)
   -t, --transaction-dir=                           Path to the transaction directory (default: /tmp/haproxy)
-  -n, --backups-number=                            Number of backup configuration files you want to keep, stored in the config dir with version number suffix(default: 0)
+  -n, --backups-number=                            Number of backup configuration files you want to keep, stored in the config dir with version number suffix (default: 0)
   -m, --master-runtime=                            Path to the master Runtime API socket
+  -i, --show-system-info                           Show system info on info endpoint
 
 Logging options:
       --log-to=[stdout|file]                       Log target, can be stdout or file (default: stdout)

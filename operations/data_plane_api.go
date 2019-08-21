@@ -244,6 +244,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		InformationGetHaproxyProcessInfoHandler: information.GetHaproxyProcessInfoHandlerFunc(func(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation InformationGetHaproxyProcessInfo has not yet been implemented")
 		}),
+		InformationGetInfoHandler: information.GetInfoHandlerFunc(func(params information.GetInfoParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation InformationGetInfo has not yet been implemented")
+		}),
 		LogTargetGetLogTargetHandler: log_target.GetLogTargetHandlerFunc(func(params log_target.GetLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation LogTargetGetLogTarget has not yet been implemented")
 		}),
@@ -529,6 +532,8 @@ type DataPlaneAPI struct {
 	DiscoveryGetHaproxyEndpointsHandler discovery.GetHaproxyEndpointsHandler
 	// InformationGetHaproxyProcessInfoHandler sets the operation handler for the get haproxy process info operation
 	InformationGetHaproxyProcessInfoHandler information.GetHaproxyProcessInfoHandler
+	// InformationGetInfoHandler sets the operation handler for the get info operation
+	InformationGetInfoHandler information.GetInfoHandler
 	// LogTargetGetLogTargetHandler sets the operation handler for the get log target operation
 	LogTargetGetLogTargetHandler log_target.GetLogTargetHandler
 	// LogTargetGetLogTargetsHandler sets the operation handler for the get log targets operation
@@ -904,6 +909,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.InformationGetHaproxyProcessInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetHaproxyProcessInfoHandler")
+	}
+
+	if o.InformationGetInfoHandler == nil {
+		unregistered = append(unregistered, "information.GetInfoHandler")
 	}
 
 	if o.LogTargetGetLogTargetHandler == nil {
@@ -1458,6 +1467,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/info"] = information.NewGetHaproxyProcessInfo(o.context, o.InformationGetHaproxyProcessInfoHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/info"] = information.NewGetInfo(o.context, o.InformationGetInfoHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

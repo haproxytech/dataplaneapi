@@ -14,6 +14,3 @@ var GitDirty = ".dirty"
 
 //BuildTime ...
 var BuildTime = ""
-
-//IngressControllerInfo console pretty print
-const IngressControllerInfo = "HAProxy Data Plane API"

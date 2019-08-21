@@ -65,6 +65,9 @@ import (
 
 //go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
 
+var Version string
+var BuildTime string
+
 var haproxyOptions struct {
 	ConfigFile      string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
 	Userlist        string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
@@ -76,6 +79,7 @@ var haproxyOptions struct {
 	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
 	BackupsNumber   int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0"`
 	MasterRuntime   string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket"`
+	ShowSystemInfo  bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint"`
 }
 
 var loggingOptions struct {
@@ -319,7 +323,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StatsGetStatsHandler = &handlers.GetStatsHandlerImpl{Client: client}
 
 	// setup info handler
-	api.InformationGetHaproxyProcessInfoHandler = &handlers.GetInformationHandlerImpl{Client: client}
+	api.InformationGetHaproxyProcessInfoHandler = &handlers.GetHaproxyProcessInfoHandlerImpl{Client: client}
 
 	// setup raw configuration handlers
 	api.ConfigurationGetHAProxyConfigurationHandler = &handlers.GetRawConfigurationHandlerImpl{Client: client}
@@ -336,6 +340,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup reload handlers
 	api.ReloadsGetReloadHandler = &handlers.GetReloadHandlerImpl{ReloadAgent: ra}
 	api.ReloadsGetReloadsHandler = &handlers.GetReloadsHandlerImpl{ReloadAgent: ra}
+
+	// setup info handler
+	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 
 	// setup specification handler
 	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {

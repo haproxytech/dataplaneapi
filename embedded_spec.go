@@ -79,6 +79,30 @@ func init() {
         }
       }
     },
+    "/info": {
+      "get": {
+        "description": "Return API, hardware and OS information",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Information"
+        ],
+        "summary": "Return API, hardware and OS information",
+        "operationId": "getInfo",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/info"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services": {
       "get": {
         "description": "Returns a list of API managed services endpoints.",
@@ -7409,6 +7433,75 @@ func init() {
       },
       "x-display-name": "HTTP Check"
     },
+    "info": {
+      "description": "General API, OS and hardware information",
+      "type": "object",
+      "title": "Information",
+      "properties": {
+        "api": {
+          "type": "object",
+          "properties": {
+            "build_date": {
+              "description": "HAProxy Dataplane API build date",
+              "type": "string",
+              "format": "date-time"
+            },
+            "version": {
+              "description": "HAProxy Dataplane API version string",
+              "type": "string"
+            }
+          }
+        },
+        "system": {
+          "type": "object",
+          "properties": {
+            "cpu_info": {
+              "type": "object",
+              "properties": {
+                "model": {
+                  "type": "string"
+                },
+                "num_cpus": {
+                  "description": "Number of logical CPUs",
+                  "type": "integer"
+                }
+              }
+            },
+            "hostname": {
+              "description": "Hostname where the HAProxy is running",
+              "type": "string"
+            },
+            "mem_info": {
+              "type": "object",
+              "properties": {
+                "dataplaneapi_memory": {
+                  "type": "integer"
+                },
+                "free_memory": {
+                  "type": "integer"
+                },
+                "total_memory": {
+                  "type": "integer"
+                }
+              }
+            },
+            "os_string": {
+              "description": "OS string",
+              "type": "string"
+            },
+            "time": {
+              "description": "Current time in milliseconds since Epoch.",
+              "type": "integer"
+            },
+            "uptime": {
+              "description": "System uptime",
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        }
+      }
+    },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
       "type": "object",
@@ -8272,10 +8365,6 @@ func init() {
         "haproxy": {
           "type": "object",
           "properties": {
-            "address": {
-              "description": "The address of the replying server",
-              "type": "string"
-            },
             "pid": {
               "description": "Process id of the replying worker process",
               "type": "integer",
@@ -8290,11 +8379,6 @@ func init() {
               "description": "HAProxy version release date",
               "type": "string",
               "format": "date"
-            },
-            "time": {
-              "description": "Current time in milliseconds since Epoch.",
-              "type": "string",
-              "format": "date-time"
             },
             "uptime": {
               "description": "HAProxy uptime in s",
@@ -9312,6 +9396,39 @@ func init() {
         }
       }
     },
+    "/info": {
+      "get": {
+        "description": "Return API, hardware and OS information",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Information"
+        ],
+        "summary": "Return API, hardware and OS information",
+        "operationId": "getInfo",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/info"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services": {
       "get": {
         "description": "Returns a list of API managed services endpoints.",
@@ -19093,6 +19210,75 @@ func init() {
       },
       "x-display-name": "HTTP Check"
     },
+    "info": {
+      "description": "General API, OS and hardware information",
+      "type": "object",
+      "title": "Information",
+      "properties": {
+        "api": {
+          "type": "object",
+          "properties": {
+            "build_date": {
+              "description": "HAProxy Dataplane API build date",
+              "type": "string",
+              "format": "date-time"
+            },
+            "version": {
+              "description": "HAProxy Dataplane API version string",
+              "type": "string"
+            }
+          }
+        },
+        "system": {
+          "type": "object",
+          "properties": {
+            "cpu_info": {
+              "type": "object",
+              "properties": {
+                "model": {
+                  "type": "string"
+                },
+                "num_cpus": {
+                  "description": "Number of logical CPUs",
+                  "type": "integer"
+                }
+              }
+            },
+            "hostname": {
+              "description": "Hostname where the HAProxy is running",
+              "type": "string"
+            },
+            "mem_info": {
+              "type": "object",
+              "properties": {
+                "dataplaneapi_memory": {
+                  "type": "integer"
+                },
+                "free_memory": {
+                  "type": "integer"
+                },
+                "total_memory": {
+                  "type": "integer"
+                }
+              }
+            },
+            "os_string": {
+              "description": "OS string",
+              "type": "string"
+            },
+            "time": {
+              "description": "Current time in milliseconds since Epoch.",
+              "type": "integer"
+            },
+            "uptime": {
+              "description": "System uptime",
+              "type": "integer",
+              "x-nullable": true
+            }
+          }
+        }
+      }
+    },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
       "type": "object",
@@ -19956,10 +20142,6 @@ func init() {
         "haproxy": {
           "type": "object",
           "properties": {
-            "address": {
-              "description": "The address of the replying server",
-              "type": "string"
-            },
             "pid": {
               "description": "Process id of the replying worker process",
               "type": "integer",
@@ -19974,11 +20156,6 @@ func init() {
               "description": "HAProxy version release date",
               "type": "string",
               "format": "date"
-            },
-            "time": {
-              "description": "Current time in milliseconds since Epoch.",
-              "type": "string",
-              "format": "date-time"
             },
             "uptime": {
               "description": "HAProxy uptime in s",

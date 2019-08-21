@@ -45,6 +45,10 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	
+	dataplaneapi.BuildTime = BuildTime
+	dataplaneapi.Version = fmt.Sprintf("%s %s%s", GitTag, GitCommit, GitDirty)
+	
 	api := operations.NewDataPlaneAPI(swaggerSpec)
 	server := dataplaneapi.NewServer(api)
 	defer server.Shutdown()
