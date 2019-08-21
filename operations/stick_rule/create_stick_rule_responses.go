@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const CreateStickRuleBadRequestCode int = 400
 swagger:response createStickRuleBadRequest
 */
 type CreateStickRuleBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type CreateStickRuleBadRequest struct {
 func NewCreateStickRuleBadRequest() *CreateStickRuleBadRequest {
 
 	return &CreateStickRuleBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create stick rule bad request response
+func (o *CreateStickRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateStickRuleBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create stick rule bad request response
+func (o *CreateStickRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create stick rule bad request response
@@ -172,6 +188,13 @@ func (o *CreateStickRuleBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateStickRuleBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const CreateStickRuleConflictCode int = 409
 swagger:response createStickRuleConflict
 */
 type CreateStickRuleConflict struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type CreateStickRuleConflict struct {
 func NewCreateStickRuleConflict() *CreateStickRuleConflict {
 
 	return &CreateStickRuleConflict{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create stick rule conflict response
+func (o *CreateStickRuleConflict) WithConfigurationVersion(configurationVersion int64) *CreateStickRuleConflict {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create stick rule conflict response
+func (o *CreateStickRuleConflict) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create stick rule conflict response
@@ -217,6 +255,13 @@ func (o *CreateStickRuleConflict) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *CreateStickRuleConflict) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(409)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response createStickRuleDefault
 */
 type CreateStickRuleDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *CreateStickRuleDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the create stick rule default response
+func (o *CreateStickRuleDefault) WithConfigurationVersion(configurationVersion int64) *CreateStickRuleDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create stick rule default response
+func (o *CreateStickRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the create stick rule default response
 func (o *CreateStickRuleDefault) WithPayload(payload *models.Error) *CreateStickRuleDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *CreateStickRuleDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateStickRuleDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

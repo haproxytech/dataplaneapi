@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteBackendNotFoundCode int = 404
 swagger:response deleteBackendNotFound
 */
 type DeleteBackendNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteBackendNotFound struct {
 func NewDeleteBackendNotFound() *DeleteBackendNotFound {
 
 	return &DeleteBackendNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete backend not found response
+func (o *DeleteBackendNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteBackendNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete backend not found response
+func (o *DeleteBackendNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete backend not found response
@@ -133,6 +149,13 @@ func (o *DeleteBackendNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteBackendNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteBackendDefault
 */
 type DeleteBackendDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteBackendDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete backend default response
+func (o *DeleteBackendDefault) WithConfigurationVersion(configurationVersion int64) *DeleteBackendDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete backend default response
+func (o *DeleteBackendDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete backend default response
 func (o *DeleteBackendDefault) WithPayload(payload *models.Error) *DeleteBackendDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteBackendDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteBackendDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const CreateHTTPResponseRuleBadRequestCode int = 400
 swagger:response createHttpResponseRuleBadRequest
 */
 type CreateHTTPResponseRuleBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type CreateHTTPResponseRuleBadRequest struct {
 func NewCreateHTTPResponseRuleBadRequest() *CreateHTTPResponseRuleBadRequest {
 
 	return &CreateHTTPResponseRuleBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create Http response rule bad request response
+func (o *CreateHTTPResponseRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateHTTPResponseRuleBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create Http response rule bad request response
+func (o *CreateHTTPResponseRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create Http response rule bad request response
@@ -172,6 +188,13 @@ func (o *CreateHTTPResponseRuleBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateHTTPResponseRuleBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const CreateHTTPResponseRuleConflictCode int = 409
 swagger:response createHttpResponseRuleConflict
 */
 type CreateHTTPResponseRuleConflict struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type CreateHTTPResponseRuleConflict struct {
 func NewCreateHTTPResponseRuleConflict() *CreateHTTPResponseRuleConflict {
 
 	return &CreateHTTPResponseRuleConflict{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create Http response rule conflict response
+func (o *CreateHTTPResponseRuleConflict) WithConfigurationVersion(configurationVersion int64) *CreateHTTPResponseRuleConflict {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create Http response rule conflict response
+func (o *CreateHTTPResponseRuleConflict) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create Http response rule conflict response
@@ -217,6 +255,13 @@ func (o *CreateHTTPResponseRuleConflict) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *CreateHTTPResponseRuleConflict) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(409)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response createHttpResponseRuleDefault
 */
 type CreateHTTPResponseRuleDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *CreateHTTPResponseRuleDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the create HTTP response rule default response
+func (o *CreateHTTPResponseRuleDefault) WithConfigurationVersion(configurationVersion int64) *CreateHTTPResponseRuleDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create HTTP response rule default response
+func (o *CreateHTTPResponseRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the create HTTP response rule default response
 func (o *CreateHTTPResponseRuleDefault) WithPayload(payload *models.Error) *CreateHTTPResponseRuleDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *CreateHTTPResponseRuleDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateHTTPResponseRuleDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

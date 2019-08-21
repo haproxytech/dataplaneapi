@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetSiteOKCode int = 200
 swagger:response getSiteOK
 */
 type GetSiteOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetSiteOK struct {
 func NewGetSiteOK() *GetSiteOK {
 
 	return &GetSiteOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get site o k response
+func (o *GetSiteOK) WithConfigurationVersion(configurationVersion int64) *GetSiteOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get site o k response
+func (o *GetSiteOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get site o k response
@@ -62,6 +78,13 @@ func (o *GetSiteOK) SetPayload(payload *GetSiteOKBody) {
 
 // WriteResponse to the client
 func (o *GetSiteOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(200)
 	if o.Payload != nil {
@@ -80,6 +103,10 @@ const GetSiteNotFoundCode int = 404
 swagger:response getSiteNotFound
 */
 type GetSiteNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -91,6 +118,17 @@ type GetSiteNotFound struct {
 func NewGetSiteNotFound() *GetSiteNotFound {
 
 	return &GetSiteNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get site not found response
+func (o *GetSiteNotFound) WithConfigurationVersion(configurationVersion int64) *GetSiteNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get site not found response
+func (o *GetSiteNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get site not found response
@@ -107,6 +145,13 @@ func (o *GetSiteNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *GetSiteNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -122,6 +167,10 @@ swagger:response getSiteDefault
 */
 type GetSiteDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -151,6 +200,17 @@ func (o *GetSiteDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get site default response
+func (o *GetSiteDefault) WithConfigurationVersion(configurationVersion int64) *GetSiteDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get site default response
+func (o *GetSiteDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get site default response
 func (o *GetSiteDefault) WithPayload(payload *models.Error) *GetSiteDefault {
 	o.Payload = payload
@@ -164,6 +224,13 @@ func (o *GetSiteDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetSiteDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

@@ -145,9 +145,9 @@ func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPRe
 	v, rule, err := h.Client.Configuration.GetTCPResponseRule(params.ID, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_response_rule.NewGetTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_response_rule.NewGetTCPResponseRuleDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return tcp_response_rule.NewGetTCPResponseRuleOK().WithPayload(&tcp_response_rule.GetTCPResponseRuleOKBody{Version: v, Data: rule})
+	return tcp_response_rule.NewGetTCPResponseRuleOK().WithPayload(&tcp_response_rule.GetTCPResponseRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response
@@ -160,9 +160,9 @@ func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPR
 	v, rules, err := h.Client.Configuration.GetTCPResponseRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_response_rule.NewGetTCPResponseRulesDefault(int(*e.Code)).WithPayload(e)
+		return tcp_response_rule.NewGetTCPResponseRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return tcp_response_rule.NewGetTCPResponseRulesOK().WithPayload(&tcp_response_rule.GetTCPResponseRulesOKBody{Version: v, Data: rules})
+	return tcp_response_rule.NewGetTCPResponseRulesOK().WithPayload(&tcp_response_rule.GetTCPResponseRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

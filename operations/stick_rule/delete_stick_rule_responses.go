@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteStickRuleNotFoundCode int = 404
 swagger:response deleteStickRuleNotFound
 */
 type DeleteStickRuleNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteStickRuleNotFound struct {
 func NewDeleteStickRuleNotFound() *DeleteStickRuleNotFound {
 
 	return &DeleteStickRuleNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete stick rule not found response
+func (o *DeleteStickRuleNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteStickRuleNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete stick rule not found response
+func (o *DeleteStickRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete stick rule not found response
@@ -133,6 +149,13 @@ func (o *DeleteStickRuleNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteStickRuleNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteStickRuleDefault
 */
 type DeleteStickRuleDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteStickRuleDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete stick rule default response
+func (o *DeleteStickRuleDefault) WithConfigurationVersion(configurationVersion int64) *DeleteStickRuleDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete stick rule default response
+func (o *DeleteStickRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete stick rule default response
 func (o *DeleteStickRuleDefault) WithPayload(payload *models.Error) *DeleteStickRuleDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteStickRuleDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteStickRuleDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -81,6 +82,10 @@ swagger:response getTransactionsDefault
 */
 type GetTransactionsDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -110,6 +115,17 @@ func (o *GetTransactionsDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get transactions default response
+func (o *GetTransactionsDefault) WithConfigurationVersion(configurationVersion int64) *GetTransactionsDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get transactions default response
+func (o *GetTransactionsDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get transactions default response
 func (o *GetTransactionsDefault) WithPayload(payload *models.Error) *GetTransactionsDefault {
 	o.Payload = payload
@@ -123,6 +139,13 @@ func (o *GetTransactionsDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetTransactionsDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

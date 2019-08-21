@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteFilterNotFoundCode int = 404
 swagger:response deleteFilterNotFound
 */
 type DeleteFilterNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteFilterNotFound struct {
 func NewDeleteFilterNotFound() *DeleteFilterNotFound {
 
 	return &DeleteFilterNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete filter not found response
+func (o *DeleteFilterNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteFilterNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete filter not found response
+func (o *DeleteFilterNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete filter not found response
@@ -133,6 +149,13 @@ func (o *DeleteFilterNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteFilterNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteFilterDefault
 */
 type DeleteFilterDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteFilterDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete filter default response
+func (o *DeleteFilterDefault) WithConfigurationVersion(configurationVersion int64) *DeleteFilterDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete filter default response
+func (o *DeleteFilterDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete filter default response
 func (o *DeleteFilterDefault) WithPayload(payload *models.Error) *DeleteFilterDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteFilterDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteFilterDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

@@ -144,9 +144,9 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 	v, b, err := h.Client.Configuration.GetBind(params.Name, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
+		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return bind.NewGetBindOK().WithPayload(&bind.GetBindOKBody{Version: v, Data: b})
+	return bind.NewGetBindOK().WithPayload(&bind.GetBindOKBody{Version: v, Data: b}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response
@@ -159,9 +159,9 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 	v, bs, err := h.Client.Configuration.GetBinds(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e)
+		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: bs})
+	return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: bs}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteServerNotFoundCode int = 404
 swagger:response deleteServerNotFound
 */
 type DeleteServerNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteServerNotFound struct {
 func NewDeleteServerNotFound() *DeleteServerNotFound {
 
 	return &DeleteServerNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete server not found response
+func (o *DeleteServerNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteServerNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete server not found response
+func (o *DeleteServerNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete server not found response
@@ -133,6 +149,13 @@ func (o *DeleteServerNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteServerNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteServerDefault
 */
 type DeleteServerDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteServerDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete server default response
+func (o *DeleteServerDefault) WithConfigurationVersion(configurationVersion int64) *DeleteServerDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete server default response
+func (o *DeleteServerDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete server default response
 func (o *DeleteServerDefault) WithPayload(payload *models.Error) *DeleteServerDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteServerDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteServerDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

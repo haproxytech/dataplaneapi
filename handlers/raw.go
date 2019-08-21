@@ -50,9 +50,9 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 	v, data, err := h.Client.Configuration.GetRawConfiguration(t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: &data})
+	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: &data}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

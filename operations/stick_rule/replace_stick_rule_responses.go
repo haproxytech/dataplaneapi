@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceStickRuleBadRequestCode int = 400
 swagger:response replaceStickRuleBadRequest
 */
 type ReplaceStickRuleBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceStickRuleBadRequest struct {
 func NewReplaceStickRuleBadRequest() *ReplaceStickRuleBadRequest {
 
 	return &ReplaceStickRuleBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace stick rule bad request response
+func (o *ReplaceStickRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceStickRuleBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace stick rule bad request response
+func (o *ReplaceStickRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace stick rule bad request response
@@ -172,6 +188,13 @@ func (o *ReplaceStickRuleBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceStickRuleBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const ReplaceStickRuleNotFoundCode int = 404
 swagger:response replaceStickRuleNotFound
 */
 type ReplaceStickRuleNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type ReplaceStickRuleNotFound struct {
 func NewReplaceStickRuleNotFound() *ReplaceStickRuleNotFound {
 
 	return &ReplaceStickRuleNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace stick rule not found response
+func (o *ReplaceStickRuleNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceStickRuleNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace stick rule not found response
+func (o *ReplaceStickRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace stick rule not found response
@@ -217,6 +255,13 @@ func (o *ReplaceStickRuleNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceStickRuleNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response replaceStickRuleDefault
 */
 type ReplaceStickRuleDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *ReplaceStickRuleDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace stick rule default response
+func (o *ReplaceStickRuleDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceStickRuleDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace stick rule default response
+func (o *ReplaceStickRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace stick rule default response
 func (o *ReplaceStickRuleDefault) WithPayload(payload *models.Error) *ReplaceStickRuleDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *ReplaceStickRuleDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceStickRuleDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

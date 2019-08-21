@@ -145,9 +145,9 @@ func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal i
 	v, srv, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetServerDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return server.NewGetServerOK().WithPayload(&server.GetServerOKBody{Version: v, Data: srv})
+	return server.NewGetServerOK().WithPayload(&server.GetServerOKBody{Version: v, Data: srv}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response
@@ -160,9 +160,9 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 	v, srvs, err := h.Client.Configuration.GetServers(params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: srvs})
+	return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: srvs}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

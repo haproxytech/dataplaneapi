@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const CommitTransactionBadRequestCode int = 400
 swagger:response commitTransactionBadRequest
 */
 type CommitTransactionBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type CommitTransactionBadRequest struct {
 func NewCommitTransactionBadRequest() *CommitTransactionBadRequest {
 
 	return &CommitTransactionBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the commit transaction bad request response
+func (o *CommitTransactionBadRequest) WithConfigurationVersion(configurationVersion int64) *CommitTransactionBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the commit transaction bad request response
+func (o *CommitTransactionBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the commit transaction bad request response
@@ -172,6 +188,13 @@ func (o *CommitTransactionBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CommitTransactionBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const CommitTransactionNotFoundCode int = 404
 swagger:response commitTransactionNotFound
 */
 type CommitTransactionNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type CommitTransactionNotFound struct {
 func NewCommitTransactionNotFound() *CommitTransactionNotFound {
 
 	return &CommitTransactionNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the commit transaction not found response
+func (o *CommitTransactionNotFound) WithConfigurationVersion(configurationVersion int64) *CommitTransactionNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the commit transaction not found response
+func (o *CommitTransactionNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the commit transaction not found response
@@ -217,6 +255,13 @@ func (o *CommitTransactionNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *CommitTransactionNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response commitTransactionDefault
 */
 type CommitTransactionDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *CommitTransactionDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the commit transaction default response
+func (o *CommitTransactionDefault) WithConfigurationVersion(configurationVersion int64) *CommitTransactionDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the commit transaction default response
+func (o *CommitTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the commit transaction default response
 func (o *CommitTransactionDefault) WithPayload(payload *models.Error) *CommitTransactionDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *CommitTransactionDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CommitTransactionDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

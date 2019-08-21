@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetDefaultsOKCode int = 200
 swagger:response getDefaultsOK
 */
 type GetDefaultsOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetDefaultsOK struct {
 func NewGetDefaultsOK() *GetDefaultsOK {
 
 	return &GetDefaultsOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get defaults o k response
+func (o *GetDefaultsOK) WithConfigurationVersion(configurationVersion int64) *GetDefaultsOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get defaults o k response
+func (o *GetDefaultsOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get defaults o k response
@@ -63,6 +79,13 @@ func (o *GetDefaultsOK) SetPayload(payload *GetDefaultsOKBody) {
 // WriteResponse to the client
 func (o *GetDefaultsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(200)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -78,6 +101,10 @@ swagger:response getDefaultsDefault
 */
 type GetDefaultsDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -107,6 +134,17 @@ func (o *GetDefaultsDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get defaults default response
+func (o *GetDefaultsDefault) WithConfigurationVersion(configurationVersion int64) *GetDefaultsDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get defaults default response
+func (o *GetDefaultsDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get defaults default response
 func (o *GetDefaultsDefault) WithPayload(payload *models.Error) *GetDefaultsDefault {
 	o.Payload = payload
@@ -120,6 +158,13 @@ func (o *GetDefaultsDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetDefaultsDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

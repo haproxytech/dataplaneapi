@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceServerBadRequestCode int = 400
 swagger:response replaceServerBadRequest
 */
 type ReplaceServerBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceServerBadRequest struct {
 func NewReplaceServerBadRequest() *ReplaceServerBadRequest {
 
 	return &ReplaceServerBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace server bad request response
+func (o *ReplaceServerBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceServerBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace server bad request response
+func (o *ReplaceServerBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace server bad request response
@@ -172,6 +188,13 @@ func (o *ReplaceServerBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceServerBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const ReplaceServerNotFoundCode int = 404
 swagger:response replaceServerNotFound
 */
 type ReplaceServerNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type ReplaceServerNotFound struct {
 func NewReplaceServerNotFound() *ReplaceServerNotFound {
 
 	return &ReplaceServerNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace server not found response
+func (o *ReplaceServerNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceServerNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace server not found response
+func (o *ReplaceServerNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace server not found response
@@ -217,6 +255,13 @@ func (o *ReplaceServerNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceServerNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response replaceServerDefault
 */
 type ReplaceServerDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *ReplaceServerDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace server default response
+func (o *ReplaceServerDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceServerDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace server default response
+func (o *ReplaceServerDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace server default response
 func (o *ReplaceServerDefault) WithPayload(payload *models.Error) *ReplaceServerDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *ReplaceServerDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceServerDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

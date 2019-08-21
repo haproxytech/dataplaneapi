@@ -46,9 +46,9 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 	v, data, err := h.Client.Configuration.GetGlobalConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
+		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return global.NewGetGlobalOK().WithPayload(&global.GetGlobalOKBody{Version: v, Data: data})
+	return global.NewGetGlobalOK().WithPayload(&global.GetGlobalOKBody{Version: v, Data: data}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

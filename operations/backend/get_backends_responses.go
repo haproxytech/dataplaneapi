@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetBackendsOKCode int = 200
 swagger:response getBackendsOK
 */
 type GetBackendsOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetBackendsOK struct {
 func NewGetBackendsOK() *GetBackendsOK {
 
 	return &GetBackendsOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get backends o k response
+func (o *GetBackendsOK) WithConfigurationVersion(configurationVersion int64) *GetBackendsOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get backends o k response
+func (o *GetBackendsOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get backends o k response
@@ -63,6 +79,13 @@ func (o *GetBackendsOK) SetPayload(payload *GetBackendsOKBody) {
 // WriteResponse to the client
 func (o *GetBackendsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(200)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -78,6 +101,10 @@ swagger:response getBackendsDefault
 */
 type GetBackendsDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -107,6 +134,17 @@ func (o *GetBackendsDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get backends default response
+func (o *GetBackendsDefault) WithConfigurationVersion(configurationVersion int64) *GetBackendsDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get backends default response
+func (o *GetBackendsDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get backends default response
 func (o *GetBackendsDefault) WithPayload(payload *models.Error) *GetBackendsDefault {
 	o.Payload = payload
@@ -120,6 +158,13 @@ func (o *GetBackendsDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetBackendsDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

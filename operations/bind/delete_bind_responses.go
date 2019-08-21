@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteBindNotFoundCode int = 404
 swagger:response deleteBindNotFound
 */
 type DeleteBindNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteBindNotFound struct {
 func NewDeleteBindNotFound() *DeleteBindNotFound {
 
 	return &DeleteBindNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete bind not found response
+func (o *DeleteBindNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteBindNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete bind not found response
+func (o *DeleteBindNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete bind not found response
@@ -133,6 +149,13 @@ func (o *DeleteBindNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteBindNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteBindDefault
 */
 type DeleteBindDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteBindDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete bind default response
+func (o *DeleteBindDefault) WithConfigurationVersion(configurationVersion int64) *DeleteBindDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete bind default response
+func (o *DeleteBindDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete bind default response
 func (o *DeleteBindDefault) WithPayload(payload *models.Error) *DeleteBindDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteBindDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteBindDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

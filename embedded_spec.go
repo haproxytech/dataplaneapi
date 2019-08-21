@@ -201,6 +201,12 @@ func init() {
                   "$ref": "#/definitions/acls"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -339,6 +345,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/acl"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -540,6 +552,12 @@ func init() {
                   "$ref": "#/definitions/backend_switching_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -654,6 +672,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/backend_switching_rule"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -823,6 +847,12 @@ func init() {
                   "$ref": "#/definitions/backends"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -921,6 +951,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/backend"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -1082,6 +1118,12 @@ func init() {
                   "$ref": "#/definitions/binds"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -1196,6 +1238,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/bind"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -1362,6 +1410,12 @@ func init() {
                   "$ref": "#/definitions/defaults"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -1473,6 +1527,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/filters"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -1612,6 +1672,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/filter"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -1805,6 +1871,12 @@ func init() {
                   "$ref": "#/definitions/frontends"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -1903,6 +1975,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/frontend"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -2053,6 +2131,12 @@ func init() {
                   "$ref": "#/definitions/global"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -2164,6 +2248,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/http_request_rules"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -2303,6 +2393,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/http_request_rule"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -2516,6 +2612,12 @@ func init() {
                   "$ref": "#/definitions/http_response_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -2654,6 +2756,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/http_response_rule"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -2867,6 +2975,12 @@ func init() {
                   "$ref": "#/definitions/log_targets"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -3005,6 +3119,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/log_target"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -3204,6 +3324,12 @@ func init() {
                   "type": "string"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -3306,6 +3432,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/server_switching_rules"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -3421,6 +3553,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/server_switching_rule"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -3598,6 +3736,12 @@ func init() {
                   "$ref": "#/definitions/servers"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -3712,6 +3856,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/server"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -3889,6 +4039,12 @@ func init() {
                   "$ref": "#/definitions/stick_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -4003,6 +4159,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/stick_rule"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -4192,6 +4354,12 @@ func init() {
                   "$ref": "#/definitions/tcp_request_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -4330,6 +4498,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/tcp_request_rule"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -4532,6 +4706,12 @@ func init() {
                   "$ref": "#/definitions/tcp_response_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -4648,6 +4828,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/tcp_response_rule"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -4900,6 +5086,12 @@ func init() {
                   "$ref": "#/definitions/sites"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -4996,6 +5188,12 @@ func init() {
                 "data": {
                   "$ref": "#/definitions/site"
                 }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
               }
             }
           },
@@ -8900,24 +9098,48 @@ func init() {
       "description": "The specified resource already exists",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     },
     "BadRequest": {
       "description": "Bad request",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     },
     "DefaultError": {
       "description": "General Error",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     },
     "NotFound": {
       "description": "The specified resource was not found",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     }
   },
@@ -9079,6 +9301,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9106,6 +9334,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9133,6 +9367,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9160,6 +9400,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9219,12 +9465,24 @@ func init() {
                   "$ref": "#/definitions/acls"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9311,18 +9569,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9386,18 +9662,36 @@ func init() {
                   "$ref": "#/definitions/acl"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9491,18 +9785,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9582,12 +9894,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9635,12 +9959,24 @@ func init() {
                   "$ref": "#/definitions/backend_switching_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9715,18 +10051,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9778,18 +10132,36 @@ func init() {
                   "$ref": "#/definitions/backend_switching_rule"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9871,18 +10243,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9950,12 +10340,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -9995,12 +10397,24 @@ func init() {
                   "$ref": "#/definitions/backends"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10067,18 +10481,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10122,18 +10554,36 @@ func init() {
                   "$ref": "#/definitions/backend"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10207,18 +10657,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10278,12 +10746,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10331,12 +10811,24 @@ func init() {
                   "$ref": "#/definitions/binds"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10411,18 +10903,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10474,18 +10984,36 @@ func init() {
                   "$ref": "#/definitions/bind"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10567,18 +11095,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10646,12 +11192,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10688,12 +11246,24 @@ func init() {
                   "$ref": "#/definitions/defaults"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10760,12 +11330,24 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10825,12 +11407,24 @@ func init() {
                   "$ref": "#/definitions/filters"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10917,18 +11511,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -10992,18 +11604,36 @@ func init() {
                   "$ref": "#/definitions/filter"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11097,18 +11727,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11188,12 +11836,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11233,12 +11893,24 @@ func init() {
                   "$ref": "#/definitions/frontends"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11305,18 +11977,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11360,18 +12050,36 @@ func init() {
                   "$ref": "#/definitions/frontend"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11445,18 +12153,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11516,12 +12242,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11558,12 +12296,24 @@ func init() {
                   "$ref": "#/definitions/global"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11630,12 +12380,24 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11695,12 +12457,24 @@ func init() {
                   "$ref": "#/definitions/http_request_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11787,18 +12561,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11862,18 +12654,36 @@ func init() {
                   "$ref": "#/definitions/http_request_rule"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -11967,18 +12777,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12058,12 +12886,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12123,12 +12963,24 @@ func init() {
                   "$ref": "#/definitions/http_response_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12215,18 +13067,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12290,18 +13160,36 @@ func init() {
                   "$ref": "#/definitions/http_response_rule"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12395,18 +13283,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12486,12 +13392,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12551,12 +13469,24 @@ func init() {
                   "$ref": "#/definitions/log_targets"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12643,18 +13573,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12718,18 +13666,36 @@ func init() {
                   "$ref": "#/definitions/log_target"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12823,18 +13789,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12914,12 +13898,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -12969,12 +13965,24 @@ func init() {
                   "type": "string"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13040,12 +14048,24 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13093,12 +14113,24 @@ func init() {
                   "$ref": "#/definitions/server_switching_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13173,18 +14205,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13236,18 +14286,36 @@ func init() {
                   "$ref": "#/definitions/server_switching_rule"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13329,18 +14397,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13408,12 +14494,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13461,12 +14559,24 @@ func init() {
                   "$ref": "#/definitions/servers"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13541,18 +14651,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13604,18 +14732,36 @@ func init() {
                   "$ref": "#/definitions/server"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13697,18 +14843,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13776,12 +14940,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13829,12 +15005,24 @@ func init() {
                   "$ref": "#/definitions/stick_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13909,18 +15097,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -13972,18 +15178,36 @@ func init() {
                   "$ref": "#/definitions/stick_rule"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14065,18 +15289,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14144,12 +15386,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14209,12 +15463,24 @@ func init() {
                   "$ref": "#/definitions/tcp_request_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14301,18 +15567,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14376,18 +15660,36 @@ func init() {
                   "$ref": "#/definitions/tcp_request_rule"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14481,18 +15783,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14572,12 +15892,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14626,12 +15958,24 @@ func init() {
                   "$ref": "#/definitions/tcp_response_rules"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14707,18 +16051,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14771,18 +16133,36 @@ func init() {
                   "$ref": "#/definitions/tcp_response_rule"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14865,18 +16245,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14945,12 +16343,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -14978,6 +16388,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15005,6 +16421,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15039,12 +16461,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15083,12 +16517,24 @@ func init() {
                   "$ref": "#/definitions/sites"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15154,18 +16600,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "409": {
             "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15208,18 +16672,36 @@ func init() {
                   "$ref": "#/definitions/site"
                 }
               }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15292,18 +16774,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15362,12 +16862,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15395,6 +16907,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15456,6 +16974,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15495,6 +17019,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15529,6 +17059,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15562,12 +17098,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15618,18 +17166,36 @@ func init() {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15658,12 +17224,24 @@ func init() {
             "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -15691,6 +17269,12 @@ func init() {
             "description": "General Error",
             "schema": {
               "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
             }
           }
         }
@@ -19199,24 +20783,48 @@ func init() {
       "description": "The specified resource already exists",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     },
     "BadRequest": {
       "description": "Bad request",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     },
     "DefaultError": {
       "description": "General Error",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     },
     "NotFound": {
       "description": "The specified resource was not found",
       "schema": {
         "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "description": "Configuration file version"
+        }
       }
     }
   },

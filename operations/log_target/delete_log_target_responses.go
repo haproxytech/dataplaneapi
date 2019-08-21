@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteLogTargetNotFoundCode int = 404
 swagger:response deleteLogTargetNotFound
 */
 type DeleteLogTargetNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteLogTargetNotFound struct {
 func NewDeleteLogTargetNotFound() *DeleteLogTargetNotFound {
 
 	return &DeleteLogTargetNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete log target not found response
+func (o *DeleteLogTargetNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteLogTargetNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete log target not found response
+func (o *DeleteLogTargetNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete log target not found response
@@ -133,6 +149,13 @@ func (o *DeleteLogTargetNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteLogTargetNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteLogTargetDefault
 */
 type DeleteLogTargetDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteLogTargetDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete log target default response
+func (o *DeleteLogTargetDefault) WithConfigurationVersion(configurationVersion int64) *DeleteLogTargetDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete log target default response
+func (o *DeleteLogTargetDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete log target default response
 func (o *DeleteLogTargetDefault) WithPayload(payload *models.Error) *DeleteLogTargetDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteLogTargetDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteLogTargetDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

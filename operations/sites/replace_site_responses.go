@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceSiteBadRequestCode int = 400
 swagger:response replaceSiteBadRequest
 */
 type ReplaceSiteBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceSiteBadRequest struct {
 func NewReplaceSiteBadRequest() *ReplaceSiteBadRequest {
 
 	return &ReplaceSiteBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace site bad request response
+func (o *ReplaceSiteBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceSiteBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace site bad request response
+func (o *ReplaceSiteBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace site bad request response
@@ -172,6 +188,13 @@ func (o *ReplaceSiteBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceSiteBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const ReplaceSiteNotFoundCode int = 404
 swagger:response replaceSiteNotFound
 */
 type ReplaceSiteNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type ReplaceSiteNotFound struct {
 func NewReplaceSiteNotFound() *ReplaceSiteNotFound {
 
 	return &ReplaceSiteNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace site not found response
+func (o *ReplaceSiteNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceSiteNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace site not found response
+func (o *ReplaceSiteNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace site not found response
@@ -217,6 +255,13 @@ func (o *ReplaceSiteNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceSiteNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response replaceSiteDefault
 */
 type ReplaceSiteDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *ReplaceSiteDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace site default response
+func (o *ReplaceSiteDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceSiteDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace site default response
+func (o *ReplaceSiteDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace site default response
 func (o *ReplaceSiteDefault) WithPayload(payload *models.Error) *ReplaceSiteDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *ReplaceSiteDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceSiteDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

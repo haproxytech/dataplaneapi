@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceFrontendBadRequestCode int = 400
 swagger:response replaceFrontendBadRequest
 */
 type ReplaceFrontendBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceFrontendBadRequest struct {
 func NewReplaceFrontendBadRequest() *ReplaceFrontendBadRequest {
 
 	return &ReplaceFrontendBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace frontend bad request response
+func (o *ReplaceFrontendBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceFrontendBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace frontend bad request response
+func (o *ReplaceFrontendBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace frontend bad request response
@@ -172,6 +188,13 @@ func (o *ReplaceFrontendBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceFrontendBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const ReplaceFrontendNotFoundCode int = 404
 swagger:response replaceFrontendNotFound
 */
 type ReplaceFrontendNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type ReplaceFrontendNotFound struct {
 func NewReplaceFrontendNotFound() *ReplaceFrontendNotFound {
 
 	return &ReplaceFrontendNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace frontend not found response
+func (o *ReplaceFrontendNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceFrontendNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace frontend not found response
+func (o *ReplaceFrontendNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace frontend not found response
@@ -217,6 +255,13 @@ func (o *ReplaceFrontendNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceFrontendNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response replaceFrontendDefault
 */
 type ReplaceFrontendDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *ReplaceFrontendDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace frontend default response
+func (o *ReplaceFrontendDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceFrontendDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace frontend default response
+func (o *ReplaceFrontendDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace frontend default response
 func (o *ReplaceFrontendDefault) WithPayload(payload *models.Error) *ReplaceFrontendDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *ReplaceFrontendDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceFrontendDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

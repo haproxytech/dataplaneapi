@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceLogTargetBadRequestCode int = 400
 swagger:response replaceLogTargetBadRequest
 */
 type ReplaceLogTargetBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceLogTargetBadRequest struct {
 func NewReplaceLogTargetBadRequest() *ReplaceLogTargetBadRequest {
 
 	return &ReplaceLogTargetBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace log target bad request response
+func (o *ReplaceLogTargetBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceLogTargetBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace log target bad request response
+func (o *ReplaceLogTargetBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace log target bad request response
@@ -172,6 +188,13 @@ func (o *ReplaceLogTargetBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceLogTargetBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const ReplaceLogTargetNotFoundCode int = 404
 swagger:response replaceLogTargetNotFound
 */
 type ReplaceLogTargetNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type ReplaceLogTargetNotFound struct {
 func NewReplaceLogTargetNotFound() *ReplaceLogTargetNotFound {
 
 	return &ReplaceLogTargetNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace log target not found response
+func (o *ReplaceLogTargetNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceLogTargetNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace log target not found response
+func (o *ReplaceLogTargetNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace log target not found response
@@ -217,6 +255,13 @@ func (o *ReplaceLogTargetNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceLogTargetNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response replaceLogTargetDefault
 */
 type ReplaceLogTargetDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *ReplaceLogTargetDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace log target default response
+func (o *ReplaceLogTargetDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceLogTargetDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace log target default response
+func (o *ReplaceLogTargetDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace log target default response
 func (o *ReplaceLogTargetDefault) WithPayload(payload *models.Error) *ReplaceLogTargetDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *ReplaceLogTargetDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceLogTargetDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

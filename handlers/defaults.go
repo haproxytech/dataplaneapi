@@ -46,9 +46,9 @@ func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, princ
 	v, data, err := h.Client.Configuration.GetDefaultsConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
+		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return defaults.NewGetDefaultsOK().WithPayload(&defaults.GetDefaultsOKBody{Version: v, Data: data})
+	return defaults.NewGetDefaultsOK().WithPayload(&defaults.GetDefaultsOKBody{Version: v, Data: data}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetServerSwitchingRulesOKCode int = 200
 swagger:response getServerSwitchingRulesOK
 */
 type GetServerSwitchingRulesOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetServerSwitchingRulesOK struct {
 func NewGetServerSwitchingRulesOK() *GetServerSwitchingRulesOK {
 
 	return &GetServerSwitchingRulesOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get server switching rules o k response
+func (o *GetServerSwitchingRulesOK) WithConfigurationVersion(configurationVersion int64) *GetServerSwitchingRulesOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get server switching rules o k response
+func (o *GetServerSwitchingRulesOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get server switching rules o k response
@@ -63,6 +79,13 @@ func (o *GetServerSwitchingRulesOK) SetPayload(payload *GetServerSwitchingRulesO
 // WriteResponse to the client
 func (o *GetServerSwitchingRulesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(200)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -78,6 +101,10 @@ swagger:response getServerSwitchingRulesDefault
 */
 type GetServerSwitchingRulesDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -107,6 +134,17 @@ func (o *GetServerSwitchingRulesDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get server switching rules default response
+func (o *GetServerSwitchingRulesDefault) WithConfigurationVersion(configurationVersion int64) *GetServerSwitchingRulesDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get server switching rules default response
+func (o *GetServerSwitchingRulesDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get server switching rules default response
 func (o *GetServerSwitchingRulesDefault) WithPayload(payload *models.Error) *GetServerSwitchingRulesDefault {
 	o.Payload = payload
@@ -120,6 +158,13 @@ func (o *GetServerSwitchingRulesDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetServerSwitchingRulesDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -60,6 +61,10 @@ const DeleteTransactionNotFoundCode int = 404
 swagger:response deleteTransactionNotFound
 */
 type DeleteTransactionNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -71,6 +76,17 @@ type DeleteTransactionNotFound struct {
 func NewDeleteTransactionNotFound() *DeleteTransactionNotFound {
 
 	return &DeleteTransactionNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete transaction not found response
+func (o *DeleteTransactionNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteTransactionNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete transaction not found response
+func (o *DeleteTransactionNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete transaction not found response
@@ -87,6 +103,13 @@ func (o *DeleteTransactionNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteTransactionNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -102,6 +125,10 @@ swagger:response deleteTransactionDefault
 */
 type DeleteTransactionDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -131,6 +158,17 @@ func (o *DeleteTransactionDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete transaction default response
+func (o *DeleteTransactionDefault) WithConfigurationVersion(configurationVersion int64) *DeleteTransactionDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete transaction default response
+func (o *DeleteTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete transaction default response
 func (o *DeleteTransactionDefault) WithPayload(payload *models.Error) *DeleteTransactionDefault {
 	o.Payload = payload
@@ -144,6 +182,13 @@ func (o *DeleteTransactionDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteTransactionDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

@@ -144,9 +144,9 @@ func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interf
 	v, site, err := h.Client.Configuration.GetSite(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return sites.NewGetSiteDefault(int(*e.Code)).WithPayload(e)
+		return sites.NewGetSiteDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return sites.NewGetSiteOK().WithPayload(&sites.GetSiteOKBody{Version: v, Data: site})
+	return sites.NewGetSiteOK().WithPayload(&sites.GetSiteOKBody{Version: v, Data: site}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response
@@ -159,9 +159,9 @@ func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal inte
 	v, s, err := h.Client.Configuration.GetSites(t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return sites.NewGetSitesDefault(int(*e.Code)).WithPayload(e)
+		return sites.NewGetSitesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: s})
+	return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: s}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

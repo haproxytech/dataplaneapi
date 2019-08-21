@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetTCPRequestRulesOKCode int = 200
 swagger:response getTcpRequestRulesOK
 */
 type GetTCPRequestRulesOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetTCPRequestRulesOK struct {
 func NewGetTCPRequestRulesOK() *GetTCPRequestRulesOK {
 
 	return &GetTCPRequestRulesOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get Tcp request rules o k response
+func (o *GetTCPRequestRulesOK) WithConfigurationVersion(configurationVersion int64) *GetTCPRequestRulesOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get Tcp request rules o k response
+func (o *GetTCPRequestRulesOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get Tcp request rules o k response
@@ -63,6 +79,13 @@ func (o *GetTCPRequestRulesOK) SetPayload(payload *GetTCPRequestRulesOKBody) {
 // WriteResponse to the client
 func (o *GetTCPRequestRulesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(200)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -78,6 +101,10 @@ swagger:response getTcpRequestRulesDefault
 */
 type GetTCPRequestRulesDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -107,6 +134,17 @@ func (o *GetTCPRequestRulesDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get TCP request rules default response
+func (o *GetTCPRequestRulesDefault) WithConfigurationVersion(configurationVersion int64) *GetTCPRequestRulesDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get TCP request rules default response
+func (o *GetTCPRequestRulesDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get TCP request rules default response
 func (o *GetTCPRequestRulesDefault) WithPayload(payload *models.Error) *GetTCPRequestRulesDefault {
 	o.Payload = payload
@@ -120,6 +158,13 @@ func (o *GetTCPRequestRulesDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetTCPRequestRulesDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

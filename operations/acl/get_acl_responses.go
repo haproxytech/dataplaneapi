@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetACLOKCode int = 200
 swagger:response getAclOK
 */
 type GetACLOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetACLOK struct {
 func NewGetACLOK() *GetACLOK {
 
 	return &GetACLOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get Acl o k response
+func (o *GetACLOK) WithConfigurationVersion(configurationVersion int64) *GetACLOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get Acl o k response
+func (o *GetACLOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get Acl o k response
@@ -62,6 +78,13 @@ func (o *GetACLOK) SetPayload(payload *GetACLOKBody) {
 
 // WriteResponse to the client
 func (o *GetACLOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(200)
 	if o.Payload != nil {
@@ -80,6 +103,10 @@ const GetACLNotFoundCode int = 404
 swagger:response getAclNotFound
 */
 type GetACLNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -91,6 +118,17 @@ type GetACLNotFound struct {
 func NewGetACLNotFound() *GetACLNotFound {
 
 	return &GetACLNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get Acl not found response
+func (o *GetACLNotFound) WithConfigurationVersion(configurationVersion int64) *GetACLNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get Acl not found response
+func (o *GetACLNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get Acl not found response
@@ -107,6 +145,13 @@ func (o *GetACLNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *GetACLNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -122,6 +167,10 @@ swagger:response getAclDefault
 */
 type GetACLDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -151,6 +200,17 @@ func (o *GetACLDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get Acl default response
+func (o *GetACLDefault) WithConfigurationVersion(configurationVersion int64) *GetACLDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get Acl default response
+func (o *GetACLDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get Acl default response
 func (o *GetACLDefault) WithPayload(payload *models.Error) *GetACLDefault {
 	o.Payload = payload
@@ -164,6 +224,13 @@ func (o *GetACLDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetACLDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

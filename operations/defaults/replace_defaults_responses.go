@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceDefaultsBadRequestCode int = 400
 swagger:response replaceDefaultsBadRequest
 */
 type ReplaceDefaultsBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceDefaultsBadRequest struct {
 func NewReplaceDefaultsBadRequest() *ReplaceDefaultsBadRequest {
 
 	return &ReplaceDefaultsBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace defaults bad request response
+func (o *ReplaceDefaultsBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceDefaultsBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace defaults bad request response
+func (o *ReplaceDefaultsBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace defaults bad request response
@@ -173,6 +189,13 @@ func (o *ReplaceDefaultsBadRequest) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceDefaultsBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(400)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -188,6 +211,10 @@ swagger:response replaceDefaultsDefault
 */
 type ReplaceDefaultsDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -217,6 +244,17 @@ func (o *ReplaceDefaultsDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace defaults default response
+func (o *ReplaceDefaultsDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceDefaultsDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace defaults default response
+func (o *ReplaceDefaultsDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace defaults default response
 func (o *ReplaceDefaultsDefault) WithPayload(payload *models.Error) *ReplaceDefaultsDefault {
 	o.Payload = payload
@@ -230,6 +268,13 @@ func (o *ReplaceDefaultsDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceDefaultsDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

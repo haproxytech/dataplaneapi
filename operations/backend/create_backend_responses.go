@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const CreateBackendBadRequestCode int = 400
 swagger:response createBackendBadRequest
 */
 type CreateBackendBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type CreateBackendBadRequest struct {
 func NewCreateBackendBadRequest() *CreateBackendBadRequest {
 
 	return &CreateBackendBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create backend bad request response
+func (o *CreateBackendBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateBackendBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create backend bad request response
+func (o *CreateBackendBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create backend bad request response
@@ -172,6 +188,13 @@ func (o *CreateBackendBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateBackendBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const CreateBackendConflictCode int = 409
 swagger:response createBackendConflict
 */
 type CreateBackendConflict struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type CreateBackendConflict struct {
 func NewCreateBackendConflict() *CreateBackendConflict {
 
 	return &CreateBackendConflict{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create backend conflict response
+func (o *CreateBackendConflict) WithConfigurationVersion(configurationVersion int64) *CreateBackendConflict {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create backend conflict response
+func (o *CreateBackendConflict) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create backend conflict response
@@ -217,6 +255,13 @@ func (o *CreateBackendConflict) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *CreateBackendConflict) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(409)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response createBackendDefault
 */
 type CreateBackendDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *CreateBackendDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the create backend default response
+func (o *CreateBackendDefault) WithConfigurationVersion(configurationVersion int64) *CreateBackendDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create backend default response
+func (o *CreateBackendDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the create backend default response
 func (o *CreateBackendDefault) WithPayload(payload *models.Error) *CreateBackendDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *CreateBackendDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateBackendDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

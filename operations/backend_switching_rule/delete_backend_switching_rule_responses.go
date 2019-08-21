@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteBackendSwitchingRuleNotFoundCode int = 404
 swagger:response deleteBackendSwitchingRuleNotFound
 */
 type DeleteBackendSwitchingRuleNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteBackendSwitchingRuleNotFound struct {
 func NewDeleteBackendSwitchingRuleNotFound() *DeleteBackendSwitchingRuleNotFound {
 
 	return &DeleteBackendSwitchingRuleNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete backend switching rule not found response
+func (o *DeleteBackendSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteBackendSwitchingRuleNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete backend switching rule not found response
+func (o *DeleteBackendSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete backend switching rule not found response
@@ -133,6 +149,13 @@ func (o *DeleteBackendSwitchingRuleNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteBackendSwitchingRuleNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteBackendSwitchingRuleDefault
 */
 type DeleteBackendSwitchingRuleDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteBackendSwitchingRuleDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete backend switching rule default response
+func (o *DeleteBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *DeleteBackendSwitchingRuleDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete backend switching rule default response
+func (o *DeleteBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete backend switching rule default response
 func (o *DeleteBackendSwitchingRuleDefault) WithPayload(payload *models.Error) *DeleteBackendSwitchingRuleDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteBackendSwitchingRuleDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteBackendSwitchingRuleDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

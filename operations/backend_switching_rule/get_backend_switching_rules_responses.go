@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetBackendSwitchingRulesOKCode int = 200
 swagger:response getBackendSwitchingRulesOK
 */
 type GetBackendSwitchingRulesOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetBackendSwitchingRulesOK struct {
 func NewGetBackendSwitchingRulesOK() *GetBackendSwitchingRulesOK {
 
 	return &GetBackendSwitchingRulesOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get backend switching rules o k response
+func (o *GetBackendSwitchingRulesOK) WithConfigurationVersion(configurationVersion int64) *GetBackendSwitchingRulesOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get backend switching rules o k response
+func (o *GetBackendSwitchingRulesOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get backend switching rules o k response
@@ -63,6 +79,13 @@ func (o *GetBackendSwitchingRulesOK) SetPayload(payload *GetBackendSwitchingRule
 // WriteResponse to the client
 func (o *GetBackendSwitchingRulesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(200)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -78,6 +101,10 @@ swagger:response getBackendSwitchingRulesDefault
 */
 type GetBackendSwitchingRulesDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -107,6 +134,17 @@ func (o *GetBackendSwitchingRulesDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get backend switching rules default response
+func (o *GetBackendSwitchingRulesDefault) WithConfigurationVersion(configurationVersion int64) *GetBackendSwitchingRulesDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get backend switching rules default response
+func (o *GetBackendSwitchingRulesDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get backend switching rules default response
 func (o *GetBackendSwitchingRulesDefault) WithPayload(payload *models.Error) *GetBackendSwitchingRulesDefault {
 	o.Payload = payload
@@ -120,6 +158,13 @@ func (o *GetBackendSwitchingRulesDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetBackendSwitchingRulesDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

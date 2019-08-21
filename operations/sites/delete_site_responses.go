@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -106,6 +107,10 @@ const DeleteSiteNotFoundCode int = 404
 swagger:response deleteSiteNotFound
 */
 type DeleteSiteNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -117,6 +122,17 @@ type DeleteSiteNotFound struct {
 func NewDeleteSiteNotFound() *DeleteSiteNotFound {
 
 	return &DeleteSiteNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the delete site not found response
+func (o *DeleteSiteNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteSiteNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete site not found response
+func (o *DeleteSiteNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the delete site not found response
@@ -133,6 +149,13 @@ func (o *DeleteSiteNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *DeleteSiteNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -148,6 +171,10 @@ swagger:response deleteSiteDefault
 */
 type DeleteSiteDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -177,6 +204,17 @@ func (o *DeleteSiteDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the delete site default response
+func (o *DeleteSiteDefault) WithConfigurationVersion(configurationVersion int64) *DeleteSiteDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the delete site default response
+func (o *DeleteSiteDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the delete site default response
 func (o *DeleteSiteDefault) WithPayload(payload *models.Error) *DeleteSiteDefault {
 	o.Payload = payload
@@ -190,6 +228,13 @@ func (o *DeleteSiteDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *DeleteSiteDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

@@ -145,9 +145,9 @@ func (h *GetHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.GetHTTPR
 	v, rule, err := h.Client.Configuration.GetHTTPRequestRule(params.ID, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_request_rule.NewGetHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_request_rule.NewGetHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return http_request_rule.NewGetHTTPRequestRuleOK().WithPayload(&http_request_rule.GetHTTPRequestRuleOKBody{Version: v, Data: rule})
+	return http_request_rule.NewGetHTTPRequestRuleOK().WithPayload(&http_request_rule.GetHTTPRequestRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response
@@ -160,9 +160,9 @@ func (h *GetHTTPRequestRulesHandlerImpl) Handle(params http_request_rule.GetHTTP
 	v, rules, err := h.Client.Configuration.GetHTTPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_request_rule.NewGetHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+		return http_request_rule.NewGetHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return http_request_rule.NewGetHTTPRequestRulesOK().WithPayload(&http_request_rule.GetHTTPRequestRulesOKBody{Version: v, Data: rules})
+	return http_request_rule.NewGetHTTPRequestRulesOK().WithPayload(&http_request_rule.GetHTTPRequestRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

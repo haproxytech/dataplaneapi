@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceGlobalBadRequestCode int = 400
 swagger:response replaceGlobalBadRequest
 */
 type ReplaceGlobalBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceGlobalBadRequest struct {
 func NewReplaceGlobalBadRequest() *ReplaceGlobalBadRequest {
 
 	return &ReplaceGlobalBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace global bad request response
+func (o *ReplaceGlobalBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceGlobalBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace global bad request response
+func (o *ReplaceGlobalBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace global bad request response
@@ -173,6 +189,13 @@ func (o *ReplaceGlobalBadRequest) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceGlobalBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(400)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -188,6 +211,10 @@ swagger:response replaceGlobalDefault
 */
 type ReplaceGlobalDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -217,6 +244,17 @@ func (o *ReplaceGlobalDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace global default response
+func (o *ReplaceGlobalDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceGlobalDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace global default response
+func (o *ReplaceGlobalDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace global default response
 func (o *ReplaceGlobalDefault) WithPayload(payload *models.Error) *ReplaceGlobalDefault {
 	o.Payload = payload
@@ -230,6 +268,13 @@ func (o *ReplaceGlobalDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceGlobalDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

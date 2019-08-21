@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const ReplaceBindBadRequestCode int = 400
 swagger:response replaceBindBadRequest
 */
 type ReplaceBindBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type ReplaceBindBadRequest struct {
 func NewReplaceBindBadRequest() *ReplaceBindBadRequest {
 
 	return &ReplaceBindBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace bind bad request response
+func (o *ReplaceBindBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceBindBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace bind bad request response
+func (o *ReplaceBindBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace bind bad request response
@@ -172,6 +188,13 @@ func (o *ReplaceBindBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceBindBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const ReplaceBindNotFoundCode int = 404
 swagger:response replaceBindNotFound
 */
 type ReplaceBindNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type ReplaceBindNotFound struct {
 func NewReplaceBindNotFound() *ReplaceBindNotFound {
 
 	return &ReplaceBindNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the replace bind not found response
+func (o *ReplaceBindNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceBindNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace bind not found response
+func (o *ReplaceBindNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the replace bind not found response
@@ -217,6 +255,13 @@ func (o *ReplaceBindNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *ReplaceBindNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response replaceBindDefault
 */
 type ReplaceBindDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *ReplaceBindDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the replace bind default response
+func (o *ReplaceBindDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceBindDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the replace bind default response
+func (o *ReplaceBindDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the replace bind default response
 func (o *ReplaceBindDefault) WithPayload(payload *models.Error) *ReplaceBindDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *ReplaceBindDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *ReplaceBindDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

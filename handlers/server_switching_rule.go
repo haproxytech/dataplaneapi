@@ -146,9 +146,9 @@ func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.
 	v, rule, err := h.Client.Configuration.GetServerSwitchingRule(params.ID, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(&server_switching_rule.GetServerSwitchingRuleOKBody{Version: v, Data: rule})
+	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(&server_switching_rule.GetServerSwitchingRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response
@@ -161,9 +161,9 @@ func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule
 	v, rules, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
+		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
-	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: rules})
+	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
 //Handle executing the request and returning a response

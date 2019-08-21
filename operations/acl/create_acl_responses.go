@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -146,6 +147,10 @@ const CreateACLBadRequestCode int = 400
 swagger:response createAclBadRequest
 */
 type CreateACLBadRequest struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -157,6 +162,17 @@ type CreateACLBadRequest struct {
 func NewCreateACLBadRequest() *CreateACLBadRequest {
 
 	return &CreateACLBadRequest{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create Acl bad request response
+func (o *CreateACLBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateACLBadRequest {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create Acl bad request response
+func (o *CreateACLBadRequest) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create Acl bad request response
@@ -172,6 +188,13 @@ func (o *CreateACLBadRequest) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateACLBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(400)
 	if o.Payload != nil {
@@ -190,6 +213,10 @@ const CreateACLConflictCode int = 409
 swagger:response createAclConflict
 */
 type CreateACLConflict struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -201,6 +228,17 @@ type CreateACLConflict struct {
 func NewCreateACLConflict() *CreateACLConflict {
 
 	return &CreateACLConflict{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the create Acl conflict response
+func (o *CreateACLConflict) WithConfigurationVersion(configurationVersion int64) *CreateACLConflict {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create Acl conflict response
+func (o *CreateACLConflict) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the create Acl conflict response
@@ -217,6 +255,13 @@ func (o *CreateACLConflict) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *CreateACLConflict) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(409)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -232,6 +277,10 @@ swagger:response createAclDefault
 */
 type CreateACLDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -261,6 +310,17 @@ func (o *CreateACLDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the create Acl default response
+func (o *CreateACLDefault) WithConfigurationVersion(configurationVersion int64) *CreateACLDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the create Acl default response
+func (o *CreateACLDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the create Acl default response
 func (o *CreateACLDefault) WithPayload(payload *models.Error) *CreateACLDefault {
 	o.Payload = payload
@@ -274,6 +334,13 @@ func (o *CreateACLDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *CreateACLDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

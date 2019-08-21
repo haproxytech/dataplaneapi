@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetLogTargetsOKCode int = 200
 swagger:response getLogTargetsOK
 */
 type GetLogTargetsOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetLogTargetsOK struct {
 func NewGetLogTargetsOK() *GetLogTargetsOK {
 
 	return &GetLogTargetsOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get log targets o k response
+func (o *GetLogTargetsOK) WithConfigurationVersion(configurationVersion int64) *GetLogTargetsOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get log targets o k response
+func (o *GetLogTargetsOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get log targets o k response
@@ -63,6 +79,13 @@ func (o *GetLogTargetsOK) SetPayload(payload *GetLogTargetsOKBody) {
 // WriteResponse to the client
 func (o *GetLogTargetsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(200)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -78,6 +101,10 @@ swagger:response getLogTargetsDefault
 */
 type GetLogTargetsDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -107,6 +134,17 @@ func (o *GetLogTargetsDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get log targets default response
+func (o *GetLogTargetsDefault) WithConfigurationVersion(configurationVersion int64) *GetLogTargetsDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get log targets default response
+func (o *GetLogTargetsDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get log targets default response
 func (o *GetLogTargetsDefault) WithPayload(payload *models.Error) *GetLogTargetsDefault {
 	o.Payload = payload
@@ -120,6 +158,13 @@ func (o *GetLogTargetsDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetLogTargetsDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {

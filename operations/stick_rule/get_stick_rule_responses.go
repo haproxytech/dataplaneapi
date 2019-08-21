@@ -24,6 +24,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/models"
 )
@@ -36,6 +37,10 @@ const GetStickRuleOKCode int = 200
 swagger:response getStickRuleOK
 */
 type GetStickRuleOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -47,6 +52,17 @@ type GetStickRuleOK struct {
 func NewGetStickRuleOK() *GetStickRuleOK {
 
 	return &GetStickRuleOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get stick rule o k response
+func (o *GetStickRuleOK) WithConfigurationVersion(configurationVersion int64) *GetStickRuleOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get stick rule o k response
+func (o *GetStickRuleOK) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get stick rule o k response
@@ -62,6 +78,13 @@ func (o *GetStickRuleOK) SetPayload(payload *GetStickRuleOKBody) {
 
 // WriteResponse to the client
 func (o *GetStickRuleOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(200)
 	if o.Payload != nil {
@@ -80,6 +103,10 @@ const GetStickRuleNotFoundCode int = 404
 swagger:response getStickRuleNotFound
 */
 type GetStickRuleNotFound struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -91,6 +118,17 @@ type GetStickRuleNotFound struct {
 func NewGetStickRuleNotFound() *GetStickRuleNotFound {
 
 	return &GetStickRuleNotFound{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get stick rule not found response
+func (o *GetStickRuleNotFound) WithConfigurationVersion(configurationVersion int64) *GetStickRuleNotFound {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get stick rule not found response
+func (o *GetStickRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get stick rule not found response
@@ -107,6 +145,13 @@ func (o *GetStickRuleNotFound) SetPayload(payload *models.Error) {
 // WriteResponse to the client
 func (o *GetStickRuleNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
 	rw.WriteHeader(404)
 	if o.Payload != nil {
 		payload := o.Payload
@@ -122,6 +167,10 @@ swagger:response getStickRuleDefault
 */
 type GetStickRuleDefault struct {
 	_statusCode int
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -151,6 +200,17 @@ func (o *GetStickRuleDefault) SetStatusCode(code int) {
 	o._statusCode = code
 }
 
+// WithConfigurationVersion adds the configurationVersion to the get stick rule default response
+func (o *GetStickRuleDefault) WithConfigurationVersion(configurationVersion int64) *GetStickRuleDefault {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get stick rule default response
+func (o *GetStickRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
 // WithPayload adds the payload to the get stick rule default response
 func (o *GetStickRuleDefault) WithPayload(payload *models.Error) *GetStickRuleDefault {
 	o.Payload = payload
@@ -164,6 +224,13 @@ func (o *GetStickRuleDefault) SetPayload(payload *models.Error) {
 
 // WriteResponse to the client
 func (o *GetStickRuleDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(o._statusCode)
 	if o.Payload != nil {
