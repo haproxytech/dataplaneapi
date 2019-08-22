@@ -422,10 +422,10 @@ func authenticateUser(user string, pass string, cli *client_native.HAProxyClient
 					return user, nil
 				}
 			}
-			return nil, errors.New(401, "Invalid password")
+			return nil, errors.New(401, "Invalid username/password")
 		}
 	}
-	return nil, errors.New(401, "User does not exist")
+	return nil, errors.New(401, "Invalid username/password")
 }
 
 func configureLogging() {
