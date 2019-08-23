@@ -5698,7 +5698,6 @@ func init() {
         },
         "cookie": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "mode": {
               "value": "http"
@@ -5950,7 +5949,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[^\\s]+$",
           "x-display-name": "Backend Name",
           "x-dynamic-enum": {
             "operation": "getBackends",
@@ -6186,8 +6185,7 @@ func init() {
           "x-display-name": "Continous Statistics"
         },
         "cookie": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+          "type": "string"
         },
         "default_backend": {
           "type": "string",
@@ -7499,6 +7497,27 @@ func init() {
               "x-nullable": true
             }
           }
+        }
+      },
+      "example": {
+        "api": {
+          "build_date": "2019-08-21T17:31:56.000Z",
+          "version": "v1.2.1 45a3288.dev"
+        },
+        "system": {
+          "cpu_info": {
+            "model": "Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz",
+            "num_cpus": 4
+          },
+          "hostname": "test",
+          "mem_info": {
+            "dataplaneapi_memory": 44755536,
+            "free_memory": 5790642176,
+            "total_memory": 16681517056
+          },
+          "os_string": "Linux 4.15.0-58-generic #64-Ubuntu SMP Tue Aug 6 11:12:41 UTC 2019",
+          "time": 1566401525,
+          "uptime": 87340
         }
       }
     },
@@ -17473,7 +17492,6 @@ func init() {
         },
         "cookie": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "mode": {
               "value": "http"
@@ -17725,7 +17743,7 @@ func init() {
         },
         "name": {
           "type": "string",
-          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "pattern": "^[^\\s]+$",
           "x-display-name": "Backend Name",
           "x-dynamic-enum": {
             "operation": "getBackends",
@@ -17963,8 +17981,7 @@ func init() {
           "x-display-name": "Continous Statistics"
         },
         "cookie": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+          "type": "string"
         },
         "default_backend": {
           "type": "string",
@@ -19276,6 +19293,27 @@ func init() {
               "x-nullable": true
             }
           }
+        }
+      },
+      "example": {
+        "api": {
+          "build_date": "2019-08-21T17:31:56.000Z",
+          "version": "v1.2.1 45a3288.dev"
+        },
+        "system": {
+          "cpu_info": {
+            "model": "Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz",
+            "num_cpus": 4
+          },
+          "hostname": "test",
+          "mem_info": {
+            "dataplaneapi_memory": 44755536,
+            "free_memory": 5790642176,
+            "total_memory": 16681517056
+          },
+          "os_string": "Linux 4.15.0-58-generic #64-Ubuntu SMP Tue Aug 6 11:12:41 UTC 2019",
+          "time": 1566401525,
+          "uptime": 87340
         }
       }
     },
