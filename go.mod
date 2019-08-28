@@ -13,7 +13,7 @@ require (
 	github.com/go-openapi/swag v0.19.0
 	github.com/go-openapi/validate v0.19.0
 	github.com/haproxytech/client-native v1.2.5
-	github.com/haproxytech/config-parser v1.1.4
+	github.com/haproxytech/config-parser v1.1.5
 	github.com/haproxytech/models v1.2.3-0.20190823114805-b3bd06b1c569
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/rs/cors v1.6.0
