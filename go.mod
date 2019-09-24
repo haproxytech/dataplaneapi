@@ -17,6 +17,7 @@ require (
 	github.com/haproxytech/models v1.2.3
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/rs/cors v1.6.0
+	github.com/shirou/gopsutil v2.18.12+incompatible
 	github.com/sirupsen/logrus v1.4.2
 	golang.org/x/net v0.0.0-20190607181551-461777fb6f67
 	golang.org/x/sys v0.0.0-20190422165155-953cdadca894

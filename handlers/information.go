@@ -24,6 +24,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/shirou/gopsutil/host"
+	"github.com/shirou/gopsutil/mem"
 	"golang.org/x/sys/unix"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -85,16 +87,17 @@ func (h *GetInfoHandlerImpl) Handle(params information.GetInfoParams, principal 
 			sys.Hostname = hName
 		}
 
-		sysInfo := &unix.Sysinfo_t{}
-		err = unix.Sysinfo(sysInfo)
-
 		sys.MemInfo = &models.InfoSystemMemInfo{}
 		sys.CPUInfo = &models.InfoSystemCPUInfo{}
 
+		mem, err := mem.VirtualMemory()
 		if err == nil {
-			sys.Uptime = &sysInfo.Uptime
-			sys.MemInfo.TotalMemory = int64(sysInfo.Totalram * uint64(sysInfo.Unit))
-			sys.MemInfo.FreeMemory = int64(sysInfo.Freeram * uint64(sysInfo.Unit))
+			sys.MemInfo.TotalMemory = int64(mem.Total)
+			sys.MemInfo.FreeMemory = int64(mem.Free)
+		}
+		if uptime, err := host.Uptime(); err == nil {
+			uptimeInt64 := int64(uptime)
+			sys.Uptime = &uptimeInt64
 		}
 
 		sys.CPUInfo.NumCpus = int64(runtime.NumCPU())
