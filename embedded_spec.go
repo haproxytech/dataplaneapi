@@ -6976,6 +6976,15 @@ func init() {
             }
           }
         },
+        "query-fmt": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-query"
+            }
+          }
+        },
         "redir_code": {
           "type": "integer",
           "enum": [
@@ -7062,12 +7071,23 @@ func init() {
             "del-header",
             "set-header",
             "set-log-level",
+            "set-query",
+            "set-uri",
             "set-var",
             "send-spoe-group",
             "add-acl",
             "del-acl"
           ],
           "x-nullable": false
+        },
+        "uri-fmt": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-uri"
+            }
+          }
         },
         "var_expr": {
           "type": "string",
@@ -18772,6 +18792,15 @@ func init() {
             }
           }
         },
+        "query-fmt": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-query"
+            }
+          }
+        },
         "redir_code": {
           "type": "integer",
           "enum": [
@@ -18858,12 +18887,23 @@ func init() {
             "del-header",
             "set-header",
             "set-log-level",
+            "set-query",
+            "set-uri",
             "set-var",
             "send-spoe-group",
             "add-acl",
             "del-acl"
           ],
           "x-nullable": false
+        },
+        "uri-fmt": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-uri"
+            }
+          }
         },
         "var_expr": {
           "type": "string",
