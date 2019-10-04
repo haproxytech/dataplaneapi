@@ -8577,6 +8577,20 @@ func init() {
           "maximum": 65535,
           "x-nullable": true
         },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "ssl": {
           "type": "string",
           "enum": [
@@ -20393,6 +20407,20 @@ func init() {
           "maximum": 65535,
           "minimum": 0,
           "x-nullable": true
+        },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "ssl": {
           "type": "string",
