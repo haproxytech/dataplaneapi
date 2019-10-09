@@ -6030,6 +6030,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
         "alpn": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -6182,7 +6185,7 @@ func init() {
           "enum": [
             "enabled"
           ],
-          "x-display-name": "Continous Statistics"
+          "x-display-name": "Continuous Statistics"
         },
         "cookie": {
           "type": "string"
@@ -6976,6 +6979,15 @@ func init() {
             }
           }
         },
+        "path_fmt": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-path"
+            }
+          }
+        },
         "query-fmt": {
           "type": "string",
           "x-dependency": {
@@ -7071,6 +7083,7 @@ func init() {
             "del-header",
             "set-header",
             "set-log-level",
+            "set-path",
             "set-query",
             "set-uri",
             "set-var",
@@ -8511,6 +8524,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
+        },
+        "allow_0rtt": {
+          "type": "boolean"
         },
         "backup": {
           "type": "string",
@@ -17858,6 +17874,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
         "alpn": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -18012,7 +18031,7 @@ func init() {
           "enum": [
             "enabled"
           ],
-          "x-display-name": "Continous Statistics"
+          "x-display-name": "Continuous Statistics"
         },
         "cookie": {
           "type": "string"
@@ -18806,6 +18825,15 @@ func init() {
             }
           }
         },
+        "path_fmt": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-path"
+            }
+          }
+        },
         "query-fmt": {
           "type": "string",
           "x-dependency": {
@@ -18901,6 +18929,7 @@ func init() {
             "del-header",
             "set-header",
             "set-log-level",
+            "set-path",
             "set-query",
             "set-uri",
             "set-var",
@@ -20341,6 +20370,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
+        },
+        "allow_0rtt": {
+          "type": "boolean"
         },
         "backup": {
           "type": "string",
