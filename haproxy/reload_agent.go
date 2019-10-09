@@ -56,6 +56,9 @@ func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, conf
 	ra.reloadCmd = reloadCmd
 	ra.restartCmd = restartCmd
 	ra.configFile = configFile
+	if delay == 0 {
+		delay = 5
+	}
 	ra.delay = delay
 	ra.lkgConfigFile = configFile + ".lkg"
 
