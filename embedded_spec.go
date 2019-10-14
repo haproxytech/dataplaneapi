@@ -4999,30 +4999,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/info": {
-      "get": {
-        "description": "Return HAProxy process information",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Information"
-        ],
-        "summary": "Return HAProxy process information",
-        "operationId": "getHaproxyProcessInfo",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/process_info"
-            }
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      }
-    },
     "/services/haproxy/reloads": {
       "get": {
         "description": "Returns a list of HAProxy reloads.",
@@ -5074,6 +5050,54 @@ func init() {
           },
           "404": {
             "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime": {
+      "get": {
+        "description": "Returns a list of endpoints to be used for advanced runtime settings of HAProxy objects.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return list of HAProxy advanced runtime endpoints",
+        "operationId": "getRuntimeEndpoints",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/endpoints"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/info": {
+      "get": {
+        "description": "Return HAProxy process information",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Information"
+        ],
+        "summary": "Return HAProxy process information",
+        "operationId": "getHaproxyProcessInfo",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/process_infos"
+            }
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -8467,40 +8491,276 @@ func init() {
       },
       "x-go-name": "NativeStats"
     },
-    "process_info": {
+    "process_infos": {
       "description": "General HAProxy process information",
-      "type": "object",
+      "type": "array",
       "title": "HAProxy Information",
-      "properties": {
-        "haproxy": {
-          "type": "object",
-          "properties": {
-            "pid": {
-              "description": "Process id of the replying worker process",
-              "type": "integer",
-              "x-nullable": true
+      "items": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "info": {
+            "type": "object",
+            "properties": {
+              "active_peers": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "busy_polling": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "bytes_out_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "compress_bps_in": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "compress_bps_out": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "compress_bps_rate_lim": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "conn_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "conn_rate_limit": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "connected_peers": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "cum_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "cum_req": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "cum_ssl_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "curr_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "curr_ssl_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "dropped_logs": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "failed_resolutions": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "hard_max_conn": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "idle_pct": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "jobs": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "listeners": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_conn": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_conn_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_pipes": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_sess_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_sock": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_ssl_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_ssl_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_zlib_mem_usage": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "mem_max_mb": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "nbthread": {
+                "description": "Number of threads",
+                "type": "integer",
+                "x-display-name": "Number of Threads",
+                "x-nullable": true
+              },
+              "node": {
+                "type": "string"
+              },
+              "pid": {
+                "description": "Process id of the replying worker process",
+                "type": "integer",
+                "x-display-name": "PID",
+                "x-nullable": true
+              },
+              "pipes_free": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pipes_used": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pool_alloc_mb": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pool_failed": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pool_used_mb": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "process_num": {
+                "description": "Process number",
+                "type": "integer",
+                "x-display-name": "Process Number",
+                "x-nullable": true
+              },
+              "processes": {
+                "description": "Number of spawned processes",
+                "type": "integer",
+                "x-display-name": "Number of processes",
+                "x-nullable": true
+              },
+              "release_date": {
+                "description": "HAProxy version release date",
+                "type": "string",
+                "format": "date"
+              },
+              "run_queue": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "sess_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "sess_rate_limit": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_backend_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_backend_max_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_cache_lookups": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_cache_misses": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_frontend_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_frontend_max_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_frontend_session_reuse": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_rate_limit": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "stopping": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "tasks": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "total_bytes_out": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ulimit_n": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "unstoppable": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "uptime": {
+                "description": "HAProxy uptime in s",
+                "type": "integer",
+                "x-nullable": true
+              },
+              "version": {
+                "description": "HAProxy version string",
+                "type": "string"
+              },
+              "zlib_mem_usage": {
+                "type": "integer",
+                "x-nullable": true
+              }
             },
-            "processes": {
-              "description": "Number of spawned processes",
-              "type": "integer",
-              "x-nullable": true
-            },
-            "release_date": {
-              "description": "HAProxy version release date",
-              "type": "string",
-              "format": "date"
-            },
-            "uptime": {
-              "description": "HAProxy uptime in s",
-              "type": "integer",
-              "x-nullable": true
-            },
-            "version": {
-              "description": "HAProxy version string",
-              "type": "string"
-            }
+            "x-go-name": "ProcessInfoItem"
+          },
+          "runtimeAPI": {
+            "type": "string"
           }
-        }
+        },
+        "x-go-name": "ProcessInfo"
       },
       "example": {
         "haproxy": {
@@ -16640,39 +16900,6 @@ func init() {
         }
       }
     },
-    "/services/haproxy/info": {
-      "get": {
-        "description": "Return HAProxy process information",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Information"
-        ],
-        "summary": "Return HAProxy process information",
-        "operationId": "getHaproxyProcessInfo",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/process_info"
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "integer",
-                "description": "Configuration file version"
-              }
-            }
-          }
-        }
-      }
-    },
     "/services/haproxy/reloads": {
       "get": {
         "description": "Returns a list of HAProxy reloads.",
@@ -16741,6 +16968,72 @@ func init() {
                 "type": "integer",
                 "description": "Configuration file version"
               }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime": {
+      "get": {
+        "description": "Returns a list of endpoints to be used for advanced runtime settings of HAProxy objects.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return list of HAProxy advanced runtime endpoints",
+        "operationId": "getRuntimeEndpoints",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/endpoints"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/info": {
+      "get": {
+        "description": "Return HAProxy process information",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Information"
+        ],
+        "summary": "Return HAProxy process information",
+        "operationId": "getHaproxyProcessInfo",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/process_infos"
             }
           },
           "default": {
@@ -20399,40 +20692,276 @@ func init() {
       },
       "x-go-name": "NativeStats"
     },
-    "process_info": {
+    "process_infos": {
       "description": "General HAProxy process information",
-      "type": "object",
+      "type": "array",
       "title": "HAProxy Information",
-      "properties": {
-        "haproxy": {
-          "type": "object",
-          "properties": {
-            "pid": {
-              "description": "Process id of the replying worker process",
-              "type": "integer",
-              "x-nullable": true
+      "items": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "info": {
+            "type": "object",
+            "properties": {
+              "active_peers": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "busy_polling": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "bytes_out_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "compress_bps_in": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "compress_bps_out": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "compress_bps_rate_lim": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "conn_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "conn_rate_limit": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "connected_peers": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "cum_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "cum_req": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "cum_ssl_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "curr_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "curr_ssl_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "dropped_logs": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "failed_resolutions": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "hard_max_conn": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "idle_pct": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "jobs": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "listeners": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_conn": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_conn_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_pipes": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_sess_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_sock": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_ssl_conns": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_ssl_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "max_zlib_mem_usage": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "mem_max_mb": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "nbthread": {
+                "description": "Number of threads",
+                "type": "integer",
+                "x-display-name": "Number of Threads",
+                "x-nullable": true
+              },
+              "node": {
+                "type": "string"
+              },
+              "pid": {
+                "description": "Process id of the replying worker process",
+                "type": "integer",
+                "x-display-name": "PID",
+                "x-nullable": true
+              },
+              "pipes_free": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pipes_used": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pool_alloc_mb": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pool_failed": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "pool_used_mb": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "process_num": {
+                "description": "Process number",
+                "type": "integer",
+                "x-display-name": "Process Number",
+                "x-nullable": true
+              },
+              "processes": {
+                "description": "Number of spawned processes",
+                "type": "integer",
+                "x-display-name": "Number of processes",
+                "x-nullable": true
+              },
+              "release_date": {
+                "description": "HAProxy version release date",
+                "type": "string",
+                "format": "date"
+              },
+              "run_queue": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "sess_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "sess_rate_limit": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_backend_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_backend_max_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_cache_lookups": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_cache_misses": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_frontend_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_frontend_max_key_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_frontend_session_reuse": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_rate": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ssl_rate_limit": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "stopping": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "tasks": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "total_bytes_out": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "ulimit_n": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "unstoppable": {
+                "type": "integer",
+                "x-nullable": true
+              },
+              "uptime": {
+                "description": "HAProxy uptime in s",
+                "type": "integer",
+                "x-nullable": true
+              },
+              "version": {
+                "description": "HAProxy version string",
+                "type": "string"
+              },
+              "zlib_mem_usage": {
+                "type": "integer",
+                "x-nullable": true
+              }
             },
-            "processes": {
-              "description": "Number of spawned processes",
-              "type": "integer",
-              "x-nullable": true
-            },
-            "release_date": {
-              "description": "HAProxy version release date",
-              "type": "string",
-              "format": "date"
-            },
-            "uptime": {
-              "description": "HAProxy uptime in s",
-              "type": "integer",
-              "x-nullable": true
-            },
-            "version": {
-              "description": "HAProxy version string",
-              "type": "string"
-            }
+            "x-go-name": "ProcessInfoItem"
+          },
+          "runtimeAPI": {
+            "type": "string"
           }
-        }
+        },
+        "x-go-name": "ProcessInfo"
       },
       "example": {
         "haproxy": {

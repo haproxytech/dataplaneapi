@@ -188,6 +188,15 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 		return discovery.NewGetConfigurationEndpointsOK().WithPayload(ends)
 	})
+	api.DiscoveryGetRuntimeEndpointsHandler = discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
+		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
+		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
+		if err != nil {
+			e := misc.HandleError(err)
+			return discovery.NewGetRuntimeEndpointsDefault(int(*e.Code)).WithPayload(e)
+		}
+		return discovery.NewGetRuntimeEndpointsOK().WithPayload(ends)
+	})
 	api.DiscoveryGetHaproxyEndpointsHandler = discovery.GetHaproxyEndpointsHandlerFunc(func(params discovery.GetHaproxyEndpointsParams, principal interface{}) middleware.Responder {
 		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
 		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)

@@ -259,6 +259,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ReloadsGetReloadsHandler: reloads.GetReloadsHandlerFunc(func(params reloads.GetReloadsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ReloadsGetReloads has not yet been implemented")
 		}),
+		DiscoveryGetRuntimeEndpointsHandler: discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation DiscoveryGetRuntimeEndpoints has not yet been implemented")
+		}),
 		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerGetServer has not yet been implemented")
 		}),
@@ -542,6 +545,8 @@ type DataPlaneAPI struct {
 	ReloadsGetReloadHandler reloads.GetReloadHandler
 	// ReloadsGetReloadsHandler sets the operation handler for the get reloads operation
 	ReloadsGetReloadsHandler reloads.GetReloadsHandler
+	// DiscoveryGetRuntimeEndpointsHandler sets the operation handler for the get runtime endpoints operation
+	DiscoveryGetRuntimeEndpointsHandler discovery.GetRuntimeEndpointsHandler
 	// ServerGetServerHandler sets the operation handler for the get server operation
 	ServerGetServerHandler server.GetServerHandler
 	// ServerSwitchingRuleGetServerSwitchingRuleHandler sets the operation handler for the get server switching rule operation
@@ -929,6 +934,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.ReloadsGetReloadsHandler == nil {
 		unregistered = append(unregistered, "reloads.GetReloadsHandler")
+	}
+
+	if o.DiscoveryGetRuntimeEndpointsHandler == nil {
+		unregistered = append(unregistered, "discovery.GetRuntimeEndpointsHandler")
 	}
 
 	if o.ServerGetServerHandler == nil {
@@ -1466,7 +1475,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/info"] = information.NewGetHaproxyProcessInfo(o.context, o.InformationGetHaproxyProcessInfoHandler)
+	o.handlers["GET"]["/services/haproxy/runtime/info"] = information.NewGetHaproxyProcessInfo(o.context, o.InformationGetHaproxyProcessInfoHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1492,6 +1501,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/reloads"] = reloads.NewGetReloads(o.context, o.ReloadsGetReloadsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime"] = discovery.NewGetRuntimeEndpoints(o.context, o.DiscoveryGetRuntimeEndpointsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

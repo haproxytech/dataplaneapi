@@ -54,10 +54,7 @@ func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyP
 		return information.NewGetHaproxyProcessInfoDefault(int(misc.ErrHTTPInternalServerError)).WithPayload(e)
 	}
 
-	data := models.ProcessInfo{}
-	data.Haproxy = &info[0]
-
-	return information.NewGetHaproxyProcessInfoOK().WithPayload(&data)
+	return information.NewGetHaproxyProcessInfoOK().WithPayload(info)
 }
 
 //GetInfoHandlerImpl implementation of the GetInfoHandler interface
@@ -140,15 +137,4 @@ func parseCPUModel() string {
 	}
 
 	return ""
-}
-
-func cutTrailingBytes(arr []byte) []byte {
-	r := make([]byte, len(arr))
-	for _, b := range arr {
-		if b == 0 {
-			continue
-		}
-		r = append(r, b)
-	}
-	return r
 }

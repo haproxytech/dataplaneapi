@@ -41,7 +41,7 @@ type GetHaproxyProcessInfoOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.ProcessInfo `json:"body,omitempty"`
+	Payload models.ProcessInfos `json:"body,omitempty"`
 }
 
 // NewGetHaproxyProcessInfoOK creates GetHaproxyProcessInfoOK with default headers values
@@ -51,13 +51,13 @@ func NewGetHaproxyProcessInfoOK() *GetHaproxyProcessInfoOK {
 }
 
 // WithPayload adds the payload to the get haproxy process info o k response
-func (o *GetHaproxyProcessInfoOK) WithPayload(payload *models.ProcessInfo) *GetHaproxyProcessInfoOK {
+func (o *GetHaproxyProcessInfoOK) WithPayload(payload models.ProcessInfos) *GetHaproxyProcessInfoOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get haproxy process info o k response
-func (o *GetHaproxyProcessInfoOK) SetPayload(payload *models.ProcessInfo) {
+func (o *GetHaproxyProcessInfoOK) SetPayload(payload models.ProcessInfos) {
 	o.Payload = payload
 }
 
@@ -65,11 +65,14 @@ func (o *GetHaproxyProcessInfoOK) SetPayload(payload *models.ProcessInfo) {
 func (o *GetHaproxyProcessInfoOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.ProcessInfos{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 
