@@ -51,9 +51,9 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "1.2"
+    "version": "2.0"
   },
-  "basePath": "/v1",
+  "basePath": "/v2",
   "paths": {
     "/": {
       "get": {
@@ -5697,12 +5697,12 @@ func init() {
           "x-nullable": true
         },
         "cookie": {
-          "type": "string",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
-          }
+          },
+          "$ref": "#/definitions/cookie"
         },
         "default_server": {
           "$ref": "#/definitions/default_server"
@@ -6046,6 +6046,7 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
+          "minimum": 1,
           "x-nullable": true
         },
         "process": {
@@ -6113,6 +6114,62 @@ func init() {
         "$ref": "#/definitions/bind"
       }
     },
+    "cookie": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "domain": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "dynamic": {
+          "type": "boolean"
+        },
+        "httponly": {
+          "type": "boolean"
+        },
+        "indirect": {
+          "type": "boolean"
+        },
+        "maxidle": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]"
+        },
+        "maxlife": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "nocache": {
+          "type": "boolean"
+        },
+        "postonly": {
+          "type": "boolean"
+        },
+        "preserve": {
+          "type": "boolean"
+        },
+        "secure": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "rewrite",
+            "insert",
+            "prefix"
+          ]
+        }
+      }
+    },
     "default_server": {
       "type": "object",
       "properties": {
@@ -6127,6 +6184,7 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
+          "minimum": 1,
           "x-nullable": true
         },
         "rise": {
@@ -6188,7 +6246,7 @@ func init() {
           "x-display-name": "Continuous Statistics"
         },
         "cookie": {
-          "type": "string"
+          "$ref": "#/definitions/cookie"
         },
         "default_backend": {
           "type": "string",
@@ -8525,6 +8583,35 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
         "allow_0rtt": {
           "type": "boolean"
         },
@@ -8591,6 +8678,7 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
+          "minimum": 1,
           "x-nullable": true
         },
         "send-proxy": {
@@ -9428,9 +9516,9 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "1.2"
+    "version": "2.0"
   },
-  "basePath": "/v1",
+  "basePath": "/v2",
   "paths": {
     "/": {
       "get": {
@@ -17541,12 +17629,12 @@ func init() {
           "x-nullable": true
         },
         "cookie": {
-          "type": "string",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
-          }
+          },
+          "$ref": "#/definitions/cookie"
         },
         "default_server": {
           "$ref": "#/definitions/default_server"
@@ -17890,7 +17978,7 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
-          "minimum": 0,
+          "minimum": 1,
           "x-nullable": true
         },
         "process": {
@@ -17958,6 +18046,62 @@ func init() {
         "$ref": "#/definitions/bind"
       }
     },
+    "cookie": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "domain": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "dynamic": {
+          "type": "boolean"
+        },
+        "httponly": {
+          "type": "boolean"
+        },
+        "indirect": {
+          "type": "boolean"
+        },
+        "maxidle": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]"
+        },
+        "maxlife": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "nocache": {
+          "type": "boolean"
+        },
+        "postonly": {
+          "type": "boolean"
+        },
+        "preserve": {
+          "type": "boolean"
+        },
+        "secure": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "rewrite",
+            "insert",
+            "prefix"
+          ]
+        }
+      }
+    },
     "default_server": {
       "type": "object",
       "properties": {
@@ -17972,7 +18116,7 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
-          "minimum": 0,
+          "minimum": 1,
           "x-nullable": true
         },
         "rise": {
@@ -18034,7 +18178,7 @@ func init() {
           "x-display-name": "Continuous Statistics"
         },
         "cookie": {
-          "type": "string"
+          "$ref": "#/definitions/cookie"
         },
         "default_backend": {
           "type": "string",
@@ -20371,6 +20515,35 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
         "allow_0rtt": {
           "type": "boolean"
         },
@@ -20437,7 +20610,7 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
-          "minimum": 0,
+          "minimum": 1,
           "x-nullable": true
         },
         "send-proxy": {

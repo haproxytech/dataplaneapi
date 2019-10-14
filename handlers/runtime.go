@@ -21,7 +21,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/models"
 )
 
@@ -29,7 +29,7 @@ import (
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
 	"frontend": []string{"Maxconn"},
-	"server":   []string{"Weigth", "Address", "Port", "Maintenance"},
+	"server":   []string{"Weigth", "Address", "Port", "Maintenance", "AgentCheck", "AgentAddr", "AgentSend"},
 }
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
@@ -127,6 +127,36 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 							// we have error's in runtime API changes, bail and reload
 							return true
 						}
+					case "AgentCheck":
+						aCheck := fieldValue.String()
+						if aCheck == "enabled" {
+							err := client.Runtime.EnableAgentCheck(parentName, vData.Name)
+							if err != nil {
+								// we have error's in runtime API changes, bail and reload
+								return true
+							}
+						}
+						if aCheck == "disabled" {
+							err := client.Runtime.DisableAgentCheck(parentName, vData.Name)
+							if err != nil {
+								// we have error's in runtime API changes, bail and reload
+								return true
+							}
+						}
+					case "AgentAddr":
+						aAddr := fieldValue.String()
+						err := client.Runtime.SetServerAgentAddr(parentName, vData.Name, aAddr)
+						if err != nil {
+							// we have error's in runtime API changes, bail and reload
+							return true
+						}
+					case "AgentSend":
+						aSend := fieldValue.String()
+						err := client.Runtime.SetServerAgentSend(parentName, vData.Name, aSend)
+						if err != nil {
+							// we have error's in runtime API changes, bail and reload
+							return true
+						}
 					}
 				}
 			}
@@ -165,6 +195,11 @@ func compareObjects(data, ondisk interface{}) []string {
 
 			dataKind = dataField.Kind()
 			ondiskKind = ondiskField.Kind()
+
+			if dataKind != ondiskKind {
+				diff = append(diff, fName)
+				continue
+			}
 		}
 
 		switch dataKind {
