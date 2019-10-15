@@ -32,8 +32,8 @@ import (
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 
-	parser "github.com/haproxytech/config-parser"
-	"github.com/haproxytech/config-parser/types"
+	parser "github.com/haproxytech/config-parser/v2"
+	"github.com/haproxytech/config-parser/v2/types"
 
 	log "github.com/sirupsen/logrus"
 
