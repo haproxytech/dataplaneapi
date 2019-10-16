@@ -29,7 +29,7 @@ import (
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
 	"frontend": []string{"Maxconn"},
-	"server":   []string{"Weigth", "Address", "Port", "Maintenance", "AgentCheck", "AgentAddr", "AgentSend"},
+	"server":   []string{"Weight", "Address", "Port", "Maintenance", "AgentCheck", "AgentAddr", "AgentSend"},
 }
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
