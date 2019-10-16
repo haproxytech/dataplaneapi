@@ -5105,6 +5105,128 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/servers": {
+      "get": {
+        "description": "Returns an array of all servers' runtime settings.",
+        "tags": [
+          "Server",
+          "Backend options"
+        ],
+        "summary": "Return an array of runtime servers' setings",
+        "operationId": "getRuntimeServers",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/runtime_servers"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/servers/{name}": {
+      "get": {
+        "description": "Returns one server runtime settings by it's name in the specified backend.",
+        "tags": [
+          "Server",
+          "Backend options"
+        ],
+        "summary": "Return one server runtime settings",
+        "operationId": "getRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/runtime_server"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a server transient settings by it's name in the specified backend.",
+        "tags": [
+          "Server",
+          "Backend options"
+        ],
+        "summary": "Replace server transient settings",
+        "operationId": "replaceRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/runtime_server"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server transient settings replaced",
+            "schema": {
+              "$ref": "#/definitions/runtime_server"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/sites": {
       "get": {
         "description": "Returns an array of all configured sites.",
@@ -8828,6 +8950,65 @@ func init() {
       "title": "HAProxy Reloads Array",
       "items": {
         "$ref": "#/definitions/reload"
+      }
+    },
+    "runtime_server": {
+      "description": "Runtime transient server properties",
+      "type": "object",
+      "title": "Runtime Server",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "admin_state": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "maint",
+            "drain"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operational_state": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down",
+            "stopping"
+          ]
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-nullable": true,
+          "readOnly": true
+        }
+      },
+      "example": {
+        "address": "127.0.0.5",
+        "admin_state": "up",
+        "operational_state": "up",
+        "port": 80,
+        "server_id": 1,
+        "server_name": "web_server"
+      }
+    },
+    "runtime_servers": {
+      "description": "HAProxy runtime servers array",
+      "type": "array",
+      "title": "HAProxy Runtime Servers Array",
+      "items": {
+        "$ref": "#/definitions/runtime_server"
       }
     },
     "server": {
@@ -17051,6 +17232,182 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/servers": {
+      "get": {
+        "description": "Returns an array of all servers' runtime settings.",
+        "tags": [
+          "Server",
+          "Backend options"
+        ],
+        "summary": "Return an array of runtime servers' setings",
+        "operationId": "getRuntimeServers",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/runtime_servers"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/servers/{name}": {
+      "get": {
+        "description": "Returns one server runtime settings by it's name in the specified backend.",
+        "tags": [
+          "Server",
+          "Backend options"
+        ],
+        "summary": "Return one server runtime settings",
+        "operationId": "getRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/runtime_server"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a server transient settings by it's name in the specified backend.",
+        "tags": [
+          "Server",
+          "Backend options"
+        ],
+        "summary": "Replace server transient settings",
+        "operationId": "replaceRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/runtime_server"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server transient settings replaced",
+            "schema": {
+              "$ref": "#/definitions/runtime_server"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/sites": {
       "get": {
         "description": "Returns an array of all configured sites.",
@@ -21029,6 +21386,66 @@ func init() {
       "title": "HAProxy Reloads Array",
       "items": {
         "$ref": "#/definitions/reload"
+      }
+    },
+    "runtime_server": {
+      "description": "Runtime transient server properties",
+      "type": "object",
+      "title": "Runtime Server",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "admin_state": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "maint",
+            "drain"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operational_state": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down",
+            "stopping"
+          ]
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-nullable": true,
+          "readOnly": true
+        }
+      },
+      "example": {
+        "address": "127.0.0.5",
+        "admin_state": "up",
+        "operational_state": "up",
+        "port": 80,
+        "server_id": 1,
+        "server_name": "web_server"
+      }
+    },
+    "runtime_servers": {
+      "description": "HAProxy runtime servers array",
+      "type": "array",
+      "title": "HAProxy Runtime Servers Array",
+      "items": {
+        "$ref": "#/definitions/runtime_server"
       }
     },
     "server": {

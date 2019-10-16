@@ -262,6 +262,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DiscoveryGetRuntimeEndpointsHandler: discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetRuntimeEndpoints has not yet been implemented")
 		}),
+		ServerGetRuntimeServerHandler: server.GetRuntimeServerHandlerFunc(func(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ServerGetRuntimeServer has not yet been implemented")
+		}),
+		ServerGetRuntimeServersHandler: server.GetRuntimeServersHandlerFunc(func(params server.GetRuntimeServersParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ServerGetRuntimeServers has not yet been implemented")
+		}),
 		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerGetServer has not yet been implemented")
 		}),
@@ -351,6 +357,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation LogTargetReplaceLogTarget has not yet been implemented")
+		}),
+		ServerReplaceRuntimeServerHandler: server.ReplaceRuntimeServerHandlerFunc(func(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ServerReplaceRuntimeServer has not yet been implemented")
 		}),
 		ServerReplaceServerHandler: server.ReplaceServerHandlerFunc(func(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerReplaceServer has not yet been implemented")
@@ -547,6 +556,10 @@ type DataPlaneAPI struct {
 	ReloadsGetReloadsHandler reloads.GetReloadsHandler
 	// DiscoveryGetRuntimeEndpointsHandler sets the operation handler for the get runtime endpoints operation
 	DiscoveryGetRuntimeEndpointsHandler discovery.GetRuntimeEndpointsHandler
+	// ServerGetRuntimeServerHandler sets the operation handler for the get runtime server operation
+	ServerGetRuntimeServerHandler server.GetRuntimeServerHandler
+	// ServerGetRuntimeServersHandler sets the operation handler for the get runtime servers operation
+	ServerGetRuntimeServersHandler server.GetRuntimeServersHandler
 	// ServerGetServerHandler sets the operation handler for the get server operation
 	ServerGetServerHandler server.GetServerHandler
 	// ServerSwitchingRuleGetServerSwitchingRuleHandler sets the operation handler for the get server switching rule operation
@@ -607,6 +620,8 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleReplaceHTTPResponseRuleHandler http_response_rule.ReplaceHTTPResponseRuleHandler
 	// LogTargetReplaceLogTargetHandler sets the operation handler for the replace log target operation
 	LogTargetReplaceLogTargetHandler log_target.ReplaceLogTargetHandler
+	// ServerReplaceRuntimeServerHandler sets the operation handler for the replace runtime server operation
+	ServerReplaceRuntimeServerHandler server.ReplaceRuntimeServerHandler
 	// ServerReplaceServerHandler sets the operation handler for the replace server operation
 	ServerReplaceServerHandler server.ReplaceServerHandler
 	// ServerSwitchingRuleReplaceServerSwitchingRuleHandler sets the operation handler for the replace server switching rule operation
@@ -940,6 +955,14 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "discovery.GetRuntimeEndpointsHandler")
 	}
 
+	if o.ServerGetRuntimeServerHandler == nil {
+		unregistered = append(unregistered, "server.GetRuntimeServerHandler")
+	}
+
+	if o.ServerGetRuntimeServersHandler == nil {
+		unregistered = append(unregistered, "server.GetRuntimeServersHandler")
+	}
+
 	if o.ServerGetServerHandler == nil {
 		unregistered = append(unregistered, "server.GetServerHandler")
 	}
@@ -1058,6 +1081,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.LogTargetReplaceLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
+	}
+
+	if o.ServerReplaceRuntimeServerHandler == nil {
+		unregistered = append(unregistered, "server.ReplaceRuntimeServerHandler")
 	}
 
 	if o.ServerReplaceServerHandler == nil {
@@ -1510,6 +1537,16 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/runtime/servers/{name}"] = server.NewGetRuntimeServer(o.context, o.ServerGetRuntimeServerHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/servers"] = server.NewGetRuntimeServers(o.context, o.ServerGetRuntimeServersHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/servers/{name}"] = server.NewGetServer(o.context, o.ServerGetServerHandler)
 
 	if o.handlers["GET"] == nil {
@@ -1656,6 +1693,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/runtime/servers/{name}"] = server.NewReplaceRuntimeServer(o.context, o.ServerReplaceRuntimeServerHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
