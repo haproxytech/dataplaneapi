@@ -21,7 +21,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/models"
 )
 
@@ -29,7 +29,7 @@ import (
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
 	"frontend": []string{"Maxconn"},
-	"server":   []string{"Weigth", "Address", "Port", "Maintenance"},
+	"server":   []string{"Weight", "Address", "Port", "Maintenance"},
 }
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
