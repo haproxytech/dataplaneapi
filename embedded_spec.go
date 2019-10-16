@@ -9074,6 +9074,12 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
         "inter": {
           "type": "integer",
           "x-nullable": true
@@ -21510,6 +21516,12 @@ func init() {
         "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
         },
         "inter": {
           "type": "integer",
