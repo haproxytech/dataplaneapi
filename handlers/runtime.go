@@ -29,7 +29,7 @@ import (
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
 	"frontend": []string{"Maxconn"},
-	"server":   []string{"Weight", "Address", "Port", "Maintenance", "AgentCheck", "AgentAddr", "AgentSend"},
+	"server":   []string{"Weight", "Address", "Port", "Maintenance", "AgentCheck", "AgentAddr", "AgentSend", "HealthCheckPort"},
 }
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
@@ -89,6 +89,13 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 					case "Weight":
 						weight := strconv.FormatInt(fieldValue.Elem().Int(), 10)
 						err := client.Runtime.SetServerWeight(parentName, vData.Name, weight)
+						if err != nil {
+							// we have error's in runtime API changes, bail and reload
+							return true
+						}
+					case "HealthCheckPort":
+						portVal := fieldValue.Elem().Int()
+						err := client.Runtime.SetServerCheckPort(parentName, vData.Name, int(portVal))
 						if err != nil {
 							// we have error's in runtime API changes, bail and reload
 							return true
@@ -173,7 +180,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 
 // return string of field names that have a diff
 func compareObjects(data, ondisk interface{}) []string {
-	diff := make([]string, 0, 0)
+	diff := make([]string, 0)
 	dataVal := reflect.ValueOf(data)
 	ondiskVal := reflect.ValueOf(ondisk)
 	for i := 0; i < dataVal.NumField(); i++ {
@@ -243,8 +250,5 @@ func compareChanged(changed, changable []string) bool {
 		delete(diff, elem)
 	}
 
-	if len(diff) == 0 {
-		return true
-	}
-	return false
+	return len(diff) == 0
 }

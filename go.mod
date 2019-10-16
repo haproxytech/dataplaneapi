@@ -12,9 +12,9 @@ require (
 	github.com/go-openapi/strfmt v0.19.0
 	github.com/go-openapi/swag v0.19.0
 	github.com/go-openapi/validate v0.19.0
-	github.com/haproxytech/client-native v1.2.7-0.20191016093421-0bff8db25d35
+	github.com/haproxytech/client-native v1.2.7-0.20191016130928-5ef0b55e0742
 	github.com/haproxytech/config-parser/v2 v2.0.0-dev1
-	github.com/haproxytech/models v1.2.5-0.20191016093115-17c8e105a037
+	github.com/haproxytech/models v1.2.5-0.20191016125350-d58ad61b7796
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/rs/cors v1.6.0
 	github.com/shirou/gopsutil v2.18.12+incompatible
