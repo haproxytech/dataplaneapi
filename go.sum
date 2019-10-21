@@ -87,8 +87,13 @@ github.com/haproxytech/client-native v1.2.7-0.20191015141253-fd2f43e23fee h1:MLf
 github.com/haproxytech/client-native v1.2.7-0.20191015141253-fd2f43e23fee/go.mod h1:JI/mJCwPKG9UQpna3LQ8HfDkiiZBW+464sArdHm/cQI=
 github.com/haproxytech/client-native v1.2.7-0.20191016093421-0bff8db25d35 h1:mgjRFC0ZYvqgqpnUUX2ckkryqvcnqhjb9x4JuhW3T1A=
 github.com/haproxytech/client-native v1.2.7-0.20191016093421-0bff8db25d35/go.mod h1:KNtCN/lwxX8KBHliGtdLPlxyHjV2LZ2j70y3wJB1ei8=
+<<<<<<< Updated upstream
 github.com/haproxytech/client-native v1.2.7-0.20191016130928-5ef0b55e0742 h1:cOekLn7Do0yKVKAcBOlFloLc74Fr7hVbLuf0PGEzEZs=
 github.com/haproxytech/client-native v1.2.7-0.20191016130928-5ef0b55e0742/go.mod h1:WFcFLfZzxDApXuLemVnA/+mLxdmYMKbeOmSSzlSgZ40=
+=======
+github.com/haproxytech/client-native v1.2.7-0.20191021102533-a31afb889101 h1:y3jro+EziL3b0+l5WGD7lR8pwI7iQA0Rwo/a6/xDpe4=
+github.com/haproxytech/client-native v1.2.7-0.20191021102533-a31afb889101/go.mod h1:WFcFLfZzxDApXuLemVnA/+mLxdmYMKbeOmSSzlSgZ40=
+>>>>>>> Stashed changes
 github.com/haproxytech/config-parser v1.1.3 h1:8G+XQ7QXGctmeQlgg9xME0WMY0TK7pZenf/DZM/QWfo=
 github.com/haproxytech/config-parser v1.1.3/go.mod h1:se7v728KDunj+qz1kXFFFl+nDuoBdUaN5eYSi+gYjNM=
 github.com/haproxytech/config-parser v1.1.4 h1:J9ziufMtKSemiHILPu3GgAopuhA8bMxxR1f0kGtgnHk=

@@ -92,3 +92,15 @@ func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, er
 	}
 	return es, nil
 }
+
+func IsUnixSocketAddr(addr string) bool {
+	if strings.HasPrefix(addr, "ipv4@") || strings.HasPrefix(addr, "ipv6@") {
+		return false
+	}
+
+	// check if it has semicolon
+	if strings.Contains(addr, ":") {
+		return false
+	}
+	return true
+}

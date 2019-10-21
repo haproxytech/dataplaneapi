@@ -26,6 +26,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"runtime/debug"
+	"strconv"
 	"strings"
 	"syscall"
 
@@ -458,7 +459,9 @@ func configureLogging() {
 		log.SetOutput(os.Stdout)
 	case "file":
 		dir := filepath.Dir(loggingOptions.LogFile)
-		os.MkdirAll(dir, os.ModePerm)
+		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+			log.Warning("Error opening log file, no logging implemented: " + err.Error())
+		}
 
 		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
 		if err != nil {
@@ -511,7 +514,7 @@ func configureNativeClient() *client_native.HAProxyClient {
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
-		if masterRuntime != "" && !strings.HasPrefix(masterRuntime, "ipv4@") {
+		if misc.IsUnixSocketAddr(masterRuntime) {
 			haproxyOptions.MasterRuntime = masterRuntime
 		}
 	}
@@ -555,44 +558,72 @@ func configureConfigurationClient() (*configuration.Client, error) {
 func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Client {
 	runtimeClient := &runtime_api.Client{}
 	_, globalConf, err := confClient.GetGlobalConfiguration("")
-	if err == nil {
-		statsSocketConfigured := false
-		socketList := make([]string, 0, 1)
-		runtimeAPIs := globalConf.RuntimeApis
 
-		if len(runtimeAPIs) != 0 {
-			statsSocketConfigured = true
+	// First try to setup master runtime socket
+	if err == nil {
+		var err error
+		// If master socket is set and a valid unix socket, use only this
+		if haproxyOptions.MasterRuntime != "" && misc.IsUnixSocketAddr(haproxyOptions.MasterRuntime) {
+			masterSocket := haproxyOptions.MasterRuntime
+			// if nbproc is set set nbproc sockets
+			if globalConf.Nbproc > 0 {
+				nbproc := int(globalConf.Nbproc)
+				if err = runtimeClient.InitWithMasterSocket(masterSocket, nbproc); err == nil {
+					return runtimeClient
+				}
+				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
+			} else {
+				// if nbproc is not set, use master socket with 1 process
+				if err = runtimeClient.InitWithMasterSocket(masterSocket, 1); err == nil {
+					return runtimeClient
+				}
+				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
+			}
+		}
+		runtimeAPIs := globalConf.RuntimeApis
+		// if no master socket set, read from first valid socket if nbproc <= 1
+		if globalConf.Nbproc <= 1 {
+			socketList := make(map[int]string)
 			for _, r := range runtimeAPIs {
-				if !strings.HasPrefix(*r.Address, "ipv4@") {
-					socketList = append(socketList, *r.Address)
+				if misc.IsUnixSocketAddr(*r.Address) {
+					socketList[1] = *r.Address
+					if err = runtimeClient.InitWithSockets(socketList); err == nil {
+						return runtimeClient
+					}
+					log.Warningf("Error setting up runtime client with socket: %s : %s", *r.Address, err.Error())
 				}
 			}
-		}
-
-		masterSocket := ""
-		nbproc := 0
-		if haproxyOptions.MasterRuntime != "" && !strings.HasPrefix(haproxyOptions.MasterRuntime, "ipv4@") {
-			if globalConf.Nbproc > 0 {
-				statsSocketConfigured = true
-				nbproc = int(globalConf.Nbproc)
-				masterSocket = haproxyOptions.MasterRuntime
-			}
-		}
-
-		if statsSocketConfigured {
-			if err := runtimeClient.Init(socketList, masterSocket, nbproc); err != nil {
-				log.Warning("Error setting up runtime client, not using one")
-				return nil
-			}
 		} else {
-			log.Warning("Runtime API not configured, not using it")
-			return nil
+			// else try to find process specific sockets and set them up
+			sockets := make(map[int]string)
+			for _, r := range runtimeAPIs {
+				if misc.IsUnixSocketAddr(*r.Address) && r.Process != "" {
+					process, err := strconv.ParseInt(r.Process, 10, 64)
+					if err == nil {
+						sockets[int(process)] = *r.Address
+					}
+				}
+			}
+			// no process specific settings found, Issue a warning and return nil
+			if len(sockets) == 0 {
+				log.Warning("Runtime API not configured, found multiple processes and no stats sockets bound to them.")
+				return nil
+				// use only found process specific sockets issue a warning if not all processes have a socket configured
+			} else {
+				if len(sockets) < int(globalConf.Nbproc) {
+					log.Warning("Runtime API not configured properly, there are more processes then configured sockets")
+				}
+				if err = runtimeClient.InitWithSockets(sockets); err == nil {
+					return runtimeClient
+				}
+				log.Warningf("Error setting up runtime client with sockets: %s : %s", sockets, err.Error())
+			}
 		}
-	} else {
-		log.Warning("Cannot read runtime API configuration, not using it")
+		log.Warning("Runtime API not configured, not using it: " + err.Error())
 		return nil
 	}
-	return runtimeClient
+	log.Warning("Cannot read runtime API configuration, not using it")
+	return nil
 }
 
 func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient) {
