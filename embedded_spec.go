@@ -5227,6 +5227,136 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/stick_table_entries": {
+      "get": {
+        "description": "Returns an array of all entries in a given stick tables.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Return Stick Table Entries",
+        "operationId": "getStickTableEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Stick table name",
+            "name": "stick_table",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not only first process is returned",
+            "name": "process",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Key which we want the entries for",
+            "name": "key",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Max number of entries to be returned for pagination",
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Offset which indicates how many items we skip in pagination",
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/stick_table_entries"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/stick_tables": {
+      "get": {
+        "description": "Returns an array of all stick tables.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Return Stick Tables",
+        "operationId": "getStickTables",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not all processes are returned",
+            "name": "process",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/stick_tables"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/stick_tables/{name}": {
+      "get": {
+        "description": "Returns one stick table from runtime.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Return Stick Table",
+        "operationId": "getStickTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Stick table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not only first process is returned",
+            "name": "process",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/stick_table"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/sites": {
       "get": {
         "description": "Returns an array of all configured sites.",
@@ -9521,6 +9651,193 @@ func init() {
       "title": "Stick Rules Array",
       "items": {
         "$ref": "#/definitions/stick_rule"
+      }
+    },
+    "stick_table": {
+      "description": "Stick Table Information",
+      "type": "object",
+      "title": "Stick Table",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string",
+                "enum": [
+                  "server_id",
+                  "gpc0",
+                  "gpc1",
+                  "gpc1_rate",
+                  "conn_cnt",
+                  "conn_cur",
+                  "conn_rate",
+                  "sess_cnt",
+                  "sess_rate",
+                  "http_req_cnt",
+                  "http_req_rate",
+                  "http_err_cnt",
+                  "http_err_rate",
+                  "bytes_in_cnt",
+                  "bytes_in_rate",
+                  "bytes_out_cnt",
+                  "bytes_out_rate"
+                ]
+              },
+              "period": {
+                "type": "integer",
+                "x-dependency": {
+                  "type": {
+                    "value": "rate"
+                  }
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "rate",
+                  "counter"
+                ]
+              }
+            },
+            "x-go-name": "StickTableField"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "process": {
+          "description": "Process number if master-worker mode",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "size": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ip",
+            "ipv6",
+            "integer",
+            "string",
+            "binary"
+          ]
+        },
+        "used": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "stick_table_entries": {
+      "description": "Entries of one runtime stick table",
+      "type": "array",
+      "title": "Stick Tables Entries",
+      "items": {
+        "$ref": "#/definitions/stick_table_entry"
+      }
+    },
+    "stick_table_entry": {
+      "description": "One entry in stick table",
+      "type": "object",
+      "title": "Stick Table Entry",
+      "properties": {
+        "bytes_in_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_in_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_out_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_out_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_cur": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "exp": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc0": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc0_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc1": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc1_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_err_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_err_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_req_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_req_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "server_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "use": {
+          "type": "boolean"
+        }
+      }
+    },
+    "stick_tables": {
+      "description": "Array of runtime stick tables",
+      "type": "array",
+      "title": "Stick Tables Array",
+      "items": {
+        "$ref": "#/definitions/stick_table"
       }
     },
     "tcp_request_rule": {
@@ -17414,6 +17731,172 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/stick_table_entries": {
+      "get": {
+        "description": "Returns an array of all entries in a given stick tables.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Return Stick Table Entries",
+        "operationId": "getStickTableEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Stick table name",
+            "name": "stick_table",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not only first process is returned",
+            "name": "process",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Key which we want the entries for",
+            "name": "key",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Max number of entries to be returned for pagination",
+            "name": "count",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Offset which indicates how many items we skip in pagination",
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/stick_table_entries"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/stick_tables": {
+      "get": {
+        "description": "Returns an array of all stick tables.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Return Stick Tables",
+        "operationId": "getStickTables",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not all processes are returned",
+            "name": "process",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/stick_tables"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/stick_tables/{name}": {
+      "get": {
+        "description": "Returns one stick table from runtime.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Return Stick Table",
+        "operationId": "getStickTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Stick table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not only first process is returned",
+            "name": "process",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/stick_table"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/sites": {
       "get": {
         "description": "Returns an array of all configured sites.",
@@ -21964,6 +22447,193 @@ func init() {
       "title": "Stick Rules Array",
       "items": {
         "$ref": "#/definitions/stick_rule"
+      }
+    },
+    "stick_table": {
+      "description": "Stick Table Information",
+      "type": "object",
+      "title": "Stick Table",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string",
+                "enum": [
+                  "server_id",
+                  "gpc0",
+                  "gpc1",
+                  "gpc1_rate",
+                  "conn_cnt",
+                  "conn_cur",
+                  "conn_rate",
+                  "sess_cnt",
+                  "sess_rate",
+                  "http_req_cnt",
+                  "http_req_rate",
+                  "http_err_cnt",
+                  "http_err_rate",
+                  "bytes_in_cnt",
+                  "bytes_in_rate",
+                  "bytes_out_cnt",
+                  "bytes_out_rate"
+                ]
+              },
+              "period": {
+                "type": "integer",
+                "x-dependency": {
+                  "type": {
+                    "value": "rate"
+                  }
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "rate",
+                  "counter"
+                ]
+              }
+            },
+            "x-go-name": "StickTableField"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "process": {
+          "description": "Process number if master-worker mode",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "size": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ip",
+            "ipv6",
+            "integer",
+            "string",
+            "binary"
+          ]
+        },
+        "used": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "stick_table_entries": {
+      "description": "Entries of one runtime stick table",
+      "type": "array",
+      "title": "Stick Tables Entries",
+      "items": {
+        "$ref": "#/definitions/stick_table_entry"
+      }
+    },
+    "stick_table_entry": {
+      "description": "One entry in stick table",
+      "type": "object",
+      "title": "Stick Table Entry",
+      "properties": {
+        "bytes_in_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_in_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_out_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_out_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_cur": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "exp": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc0": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc0_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc1": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpc1_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_err_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_err_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_req_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "http_req_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "server_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "use": {
+          "type": "boolean"
+        }
+      }
+    },
+    "stick_tables": {
+      "description": "Array of runtime stick tables",
+      "type": "array",
+      "title": "Stick Tables Array",
+      "items": {
+        "$ref": "#/definitions/stick_table"
       }
     },
     "tcp_request_rule": {

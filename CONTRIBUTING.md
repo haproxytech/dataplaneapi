@@ -40,6 +40,7 @@ Data Plane API is generated using [go-swagger](https://github.com/go-swagger/go-
     --tags=Reloads \
     --tags=ACL \
     --tags=Defaults \
+    --tags=StickTable \
     -r ~/dataplaneapi-specification/copyright.txt
 ```
 

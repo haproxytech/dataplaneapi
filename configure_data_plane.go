@@ -356,6 +356,11 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.ServerGetRuntimeServersHandler = &handlers.GetRuntimeServersHandlerImpl{Client: client}
 	api.ServerReplaceRuntimeServerHandler = &handlers.ReplaceRuntimeServerHandlerImpl{Client: client}
 
+	// setup stick table handlers
+	api.StickTableGetStickTablesHandler = &handlers.GetStickTablesHandlerImpl{Client: client}
+	api.StickTableGetStickTableHandler = &handlers.GetStickTableHandlerImpl{Client: client}
+	api.StickTableGetStickTableEntriesHandler = &handlers.GetStickTableEntriesHandlerImpl{Client: client}
+
 	// setup info handler
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 
