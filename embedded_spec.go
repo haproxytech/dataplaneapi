@@ -9668,6 +9668,7 @@ func init() {
                 "enum": [
                   "server_id",
                   "gpc0",
+                  "gpc0_rate",
                   "gpc1",
                   "gpc1_rate",
                   "conn_cnt",
@@ -22464,6 +22465,7 @@ func init() {
                 "enum": [
                   "server_id",
                   "gpc0",
+                  "gpc0_rate",
                   "gpc1",
                   "gpc1_rate",
                   "conn_cnt",
