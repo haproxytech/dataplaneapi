@@ -66,6 +66,16 @@ func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesPara
 //Handle executing the request and returning a response
 func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams, principal interface{}) middleware.Responder {
 	stkT, err := h.Client.Runtime.ShowTable(params.Name, int(params.Process))
+	if stkT == nil {
+		msg := fmt.Sprintf("Stick table %s not found in process %d", params.Name, params.Process)
+		c := misc.ErrHTTPNotFound
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return stick_table.NewGetStickTableDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	stkT.Fields = findTableFields(stkT.Name, h.Client)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -93,6 +103,12 @@ func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTabl
 		return stick_table.NewGetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
+	// if no entries return empty array
+	if len(stkEntries) == 0 {
+		return stick_table.NewGetStickTableEntriesOK().WithPayload(stkEntries)
+	}
+
+	// else check for pagination
 	offset := int64(0)
 	if params.Offset != nil {
 		offset = *params.Offset
