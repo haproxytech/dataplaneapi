@@ -624,7 +624,11 @@ func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Clien
 				log.Warningf("Error setting up runtime client with sockets: %s : %s", sockets, err.Error())
 			}
 		}
-		log.Warning("Runtime API not configured, not using it: " + err.Error())
+		if err != nil {
+			log.Warning("Runtime API not configured, not using it: " + err.Error())
+		} else {
+			log.Warning("Runtime API not configured, not using it")
+		}
 		return nil
 	}
 	log.Warning("Cannot read runtime API configuration, not using it")
