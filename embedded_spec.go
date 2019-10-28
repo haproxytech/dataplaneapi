@@ -6449,7 +6449,22 @@ func init() {
     "default_server": {
       "type": "object",
       "properties": {
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "fall": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "fastinter": {
           "type": "integer",
           "x-nullable": true
         },
@@ -9200,9 +9215,24 @@ func init() {
             "disabled"
           ]
         },
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "fastinter": {
+          "type": "integer",
+          "x-nullable": true
         },
         "health_check_port": {
           "type": "integer",
@@ -19245,7 +19275,22 @@ func init() {
     "default_server": {
       "type": "object",
       "properties": {
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "fall": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "fastinter": {
           "type": "integer",
           "x-nullable": true
         },
@@ -21997,9 +22042,24 @@ func init() {
             "disabled"
           ]
         },
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "fastinter": {
+          "type": "integer",
+          "x-nullable": true
         },
         "health_check_port": {
           "type": "integer",
