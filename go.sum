@@ -95,6 +95,27 @@ github.com/haproxytech/models v1.2.4-0.20191009071622-2e6a8ecf1d8e h1:UlPkQ90yhi
 github.com/haproxytech/models v1.2.4-0.20191009071622-2e6a8ecf1d8e/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
 github.com/haproxytech/models v1.2.4 h1:KYWMzEVVRxAPI6F64xF6oISY10TGm6VWvo/T2rXp4x4=
 github.com/haproxytech/models v1.2.4/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+<<<<<<< HEAD
+=======
+github.com/haproxytech/models v1.2.5-0.20191014071538-306b0b122d42 h1:Yp0oKt9wE2NDNBGUKUR+dgpiQ+6i04/WkcDp+M5CIJY=
+github.com/haproxytech/models v1.2.5-0.20191014071538-306b0b122d42/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191014074611-afc4060df863 h1:+11bo6uZr97ZLf0+yo9rBms8+bGqCGf9aTz2Vg3X68A=
+github.com/haproxytech/models v1.2.5-0.20191014074611-afc4060df863/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191014095528-ac55cbc13783 h1:Rss3B2VIwgLjHMuNiki0osAYYmVJlafMij4jqMENGaQ=
+github.com/haproxytech/models v1.2.5-0.20191014095528-ac55cbc13783/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191014152757-1080a77cbac7 h1:jrwnv559loPKl4EgFT1J5wNmkI+KsBo01Khqgfgjp8Q=
+github.com/haproxytech/models v1.2.5-0.20191014152757-1080a77cbac7/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191016093115-17c8e105a037 h1:NcVoOGnYZ61rmlMi6rQXLW8XMLWB4+GqNQhP//I6rUM=
+github.com/haproxytech/models v1.2.5-0.20191016093115-17c8e105a037/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191016125350-d58ad61b7796 h1:Xg9OwexneLXZarvMhUx+Z/TIKMCUhGOH03ylQ+g8uAE=
+github.com/haproxytech/models v1.2.5-0.20191016125350-d58ad61b7796/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191022101727-c120a7db6e37 h1:kmc2xF9sWBH55Lbk2gcfHQxjW4IrtZ5t2zs76WoZU1Q=
+github.com/haproxytech/models v1.2.5-0.20191022101727-c120a7db6e37/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191022134201-aaee72f14d7b h1:Cd7QHpht8UZU5DoEqjcDgOvg3GIplDnvJxLYuBHJtUo=
+github.com/haproxytech/models v1.2.5-0.20191022134201-aaee72f14d7b/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191028111010-e970882e5217 h1:w0eBCQM1h2oQs8VHqUn12iGXFRHL4npqVGvCnM8A12k=
+github.com/haproxytech/models v1.2.5-0.20191028111010-e970882e5217/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+>>>>>>> 7b77fbe... MINOR: ErrTransactionAlreadyExists typo
 github.com/jessevdk/go-flags v1.4.0 h1:4IU2WS7AumrZ/40jfhf4QVDMsQwqA7VEHozFRrGARJA=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
