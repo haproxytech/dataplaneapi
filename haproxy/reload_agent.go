@@ -119,7 +119,7 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 		log.Debug("HAProxy restarted with last known good config.")
 		return output, err
 	}
-	log.Debug("Reload succesful")
+	log.Debug("Reload successful")
 	// if success, replace last known good file
 	copyFile(ra.configFile, ra.lkgConfigFile)
 	return output, nil
@@ -343,7 +343,7 @@ func (e *ReloadError) Error() string {
 	return fmt.Sprintf(e.msg)
 }
 
-// NewReloadError contstructor for ReloadError
+// NewReloadError constructor for ReloadError
 func NewReloadError(msg string) *ReloadError {
 	return &ReloadError{msg: msg}
 }

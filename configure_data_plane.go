@@ -57,7 +57,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations"
 
 	"github.com/GehirnInc/crypt"
-	// import various crypting algorihtms
+	// import various crypting algorithms
 	_ "github.com/GehirnInc/crypt/md5_crypt"
 	_ "github.com/GehirnInc/crypt/sha256_crypt"
 	_ "github.com/GehirnInc/crypt/sha512_crypt"
