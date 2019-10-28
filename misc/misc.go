@@ -46,7 +46,7 @@ func HandleError(err error) *models.Error {
 		switch t.Code() {
 		case configuration.ErrObjectDoesNotExist:
 			httpCode = ErrHTTPNotFound
-		case configuration.ErrObjectAlreadyExists, configuration.ErrVersionMismatch, configuration.ErrTransactionAlredyExists:
+		case configuration.ErrObjectAlreadyExists, configuration.ErrVersionMismatch, configuration.ErrTransactionAlreadyExists:
 			httpCode = ErrHTTPConflict
 		case configuration.ErrObjectIndexOutOfRange, configuration.ErrValidationError, configuration.ErrBothVersionTransaction,
 			configuration.ErrNoVersionTransaction, configuration.ErrNoParentSpecified, configuration.ErrParentDoesNotExist,
