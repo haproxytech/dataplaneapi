@@ -55,6 +55,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
+	"github.com/haproxytech/dataplaneapi/operations/stick_table"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
@@ -303,6 +304,15 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StickRuleGetStickRulesHandler: stick_rule.GetStickRulesHandlerFunc(func(params stick_rule.GetStickRulesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation StickRuleGetStickRules has not yet been implemented")
+		}),
+		StickTableGetStickTableHandler: stick_table.GetStickTableHandlerFunc(func(params stick_table.GetStickTableParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickTableGetStickTable has not yet been implemented")
+		}),
+		StickTableGetStickTableEntriesHandler: stick_table.GetStickTableEntriesHandlerFunc(func(params stick_table.GetStickTableEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickTableGetStickTableEntries has not yet been implemented")
+		}),
+		StickTableGetStickTablesHandler: stick_table.GetStickTablesHandlerFunc(func(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StickTableGetStickTables has not yet been implemented")
 		}),
 		TCPRequestRuleGetTCPRequestRuleHandler: tcp_request_rule.GetTCPRequestRuleHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TCPRequestRuleGetTCPRequestRule has not yet been implemented")
@@ -584,6 +594,12 @@ type DataPlaneAPI struct {
 	StickRuleGetStickRuleHandler stick_rule.GetStickRuleHandler
 	// StickRuleGetStickRulesHandler sets the operation handler for the get stick rules operation
 	StickRuleGetStickRulesHandler stick_rule.GetStickRulesHandler
+	// StickTableGetStickTableHandler sets the operation handler for the get stick table operation
+	StickTableGetStickTableHandler stick_table.GetStickTableHandler
+	// StickTableGetStickTableEntriesHandler sets the operation handler for the get stick table entries operation
+	StickTableGetStickTableEntriesHandler stick_table.GetStickTableEntriesHandler
+	// StickTableGetStickTablesHandler sets the operation handler for the get stick tables operation
+	StickTableGetStickTablesHandler stick_table.GetStickTablesHandler
 	// TCPRequestRuleGetTCPRequestRuleHandler sets the operation handler for the get TCP request rule operation
 	TCPRequestRuleGetTCPRequestRuleHandler tcp_request_rule.GetTCPRequestRuleHandler
 	// TCPRequestRuleGetTCPRequestRulesHandler sets the operation handler for the get TCP request rules operation
@@ -1009,6 +1025,18 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.StickRuleGetStickRulesHandler == nil {
 		unregistered = append(unregistered, "stick_rule.GetStickRulesHandler")
+	}
+
+	if o.StickTableGetStickTableHandler == nil {
+		unregistered = append(unregistered, "stick_table.GetStickTableHandler")
+	}
+
+	if o.StickTableGetStickTableEntriesHandler == nil {
+		unregistered = append(unregistered, "stick_table.GetStickTableEntriesHandler")
+	}
+
+	if o.StickTableGetStickTablesHandler == nil {
+		unregistered = append(unregistered, "stick_table.GetStickTablesHandler")
 	}
 
 	if o.TCPRequestRuleGetTCPRequestRuleHandler == nil {
@@ -1603,6 +1631,21 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewGetStickRules(o.context, o.StickRuleGetStickRulesHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/stick_tables/{name}"] = stick_table.NewGetStickTable(o.context, o.StickTableGetStickTableHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/stick_table_entries"] = stick_table.NewGetStickTableEntries(o.context, o.StickTableGetStickTableEntriesHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/stick_tables"] = stick_table.NewGetStickTables(o.context, o.StickTableGetStickTablesHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
