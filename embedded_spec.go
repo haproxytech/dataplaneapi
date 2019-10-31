@@ -6177,7 +6177,7 @@ func init() {
           "algorithm": "roundrobin"
         },
         "forwardfor": {
-          "enabled": true
+          "enabled": "enabled"
         },
         "httpchk": {
           "method": "OPTIONS",
@@ -6260,6 +6260,9 @@ func init() {
     },
     "balance": {
       "type": "object",
+      "required": [
+        "algorithm"
+      ],
       "properties": {
         "algorithm": {
           "type": "string",
@@ -6271,23 +6274,109 @@ func init() {
             "source",
             "uri",
             "url_param",
-            "random"
+            "hdr",
+            "random",
+            "rdp-cookie"
           ]
         },
-        "arguments": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          },
+        "hdr_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "algorithm": {
-              "value": [
-                "uri",
-                "url_param"
-              ]
+              "required": true,
+              "value": "hdr"
             }
-          }
+          },
+          "x-display-name": "Header Name"
+        },
+        "hdr_use_domain_only": {
+          "type": "boolean",
+          "x-dependency": {
+            "algorithm": {
+              "value": "hdr"
+            }
+          },
+          "x-display-name": "Header Use Domain Only"
+        },
+        "random_draws": {
+          "type": "integer",
+          "x-dependency": {
+            "algorithm": {
+              "value": "random"
+            }
+          },
+          "x-display-name": "Random Draws",
+          "x-nullable": false
+        },
+        "rdp_cookie_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "algorithm": {
+              "value": "rdp-cookie"
+            }
+          },
+          "x-display-name": "Rdp Cookie Name"
+        },
+        "uri_depth": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Depth"
+        },
+        "uri_len": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Len"
+        },
+        "uri_whole": {
+          "type": "boolean",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Whole"
+        },
+        "url_param": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "algorithm": {
+              "required": true,
+              "value": "url_param"
+            }
+          },
+          "x-display-name": "Url Param"
+        },
+        "url_param_check_post": {
+          "type": "integer",
+          "x-dependency": {
+            "algorithm": {
+              "value": "url_param"
+            }
+          },
+          "x-display-name": "Url Param Check Post"
+        },
+        "url_param_max_wait": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]",
+          "x-dependency": {
+            "algorithm": {
+              "value": "url_param"
+            }
+          },
+          "x-display-name": "Url Param Max Weight"
         }
       }
     },
@@ -19003,7 +19092,7 @@ func init() {
           "algorithm": "roundrobin"
         },
         "forwardfor": {
-          "enabled": true
+          "enabled": "enabled"
         },
         "httpchk": {
           "method": "OPTIONS",
@@ -19086,6 +19175,9 @@ func init() {
     },
     "balance": {
       "type": "object",
+      "required": [
+        "algorithm"
+      ],
       "properties": {
         "algorithm": {
           "type": "string",
@@ -19097,23 +19189,109 @@ func init() {
             "source",
             "uri",
             "url_param",
-            "random"
+            "hdr",
+            "random",
+            "rdp-cookie"
           ]
         },
-        "arguments": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          },
+        "hdr_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "algorithm": {
-              "value": [
-                "uri",
-                "url_param"
-              ]
+              "required": true,
+              "value": "hdr"
             }
-          }
+          },
+          "x-display-name": "Header Name"
+        },
+        "hdr_use_domain_only": {
+          "type": "boolean",
+          "x-dependency": {
+            "algorithm": {
+              "value": "hdr"
+            }
+          },
+          "x-display-name": "Header Use Domain Only"
+        },
+        "random_draws": {
+          "type": "integer",
+          "x-dependency": {
+            "algorithm": {
+              "value": "random"
+            }
+          },
+          "x-display-name": "Random Draws",
+          "x-nullable": false
+        },
+        "rdp_cookie_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "algorithm": {
+              "value": "rdp-cookie"
+            }
+          },
+          "x-display-name": "Rdp Cookie Name"
+        },
+        "uri_depth": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Depth"
+        },
+        "uri_len": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Len"
+        },
+        "uri_whole": {
+          "type": "boolean",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Whole"
+        },
+        "url_param": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "algorithm": {
+              "required": true,
+              "value": "url_param"
+            }
+          },
+          "x-display-name": "Url Param"
+        },
+        "url_param_check_post": {
+          "type": "integer",
+          "x-dependency": {
+            "algorithm": {
+              "value": "url_param"
+            }
+          },
+          "x-display-name": "Url Param Check Post"
+        },
+        "url_param_max_wait": {
+          "type": "integer",
+          "pattern": "^[^\\d+$]",
+          "x-dependency": {
+            "algorithm": {
+              "value": "url_param"
+            }
+          },
+          "x-display-name": "Url Param Max Weight"
         }
       }
     },
