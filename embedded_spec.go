@@ -8282,11 +8282,10 @@ func init() {
               "x-nullable": true
             },
             "tracked": {
-              "type": "integer",
+              "type": "string",
               "x-dependency": {
                 "type": "server"
-              },
-              "x-nullable": true
+              }
             },
             "ttime": {
               "type": "integer",
@@ -20128,11 +20127,10 @@ func init() {
               "x-nullable": true
             },
             "tracked": {
-              "type": "integer",
+              "type": "string",
               "x-dependency": {
                 "type": "server"
-              },
-              "x-nullable": true
+              }
             },
             "ttime": {
               "type": "integer",
