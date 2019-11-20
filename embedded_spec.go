@@ -5948,6 +5948,13 @@ func init() {
         "name"
       ],
       "properties": {
+        "abortonclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -6578,6 +6585,13 @@ func init() {
       "type": "object",
       "title": "Defaults",
       "properties": {
+        "abortonclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -18862,6 +18876,13 @@ func init() {
         "name"
       ],
       "properties": {
+        "abortonclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -19492,6 +19513,13 @@ func init() {
       "type": "object",
       "title": "Defaults",
       "properties": {
+        "abortonclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "adv_check": {
           "type": "string",
           "enum": [
