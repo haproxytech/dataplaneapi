@@ -103,6 +103,8 @@ github.com/haproxytech/client-native v1.2.7-0.20191031100812-1ff45bfb5d0d h1:Ia2
 github.com/haproxytech/client-native v1.2.7-0.20191031100812-1ff45bfb5d0d/go.mod h1:pQ98oAkDTqx9F+WSoTtcc2fXct+KktxxFh0LpTwP5c8=
 github.com/haproxytech/client-native v1.2.7-0.20191104105101-e7b8f3d484a1 h1:gu09dhR8js5D0Ex4nPk3D/mEps7CD/vNKtcetXYyYNo=
 github.com/haproxytech/client-native v1.2.7-0.20191104105101-e7b8f3d484a1/go.mod h1:dlgoSojtTJ76vlMDd7tpCfDBtuhxlB5hMyjTkLN6eW0=
+github.com/haproxytech/client-native v1.2.7-0.20191120125416-8a71e2e43fab h1:01Ybtj795wz188kyjEULBJD9hsFh35b3rOTaDTId3bo=
+github.com/haproxytech/client-native v1.2.7-0.20191120125416-8a71e2e43fab/go.mod h1:a8pS+qqtPY3QZd6Un55wqRYyQqBnC9+MQNQcwFowd50=
 github.com/haproxytech/config-parser v1.1.3 h1:8G+XQ7QXGctmeQlgg9xME0WMY0TK7pZenf/DZM/QWfo=
 github.com/haproxytech/config-parser v1.1.3/go.mod h1:se7v728KDunj+qz1kXFFFl+nDuoBdUaN5eYSi+gYjNM=
 github.com/haproxytech/config-parser v1.1.4 h1:J9ziufMtKSemiHILPu3GgAopuhA8bMxxR1f0kGtgnHk=
@@ -156,6 +158,8 @@ github.com/haproxytech/models v1.2.5-0.20191031094129-685a322a8b49 h1:Kyp/O66Odl
 github.com/haproxytech/models v1.2.5-0.20191031094129-685a322a8b49/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
 github.com/haproxytech/models v1.2.5-0.20191104104934-518cfec95f5b h1:uWKus7GKxqBwGyl363i4IpH/LzW/wab31yTSIXEJf0A=
 github.com/haproxytech/models v1.2.5-0.20191104104934-518cfec95f5b/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20191119093343-0605e7733eed h1:xyI1hMK4BsEbULJgLH1vSAmgmH3gAU2HkXWBanbp+Mk=
+github.com/haproxytech/models v1.2.5-0.20191119093343-0605e7733eed/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
 github.com/jessevdk/go-flags v1.4.0 h1:4IU2WS7AumrZ/40jfhf4QVDMsQwqA7VEHozFRrGARJA=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
