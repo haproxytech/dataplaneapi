@@ -145,6 +145,7 @@ func RecoverMiddleware(logger *logrus.Logger) func(h http.Handler) http.Handler 
 					if strings.HasPrefix(ct, "application/json") {
 						w.Header().Set(http.CanonicalHeaderKey("Content-Type"), "application/json")
 					}
+					// nolint:errcheck
 					w.Write(errMsg)
 				}
 			}()

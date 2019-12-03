@@ -87,7 +87,7 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 
 	// change operational state
 	if rs.OperationalState != params.Data.OperationalState {
-		err := h.Client.Runtime.SetServerHealth(params.Backend, params.Name, params.Data.OperationalState)
+		err = h.Client.Runtime.SetServerHealth(params.Backend, params.Name, params.Data.OperationalState)
 		if err != nil {
 			e := misc.HandleError(err)
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -96,11 +96,12 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 
 	// change admin state
 	if rs.AdminState != params.Data.AdminState {
-		err := h.Client.Runtime.SetServerState(params.Backend, params.Name, params.Data.AdminState)
+		err = h.Client.Runtime.SetServerState(params.Backend, params.Name, params.Data.AdminState)
 		if err != nil {
 			e := misc.HandleError(err)
 
 			// try to revert operational state and fall silently
+			//nolint:errcheck
 			h.Client.Runtime.SetServerHealth(params.Backend, params.Name, rs.OperationalState)
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 		}

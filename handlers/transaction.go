@@ -17,7 +17,7 @@ package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"

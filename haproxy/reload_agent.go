@@ -72,6 +72,7 @@ func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, conf
 }
 
 func (ra *ReloadAgent) handleReloads() {
+	//nolint:gosimple
 	for {
 		select {
 		case <-time.After(time.Duration(ra.delay) * time.Second):
@@ -102,17 +103,18 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 	if err != nil {
 		// if failed, return to last known good file and restart and return the original file
 		log.Info("Reload failed, restarting with last known good config...")
-		if err := copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
+		if err = copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
 			return fmt.Sprintf("Reload failed: %s, failed to backup original config file for restart.", output), err
 		}
 		defer func() {
+			// nolint:errcheck
 			copyFile(ra.configFile+".bck", ra.configFile)
 			os.Remove(ra.configFile + ".bck")
 		}()
-		if err := copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
+		if err = copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
 			return fmt.Sprintf("Reload failed: %s, failed to revert to last known good config file", output), err
 		}
-		if err := ra.restartHAProxy(); err != nil {
+		if err = ra.restartHAProxy(); err != nil {
 			log.Warn("Restart failed, please check the reason and restart manually: ", err)
 			return fmt.Sprintf("Reload failed: %s, failed to restart HAProxy, please check and start manually", output), err
 		}
@@ -121,6 +123,7 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 	}
 	log.Debug("Reload successful")
 	// if success, replace last known good file
+	// nolint:errcheck
 	copyFile(ra.configFile, ra.lkgConfigFile)
 	return output, nil
 }
@@ -137,8 +140,10 @@ func execCmd(cmd string) (string, error) {
 	strArr := strings.Split(cmd, " ")
 	var c *exec.Cmd
 	if len(strArr) == 1 {
+		//nolint:gosec
 		c = exec.Command(strArr[0])
 	} else {
+		//nolint:gosec
 		c = exec.Command(strArr[0], strArr[1:]...)
 	}
 	var stdout, stderr bytes.Buffer
@@ -147,9 +152,9 @@ func execCmd(cmd string) (string, error) {
 
 	err := c.Run()
 	if err != nil {
-		return string(stderr.Bytes()), fmt.Errorf("Executing %s failed: %s", cmd, err)
+		return stderr.String(), fmt.Errorf("executing %s failed: %s", cmd, err)
 	}
-	return string(stdout.Bytes()), nil
+	return stdout.String(), nil
 }
 
 // Reload schedules a reload

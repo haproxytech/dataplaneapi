@@ -108,21 +108,22 @@ func IsUnixSocketAddr(addr string) bool {
 
 func ParseTimeout(tOut string) *int64 {
 	var v int64
-	if strings.HasSuffix(tOut, "ms") {
+	switch {
+	case strings.HasSuffix(tOut, "ms"):
 		v, _ = strconv.ParseInt(strings.TrimSuffix(tOut, "ms"), 10, 64)
-	} else if strings.HasSuffix(tOut, "s") {
+	case strings.HasSuffix(tOut, "s"):
 		v, _ = strconv.ParseInt(strings.TrimSuffix(tOut, "s"), 10, 64)
-		v = v * 1000
-	} else if strings.HasSuffix(tOut, "m") {
+		v *= 1000
+	case strings.HasSuffix(tOut, "m"):
 		v, _ = strconv.ParseInt(strings.TrimSuffix(tOut, "m"), 10, 64)
 		v = v * 1000 * 60
-	} else if strings.HasSuffix(tOut, "h") {
+	case strings.HasSuffix(tOut, "h"):
 		v, _ = strconv.ParseInt(strings.TrimSuffix(tOut, "h"), 10, 64)
 		v = v * 1000 * 60 * 60
-	} else if strings.HasSuffix(tOut, "d") {
+	case strings.HasSuffix(tOut, "d"):
 		v, _ = strconv.ParseInt(strings.TrimSuffix(tOut, "d"), 10, 64)
 		v = v * 1000 * 60 * 60 * 24
-	} else {
+	default:
 		v, _ = strconv.ParseInt(tOut, 10, 64)
 	}
 	if v != 0 {

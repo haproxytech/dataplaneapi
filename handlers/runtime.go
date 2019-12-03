@@ -63,6 +63,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 			for _, field := range diff {
 				fieldValue := reflect.ValueOf(vData).FieldByName(field)
 				if fieldValue.IsValid() {
+					//nolint:gocritic
 					switch field {
 					case "Maxconn":
 						maxConn := fieldValue.Elem().Int()

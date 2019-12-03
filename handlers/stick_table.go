@@ -87,7 +87,7 @@ func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams
 
 //Handle executing the request and returning a response
 func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTableEntriesParams, principal interface{}) middleware.Responder {
-	filter := make([]string, 0, 0)
+	filter := make([]string, 0)
 	if params.Filter != nil {
 		filter = strings.Split(*params.Filter, ",")
 	}

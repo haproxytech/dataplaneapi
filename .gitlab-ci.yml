@@ -1,0 +1,14 @@
+---
+reviewdog:
+  image:
+    name: golangci/golangci-lint:v1.21.0
+    entrypoint: [""]
+  tags:
+    - docker
+  script:
+    - go env
+    - go mod verify
+    - golangci-lint run -v --color always --timeout 120s
+    #- go get -u github.com/reviewdog/reviewdog/cmd/reviewdog
+    #- reviewdog -reporter=gitlab-mr-discussion
+    - go build .

@@ -421,14 +421,14 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
 	data, err := cli.Configuration.Parser.Get(parser.UserList, haproxyOptions.Userlist, "user")
 	if err != nil {
-		return nil, fmt.Errorf("Error reading userlist %v userlist in conf: %s", haproxyOptions.Userlist, err.Error())
+		return nil, fmt.Errorf("error reading userlist %v userlist in conf: %s", haproxyOptions.Userlist, err.Error())
 	}
 	users, ok := data.([]types.User)
 	if !ok {
-		return nil, fmt.Errorf("Error reading users from %v userlist in conf", haproxyOptions.Userlist)
+		return nil, fmt.Errorf("error reading users from %v userlist in conf", haproxyOptions.Userlist)
 	}
 	if len(users) == 0 {
-		return nil, fmt.Errorf("No users configured in %v userlist in conf", haproxyOptions.Userlist)
+		return nil, fmt.Errorf("no users configured in %v userlist in conf", haproxyOptions.Userlist)
 	}
 
 	for _, u := range users {
@@ -467,7 +467,7 @@ func configureLogging() {
 		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
 			log.Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
-
+		//nolint:govet
 		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
 		if err != nil {
 			log.Warning("Error opening log file, no logging implemented: " + err.Error())
@@ -555,7 +555,7 @@ func configureConfigurationClient() (*configuration.Client, error) {
 	}
 	err := confClient.Init(confParams)
 	if err != nil {
-		return nil, fmt.Errorf("Error setting up configuration client: %s", err.Error())
+		return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())
 	}
 	return confClient, nil
 }
@@ -602,6 +602,7 @@ func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Clien
 			// else try to find process specific sockets and set them up
 			sockets := make(map[int]string)
 			for _, r := range runtimeAPIs {
+				//nolint:govet
 				if misc.IsUnixSocketAddr(*r.Address) && r.Process != "" {
 					process, err := strconv.ParseInt(r.Process, 10, 64)
 					if err == nil {
@@ -614,15 +615,15 @@ func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Clien
 				log.Warning("Runtime API not configured, found multiple processes and no stats sockets bound to them.")
 				return nil
 				// use only found process specific sockets issue a warning if not all processes have a socket configured
-			} else {
-				if len(sockets) < int(globalConf.Nbproc) {
-					log.Warning("Runtime API not configured properly, there are more processes then configured sockets")
-				}
-				if err = runtimeClient.InitWithSockets(sockets); err == nil {
-					return runtimeClient
-				}
-				log.Warningf("Error setting up runtime client with sockets: %s : %s", sockets, err.Error())
 			}
+			if len(sockets) < int(globalConf.Nbproc) {
+				log.Warning("Runtime API not configured properly, there are more processes then configured sockets")
+			}
+			if err = runtimeClient.InitWithSockets(sockets); err == nil {
+				return runtimeClient
+			}
+			log.Warningf("Error setting up runtime client with sockets: %v : %s", sockets, err.Error())
+
 		}
 		if err != nil {
 			log.Warning("Runtime API not configured, not using it: " + err.Error())
@@ -636,6 +637,7 @@ func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Clien
 }
 
 func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient) {
+	//nolint:gosimple
 	for {
 		select {
 		case sig := <-sigs:
