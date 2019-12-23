@@ -21,6 +21,9 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"hash/fnv"
+	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"os"
 	"os/signal"
@@ -29,9 +32,11 @@ import (
 	"strconv"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
+	"github.com/haproxytech/models"
 
 	log "github.com/sirupsen/logrus"
 
@@ -139,6 +144,11 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
 	go handleSignals(sigs, client, haproxyOptions, users)
+
+	// Sync map physical file with runtime map entries
+	if haproxyOptions.UpdateMapFiles {
+		go syncMaps(client)
+	}
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
@@ -382,6 +392,17 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StickTableGetStickTableHandler = &handlers.GetStickTableHandlerImpl{Client: client}
 	api.StickTableGetStickTableEntriesHandler = &handlers.GetStickTableEntriesHandlerImpl{Client: client}
 
+	// setup map handlers
+	api.MapsCreateRuntimeMapHandler = &handlers.MapsCreateRuntimeMapHandlerImpl{Client: client}
+	api.MapsGetAllRuntimeMapFilesHandler = &handlers.GetMapsHandlerImpl{Client: client}
+	api.MapsGetOneRuntimeMapHandler = &handlers.GetMapHandlerImpl{Client: client}
+	api.MapsClearRuntimeMapHandler = &handlers.ClearMapHandlerImpl{Client: client}
+	api.MapsShowRuntimeMapHandler = &handlers.ShowMapHandlerImpl{Client: client}
+	api.MapsAddMapEntryHandler = &handlers.AddMapEntryHandlerImpl{Client: client}
+	api.MapsGetRuntimeMapEntryHandler = &handlers.GetRuntimeMapEntryHandlerImpl{Client: client}
+	api.MapsReplaceRuntimeMapEntryHandler = &handlers.ReplaceRuntimeMapEntryHandlerImpl{Client: client}
+	api.MapsDeleteRuntimeMapEntryHandler = &handlers.DeleteRuntimeMapEntryHandlerImpl{Client: client}
+
 	// setup info handler
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 
@@ -534,6 +555,7 @@ func serverShutdown() {
 	if logFile != nil {
 		logFile.Close()
 	}
+	MapQuitChan <- MapQuitNotice{}
 }
 
 func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) *client_native.HAProxyClient {
@@ -575,7 +597,11 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 }
 
 func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dataplaneapi_config.HAProxyConfiguration) *runtime_api.Client {
-	runtimeClient := &runtime_api.Client{}
+	runtimeParams := runtime_api.ClientParams{
+		MapsDir: haproxyOptions.MapsDir,
+	}
+	runtimeClient := &runtime_api.Client{ClientParams: runtimeParams}
+
 	_, globalConf, err := confClient.GetGlobalConfiguration("")
 
 	// First try to setup master runtime socket
@@ -584,7 +610,7 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 		// If master socket is set and a valid unix socket, use only this
 		if haproxyOptions.MasterRuntime != "" && misc.IsUnixSocketAddr(haproxyOptions.MasterRuntime) {
 			masterSocket := haproxyOptions.MasterRuntime
-			// if nbproc is set set nbproc sockets
+			// if nbproc is set, set nbproc sockets
 			if globalConf.Nbproc > 0 {
 				nbproc := int(globalConf.Nbproc)
 				if err = runtimeClient.InitWithMasterSocket(masterSocket, nbproc); err == nil {
@@ -671,4 +697,162 @@ func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, hap
 			}
 		}
 	}
+}
+
+type MapQuitNotice struct{}
+
+var MapQuitChan = make(chan MapQuitNotice)
+
+//syncMaps sync maps file entries with runtime maps entries for all configured files.
+//Missing runtime entries are appended to the map file
+func syncMaps(client *client_native.HAProxyClient) {
+	cfg := dataplaneapi_config.Get()
+	haproxyOptions := cfg.HAProxy
+
+	d := time.Duration(haproxyOptions.UpdateMapFilesPeriod)
+	ticker := time.NewTicker(d * time.Second)
+
+	for {
+		select {
+		case <-ticker.C:
+			maps, err := client.Runtime.ShowMaps()
+			if err != nil {
+				log.Warning("syncMaps runtime API ShowMaps error: ", err.Error())
+			}
+			for _, mp := range maps {
+				go syncMapFilesToRuntimeEntries(mp, client)
+			}
+		case <-MapQuitChan:
+			return
+		}
+	}
+}
+
+func syncMapFilesToRuntimeEntries(mp *models.Map, client *client_native.HAProxyClient) {
+	//map file entries
+	raw, err := ioutil.ReadFile(mp.File)
+	if err != nil {
+		log.Warningf("error reading map file: %s %s", mp.File, err.Error())
+	}
+	fileEntries := client.Runtime.ParseMapEntries(string(raw))
+
+	//runtime map entries
+	id := fmt.Sprintf("#%s", mp.ID)
+	runtimeEntries, err := client.Runtime.ShowMapEntries(id)
+	if err != nil {
+		log.Warningf("error runtime API ShowMapEntries: id: %s %s", id, err.Error())
+	}
+
+	if len(runtimeEntries) < 1 {
+		return
+	}
+
+	if len(fileEntries) != len(runtimeEntries) {
+		if dumpRuntimeEntries(mp.File, runtimeEntries) {
+			log.Infof("map file %s synced with runtime entries", mp.File)
+			return
+		}
+	}
+
+	if !equalSomeFileAndRuntimeEntries(fileEntries, runtimeEntries) {
+		if dumpRuntimeEntries(mp.File, runtimeEntries) {
+			log.Infof("map file %s synced with runtime entries", mp.File)
+			return
+		}
+	}
+
+	if !equalHashFileAndRuntimeEntries(fileEntries, runtimeEntries) {
+		if dumpRuntimeEntries(mp.File, runtimeEntries) {
+			log.Infof("map file %s synced with runtime entries", mp.File)
+			return
+		}
+	}
+}
+
+//equalSomeFileAndRuntimeEntries compares last few runtime entries with file entries
+//if records differs, check is run against random entries
+func equalSomeFileAndRuntimeEntries(fEntries, rEntries models.MapEntries) bool {
+	if len(fEntries) != len(rEntries) {
+		return false
+	}
+
+	max := 0
+	switch l := len(rEntries); {
+	case l > 19:
+		for i := l - 20; i < l; i++ {
+			if rEntries[i].Key != fEntries[i].Key || rEntries[i].Value != fEntries[i].Value {
+				return false
+			}
+		}
+		max = l - 19
+	default:
+		max = l
+	}
+
+	for i := 0; i < 10; i++ {
+		rand.Seed(time.Now().UTC().UnixNano())
+		r := rand.Intn(max-1) + 1
+		if rEntries[r].Key != fEntries[r].Key || rEntries[r].Value != fEntries[r].Value {
+			return false
+		}
+	}
+	return true
+}
+
+func hash(s string) uint32 {
+	h := fnv.New32a()
+	_, _ = h.Write([]byte(s))
+	return h.Sum32()
+}
+
+//equalHashFileAndRuntimeEntries compares runtime and map entries in form of hash
+//Returns true if hashes are same, otherwise returns false
+func equalHashFileAndRuntimeEntries(fEntries, rEntries models.MapEntries) bool {
+	if len(fEntries) != len(rEntries) {
+		return false
+	}
+
+	var fb strings.Builder
+	for _, fe := range fEntries {
+		fb.WriteString(fe.Key + fe.Value)
+	}
+
+	var rb strings.Builder
+	for _, re := range rEntries {
+		rb.WriteString(re.Key + re.Value)
+	}
+
+	return hash(fb.String()) == hash(rb.String())
+}
+
+//dumpRuntimeEntries dumps runtime entries into map file
+func dumpRuntimeEntries(file string, me models.MapEntries) bool {
+	f, err := os.OpenFile(file, os.O_APPEND|os.O_WRONLY|os.O_TRUNC, 0600)
+	if err != nil {
+		log.Warningf("error opening map file: %s %s", file, err.Error())
+		return false
+	}
+	defer f.Close()
+
+	err = f.Truncate(0)
+	if err != nil {
+		log.Warningf("error truncating map file: %s %s", file, err.Error())
+		return false
+	}
+
+	_, err = f.Seek(0, 0)
+	if err != nil {
+		log.Warningf("error setting file to offset: %s %s", file, err.Error())
+		return false
+	}
+
+	for _, e := range me {
+		line := fmt.Sprintf("%s %s%s", e.Key, e.Value, "\n")
+		_, err = f.WriteString(line)
+		if err != nil {
+			log.Warningf("error writing map file: %s %s", file, err.Error())
+			return false
+		}
+	}
+	return true
 }

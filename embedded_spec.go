@@ -6244,6 +6244,342 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/maps": {
+      "get": {
+        "description": "Returns all available map files.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return all available map files",
+        "operationId": "getAllRuntimeMapFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/maps"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates runtime map file with its entries.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Creates runtime map file with its entries",
+        "operationId": "createRuntimeMap",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The map file to upload",
+            "name": "fileUpload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map file created with its entries",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/maps/{name}": {
+      "get": {
+        "description": "Returns one runtime map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return one runtime map file",
+        "operationId": "getOneRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/map"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Remove all map entries from the map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Remove all map entries from the map file",
+        "operationId": "clearRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "description": "If true, deletes file from disk",
+            "name": "forceDelete",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "All map entries deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/maps_entries": {
+      "get": {
+        "description": "Returns an array of all entries in a given runtime map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return one map runtime entries",
+        "operationId": "showRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds an entry into the map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Adds an entry into the map file",
+        "operationId": "addMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map entry created",
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/maps_entries/{id}": {
+      "get": {
+        "description": "Returns one map runtime setting by it's id.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return one map runtime setting",
+        "operationId": "getRuntimeMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces the value corresponding to each id in a map.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Replace the value corresponding to each id in a map",
+        "operationId": "replaceRuntimeMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "description": "Map value",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Map value replaced",
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete all the map entries from the map by its id.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Deletes all the map entries from the map by its id",
+        "operationId": "deleteRuntimeMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Map key/value deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/servers": {
       "get": {
         "description": "Returns an array of all servers' runtime settings.",
@@ -9726,6 +10062,55 @@ func init() {
         "$ref": "#/definitions/log_target"
       }
     },
+    "map": {
+      "description": "Map File",
+      "type": "object",
+      "title": "Map File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "map_entries": {
+      "description": "Entries of one runtime map",
+      "type": "array",
+      "title": "Maps Entries",
+      "items": {
+        "$ref": "#/definitions/map_entry"
+      }
+    },
+    "map_entry": {
+      "description": "One Map Entry",
+      "type": "object",
+      "title": "One Map Entry",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "maps": {
+      "description": "Array of runtime map files",
+      "type": "array",
+      "title": "Map Files Array",
+      "items": {
+        "$ref": "#/definitions/map"
+      }
+    },
     "nameserver": {
       "description": "Nameserver used in Runtime DNS configuration",
       "type": "object",
@@ -12503,6 +12888,9 @@ func init() {
       "name": "StickRule"
     },
     {
+      "name": "StickTable"
+    },
+    {
       "name": "LogTarget"
     },
     {
@@ -12522,6 +12910,9 @@ func init() {
     },
     {
       "name": "Cluster"
+    },
+    {
+      "name": "Maps"
     }
   ],
   "externalDocs": {
@@ -21743,6 +22134,552 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/maps": {
+      "get": {
+        "description": "Returns all available map files.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return all available map files",
+        "operationId": "getAllRuntimeMapFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/maps"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates runtime map file with its entries.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Creates runtime map file with its entries",
+        "operationId": "createRuntimeMap",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The map file to upload",
+            "name": "fileUpload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map file created with its entries",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/maps/{name}": {
+      "get": {
+        "description": "Returns one runtime map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return one runtime map file",
+        "operationId": "getOneRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/map"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Remove all map entries from the map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Remove all map entries from the map file",
+        "operationId": "clearRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "description": "If true, deletes file from disk",
+            "name": "forceDelete",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "All map entries deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/maps_entries": {
+      "get": {
+        "description": "Returns an array of all entries in a given runtime map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return one map runtime entries",
+        "operationId": "showRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds an entry into the map file.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Adds an entry into the map file",
+        "operationId": "addMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map entry created",
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/maps_entries/{id}": {
+      "get": {
+        "description": "Returns one map runtime setting by it's id.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Return one map runtime setting",
+        "operationId": "getRuntimeMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces the value corresponding to each id in a map.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Replace the value corresponding to each id in a map",
+        "operationId": "replaceRuntimeMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "description": "Map value",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Map value replaced",
+            "schema": {
+              "$ref": "#/definitions/map_entry"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete all the map entries from the map by its id.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Deletes all the map entries from the map by its id",
+        "operationId": "deleteRuntimeMapEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "map",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Map key/value deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/servers": {
       "get": {
         "description": "Returns an array of all servers' runtime settings.",
@@ -25603,6 +26540,55 @@ func init() {
         "$ref": "#/definitions/log_target"
       }
     },
+    "map": {
+      "description": "Map File",
+      "type": "object",
+      "title": "Map File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "map_entries": {
+      "description": "Entries of one runtime map",
+      "type": "array",
+      "title": "Maps Entries",
+      "items": {
+        "$ref": "#/definitions/map_entry"
+      }
+    },
+    "map_entry": {
+      "description": "One Map Entry",
+      "type": "object",
+      "title": "One Map Entry",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "maps": {
+      "description": "Array of runtime map files",
+      "type": "array",
+      "title": "Map Files Array",
+      "items": {
+        "$ref": "#/definitions/map"
+      }
+    },
     "nameserver": {
       "description": "Nameserver used in Runtime DNS configuration",
       "type": "object",
@@ -28381,6 +29367,9 @@ func init() {
       "name": "StickRule"
     },
     {
+      "name": "StickTable"
+    },
+    {
       "name": "LogTarget"
     },
     {
@@ -28400,6 +29389,9 @@ func init() {
     },
     {
       "name": "Cluster"
+    },
+    {
+      "name": "Maps"
     }
   ],
   "externalDocs": {

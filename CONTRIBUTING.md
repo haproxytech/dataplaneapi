@@ -41,6 +41,12 @@ Data Plane API is generated using [go-swagger](https://github.com/go-swagger/go-
     --tags=ACL \
     --tags=Defaults \
     --tags=StickTable \
+    --tags=Maps \
+    --tags=Nameserver \
+    --tags=Cluster \
+    --tags=Peer \
+    --tags=PeerEntry \
+    --tags=Resolver \
     -r ~/dataplaneapi-specification/copyright.txt
 ```
 

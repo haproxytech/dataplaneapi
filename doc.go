@@ -31,6 +31,7 @@ haproxy stats and logs.
 
     Consumes:
     - application/json
+    - multipart/form-data
     - text/plain
 
     Produces:

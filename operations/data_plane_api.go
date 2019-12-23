@@ -49,6 +49,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
+	"github.com/haproxytech/dataplaneapi/operations/maps"
 	"github.com/haproxytech/dataplaneapi/operations/nameserver"
 	"github.com/haproxytech/dataplaneapi/operations/peer"
 	"github.com/haproxytech/dataplaneapi/operations/peer_entry"
@@ -69,21 +70,28 @@ import (
 // NewDataPlaneAPI creates a new DataPlane instance
 func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 	return &DataPlaneAPI{
-		handlers:            make(map[string]map[string]http.Handler),
-		formats:             strfmt.Default,
-		defaultConsumes:     "application/json",
-		defaultProduces:     "application/json",
-		customConsumers:     make(map[string]runtime.Consumer),
-		customProducers:     make(map[string]runtime.Producer),
-		ServerShutdown:      func() {},
-		spec:                spec,
-		ServeError:          errors.ServeError,
-		BasicAuthenticator:  security.BasicAuth,
-		APIKeyAuthenticator: security.APIKeyAuth,
-		BearerAuthenticator: security.BearerAuth,
-		JSONConsumer:        runtime.JSONConsumer(),
-		TxtConsumer:         runtime.TextConsumer(),
-		JSONProducer:        runtime.JSONProducer(),
+		handlers:              make(map[string]map[string]http.Handler),
+		formats:               strfmt.Default,
+		defaultConsumes:       "application/json",
+		defaultProduces:       "application/json",
+		customConsumers:       make(map[string]runtime.Consumer),
+		customProducers:       make(map[string]runtime.Producer),
+		ServerShutdown:        func() {},
+		spec:                  spec,
+		ServeError:            errors.ServeError,
+		BasicAuthenticator:    security.BasicAuth,
+		APIKeyAuthenticator:   security.APIKeyAuth,
+		BearerAuthenticator:   security.BearerAuth,
+		JSONConsumer:          runtime.JSONConsumer(),
+		MultipartformConsumer: runtime.DiscardConsumer,
+		TxtConsumer:           runtime.TextConsumer(),
+		JSONProducer:          runtime.JSONProducer(),
+		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsAddMapEntry has not yet been implemented")
+		}),
+		MapsClearRuntimeMapHandler: maps.ClearRuntimeMapHandlerFunc(func(params maps.ClearRuntimeMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsClearRuntimeMap has not yet been implemented")
+		}),
 		TransactionsCommitTransactionHandler: transactions.CommitTransactionHandlerFunc(func(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsCommitTransaction has not yet been implemented")
 		}),
@@ -125,6 +133,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ResolverCreateResolver has not yet been implemented")
+		}),
+		MapsCreateRuntimeMapHandler: maps.CreateRuntimeMapHandlerFunc(func(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsCreateRuntimeMap has not yet been implemented")
 		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerCreateServer has not yet been implemented")
@@ -183,6 +194,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverDeleteResolverHandler: resolver.DeleteResolverHandlerFunc(func(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ResolverDeleteResolver has not yet been implemented")
 		}),
+		MapsDeleteRuntimeMapEntryHandler: maps.DeleteRuntimeMapEntryHandlerFunc(func(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsDeleteRuntimeMapEntry has not yet been implemented")
+		}),
 		ServerDeleteServerHandler: server.DeleteServerHandlerFunc(func(params server.DeleteServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerDeleteServer has not yet been implemented")
 		}),
@@ -212,6 +226,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ACLGetAclsHandler: acl.GetAclsHandlerFunc(func(params acl.GetAclsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ACLGetAcls has not yet been implemented")
+		}),
+		MapsGetAllRuntimeMapFilesHandler: maps.GetAllRuntimeMapFilesHandlerFunc(func(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsGetAllRuntimeMapFiles has not yet been implemented")
 		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackendGetBackend has not yet been implemented")
@@ -291,6 +308,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		NameserverGetNameserversHandler: nameserver.GetNameserversHandlerFunc(func(params nameserver.GetNameserversParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation NameserverGetNameservers has not yet been implemented")
 		}),
+		MapsGetOneRuntimeMapHandler: maps.GetOneRuntimeMapHandlerFunc(func(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsGetOneRuntimeMap has not yet been implemented")
+		}),
 		PeerEntryGetPeerEntriesHandler: peer_entry.GetPeerEntriesHandlerFunc(func(params peer_entry.GetPeerEntriesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation PeerEntryGetPeerEntries has not yet been implemented")
 		}),
@@ -317,6 +337,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DiscoveryGetRuntimeEndpointsHandler: discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetRuntimeEndpoints has not yet been implemented")
+		}),
+		MapsGetRuntimeMapEntryHandler: maps.GetRuntimeMapEntryHandlerFunc(func(params maps.GetRuntimeMapEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsGetRuntimeMapEntry has not yet been implemented")
 		}),
 		ServerGetRuntimeServerHandler: server.GetRuntimeServerHandlerFunc(func(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerGetRuntimeServer has not yet been implemented")
@@ -435,6 +458,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverReplaceResolverHandler: resolver.ReplaceResolverHandlerFunc(func(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ResolverReplaceResolver has not yet been implemented")
 		}),
+		MapsReplaceRuntimeMapEntryHandler: maps.ReplaceRuntimeMapEntryHandlerFunc(func(params maps.ReplaceRuntimeMapEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsReplaceRuntimeMapEntry has not yet been implemented")
+		}),
 		ServerReplaceRuntimeServerHandler: server.ReplaceRuntimeServerHandlerFunc(func(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerReplaceRuntimeServer has not yet been implemented")
 		}),
@@ -455,6 +481,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPResponseRuleReplaceTCPResponseRuleHandler: tcp_response_rule.ReplaceTCPResponseRuleHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TCPResponseRuleReplaceTCPResponseRule has not yet been implemented")
+		}),
+		MapsShowRuntimeMapHandler: maps.ShowRuntimeMapHandlerFunc(func(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation MapsShowRuntimeMap has not yet been implemented")
 		}),
 		TransactionsStartTransactionHandler: transactions.StartTransactionHandlerFunc(func(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsStartTransaction has not yet been implemented")
@@ -496,6 +525,8 @@ type DataPlaneAPI struct {
 
 	// JSONConsumer registers a consumer for a "application/json" mime type
 	JSONConsumer runtime.Consumer
+	// MultipartformConsumer registers a consumer for a "multipart/form-data" mime type
+	MultipartformConsumer runtime.Consumer
 	// TxtConsumer registers a consumer for a "text/plain" mime type
 	TxtConsumer runtime.Consumer
 
@@ -509,6 +540,10 @@ type DataPlaneAPI struct {
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
 
+	// MapsAddMapEntryHandler sets the operation handler for the add map entry operation
+	MapsAddMapEntryHandler maps.AddMapEntryHandler
+	// MapsClearRuntimeMapHandler sets the operation handler for the clear runtime map operation
+	MapsClearRuntimeMapHandler maps.ClearRuntimeMapHandler
 	// TransactionsCommitTransactionHandler sets the operation handler for the commit transaction operation
 	TransactionsCommitTransactionHandler transactions.CommitTransactionHandler
 	// ACLCreateACLHandler sets the operation handler for the create Acl operation
@@ -537,6 +572,8 @@ type DataPlaneAPI struct {
 	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
 	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
+	// MapsCreateRuntimeMapHandler sets the operation handler for the create runtime map operation
+	MapsCreateRuntimeMapHandler maps.CreateRuntimeMapHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
@@ -575,6 +612,8 @@ type DataPlaneAPI struct {
 	PeerEntryDeletePeerEntryHandler peer_entry.DeletePeerEntryHandler
 	// ResolverDeleteResolverHandler sets the operation handler for the delete resolver operation
 	ResolverDeleteResolverHandler resolver.DeleteResolverHandler
+	// MapsDeleteRuntimeMapEntryHandler sets the operation handler for the delete runtime map entry operation
+	MapsDeleteRuntimeMapEntryHandler maps.DeleteRuntimeMapEntryHandler
 	// ServerDeleteServerHandler sets the operation handler for the delete server operation
 	ServerDeleteServerHandler server.DeleteServerHandler
 	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
@@ -595,6 +634,8 @@ type DataPlaneAPI struct {
 	ACLGetACLHandler acl.GetACLHandler
 	// ACLGetAclsHandler sets the operation handler for the get acls operation
 	ACLGetAclsHandler acl.GetAclsHandler
+	// MapsGetAllRuntimeMapFilesHandler sets the operation handler for the get all runtime map files operation
+	MapsGetAllRuntimeMapFilesHandler maps.GetAllRuntimeMapFilesHandler
 	// BackendGetBackendHandler sets the operation handler for the get backend operation
 	BackendGetBackendHandler backend.GetBackendHandler
 	// BackendSwitchingRuleGetBackendSwitchingRuleHandler sets the operation handler for the get backend switching rule operation
@@ -647,6 +688,8 @@ type DataPlaneAPI struct {
 	NameserverGetNameserverHandler nameserver.GetNameserverHandler
 	// NameserverGetNameserversHandler sets the operation handler for the get nameservers operation
 	NameserverGetNameserversHandler nameserver.GetNameserversHandler
+	// MapsGetOneRuntimeMapHandler sets the operation handler for the get one runtime map operation
+	MapsGetOneRuntimeMapHandler maps.GetOneRuntimeMapHandler
 	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
 	PeerEntryGetPeerEntriesHandler peer_entry.GetPeerEntriesHandler
 	// PeerEntryGetPeerEntryHandler sets the operation handler for the get peer entry operation
@@ -665,6 +708,8 @@ type DataPlaneAPI struct {
 	ResolverGetResolversHandler resolver.GetResolversHandler
 	// DiscoveryGetRuntimeEndpointsHandler sets the operation handler for the get runtime endpoints operation
 	DiscoveryGetRuntimeEndpointsHandler discovery.GetRuntimeEndpointsHandler
+	// MapsGetRuntimeMapEntryHandler sets the operation handler for the get runtime map entry operation
+	MapsGetRuntimeMapEntryHandler maps.GetRuntimeMapEntryHandler
 	// ServerGetRuntimeServerHandler sets the operation handler for the get runtime server operation
 	ServerGetRuntimeServerHandler server.GetRuntimeServerHandler
 	// ServerGetRuntimeServersHandler sets the operation handler for the get runtime servers operation
@@ -743,6 +788,8 @@ type DataPlaneAPI struct {
 	PeerEntryReplacePeerEntryHandler peer_entry.ReplacePeerEntryHandler
 	// ResolverReplaceResolverHandler sets the operation handler for the replace resolver operation
 	ResolverReplaceResolverHandler resolver.ReplaceResolverHandler
+	// MapsReplaceRuntimeMapEntryHandler sets the operation handler for the replace runtime map entry operation
+	MapsReplaceRuntimeMapEntryHandler maps.ReplaceRuntimeMapEntryHandler
 	// ServerReplaceRuntimeServerHandler sets the operation handler for the replace runtime server operation
 	ServerReplaceRuntimeServerHandler server.ReplaceRuntimeServerHandler
 	// ServerReplaceServerHandler sets the operation handler for the replace server operation
@@ -757,6 +804,8 @@ type DataPlaneAPI struct {
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
 	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
+	// MapsShowRuntimeMapHandler sets the operation handler for the show runtime map operation
+	MapsShowRuntimeMapHandler maps.ShowRuntimeMapHandler
 	// TransactionsStartTransactionHandler sets the operation handler for the start transaction operation
 	TransactionsStartTransactionHandler transactions.StartTransactionHandler
 
@@ -818,6 +867,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "JSONConsumer")
 	}
 
+	if o.MultipartformConsumer == nil {
+		unregistered = append(unregistered, "MultipartformConsumer")
+	}
+
 	if o.TxtConsumer == nil {
 		unregistered = append(unregistered, "TxtConsumer")
 	}
@@ -828,6 +881,14 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.BasicAuthAuth == nil {
 		unregistered = append(unregistered, "BasicAuthAuth")
+	}
+
+	if o.MapsAddMapEntryHandler == nil {
+		unregistered = append(unregistered, "maps.AddMapEntryHandler")
+	}
+
+	if o.MapsClearRuntimeMapHandler == nil {
+		unregistered = append(unregistered, "maps.ClearRuntimeMapHandler")
 	}
 
 	if o.TransactionsCommitTransactionHandler == nil {
@@ -884,6 +945,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
+	}
+
+	if o.MapsCreateRuntimeMapHandler == nil {
+		unregistered = append(unregistered, "maps.CreateRuntimeMapHandler")
 	}
 
 	if o.ServerCreateServerHandler == nil {
@@ -962,6 +1027,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "resolver.DeleteResolverHandler")
 	}
 
+	if o.MapsDeleteRuntimeMapEntryHandler == nil {
+		unregistered = append(unregistered, "maps.DeleteRuntimeMapEntryHandler")
+	}
+
 	if o.ServerDeleteServerHandler == nil {
 		unregistered = append(unregistered, "server.DeleteServerHandler")
 	}
@@ -1000,6 +1069,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.ACLGetAclsHandler == nil {
 		unregistered = append(unregistered, "acl.GetAclsHandler")
+	}
+
+	if o.MapsGetAllRuntimeMapFilesHandler == nil {
+		unregistered = append(unregistered, "maps.GetAllRuntimeMapFilesHandler")
 	}
 
 	if o.BackendGetBackendHandler == nil {
@@ -1106,6 +1179,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "nameserver.GetNameserversHandler")
 	}
 
+	if o.MapsGetOneRuntimeMapHandler == nil {
+		unregistered = append(unregistered, "maps.GetOneRuntimeMapHandler")
+	}
+
 	if o.PeerEntryGetPeerEntriesHandler == nil {
 		unregistered = append(unregistered, "peer_entry.GetPeerEntriesHandler")
 	}
@@ -1140,6 +1217,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.DiscoveryGetRuntimeEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetRuntimeEndpointsHandler")
+	}
+
+	if o.MapsGetRuntimeMapEntryHandler == nil {
+		unregistered = append(unregistered, "maps.GetRuntimeMapEntryHandler")
 	}
 
 	if o.ServerGetRuntimeServerHandler == nil {
@@ -1298,6 +1379,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "resolver.ReplaceResolverHandler")
 	}
 
+	if o.MapsReplaceRuntimeMapEntryHandler == nil {
+		unregistered = append(unregistered, "maps.ReplaceRuntimeMapEntryHandler")
+	}
+
 	if o.ServerReplaceRuntimeServerHandler == nil {
 		unregistered = append(unregistered, "server.ReplaceRuntimeServerHandler")
 	}
@@ -1324,6 +1409,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.TCPResponseRuleReplaceTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleHandler")
+	}
+
+	if o.MapsShowRuntimeMapHandler == nil {
+		unregistered = append(unregistered, "maps.ShowRuntimeMapHandler")
 	}
 
 	if o.TransactionsStartTransactionHandler == nil {
@@ -1375,6 +1464,9 @@ func (o *DataPlaneAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Cons
 
 		case "application/json":
 			result["application/json"] = o.JSONConsumer
+
+		case "multipart/form-data":
+			result["multipart/form-data"] = o.MultipartformConsumer
 
 		case "text/plain":
 			result["text/plain"] = o.TxtConsumer
@@ -1440,6 +1532,16 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers == nil {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/maps_entries"] = maps.NewAddMapEntry(o.context, o.MapsAddMapEntryHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/maps/{name}"] = maps.NewClearRuntimeMap(o.context, o.MapsClearRuntimeMapHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -1510,6 +1612,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/resolvers"] = resolver.NewCreateResolver(o.context, o.ResolverCreateResolverHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/maps"] = maps.NewCreateRuntimeMap(o.context, o.MapsCreateRuntimeMapHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1609,6 +1716,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/maps_entries/{id}"] = maps.NewDeleteRuntimeMapEntry(o.context, o.MapsDeleteRuntimeMapEntryHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/servers/{name}"] = server.NewDeleteServer(o.context, o.ServerDeleteServerHandler)
 
 	if o.handlers["DELETE"] == nil {
@@ -1655,6 +1767,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/acls"] = acl.NewGetAcls(o.context, o.ACLGetAclsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/maps"] = maps.NewGetAllRuntimeMapFiles(o.context, o.MapsGetAllRuntimeMapFilesHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1789,6 +1906,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/runtime/maps/{name}"] = maps.NewGetOneRuntimeMap(o.context, o.MapsGetOneRuntimeMapHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/peer_entries"] = peer_entry.NewGetPeerEntries(o.context, o.PeerEntryGetPeerEntriesHandler)
 
 	if o.handlers["GET"] == nil {
@@ -1830,6 +1952,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime"] = discovery.NewGetRuntimeEndpoints(o.context, o.DiscoveryGetRuntimeEndpointsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/maps_entries/{id}"] = maps.NewGetRuntimeMapEntry(o.context, o.MapsGetRuntimeMapEntryHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -2029,6 +2156,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/runtime/maps_entries/{id}"] = maps.NewReplaceRuntimeMapEntry(o.context, o.MapsReplaceRuntimeMapEntryHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/runtime/servers/{name}"] = server.NewReplaceRuntimeServer(o.context, o.ServerReplaceRuntimeServerHandler)
 
 	if o.handlers["PUT"] == nil {
@@ -2060,6 +2192,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/maps_entries"] = maps.NewShowRuntimeMap(o.context, o.MapsShowRuntimeMapHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
