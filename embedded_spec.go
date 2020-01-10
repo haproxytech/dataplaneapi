@@ -6564,6 +6564,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "init-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "inter": {
           "type": "integer",
           "x-nullable": true
@@ -7326,6 +7330,38 @@ func init() {
           },
           "x-display-name": "Authentication Realm"
         },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Len"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -7541,7 +7577,8 @@ func init() {
             "set-var",
             "send-spoe-group",
             "add-acl",
-            "del-acl"
+            "del-acl",
+            "capture"
           ],
           "x-nullable": false
         },
@@ -7638,6 +7675,28 @@ func init() {
             }
           },
           "x-display-name": "ACK Key Format"
+        },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
         },
         "cond": {
           "type": "string",
@@ -7838,7 +7897,8 @@ func init() {
             "replace-header",
             "replace-value",
             "add-acl",
-            "del-acl"
+            "del-acl",
+            "capture"
           ],
           "x-nullable": false
         },
@@ -9342,6 +9402,10 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "init-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "inter": {
           "type": "integer",
           "x-nullable": true
@@ -9539,7 +9603,7 @@ func init() {
       }
     },
     "site": {
-      "description": "Site configuration. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Site configuration. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration\nendpoints.\n",
       "type": "object",
       "title": "Site",
       "required": [
@@ -19492,6 +19556,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "init-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "inter": {
           "type": "integer",
           "x-nullable": true
@@ -20254,6 +20322,38 @@ func init() {
           },
           "x-display-name": "Authentication Realm"
         },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Len"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -20469,7 +20569,8 @@ func init() {
             "set-var",
             "send-spoe-group",
             "add-acl",
-            "del-acl"
+            "del-acl",
+            "capture"
           ],
           "x-nullable": false
         },
@@ -20566,6 +20667,28 @@ func init() {
             }
           },
           "x-display-name": "ACK Key Format"
+        },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
         },
         "cond": {
           "type": "string",
@@ -20766,7 +20889,8 @@ func init() {
             "replace-header",
             "replace-value",
             "add-acl",
-            "del-acl"
+            "del-acl",
+            "capture"
           ],
           "x-nullable": false
         },
@@ -22271,6 +22395,10 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "init-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "inter": {
           "type": "integer",
           "x-nullable": true
@@ -22468,7 +22596,7 @@ func init() {
       }
     },
     "site": {
-      "description": "Site configuration. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Site configuration. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration\nendpoints.\n",
       "type": "object",
       "title": "Site",
       "required": [
