@@ -33,7 +33,7 @@ type GetDefaultsHandlerImpl struct {
 // ReplaceDefaultsHandlerImpl implementation of the ReplaceDefaultsHandler interface
 type ReplaceDefaultsHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

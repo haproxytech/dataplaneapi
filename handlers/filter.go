@@ -27,13 +27,13 @@ import (
 //CreateFilterHandlerImpl implementation of the CreateFilterHandler interface using client-native client
 type CreateFilterHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteFilterHandlerImpl implementation of the DeleteFilterHandler interface using client-native client
 type DeleteFilterHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetFilterHandlerImpl implementation of the GetFilterHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetFiltersHandlerImpl struct {
 //ReplaceFilterHandlerImpl implementation of the ReplaceFilterHandler interface using client-native client
 type ReplaceFilterHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

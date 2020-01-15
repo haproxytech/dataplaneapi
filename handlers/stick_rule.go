@@ -27,13 +27,13 @@ import (
 //CreateStickRuleHandlerImpl implementation of the CreateStickRuleHandler interface using client-native client
 type CreateStickRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteStickRuleHandlerImpl implementation of the DeleteStickRuleHandler interface using client-native client
 type DeleteStickRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetStickRuleHandlerImpl implementation of the GetStickRuleHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetStickRulesHandlerImpl struct {
 //ReplaceStickRuleHandlerImpl implementation of the ReplaceStickRuleHandler interface using client-native client
 type ReplaceStickRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

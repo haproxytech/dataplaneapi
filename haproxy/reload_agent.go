@@ -31,6 +31,14 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+type IReloadAgent interface {
+	Init(delay int, reloadCmd string, restartCmd string, configFile string, retention int) error
+	Reload() string
+	ForceReload() error
+	GetReloads() models.Reloads
+	GetReload(id string) *models.Reload
+}
+
 type reloadCache struct {
 	failedReloads map[string]*models.Reload
 	lastSuccess   *models.Reload

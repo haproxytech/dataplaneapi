@@ -27,13 +27,13 @@ import (
 //CreateTCPRequestRuleHandlerImpl implementation of the CreateTCPRequestRuleHandler interface using client-native client
 type CreateTCPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteTCPRequestRuleHandlerImpl implementation of the DeleteTCPRequestRuleHandler interface using client-native client
 type DeleteTCPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetTCPRequestRuleHandlerImpl implementation of the GetTCPRequestRuleHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetTCPRequestRulesHandlerImpl struct {
 //ReplaceTCPRequestRuleHandlerImpl implementation of the ReplaceTCPRequestRuleHandler interface using client-native client
 type ReplaceTCPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

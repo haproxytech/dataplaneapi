@@ -27,13 +27,13 @@ import (
 //CreateLogTargetHandlerImpl implementation of the CreateLogTargetHandler interface using client-native client
 type CreateLogTargetHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteLogTargetHandlerImpl implementation of the DeleteLogTargetHandler interface using client-native client
 type DeleteLogTargetHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetLogTargetHandlerImpl implementation of the GetLogTargetHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetLogTargetsHandlerImpl struct {
 //ReplaceLogTargetHandlerImpl implementation of the ReplaceLogTargetHandler interface using client-native client
 type ReplaceLogTargetHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

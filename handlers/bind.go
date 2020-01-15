@@ -27,13 +27,13 @@ import (
 //CreateBindHandlerImpl implementation of the CreateBindHandler interface using client-native client
 type CreateBindHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteBindHandlerImpl implementation of the DeleteBindHandler interface using client-native client
 type DeleteBindHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetBindHandlerImpl implementation of the GetBindHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetBindsHandlerImpl struct {
 //ReplaceBindHandlerImpl implementation of the ReplaceBindHandler interface using client-native client
 type ReplaceBindHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

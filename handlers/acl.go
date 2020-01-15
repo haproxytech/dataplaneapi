@@ -27,13 +27,13 @@ import (
 //CreateACLHandlerImpl implementation of the CreateACLHandler interface using client-native client
 type CreateACLHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteACLHandlerImpl implementation of the DeleteACLHandler interface using client-native client
 type DeleteACLHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetACLHandlerImpl implementation of the GetACLHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetAclsHandlerImpl struct {
 //ReplaceACLHandlerImpl implementation of the ReplaceACLHandler interface using client-native client
 type ReplaceACLHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

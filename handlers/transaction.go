@@ -46,7 +46,7 @@ type GetTransactionsHandlerImpl struct {
 //CommitTransactionHandlerImpl implementation of the CommitTransactionHandlerImpl interface using client-native client
 type CommitTransactionHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

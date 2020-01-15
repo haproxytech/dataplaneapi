@@ -27,13 +27,13 @@ import (
 //CreateFrontendHandlerImpl implementation of the CreateFrontendHandler interface using client-native client
 type CreateFrontendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteFrontendHandlerImpl implementation of the DeleteFrontendHandler interface using client-native client
 type DeleteFrontendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetFrontendHandlerImpl implementation of the GetFrontendHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetFrontendsHandlerImpl struct {
 //ReplaceFrontendHandlerImpl implementation of the ReplaceFrontendHandler interface using client-native client
 type ReplaceFrontendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

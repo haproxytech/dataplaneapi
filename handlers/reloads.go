@@ -27,12 +27,12 @@ import (
 
 //GetReloadHandlerImpl implementation of the GetReloadHandler interface using client-native client
 type GetReloadHandlerImpl struct {
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetReloadsHandlerImpl implementation of the GetReloadsHandler interface using client-native client
 type GetReloadsHandlerImpl struct {
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

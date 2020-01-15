@@ -27,13 +27,13 @@ import (
 //CreateServerSwitchingRuleHandlerImpl implementation of the CreateServerSwitchingRuleHandler interface using client-native client
 type CreateServerSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteServerSwitchingRuleHandlerImpl implementation of the DeleteServerSwitchingRuleHandler interface using client-native client
 type DeleteServerSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetServerSwitchingRuleHandlerImpl implementation of the GetServerSwitchingRuleHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetServerSwitchingRulesHandlerImpl struct {
 //ReplaceServerSwitchingRuleHandlerImpl implementation of the ReplaceServerSwitchingRuleHandler interface using client-native client
 type ReplaceServerSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

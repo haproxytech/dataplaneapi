@@ -27,13 +27,13 @@ import (
 //CreateBackendHandlerImpl implementation of the CreateBackendHandler interface using client-native client
 type CreateBackendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteBackendHandlerImpl implementation of the DeleteBackendHandler interface using client-native client
 type DeleteBackendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetBackendHandlerImpl implementation of the GetBackendHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetBackendsHandlerImpl struct {
 //ReplaceBackendHandlerImpl implementation of the ReplaceBackendHandler interface using client-native client
 type ReplaceBackendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

@@ -27,13 +27,13 @@ import (
 //CreateSiteHandlerImpl implementation of the CreateSiteHandler interface using client-native client
 type CreateSiteHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteSiteHandlerImpl implementation of the DeleteSiteHandler interface using client-native client
 type DeleteSiteHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetSiteHandlerImpl implementation of the GetSiteHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetSitesHandlerImpl struct {
 //ReplaceSiteHandlerImpl implementation of the ReplaceSiteHandler interface using client-native client
 type ReplaceSiteHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response

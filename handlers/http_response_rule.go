@@ -27,13 +27,13 @@ import (
 //CreateHTTPResponseRuleHandlerImpl implementation of the CreateHTTPResponseRuleHandler interface using client-native client
 type CreateHTTPResponseRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //DeleteHTTPResponseRuleHandlerImpl implementation of the DeleteHTTPResponseRuleHandler interface using client-native client
 type DeleteHTTPResponseRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //GetHTTPResponseRuleHandlerImpl implementation of the GetHTTPResponseRuleHandler interface using client-native client
@@ -49,7 +49,7 @@ type GetHTTPResponseRulesHandlerImpl struct {
 //ReplaceHTTPResponseRuleHandlerImpl implementation of the ReplaceHTTPResponseRuleHandler interface using client-native client
 type ReplaceHTTPResponseRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 //Handle executing the request and returning a response
