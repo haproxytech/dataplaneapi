@@ -6545,6 +6545,10 @@ func init() {
     "default_server": {
       "type": "object",
       "properties": {
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "check-ssl": {
           "type": "string",
           "enum": [
@@ -6581,6 +6585,10 @@ func init() {
         "rise": {
           "type": "integer",
           "x-nullable": true
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         }
       }
     },
@@ -9377,6 +9385,10 @@ func init() {
             "disabled"
           ]
         },
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "check-ssl": {
           "type": "string",
           "enum": [
@@ -9467,6 +9479,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "ssl": {
           "type": "string",
@@ -19537,6 +19553,10 @@ func init() {
     "default_server": {
       "type": "object",
       "properties": {
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "check-ssl": {
           "type": "string",
           "enum": [
@@ -19573,6 +19593,10 @@ func init() {
         "rise": {
           "type": "integer",
           "x-nullable": true
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         }
       }
     },
@@ -22370,6 +22394,10 @@ func init() {
             "disabled"
           ]
         },
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "check-ssl": {
           "type": "string",
           "enum": [
@@ -22460,6 +22488,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "ssl": {
           "type": "string",
