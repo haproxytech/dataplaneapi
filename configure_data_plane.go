@@ -47,6 +47,7 @@ import (
 
 	"github.com/haproxytech/client-native/configuration"
 	runtime_api "github.com/haproxytech/client-native/runtime"
+	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 
@@ -69,40 +70,21 @@ import (
 var Version string
 var BuildTime string
 
-var haproxyOptions struct {
-	ConfigFile      string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
-	Userlist        string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller"`
-	HAProxy         string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy"`
-	ReloadDelay     int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5"`
-	ReloadCmd       string `short:"r" long:"reload-cmd" description:"Reload command"`
-	RestartCmd      string `short:"s" long:"restart-cmd" description:"Restart command"`
-	ReloadRetention int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1"`
-	TransactionDir  string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
-	BackupsNumber   int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0"`
-	MasterRuntime   string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket"`
-	ShowSystemInfo  bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint"`
-}
-
-var loggingOptions struct {
-	LogTo     string `long:"log-to" description:"Log target, can be stdout or file" default:"stdout" choice:"stdout" choice:"file"`
-	LogFile   string `long:"log-file" description:"Location of the log file" default:"/var/log/dataplaneapi/dataplaneapi.log"`
-	LogLevel  string `long:"log-level" description:"Logging level" default:"warning" choice:"trace" choice:"debug" choice:"info" choice:"warning" choice:"error"`
-	LogFormat string `long:"log-format" description:"Logging format" default:"text" choice:"text" choice:"JSON"`
-}
-
 var logFile *os.File
 
 func configureFlags(api *operations.DataPlaneAPI) {
+	cfg := dataplaneapi_config.Get()
+
 	haproxyOptionsGroup := swag.CommandLineOptionsGroup{
 		ShortDescription: "HAProxy options",
 		LongDescription:  "Options for configuring haproxy locations.",
-		Options:          &haproxyOptions,
+		Options:          &cfg.HAProxy,
 	}
 
 	loggingOptionsGroup := swag.CommandLineOptionsGroup{
 		ShortDescription: "Logging options",
 		LongDescription:  "Options for configuring logging.",
-		Options:          &loggingOptions,
+		Options:          &cfg.Logging,
 	}
 
 	api.CommandLineOptionsGroups = make([]swag.CommandLineOptionsGroup, 0, 1)
@@ -111,7 +93,10 @@ func configureFlags(api *operations.DataPlaneAPI) {
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
-	configureLogging()
+	cfg := dataplaneapi_config.Get()
+	haproxyOptions := cfg.HAProxy
+
+	configureLogging(cfg.Logging)
 
 	defer func() {
 		if err := recover(); err != nil {
@@ -137,12 +122,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.ServerShutdown = serverShutdown
 
-	client := configureNativeClient()
+	client := configureNativeClient(haproxyOptions)
 
 	// Handle reload signals
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
-	go handleSignals(sigs, client)
+	go handleSignals(sigs, client, haproxyOptions)
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
@@ -419,6 +404,9 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 }
 
 func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
+	cfg := dataplaneapi_config.Get()
+	haproxyOptions := cfg.HAProxy
+
 	data, err := cli.Configuration.Parser.Get(parser.UserList, haproxyOptions.Userlist, "user")
 	if err != nil {
 		return nil, fmt.Errorf("error reading userlist %v userlist in conf: %s", haproxyOptions.Userlist, err.Error())
@@ -448,7 +436,7 @@ func authenticateUser(user string, pass string, cli *client_native.HAProxyClient
 	return nil, errors.New(401, "Invalid username/password")
 }
 
-func configureLogging() {
+func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
 	switch loggingOptions.LogFormat {
 	case "text":
 		log.SetFormatter(&log.TextFormatter{
@@ -515,7 +503,7 @@ func serverShutdown() {
 	}
 }
 
-func configureNativeClient() *client_native.HAProxyClient {
+func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration) *client_native.HAProxyClient {
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
@@ -529,12 +517,12 @@ func configureNativeClient() *client_native.HAProxyClient {
 		haproxyOptions.ConfigFile = cfg[0]
 	}
 	// Initialize HAProxy native client
-	confClient, err := configureConfigurationClient()
+	confClient, err := configureConfigurationClient(haproxyOptions)
 	if err != nil {
 		log.Fatalf("Error initializing configuration client: %v", err)
 	}
 
-	runtimeClient := configureRuntimeClient(confClient)
+	runtimeClient := configureRuntimeClient(confClient, haproxyOptions)
 	client := &client_native.HAProxyClient{}
 	if err := client.Init(confClient, runtimeClient); err != nil {
 		log.Fatalf("Error setting up native client: %v", err)
@@ -543,7 +531,7 @@ func configureNativeClient() *client_native.HAProxyClient {
 	return client
 }
 
-func configureConfigurationClient() (*configuration.Client, error) {
+func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration) (*configuration.Client, error) {
 	confClient := &configuration.Client{}
 	confParams := configuration.ClientParams{
 		ConfigurationFile:      haproxyOptions.ConfigFile,
@@ -560,7 +548,7 @@ func configureConfigurationClient() (*configuration.Client, error) {
 	return confClient, nil
 }
 
-func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Client {
+func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dataplaneapi_config.HAProxyConfiguration) *runtime_api.Client {
 	runtimeClient := &runtime_api.Client{}
 	_, globalConf, err := confClient.GetGlobalConfiguration("")
 
@@ -636,16 +624,16 @@ func configureRuntimeClient(confClient *configuration.Client) *runtime_api.Clien
 	return nil
 }
 
-func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient) {
+func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration) {
 	//nolint:gosimple
 	for {
 		select {
 		case sig := <-sigs:
 			if sig == syscall.SIGUSR1 {
-				client.Runtime = configureRuntimeClient(client.Configuration)
+				client.Runtime = configureRuntimeClient(client.Configuration, haproxyOptions)
 				log.Info("Reloaded Data Plane API")
 			} else if sig == syscall.SIGUSR2 {
-				confClient, err := configureConfigurationClient()
+				confClient, err := configureConfigurationClient(haproxyOptions)
 				if err != nil {
 					log.Fatalf(err.Error())
 				}
