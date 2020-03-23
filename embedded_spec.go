@@ -6495,9 +6495,16 @@ func init() {
         "domain": {
           "type": "array",
           "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          }
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            },
+            "x-go-name": "Domain"
+          },
+          "x-go-name": "Domains"
         },
         "dynamic": {
           "type": "boolean"
@@ -8244,611 +8251,7 @@ func init() {
           "type": "string"
         },
         "stats": {
-          "type": "object",
-          "properties": {
-            "act": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "addr": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "agent_code": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_desc": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "agent_duration": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_fall": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_health": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_rise": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_status": {
-              "type": "string",
-              "enum": [
-                "UNK",
-                "INI",
-                "SOCKERR",
-                "L40K",
-                "L4TOUT",
-                "L4CON",
-                "L7OK",
-                "L7STS"
-              ],
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "algo": {
-              "type": "string",
-              "x-dependency": {
-                "type": "backend"
-              }
-            },
-            "bck": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "bin": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "bout": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "check_code": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_desc": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "check_duration": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_fall": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_health": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_rise": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_status": {
-              "type": "string",
-              "enum": [
-                "UNK",
-                "INI",
-                "SOCKERR",
-                "L40K",
-                "L4TOUT",
-                "L4CON",
-                "L6OK",
-                "L6TOUT",
-                "L6RSP",
-                "L7OK",
-                "L7OKC",
-                "L7TOUT",
-                "L7RSP",
-                "L7STS"
-              ],
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "chkdown": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "chkfail": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "cli_abrt": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_byp": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_in": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_out": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_rsp": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "conn_rate": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "conn_rate_max": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "conn_tot": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "cookie": {
-              "type": "string",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              }
-            },
-            "ctime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "dcon": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "downtime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "dreq": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "dresp": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "dses": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "econ": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "ereq": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "eresp": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "hanafail": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "hrsp_1xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_2xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_3xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_4xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_5xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_other": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "iid": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "intercepted": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "lastchg": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "lastsess": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "lbtot": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "mode": {
-              "type": "string",
-              "enum": [
-                "tcp",
-                "http",
-                "health",
-                "unknown"
-              ]
-            },
-            "pid": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "qcur": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "qlimit": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "qmax": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "qtime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "rate": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "rate_lim": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "rate_max": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "req_rate": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "req_rate_max": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "req_tot": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "rtime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "scur": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "sid": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "slim": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "smax": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "srv_abrt": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "status": {
-              "type": "string",
-              "enum": [
-                "UP",
-                "DOWN",
-                "NOLB",
-                "MAINT",
-                "no check"
-              ]
-            },
-            "stot": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "throttle": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "tracked": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "ttime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "weight": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "wredis": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "wretr": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            }
-          },
-          "x-go-name": "NativeStatStats"
+          "$ref": "#/definitions/native_stat_stats"
         },
         "type": {
           "type": "string",
@@ -8858,48 +8261,649 @@ func init() {
             "frontend"
           ]
         }
-      },
-      "x-go-name": "NativeStat",
-      "example": {
-        "name": "frontend_test",
-        "stats": {
-          "bin": 4326578,
-          "bout": 889901290,
-          "comp_byp": 0,
-          "comp_in": 0,
-          "comp_out": 0,
-          "comp_rsp": 0,
-          "conn_rate": 12,
-          "conn_rate_max": 456,
-          "conn_tot": 45682,
-          "dcon": 0,
-          "dreq": 4,
-          "dresp": 1,
-          "dses": 0,
-          "ereq": 54,
-          "hrsp_1xx": 0,
-          "hrsp_2xx": 165,
-          "hrsp_3xx": 12,
-          "hrsp_4xx": 50,
-          "hrsp_5xx": 4,
-          "hrsp_other": 0,
-          "iid": 0,
-          "intercepted": 346,
-          "mode": "http",
-          "pid": 3204,
-          "rate": 64,
-          "rate_lim": 20000,
-          "rate_max": 4000,
-          "req_rate": 49,
-          "req_rate_max": 3965,
-          "req_total": 1254786,
-          "scur": 129,
-          "slim": 2000,
-          "smax": 2000,
-          "status": "UP",
-          "stot": 12902
+      }
+    },
+    "native_stat_stats": {
+      "type": "object",
+      "properties": {
+        "act": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
         },
-        "type": "frontend"
+        "addr": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "agent_code": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_desc": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "agent_duration": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_fall": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_health": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_rise": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_status": {
+          "type": "string",
+          "enum": [
+            "UNK",
+            "INI",
+            "SOCKERR",
+            "L40K",
+            "L4TOUT",
+            "L4CON",
+            "L7OK",
+            "L7STS"
+          ],
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "algo": {
+          "type": "string",
+          "x-dependency": {
+            "type": "backend"
+          }
+        },
+        "bck": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "bin": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "check_code": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_desc": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "check_duration": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_fall": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_health": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_rise": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_status": {
+          "type": "string",
+          "enum": [
+            "UNK",
+            "INI",
+            "SOCKERR",
+            "L40K",
+            "L4TOUT",
+            "L4CON",
+            "L6OK",
+            "L6TOUT",
+            "L6RSP",
+            "L7OK",
+            "L7OKC",
+            "L7TOUT",
+            "L7RSP",
+            "L7STS"
+          ],
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "chkdown": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "chkfail": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "cli_abrt": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_byp": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_in": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_out": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_rsp": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "conn_rate": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "conn_rate_max": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "conn_tot": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "cookie": {
+          "type": "string",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          }
+        },
+        "ctime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "dcon": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "downtime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "dreq": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "dresp": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "dses": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "econ": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "ereq": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "eresp": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "hanafail": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "hrsp_1xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_2xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_3xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_4xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_5xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_other": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "iid": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "intercepted": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "lastchg": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "lastsess": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "lbtot": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "http",
+            "health",
+            "unknown"
+          ]
+        },
+        "pid": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "qcur": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "qlimit": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "qmax": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "qtime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "rate_lim": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "rate_max": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "req_rate": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "req_rate_max": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "req_tot": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "rtime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "scur": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sid": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "slim": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "smax": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "srv_abrt": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "UP",
+            "DOWN",
+            "NOLB",
+            "MAINT",
+            "no check"
+          ]
+        },
+        "stot": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "throttle": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "tracked": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "ttime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "weight": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "wredis": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "wretr": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        }
+      },
+      "example": {
+        "bin": 4326578,
+        "bout": 889901290,
+        "comp_byp": 0,
+        "comp_in": 0,
+        "comp_out": 0,
+        "comp_rsp": 0,
+        "conn_rate": 12,
+        "conn_rate_max": 456,
+        "conn_tot": 45682,
+        "dcon": 0,
+        "dreq": 4,
+        "dresp": 1,
+        "dses": 0,
+        "ereq": 54,
+        "hrsp_1xx": 0,
+        "hrsp_2xx": 165,
+        "hrsp_3xx": 12,
+        "hrsp_4xx": 50,
+        "hrsp_5xx": 4,
+        "hrsp_other": 0,
+        "iid": 0,
+        "intercepted": 346,
+        "mode": "http",
+        "pid": 3204,
+        "rate": 64,
+        "rate_lim": 20000,
+        "rate_max": 4000,
+        "req_rate": 49,
+        "req_rate_max": 3965,
+        "req_total": 1254786,
+        "scur": 129,
+        "slim": 2000,
+        "smax": 2000,
+        "status": "UP",
+        "stot": 12902
       }
     },
     "native_stats": {
@@ -8907,308 +8911,302 @@ func init() {
       "type": "array",
       "title": "Stats Array",
       "items": {
-        "description": "Stats from one runtime API",
-        "type": "object",
-        "title": "Stats collection",
-        "properties": {
-          "error": {
-            "type": "string"
-          },
-          "runtimeAPI": {
-            "type": "string"
-          },
-          "stats": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/native_stat"
-            }
-          }
+        "$ref": "#/definitions/native_stats_collection"
+      }
+    },
+    "native_stats_collection": {
+      "description": "Stats from one runtime API",
+      "type": "object",
+      "title": "Stats collection",
+      "properties": {
+        "error": {
+          "type": "string"
         },
-        "x-go-name": "NativeStatsCollection"
-      },
-      "x-go-name": "NativeStats"
+        "runtimeAPI": {
+          "type": "string"
+        },
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/native_stat"
+          }
+        }
+      }
+    },
+    "process_info": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "info": {
+          "$ref": "#/definitions/process_info_item"
+        },
+        "runtimeAPI": {
+          "type": "string"
+        }
+      }
+    },
+    "process_info_item": {
+      "type": "object",
+      "properties": {
+        "active_peers": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "busy_polling": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_out_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "compress_bps_in": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "compress_bps_out": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "compress_bps_rate_lim": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_rate_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "connected_peers": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "cum_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "cum_req": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "cum_ssl_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "curr_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "curr_ssl_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "dropped_logs": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "failed_resolutions": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hard_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "idle_pct": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "jobs": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "listeners": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_conn_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_pipes": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_sess_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_sock": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_ssl_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_ssl_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_zlib_mem_usage": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "mem_max_mb": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "nbthread": {
+          "description": "Number of threads",
+          "type": "integer",
+          "x-display-name": "Number of Threads",
+          "x-nullable": true
+        },
+        "node": {
+          "type": "string"
+        },
+        "pid": {
+          "description": "Process id of the replying worker process",
+          "type": "integer",
+          "x-display-name": "PID",
+          "x-nullable": true
+        },
+        "pipes_free": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pipes_used": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_alloc_mb": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_failed": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_used_mb": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "process_num": {
+          "description": "Process number",
+          "type": "integer",
+          "x-display-name": "Process Number",
+          "x-nullable": true
+        },
+        "processes": {
+          "description": "Number of spawned processes",
+          "type": "integer",
+          "x-display-name": "Number of processes",
+          "x-nullable": true
+        },
+        "release_date": {
+          "description": "HAProxy version release date",
+          "type": "string",
+          "format": "date"
+        },
+        "run_queue": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_rate_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_backend_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_backend_max_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_cache_lookups": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_cache_misses": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_frontend_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_frontend_max_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_frontend_session_reuse": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_rate_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "stopping": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "tasks": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "total_bytes_out": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ulimit_n": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "unstoppable": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "uptime": {
+          "description": "HAProxy uptime in s",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "version": {
+          "description": "HAProxy version string",
+          "type": "string"
+        },
+        "zlib_mem_usage": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
     },
     "process_infos": {
       "description": "General HAProxy process information",
       "type": "array",
       "title": "HAProxy Information",
       "items": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string"
-          },
-          "info": {
-            "type": "object",
-            "properties": {
-              "active_peers": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "busy_polling": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "bytes_out_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "compress_bps_in": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "compress_bps_out": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "compress_bps_rate_lim": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "conn_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "conn_rate_limit": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "connected_peers": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "cum_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "cum_req": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "cum_ssl_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "curr_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "curr_ssl_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "dropped_logs": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "failed_resolutions": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "hard_max_conn": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "idle_pct": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "jobs": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "listeners": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_conn": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_conn_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_pipes": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_sess_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_sock": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_ssl_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_ssl_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_zlib_mem_usage": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "mem_max_mb": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "nbthread": {
-                "description": "Number of threads",
-                "type": "integer",
-                "x-display-name": "Number of Threads",
-                "x-nullable": true
-              },
-              "node": {
-                "type": "string"
-              },
-              "pid": {
-                "description": "Process id of the replying worker process",
-                "type": "integer",
-                "x-display-name": "PID",
-                "x-nullable": true
-              },
-              "pipes_free": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pipes_used": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pool_alloc_mb": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pool_failed": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pool_used_mb": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "process_num": {
-                "description": "Process number",
-                "type": "integer",
-                "x-display-name": "Process Number",
-                "x-nullable": true
-              },
-              "processes": {
-                "description": "Number of spawned processes",
-                "type": "integer",
-                "x-display-name": "Number of processes",
-                "x-nullable": true
-              },
-              "release_date": {
-                "description": "HAProxy version release date",
-                "type": "string",
-                "format": "date"
-              },
-              "run_queue": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "sess_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "sess_rate_limit": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_backend_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_backend_max_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_cache_lookups": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_cache_misses": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_frontend_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_frontend_max_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_frontend_session_reuse": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_rate_limit": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "stopping": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "tasks": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "total_bytes_out": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ulimit_n": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "unstoppable": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "uptime": {
-                "description": "HAProxy uptime in s",
-                "type": "integer",
-                "x-nullable": true
-              },
-              "version": {
-                "description": "HAProxy version string",
-                "type": "string"
-              },
-              "zlib_mem_usage": {
-                "type": "integer",
-                "x-nullable": true
-              }
-            },
-            "x-go-name": "ProcessInfoItem"
-          },
-          "runtimeAPI": {
-            "type": "string"
-          }
-        },
-        "x-go-name": "ProcessInfo"
-      },
-      "example": {
-        "haproxy": {
-          "address": "127.0.0.1",
-          "pid": 1234,
-          "processes": 4,
-          "release_date": "2016-03-11",
-          "time": "2018-07-02T12:00:00.124Z",
-          "uptime": 8,
-          "version": "1.7-dev1-868ab3-148"
-        }
+        "$ref": "#/definitions/process_info"
       }
     },
     "redispatch": {
@@ -9465,6 +9463,10 @@ func init() {
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "send-proxy": {
           "type": "string",
@@ -19503,9 +19505,16 @@ func init() {
         "domain": {
           "type": "array",
           "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          }
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            },
+            "x-go-name": "Domain"
+          },
+          "x-go-name": "Domains"
         },
         "dynamic": {
           "type": "boolean"
@@ -21252,611 +21261,7 @@ func init() {
           "type": "string"
         },
         "stats": {
-          "type": "object",
-          "properties": {
-            "act": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "addr": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "agent_code": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_desc": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "agent_duration": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_fall": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_health": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_rise": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "agent_status": {
-              "type": "string",
-              "enum": [
-                "UNK",
-                "INI",
-                "SOCKERR",
-                "L40K",
-                "L4TOUT",
-                "L4CON",
-                "L7OK",
-                "L7STS"
-              ],
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "algo": {
-              "type": "string",
-              "x-dependency": {
-                "type": "backend"
-              }
-            },
-            "bck": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "bin": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "bout": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "check_code": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_desc": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "check_duration": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_fall": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_health": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_rise": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "check_status": {
-              "type": "string",
-              "enum": [
-                "UNK",
-                "INI",
-                "SOCKERR",
-                "L40K",
-                "L4TOUT",
-                "L4CON",
-                "L6OK",
-                "L6TOUT",
-                "L6RSP",
-                "L7OK",
-                "L7OKC",
-                "L7TOUT",
-                "L7RSP",
-                "L7STS"
-              ],
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "chkdown": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "chkfail": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "cli_abrt": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_byp": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_in": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_out": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "comp_rsp": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "conn_rate": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "conn_rate_max": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "conn_tot": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "cookie": {
-              "type": "string",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              }
-            },
-            "ctime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "dcon": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "downtime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "dreq": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "dresp": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "dses": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "econ": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "ereq": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "eresp": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "hanafail": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "hrsp_1xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_2xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_3xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_4xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_5xx": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "hrsp_other": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "iid": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "intercepted": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "lastchg": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "lastsess": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "lbtot": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "mode": {
-              "type": "string",
-              "enum": [
-                "tcp",
-                "http",
-                "health",
-                "unknown"
-              ]
-            },
-            "pid": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "qcur": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "qlimit": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "qmax": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "qtime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "rate": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "rate_lim": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "rate_max": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "req_rate": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "req_rate_max": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "frontend"
-              },
-              "x-nullable": true
-            },
-            "req_tot": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "frontend",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "rtime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "scur": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "sid": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "slim": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "smax": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "srv_abrt": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "status": {
-              "type": "string",
-              "enum": [
-                "UP",
-                "DOWN",
-                "NOLB",
-                "MAINT",
-                "no check"
-              ]
-            },
-            "stot": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "throttle": {
-              "type": "integer",
-              "x-dependency": {
-                "type": "server"
-              },
-              "x-nullable": true
-            },
-            "tracked": {
-              "type": "string",
-              "x-dependency": {
-                "type": "server"
-              }
-            },
-            "ttime": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "weight": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "wredis": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            },
-            "wretr": {
-              "type": "integer",
-              "x-dependency": {
-                "type": [
-                  "server",
-                  "backend"
-                ]
-              },
-              "x-nullable": true
-            }
-          },
-          "x-go-name": "NativeStatStats"
+          "$ref": "#/definitions/native_stat_stats"
         },
         "type": {
           "type": "string",
@@ -21866,48 +21271,649 @@ func init() {
             "frontend"
           ]
         }
-      },
-      "x-go-name": "NativeStat",
-      "example": {
-        "name": "frontend_test",
-        "stats": {
-          "bin": 4326578,
-          "bout": 889901290,
-          "comp_byp": 0,
-          "comp_in": 0,
-          "comp_out": 0,
-          "comp_rsp": 0,
-          "conn_rate": 12,
-          "conn_rate_max": 456,
-          "conn_tot": 45682,
-          "dcon": 0,
-          "dreq": 4,
-          "dresp": 1,
-          "dses": 0,
-          "ereq": 54,
-          "hrsp_1xx": 0,
-          "hrsp_2xx": 165,
-          "hrsp_3xx": 12,
-          "hrsp_4xx": 50,
-          "hrsp_5xx": 4,
-          "hrsp_other": 0,
-          "iid": 0,
-          "intercepted": 346,
-          "mode": "http",
-          "pid": 3204,
-          "rate": 64,
-          "rate_lim": 20000,
-          "rate_max": 4000,
-          "req_rate": 49,
-          "req_rate_max": 3965,
-          "req_total": 1254786,
-          "scur": 129,
-          "slim": 2000,
-          "smax": 2000,
-          "status": "UP",
-          "stot": 12902
+      }
+    },
+    "native_stat_stats": {
+      "type": "object",
+      "properties": {
+        "act": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
         },
-        "type": "frontend"
+        "addr": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "agent_code": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_desc": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "agent_duration": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_fall": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_health": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_rise": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "agent_status": {
+          "type": "string",
+          "enum": [
+            "UNK",
+            "INI",
+            "SOCKERR",
+            "L40K",
+            "L4TOUT",
+            "L4CON",
+            "L7OK",
+            "L7STS"
+          ],
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "algo": {
+          "type": "string",
+          "x-dependency": {
+            "type": "backend"
+          }
+        },
+        "bck": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "bin": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bout": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "check_code": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_desc": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "check_duration": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_fall": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_health": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_rise": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "check_status": {
+          "type": "string",
+          "enum": [
+            "UNK",
+            "INI",
+            "SOCKERR",
+            "L40K",
+            "L4TOUT",
+            "L4CON",
+            "L6OK",
+            "L6TOUT",
+            "L6RSP",
+            "L7OK",
+            "L7OKC",
+            "L7TOUT",
+            "L7RSP",
+            "L7STS"
+          ],
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "chkdown": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "chkfail": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "cli_abrt": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_byp": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_in": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_out": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "comp_rsp": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "conn_rate": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "conn_rate_max": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "conn_tot": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "cookie": {
+          "type": "string",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          }
+        },
+        "ctime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "dcon": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "downtime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "dreq": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "dresp": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "dses": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "econ": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "ereq": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "eresp": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "hanafail": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "hrsp_1xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_2xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_3xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_4xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_5xx": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hrsp_other": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "iid": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "intercepted": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "lastchg": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "lastsess": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "lbtot": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "http",
+            "health",
+            "unknown"
+          ]
+        },
+        "pid": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "qcur": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "qlimit": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "qmax": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "qtime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "rate_lim": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "rate_max": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "req_rate": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "req_rate_max": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "frontend"
+          },
+          "x-nullable": true
+        },
+        "req_tot": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "frontend",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "rtime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "scur": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sid": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "slim": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "smax": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "srv_abrt": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "UP",
+            "DOWN",
+            "NOLB",
+            "MAINT",
+            "no check"
+          ]
+        },
+        "stot": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "throttle": {
+          "type": "integer",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
+        "tracked": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          }
+        },
+        "ttime": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "weight": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "wredis": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        },
+        "wretr": {
+          "type": "integer",
+          "x-dependency": {
+            "type": [
+              "server",
+              "backend"
+            ]
+          },
+          "x-nullable": true
+        }
+      },
+      "example": {
+        "bin": 4326578,
+        "bout": 889901290,
+        "comp_byp": 0,
+        "comp_in": 0,
+        "comp_out": 0,
+        "comp_rsp": 0,
+        "conn_rate": 12,
+        "conn_rate_max": 456,
+        "conn_tot": 45682,
+        "dcon": 0,
+        "dreq": 4,
+        "dresp": 1,
+        "dses": 0,
+        "ereq": 54,
+        "hrsp_1xx": 0,
+        "hrsp_2xx": 165,
+        "hrsp_3xx": 12,
+        "hrsp_4xx": 50,
+        "hrsp_5xx": 4,
+        "hrsp_other": 0,
+        "iid": 0,
+        "intercepted": 346,
+        "mode": "http",
+        "pid": 3204,
+        "rate": 64,
+        "rate_lim": 20000,
+        "rate_max": 4000,
+        "req_rate": 49,
+        "req_rate_max": 3965,
+        "req_total": 1254786,
+        "scur": 129,
+        "slim": 2000,
+        "smax": 2000,
+        "status": "UP",
+        "stot": 12902
       }
     },
     "native_stats": {
@@ -21915,308 +21921,302 @@ func init() {
       "type": "array",
       "title": "Stats Array",
       "items": {
-        "description": "Stats from one runtime API",
-        "type": "object",
-        "title": "Stats collection",
-        "properties": {
-          "error": {
-            "type": "string"
-          },
-          "runtimeAPI": {
-            "type": "string"
-          },
-          "stats": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/native_stat"
-            }
-          }
+        "$ref": "#/definitions/native_stats_collection"
+      }
+    },
+    "native_stats_collection": {
+      "description": "Stats from one runtime API",
+      "type": "object",
+      "title": "Stats collection",
+      "properties": {
+        "error": {
+          "type": "string"
         },
-        "x-go-name": "NativeStatsCollection"
-      },
-      "x-go-name": "NativeStats"
+        "runtimeAPI": {
+          "type": "string"
+        },
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/native_stat"
+          }
+        }
+      }
+    },
+    "process_info": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "info": {
+          "$ref": "#/definitions/process_info_item"
+        },
+        "runtimeAPI": {
+          "type": "string"
+        }
+      }
+    },
+    "process_info_item": {
+      "type": "object",
+      "properties": {
+        "active_peers": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "busy_polling": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "bytes_out_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "compress_bps_in": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "compress_bps_out": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "compress_bps_rate_lim": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "conn_rate_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "connected_peers": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "cum_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "cum_req": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "cum_ssl_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "curr_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "curr_ssl_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "dropped_logs": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "failed_resolutions": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "hard_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "idle_pct": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "jobs": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "listeners": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_conn_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_pipes": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_sess_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_sock": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_ssl_conns": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_ssl_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "max_zlib_mem_usage": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "mem_max_mb": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "nbthread": {
+          "description": "Number of threads",
+          "type": "integer",
+          "x-display-name": "Number of Threads",
+          "x-nullable": true
+        },
+        "node": {
+          "type": "string"
+        },
+        "pid": {
+          "description": "Process id of the replying worker process",
+          "type": "integer",
+          "x-display-name": "PID",
+          "x-nullable": true
+        },
+        "pipes_free": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pipes_used": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_alloc_mb": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_failed": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_used_mb": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "process_num": {
+          "description": "Process number",
+          "type": "integer",
+          "x-display-name": "Process Number",
+          "x-nullable": true
+        },
+        "processes": {
+          "description": "Number of spawned processes",
+          "type": "integer",
+          "x-display-name": "Number of processes",
+          "x-nullable": true
+        },
+        "release_date": {
+          "description": "HAProxy version release date",
+          "type": "string",
+          "format": "date"
+        },
+        "run_queue": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sess_rate_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_backend_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_backend_max_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_cache_lookups": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_cache_misses": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_frontend_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_frontend_max_key_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_frontend_session_reuse": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ssl_rate_limit": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "stopping": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "tasks": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "total_bytes_out": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ulimit_n": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "unstoppable": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "uptime": {
+          "description": "HAProxy uptime in s",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "version": {
+          "description": "HAProxy version string",
+          "type": "string"
+        },
+        "zlib_mem_usage": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
     },
     "process_infos": {
       "description": "General HAProxy process information",
       "type": "array",
       "title": "HAProxy Information",
       "items": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string"
-          },
-          "info": {
-            "type": "object",
-            "properties": {
-              "active_peers": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "busy_polling": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "bytes_out_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "compress_bps_in": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "compress_bps_out": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "compress_bps_rate_lim": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "conn_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "conn_rate_limit": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "connected_peers": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "cum_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "cum_req": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "cum_ssl_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "curr_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "curr_ssl_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "dropped_logs": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "failed_resolutions": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "hard_max_conn": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "idle_pct": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "jobs": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "listeners": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_conn": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_conn_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_pipes": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_sess_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_sock": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_ssl_conns": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_ssl_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "max_zlib_mem_usage": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "mem_max_mb": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "nbthread": {
-                "description": "Number of threads",
-                "type": "integer",
-                "x-display-name": "Number of Threads",
-                "x-nullable": true
-              },
-              "node": {
-                "type": "string"
-              },
-              "pid": {
-                "description": "Process id of the replying worker process",
-                "type": "integer",
-                "x-display-name": "PID",
-                "x-nullable": true
-              },
-              "pipes_free": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pipes_used": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pool_alloc_mb": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pool_failed": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "pool_used_mb": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "process_num": {
-                "description": "Process number",
-                "type": "integer",
-                "x-display-name": "Process Number",
-                "x-nullable": true
-              },
-              "processes": {
-                "description": "Number of spawned processes",
-                "type": "integer",
-                "x-display-name": "Number of processes",
-                "x-nullable": true
-              },
-              "release_date": {
-                "description": "HAProxy version release date",
-                "type": "string",
-                "format": "date"
-              },
-              "run_queue": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "sess_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "sess_rate_limit": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_backend_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_backend_max_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_cache_lookups": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_cache_misses": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_frontend_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_frontend_max_key_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_frontend_session_reuse": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_rate": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ssl_rate_limit": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "stopping": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "tasks": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "total_bytes_out": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "ulimit_n": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "unstoppable": {
-                "type": "integer",
-                "x-nullable": true
-              },
-              "uptime": {
-                "description": "HAProxy uptime in s",
-                "type": "integer",
-                "x-nullable": true
-              },
-              "version": {
-                "description": "HAProxy version string",
-                "type": "string"
-              },
-              "zlib_mem_usage": {
-                "type": "integer",
-                "x-nullable": true
-              }
-            },
-            "x-go-name": "ProcessInfoItem"
-          },
-          "runtimeAPI": {
-            "type": "string"
-          }
-        },
-        "x-go-name": "ProcessInfo"
-      },
-      "example": {
-        "haproxy": {
-          "address": "127.0.0.1",
-          "pid": 1234,
-          "processes": 4,
-          "release_date": "2016-03-11",
-          "time": "2018-07-02T12:00:00.124Z",
-          "uptime": 8,
-          "version": "1.7-dev1-868ab3-148"
-        }
+        "$ref": "#/definitions/process_info"
       }
     },
     "redispatch": {
@@ -22474,6 +22474,10 @@ func init() {
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "send-proxy": {
           "type": "string",
