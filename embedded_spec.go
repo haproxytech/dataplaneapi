@@ -79,6 +79,65 @@ func init() {
         }
       }
     },
+    "/cluster": {
+      "get": {
+        "description": "Returns cluster data",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return cluster data",
+        "operationId": "getCluster",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Post cluster settings",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Post cluster settings",
+        "operationId": "postCluster",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cluster settings changed",
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/info": {
       "get": {
         "description": "Return API, hardware and OS information",
@@ -6484,6 +6543,57 @@ func init() {
       "title": "Binds",
       "items": {
         "$ref": "#/definitions/bind"
+      }
+    },
+    "cluster_settings": {
+      "description": "Settings related to a cluster.",
+      "type": "object",
+      "title": "Cluster Settings",
+      "properties": {
+        "bootstrap_key": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "object",
+          "title": "Cluster controller information",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            },
+            "api_base_path": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          }
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "single",
+            "cluster"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "unreachable",
+            "waiting_approval"
+          ],
+          "readOnly": true
+        }
       }
     },
     "cookie": {
@@ -10532,6 +10642,96 @@ func init() {
         }
       }
     },
+    "/cluster": {
+      "get": {
+        "description": "Returns cluster data",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return cluster data",
+        "operationId": "getCluster",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Post cluster settings",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Post cluster settings",
+        "operationId": "postCluster",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cluster settings changed",
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/info": {
       "get": {
         "description": "Return API, hardware and OS information",
@@ -19494,6 +19694,57 @@ func init() {
       "title": "Binds",
       "items": {
         "$ref": "#/definitions/bind"
+      }
+    },
+    "cluster_settings": {
+      "description": "Settings related to a cluster.",
+      "type": "object",
+      "title": "Cluster Settings",
+      "properties": {
+        "bootstrap_key": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "object",
+          "title": "Cluster controller information",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            },
+            "api_base_path": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          }
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "single",
+            "cluster"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "unreachable",
+            "waiting_approval"
+          ],
+          "readOnly": true
+        }
       }
     },
     "cookie": {

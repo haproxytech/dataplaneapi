@@ -25,6 +25,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 
 	"github.com/haproxytech/dataplaneapi"
+	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/operations"
 )
 
@@ -71,7 +72,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	if _, err := parser.Parse(); err != nil {
+	if _, err = parser.Parse(); err != nil {
 		if fe, ok := err.(*flags.Error); ok {
 			if fe.Type == flags.ErrHelp {
 				os.Exit(0)
@@ -88,12 +89,41 @@ func main() {
 		return
 	}
 
-	server.ConfigureAPI()
+	cfg := configuration.Get()
+	err = cfg.Load(dataplaneapi.SwaggerJSON, server.Host, server.Port)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	if cfg.Cluster.Mode.Load() == "cluster" {
+		if cfg.Cluster.CertFetched.Load() {
+			log.Info("HAProxy Data Plane API in cluster mode")
+			server.TLSCertificate = flags.Filename(cfg.Cluster.CertificatePath.Load())
+			server.TLSCertificateKey = flags.Filename(cfg.Cluster.CertificateKeyPath.Load())
+			server.EnabledListeners = []string{"https"}
+		} else if cfg.Cluster.ActiveBootstrapKey.Load() != "" {
+			cfg.BotstrapKeyReload()
+		}
+	}
+	err = cfg.Save()
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	log.Infof("HAProxy Data Plane API %s %s%s", GitTag, GitCommit, GitDirty)
 	log.Infof("Build from: %s", GitRepo)
 	log.Infof("Build date: %s", BuildTime)
 
+	go func() {
+		for range cfg.GetRestartNotification() {
+			log.Info("HAProxy Data Plane API shuting down, needs reload")
+			err := server.Shutdown()
+			if err != nil {
+				log.Fatalln(err)
+			}
+		}
+	}()
+
+	server.ConfigureAPI()
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
 	}

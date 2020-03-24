@@ -38,6 +38,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
+	"github.com/haproxytech/dataplaneapi/operations/cluster"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
 	"github.com/haproxytech/dataplaneapi/operations/defaults"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
@@ -203,6 +204,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindGetBindsHandler: bind.GetBindsHandlerFunc(func(params bind.GetBindsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BindGetBinds has not yet been implemented")
 		}),
+		DiscoveryGetClusterHandler: discovery.GetClusterHandlerFunc(func(params discovery.GetClusterParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation DiscoveryGetCluster has not yet been implemented")
+		}),
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetConfigurationEndpoints has not yet been implemented")
 		}),
@@ -331,6 +335,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TransactionsGetTransactionsHandler: transactions.GetTransactionsHandlerFunc(func(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsGetTransactions has not yet been implemented")
+		}),
+		ClusterPostClusterHandler: cluster.PostClusterHandlerFunc(func(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ClusterPostCluster has not yet been implemented")
 		}),
 		ConfigurationPostHAProxyConfigurationHandler: configuration.PostHAProxyConfigurationHandlerFunc(func(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ConfigurationPostHAProxyConfiguration has not yet been implemented")
@@ -526,6 +533,8 @@ type DataPlaneAPI struct {
 	BindGetBindHandler bind.GetBindHandler
 	// BindGetBindsHandler sets the operation handler for the get binds operation
 	BindGetBindsHandler bind.GetBindsHandler
+	// DiscoveryGetClusterHandler sets the operation handler for the get cluster operation
+	DiscoveryGetClusterHandler discovery.GetClusterHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
 	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
@@ -612,6 +621,8 @@ type DataPlaneAPI struct {
 	TransactionsGetTransactionHandler transactions.GetTransactionHandler
 	// TransactionsGetTransactionsHandler sets the operation handler for the get transactions operation
 	TransactionsGetTransactionsHandler transactions.GetTransactionsHandler
+	// ClusterPostClusterHandler sets the operation handler for the post cluster operation
+	ClusterPostClusterHandler cluster.PostClusterHandler
 	// ConfigurationPostHAProxyConfigurationHandler sets the operation handler for the post h a proxy configuration operation
 	ConfigurationPostHAProxyConfigurationHandler configuration.PostHAProxyConfigurationHandler
 	// ACLReplaceACLHandler sets the operation handler for the replace Acl operation
@@ -891,6 +902,10 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "bind.GetBindsHandler")
 	}
 
+	if o.DiscoveryGetClusterHandler == nil {
+		unregistered = append(unregistered, "discovery.GetClusterHandler")
+	}
+
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
 	}
@@ -1061,6 +1076,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.TransactionsGetTransactionsHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionsHandler")
+	}
+
+	if o.ClusterPostClusterHandler == nil {
+		unregistered = append(unregistered, "cluster.PostClusterHandler")
 	}
 
 	if o.ConfigurationPostHAProxyConfigurationHandler == nil {
@@ -1465,6 +1484,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/cluster"] = discovery.NewGetCluster(o.context, o.DiscoveryGetClusterHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration"] = discovery.NewGetConfigurationEndpoints(o.context, o.DiscoveryGetConfigurationEndpointsHandler)
 
 	if o.handlers["GET"] == nil {
@@ -1676,6 +1700,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/transactions"] = transactions.NewGetTransactions(o.context, o.TransactionsGetTransactionsHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/cluster"] = cluster.NewPostCluster(o.context, o.ClusterPostClusterHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

@@ -349,6 +349,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup info handler
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 
+	// setup cluster handlers
+	api.DiscoveryGetClusterHandler = &handlers.GetClusterHandlerImpl{Config: cfg}
+	api.ClusterPostClusterHandler = &handlers.CreateClusterHandlerImpl{Config: cfg}
+
+	var clusterSync dataplaneapi_config.ClusterSync
+	go clusterSync.Monitor(cfg, client)
+
 	// setup specification handler
 	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
 		var m map[string]interface{}
