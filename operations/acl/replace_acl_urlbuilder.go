@@ -31,7 +31,7 @@ import (
 
 // ReplaceACLURL generates an URL for the replace Acl operation
 type ReplaceACLURL struct {
-	ID int64
+	Index int64
 
 	ForceReload   *bool
 	ParentName    string
@@ -63,13 +63,13 @@ func (o *ReplaceACLURL) SetBasePath(bp string) {
 func (o *ReplaceACLURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/acls/{id}"
+	var _path = "/services/haproxy/configuration/acls/{index}"
 
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		_path = strings.Replace(_path, "{id}", id, -1)
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
-		return nil, errors.New("id is required on ReplaceACLURL")
+		return nil, errors.New("index is required on ReplaceACLURL")
 	}
 
 	_basePath := o._basePath

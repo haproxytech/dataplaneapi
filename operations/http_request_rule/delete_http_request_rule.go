@@ -44,11 +44,11 @@ func NewDeleteHTTPRequestRule(ctx *middleware.Context, handler DeleteHTTPRequest
 	return &DeleteHTTPRequestRule{Context: ctx, Handler: handler}
 }
 
-/*DeleteHTTPRequestRule swagger:route DELETE /services/haproxy/configuration/http_request_rules/{id} HTTPRequestRule deleteHttpRequestRule
+/*DeleteHTTPRequestRule swagger:route DELETE /services/haproxy/configuration/http_request_rules/{index} HTTPRequestRule deleteHttpRequestRule
 
 Delete a HTTP Request Rule
 
-Deletes a HTTP Request Rule configuration by it's ID from the specified parent.
+Deletes a HTTP Request Rule configuration by it's index from the specified parent.
 
 */
 type DeleteHTTPRequestRule struct {

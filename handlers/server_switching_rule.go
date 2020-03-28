@@ -115,7 +115,7 @@ func (h *DeleteServerSwitchingRuleHandlerImpl) Handle(params server_switching_ru
 		return server_switching_rule.NewDeleteServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteServerSwitchingRule(params.ID, params.Backend, t, v)
+	err := h.Client.Configuration.DeleteServerSwitchingRule(params.Index, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewDeleteServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration.GetServerSwitchingRule(params.ID, params.Backend, t)
+	v, rule, err := h.Client.Configuration.GetServerSwitchingRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
@@ -187,7 +187,7 @@ func (h *ReplaceServerSwitchingRuleHandlerImpl) Handle(params server_switching_r
 		return server_switching_rule.NewReplaceServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditServerSwitchingRule(params.ID, params.Backend, params.Data, t, v)
+	err := h.Client.Configuration.EditServerSwitchingRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewReplaceServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)

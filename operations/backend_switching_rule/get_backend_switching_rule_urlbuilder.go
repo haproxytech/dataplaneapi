@@ -31,7 +31,7 @@ import (
 
 // GetBackendSwitchingRuleURL generates an URL for the get backend switching rule operation
 type GetBackendSwitchingRuleURL struct {
-	ID int64
+	Index int64
 
 	Frontend      string
 	TransactionID *string
@@ -60,13 +60,13 @@ func (o *GetBackendSwitchingRuleURL) SetBasePath(bp string) {
 func (o *GetBackendSwitchingRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/backend_switching_rules/{id}"
+	var _path = "/services/haproxy/configuration/backend_switching_rules/{index}"
 
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		_path = strings.Replace(_path, "{id}", id, -1)
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
-		return nil, errors.New("id is required on GetBackendSwitchingRuleURL")
+		return nil, errors.New("index is required on GetBackendSwitchingRuleURL")
 	}
 
 	_basePath := o._basePath

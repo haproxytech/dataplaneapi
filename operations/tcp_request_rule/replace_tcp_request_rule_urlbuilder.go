@@ -31,7 +31,7 @@ import (
 
 // ReplaceTCPRequestRuleURL generates an URL for the replace TCP request rule operation
 type ReplaceTCPRequestRuleURL struct {
-	ID int64
+	Index int64
 
 	ForceReload   *bool
 	ParentName    string
@@ -63,13 +63,13 @@ func (o *ReplaceTCPRequestRuleURL) SetBasePath(bp string) {
 func (o *ReplaceTCPRequestRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/tcp_request_rules/{id}"
+	var _path = "/services/haproxy/configuration/tcp_request_rules/{index}"
 
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		_path = strings.Replace(_path, "{id}", id, -1)
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
-		return nil, errors.New("id is required on ReplaceTCPRequestRuleURL")
+		return nil, errors.New("index is required on ReplaceTCPRequestRuleURL")
 	}
 
 	_basePath := o._basePath

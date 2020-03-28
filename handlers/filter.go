@@ -114,7 +114,7 @@ func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, princ
 		return filter.NewDeleteFilterDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteFilter(params.ID, params.ParentType, params.ParentName, t, v)
+	err := h.Client.Configuration.DeleteFilter(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewDeleteFilterDefault(int(*e.Code)).WithPayload(e)
@@ -141,7 +141,7 @@ func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal i
 		t = *params.TransactionID
 	}
 
-	v, f, err := h.Client.Configuration.GetFilter(params.ID, params.ParentType, params.ParentName, t)
+	v, f, err := h.Client.Configuration.GetFilter(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewGetFilterDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
@@ -185,7 +185,7 @@ func (h *ReplaceFilterHandlerImpl) Handle(params filter.ReplaceFilterParams, pri
 		return filter.NewReplaceFilterDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditFilter(params.ID, params.ParentType, params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration.EditFilter(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewReplaceFilterDefault(int(*e.Code)).WithPayload(e)

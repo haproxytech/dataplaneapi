@@ -44,11 +44,11 @@ func NewReplaceTCPRequestRule(ctx *middleware.Context, handler ReplaceTCPRequest
 	return &ReplaceTCPRequestRule{Context: ctx, Handler: handler}
 }
 
-/*ReplaceTCPRequestRule swagger:route PUT /services/haproxy/configuration/tcp_request_rules/{id} TCPRequestRule replaceTcpRequestRule
+/*ReplaceTCPRequestRule swagger:route PUT /services/haproxy/configuration/tcp_request_rules/{index} TCPRequestRule replaceTcpRequestRule
 
 Replace a TCP Request Rule
 
-Replaces a TCP Request Rule configuration by it's ID in the specified parent.
+Replaces a TCP Request Rule configuration by it's index in the specified parent.
 
 */
 type ReplaceTCPRequestRule struct {

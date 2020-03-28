@@ -44,11 +44,11 @@ func NewDeleteTCPRequestRule(ctx *middleware.Context, handler DeleteTCPRequestRu
 	return &DeleteTCPRequestRule{Context: ctx, Handler: handler}
 }
 
-/*DeleteTCPRequestRule swagger:route DELETE /services/haproxy/configuration/tcp_request_rules/{id} TCPRequestRule deleteTcpRequestRule
+/*DeleteTCPRequestRule swagger:route DELETE /services/haproxy/configuration/tcp_request_rules/{index} TCPRequestRule deleteTcpRequestRule
 
 Delete a TCP Request Rule
 
-Deletes a TCP Request Rule configuration by it's ID from the specified parent.
+Deletes a TCP Request Rule configuration by it's index from the specified parent.
 
 */
 type DeleteTCPRequestRule struct {

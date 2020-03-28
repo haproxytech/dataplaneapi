@@ -114,7 +114,7 @@ func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRulePar
 		return stick_rule.NewDeleteStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteStickRule(params.ID, params.Backend, t, v)
+	err := h.Client.Configuration.DeleteStickRule(params.Index, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewDeleteStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -142,7 +142,7 @@ func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, p
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration.GetStickRule(params.ID, params.Backend, t)
+	v, rule, err := h.Client.Configuration.GetStickRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewGetStickRuleDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
@@ -186,7 +186,7 @@ func (h *ReplaceStickRuleHandlerImpl) Handle(params stick_rule.ReplaceStickRuleP
 		return stick_rule.NewReplaceStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditStickRule(params.ID, params.Backend, params.Data, t, v)
+	err := h.Client.Configuration.EditStickRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewReplaceStickRuleDefault(int(*e.Code)).WithPayload(e)

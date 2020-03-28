@@ -49,11 +49,11 @@ func NewGetHTTPResponseRule(ctx *middleware.Context, handler GetHTTPResponseRule
 	return &GetHTTPResponseRule{Context: ctx, Handler: handler}
 }
 
-/*GetHTTPResponseRule swagger:route GET /services/haproxy/configuration/http_response_rules/{id} HTTPResponseRule getHttpResponseRule
+/*GetHTTPResponseRule swagger:route GET /services/haproxy/configuration/http_response_rules/{index} HTTPResponseRule getHttpResponseRule
 
 Return one HTTP Response Rule
 
-Returns one HTTP Response Rule configuration by it's ID in the specified parent.
+Returns one HTTP Response Rule configuration by it's index in the specified parent.
 
 */
 type GetHTTPResponseRule struct {

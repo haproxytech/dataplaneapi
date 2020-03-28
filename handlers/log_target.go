@@ -115,7 +115,7 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 		return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteLogTarget(params.ID, params.ParentType, params.ParentName, t, v)
+	err := h.Client.Configuration.DeleteLogTarget(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 		t = *params.TransactionID
 	}
 
-	v, logTarget, err := h.Client.Configuration.GetLogTarget(params.ID, params.ParentType, params.ParentName, t)
+	v, logTarget, err := h.Client.Configuration.GetLogTarget(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewGetLogTargetDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
@@ -187,7 +187,7 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditLogTarget(params.ID, params.ParentType, params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration.EditLogTarget(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)

@@ -49,11 +49,11 @@ func NewGetFilter(ctx *middleware.Context, handler GetFilterHandler) *GetFilter 
 	return &GetFilter{Context: ctx, Handler: handler}
 }
 
-/*GetFilter swagger:route GET /services/haproxy/configuration/filters/{id} Filter getFilter
+/*GetFilter swagger:route GET /services/haproxy/configuration/filters/{index} Filter getFilter
 
 Return one Filter
 
-Returns one Filter configuration by it's ID in the specified parent.
+Returns one Filter configuration by it's index in the specified parent.
 
 */
 type GetFilter struct {

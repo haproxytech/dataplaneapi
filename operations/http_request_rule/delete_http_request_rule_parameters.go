@@ -61,11 +61,11 @@ type DeleteHTTPRequestRuleParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
-	/*HTTP Request Rule ID
+	/*HTTP Request Rule Index
 	  Required: true
 	  In: path
 	*/
-	ID int64
+	Index int64
 	/*Parent name
 	  Required: true
 	  In: query
@@ -102,8 +102,8 @@ func (o *DeleteHTTPRequestRuleParams) BindRequest(r *http.Request, route *middle
 		res = append(res, err)
 	}
 
-	rID, rhkID, _ := route.Params.GetOK("id")
-	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
+	rIndex, rhkIndex, _ := route.Params.GetOK("index")
+	if err := o.bindIndex(rIndex, rhkIndex, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -156,8 +156,8 @@ func (o *DeleteHTTPRequestRuleParams) bindForceReload(rawData []string, hasKey b
 	return nil
 }
 
-// bindID binds and validates parameter ID from path.
-func (o *DeleteHTTPRequestRuleParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindIndex binds and validates parameter Index from path.
+func (o *DeleteHTTPRequestRuleParams) bindIndex(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -168,9 +168,9 @@ func (o *DeleteHTTPRequestRuleParams) bindID(rawData []string, hasKey bool, form
 
 	value, err := swag.ConvertInt64(raw)
 	if err != nil {
-		return errors.InvalidType("id", "path", "int64", raw)
+		return errors.InvalidType("index", "path", "int64", raw)
 	}
-	o.ID = value
+	o.Index = value
 
 	return nil
 }

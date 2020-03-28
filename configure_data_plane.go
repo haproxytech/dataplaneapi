@@ -307,12 +307,39 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.LogTargetGetLogTargetsHandler = &handlers.GetLogTargetsHandlerImpl{Client: client}
 	api.LogTargetReplaceLogTargetHandler = &handlers.ReplaceLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
 
-	// setup log target handlers
+	// setup acl rule handlers
 	api.ACLCreateACLHandler = &handlers.CreateACLHandlerImpl{Client: client, ReloadAgent: ra}
 	api.ACLDeleteACLHandler = &handlers.DeleteACLHandlerImpl{Client: client, ReloadAgent: ra}
 	api.ACLGetACLHandler = &handlers.GetACLHandlerImpl{Client: client}
 	api.ACLGetAclsHandler = &handlers.GetAclsHandlerImpl{Client: client}
 	api.ACLReplaceACLHandler = &handlers.ReplaceACLHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup resolvers handlers
+	api.ResolverCreateResolverHandler = &handlers.CreateResolverHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ResolverDeleteResolverHandler = &handlers.DeleteResolverHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ResolverGetResolverHandler = &handlers.GetResolverHandlerImpl{Client: client}
+	api.ResolverGetResolversHandler = &handlers.GetResolversHandlerImpl{Client: client}
+	api.ResolverReplaceResolverHandler = &handlers.ReplaceResolverHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup nameserver handlers
+	api.NameserverCreateNameserverHandler = &handlers.CreateNameserverHandlerImpl{Client: client, ReloadAgent: ra}
+	api.NameserverDeleteNameserverHandler = &handlers.DeleteNameserverHandlerImpl{Client: client, ReloadAgent: ra}
+	api.NameserverGetNameserverHandler = &handlers.GetNameserverHandlerImpl{Client: client}
+	api.NameserverGetNameserversHandler = &handlers.GetNameserversHandlerImpl{Client: client}
+	api.NameserverReplaceNameserverHandler = &handlers.ReplaceNameserverHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup peer section handlers
+	api.PeerCreatePeerHandler = &handlers.CreatePeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.PeerDeletePeerHandler = &handlers.DeletePeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.PeerGetPeerSectionHandler = &handlers.GetPeerHandlerImpl{Client: client}
+	api.PeerGetPeerSectionsHandler = &handlers.GetPeersHandlerImpl{Client: client}
+
+	// setup peer entries handlers
+	api.PeerEntryCreatePeerEntryHandler = &handlers.CreatePeerEntryHandlerImpl{Client: client, ReloadAgent: ra}
+	api.PeerEntryDeletePeerEntryHandler = &handlers.DeletePeerEntryHandlerImpl{Client: client, ReloadAgent: ra}
+	api.PeerEntryGetPeerEntryHandler = &handlers.GetPeerEntryHandlerImpl{Client: client}
+	api.PeerEntryGetPeerEntriesHandler = &handlers.GetPeerEntriesHandlerImpl{Client: client}
+	api.PeerEntryReplacePeerEntryHandler = &handlers.ReplacePeerEntryHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup stats handler
 	api.StatsGetStatsHandler = &handlers.GetStatsHandlerImpl{Client: client}

@@ -44,11 +44,11 @@ func NewDeleteServerSwitchingRule(ctx *middleware.Context, handler DeleteServerS
 	return &DeleteServerSwitchingRule{Context: ctx, Handler: handler}
 }
 
-/*DeleteServerSwitchingRule swagger:route DELETE /services/haproxy/configuration/server_switching_rules/{id} ServerSwitchingRule deleteServerSwitchingRule
+/*DeleteServerSwitchingRule swagger:route DELETE /services/haproxy/configuration/server_switching_rules/{index} ServerSwitchingRule deleteServerSwitchingRule
 
 Delete a Server Switching Rule
 
-Deletes a Server Switching Rule configuration by it's ID from the specified backend.
+Deletes a Server Switching Rule configuration by it's index from the specified backend.
 
 */
 type DeleteServerSwitchingRule struct {

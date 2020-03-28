@@ -69,11 +69,11 @@ type ReplaceLogTargetParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
-	/*Log Target ID
+	/*Log Target Index
 	  Required: true
 	  In: path
 	*/
-	ID int64
+	Index int64
 	/*Parent name
 	  Required: true
 	  In: query
@@ -132,8 +132,8 @@ func (o *ReplaceLogTargetParams) BindRequest(r *http.Request, route *middleware.
 		res = append(res, err)
 	}
 
-	rID, rhkID, _ := route.Params.GetOK("id")
-	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
+	rIndex, rhkIndex, _ := route.Params.GetOK("index")
+	if err := o.bindIndex(rIndex, rhkIndex, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -186,8 +186,8 @@ func (o *ReplaceLogTargetParams) bindForceReload(rawData []string, hasKey bool, 
 	return nil
 }
 
-// bindID binds and validates parameter ID from path.
-func (o *ReplaceLogTargetParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindIndex binds and validates parameter Index from path.
+func (o *ReplaceLogTargetParams) bindIndex(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -198,9 +198,9 @@ func (o *ReplaceLogTargetParams) bindID(rawData []string, hasKey bool, formats s
 
 	value, err := swag.ConvertInt64(raw)
 	if err != nil {
-		return errors.InvalidType("id", "path", "int64", raw)
+		return errors.InvalidType("index", "path", "int64", raw)
 	}
-	o.ID = value
+	o.Index = value
 
 	return nil
 }

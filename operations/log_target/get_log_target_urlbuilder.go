@@ -31,7 +31,7 @@ import (
 
 // GetLogTargetURL generates an URL for the get log target operation
 type GetLogTargetURL struct {
-	ID int64
+	Index int64
 
 	ParentName    string
 	ParentType    string
@@ -61,13 +61,13 @@ func (o *GetLogTargetURL) SetBasePath(bp string) {
 func (o *GetLogTargetURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/log_targets/{id}"
+	var _path = "/services/haproxy/configuration/log_targets/{index}"
 
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		_path = strings.Replace(_path, "{id}", id, -1)
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
-		return nil, errors.New("id is required on GetLogTargetURL")
+		return nil, errors.New("index is required on GetLogTargetURL")
 	}
 
 	_basePath := o._basePath

@@ -31,7 +31,7 @@ import (
 
 // DeleteStickRuleURL generates an URL for the delete stick rule operation
 type DeleteStickRuleURL struct {
-	ID int64
+	Index int64
 
 	Backend       string
 	ForceReload   *bool
@@ -62,13 +62,13 @@ func (o *DeleteStickRuleURL) SetBasePath(bp string) {
 func (o *DeleteStickRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/stick_rules/{id}"
+	var _path = "/services/haproxy/configuration/stick_rules/{index}"
 
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		_path = strings.Replace(_path, "{id}", id, -1)
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
-		return nil, errors.New("id is required on DeleteStickRuleURL")
+		return nil, errors.New("index is required on DeleteStickRuleURL")
 	}
 
 	_basePath := o._basePath

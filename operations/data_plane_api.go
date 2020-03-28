@@ -49,7 +49,11 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
+	"github.com/haproxytech/dataplaneapi/operations/nameserver"
+	"github.com/haproxytech/dataplaneapi/operations/peer"
+	"github.com/haproxytech/dataplaneapi/operations/peer_entry"
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
+	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
@@ -111,6 +115,18 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogTargetCreateLogTargetHandler: log_target.CreateLogTargetHandlerFunc(func(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation LogTargetCreateLogTarget has not yet been implemented")
 		}),
+		NameserverCreateNameserverHandler: nameserver.CreateNameserverHandlerFunc(func(params nameserver.CreateNameserverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation NameserverCreateNameserver has not yet been implemented")
+		}),
+		PeerCreatePeerHandler: peer.CreatePeerHandlerFunc(func(params peer.CreatePeerParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerCreatePeer has not yet been implemented")
+		}),
+		PeerEntryCreatePeerEntryHandler: peer_entry.CreatePeerEntryHandlerFunc(func(params peer_entry.CreatePeerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerEntryCreatePeerEntry has not yet been implemented")
+		}),
+		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ResolverCreateResolver has not yet been implemented")
+		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerCreateServer has not yet been implemented")
 		}),
@@ -155,6 +171,18 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		LogTargetDeleteLogTargetHandler: log_target.DeleteLogTargetHandlerFunc(func(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation LogTargetDeleteLogTarget has not yet been implemented")
+		}),
+		NameserverDeleteNameserverHandler: nameserver.DeleteNameserverHandlerFunc(func(params nameserver.DeleteNameserverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation NameserverDeleteNameserver has not yet been implemented")
+		}),
+		PeerDeletePeerHandler: peer.DeletePeerHandlerFunc(func(params peer.DeletePeerParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerDeletePeer has not yet been implemented")
+		}),
+		PeerEntryDeletePeerEntryHandler: peer_entry.DeletePeerEntryHandlerFunc(func(params peer_entry.DeletePeerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerEntryDeletePeerEntry has not yet been implemented")
+		}),
+		ResolverDeleteResolverHandler: resolver.DeleteResolverHandlerFunc(func(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ResolverDeleteResolver has not yet been implemented")
 		}),
 		ServerDeleteServerHandler: server.DeleteServerHandlerFunc(func(params server.DeleteServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerDeleteServer has not yet been implemented")
@@ -258,11 +286,35 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogTargetGetLogTargetsHandler: log_target.GetLogTargetsHandlerFunc(func(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation LogTargetGetLogTargets has not yet been implemented")
 		}),
+		NameserverGetNameserverHandler: nameserver.GetNameserverHandlerFunc(func(params nameserver.GetNameserverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation NameserverGetNameserver has not yet been implemented")
+		}),
+		NameserverGetNameserversHandler: nameserver.GetNameserversHandlerFunc(func(params nameserver.GetNameserversParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation NameserverGetNameservers has not yet been implemented")
+		}),
+		PeerEntryGetPeerEntriesHandler: peer_entry.GetPeerEntriesHandlerFunc(func(params peer_entry.GetPeerEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerEntryGetPeerEntries has not yet been implemented")
+		}),
+		PeerEntryGetPeerEntryHandler: peer_entry.GetPeerEntryHandlerFunc(func(params peer_entry.GetPeerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerEntryGetPeerEntry has not yet been implemented")
+		}),
+		PeerGetPeerSectionHandler: peer.GetPeerSectionHandlerFunc(func(params peer.GetPeerSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerGetPeerSection has not yet been implemented")
+		}),
+		PeerGetPeerSectionsHandler: peer.GetPeerSectionsHandlerFunc(func(params peer.GetPeerSectionsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerGetPeerSections has not yet been implemented")
+		}),
 		ReloadsGetReloadHandler: reloads.GetReloadHandlerFunc(func(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ReloadsGetReload has not yet been implemented")
 		}),
 		ReloadsGetReloadsHandler: reloads.GetReloadsHandlerFunc(func(params reloads.GetReloadsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ReloadsGetReloads has not yet been implemented")
+		}),
+		ResolverGetResolverHandler: resolver.GetResolverHandlerFunc(func(params resolver.GetResolverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ResolverGetResolver has not yet been implemented")
+		}),
+		ResolverGetResolversHandler: resolver.GetResolversHandlerFunc(func(params resolver.GetResolversParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ResolverGetResolvers has not yet been implemented")
 		}),
 		DiscoveryGetRuntimeEndpointsHandler: discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DiscoveryGetRuntimeEndpoints has not yet been implemented")
@@ -375,6 +427,15 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation LogTargetReplaceLogTarget has not yet been implemented")
 		}),
+		NameserverReplaceNameserverHandler: nameserver.ReplaceNameserverHandlerFunc(func(params nameserver.ReplaceNameserverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation NameserverReplaceNameserver has not yet been implemented")
+		}),
+		PeerEntryReplacePeerEntryHandler: peer_entry.ReplacePeerEntryHandlerFunc(func(params peer_entry.ReplacePeerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation PeerEntryReplacePeerEntry has not yet been implemented")
+		}),
+		ResolverReplaceResolverHandler: resolver.ReplaceResolverHandlerFunc(func(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ResolverReplaceResolver has not yet been implemented")
+		}),
 		ServerReplaceRuntimeServerHandler: server.ReplaceRuntimeServerHandlerFunc(func(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ServerReplaceRuntimeServer has not yet been implemented")
 		}),
@@ -471,6 +532,14 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleCreateHTTPResponseRuleHandler http_response_rule.CreateHTTPResponseRuleHandler
 	// LogTargetCreateLogTargetHandler sets the operation handler for the create log target operation
 	LogTargetCreateLogTargetHandler log_target.CreateLogTargetHandler
+	// NameserverCreateNameserverHandler sets the operation handler for the create nameserver operation
+	NameserverCreateNameserverHandler nameserver.CreateNameserverHandler
+	// PeerCreatePeerHandler sets the operation handler for the create peer operation
+	PeerCreatePeerHandler peer.CreatePeerHandler
+	// PeerEntryCreatePeerEntryHandler sets the operation handler for the create peer entry operation
+	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
+	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
+	ResolverCreateResolverHandler resolver.CreateResolverHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
@@ -501,6 +570,14 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleDeleteHTTPResponseRuleHandler http_response_rule.DeleteHTTPResponseRuleHandler
 	// LogTargetDeleteLogTargetHandler sets the operation handler for the delete log target operation
 	LogTargetDeleteLogTargetHandler log_target.DeleteLogTargetHandler
+	// NameserverDeleteNameserverHandler sets the operation handler for the delete nameserver operation
+	NameserverDeleteNameserverHandler nameserver.DeleteNameserverHandler
+	// PeerDeletePeerHandler sets the operation handler for the delete peer operation
+	PeerDeletePeerHandler peer.DeletePeerHandler
+	// PeerEntryDeletePeerEntryHandler sets the operation handler for the delete peer entry operation
+	PeerEntryDeletePeerEntryHandler peer_entry.DeletePeerEntryHandler
+	// ResolverDeleteResolverHandler sets the operation handler for the delete resolver operation
+	ResolverDeleteResolverHandler resolver.DeleteResolverHandler
 	// ServerDeleteServerHandler sets the operation handler for the delete server operation
 	ServerDeleteServerHandler server.DeleteServerHandler
 	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
@@ -569,10 +646,26 @@ type DataPlaneAPI struct {
 	LogTargetGetLogTargetHandler log_target.GetLogTargetHandler
 	// LogTargetGetLogTargetsHandler sets the operation handler for the get log targets operation
 	LogTargetGetLogTargetsHandler log_target.GetLogTargetsHandler
+	// NameserverGetNameserverHandler sets the operation handler for the get nameserver operation
+	NameserverGetNameserverHandler nameserver.GetNameserverHandler
+	// NameserverGetNameserversHandler sets the operation handler for the get nameservers operation
+	NameserverGetNameserversHandler nameserver.GetNameserversHandler
+	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
+	PeerEntryGetPeerEntriesHandler peer_entry.GetPeerEntriesHandler
+	// PeerEntryGetPeerEntryHandler sets the operation handler for the get peer entry operation
+	PeerEntryGetPeerEntryHandler peer_entry.GetPeerEntryHandler
+	// PeerGetPeerSectionHandler sets the operation handler for the get peer section operation
+	PeerGetPeerSectionHandler peer.GetPeerSectionHandler
+	// PeerGetPeerSectionsHandler sets the operation handler for the get peer sections operation
+	PeerGetPeerSectionsHandler peer.GetPeerSectionsHandler
 	// ReloadsGetReloadHandler sets the operation handler for the get reload operation
 	ReloadsGetReloadHandler reloads.GetReloadHandler
 	// ReloadsGetReloadsHandler sets the operation handler for the get reloads operation
 	ReloadsGetReloadsHandler reloads.GetReloadsHandler
+	// ResolverGetResolverHandler sets the operation handler for the get resolver operation
+	ResolverGetResolverHandler resolver.GetResolverHandler
+	// ResolverGetResolversHandler sets the operation handler for the get resolvers operation
+	ResolverGetResolversHandler resolver.GetResolversHandler
 	// DiscoveryGetRuntimeEndpointsHandler sets the operation handler for the get runtime endpoints operation
 	DiscoveryGetRuntimeEndpointsHandler discovery.GetRuntimeEndpointsHandler
 	// ServerGetRuntimeServerHandler sets the operation handler for the get runtime server operation
@@ -647,6 +740,12 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleReplaceHTTPResponseRuleHandler http_response_rule.ReplaceHTTPResponseRuleHandler
 	// LogTargetReplaceLogTargetHandler sets the operation handler for the replace log target operation
 	LogTargetReplaceLogTargetHandler log_target.ReplaceLogTargetHandler
+	// NameserverReplaceNameserverHandler sets the operation handler for the replace nameserver operation
+	NameserverReplaceNameserverHandler nameserver.ReplaceNameserverHandler
+	// PeerEntryReplacePeerEntryHandler sets the operation handler for the replace peer entry operation
+	PeerEntryReplacePeerEntryHandler peer_entry.ReplacePeerEntryHandler
+	// ResolverReplaceResolverHandler sets the operation handler for the replace resolver operation
+	ResolverReplaceResolverHandler resolver.ReplaceResolverHandler
 	// ServerReplaceRuntimeServerHandler sets the operation handler for the replace runtime server operation
 	ServerReplaceRuntimeServerHandler server.ReplaceRuntimeServerHandler
 	// ServerReplaceServerHandler sets the operation handler for the replace server operation
@@ -778,6 +877,22 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "log_target.CreateLogTargetHandler")
 	}
 
+	if o.NameserverCreateNameserverHandler == nil {
+		unregistered = append(unregistered, "nameserver.CreateNameserverHandler")
+	}
+
+	if o.PeerCreatePeerHandler == nil {
+		unregistered = append(unregistered, "peer.CreatePeerHandler")
+	}
+
+	if o.PeerEntryCreatePeerEntryHandler == nil {
+		unregistered = append(unregistered, "peer_entry.CreatePeerEntryHandler")
+	}
+
+	if o.ResolverCreateResolverHandler == nil {
+		unregistered = append(unregistered, "resolver.CreateResolverHandler")
+	}
+
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
 	}
@@ -836,6 +951,22 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.LogTargetDeleteLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.DeleteLogTargetHandler")
+	}
+
+	if o.NameserverDeleteNameserverHandler == nil {
+		unregistered = append(unregistered, "nameserver.DeleteNameserverHandler")
+	}
+
+	if o.PeerDeletePeerHandler == nil {
+		unregistered = append(unregistered, "peer.DeletePeerHandler")
+	}
+
+	if o.PeerEntryDeletePeerEntryHandler == nil {
+		unregistered = append(unregistered, "peer_entry.DeletePeerEntryHandler")
+	}
+
+	if o.ResolverDeleteResolverHandler == nil {
+		unregistered = append(unregistered, "resolver.DeleteResolverHandler")
 	}
 
 	if o.ServerDeleteServerHandler == nil {
@@ -974,12 +1105,44 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "log_target.GetLogTargetsHandler")
 	}
 
+	if o.NameserverGetNameserverHandler == nil {
+		unregistered = append(unregistered, "nameserver.GetNameserverHandler")
+	}
+
+	if o.NameserverGetNameserversHandler == nil {
+		unregistered = append(unregistered, "nameserver.GetNameserversHandler")
+	}
+
+	if o.PeerEntryGetPeerEntriesHandler == nil {
+		unregistered = append(unregistered, "peer_entry.GetPeerEntriesHandler")
+	}
+
+	if o.PeerEntryGetPeerEntryHandler == nil {
+		unregistered = append(unregistered, "peer_entry.GetPeerEntryHandler")
+	}
+
+	if o.PeerGetPeerSectionHandler == nil {
+		unregistered = append(unregistered, "peer.GetPeerSectionHandler")
+	}
+
+	if o.PeerGetPeerSectionsHandler == nil {
+		unregistered = append(unregistered, "peer.GetPeerSectionsHandler")
+	}
+
 	if o.ReloadsGetReloadHandler == nil {
 		unregistered = append(unregistered, "reloads.GetReloadHandler")
 	}
 
 	if o.ReloadsGetReloadsHandler == nil {
 		unregistered = append(unregistered, "reloads.GetReloadsHandler")
+	}
+
+	if o.ResolverGetResolverHandler == nil {
+		unregistered = append(unregistered, "resolver.GetResolverHandler")
+	}
+
+	if o.ResolverGetResolversHandler == nil {
+		unregistered = append(unregistered, "resolver.GetResolversHandler")
 	}
 
 	if o.DiscoveryGetRuntimeEndpointsHandler == nil {
@@ -1128,6 +1291,18 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.LogTargetReplaceLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
+	}
+
+	if o.NameserverReplaceNameserverHandler == nil {
+		unregistered = append(unregistered, "nameserver.ReplaceNameserverHandler")
+	}
+
+	if o.PeerEntryReplacePeerEntryHandler == nil {
+		unregistered = append(unregistered, "peer_entry.ReplacePeerEntryHandler")
+	}
+
+	if o.ResolverReplaceResolverHandler == nil {
+		unregistered = append(unregistered, "resolver.ReplaceResolverHandler")
 	}
 
 	if o.ServerReplaceRuntimeServerHandler == nil {
@@ -1329,6 +1504,26 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/nameservers"] = nameserver.NewCreateNameserver(o.context, o.NameserverCreateNameserverHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/peer_section"] = peer.NewCreatePeer(o.context, o.PeerCreatePeerHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/peer_entries"] = peer_entry.NewCreatePeerEntry(o.context, o.PeerEntryCreatePeerEntryHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/resolvers"] = resolver.NewCreateResolver(o.context, o.ResolverCreateResolverHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
 
 	if o.handlers["POST"] == nil {
@@ -1359,7 +1554,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/acls/{id}"] = acl.NewDeleteACL(o.context, o.ACLDeleteACLHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/acls/{index}"] = acl.NewDeleteACL(o.context, o.ACLDeleteACLHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1369,7 +1564,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/backend_switching_rules/{id}"] = backend_switching_rule.NewDeleteBackendSwitchingRule(o.context, o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewDeleteBackendSwitchingRule(o.context, o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1379,7 +1574,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/filters/{id}"] = filter.NewDeleteFilter(o.context, o.FilterDeleteFilterHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/filters/{index}"] = filter.NewDeleteFilter(o.context, o.FilterDeleteFilterHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1389,17 +1584,37 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/http_request_rules/{id}"] = http_request_rule.NewDeleteHTTPRequestRule(o.context, o.HTTPRequestRuleDeleteHTTPRequestRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/http_request_rules/{index}"] = http_request_rule.NewDeleteHTTPRequestRule(o.context, o.HTTPRequestRuleDeleteHTTPRequestRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewDeleteHTTPResponseRule(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewDeleteHTTPResponseRule(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewDeleteLogTarget(o.context, o.LogTargetDeleteLogTargetHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewDeleteLogTarget(o.context, o.LogTargetDeleteLogTargetHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewDeleteNameserver(o.context, o.NameserverDeleteNameserverHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/peer_section/{name}"] = peer.NewDeletePeer(o.context, o.PeerDeletePeerHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewDeletePeerEntry(o.context, o.PeerEntryDeletePeerEntryHandler)
+
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewDeleteResolver(o.context, o.ResolverDeleteResolverHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1409,7 +1624,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/server_switching_rules/{id}"] = server_switching_rule.NewDeleteServerSwitchingRule(o.context, o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewDeleteServerSwitchingRule(o.context, o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1419,17 +1634,17 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewDeleteStickRule(o.context, o.StickRuleDeleteStickRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewDeleteStickRule(o.context, o.StickRuleDeleteStickRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewDeleteTCPRequestRule(o.context, o.TCPRequestRuleDeleteTCPRequestRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewDeleteTCPRequestRule(o.context, o.TCPRequestRuleDeleteTCPRequestRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewDeleteTCPResponseRule(o.context, o.TCPResponseRuleDeleteTCPResponseRuleHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewDeleteTCPResponseRule(o.context, o.TCPResponseRuleDeleteTCPResponseRuleHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1444,7 +1659,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/acls/{id}"] = acl.NewGetACL(o.context, o.ACLGetACLHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/acls/{index}"] = acl.NewGetACL(o.context, o.ACLGetACLHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1459,7 +1674,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/backend_switching_rules/{id}"] = backend_switching_rule.NewGetBackendSwitchingRule(o.context, o.BackendSwitchingRuleGetBackendSwitchingRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewGetBackendSwitchingRule(o.context, o.BackendSwitchingRuleGetBackendSwitchingRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1499,7 +1714,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/filters/{id}"] = filter.NewGetFilter(o.context, o.FilterGetFilterHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/filters/{index}"] = filter.NewGetFilter(o.context, o.FilterGetFilterHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1529,7 +1744,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/http_request_rules/{id}"] = http_request_rule.NewGetHTTPRequestRule(o.context, o.HTTPRequestRuleGetHTTPRequestRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/http_request_rules/{index}"] = http_request_rule.NewGetHTTPRequestRule(o.context, o.HTTPRequestRuleGetHTTPRequestRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1539,7 +1754,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewGetHTTPResponseRule(o.context, o.HTTPResponseRuleGetHTTPResponseRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewGetHTTPResponseRule(o.context, o.HTTPResponseRuleGetHTTPResponseRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1564,12 +1779,42 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewGetLogTarget(o.context, o.LogTargetGetLogTargetHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewGetLogTarget(o.context, o.LogTargetGetLogTargetHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/log_targets"] = log_target.NewGetLogTargets(o.context, o.LogTargetGetLogTargetsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewGetNameserver(o.context, o.NameserverGetNameserverHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/nameservers"] = nameserver.NewGetNameservers(o.context, o.NameserverGetNameserversHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/peer_entries"] = peer_entry.NewGetPeerEntries(o.context, o.PeerEntryGetPeerEntriesHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewGetPeerEntry(o.context, o.PeerEntryGetPeerEntryHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/peer_section/{name}"] = peer.NewGetPeerSection(o.context, o.PeerGetPeerSectionHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/peer_section"] = peer.NewGetPeerSections(o.context, o.PeerGetPeerSectionsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1580,6 +1825,16 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/reloads"] = reloads.NewGetReloads(o.context, o.ReloadsGetReloadsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewGetResolver(o.context, o.ResolverGetResolverHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/resolvers"] = resolver.NewGetResolvers(o.context, o.ResolverGetResolversHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1604,7 +1859,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/server_switching_rules/{id}"] = server_switching_rule.NewGetServerSwitchingRule(o.context, o.ServerSwitchingRuleGetServerSwitchingRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewGetServerSwitchingRule(o.context, o.ServerSwitchingRuleGetServerSwitchingRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1649,7 +1904,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewGetStickRule(o.context, o.StickRuleGetStickRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewGetStickRule(o.context, o.StickRuleGetStickRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1674,7 +1929,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewGetTCPRequestRule(o.context, o.TCPRequestRuleGetTCPRequestRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewGetTCPRequestRule(o.context, o.TCPRequestRuleGetTCPRequestRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1684,7 +1939,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewGetTCPResponseRule(o.context, o.TCPResponseRuleGetTCPResponseRuleHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewGetTCPResponseRule(o.context, o.TCPResponseRuleGetTCPResponseRuleHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1714,7 +1969,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/acls/{id}"] = acl.NewReplaceACL(o.context, o.ACLReplaceACLHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/acls/{index}"] = acl.NewReplaceACL(o.context, o.ACLReplaceACLHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -1724,7 +1979,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/backend_switching_rules/{id}"] = backend_switching_rule.NewReplaceBackendSwitchingRule(o.context, o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewReplaceBackendSwitchingRule(o.context, o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -1739,7 +1994,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/filters/{id}"] = filter.NewReplaceFilter(o.context, o.FilterReplaceFilterHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/filters/{index}"] = filter.NewReplaceFilter(o.context, o.FilterReplaceFilterHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -1754,17 +2009,32 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/http_request_rules/{id}"] = http_request_rule.NewReplaceHTTPRequestRule(o.context, o.HTTPRequestRuleReplaceHTTPRequestRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/http_request_rules/{index}"] = http_request_rule.NewReplaceHTTPRequestRule(o.context, o.HTTPRequestRuleReplaceHTTPRequestRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules/{id}"] = http_response_rule.NewReplaceHTTPResponseRule(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewReplaceHTTPResponseRule(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{id}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewReplaceNameserver(o.context, o.NameserverReplaceNameserverHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewReplacePeerEntry(o.context, o.PeerEntryReplacePeerEntryHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewReplaceResolver(o.context, o.ResolverReplaceResolverHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -1779,7 +2049,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/server_switching_rules/{id}"] = server_switching_rule.NewReplaceServerSwitchingRule(o.context, o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewReplaceServerSwitchingRule(o.context, o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -1789,17 +2059,17 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{id}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/tcp_request_rules/{id}"] = tcp_request_rule.NewReplaceTCPRequestRule(o.context, o.TCPRequestRuleReplaceTCPRequestRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewReplaceTCPRequestRule(o.context, o.TCPRequestRuleReplaceTCPRequestRuleHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{id}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

@@ -375,9 +375,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/acls/{id}": {
+    "/services/haproxy/configuration/acls/{index}": {
       "get": {
-        "description": "Returns one ACL line configuration by it's ID in the specified parent.",
+        "description": "Returns one ACL line configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -389,8 +389,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL line ID",
-            "name": "id",
+            "description": "ACL line Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -446,7 +446,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a ACL line configuration by it's ID in the specified parent.",
+        "description": "Replaces a ACL line configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -458,8 +458,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL line ID",
-            "name": "id",
+            "description": "ACL line Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -530,7 +530,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a ACL line configuration by it's ID from the specified parent.",
+        "description": "Deletes a ACL line configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -542,8 +542,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL line ID",
-            "name": "id",
+            "description": "ACL line Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -714,9 +714,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/backend_switching_rules/{id}": {
+    "/services/haproxy/configuration/backend_switching_rules/{index}": {
       "get": {
-        "description": "Returns one Backend Switching Rule configuration by it's ID in the specified frontend.",
+        "description": "Returns one Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
           "HAProxy configuration management",
           "Frontend options",
@@ -727,8 +727,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -773,7 +773,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Backend Switching Rule configuration by it's ID in the specified frontend.",
+        "description": "Replaces a Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
           "HAProxy configuration management",
           "Frontend options",
@@ -784,8 +784,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -845,7 +845,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Backend Switching Rule configuration by it's ID from the specified frontend.",
+        "description": "Deletes a Backend Switching Rule configuration by it's index from the specified frontend.",
         "tags": [
           "HAProxy configuration management",
           "Frontend options",
@@ -856,8 +856,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -1702,9 +1702,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/filters/{id}": {
+    "/services/haproxy/configuration/filters/{index}": {
       "get": {
-        "description": "Returns one Filter configuration by it's ID in the specified parent.",
+        "description": "Returns one Filter configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -1716,8 +1716,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Filter ID",
-            "name": "id",
+            "description": "Filter Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -1773,7 +1773,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Filter configuration by it's ID in the specified parent.",
+        "description": "Replaces a Filter configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -1785,8 +1785,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Filter ID",
-            "name": "id",
+            "description": "Filter Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -1857,7 +1857,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Filter configuration by it's ID from the specified parent.",
+        "description": "Deletes a Filter configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -1869,8 +1869,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Filter ID",
-            "name": "id",
+            "description": "Filter Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -2423,9 +2423,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/http_request_rules/{id}": {
+    "/services/haproxy/configuration/http_request_rules/{index}": {
       "get": {
-        "description": "Returns one HTTP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -2437,8 +2437,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Request Rule ID",
-            "name": "id",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -2494,7 +2494,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a HTTP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -2506,8 +2506,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Request Rule ID",
-            "name": "id",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -2578,7 +2578,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a HTTP Request Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a HTTP Request Rule configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -2590,8 +2590,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Request Rule ID",
-            "name": "id",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -2786,9 +2786,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/http_response_rules/{id}": {
+    "/services/haproxy/configuration/http_response_rules/{index}": {
       "get": {
-        "description": "Returns one HTTP Response Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -2800,8 +2800,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Response Rule ID",
-            "name": "id",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -2857,7 +2857,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a HTTP Response Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -2869,8 +2869,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Response Rule ID",
-            "name": "id",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -2941,7 +2941,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a HTTP Response Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a HTTP Response Rule configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -2953,8 +2953,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Response Rule ID",
-            "name": "id",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -3149,9 +3149,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/log_targets/{id}": {
+    "/services/haproxy/configuration/log_targets/{index}": {
       "get": {
-        "description": "Returns one Log Target configuration by it's ID in the specified parent.",
+        "description": "Returns one Log Target configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -3163,8 +3163,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Log Target ID",
-            "name": "id",
+            "description": "Log Target Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -3220,7 +3220,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Log Target configuration by it's ID in the specified parent.",
+        "description": "Replaces a Log Target configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -3232,8 +3232,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Log Target ID",
-            "name": "id",
+            "description": "Log Target Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -3304,7 +3304,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Log Target configuration by it's ID from the specified parent.",
+        "description": "Deletes a Log Target configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -3316,8 +3316,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Log Target ID",
-            "name": "id",
+            "description": "Log Target Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -3361,6 +3361,803 @@ func init() {
           },
           "204": {
             "description": "Log Target deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/nameservers": {
+      "get": {
+        "description": "Returns an array of all configured nameservers.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of nameservers",
+        "operationId": "getNameservers",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/nameservers"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new nameserver to the resolvers section.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a nameserver",
+        "operationId": "createNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Nameserver created",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/nameservers/{name}": {
+      "get": {
+        "description": "Returns one nameserver configuration by it's name.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return a nameserver",
+        "operationId": "getNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/nameserver"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a nameserver configuration by it's name.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Replace a nameserver",
+        "operationId": "replaceNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nameserver replaced",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a nameserver from the resolvers section by it's name.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Delete a nameserver",
+        "operationId": "deleteNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Nameserver deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_entries": {
+      "get": {
+        "description": "Returns an array of all peer_entries that are configured in specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of peer_entries",
+        "operationId": "getPeerEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_entries"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new peer entry in the specified peer section in the configuration file.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a new peer_entry",
+        "operationId": "createPeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "PeerEntry created",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_entries/{name}": {
+      "get": {
+        "description": "Returns one peer_entry configuration by it's name in the specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return one peer_entry",
+        "operationId": "getPeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "PeerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_entry"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a peer entry configuration by it's name in the specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management",
+          "Peers options"
+        ],
+        "summary": "Replace a peer_entry",
+        "operationId": "replacePeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "PeerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PeerEntry replaced",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a peer entry configuration by it's name in the specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management",
+          "Peers options"
+        ],
+        "summary": "Delete a peer_entry",
+        "operationId": "deletePeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "PeerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "PeerEntry deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_section": {
+      "get": {
+        "description": "Returns an array of all configured peer_section.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of peer_section",
+        "operationId": "getPeerSections",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_sections"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new peer to the configuration file.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a peer",
+        "operationId": "createPeer",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/peer_section"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Peer created",
+            "schema": {
+              "$ref": "#/definitions/peer_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/peer_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_section/{name}": {
+      "get": {
+        "description": "Returns one peer configuration by it's name.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return a peer",
+        "operationId": "getPeerSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Peer name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_section"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a peer from the configuration by it's name.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Delete a peer",
+        "operationId": "deletePeer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Peer name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Peer deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -3471,6 +4268,269 @@ func init() {
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/resolvers": {
+      "get": {
+        "description": "Returns an array of all configured resolvers.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of resolvers",
+        "operationId": "getResolvers",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/resolvers"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new resolver section to the configuration file.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a resolver",
+        "operationId": "createResolver",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Resolver created",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/resolvers/{name}": {
+      "get": {
+        "description": "Returns one resolver section configuration by it's name.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return a resolver",
+        "operationId": "getResolver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Resolver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/resolver"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a resolver configuration by it's name.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Replace a resolver",
+        "operationId": "replaceResolver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Resolver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resolver replaced",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a resolver from the configuration by it's name.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Delete a resolver",
+        "operationId": "deleteResolver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Resolver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Resolver deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -3595,9 +4655,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/server_switching_rules/{id}": {
+    "/services/haproxy/configuration/server_switching_rules/{index}": {
       "get": {
-        "description": "Returns one Server Switching Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -3608,8 +4668,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -3654,7 +4714,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Server Switching Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -3665,8 +4725,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -3726,7 +4786,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Server Switching Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a Server Switching Rule configuration by it's index from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -3737,8 +4797,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4201,9 +5261,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_rules/{id}": {
+    "/services/haproxy/configuration/stick_rules/{index}": {
       "get": {
-        "description": "Returns one Stick Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one Stick Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4214,8 +5274,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Rule ID",
-            "name": "id",
+            "description": "Stick Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4260,7 +5320,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Stick Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a Stick Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4271,8 +5331,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Rule ID",
-            "name": "id",
+            "description": "Stick Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4332,7 +5392,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Stick Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a Stick Rule configuration by it's index from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4343,8 +5403,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Rule ID",
-            "name": "id",
+            "description": "Stick Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4528,9 +5588,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_request_rules/{id}": {
+    "/services/haproxy/configuration/tcp_request_rules/{index}": {
       "get": {
-        "description": "Returns one TCP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4542,8 +5602,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Request Rule ID",
-            "name": "id",
+            "description": "TCP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4599,7 +5659,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a TCP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4611,8 +5671,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Request Rule ID",
-            "name": "id",
+            "description": "TCP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4683,7 +5743,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a TCP Request Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a TCP Request Rule configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4695,8 +5755,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Request Rule ID",
-            "name": "id",
+            "description": "TCP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4869,9 +5929,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_response_rules/{id}": {
+    "/services/haproxy/configuration/tcp_response_rules/{index}": {
       "get": {
-        "description": "Returns one TCP Response Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one TCP Response Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4883,8 +5943,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Response Rule ID",
-            "name": "id",
+            "description": "TCP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -4929,7 +5989,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a TCP Response Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a TCP Response Rule configuration by it's Index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -4941,8 +6001,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Response Rule ID",
-            "name": "id",
+            "description": "TCP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -5002,7 +6062,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a TCP Response Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a TCP Response Rule configuration by it's index from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -5014,8 +6074,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Response Rule ID",
-            "name": "id",
+            "description": "TCP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -5964,7 +7024,7 @@ func init() {
       "type": "object",
       "title": "ACL Lines",
       "required": [
-        "id",
+        "index",
         "acl_name",
         "criterion",
         "value"
@@ -5980,7 +7040,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -6029,6 +7089,10 @@ func init() {
         },
         "balance": {
           "$ref": "#/definitions/balance"
+        },
+        "bind_process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "check_timeout": {
           "type": "integer",
@@ -6102,6 +7166,9 @@ func init() {
             }
           }
         },
+        "http-check": {
+          "$ref": "#/definitions/http-check"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -6156,6 +7223,20 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "http_reuse": {
+          "type": "string",
+          "enum": [
+            "aggressive",
+            "always",
+            "never",
+            "safe"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "httpchk": {
           "x-dependency": {
@@ -6259,7 +7340,7 @@ func init() {
       "type": "object",
       "title": "Backend Switching Rule",
       "required": [
-        "id",
+        "index",
         "name"
       ],
       "properties": {
@@ -6285,7 +7366,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -6737,6 +7818,10 @@ func init() {
         "balance": {
           "$ref": "#/definitions/balance"
         },
+        "bind_process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "check_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -6818,6 +7903,9 @@ func init() {
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
+        "http-check": {
+          "$ref": "#/definitions/http-check"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -6848,6 +7936,15 @@ func init() {
         "http_request_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "http_reuse": {
+          "type": "string",
+          "enum": [
+            "aggressive",
+            "always",
+            "never",
+            "safe"
+          ]
         },
         "httpchk": {
           "$ref": "#/definitions/httpchk"
@@ -6904,6 +8001,19 @@ func init() {
         "tcplog": {
           "type": "boolean",
           "x-display-name": "TCP Log"
+        },
+        "unique_id_format": {
+          "type": "string",
+          "x-display-name": "Unique ID format"
+        },
+        "unique_id_header": {
+          "type": "string",
+          "x-dependency": {
+            "unique_id_format": {
+              "required": true
+            }
+          },
+          "x-display-name": "Unique ID header"
         }
       },
       "additionalProperties": false
@@ -6987,7 +8097,7 @@ func init() {
       "type": "object",
       "title": "Filter",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -7001,7 +8111,7 @@ func init() {
             }
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -7120,6 +8230,10 @@ func init() {
         "name"
       ],
       "properties": {
+        "bind_process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "clflog": {
           "type": "boolean",
           "x-dependency": {
@@ -7273,6 +8387,19 @@ func init() {
             }
           },
           "x-display-name": "TCP Log"
+        },
+        "unique_id_format": {
+          "type": "string",
+          "x-display-name": "Unique ID format"
+        },
+        "unique_id_header": {
+          "type": "string",
+          "x-dependency": {
+            "unique_id_format": {
+              "required": true
+            }
+          },
+          "x-display-name": "Unique ID header"
         }
       },
       "additionalProperties": false,
@@ -7297,6 +8424,11 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "chroot": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Chroot"
+        },
         "cpu_maps": {
           "type": "array",
           "items": {
@@ -7330,6 +8462,11 @@ func init() {
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "group": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Group"
         },
         "master-worker": {
           "type": "boolean",
@@ -7397,6 +8534,14 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Bind Options"
         },
+        "ssl_default_server_ciphers": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphers"
+        },
+        "ssl_default_server_options": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Options"
+        },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -7404,16 +8549,74 @@ func init() {
         "tune_ssl_default_dh_param": {
           "type": "integer",
           "x-display-name": "SSL Default DH Parameter Size"
+        },
+        "user": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "User"
         }
       },
       "additionalProperties": false
+    },
+    "http-check": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "exclamation_mark": {
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Exclamation Mark"
+        },
+        "match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "enum": [
+            "status",
+            "rstatus",
+            "string",
+            "rstring"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Match"
+        },
+        "pattern": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Pattern"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "disable-on-404",
+            "expect",
+            "send-state"
+          ]
+        }
+      }
     },
     "http_request_rule": {
       "description": "HAProxy HTTP request rule configuration (corresponds to http-request directives)",
       "type": "object",
       "title": "HTTP Request Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -7568,7 +8771,7 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -7682,6 +8885,69 @@ func init() {
           },
           "x-display-name": "SPOE Group"
         },
+        "track-sc0-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Key"
+        },
+        "track-sc0-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Table"
+        },
+        "track-sc1-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Key"
+        },
+        "track-sc1-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Table"
+        },
+        "track-sc2-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Key"
+        },
+        "track-sc2-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Table"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -7703,7 +8969,10 @@ func init() {
             "send-spoe-group",
             "add-acl",
             "del-acl",
-            "capture"
+            "capture",
+            "track-sc0",
+            "track-sc1",
+            "track-sc2"
           ],
           "x-nullable": false
         },
@@ -7770,7 +9039,7 @@ func init() {
       "type": "object",
       "title": "HTTP Response Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -7892,7 +9161,7 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -8196,7 +9465,7 @@ func init() {
       "type": "object",
       "title": "Log Target",
       "required": [
-        "id"
+        "index"
       ],
       "properties": {
         "address": {
@@ -8272,7 +9541,7 @@ func init() {
         "global": {
           "type": "boolean"
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -8344,6 +9613,45 @@ func init() {
       "title": "Log Target Array",
       "items": {
         "$ref": "#/definitions/log_target"
+      }
+    },
+    "nameserver": {
+      "description": "Nameserver used in Runtime DNS configuration",
+      "type": "object",
+      "title": "Nameserver",
+      "required": [
+        "name",
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      },
+      "example": {
+        "address": "10.0.0.1",
+        "name": "ns1",
+        "port": 53
+      }
+    },
+    "nameservers": {
+      "description": "Nameservers array",
+      "type": "array",
+      "title": "Nameservers",
+      "items": {
+        "$ref": "#/definitions/nameserver"
       }
     },
     "native_stat": {
@@ -9043,6 +10351,65 @@ func init() {
         }
       }
     },
+    "peer_entries": {
+      "description": "HAProxy peer entries array",
+      "type": "array",
+      "title": "Peer entries",
+      "items": {
+        "$ref": "#/definitions/peer_entry"
+      }
+    },
+    "peer_entry": {
+      "description": "Peer Entry from peers table",
+      "type": "object",
+      "title": "Peer Entry",
+      "required": [
+        "name",
+        "address",
+        "port"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      }
+    },
+    "peer_section": {
+      "description": "HAProxy peer_section configuration",
+      "type": "object",
+      "title": "Peer Section",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "peer_sections": {
+      "description": "HAProxy peer_section array",
+      "type": "array",
+      "title": "Peer_Section",
+      "items": {
+        "$ref": "#/definitions/peer_section"
+      }
+    },
     "process_info": {
       "type": "object",
       "properties": {
@@ -9375,6 +10742,64 @@ func init() {
         "$ref": "#/definitions/reload"
       }
     },
+    "resolver": {
+      "description": "Runtime DNS configuration",
+      "type": "object",
+      "title": "Resolver",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "accepted_payload_size": {
+          "type": "integer",
+          "minimum": 1232
+        },
+        "hold_nx": {
+          "type": "integer"
+        },
+        "hold_obsolete": {
+          "type": "integer"
+        },
+        "hold_other": {
+          "type": "integer"
+        },
+        "hold_refused": {
+          "type": "integer"
+        },
+        "hold_timeout": {
+          "type": "integer"
+        },
+        "hold_valid": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "parse-resolv-conf": {
+          "type": "boolean"
+        },
+        "resolve_retries": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timeout_resolve": {
+          "type": "integer"
+        },
+        "timeout_retry": {
+          "type": "integer"
+        }
+      }
+    },
+    "resolvers": {
+      "description": "HAProxy resolvers array",
+      "type": "array",
+      "title": "Resolvers",
+      "items": {
+        "$ref": "#/definitions/resolver"
+      }
+    },
     "runtime_server": {
       "description": "Runtime transient server properties",
       "type": "object",
@@ -9666,7 +11091,7 @@ func init() {
       "type": "object",
       "title": "Server Switching Rule",
       "required": [
-        "id",
+        "index",
         "target_server"
       ],
       "properties": {
@@ -9692,7 +11117,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -9899,7 +11324,7 @@ func init() {
       }
     },
     "sites": {
-      "description": "Sites array. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Sites array. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration\nendpoints.\n",
       "type": "array",
       "title": "Sites",
       "items": {
@@ -9911,7 +11336,7 @@ func init() {
       "type": "object",
       "title": "Stick Rule",
       "required": [
-        "id",
+        "index",
         "type",
         "pattern"
       ],
@@ -9938,7 +11363,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -10170,7 +11595,7 @@ func init() {
       "type": "object",
       "title": "TCP Request Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -10231,7 +11656,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -10277,7 +11702,7 @@ func init() {
       "type": "object",
       "title": "TCP Response Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -10325,7 +11750,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -10495,15 +11920,15 @@ func init() {
       "name": "Specification"
     },
     {
-      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the \ntransaction with trasactions POST, and call the configuration changes you need with parameter \ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id, \ntransaction mechanism is implicitly called with one operation in transaction.\n",
+      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
     },
     {
-      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string \nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
+      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
       "name": "Reloads"
     },
     {
-      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends \nconnected to it via default_backend or use-backend directives.\n",
+      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends\nconnected to it via default_backend or use-backend directives.\n",
       "name": "Sites"
     },
     {
@@ -10579,6 +12004,21 @@ func init() {
     },
     {
       "name": "ACL"
+    },
+    {
+      "name": "Resolver"
+    },
+    {
+      "name": "Nameserver"
+    },
+    {
+      "name": "Peer"
+    },
+    {
+      "name": "PeerEntry"
+    },
+    {
+      "name": "Cluster"
     }
   ],
   "externalDocs": {
@@ -11057,9 +12497,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/acls/{id}": {
+    "/services/haproxy/configuration/acls/{index}": {
       "get": {
-        "description": "Returns one ACL line configuration by it's ID in the specified parent.",
+        "description": "Returns one ACL line configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -11071,8 +12511,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL line ID",
-            "name": "id",
+            "description": "ACL line Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -11150,7 +12590,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a ACL line configuration by it's ID in the specified parent.",
+        "description": "Replaces a ACL line configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -11162,8 +12602,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL line ID",
-            "name": "id",
+            "description": "ACL line Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -11273,7 +12713,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a ACL line configuration by it's ID from the specified parent.",
+        "description": "Deletes a ACL line configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -11285,8 +12725,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "ACL line ID",
-            "name": "id",
+            "description": "ACL line Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -11539,9 +12979,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/backend_switching_rules/{id}": {
+    "/services/haproxy/configuration/backend_switching_rules/{index}": {
       "get": {
-        "description": "Returns one Backend Switching Rule configuration by it's ID in the specified frontend.",
+        "description": "Returns one Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
           "HAProxy configuration management",
           "Frontend options",
@@ -11552,8 +12992,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -11620,7 +13060,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Backend Switching Rule configuration by it's ID in the specified frontend.",
+        "description": "Replaces a Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
           "HAProxy configuration management",
           "Frontend options",
@@ -11631,8 +13071,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -11731,7 +13171,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Backend Switching Rule configuration by it's ID from the specified frontend.",
+        "description": "Deletes a Backend Switching Rule configuration by it's index from the specified frontend.",
         "tags": [
           "HAProxy configuration management",
           "Frontend options",
@@ -11742,8 +13182,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -12999,9 +14439,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/filters/{id}": {
+    "/services/haproxy/configuration/filters/{index}": {
       "get": {
-        "description": "Returns one Filter configuration by it's ID in the specified parent.",
+        "description": "Returns one Filter configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -13013,8 +14453,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Filter ID",
-            "name": "id",
+            "description": "Filter Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -13092,7 +14532,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Filter configuration by it's ID in the specified parent.",
+        "description": "Replaces a Filter configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -13104,8 +14544,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Filter ID",
-            "name": "id",
+            "description": "Filter Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -13215,7 +14655,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Filter configuration by it's ID from the specified parent.",
+        "description": "Deletes a Filter configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -13227,8 +14667,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Filter ID",
-            "name": "id",
+            "description": "Filter Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -14049,9 +15489,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/http_request_rules/{id}": {
+    "/services/haproxy/configuration/http_request_rules/{index}": {
       "get": {
-        "description": "Returns one HTTP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -14063,8 +15503,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Request Rule ID",
-            "name": "id",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -14142,7 +15582,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a HTTP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -14154,8 +15594,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Request Rule ID",
-            "name": "id",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -14265,7 +15705,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a HTTP Request Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a HTTP Request Rule configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -14277,8 +15717,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Request Rule ID",
-            "name": "id",
+            "description": "HTTP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -14555,9 +15995,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/http_response_rules/{id}": {
+    "/services/haproxy/configuration/http_response_rules/{index}": {
       "get": {
-        "description": "Returns one HTTP Response Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -14569,8 +16009,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Response Rule ID",
-            "name": "id",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -14648,7 +16088,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a HTTP Response Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -14660,8 +16100,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Response Rule ID",
-            "name": "id",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -14771,7 +16211,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a HTTP Response Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a HTTP Response Rule configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -14783,8 +16223,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "HTTP Response Rule ID",
-            "name": "id",
+            "description": "HTTP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -15061,9 +16501,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/log_targets/{id}": {
+    "/services/haproxy/configuration/log_targets/{index}": {
       "get": {
-        "description": "Returns one Log Target configuration by it's ID in the specified parent.",
+        "description": "Returns one Log Target configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -15075,8 +16515,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Log Target ID",
-            "name": "id",
+            "description": "Log Target Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -15154,7 +16594,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Log Target configuration by it's ID in the specified parent.",
+        "description": "Replaces a Log Target configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -15166,8 +16606,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Log Target ID",
-            "name": "id",
+            "description": "Log Target Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -15277,7 +16717,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Log Target configuration by it's ID from the specified parent.",
+        "description": "Deletes a Log Target configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -15289,8 +16729,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Log Target ID",
-            "name": "id",
+            "description": "Log Target Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -15346,6 +16786,1193 @@ func init() {
           },
           "204": {
             "description": "Log Target deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/nameservers": {
+      "get": {
+        "description": "Returns an array of all configured nameservers.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of nameservers",
+        "operationId": "getNameservers",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/nameservers"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new nameserver to the resolvers section.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a nameserver",
+        "operationId": "createNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Nameserver created",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/nameservers/{name}": {
+      "get": {
+        "description": "Returns one nameserver configuration by it's name.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return a nameserver",
+        "operationId": "getNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/nameserver"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a nameserver configuration by it's name.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Replace a nameserver",
+        "operationId": "replaceNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nameserver replaced",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/nameserver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a nameserver from the resolvers section by it's name.",
+        "tags": [
+          "Nameserver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Delete a nameserver",
+        "operationId": "deleteNameserver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent resolver name",
+            "name": "resolver",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Nameserver deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_entries": {
+      "get": {
+        "description": "Returns an array of all peer_entries that are configured in specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of peer_entries",
+        "operationId": "getPeerEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_entries"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new peer entry in the specified peer section in the configuration file.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a new peer_entry",
+        "operationId": "createPeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "PeerEntry created",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_entries/{name}": {
+      "get": {
+        "description": "Returns one peer_entry configuration by it's name in the specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return one peer_entry",
+        "operationId": "getPeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "PeerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_entry"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a peer entry configuration by it's name in the specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management",
+          "Peers options"
+        ],
+        "summary": "Replace a peer_entry",
+        "operationId": "replacePeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "PeerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PeerEntry replaced",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/peer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a peer entry configuration by it's name in the specified peer section.",
+        "tags": [
+          "PeerEntry",
+          "HAProxy configuration management",
+          "Peers options"
+        ],
+        "summary": "Delete a peer_entry",
+        "operationId": "deletePeerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "PeerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "PeerEntry deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_section": {
+      "get": {
+        "description": "Returns an array of all configured peer_section.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of peer_section",
+        "operationId": "getPeerSections",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_sections"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new peer to the configuration file.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a peer",
+        "operationId": "createPeer",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/peer_section"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Peer created",
+            "schema": {
+              "$ref": "#/definitions/peer_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/peer_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/peer_section/{name}": {
+      "get": {
+        "description": "Returns one peer configuration by it's name.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return a peer",
+        "operationId": "getPeerSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Peer name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/peer_section"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a peer from the configuration by it's name.",
+        "tags": [
+          "Peer",
+          "HAProxy configuration management"
+        ],
+        "summary": "Delete a peer",
+        "operationId": "deletePeer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Peer name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Peer deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -15499,6 +18126,412 @@ func init() {
           },
           "400": {
             "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/resolvers": {
+      "get": {
+        "description": "Returns an array of all configured resolvers.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return an array of resolvers",
+        "operationId": "getResolvers",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/resolvers"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new resolver section to the configuration file.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Add a resolver",
+        "operationId": "createResolver",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Resolver created",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/resolvers/{name}": {
+      "get": {
+        "description": "Returns one resolver section configuration by it's name.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Return a resolver",
+        "operationId": "getResolver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Resolver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/resolver"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a resolver configuration by it's name.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Replace a resolver",
+        "operationId": "replaceResolver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Resolver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resolver replaced",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/resolver"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a resolver from the configuration by it's name.",
+        "tags": [
+          "Resolver",
+          "HAProxy configuration management"
+        ],
+        "summary": "Delete a resolver",
+        "operationId": "deleteResolver",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Resolver name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Resolver deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -15693,9 +18726,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/server_switching_rules/{id}": {
+    "/services/haproxy/configuration/server_switching_rules/{index}": {
       "get": {
-        "description": "Returns one Server Switching Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -15706,8 +18739,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -15774,7 +18807,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Server Switching Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -15785,8 +18818,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -15885,7 +18918,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Server Switching Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a Server Switching Rule configuration by it's index from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -15896,8 +18929,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Switching Rule ID",
-            "name": "id",
+            "description": "Switching Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -16585,9 +19618,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/stick_rules/{id}": {
+    "/services/haproxy/configuration/stick_rules/{index}": {
       "get": {
-        "description": "Returns one Stick Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one Stick Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -16598,8 +19631,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Rule ID",
-            "name": "id",
+            "description": "Stick Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -16666,7 +19699,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Stick Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a Stick Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -16677,8 +19710,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Rule ID",
-            "name": "id",
+            "description": "Stick Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -16777,7 +19810,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a Stick Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a Stick Rule configuration by it's index from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -16788,8 +19821,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "Stick Rule ID",
-            "name": "id",
+            "description": "Stick Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -17055,9 +20088,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_request_rules/{id}": {
+    "/services/haproxy/configuration/tcp_request_rules/{index}": {
       "get": {
-        "description": "Returns one TCP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Returns one TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -17069,8 +20102,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Request Rule ID",
-            "name": "id",
+            "description": "TCP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -17148,7 +20181,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a TCP Request Rule configuration by it's ID in the specified parent.",
+        "description": "Replaces a TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -17160,8 +20193,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Request Rule ID",
-            "name": "id",
+            "description": "TCP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -17271,7 +20304,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a TCP Request Rule configuration by it's ID from the specified parent.",
+        "description": "Deletes a TCP Request Rule configuration by it's index from the specified parent.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -17283,8 +20316,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Request Rule ID",
-            "name": "id",
+            "description": "TCP Request Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -17539,9 +20572,9 @@ func init() {
         }
       }
     },
-    "/services/haproxy/configuration/tcp_response_rules/{id}": {
+    "/services/haproxy/configuration/tcp_response_rules/{index}": {
       "get": {
-        "description": "Returns one TCP Response Rule configuration by it's ID in the specified backend.",
+        "description": "Returns one TCP Response Rule configuration by it's index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -17553,8 +20586,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Response Rule ID",
-            "name": "id",
+            "description": "TCP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -17621,7 +20654,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a TCP Response Rule configuration by it's ID in the specified backend.",
+        "description": "Replaces a TCP Response Rule configuration by it's Index in the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -17633,8 +20666,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Response Rule ID",
-            "name": "id",
+            "description": "TCP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -17733,7 +20766,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a TCP Response Rule configuration by it's ID from the specified backend.",
+        "description": "Deletes a TCP Response Rule configuration by it's index from the specified backend.",
         "tags": [
           "HAProxy configuration management",
           "Backend options",
@@ -17745,8 +20778,8 @@ func init() {
         "parameters": [
           {
             "type": "integer",
-            "description": "TCP Response Rule ID",
-            "name": "id",
+            "description": "TCP Response Rule Index",
+            "name": "index",
             "in": "path",
             "required": true
           },
@@ -19115,7 +22148,7 @@ func init() {
       "type": "object",
       "title": "ACL Lines",
       "required": [
-        "id",
+        "index",
         "acl_name",
         "criterion",
         "value"
@@ -19131,7 +22164,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -19180,6 +22213,10 @@ func init() {
         },
         "balance": {
           "$ref": "#/definitions/balance"
+        },
+        "bind_process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "check_timeout": {
           "type": "integer",
@@ -19253,6 +22290,9 @@ func init() {
             }
           }
         },
+        "http-check": {
+          "$ref": "#/definitions/http-check"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -19307,6 +22347,20 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "http_reuse": {
+          "type": "string",
+          "enum": [
+            "aggressive",
+            "always",
+            "never",
+            "safe"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          }
         },
         "httpchk": {
           "x-dependency": {
@@ -19410,7 +22464,7 @@ func init() {
       "type": "object",
       "title": "Backend Switching Rule",
       "required": [
-        "id",
+        "index",
         "name"
       ],
       "properties": {
@@ -19436,7 +22490,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -19888,6 +22942,10 @@ func init() {
         "balance": {
           "$ref": "#/definitions/balance"
         },
+        "bind_process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "check_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -19969,6 +23027,9 @@ func init() {
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
+        "http-check": {
+          "$ref": "#/definitions/http-check"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -19999,6 +23060,15 @@ func init() {
         "http_request_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "http_reuse": {
+          "type": "string",
+          "enum": [
+            "aggressive",
+            "always",
+            "never",
+            "safe"
+          ]
         },
         "httpchk": {
           "$ref": "#/definitions/httpchk"
@@ -20055,6 +23125,19 @@ func init() {
         "tcplog": {
           "type": "boolean",
           "x-display-name": "TCP Log"
+        },
+        "unique_id_format": {
+          "type": "string",
+          "x-display-name": "Unique ID format"
+        },
+        "unique_id_header": {
+          "type": "string",
+          "x-dependency": {
+            "unique_id_format": {
+              "required": true
+            }
+          },
+          "x-display-name": "Unique ID header"
         }
       },
       "additionalProperties": false
@@ -20138,7 +23221,7 @@ func init() {
       "type": "object",
       "title": "Filter",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -20152,7 +23235,7 @@ func init() {
             }
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -20271,6 +23354,10 @@ func init() {
         "name"
       ],
       "properties": {
+        "bind_process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "clflog": {
           "type": "boolean",
           "x-dependency": {
@@ -20424,6 +23511,19 @@ func init() {
             }
           },
           "x-display-name": "TCP Log"
+        },
+        "unique_id_format": {
+          "type": "string",
+          "x-display-name": "Unique ID format"
+        },
+        "unique_id_header": {
+          "type": "string",
+          "x-dependency": {
+            "unique_id_format": {
+              "required": true
+            }
+          },
+          "x-display-name": "Unique ID header"
         }
       },
       "additionalProperties": false,
@@ -20448,6 +23548,11 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "chroot": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Chroot"
+        },
         "cpu_maps": {
           "type": "array",
           "items": {
@@ -20481,6 +23586,11 @@ func init() {
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "group": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Group"
         },
         "master-worker": {
           "type": "boolean",
@@ -20548,6 +23658,14 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Bind Options"
         },
+        "ssl_default_server_ciphers": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphers"
+        },
+        "ssl_default_server_options": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Options"
+        },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -20555,16 +23673,74 @@ func init() {
         "tune_ssl_default_dh_param": {
           "type": "integer",
           "x-display-name": "SSL Default DH Parameter Size"
+        },
+        "user": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "User"
         }
       },
       "additionalProperties": false
+    },
+    "http-check": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "exclamation_mark": {
+          "type": "boolean",
+          "x-dependency": {
+            "type": {
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Exclamation Mark"
+        },
+        "match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "enum": [
+            "status",
+            "rstatus",
+            "string",
+            "rstring"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Match"
+        },
+        "pattern": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Pattern"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "disable-on-404",
+            "expect",
+            "send-state"
+          ]
+        }
+      }
     },
     "http_request_rule": {
       "description": "HAProxy HTTP request rule configuration (corresponds to http-request directives)",
       "type": "object",
       "title": "HTTP Request Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -20719,7 +23895,7 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -20833,6 +24009,69 @@ func init() {
           },
           "x-display-name": "SPOE Group"
         },
+        "track-sc0-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Key"
+        },
+        "track-sc0-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Table"
+        },
+        "track-sc1-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Key"
+        },
+        "track-sc1-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Table"
+        },
+        "track-sc2-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Key"
+        },
+        "track-sc2-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Table"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -20854,7 +24093,10 @@ func init() {
             "send-spoe-group",
             "add-acl",
             "del-acl",
-            "capture"
+            "capture",
+            "track-sc0",
+            "track-sc1",
+            "track-sc2"
           ],
           "x-nullable": false
         },
@@ -20921,7 +24163,7 @@ func init() {
       "type": "object",
       "title": "HTTP Response Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -21043,7 +24285,7 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -21347,7 +24589,7 @@ func init() {
       "type": "object",
       "title": "Log Target",
       "required": [
-        "id"
+        "index"
       ],
       "properties": {
         "address": {
@@ -21423,7 +24665,7 @@ func init() {
         "global": {
           "type": "boolean"
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -21495,6 +24737,45 @@ func init() {
       "title": "Log Target Array",
       "items": {
         "$ref": "#/definitions/log_target"
+      }
+    },
+    "nameserver": {
+      "description": "Nameserver used in Runtime DNS configuration",
+      "type": "object",
+      "title": "Nameserver",
+      "required": [
+        "name",
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      },
+      "example": {
+        "address": "10.0.0.1",
+        "name": "ns1",
+        "port": 53
+      }
+    },
+    "nameservers": {
+      "description": "Nameservers array",
+      "type": "array",
+      "title": "Nameservers",
+      "items": {
+        "$ref": "#/definitions/nameserver"
       }
     },
     "native_stat": {
@@ -22194,6 +25475,65 @@ func init() {
         }
       }
     },
+    "peer_entries": {
+      "description": "HAProxy peer entries array",
+      "type": "array",
+      "title": "Peer entries",
+      "items": {
+        "$ref": "#/definitions/peer_entry"
+      }
+    },
+    "peer_entry": {
+      "description": "Peer Entry from peers table",
+      "type": "object",
+      "title": "Peer Entry",
+      "required": [
+        "name",
+        "address",
+        "port"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      }
+    },
+    "peer_section": {
+      "description": "HAProxy peer_section configuration",
+      "type": "object",
+      "title": "Peer Section",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "peer_sections": {
+      "description": "HAProxy peer_section array",
+      "type": "array",
+      "title": "Peer_Section",
+      "items": {
+        "$ref": "#/definitions/peer_section"
+      }
+    },
     "process_info": {
       "type": "object",
       "properties": {
@@ -22526,6 +25866,64 @@ func init() {
         "$ref": "#/definitions/reload"
       }
     },
+    "resolver": {
+      "description": "Runtime DNS configuration",
+      "type": "object",
+      "title": "Resolver",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "accepted_payload_size": {
+          "type": "integer",
+          "minimum": 1232
+        },
+        "hold_nx": {
+          "type": "integer"
+        },
+        "hold_obsolete": {
+          "type": "integer"
+        },
+        "hold_other": {
+          "type": "integer"
+        },
+        "hold_refused": {
+          "type": "integer"
+        },
+        "hold_timeout": {
+          "type": "integer"
+        },
+        "hold_valid": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "parse-resolv-conf": {
+          "type": "boolean"
+        },
+        "resolve_retries": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timeout_resolve": {
+          "type": "integer"
+        },
+        "timeout_retry": {
+          "type": "integer"
+        }
+      }
+    },
+    "resolvers": {
+      "description": "HAProxy resolvers array",
+      "type": "array",
+      "title": "Resolvers",
+      "items": {
+        "$ref": "#/definitions/resolver"
+      }
+    },
     "runtime_server": {
       "description": "Runtime transient server properties",
       "type": "object",
@@ -22818,7 +26216,7 @@ func init() {
       "type": "object",
       "title": "Server Switching Rule",
       "required": [
-        "id",
+        "index",
         "target_server"
       ],
       "properties": {
@@ -22844,7 +26242,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -23051,7 +26449,7 @@ func init() {
       }
     },
     "sites": {
-      "description": "Sites array. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration \nendpoints.\n",
+      "description": "Sites array. Sites are considered as one service and all farms connected to that service.\nFarms are connected to service using use-backend and default_backend directives. Sites let you\nconfigure simple HAProxy configurations, for more advanced options use /haproxy/configuration\nendpoints.\n",
       "type": "array",
       "title": "Sites",
       "items": {
@@ -23063,7 +26461,7 @@ func init() {
       "type": "object",
       "title": "Stick Rule",
       "required": [
-        "id",
+        "index",
         "type",
         "pattern"
       ],
@@ -23090,7 +26488,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -23322,7 +26720,7 @@ func init() {
       "type": "object",
       "title": "TCP Request Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -23383,7 +26781,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -23429,7 +26827,7 @@ func init() {
       "type": "object",
       "title": "TCP Response Rule",
       "required": [
-        "id",
+        "index",
         "type"
       ],
       "properties": {
@@ -23477,7 +26875,7 @@ func init() {
             "property": "acl_name"
           }
         },
-        "id": {
+        "index": {
           "type": "integer",
           "x-nullable": true
         },
@@ -23647,15 +27045,15 @@ func init() {
       "name": "Specification"
     },
     {
-      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the \ntransaction with trasactions POST, and call the configuration changes you need with parameter \ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id, \ntransaction mechanism is implicitly called with one operation in transaction.\n",
+      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
     },
     {
-      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string \nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
+      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
       "name": "Reloads"
     },
     {
-      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends \nconnected to it via default_backend or use-backend directives.\n",
+      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends\nconnected to it via default_backend or use-backend directives.\n",
       "name": "Sites"
     },
     {
@@ -23731,6 +27129,21 @@ func init() {
     },
     {
       "name": "ACL"
+    },
+    {
+      "name": "Resolver"
+    },
+    {
+      "name": "Nameserver"
+    },
+    {
+      "name": "Peer"
+    },
+    {
+      "name": "PeerEntry"
+    },
+    {
+      "name": "Cluster"
     }
   ],
   "externalDocs": {

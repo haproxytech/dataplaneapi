@@ -44,11 +44,11 @@ func NewReplaceLogTarget(ctx *middleware.Context, handler ReplaceLogTargetHandle
 	return &ReplaceLogTarget{Context: ctx, Handler: handler}
 }
 
-/*ReplaceLogTarget swagger:route PUT /services/haproxy/configuration/log_targets/{id} LogTarget replaceLogTarget
+/*ReplaceLogTarget swagger:route PUT /services/haproxy/configuration/log_targets/{index} LogTarget replaceLogTarget
 
 Replace a Log Target
 
-Replaces a Log Target configuration by it's ID in the specified parent.
+Replaces a Log Target configuration by it's index in the specified parent.
 
 */
 type ReplaceLogTarget struct {

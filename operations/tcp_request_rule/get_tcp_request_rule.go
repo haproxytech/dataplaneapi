@@ -49,11 +49,11 @@ func NewGetTCPRequestRule(ctx *middleware.Context, handler GetTCPRequestRuleHand
 	return &GetTCPRequestRule{Context: ctx, Handler: handler}
 }
 
-/*GetTCPRequestRule swagger:route GET /services/haproxy/configuration/tcp_request_rules/{id} TCPRequestRule getTcpRequestRule
+/*GetTCPRequestRule swagger:route GET /services/haproxy/configuration/tcp_request_rules/{index} TCPRequestRule getTcpRequestRule
 
 Return one TCP Request Rule
 
-Returns one TCP Request Rule configuration by it's ID in the specified parent.
+Returns one TCP Request Rule configuration by it's index in the specified parent.
 
 */
 type GetTCPRequestRule struct {

@@ -31,7 +31,7 @@ import (
 
 // GetFilterURL generates an URL for the get filter operation
 type GetFilterURL struct {
-	ID int64
+	Index int64
 
 	ParentName    string
 	ParentType    string
@@ -61,13 +61,13 @@ func (o *GetFilterURL) SetBasePath(bp string) {
 func (o *GetFilterURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/filters/{id}"
+	var _path = "/services/haproxy/configuration/filters/{index}"
 
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		_path = strings.Replace(_path, "{id}", id, -1)
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
-		return nil, errors.New("id is required on GetFilterURL")
+		return nil, errors.New("index is required on GetFilterURL")
 	}
 
 	_basePath := o._basePath

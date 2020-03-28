@@ -44,11 +44,11 @@ func NewReplaceHTTPRequestRule(ctx *middleware.Context, handler ReplaceHTTPReque
 	return &ReplaceHTTPRequestRule{Context: ctx, Handler: handler}
 }
 
-/*ReplaceHTTPRequestRule swagger:route PUT /services/haproxy/configuration/http_request_rules/{id} HTTPRequestRule replaceHttpRequestRule
+/*ReplaceHTTPRequestRule swagger:route PUT /services/haproxy/configuration/http_request_rules/{index} HTTPRequestRule replaceHttpRequestRule
 
 Replace a HTTP Request Rule
 
-Replaces a HTTP Request Rule configuration by it's ID in the specified parent.
+Replaces a HTTP Request Rule configuration by it's index in the specified parent.
 
 */
 type ReplaceHTTPRequestRule struct {
