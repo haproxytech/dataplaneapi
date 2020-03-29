@@ -7780,6 +7780,32 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "resolve-net": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve-prefer": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolvers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getResolvers",
+            "property": "name"
+          }
+        },
         "rise": {
           "type": "integer",
           "x-nullable": true
@@ -11002,6 +11028,32 @@ func init() {
         "proto": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "resolve-net": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve-prefer": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolvers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getResolvers",
+            "property": "name"
+          }
         },
         "send-proxy": {
           "type": "string",
@@ -22904,6 +22956,32 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "resolve-net": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve-prefer": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolvers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getResolvers",
+            "property": "name"
+          }
+        },
         "rise": {
           "type": "integer",
           "x-nullable": true
@@ -26127,6 +26205,32 @@ func init() {
         "proto": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "resolve-net": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve-prefer": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolvers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getResolvers",
+            "property": "name"
+          }
         },
         "send-proxy": {
           "type": "string",
