@@ -118,8 +118,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.TxtProducer = runtime.TextProducer()
-
 	api.ServerShutdown = serverShutdown
 
 	client := configureNativeClient(haproxyOptions)

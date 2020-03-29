@@ -31,6 +31,7 @@ import (
 // PostHAProxyConfigurationURL generates an URL for the post h a proxy configuration operation
 type PostHAProxyConfigurationURL struct {
 	ForceReload *bool
+	SkipReload  *bool
 	Version     *int64
 
 	_basePath string
@@ -73,6 +74,14 @@ func (o *PostHAProxyConfigurationURL) Build() (*url.URL, error) {
 	}
 	if forceReload != "" {
 		qs.Set("force_reload", forceReload)
+	}
+
+	var skipReload string
+	if o.SkipReload != nil {
+		skipReload = swag.FormatBool(*o.SkipReload)
+	}
+	if skipReload != "" {
+		qs.Set("skip_reload", skipReload)
 	}
 
 	var version string

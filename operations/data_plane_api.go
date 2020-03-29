@@ -84,7 +84,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		JSONConsumer:        runtime.JSONConsumer(),
 		TxtConsumer:         runtime.TextConsumer(),
 		JSONProducer:        runtime.JSONProducer(),
-		TxtProducer:         runtime.TextProducer(),
 		TransactionsCommitTransactionHandler: transactions.CommitTransactionHandlerFunc(func(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsCommitTransaction has not yet been implemented")
 		}),
@@ -502,8 +501,6 @@ type DataPlaneAPI struct {
 
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
-	// TxtProducer registers a producer for a "text/plain" mime type
-	TxtProducer runtime.Producer
 
 	// BasicAuthAuth registers a function that takes username and password and returns a principal
 	// it performs authentication with basic auth
@@ -827,10 +824,6 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
-	}
-
-	if o.TxtProducer == nil {
-		unregistered = append(unregistered, "TxtProducer")
 	}
 
 	if o.BasicAuthAuth == nil {
@@ -1405,9 +1398,6 @@ func (o *DataPlaneAPI) ProducersFor(mediaTypes []string) map[string]runtime.Prod
 
 		case "application/json":
 			result["application/json"] = o.JSONProducer
-
-		case "text/plain":
-			result["text/plain"] = o.TxtProducer
 
 		}
 

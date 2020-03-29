@@ -4172,7 +4172,7 @@ func init() {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
         "produces": [
-          "text/plain"
+          "application/json"
         ],
         "tags": [
           "Configuration",
@@ -4223,7 +4223,7 @@ func init() {
           "text/plain"
         ],
         "produces": [
-          "text/plain"
+          "application/json"
         ],
         "tags": [
           "Configuration",
@@ -4239,6 +4239,19 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated and runtime actions from X-Runtime-Actions will be applied",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "List of Runtime API commands with parameters separated by ';'",
+            "name": "X-Runtime-Actions",
+            "in": "header"
           },
           {
             "$ref": "#/parameters/version"
@@ -18057,7 +18070,7 @@ func init() {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
         "produces": [
-          "text/plain"
+          "application/json"
         ],
         "tags": [
           "Configuration",
@@ -18125,7 +18138,7 @@ func init() {
           "text/plain"
         ],
         "produces": [
-          "text/plain"
+          "application/json"
         ],
         "tags": [
           "Configuration",
@@ -18141,6 +18154,19 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated and runtime actions from X-Runtime-Actions will be applied",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "List of Runtime API commands with parameters separated by ';'",
+            "name": "X-Runtime-Actions",
+            "in": "header"
           },
           {
             "type": "integer",

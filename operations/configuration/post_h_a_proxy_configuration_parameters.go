@@ -40,10 +40,13 @@ func NewPostHAProxyConfigurationParams() PostHAProxyConfigurationParams {
 		// initialize parameters with default values
 
 		forceReloadDefault = bool(false)
+		skipReloadDefault  = bool(false)
 	)
 
 	return PostHAProxyConfigurationParams{
 		ForceReload: &forceReloadDefault,
+
+		SkipReload: &skipReloadDefault,
 	}
 }
 
@@ -56,6 +59,10 @@ type PostHAProxyConfigurationParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*List of Runtime API commands with parameters separated by ';'
+	  In: header
+	*/
+	XRuntimeActions *string
 	/*
 	  Required: true
 	  In: body
@@ -66,6 +73,11 @@ type PostHAProxyConfigurationParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*If set, no reload will be initiated and runtime actions from X-Runtime-Actions will be applied
+	  In: query
+	  Default: false
+	*/
+	SkipReload *bool
 	/*Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.
 	  In: query
 	*/
@@ -82,6 +94,10 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 	o.HTTPRequest = r
 
 	qs := runtime.Values(r.URL.Query())
+
+	if err := o.bindXRuntimeActions(r.Header[http.CanonicalHeaderKey("X-Runtime-Actions")], true, route.Formats); err != nil {
+		res = append(res, err)
+	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -104,6 +120,11 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 		res = append(res, err)
 	}
 
+	qSkipReload, qhkSkipReload, _ := qs.GetOK("skip_reload")
+	if err := o.bindSkipReload(qSkipReload, qhkSkipReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qVersion, qhkVersion, _ := qs.GetOK("version")
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
@@ -112,6 +133,24 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindXRuntimeActions binds and validates parameter XRuntimeActions from header.
+func (o *PostHAProxyConfigurationParams) bindXRuntimeActions(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.XRuntimeActions = &raw
+
 	return nil
 }
 
@@ -134,6 +173,29 @@ func (o *PostHAProxyConfigurationParams) bindForceReload(rawData []string, hasKe
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindSkipReload binds and validates parameter SkipReload from query.
+func (o *PostHAProxyConfigurationParams) bindSkipReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewPostHAProxyConfigurationParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("skip_reload", "query", "bool", raw)
+	}
+	o.SkipReload = &value
 
 	return nil
 }
