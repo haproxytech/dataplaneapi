@@ -7100,6 +7100,14 @@ func init() {
           ],
           "x-display-name": "Advanced Check"
         },
+        "allbackups": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "All Backups"
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -7854,6 +7862,14 @@ func init() {
           ],
           "x-display-name": "Advanced Check"
         },
+        "allbackups": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "All Backups"
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -8009,6 +8025,14 @@ func init() {
         "log_tag": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "logasap": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log ASAP"
         },
         "maxconn": {
           "type": "integer",
@@ -8400,6 +8424,14 @@ func init() {
         "log_tag": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "logasap": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log ASAP"
         },
         "maxconn": {
           "type": "integer",
@@ -22289,6 +22321,14 @@ func init() {
           ],
           "x-display-name": "Advanced Check"
         },
+        "allbackups": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "All Backups"
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -23043,6 +23083,14 @@ func init() {
           ],
           "x-display-name": "Advanced Check"
         },
+        "allbackups": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "All Backups"
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -23198,6 +23246,14 @@ func init() {
         "log_tag": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "logasap": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log ASAP"
         },
         "maxconn": {
           "type": "integer",
@@ -23589,6 +23645,14 @@ func init() {
         "log_tag": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "logasap": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log ASAP"
         },
         "maxconn": {
           "type": "integer",
