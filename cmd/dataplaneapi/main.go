@@ -42,6 +42,17 @@ var cliOptions struct {
 }
 
 func main() {
+	cfg := configuration.Get()
+	for {
+		restart := startServer(cfg)
+		if !restart.Load() {
+			break
+		}
+	}
+}
+
+func startServer(cfg *configuration.Configuration) (reload configuration.AtomicBool) {
+
 	swaggerSpec, err := loads.Embedded(dataplaneapi.SwaggerJSON, dataplaneapi.FlatSwaggerJSON)
 	if err != nil {
 		log.Fatalln(err)
@@ -89,22 +100,7 @@ func main() {
 		return
 	}
 
-	cfg := configuration.Get()
 	err = cfg.Load(dataplaneapi.SwaggerJSON, server.Host, server.Port)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	if cfg.Cluster.Mode.Load() == "cluster" {
-		if cfg.Cluster.CertFetched.Load() {
-			log.Info("HAProxy Data Plane API in cluster mode")
-			server.TLSCertificate = flags.Filename(cfg.Cluster.CertificatePath.Load())
-			server.TLSCertificateKey = flags.Filename(cfg.Cluster.CertificateKeyPath.Load())
-			server.EnabledListeners = []string{"https"}
-		} else if cfg.Cluster.ActiveBootstrapKey.Load() != "" {
-			cfg.BotstrapKeyReload()
-		}
-	}
-	err = cfg.Save()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -113,9 +109,29 @@ func main() {
 	log.Infof("Build from: %s", GitRepo)
 	log.Infof("Build date: %s", BuildTime)
 
+	if cfg.Cluster.Mode.Load() == "cluster" {
+		if cfg.Cluster.CertFetched.Load() {
+			log.Info("HAProxy Data Plane API in cluster mode")
+			server.TLSCertificate = flags.Filename(cfg.Cluster.CertificatePath.Load())
+			server.TLSCertificateKey = flags.Filename(cfg.Cluster.CertificateKeyPath.Load())
+			server.EnabledListeners = []string{"https"}
+			if server.TLSPort == 0 {
+				server.TLSPort = server.Port
+			}
+		} else if cfg.Cluster.ActiveBootstrapKey.Load() != "" {
+			cfg.Notify.BootstrapKeyChanged.Notify()
+		}
+	}
+	err = cfg.Save()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	go func() {
-		for range cfg.GetRestartNotification() {
-			log.Info("HAProxy Data Plane API shuting down, needs reload")
+		for range cfg.Notify.Reload.Subscribe("main") {
+			log.Info("HAProxy Data Plane API reloading")
+			reload.Store(true)
+			cfg.UnSubscribeAll()
 			err := server.Shutdown()
 			if err != nil {
 				log.Fatalln(err)
@@ -123,8 +139,20 @@ func main() {
 		}
 	}()
 
+	go func() {
+		for range cfg.Notify.Shutdown.Subscribe("main") {
+			log.Info("HAProxy Data Plane API shuting down")
+			err := server.Shutdown()
+			if err != nil {
+				log.Fatalln(err)
+			}
+			os.Exit(0)
+		}
+	}()
+
 	server.ConfigureAPI()
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
 	}
+	return reload
 }

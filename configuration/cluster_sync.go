@@ -73,12 +73,12 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 	certFetched := cfg.Cluster.CertFetched.Load()
 
 	if key != "" && !certFetched {
-		c.cfg.BotstrapKeyReload()
+		c.cfg.Notify.BootstrapKeyChanged.Notify()
 	}
 }
 
 func (c *ClusterSync) monitorBootstrapKey() {
-	for range c.cfg.GetBotstrapKeyChange() {
+	for range c.cfg.Notify.BootstrapKeyChanged.Subscribe("monitorBootstrapKey") {
 		key := c.cfg.Cluster.BootstrapKey.Load()
 		c.cfg.Cluster.CertFetched.Store(false)
 		if key == "" {
@@ -223,7 +223,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, csr, key stri
 		}
 		c.cfg.Cluster.CertificatePath.Store("tls.crt")
 		c.cfg.Cluster.CertFetched.Store(true)
-		c.cfg.RestartServer()
+		c.cfg.Notify.Reload.Notify()
 	}
 	err = c.cfg.Save()
 	if err != nil {
@@ -294,7 +294,7 @@ func (c *ClusterSync) fetchCert() {
 				}
 				c.cfg.Cluster.CertificatePath.Store("tls.crt")
 				c.cfg.Cluster.CertFetched.Store(true)
-				c.cfg.RestartServer()
+				c.cfg.Notify.Reload.Notify()
 			}
 			err = c.cfg.Save()
 			if err != nil {

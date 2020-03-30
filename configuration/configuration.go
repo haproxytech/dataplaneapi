@@ -76,8 +76,9 @@ type ServerConfiguration struct {
 }
 
 type NotifyConfiguration struct {
-	keyChanged chan struct{} `yaml:"-"`
-	restart    chan struct{} `yaml:"-"`
+	BootstrapKeyChanged *ChanNotify `yaml:"-"`
+	Reload              *ChanNotify `yaml:"-"`
+	Shutdown            *ChanNotify `yaml:"-"`
 }
 
 type Configuration struct {
@@ -88,19 +89,16 @@ type Configuration struct {
 	Notify  NotifyConfiguration  `yaml:"-"`
 }
 
-//Get retuns pointer to configuration
+//Get returns pointer to configuration
 func Get() *Configuration {
-
 	if cfg == nil {
 		cfg = &Configuration{}
-		cfg.Notify.keyChanged = make(chan struct{}, 1)
-		cfg.Notify.restart = make(chan struct{}, 1)
+		cfg.initSignalHandler()
+		cfg.Notify.BootstrapKeyChanged = NewChanNotify()
+		cfg.Notify.Reload = NewChanNotify()
+		cfg.Notify.Shutdown = NewChanNotify()
 	}
 	return cfg
-}
-
-func (c *Configuration) GetBotstrapKeyChange() <-chan struct{} {
-	return c.Notify.keyChanged
 }
 
 func (c *Configuration) BotstrapKeyChanged(bootstrapKey string) {
@@ -109,19 +107,13 @@ func (c *Configuration) BotstrapKeyChanged(bootstrapKey string) {
 	if err != nil {
 		log.Println(err)
 	}
-	c.Notify.keyChanged <- struct{}{}
+	c.Notify.BootstrapKeyChanged.Notify()
 }
 
-func (c *Configuration) BotstrapKeyReload() {
-	c.Notify.keyChanged <- struct{}{}
-}
-
-func (c *Configuration) GetRestartNotification() <-chan struct{} {
-	return c.Notify.restart
-}
-
-func (c *Configuration) RestartServer() {
-	c.Notify.restart <- struct{}{}
+func (c *Configuration) UnSubscribeAll() {
+	c.Notify.BootstrapKeyChanged.UnSubscribeAll()
+	c.Notify.Reload.UnSubscribeAll()
+	c.Notify.Shutdown.UnSubscribeAll()
 }
 
 func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int) error {
