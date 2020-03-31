@@ -21,6 +21,7 @@ import (
 	"os/signal"
 	"sync"
 	"syscall"
+	"time"
 )
 
 type ChanNotify struct {
@@ -50,8 +51,28 @@ func (cn *ChanNotify) UnSubscribeAll() {
 }
 
 func (cn *ChanNotify) Notify() {
+	cn.notify(0)
+}
+
+func (cn *ChanNotify) NotifyWithRetry() {
+	cn.notify(3)
+}
+
+func (cn *ChanNotify) notify(numTry int) {
+	if numTry < 0 {
+		return
+	}
 	cn.mu.RLock()
 	defer cn.mu.RUnlock()
+
+	if len(cn.subsribers) == 0 {
+		go func() {
+			time.Sleep(2 * time.Second)
+			numTry--
+			cn.notify(numTry)
+		}()
+		return
+	}
 
 	for _, c := range cn.subsribers {
 		c <- struct{}{}

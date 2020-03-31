@@ -109,7 +109,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	log.Infof("Build from: %s", GitRepo)
 	log.Infof("Build date: %s", BuildTime)
 
-	if cfg.Cluster.Mode.Load() == "cluster" {
+	if cfg.Mode.Load() == "cluster" {
 		if cfg.Cluster.CertFetched.Load() {
 			log.Info("HAProxy Data Plane API in cluster mode")
 			server.TLSCertificate = flags.Filename(cfg.Cluster.CertificatePath.Load())
@@ -119,7 +119,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 				server.TLSPort = server.Port
 			}
 		} else if cfg.Cluster.ActiveBootstrapKey.Load() != "" {
-			cfg.Notify.BootstrapKeyChanged.Notify()
+			cfg.Notify.BootstrapKeyChanged.NotifyWithRetry()
 		}
 	}
 	err = cfg.Save()

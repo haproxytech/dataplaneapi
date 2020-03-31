@@ -54,18 +54,16 @@ type LoggingOptions struct {
 
 type ClusterConfiguration struct {
 	ID                 AtomicString `yaml:"id"`
-	Mode               AtomicString `yaml:"mode" default:"single"`
-	BootstrapKey       AtomicString `yaml:"bootstrap_key"`
 	ActiveBootstrapKey AtomicString `yaml:"active_bootstrap_key"`
 	Token              AtomicString `yaml:"token"`
 	URL                AtomicString `yaml:"url"`
 	Port               AtomicString `yaml:"port"`
 	APIBasePath        AtomicString `yaml:"api_base_path"`
+	APINodesPath       AtomicString `yaml:"api_nodes_path"`
 	CertificatePath    AtomicString `yaml:"tls-certificate"`
 	CertificateKeyPath AtomicString `yaml:"tls-key"`
 	CertFetched        AtomicBool   `yaml:"cert_fetched"`
 	Name               AtomicString `yaml:"name"`
-	Status             AtomicString `yaml:"status"`
 	Description        AtomicString `yaml:"description"`
 }
 
@@ -82,11 +80,15 @@ type NotifyConfiguration struct {
 }
 
 type Configuration struct {
-	HAProxy HAProxyConfiguration `yaml:"-"`
-	Logging LoggingOptions       `yaml:"-"`
-	Cluster ClusterConfiguration `yaml:"cluster"`
-	Server  ServerConfiguration  `yaml:"-"`
-	Notify  NotifyConfiguration  `yaml:"-"`
+	HAProxy      HAProxyConfiguration `yaml:"-"`
+	Logging      LoggingOptions       `yaml:"-"`
+	Cluster      ClusterConfiguration `yaml:"cluster"`
+	Server       ServerConfiguration  `yaml:"-"`
+	Notify       NotifyConfiguration  `yaml:"-"`
+	Name         AtomicString         `yaml:"name"`
+	BootstrapKey AtomicString         `yaml:"bootstrap_key"`
+	Mode         AtomicString         `yaml:"mode" default:"single"`
+	Status       AtomicString         `yaml:"status"`
 }
 
 //Get returns pointer to configuration
@@ -102,7 +104,7 @@ func Get() *Configuration {
 }
 
 func (c *Configuration) BotstrapKeyChanged(bootstrapKey string) {
-	c.Cluster.BootstrapKey.Store(bootstrapKey)
+	c.BootstrapKey.Store(bootstrapKey)
 	err := c.Save()
 	if err != nil {
 		log.Println(err)
@@ -141,8 +143,8 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 	}
 	c.Cluster = cfgLoaded.Cluster
 
-	if c.Cluster.Mode.Load() == "" {
-		c.Cluster.Mode.Store("single")
+	if c.Mode.Load() == "" {
+		c.Mode.Store("single")
 	}
 	if c.Cluster.CertificatePath.Load() == "" {
 		c.Cluster.CertificatePath.Store("tls.crt")
@@ -155,8 +157,8 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
 	id := ulid.MustNew(ulid.Timestamp(t), entropy)
 
-	if c.Cluster.Name.Load() == "" {
-		c.Cluster.Name.Store(id.String())
+	if c.Name.Load() == "" {
+		c.Name.Store(id.String())
 	}
 
 	return nil

@@ -23,19 +23,17 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/asn1"
-	"encoding/base64"
 	"encoding/json"
 	"encoding/pem"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	client_native "github.com/haproxytech/client-native"
 	parser "github.com/haproxytech/config-parser/v2"
 	"github.com/haproxytech/config-parser/v2/types"
+	log "github.com/sirupsen/logrus"
 )
 
 //Node is structure required for connection to cluster
@@ -69,7 +67,7 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 	c.certFetch = make(chan struct{}, 2)
 	go c.fetchCert()
 
-	key := c.cfg.Cluster.BootstrapKey.Load()
+	key := c.cfg.BootstrapKey.Load()
 	certFetched := cfg.Cluster.CertFetched.Load()
 
 	if key != "" && !certFetched {
@@ -79,7 +77,7 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 
 func (c *ClusterSync) monitorBootstrapKey() {
 	for range c.cfg.Notify.BootstrapKeyChanged.Subscribe("monitorBootstrapKey") {
-		key := c.cfg.Cluster.BootstrapKey.Load()
+		key := c.cfg.BootstrapKey.Load()
 		c.cfg.Cluster.CertFetched.Store(false)
 		if key == "" {
 			//do we need to delete cert here maybe?
@@ -97,55 +95,56 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			}
 			continue
 		}
-		raw, err := base64.StdEncoding.DecodeString(key)
+		data, err := decodeBootstrapKey(key)
 		if err != nil {
-			log.Println(err)
+			log.Warning(err)
+		}
+		if len(data) != 8 {
+			log.Warning("bottstrap key in unrecognized format")
 			continue
 		}
-		data := strings.Split(string(raw), ":")
-		if len(data) != 5 {
-			log.Println("bottstrap key in unrecognized format")
-			continue
-		}
-		url := fmt.Sprintf("%s:%s", data[0], data[1])
+		url := fmt.Sprintf("%s://%s", data[0], data[1])
 		c.cfg.Cluster.URL.Store(url)
 		c.cfg.Cluster.Port.Store(data[2])
 		c.cfg.Cluster.APIBasePath.Store(data[3])
-		c.cfg.Cluster.Mode.Store("cluster")
+		c.cfg.Cluster.APINodesPath.Store(data[4])
+		c.cfg.Cluster.Name.Store(data[5])
+		c.cfg.Cluster.Description.Store(data[6])
+		c.cfg.Mode.Store("cluster")
 		err = c.cfg.Save()
 		if err != nil {
 			log.Panic(err)
 		}
 		csr, key, err := generateCSR()
 		if err != nil {
-			log.Println(err)
+			log.Warning(err)
 			continue
 		}
 		err = ioutil.WriteFile("tls.key", []byte(key), 0644)
 		if err != nil {
-			log.Println(err)
+			log.Warning(err)
 			continue
 		}
 		err = ioutil.WriteFile("csr.crt", []byte(csr), 0644)
 		if err != nil {
-			log.Println(err)
+			log.Warning(err)
 			continue
 		}
 		err = c.cfg.Save()
 		if err != nil {
 			log.Panic(err)
 		}
-		err = c.issueJoinRequest(url, data[2], data[3], csr, key)
+		err = c.issueJoinRequest(url, data[2], data[3], data[4], csr, key)
 		if err != nil {
-			log.Println(err)
+			log.Warning(err)
 			continue
 		}
 		c.certFetch <- struct{}{}
 	}
 }
 
-func (c *ClusterSync) issueJoinRequest(url, port, basePath string, csr, key string) error {
-	url = fmt.Sprintf("%s:%s/%s", url, port, basePath)
+func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath string, csr, key string) error {
+	url = fmt.Sprintf("%s:%s%s/%s", url, port, basePath, nodesPath)
 	serverCfg := c.cfg.Server
 
 	data, err := c.cli.Configuration.Parser.Get(parser.UserList, c.cfg.HAProxy.Userlist, "user")
@@ -178,7 +177,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, csr, key stri
 		APIUser:     user.Password,
 		Certificate: csr,
 		Description: "",
-		Name:        c.cfg.Cluster.Name.Load(),
+		Name:        c.cfg.Name.Load(),
 		Port:        int64(serverCfg.Port),
 		Status:      "waiting_approval",
 		Type:        "community",
@@ -189,9 +188,9 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, csr, key stri
 	if err != nil {
 		return fmt.Errorf("error creating new POST request for cluster comunication")
 	}
-	req.Header.Add("X-Bootstrap-Key", c.cfg.Cluster.BootstrapKey.Load())
+	req.Header.Add("X-Bootstrap-Key", c.cfg.BootstrapKey.Load())
 	req.Header.Add("Content-Type", "application/json")
-	log.Printf("Joining cluster %s", url)
+	log.Infof("Joining cluster %s", url)
 	httpClient := createHTTPClient()
 	resp, err := httpClient.Do(req)
 	if err != nil {
@@ -213,9 +212,9 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, csr, key stri
 	}
 	c.cfg.Cluster.ID.Store(responseData.ID)
 	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
-	c.cfg.Cluster.ActiveBootstrapKey.Store(c.cfg.Cluster.BootstrapKey.Load())
-	c.cfg.Cluster.Status.Store(responseData.Status)
-	log.Printf("Cluster joined, status: %s", responseData.Status)
+	c.cfg.Cluster.ActiveBootstrapKey.Store(c.cfg.BootstrapKey.Load())
+	c.cfg.Status.Store(responseData.Status)
+	log.Infof("Cluster joined, status: %s", responseData.Status)
 	if responseData.Status == "active" {
 		err = ioutil.WriteFile("tls.crt", []byte(responseData.Certificate), 0644)
 		if err != nil {
@@ -234,7 +233,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, csr, key stri
 
 func (c *ClusterSync) activateFetchCert(err error) {
 	go func(err error) {
-		log.Println(err)
+		log.Warning(err)
 		time.Sleep(1 * time.Minute)
 		c.certFetch <- struct{}{}
 	}(err)
@@ -242,7 +241,7 @@ func (c *ClusterSync) activateFetchCert(err error) {
 
 func (c *ClusterSync) fetchCert() {
 	for range c.certFetch {
-		key := c.cfg.Cluster.BootstrapKey.Load()
+		key := c.cfg.BootstrapKey.Load()
 		if key == "" || c.cfg.Cluster.Token.Load() == "" {
 			continue
 		}
@@ -251,9 +250,10 @@ func (c *ClusterSync) fetchCert() {
 		if !certFetched {
 			url := c.cfg.Cluster.URL.Load()
 			port := c.cfg.Cluster.Port.Load()
-			aPIBasePath := c.cfg.Cluster.APIBasePath.Load()
+			apiBasePath := c.cfg.Cluster.APIBasePath.Load()
+			apiNodesPath := c.cfg.Cluster.APINodesPath.Load()
 			id := c.cfg.Cluster.ID.Load()
-			url = fmt.Sprintf("%s:%s/%s/%s", url, port, aPIBasePath, id)
+			url = fmt.Sprintf("%s:%s/%s/%s/%s", url, port, apiBasePath, apiNodesPath, id)
 			req, err := http.NewRequest("GET", url, nil)
 			if err != nil {
 				c.activateFetchCert(err)
@@ -283,13 +283,13 @@ func (c *ClusterSync) fetchCert() {
 				c.activateFetchCert(err)
 				continue
 			}
-			c.cfg.Cluster.Status.Store(responseData.Status)
-			log.Printf("Fetching certificate, status: %s", responseData.Status)
+			c.cfg.Status.Store(responseData.Status)
+			log.Warningf("Fetching certificate, status: %s", responseData.Status)
 
 			if responseData.Status == "active" {
 				err = ioutil.WriteFile("tls.crt", []byte(responseData.Certificate), 0644)
 				if err != nil {
-					log.Println(err.Error())
+					log.Warning(err.Error())
 					continue
 				}
 				c.cfg.Cluster.CertificatePath.Store("tls.crt")
@@ -298,7 +298,7 @@ func (c *ClusterSync) fetchCert() {
 			}
 			err = c.cfg.Save()
 			if err != nil {
-				log.Println(err)
+				log.Warning(err)
 			}
 		}
 		if !certFetched {

@@ -37,9 +37,9 @@ type GetClusterHandlerImpl struct {
 
 //Handle executing the request and returning a response
 func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
-	key := h.Config.Cluster.BootstrapKey.Load()
+	key := h.Config.BootstrapKey.Load()
 	if key != params.Data.BootstrapKey || true {
-		h.Config.Cluster.Mode.Store("cluster")
+		h.Config.Mode.Store("cluster")
 		h.Config.BotstrapKeyChanged(params.Data.BootstrapKey)
 	}
 
@@ -67,10 +67,10 @@ func (h *GetClusterHandlerImpl) Handle(params discovery.GetClusterParams, princi
 		Description: "",
 	}
 	settings := &models.ClusterSettings{
-		BootstrapKey: h.Config.Cluster.BootstrapKey.Load(),
+		BootstrapKey: h.Config.BootstrapKey.Load(),
 		Cluster:      clusterSettings,
-		Mode:         h.Config.Cluster.Mode.Load(),
-		Status:       h.Config.Cluster.Status.Load(),
+		Mode:         h.Config.Mode.Load(),
+		Status:       h.Config.Status.Load(),
 	}
 	return discovery.NewGetClusterOK().WithPayload(settings)
 }
