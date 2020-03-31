@@ -7192,6 +7192,7 @@ func init() {
         },
         "http-use-htx": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "enum": [
             "enabled",
             "disabled"
@@ -7297,6 +7298,9 @@ func init() {
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "stats_options": {
+          "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
           "type": "object",
@@ -8061,6 +8065,9 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "stats_options": {
+          "$ref": "#/definitions/stats_options"
+        },
         "tcplog": {
           "type": "boolean",
           "x-display-name": "TCP Log"
@@ -8449,6 +8456,9 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "stats_options": {
+          "$ref": "#/definitions/stats_options"
         },
         "tcplog": {
           "type": "boolean",
@@ -10826,22 +10836,28 @@ func init() {
           "minimum": 1232
         },
         "hold_nx": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_obsolete": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_other": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_refused": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_valid": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "name": {
           "type": "string",
@@ -10856,10 +10872,12 @@ func init() {
           "minimum": 1
         },
         "timeout_resolve": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "timeout_retry": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         }
       }
     },
@@ -11428,6 +11446,45 @@ func init() {
         "$ref": "#/definitions/site"
       }
     },
+    "stats_options": {
+      "type": "object",
+      "properties": {
+        "stats_enable": {
+          "type": "boolean",
+          "x-display-name": "Stats Enable"
+        },
+        "stats_hide_version": {
+          "type": "boolean",
+          "x-display-name": "Stats Hide Version"
+        },
+        "stats_maxconn": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stats_refresh_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "stats_show_desc": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "stats_show_legends": {
+          "type": "boolean",
+          "x-display-name": "Stats Show Legends"
+        },
+        "stats_show_node_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "stats_uri_prefix": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      }
+    },
     "stick_rule": {
       "description": "Define a pattern used to create an entry in a stickiness table or matching condition or associate a user to a server.",
       "type": "object",
@@ -11700,7 +11757,26 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
-            "reject"
+            "capture",
+            "do-resolve",
+            "expect-netscaler-cip",
+            "expect-proxy",
+            "reject",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "send-spoe-group",
+            "set-dst-port",
+            "set-dst",
+            "set-priority",
+            "set-src",
+            "set-var",
+            "silent-drop",
+            "track-sc0",
+            "track-sc1",
+            "track-sc2",
+            "unset-var",
+            "use-service"
           ],
           "x-dependency": {
             "type": {
@@ -11713,6 +11789,41 @@ func init() {
             }
           },
           "x-nullable": false
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "capture"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Capture Length"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "capture"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Capture Sample"
         },
         "cond": {
           "type": "string",
@@ -11753,9 +11864,188 @@ func init() {
             "property": "acl_name"
           }
         },
+        "expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "do-resolve",
+                "set-var",
+                "set-src",
+                "set-priority",
+                "set-dst",
+                "set-dst-port"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "gpt_value": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Sticky counter value"
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "priority_type": {
+          "type": "string",
+          "enum": [
+            "class",
+            "offset"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-priority"
+            },
+            "type": {
+              "value": [
+                "content"
+              ]
+            }
+          }
+        },
+        "resolve_protocol": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": false,
+              "value": "do-resolve"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Protocol"
+        },
+        "resolve_resolvers": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "do-resolve"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Resolvers"
+        },
+        "resolve_var": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "do-resolve"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Variable name"
+        },
+        "sc_inc_id": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Sticky counter ID"
+        },
+        "service_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "use-service"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Service name"
+        },
+        "spoe_engine_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Engine name"
+        },
+        "spoe_group_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Group name"
         },
         "timeout": {
           "type": "integer",
@@ -11767,6 +12057,48 @@ func init() {
           },
           "x-nullable": true
         },
+        "track_key": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "track-sc0",
+                "track-sc1",
+                "track-sc2"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Sample expression rule"
+        },
+        "track_table": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": false,
+              "value": [
+                "track-sc0",
+                "track-sc1",
+                "track-sc2"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Optional table name"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -11776,6 +12108,46 @@ func init() {
             "session"
           ],
           "x-nullable": false
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Variable name"
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Variable scope"
         }
       },
       "additionalProperties": false,
@@ -22413,6 +22785,7 @@ func init() {
         },
         "http-use-htx": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "enum": [
             "enabled",
             "disabled"
@@ -22518,6 +22891,9 @@ func init() {
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "stats_options": {
+          "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
           "type": "object",
@@ -23282,6 +23658,9 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "stats_options": {
+          "$ref": "#/definitions/stats_options"
+        },
         "tcplog": {
           "type": "boolean",
           "x-display-name": "TCP Log"
@@ -23670,6 +24049,9 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "stats_options": {
+          "$ref": "#/definitions/stats_options"
         },
         "tcplog": {
           "type": "boolean",
@@ -26047,22 +26429,28 @@ func init() {
           "minimum": 1232
         },
         "hold_nx": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_obsolete": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_other": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_refused": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "hold_valid": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "name": {
           "type": "string",
@@ -26077,10 +26465,12 @@ func init() {
           "minimum": 1
         },
         "timeout_resolve": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         },
         "timeout_retry": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": false
         }
       }
     },
@@ -26650,6 +27040,45 @@ func init() {
         "$ref": "#/definitions/site"
       }
     },
+    "stats_options": {
+      "type": "object",
+      "properties": {
+        "stats_enable": {
+          "type": "boolean",
+          "x-display-name": "Stats Enable"
+        },
+        "stats_hide_version": {
+          "type": "boolean",
+          "x-display-name": "Stats Hide Version"
+        },
+        "stats_maxconn": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stats_refresh_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "stats_show_desc": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "stats_show_legends": {
+          "type": "boolean",
+          "x-display-name": "Stats Show Legends"
+        },
+        "stats_show_node_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "stats_uri_prefix": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      }
+    },
     "stick_rule": {
       "description": "Define a pattern used to create an entry in a stickiness table or matching condition or associate a user to a server.",
       "type": "object",
@@ -26922,7 +27351,26 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
-            "reject"
+            "capture",
+            "do-resolve",
+            "expect-netscaler-cip",
+            "expect-proxy",
+            "reject",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "send-spoe-group",
+            "set-dst-port",
+            "set-dst",
+            "set-priority",
+            "set-src",
+            "set-var",
+            "silent-drop",
+            "track-sc0",
+            "track-sc1",
+            "track-sc2",
+            "unset-var",
+            "use-service"
           ],
           "x-dependency": {
             "type": {
@@ -26935,6 +27383,41 @@ func init() {
             }
           },
           "x-nullable": false
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "capture"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Capture Length"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "capture"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Capture Sample"
         },
         "cond": {
           "type": "string",
@@ -26975,9 +27458,188 @@ func init() {
             "property": "acl_name"
           }
         },
+        "expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "do-resolve",
+                "set-var",
+                "set-src",
+                "set-priority",
+                "set-dst",
+                "set-dst-port"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "gpt_value": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Sticky counter value"
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "priority_type": {
+          "type": "string",
+          "enum": [
+            "class",
+            "offset"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-priority"
+            },
+            "type": {
+              "value": [
+                "content"
+              ]
+            }
+          }
+        },
+        "resolve_protocol": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": false,
+              "value": "do-resolve"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Protocol"
+        },
+        "resolve_resolvers": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "do-resolve"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Resolvers"
+        },
+        "resolve_var": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "do-resolve"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Variable name"
+        },
+        "sc_inc_id": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Sticky counter ID"
+        },
+        "service_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "use-service"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Service name"
+        },
+        "spoe_engine_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Engine name"
+        },
+        "spoe_group_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Group name"
         },
         "timeout": {
           "type": "integer",
@@ -26989,6 +27651,48 @@ func init() {
           },
           "x-nullable": true
         },
+        "track_key": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "track-sc0",
+                "track-sc1",
+                "track-sc2"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Sample expression rule"
+        },
+        "track_table": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": false,
+              "value": [
+                "track-sc0",
+                "track-sc1",
+                "track-sc2"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Optional table name"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -26998,6 +27702,46 @@ func init() {
             "session"
           ],
           "x-nullable": false
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Variable name"
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Variable scope"
         }
       },
       "additionalProperties": false,
