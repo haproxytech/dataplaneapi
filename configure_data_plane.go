@@ -96,6 +96,20 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
 	haproxyOptions := cfg.HAProxy
 
+	// Override options with env variables
+	if os.Getenv("HAPROXY_MWORKER") == "1" {
+		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
+		if misc.IsUnixSocketAddr(masterRuntime) {
+			haproxyOptions.MasterRuntime = masterRuntime
+		}
+	}
+	cfgFiles := os.Getenv("HAPROXY_CFGFILES")
+	if cfgFiles != "" {
+		cfg := strings.Split(cfgFiles, ";")
+		haproxyOptions.ConfigFile = cfg[0]
+	}
+	// end overriding options with env variables
+
 	configureLogging(cfg.Logging)
 
 	defer func() {
@@ -536,18 +550,6 @@ func serverShutdown() {
 }
 
 func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration) *client_native.HAProxyClient {
-	// Override options with env variables
-	if os.Getenv("HAPROXY_MWORKER") == "1" {
-		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
-		if misc.IsUnixSocketAddr(masterRuntime) {
-			haproxyOptions.MasterRuntime = masterRuntime
-		}
-	}
-	cfgFiles := os.Getenv("HAPROXY_CFGFILES")
-	if cfgFiles != "" {
-		cfg := strings.Split(cfgFiles, ";")
-		haproxyOptions.ConfigFile = cfg[0]
-	}
 	// Initialize HAProxy native client
 	confClient, err := configureConfigurationClient(haproxyOptions)
 	if err != nil {
