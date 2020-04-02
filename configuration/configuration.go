@@ -142,6 +142,10 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 		}
 	}
 	c.Cluster = cfgLoaded.Cluster
+	c.BootstrapKey.Store(cfgLoaded.BootstrapKey.Load())
+	c.Name.Store(cfgLoaded.Name.Load())
+	c.Mode.Store(cfgLoaded.Mode.Load())
+	c.Status.Store(cfgLoaded.Status.Load())
 
 	if c.Mode.Load() == "" {
 		c.Mode.Store("single")
