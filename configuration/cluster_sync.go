@@ -120,12 +120,12 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			log.Warning(err)
 			continue
 		}
-		err = ioutil.WriteFile("tls.key", []byte(key), 0644)
+		err = ioutil.WriteFile(c.cfg.Cluster.CertificateKeyPath.Load(), []byte(key), 0644)
 		if err != nil {
 			log.Warning(err)
 			continue
 		}
-		err = ioutil.WriteFile("csr.crt", []byte(csr), 0644)
+		err = ioutil.WriteFile(c.cfg.Cluster.CertificateCSR.Load(), []byte(csr), 0644)
 		if err != nil {
 			log.Warning(err)
 			continue
@@ -216,11 +216,10 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 	c.cfg.Status.Store(responseData.Status)
 	log.Infof("Cluster joined, status: %s", responseData.Status)
 	if responseData.Status == "active" {
-		err = ioutil.WriteFile("tls.crt", []byte(responseData.Certificate), 0644)
+		err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
 		if err != nil {
 			return err
 		}
-		c.cfg.Cluster.CertificatePath.Store("tls.crt")
 		c.cfg.Cluster.CertFetched.Store(true)
 		c.cfg.Notify.Reload.Notify()
 	}
@@ -287,12 +286,11 @@ func (c *ClusterSync) fetchCert() {
 			log.Warningf("Fetching certificate, status: %s", responseData.Status)
 
 			if responseData.Status == "active" {
-				err = ioutil.WriteFile("tls.crt", []byte(responseData.Certificate), 0644)
+				err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
 				if err != nil {
 					log.Warning(err.Error())
 					continue
 				}
-				c.cfg.Cluster.CertificatePath.Store("tls.crt")
 				c.cfg.Cluster.CertFetched.Store(true)
 				c.cfg.Notify.Reload.Notify()
 			}

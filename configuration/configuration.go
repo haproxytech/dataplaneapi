@@ -60,8 +60,9 @@ type ClusterConfiguration struct {
 	Port               AtomicString `yaml:"port"`
 	APIBasePath        AtomicString `yaml:"api_base_path"`
 	APINodesPath       AtomicString `yaml:"api_nodes_path"`
-	CertificatePath    AtomicString `yaml:"tls-certificate"`
-	CertificateKeyPath AtomicString `yaml:"tls-key"`
+	CertificatePath    AtomicString `yaml:"tls_certificate"`
+	CertificateKeyPath AtomicString `yaml:"tls_key"`
+	CertificateCSR     AtomicString `yaml:"tls_csr"`
 	CertFetched        AtomicBool   `yaml:"cert_fetched"`
 	Name               AtomicString `yaml:"name"`
 	Description        AtomicString `yaml:"description"`
@@ -155,6 +156,9 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 	}
 	if c.Cluster.CertificateKeyPath.Load() == "" {
 		c.Cluster.CertificateKeyPath.Store("tls.key")
+	}
+	if c.Cluster.CertificateCSR.Load() == "" {
+		c.Cluster.CertificateCSR.Store("csr.crt")
 	}
 
 	t := time.Now()
