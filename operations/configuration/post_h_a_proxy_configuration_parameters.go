@@ -41,12 +41,15 @@ func NewPostHAProxyConfigurationParams() PostHAProxyConfigurationParams {
 
 		forceReloadDefault = bool(false)
 		skipReloadDefault  = bool(false)
+		skipVersionDefault = bool(false)
 	)
 
 	return PostHAProxyConfigurationParams{
 		ForceReload: &forceReloadDefault,
 
 		SkipReload: &skipReloadDefault,
+
+		SkipVersion: &skipVersionDefault,
 	}
 }
 
@@ -78,6 +81,11 @@ type PostHAProxyConfigurationParams struct {
 	  Default: false
 	*/
 	SkipReload *bool
+	/*If set, no version check will be done and the pushed config will be enforced
+	  In: query
+	  Default: false
+	*/
+	SkipVersion *bool
 	/*Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.
 	  In: query
 	*/
@@ -122,6 +130,11 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 
 	qSkipReload, qhkSkipReload, _ := qs.GetOK("skip_reload")
 	if err := o.bindSkipReload(qSkipReload, qhkSkipReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qSkipVersion, qhkSkipVersion, _ := qs.GetOK("skip_version")
+	if err := o.bindSkipVersion(qSkipVersion, qhkSkipVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -196,6 +209,29 @@ func (o *PostHAProxyConfigurationParams) bindSkipReload(rawData []string, hasKey
 		return errors.InvalidType("skip_reload", "query", "bool", raw)
 	}
 	o.SkipReload = &value
+
+	return nil
+}
+
+// bindSkipVersion binds and validates parameter SkipVersion from query.
+func (o *PostHAProxyConfigurationParams) bindSkipVersion(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewPostHAProxyConfigurationParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("skip_version", "query", "bool", raw)
+	}
+	o.SkipVersion = &value
 
 	return nil
 }

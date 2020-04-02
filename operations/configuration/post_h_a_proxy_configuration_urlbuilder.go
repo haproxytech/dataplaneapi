@@ -32,6 +32,7 @@ import (
 type PostHAProxyConfigurationURL struct {
 	ForceReload *bool
 	SkipReload  *bool
+	SkipVersion *bool
 	Version     *int64
 
 	_basePath string
@@ -82,6 +83,14 @@ func (o *PostHAProxyConfigurationURL) Build() (*url.URL, error) {
 	}
 	if skipReload != "" {
 		qs.Set("skip_reload", skipReload)
+	}
+
+	var skipVersion string
+	if o.SkipVersion != nil {
+		skipVersion = swag.FormatBool(*o.SkipVersion)
+	}
+	if skipVersion != "" {
+		qs.Set("skip_version", skipVersion)
 	}
 
 	var version string

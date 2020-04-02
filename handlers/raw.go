@@ -65,13 +65,24 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 	if params.Version != nil {
 		v = *params.Version
 	}
-
-	err := h.Client.Configuration.PostRawConfiguration(&params.Data, v)
+	skipReload := false
+	if params.SkipReload != nil {
+		skipReload = *params.SkipReload
+	}
+	skipVersion := false
+	if params.SkipVersion != nil {
+		skipVersion = *params.SkipVersion
+	}
+	forceReload := false
+	if params.ForceReload != nil {
+		forceReload = *params.ForceReload
+	}
+	err := h.Client.Configuration.PostRawConfiguration(&params.Data, v, skipVersion)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
-	if *params.SkipReload {
+	if skipReload {
 		if params.XRuntimeActions != nil {
 			if err := executeRuntimeActions(*params.XRuntimeActions, h.Client); err != nil {
 				e := misc.HandleError(err)
@@ -80,7 +91,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		}
 		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(params.Data)
 	}
-	if *params.ForceReload {
+	if forceReload {
 		err := h.ReloadAgent.ForceReload()
 		if err != nil {
 			e := misc.HandleError(err)

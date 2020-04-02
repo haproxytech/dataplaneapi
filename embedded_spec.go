@@ -4243,6 +4243,13 @@ func init() {
           {
             "type": "boolean",
             "default": false,
+            "description": "If set, no version check will be done and the pushed config will be enforced",
+            "name": "skip_version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
             "description": "If set, no reload will be initiated and runtime actions from X-Runtime-Actions will be applied",
             "name": "skip_reload",
             "in": "query"
@@ -18706,6 +18713,13 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no version check will be done and the pushed config will be enforced",
+            "name": "skip_version",
+            "in": "query"
           },
           {
             "type": "boolean",
