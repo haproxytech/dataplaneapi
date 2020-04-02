@@ -84,7 +84,8 @@ type GetHaproxyEndpointsDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -99,8 +100,16 @@ func NewGetHaproxyEndpointsDefault(code int) *GetHaproxyEndpointsDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetHaproxyEndpointsDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

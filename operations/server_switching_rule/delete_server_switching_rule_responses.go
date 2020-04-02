@@ -109,7 +109,8 @@ swagger:response deleteServerSwitchingRuleNotFound
 type DeleteServerSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeleteServerSwitchingRuleNotFound struct {
 // NewDeleteServerSwitchingRuleNotFound creates DeleteServerSwitchingRuleNotFound with default headers values
 func NewDeleteServerSwitchingRuleNotFound() *DeleteServerSwitchingRuleNotFound {
 
-	return &DeleteServerSwitchingRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteServerSwitchingRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete server switching rule not found response
@@ -173,7 +183,8 @@ type DeleteServerSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeleteServerSwitchingRuleDefault(code int) *DeleteServerSwitchingRuleDef
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteServerSwitchingRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

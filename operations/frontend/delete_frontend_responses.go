@@ -109,7 +109,8 @@ swagger:response deleteFrontendNotFound
 type DeleteFrontendNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeleteFrontendNotFound struct {
 // NewDeleteFrontendNotFound creates DeleteFrontendNotFound with default headers values
 func NewDeleteFrontendNotFound() *DeleteFrontendNotFound {
 
-	return &DeleteFrontendNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteFrontendNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete frontend not found response
@@ -173,7 +183,8 @@ type DeleteFrontendDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeleteFrontendDefault(code int) *DeleteFrontendDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteFrontendDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

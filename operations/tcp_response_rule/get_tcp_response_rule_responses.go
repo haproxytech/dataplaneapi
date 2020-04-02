@@ -105,7 +105,8 @@ swagger:response getTcpResponseRuleNotFound
 type GetTCPResponseRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -117,7 +118,16 @@ type GetTCPResponseRuleNotFound struct {
 // NewGetTCPResponseRuleNotFound creates GetTCPResponseRuleNotFound with default headers values
 func NewGetTCPResponseRuleNotFound() *GetTCPResponseRuleNotFound {
 
-	return &GetTCPResponseRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetTCPResponseRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get Tcp response rule not found response
@@ -169,7 +179,8 @@ type GetTCPResponseRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -184,8 +195,16 @@ func NewGetTCPResponseRuleDefault(code int) *GetTCPResponseRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetTCPResponseRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

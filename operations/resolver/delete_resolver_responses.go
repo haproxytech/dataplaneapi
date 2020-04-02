@@ -109,7 +109,8 @@ swagger:response deleteResolverNotFound
 type DeleteResolverNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeleteResolverNotFound struct {
 // NewDeleteResolverNotFound creates DeleteResolverNotFound with default headers values
 func NewDeleteResolverNotFound() *DeleteResolverNotFound {
 
-	return &DeleteResolverNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteResolverNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete resolver not found response
@@ -173,7 +183,8 @@ type DeleteResolverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeleteResolverDefault(code int) *DeleteResolverDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteResolverDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

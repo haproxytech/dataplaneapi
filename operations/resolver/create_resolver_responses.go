@@ -149,7 +149,8 @@ swagger:response createResolverBadRequest
 type CreateResolverBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateResolverBadRequest struct {
 // NewCreateResolverBadRequest creates CreateResolverBadRequest with default headers values
 func NewCreateResolverBadRequest() *CreateResolverBadRequest {
 
-	return &CreateResolverBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateResolverBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create resolver bad request response
@@ -215,7 +225,8 @@ swagger:response createResolverConflict
 type CreateResolverConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateResolverConflict struct {
 // NewCreateResolverConflict creates CreateResolverConflict with default headers values
 func NewCreateResolverConflict() *CreateResolverConflict {
 
-	return &CreateResolverConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateResolverConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create resolver conflict response
@@ -279,7 +299,8 @@ type CreateResolverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateResolverDefault(code int) *CreateResolverDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateResolverDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

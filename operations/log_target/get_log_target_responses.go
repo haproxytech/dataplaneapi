@@ -105,7 +105,8 @@ swagger:response getLogTargetNotFound
 type GetLogTargetNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -117,7 +118,16 @@ type GetLogTargetNotFound struct {
 // NewGetLogTargetNotFound creates GetLogTargetNotFound with default headers values
 func NewGetLogTargetNotFound() *GetLogTargetNotFound {
 
-	return &GetLogTargetNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetLogTargetNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get log target not found response
@@ -169,7 +179,8 @@ type GetLogTargetDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -184,8 +195,16 @@ func NewGetLogTargetDefault(code int) *GetLogTargetDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetLogTargetDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

@@ -149,7 +149,8 @@ swagger:response createBackendBadRequest
 type CreateBackendBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateBackendBadRequest struct {
 // NewCreateBackendBadRequest creates CreateBackendBadRequest with default headers values
 func NewCreateBackendBadRequest() *CreateBackendBadRequest {
 
-	return &CreateBackendBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateBackendBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create backend bad request response
@@ -215,7 +225,8 @@ swagger:response createBackendConflict
 type CreateBackendConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateBackendConflict struct {
 // NewCreateBackendConflict creates CreateBackendConflict with default headers values
 func NewCreateBackendConflict() *CreateBackendConflict {
 
-	return &CreateBackendConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateBackendConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create backend conflict response
@@ -279,7 +299,8 @@ type CreateBackendDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateBackendDefault(code int) *CreateBackendDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateBackendDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

@@ -83,7 +83,8 @@ swagger:response replaceRuntimeServerBadRequest
 type ReplaceRuntimeServerBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -95,7 +96,16 @@ type ReplaceRuntimeServerBadRequest struct {
 // NewReplaceRuntimeServerBadRequest creates ReplaceRuntimeServerBadRequest with default headers values
 func NewReplaceRuntimeServerBadRequest() *ReplaceRuntimeServerBadRequest {
 
-	return &ReplaceRuntimeServerBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceRuntimeServerBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace runtime server bad request response
@@ -149,7 +159,8 @@ swagger:response replaceRuntimeServerNotFound
 type ReplaceRuntimeServerNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +172,16 @@ type ReplaceRuntimeServerNotFound struct {
 // NewReplaceRuntimeServerNotFound creates ReplaceRuntimeServerNotFound with default headers values
 func NewReplaceRuntimeServerNotFound() *ReplaceRuntimeServerNotFound {
 
-	return &ReplaceRuntimeServerNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceRuntimeServerNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace runtime server not found response
@@ -213,7 +233,8 @@ type ReplaceRuntimeServerDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -228,8 +249,16 @@ func NewReplaceRuntimeServerDefault(code int) *ReplaceRuntimeServerDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceRuntimeServerDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

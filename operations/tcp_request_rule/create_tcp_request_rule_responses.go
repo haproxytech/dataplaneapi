@@ -149,7 +149,8 @@ swagger:response createTcpRequestRuleBadRequest
 type CreateTCPRequestRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateTCPRequestRuleBadRequest struct {
 // NewCreateTCPRequestRuleBadRequest creates CreateTCPRequestRuleBadRequest with default headers values
 func NewCreateTCPRequestRuleBadRequest() *CreateTCPRequestRuleBadRequest {
 
-	return &CreateTCPRequestRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateTCPRequestRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Tcp request rule bad request response
@@ -215,7 +225,8 @@ swagger:response createTcpRequestRuleConflict
 type CreateTCPRequestRuleConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateTCPRequestRuleConflict struct {
 // NewCreateTCPRequestRuleConflict creates CreateTCPRequestRuleConflict with default headers values
 func NewCreateTCPRequestRuleConflict() *CreateTCPRequestRuleConflict {
 
-	return &CreateTCPRequestRuleConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateTCPRequestRuleConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Tcp request rule conflict response
@@ -279,7 +299,8 @@ type CreateTCPRequestRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateTCPRequestRuleDefault(code int) *CreateTCPRequestRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateTCPRequestRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

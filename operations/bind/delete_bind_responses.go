@@ -109,7 +109,8 @@ swagger:response deleteBindNotFound
 type DeleteBindNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeleteBindNotFound struct {
 // NewDeleteBindNotFound creates DeleteBindNotFound with default headers values
 func NewDeleteBindNotFound() *DeleteBindNotFound {
 
-	return &DeleteBindNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteBindNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete bind not found response
@@ -173,7 +183,8 @@ type DeleteBindDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeleteBindDefault(code int) *DeleteBindDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteBindDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

@@ -149,7 +149,8 @@ swagger:response replaceDefaultsBadRequest
 type ReplaceDefaultsBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceDefaultsBadRequest struct {
 // NewReplaceDefaultsBadRequest creates ReplaceDefaultsBadRequest with default headers values
 func NewReplaceDefaultsBadRequest() *ReplaceDefaultsBadRequest {
 
-	return &ReplaceDefaultsBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceDefaultsBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace defaults bad request response
@@ -213,7 +223,8 @@ type ReplaceDefaultsDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -228,8 +239,16 @@ func NewReplaceDefaultsDefault(code int) *ReplaceDefaultsDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceDefaultsDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

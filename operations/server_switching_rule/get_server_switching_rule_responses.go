@@ -105,7 +105,8 @@ swagger:response getServerSwitchingRuleNotFound
 type GetServerSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -117,7 +118,16 @@ type GetServerSwitchingRuleNotFound struct {
 // NewGetServerSwitchingRuleNotFound creates GetServerSwitchingRuleNotFound with default headers values
 func NewGetServerSwitchingRuleNotFound() *GetServerSwitchingRuleNotFound {
 
-	return &GetServerSwitchingRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetServerSwitchingRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get server switching rule not found response
@@ -169,7 +179,8 @@ type GetServerSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -184,8 +195,16 @@ func NewGetServerSwitchingRuleDefault(code int) *GetServerSwitchingRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetServerSwitchingRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

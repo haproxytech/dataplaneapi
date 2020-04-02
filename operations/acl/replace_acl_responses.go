@@ -149,7 +149,8 @@ swagger:response replaceAclBadRequest
 type ReplaceACLBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceACLBadRequest struct {
 // NewReplaceACLBadRequest creates ReplaceACLBadRequest with default headers values
 func NewReplaceACLBadRequest() *ReplaceACLBadRequest {
 
-	return &ReplaceACLBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceACLBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Acl bad request response
@@ -215,7 +225,8 @@ swagger:response replaceAclNotFound
 type ReplaceACLNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceACLNotFound struct {
 // NewReplaceACLNotFound creates ReplaceACLNotFound with default headers values
 func NewReplaceACLNotFound() *ReplaceACLNotFound {
 
-	return &ReplaceACLNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceACLNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Acl not found response
@@ -279,7 +299,8 @@ type ReplaceACLDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceACLDefault(code int) *ReplaceACLDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceACLDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

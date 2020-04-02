@@ -83,7 +83,8 @@ swagger:response postClusterBadRequest
 type PostClusterBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -95,7 +96,16 @@ type PostClusterBadRequest struct {
 // NewPostClusterBadRequest creates PostClusterBadRequest with default headers values
 func NewPostClusterBadRequest() *PostClusterBadRequest {
 
-	return &PostClusterBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &PostClusterBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post cluster bad request response
@@ -147,7 +157,8 @@ type PostClusterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -162,8 +173,16 @@ func NewPostClusterDefault(code int) *PostClusterDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &PostClusterDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

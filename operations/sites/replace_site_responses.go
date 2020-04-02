@@ -149,7 +149,8 @@ swagger:response replaceSiteBadRequest
 type ReplaceSiteBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceSiteBadRequest struct {
 // NewReplaceSiteBadRequest creates ReplaceSiteBadRequest with default headers values
 func NewReplaceSiteBadRequest() *ReplaceSiteBadRequest {
 
-	return &ReplaceSiteBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceSiteBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace site bad request response
@@ -215,7 +225,8 @@ swagger:response replaceSiteNotFound
 type ReplaceSiteNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceSiteNotFound struct {
 // NewReplaceSiteNotFound creates ReplaceSiteNotFound with default headers values
 func NewReplaceSiteNotFound() *ReplaceSiteNotFound {
 
-	return &ReplaceSiteNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceSiteNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace site not found response
@@ -279,7 +299,8 @@ type ReplaceSiteDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceSiteDefault(code int) *ReplaceSiteDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceSiteDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

@@ -83,7 +83,8 @@ swagger:response getReloadNotFound
 type GetReloadNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -95,7 +96,16 @@ type GetReloadNotFound struct {
 // NewGetReloadNotFound creates GetReloadNotFound with default headers values
 func NewGetReloadNotFound() *GetReloadNotFound {
 
-	return &GetReloadNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetReloadNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get reload not found response
@@ -147,7 +157,8 @@ type GetReloadDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -162,8 +173,16 @@ func NewGetReloadDefault(code int) *GetReloadDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetReloadDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

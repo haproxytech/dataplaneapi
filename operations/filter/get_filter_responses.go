@@ -105,7 +105,8 @@ swagger:response getFilterNotFound
 type GetFilterNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -117,7 +118,16 @@ type GetFilterNotFound struct {
 // NewGetFilterNotFound creates GetFilterNotFound with default headers values
 func NewGetFilterNotFound() *GetFilterNotFound {
 
-	return &GetFilterNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetFilterNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get filter not found response
@@ -169,7 +179,8 @@ type GetFilterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -184,8 +195,16 @@ func NewGetFilterDefault(code int) *GetFilterDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetFilterDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

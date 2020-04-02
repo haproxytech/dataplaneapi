@@ -149,7 +149,8 @@ swagger:response createServerSwitchingRuleBadRequest
 type CreateServerSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateServerSwitchingRuleBadRequest struct {
 // NewCreateServerSwitchingRuleBadRequest creates CreateServerSwitchingRuleBadRequest with default headers values
 func NewCreateServerSwitchingRuleBadRequest() *CreateServerSwitchingRuleBadRequest {
 
-	return &CreateServerSwitchingRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateServerSwitchingRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create server switching rule bad request response
@@ -215,7 +225,8 @@ swagger:response createServerSwitchingRuleConflict
 type CreateServerSwitchingRuleConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateServerSwitchingRuleConflict struct {
 // NewCreateServerSwitchingRuleConflict creates CreateServerSwitchingRuleConflict with default headers values
 func NewCreateServerSwitchingRuleConflict() *CreateServerSwitchingRuleConflict {
 
-	return &CreateServerSwitchingRuleConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateServerSwitchingRuleConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create server switching rule conflict response
@@ -279,7 +299,8 @@ type CreateServerSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateServerSwitchingRuleDefault(code int) *CreateServerSwitchingRuleDef
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateServerSwitchingRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

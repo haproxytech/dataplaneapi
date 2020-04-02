@@ -149,7 +149,8 @@ swagger:response replaceTcpResponseRuleBadRequest
 type ReplaceTCPResponseRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceTCPResponseRuleBadRequest struct {
 // NewReplaceTCPResponseRuleBadRequest creates ReplaceTCPResponseRuleBadRequest with default headers values
 func NewReplaceTCPResponseRuleBadRequest() *ReplaceTCPResponseRuleBadRequest {
 
-	return &ReplaceTCPResponseRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceTCPResponseRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Tcp response rule bad request response
@@ -215,7 +225,8 @@ swagger:response replaceTcpResponseRuleNotFound
 type ReplaceTCPResponseRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceTCPResponseRuleNotFound struct {
 // NewReplaceTCPResponseRuleNotFound creates ReplaceTCPResponseRuleNotFound with default headers values
 func NewReplaceTCPResponseRuleNotFound() *ReplaceTCPResponseRuleNotFound {
 
-	return &ReplaceTCPResponseRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceTCPResponseRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Tcp response rule not found response
@@ -279,7 +299,8 @@ type ReplaceTCPResponseRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceTCPResponseRuleDefault(code int) *ReplaceTCPResponseRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceTCPResponseRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

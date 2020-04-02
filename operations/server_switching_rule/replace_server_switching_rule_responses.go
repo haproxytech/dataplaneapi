@@ -149,7 +149,8 @@ swagger:response replaceServerSwitchingRuleBadRequest
 type ReplaceServerSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceServerSwitchingRuleBadRequest struct {
 // NewReplaceServerSwitchingRuleBadRequest creates ReplaceServerSwitchingRuleBadRequest with default headers values
 func NewReplaceServerSwitchingRuleBadRequest() *ReplaceServerSwitchingRuleBadRequest {
 
-	return &ReplaceServerSwitchingRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceServerSwitchingRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server switching rule bad request response
@@ -215,7 +225,8 @@ swagger:response replaceServerSwitchingRuleNotFound
 type ReplaceServerSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceServerSwitchingRuleNotFound struct {
 // NewReplaceServerSwitchingRuleNotFound creates ReplaceServerSwitchingRuleNotFound with default headers values
 func NewReplaceServerSwitchingRuleNotFound() *ReplaceServerSwitchingRuleNotFound {
 
-	return &ReplaceServerSwitchingRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceServerSwitchingRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server switching rule not found response
@@ -279,7 +299,8 @@ type ReplaceServerSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceServerSwitchingRuleDefault(code int) *ReplaceServerSwitchingRuleD
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceServerSwitchingRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

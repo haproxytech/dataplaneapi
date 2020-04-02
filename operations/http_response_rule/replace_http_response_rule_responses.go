@@ -149,7 +149,8 @@ swagger:response replaceHttpResponseRuleBadRequest
 type ReplaceHTTPResponseRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceHTTPResponseRuleBadRequest struct {
 // NewReplaceHTTPResponseRuleBadRequest creates ReplaceHTTPResponseRuleBadRequest with default headers values
 func NewReplaceHTTPResponseRuleBadRequest() *ReplaceHTTPResponseRuleBadRequest {
 
-	return &ReplaceHTTPResponseRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceHTTPResponseRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Http response rule bad request response
@@ -215,7 +225,8 @@ swagger:response replaceHttpResponseRuleNotFound
 type ReplaceHTTPResponseRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceHTTPResponseRuleNotFound struct {
 // NewReplaceHTTPResponseRuleNotFound creates ReplaceHTTPResponseRuleNotFound with default headers values
 func NewReplaceHTTPResponseRuleNotFound() *ReplaceHTTPResponseRuleNotFound {
 
-	return &ReplaceHTTPResponseRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceHTTPResponseRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Http response rule not found response
@@ -279,7 +299,8 @@ type ReplaceHTTPResponseRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceHTTPResponseRuleDefault(code int) *ReplaceHTTPResponseRuleDefault
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceHTTPResponseRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

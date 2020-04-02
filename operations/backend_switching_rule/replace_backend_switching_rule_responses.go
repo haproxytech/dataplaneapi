@@ -149,7 +149,8 @@ swagger:response replaceBackendSwitchingRuleBadRequest
 type ReplaceBackendSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceBackendSwitchingRuleBadRequest struct {
 // NewReplaceBackendSwitchingRuleBadRequest creates ReplaceBackendSwitchingRuleBadRequest with default headers values
 func NewReplaceBackendSwitchingRuleBadRequest() *ReplaceBackendSwitchingRuleBadRequest {
 
-	return &ReplaceBackendSwitchingRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceBackendSwitchingRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace backend switching rule bad request response
@@ -215,7 +225,8 @@ swagger:response replaceBackendSwitchingRuleNotFound
 type ReplaceBackendSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceBackendSwitchingRuleNotFound struct {
 // NewReplaceBackendSwitchingRuleNotFound creates ReplaceBackendSwitchingRuleNotFound with default headers values
 func NewReplaceBackendSwitchingRuleNotFound() *ReplaceBackendSwitchingRuleNotFound {
 
-	return &ReplaceBackendSwitchingRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceBackendSwitchingRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace backend switching rule not found response
@@ -279,7 +299,8 @@ type ReplaceBackendSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceBackendSwitchingRuleDefault(code int) *ReplaceBackendSwitchingRul
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceBackendSwitchingRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

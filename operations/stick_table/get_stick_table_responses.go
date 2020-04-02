@@ -83,7 +83,8 @@ swagger:response getStickTableNotFound
 type GetStickTableNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -95,7 +96,16 @@ type GetStickTableNotFound struct {
 // NewGetStickTableNotFound creates GetStickTableNotFound with default headers values
 func NewGetStickTableNotFound() *GetStickTableNotFound {
 
-	return &GetStickTableNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetStickTableNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get stick table not found response
@@ -147,7 +157,8 @@ type GetStickTableDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -162,8 +173,16 @@ func NewGetStickTableDefault(code int) *GetStickTableDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetStickTableDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

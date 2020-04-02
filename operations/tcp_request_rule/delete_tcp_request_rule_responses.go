@@ -109,7 +109,8 @@ swagger:response deleteTcpRequestRuleNotFound
 type DeleteTCPRequestRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeleteTCPRequestRuleNotFound struct {
 // NewDeleteTCPRequestRuleNotFound creates DeleteTCPRequestRuleNotFound with default headers values
 func NewDeleteTCPRequestRuleNotFound() *DeleteTCPRequestRuleNotFound {
 
-	return &DeleteTCPRequestRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteTCPRequestRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete Tcp request rule not found response
@@ -173,7 +183,8 @@ type DeleteTCPRequestRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeleteTCPRequestRuleDefault(code int) *DeleteTCPRequestRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteTCPRequestRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

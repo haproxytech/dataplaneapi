@@ -109,7 +109,8 @@ swagger:response deleteLogTargetNotFound
 type DeleteLogTargetNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeleteLogTargetNotFound struct {
 // NewDeleteLogTargetNotFound creates DeleteLogTargetNotFound with default headers values
 func NewDeleteLogTargetNotFound() *DeleteLogTargetNotFound {
 
-	return &DeleteLogTargetNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteLogTargetNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete log target not found response
@@ -173,7 +183,8 @@ type DeleteLogTargetDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeleteLogTargetDefault(code int) *DeleteLogTargetDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteLogTargetDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

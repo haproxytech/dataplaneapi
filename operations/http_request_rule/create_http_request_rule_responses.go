@@ -149,7 +149,8 @@ swagger:response createHttpRequestRuleBadRequest
 type CreateHTTPRequestRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateHTTPRequestRuleBadRequest struct {
 // NewCreateHTTPRequestRuleBadRequest creates CreateHTTPRequestRuleBadRequest with default headers values
 func NewCreateHTTPRequestRuleBadRequest() *CreateHTTPRequestRuleBadRequest {
 
-	return &CreateHTTPRequestRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateHTTPRequestRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Http request rule bad request response
@@ -215,7 +225,8 @@ swagger:response createHttpRequestRuleConflict
 type CreateHTTPRequestRuleConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateHTTPRequestRuleConflict struct {
 // NewCreateHTTPRequestRuleConflict creates CreateHTTPRequestRuleConflict with default headers values
 func NewCreateHTTPRequestRuleConflict() *CreateHTTPRequestRuleConflict {
 
-	return &CreateHTTPRequestRuleConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateHTTPRequestRuleConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Http request rule conflict response
@@ -279,7 +299,8 @@ type CreateHTTPRequestRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateHTTPRequestRuleDefault(code int) *CreateHTTPRequestRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateHTTPRequestRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

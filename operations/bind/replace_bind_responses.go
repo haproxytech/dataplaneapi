@@ -149,7 +149,8 @@ swagger:response replaceBindBadRequest
 type ReplaceBindBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceBindBadRequest struct {
 // NewReplaceBindBadRequest creates ReplaceBindBadRequest with default headers values
 func NewReplaceBindBadRequest() *ReplaceBindBadRequest {
 
-	return &ReplaceBindBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceBindBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace bind bad request response
@@ -215,7 +225,8 @@ swagger:response replaceBindNotFound
 type ReplaceBindNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceBindNotFound struct {
 // NewReplaceBindNotFound creates ReplaceBindNotFound with default headers values
 func NewReplaceBindNotFound() *ReplaceBindNotFound {
 
-	return &ReplaceBindNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceBindNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace bind not found response
@@ -279,7 +299,8 @@ type ReplaceBindDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceBindDefault(code int) *ReplaceBindDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceBindDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

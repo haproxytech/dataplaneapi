@@ -149,7 +149,8 @@ swagger:response replaceStickRuleBadRequest
 type ReplaceStickRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceStickRuleBadRequest struct {
 // NewReplaceStickRuleBadRequest creates ReplaceStickRuleBadRequest with default headers values
 func NewReplaceStickRuleBadRequest() *ReplaceStickRuleBadRequest {
 
-	return &ReplaceStickRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceStickRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace stick rule bad request response
@@ -215,7 +225,8 @@ swagger:response replaceStickRuleNotFound
 type ReplaceStickRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceStickRuleNotFound struct {
 // NewReplaceStickRuleNotFound creates ReplaceStickRuleNotFound with default headers values
 func NewReplaceStickRuleNotFound() *ReplaceStickRuleNotFound {
 
-	return &ReplaceStickRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceStickRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace stick rule not found response
@@ -279,7 +299,8 @@ type ReplaceStickRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceStickRuleDefault(code int) *ReplaceStickRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceStickRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

@@ -149,7 +149,8 @@ swagger:response replaceBackendBadRequest
 type ReplaceBackendBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceBackendBadRequest struct {
 // NewReplaceBackendBadRequest creates ReplaceBackendBadRequest with default headers values
 func NewReplaceBackendBadRequest() *ReplaceBackendBadRequest {
 
-	return &ReplaceBackendBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceBackendBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace backend bad request response
@@ -215,7 +225,8 @@ swagger:response replaceBackendNotFound
 type ReplaceBackendNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceBackendNotFound struct {
 // NewReplaceBackendNotFound creates ReplaceBackendNotFound with default headers values
 func NewReplaceBackendNotFound() *ReplaceBackendNotFound {
 
-	return &ReplaceBackendNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceBackendNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace backend not found response
@@ -279,7 +299,8 @@ type ReplaceBackendDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceBackendDefault(code int) *ReplaceBackendDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceBackendDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

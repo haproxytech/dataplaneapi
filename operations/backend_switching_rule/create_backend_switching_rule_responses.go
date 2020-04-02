@@ -149,7 +149,8 @@ swagger:response createBackendSwitchingRuleBadRequest
 type CreateBackendSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateBackendSwitchingRuleBadRequest struct {
 // NewCreateBackendSwitchingRuleBadRequest creates CreateBackendSwitchingRuleBadRequest with default headers values
 func NewCreateBackendSwitchingRuleBadRequest() *CreateBackendSwitchingRuleBadRequest {
 
-	return &CreateBackendSwitchingRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateBackendSwitchingRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create backend switching rule bad request response
@@ -215,7 +225,8 @@ swagger:response createBackendSwitchingRuleConflict
 type CreateBackendSwitchingRuleConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateBackendSwitchingRuleConflict struct {
 // NewCreateBackendSwitchingRuleConflict creates CreateBackendSwitchingRuleConflict with default headers values
 func NewCreateBackendSwitchingRuleConflict() *CreateBackendSwitchingRuleConflict {
 
-	return &CreateBackendSwitchingRuleConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateBackendSwitchingRuleConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create backend switching rule conflict response
@@ -279,7 +299,8 @@ type CreateBackendSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateBackendSwitchingRuleDefault(code int) *CreateBackendSwitchingRuleD
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateBackendSwitchingRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

@@ -149,7 +149,8 @@ swagger:response commitTransactionBadRequest
 type CommitTransactionBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CommitTransactionBadRequest struct {
 // NewCommitTransactionBadRequest creates CommitTransactionBadRequest with default headers values
 func NewCommitTransactionBadRequest() *CommitTransactionBadRequest {
 
-	return &CommitTransactionBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CommitTransactionBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit transaction bad request response
@@ -215,7 +225,8 @@ swagger:response commitTransactionNotFound
 type CommitTransactionNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CommitTransactionNotFound struct {
 // NewCommitTransactionNotFound creates CommitTransactionNotFound with default headers values
 func NewCommitTransactionNotFound() *CommitTransactionNotFound {
 
-	return &CommitTransactionNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CommitTransactionNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit transaction not found response
@@ -279,7 +299,8 @@ type CommitTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCommitTransactionDefault(code int) *CommitTransactionDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CommitTransactionDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

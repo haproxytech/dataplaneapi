@@ -149,7 +149,8 @@ swagger:response replaceTcpRequestRuleBadRequest
 type ReplaceTCPRequestRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceTCPRequestRuleBadRequest struct {
 // NewReplaceTCPRequestRuleBadRequest creates ReplaceTCPRequestRuleBadRequest with default headers values
 func NewReplaceTCPRequestRuleBadRequest() *ReplaceTCPRequestRuleBadRequest {
 
-	return &ReplaceTCPRequestRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceTCPRequestRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Tcp request rule bad request response
@@ -215,7 +225,8 @@ swagger:response replaceTcpRequestRuleNotFound
 type ReplaceTCPRequestRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceTCPRequestRuleNotFound struct {
 // NewReplaceTCPRequestRuleNotFound creates ReplaceTCPRequestRuleNotFound with default headers values
 func NewReplaceTCPRequestRuleNotFound() *ReplaceTCPRequestRuleNotFound {
 
-	return &ReplaceTCPRequestRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceTCPRequestRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Tcp request rule not found response
@@ -279,7 +299,8 @@ type ReplaceTCPRequestRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceTCPRequestRuleDefault(code int) *ReplaceTCPRequestRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceTCPRequestRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

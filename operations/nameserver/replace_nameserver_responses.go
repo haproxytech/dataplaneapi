@@ -149,7 +149,8 @@ swagger:response replaceNameserverBadRequest
 type ReplaceNameserverBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceNameserverBadRequest struct {
 // NewReplaceNameserverBadRequest creates ReplaceNameserverBadRequest with default headers values
 func NewReplaceNameserverBadRequest() *ReplaceNameserverBadRequest {
 
-	return &ReplaceNameserverBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceNameserverBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace nameserver bad request response
@@ -215,7 +225,8 @@ swagger:response replaceNameserverNotFound
 type ReplaceNameserverNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceNameserverNotFound struct {
 // NewReplaceNameserverNotFound creates ReplaceNameserverNotFound with default headers values
 func NewReplaceNameserverNotFound() *ReplaceNameserverNotFound {
 
-	return &ReplaceNameserverNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceNameserverNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace nameserver not found response
@@ -279,7 +299,8 @@ type ReplaceNameserverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceNameserverDefault(code int) *ReplaceNameserverDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceNameserverDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

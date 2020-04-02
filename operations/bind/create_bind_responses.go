@@ -149,7 +149,8 @@ swagger:response createBindBadRequest
 type CreateBindBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateBindBadRequest struct {
 // NewCreateBindBadRequest creates CreateBindBadRequest with default headers values
 func NewCreateBindBadRequest() *CreateBindBadRequest {
 
-	return &CreateBindBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateBindBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create bind bad request response
@@ -215,7 +225,8 @@ swagger:response createBindConflict
 type CreateBindConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateBindConflict struct {
 // NewCreateBindConflict creates CreateBindConflict with default headers values
 func NewCreateBindConflict() *CreateBindConflict {
 
-	return &CreateBindConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateBindConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create bind conflict response
@@ -279,7 +299,8 @@ type CreateBindDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateBindDefault(code int) *CreateBindDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateBindDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

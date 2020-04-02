@@ -103,7 +103,8 @@ type GetServerSwitchingRulesDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -118,8 +119,16 @@ func NewGetServerSwitchingRulesDefault(code int) *GetServerSwitchingRulesDefault
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetServerSwitchingRulesDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

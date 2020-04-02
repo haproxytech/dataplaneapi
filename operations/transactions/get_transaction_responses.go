@@ -83,7 +83,8 @@ swagger:response getTransactionNotFound
 type GetTransactionNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -95,7 +96,16 @@ type GetTransactionNotFound struct {
 // NewGetTransactionNotFound creates GetTransactionNotFound with default headers values
 func NewGetTransactionNotFound() *GetTransactionNotFound {
 
-	return &GetTransactionNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetTransactionNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get transaction not found response
@@ -147,7 +157,8 @@ type GetTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -162,8 +173,16 @@ func NewGetTransactionDefault(code int) *GetTransactionDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetTransactionDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

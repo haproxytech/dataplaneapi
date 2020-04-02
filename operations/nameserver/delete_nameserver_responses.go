@@ -109,7 +109,8 @@ swagger:response deleteNameserverNotFound
 type DeleteNameserverNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeleteNameserverNotFound struct {
 // NewDeleteNameserverNotFound creates DeleteNameserverNotFound with default headers values
 func NewDeleteNameserverNotFound() *DeleteNameserverNotFound {
 
-	return &DeleteNameserverNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteNameserverNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete nameserver not found response
@@ -173,7 +183,8 @@ type DeleteNameserverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeleteNameserverDefault(code int) *DeleteNameserverDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteNameserverDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

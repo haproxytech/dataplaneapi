@@ -149,7 +149,8 @@ swagger:response createServerBadRequest
 type CreateServerBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateServerBadRequest struct {
 // NewCreateServerBadRequest creates CreateServerBadRequest with default headers values
 func NewCreateServerBadRequest() *CreateServerBadRequest {
 
-	return &CreateServerBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateServerBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create server bad request response
@@ -215,7 +225,8 @@ swagger:response createServerConflict
 type CreateServerConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateServerConflict struct {
 // NewCreateServerConflict creates CreateServerConflict with default headers values
 func NewCreateServerConflict() *CreateServerConflict {
 
-	return &CreateServerConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateServerConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create server conflict response
@@ -279,7 +299,8 @@ type CreateServerDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateServerDefault(code int) *CreateServerDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateServerDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

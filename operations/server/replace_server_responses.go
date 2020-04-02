@@ -149,7 +149,8 @@ swagger:response replaceServerBadRequest
 type ReplaceServerBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceServerBadRequest struct {
 // NewReplaceServerBadRequest creates ReplaceServerBadRequest with default headers values
 func NewReplaceServerBadRequest() *ReplaceServerBadRequest {
 
-	return &ReplaceServerBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceServerBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server bad request response
@@ -215,7 +225,8 @@ swagger:response replaceServerNotFound
 type ReplaceServerNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceServerNotFound struct {
 // NewReplaceServerNotFound creates ReplaceServerNotFound with default headers values
 func NewReplaceServerNotFound() *ReplaceServerNotFound {
 
-	return &ReplaceServerNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceServerNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server not found response
@@ -279,7 +299,8 @@ type ReplaceServerDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceServerDefault(code int) *ReplaceServerDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceServerDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

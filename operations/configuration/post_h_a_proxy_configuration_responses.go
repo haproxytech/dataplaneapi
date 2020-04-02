@@ -145,7 +145,8 @@ swagger:response postHAProxyConfigurationBadRequest
 type PostHAProxyConfigurationBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -157,7 +158,16 @@ type PostHAProxyConfigurationBadRequest struct {
 // NewPostHAProxyConfigurationBadRequest creates PostHAProxyConfigurationBadRequest with default headers values
 func NewPostHAProxyConfigurationBadRequest() *PostHAProxyConfigurationBadRequest {
 
-	return &PostHAProxyConfigurationBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &PostHAProxyConfigurationBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post h a proxy configuration bad request response
@@ -209,7 +219,8 @@ type PostHAProxyConfigurationDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -224,8 +235,16 @@ func NewPostHAProxyConfigurationDefault(code int) *PostHAProxyConfigurationDefau
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &PostHAProxyConfigurationDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

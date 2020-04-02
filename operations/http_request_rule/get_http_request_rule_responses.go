@@ -105,7 +105,8 @@ swagger:response getHttpRequestRuleNotFound
 type GetHTTPRequestRuleNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -117,7 +118,16 @@ type GetHTTPRequestRuleNotFound struct {
 // NewGetHTTPRequestRuleNotFound creates GetHTTPRequestRuleNotFound with default headers values
 func NewGetHTTPRequestRuleNotFound() *GetHTTPRequestRuleNotFound {
 
-	return &GetHTTPRequestRuleNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetHTTPRequestRuleNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get Http request rule not found response
@@ -169,7 +179,8 @@ type GetHTTPRequestRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -184,8 +195,16 @@ func NewGetHTTPRequestRuleDefault(code int) *GetHTTPRequestRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetHTTPRequestRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

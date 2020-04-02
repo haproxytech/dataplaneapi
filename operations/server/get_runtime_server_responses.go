@@ -83,7 +83,8 @@ swagger:response getRuntimeServerNotFound
 type GetRuntimeServerNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -95,7 +96,16 @@ type GetRuntimeServerNotFound struct {
 // NewGetRuntimeServerNotFound creates GetRuntimeServerNotFound with default headers values
 func NewGetRuntimeServerNotFound() *GetRuntimeServerNotFound {
 
-	return &GetRuntimeServerNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetRuntimeServerNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get runtime server not found response
@@ -147,7 +157,8 @@ type GetRuntimeServerDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -162,8 +173,16 @@ func NewGetRuntimeServerDefault(code int) *GetRuntimeServerDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetRuntimeServerDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

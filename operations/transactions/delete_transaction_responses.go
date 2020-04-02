@@ -63,7 +63,8 @@ swagger:response deleteTransactionNotFound
 type DeleteTransactionNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -75,7 +76,16 @@ type DeleteTransactionNotFound struct {
 // NewDeleteTransactionNotFound creates DeleteTransactionNotFound with default headers values
 func NewDeleteTransactionNotFound() *DeleteTransactionNotFound {
 
-	return &DeleteTransactionNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeleteTransactionNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete transaction not found response
@@ -127,7 +137,8 @@ type DeleteTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -142,8 +153,16 @@ func NewDeleteTransactionDefault(code int) *DeleteTransactionDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeleteTransactionDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

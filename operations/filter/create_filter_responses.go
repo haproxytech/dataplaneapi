@@ -149,7 +149,8 @@ swagger:response createFilterBadRequest
 type CreateFilterBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateFilterBadRequest struct {
 // NewCreateFilterBadRequest creates CreateFilterBadRequest with default headers values
 func NewCreateFilterBadRequest() *CreateFilterBadRequest {
 
-	return &CreateFilterBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateFilterBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create filter bad request response
@@ -215,7 +225,8 @@ swagger:response createFilterConflict
 type CreateFilterConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateFilterConflict struct {
 // NewCreateFilterConflict creates CreateFilterConflict with default headers values
 func NewCreateFilterConflict() *CreateFilterConflict {
 
-	return &CreateFilterConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateFilterConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create filter conflict response
@@ -279,7 +299,8 @@ type CreateFilterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateFilterDefault(code int) *CreateFilterDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateFilterDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

@@ -149,7 +149,8 @@ swagger:response createPeerBadRequest
 type CreatePeerBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreatePeerBadRequest struct {
 // NewCreatePeerBadRequest creates CreatePeerBadRequest with default headers values
 func NewCreatePeerBadRequest() *CreatePeerBadRequest {
 
-	return &CreatePeerBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreatePeerBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create peer bad request response
@@ -215,7 +225,8 @@ swagger:response createPeerConflict
 type CreatePeerConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreatePeerConflict struct {
 // NewCreatePeerConflict creates CreatePeerConflict with default headers values
 func NewCreatePeerConflict() *CreatePeerConflict {
 
-	return &CreatePeerConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreatePeerConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create peer conflict response
@@ -279,7 +299,8 @@ type CreatePeerDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreatePeerDefault(code int) *CreatePeerDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreatePeerDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

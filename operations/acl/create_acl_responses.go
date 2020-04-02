@@ -149,7 +149,8 @@ swagger:response createAclBadRequest
 type CreateACLBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateACLBadRequest struct {
 // NewCreateACLBadRequest creates CreateACLBadRequest with default headers values
 func NewCreateACLBadRequest() *CreateACLBadRequest {
 
-	return &CreateACLBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateACLBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Acl bad request response
@@ -215,7 +225,8 @@ swagger:response createAclConflict
 type CreateACLConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateACLConflict struct {
 // NewCreateACLConflict creates CreateACLConflict with default headers values
 func NewCreateACLConflict() *CreateACLConflict {
 
-	return &CreateACLConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateACLConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Acl conflict response
@@ -279,7 +299,8 @@ type CreateACLDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateACLDefault(code int) *CreateACLDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateACLDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

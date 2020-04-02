@@ -149,7 +149,8 @@ swagger:response replaceFrontendBadRequest
 type ReplaceFrontendBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type ReplaceFrontendBadRequest struct {
 // NewReplaceFrontendBadRequest creates ReplaceFrontendBadRequest with default headers values
 func NewReplaceFrontendBadRequest() *ReplaceFrontendBadRequest {
 
-	return &ReplaceFrontendBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceFrontendBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace frontend bad request response
@@ -215,7 +225,8 @@ swagger:response replaceFrontendNotFound
 type ReplaceFrontendNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type ReplaceFrontendNotFound struct {
 // NewReplaceFrontendNotFound creates ReplaceFrontendNotFound with default headers values
 func NewReplaceFrontendNotFound() *ReplaceFrontendNotFound {
 
-	return &ReplaceFrontendNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &ReplaceFrontendNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace frontend not found response
@@ -279,7 +299,8 @@ type ReplaceFrontendDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewReplaceFrontendDefault(code int) *ReplaceFrontendDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &ReplaceFrontendDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

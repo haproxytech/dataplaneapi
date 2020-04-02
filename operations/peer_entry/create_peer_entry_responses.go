@@ -149,7 +149,8 @@ swagger:response createPeerEntryBadRequest
 type CreatePeerEntryBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreatePeerEntryBadRequest struct {
 // NewCreatePeerEntryBadRequest creates CreatePeerEntryBadRequest with default headers values
 func NewCreatePeerEntryBadRequest() *CreatePeerEntryBadRequest {
 
-	return &CreatePeerEntryBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreatePeerEntryBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create peer entry bad request response
@@ -215,7 +225,8 @@ swagger:response createPeerEntryConflict
 type CreatePeerEntryConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreatePeerEntryConflict struct {
 // NewCreatePeerEntryConflict creates CreatePeerEntryConflict with default headers values
 func NewCreatePeerEntryConflict() *CreatePeerEntryConflict {
 
-	return &CreatePeerEntryConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreatePeerEntryConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create peer entry conflict response
@@ -279,7 +299,8 @@ type CreatePeerEntryDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreatePeerEntryDefault(code int) *CreatePeerEntryDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreatePeerEntryDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

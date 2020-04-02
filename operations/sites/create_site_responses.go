@@ -149,7 +149,8 @@ swagger:response createSiteBadRequest
 type CreateSiteBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateSiteBadRequest struct {
 // NewCreateSiteBadRequest creates CreateSiteBadRequest with default headers values
 func NewCreateSiteBadRequest() *CreateSiteBadRequest {
 
-	return &CreateSiteBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateSiteBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create site bad request response
@@ -215,7 +225,8 @@ swagger:response createSiteConflict
 type CreateSiteConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateSiteConflict struct {
 // NewCreateSiteConflict creates CreateSiteConflict with default headers values
 func NewCreateSiteConflict() *CreateSiteConflict {
 
-	return &CreateSiteConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateSiteConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create site conflict response
@@ -279,7 +299,8 @@ type CreateSiteDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateSiteDefault(code int) *CreateSiteDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateSiteDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

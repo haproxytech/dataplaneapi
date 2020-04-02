@@ -149,7 +149,8 @@ swagger:response createHttpResponseRuleBadRequest
 type CreateHTTPResponseRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateHTTPResponseRuleBadRequest struct {
 // NewCreateHTTPResponseRuleBadRequest creates CreateHTTPResponseRuleBadRequest with default headers values
 func NewCreateHTTPResponseRuleBadRequest() *CreateHTTPResponseRuleBadRequest {
 
-	return &CreateHTTPResponseRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateHTTPResponseRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Http response rule bad request response
@@ -215,7 +225,8 @@ swagger:response createHttpResponseRuleConflict
 type CreateHTTPResponseRuleConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateHTTPResponseRuleConflict struct {
 // NewCreateHTTPResponseRuleConflict creates CreateHTTPResponseRuleConflict with default headers values
 func NewCreateHTTPResponseRuleConflict() *CreateHTTPResponseRuleConflict {
 
-	return &CreateHTTPResponseRuleConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateHTTPResponseRuleConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Http response rule conflict response
@@ -279,7 +299,8 @@ type CreateHTTPResponseRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateHTTPResponseRuleDefault(code int) *CreateHTTPResponseRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateHTTPResponseRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

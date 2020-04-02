@@ -105,7 +105,8 @@ swagger:response getPeerSectionNotFound
 type GetPeerSectionNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -117,7 +118,16 @@ type GetPeerSectionNotFound struct {
 // NewGetPeerSectionNotFound creates GetPeerSectionNotFound with default headers values
 func NewGetPeerSectionNotFound() *GetPeerSectionNotFound {
 
-	return &GetPeerSectionNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &GetPeerSectionNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get peer section not found response
@@ -169,7 +179,8 @@ type GetPeerSectionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -184,8 +195,16 @@ func NewGetPeerSectionDefault(code int) *GetPeerSectionDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &GetPeerSectionDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

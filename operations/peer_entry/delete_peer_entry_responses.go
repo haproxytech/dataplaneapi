@@ -109,7 +109,8 @@ swagger:response deletePeerEntryNotFound
 type DeletePeerEntryNotFound struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -121,7 +122,16 @@ type DeletePeerEntryNotFound struct {
 // NewDeletePeerEntryNotFound creates DeletePeerEntryNotFound with default headers values
 func NewDeletePeerEntryNotFound() *DeletePeerEntryNotFound {
 
-	return &DeletePeerEntryNotFound{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &DeletePeerEntryNotFound{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete peer entry not found response
@@ -173,7 +183,8 @@ type DeletePeerEntryDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -188,8 +199,16 @@ func NewDeletePeerEntryDefault(code int) *DeletePeerEntryDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &DeletePeerEntryDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

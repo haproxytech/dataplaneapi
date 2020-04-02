@@ -149,7 +149,8 @@ swagger:response createNameserverBadRequest
 type CreateNameserverBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateNameserverBadRequest struct {
 // NewCreateNameserverBadRequest creates CreateNameserverBadRequest with default headers values
 func NewCreateNameserverBadRequest() *CreateNameserverBadRequest {
 
-	return &CreateNameserverBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateNameserverBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create nameserver bad request response
@@ -215,7 +225,8 @@ swagger:response createNameserverConflict
 type CreateNameserverConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateNameserverConflict struct {
 // NewCreateNameserverConflict creates CreateNameserverConflict with default headers values
 func NewCreateNameserverConflict() *CreateNameserverConflict {
 
-	return &CreateNameserverConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateNameserverConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create nameserver conflict response
@@ -279,7 +299,8 @@ type CreateNameserverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateNameserverDefault(code int) *CreateNameserverDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateNameserverDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 

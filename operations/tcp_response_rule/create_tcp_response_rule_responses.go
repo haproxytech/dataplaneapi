@@ -149,7 +149,8 @@ swagger:response createTcpResponseRuleBadRequest
 type CreateTCPResponseRuleBadRequest struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -161,7 +162,16 @@ type CreateTCPResponseRuleBadRequest struct {
 // NewCreateTCPResponseRuleBadRequest creates CreateTCPResponseRuleBadRequest with default headers values
 func NewCreateTCPResponseRuleBadRequest() *CreateTCPResponseRuleBadRequest {
 
-	return &CreateTCPResponseRuleBadRequest{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateTCPResponseRuleBadRequest{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Tcp response rule bad request response
@@ -215,7 +225,8 @@ swagger:response createTcpResponseRuleConflict
 type CreateTCPResponseRuleConflict struct {
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -227,7 +238,16 @@ type CreateTCPResponseRuleConflict struct {
 // NewCreateTCPResponseRuleConflict creates CreateTCPResponseRuleConflict with default headers values
 func NewCreateTCPResponseRuleConflict() *CreateTCPResponseRuleConflict {
 
-	return &CreateTCPResponseRuleConflict{}
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CreateTCPResponseRuleConflict{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Tcp response rule conflict response
@@ -279,7 +299,8 @@ type CreateTCPResponseRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	 */
+	  Default: 0
+	*/
 	ConfigurationVersion int64 `json:"Configuration-Version"`
 
 	/*
@@ -294,8 +315,16 @@ func NewCreateTCPResponseRuleDefault(code int) *CreateTCPResponseRuleDefault {
 		code = 500
 	}
 
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
 	return &CreateTCPResponseRuleDefault{
 		_statusCode: code,
+
+		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
