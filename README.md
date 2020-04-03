@@ -66,6 +66,8 @@ HAProxy options:
   -n, --backups-number=                            Number of backup configuration files you want to keep, stored in the config dir with version number suffix (default: 0)
   -m, --master-runtime=                            Path to the master Runtime API socket
   -i, --show-system-info                           Show system info on info endpoint
+  -f=                                              Path to the dataplane configuration file
+      --userlist-file=                             Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file
 
 Logging options:
       --log-to=[stdout|file]                       Log target, can be stdout or file (default: stdout)

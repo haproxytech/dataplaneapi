@@ -18,9 +18,11 @@ package configuration
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
+
 	"math/rand"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/oklog/ulid"
 	"gopkg.in/yaml.v2"
@@ -40,8 +42,6 @@ type HAProxyConfiguration struct {
 	BackupsNumber   int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0"`
 	MasterRuntime   string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket"`
 	ShowSystemInfo  bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint"`
-	GitMode         bool   `short:"g" long:"git-mode" description:"Run dataplaneapi in git mode, without running the haproxy and ability to push to Git"`
-	GitSettingsFile string `long:"git-settings-file" description:"Path to the git settings file" default:"/etc/haproxy/git.settings"`
 	DataplaneConfig string `short:"f" description:"Path to the dataplane configuration file" default:"" yaml:"-"`
 	UserListFile    string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file"`
 }
