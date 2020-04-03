@@ -38,16 +38,36 @@ type GetClusterHandlerImpl struct {
 //Handle executing the request and returning a response
 func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
 	key := h.Config.BootstrapKey.Load()
-	if key != params.Data.BootstrapKey || true {
+	if params.Data.BootstrapKey != "" && key != params.Data.BootstrapKey {
 		h.Config.Mode.Store("cluster")
-		h.Config.BotstrapKeyChanged(params.Data.BootstrapKey)
+		h.Config.BootstrapKey.Store(params.Data.BootstrapKey)
+		h.Config.Cluster.Clear()
+		h.Config.Notify.BootstrapKeyChanged.Notify()
 	}
-
+	if params.Data.Mode == "single" && h.Config.Mode.Load() != params.Data.Mode {
+		h.Config.BootstrapKey.Store("")
+		h.Config.Mode.Store(params.Data.Mode)
+		h.Config.Status.Store("active")
+		h.Config.Cluster.Clear()
+		defer func() {
+			h.Config.Notify.Reload.Notify()
+		}()
+	}
 	err := h.Config.Save()
 	if err != nil {
-		return cluster.NewPostClusterDefault(500)
+		msg := err.Error()
+		code := int64(500)
+		return cluster.NewPostClusterDefault(500).WithPayload(&models.Error{
+			Code:    &code,
+			Message: &msg,
+		})
 	}
-	return cluster.NewPostClusterOK().WithPayload(params.Data)
+	result := models.ClusterSettings{
+		BootstrapKey: h.Config.BootstrapKey.Load(),
+		Mode:         h.Config.Mode.Load(),
+		Status:       h.Config.Status.Load(),
+	}
+	return cluster.NewPostClusterOK().WithPayload(&result)
 }
 
 //Handle executing the request and returning a response
@@ -59,12 +79,15 @@ func (h *GetClusterHandlerImpl) Handle(params discovery.GetClusterParams, princi
 		p = 0
 	}
 	port := int64(p)
-	clusterSettings := &models.ClusterSettingsCluster{
-		Address:     h.Config.Cluster.URL.Load(),
-		Port:        &port,
-		APIBasePath: h.Config.Cluster.APIBasePath.Load(),
-		Name:        h.Config.Cluster.Name.Load(),
-		Description: "",
+	var clusterSettings *models.ClusterSettingsCluster
+	if h.Config.Mode.Load() == "cluster" {
+		clusterSettings = &models.ClusterSettingsCluster{
+			Address:     h.Config.Cluster.URL.Load(),
+			Port:        &port,
+			APIBasePath: h.Config.Cluster.APIBasePath.Load(),
+			Name:        h.Config.Cluster.Name.Load(),
+			Description: h.Config.Cluster.Description.Load(),
+		}
 	}
 	settings := &models.ClusterSettings{
 		BootstrapKey: h.Config.BootstrapKey.Load(),

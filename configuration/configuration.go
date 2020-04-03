@@ -69,6 +69,18 @@ type ClusterConfiguration struct {
 	Description        AtomicString `yaml:"description"`
 }
 
+func (c *ClusterConfiguration) Clear() {
+	c.ID.Store("")
+	c.ActiveBootstrapKey.Store("")
+	c.Token.Store("")
+	c.Port.Store("")
+	c.APIBasePath.Store("")
+	c.APINodesPath.Store("")
+	c.CertFetched.Store(false)
+	c.Name.Store("")
+	c.Description.Store("")
+}
+
 type ServerConfiguration struct {
 	Host        string `yaml:"host"`
 	Port        int    `yaml:"port"`
