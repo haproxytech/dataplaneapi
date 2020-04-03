@@ -43,6 +43,7 @@ type HAProxyConfiguration struct {
 	GitMode         bool   `short:"g" long:"git-mode" description:"Run dataplaneapi in git mode, without running the haproxy and ability to push to Git"`
 	GitSettingsFile string `long:"git-settings-file" description:"Path to the git settings file" default:"/etc/haproxy/git.settings"`
 	DataplaneConfig string `short:"f" description:"Path to the dataplane configuration file" default:"" yaml:"-"`
+	UserListFile    string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file"`
 }
 
 type LoggingOptions struct {

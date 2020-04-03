@@ -30,11 +30,9 @@ import (
 	"strings"
 	"syscall"
 
+	parser "github.com/haproxytech/config-parser/v2"
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
-
-	parser "github.com/haproxytech/config-parser/v2"
-	"github.com/haproxytech/config-parser/v2/types"
 
 	log "github.com/sirupsen/logrus"
 
@@ -71,6 +69,7 @@ var Version string
 var BuildTime string
 
 var logFile *os.File
+var configuredUser dataplaneapi_config.User
 
 func configureFlags(api *operations.DataPlaneAPI) {
 	cfg := dataplaneapi_config.Get()
@@ -450,19 +449,9 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 }
 
 func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
-	cfg := dataplaneapi_config.Get()
-	haproxyOptions := cfg.HAProxy
-
-	data, err := cli.Configuration.Parser.Get(parser.UserList, haproxyOptions.Userlist, "user")
-	if err != nil {
-		return nil, fmt.Errorf("error reading userlist %v userlist in conf: %s", haproxyOptions.Userlist, err.Error())
-	}
-	users, ok := data.([]types.User)
-	if !ok {
-		return nil, fmt.Errorf("error reading users from %v userlist in conf", haproxyOptions.Userlist)
-	}
+	users := configuredUser.Get()
 	if len(users) == 0 {
-		return nil, fmt.Errorf("no users configured in %v userlist in conf", haproxyOptions.Userlist)
+		return nil, errors.New(401, "no configured users")
 	}
 
 	for _, u := range users {
@@ -558,10 +547,17 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 
 	runtimeClient := configureRuntimeClient(confClient, haproxyOptions)
 	client := &client_native.HAProxyClient{}
-	if err := client.Init(confClient, runtimeClient); err != nil {
+	if err = client.Init(confClient, runtimeClient); err != nil {
 		log.Fatalf("Error setting up native client: %v", err)
 	}
 
+	configuredUser = dataplaneapi_config.User{
+		Parser: &parser.Parser{},
+	}
+	err = configuredUser.Init(confClient)
+	if err != nil {
+		log.Fatalf("error initializing configuration user: %v", err)
+	}
 	return client
 }
 
@@ -579,6 +575,7 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 	if err != nil {
 		return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())
 	}
+
 	return confClient, nil
 }
 
