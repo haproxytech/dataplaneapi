@@ -44,6 +44,7 @@ type HAProxyConfiguration struct {
 	ShowSystemInfo  bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint"`
 	DataplaneConfig string `short:"f" description:"Path to the dataplane configuration file" default:"" yaml:"-"`
 	UserListFile    string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file"`
+	NodeIDFile      string `long:"fid" description:"Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster"`
 }
 
 type LoggingOptions struct {

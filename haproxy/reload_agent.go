@@ -34,6 +34,7 @@ import (
 type IReloadAgent interface {
 	Init(delay int, reloadCmd string, restartCmd string, configFile string, retention int) error
 	Reload() string
+	Restart() error
 	ForceReload() error
 	GetReloads() models.Reloads
 	GetReload(id string) *models.Reload
@@ -323,6 +324,10 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 		}
 	}
 	return nil
+}
+
+func (ra *ReloadAgent) Restart() error {
+	return ra.restartHAProxy()
 }
 
 func (rc *reloadCache) generateID() string {

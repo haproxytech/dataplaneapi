@@ -32,6 +32,7 @@ import (
 
 	client_native "github.com/haproxytech/client-native"
 	"github.com/haproxytech/config-parser/v2/types"
+	"github.com/haproxytech/dataplaneapi/haproxy"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -52,9 +53,10 @@ type Node struct {
 
 //ClusterSync fetches certificates for joining cluster
 type ClusterSync struct {
-	cfg       *Configuration
-	certFetch chan struct{}
-	cli       *client_native.HAProxyClient
+	cfg         *Configuration
+	certFetch   chan struct{}
+	cli         *client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClient) {
@@ -200,6 +202,62 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 	err = json.Unmarshal(body, &responseData)
 	if err != nil {
 		return err
+	}
+	if c.cfg.HAProxy.NodeIDFile != "" {
+		//write id to file
+		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0644)
+		if errFID != nil {
+			return errFID
+		}
+		version, errVersion := c.cli.Configuration.GetVersion("")
+		if errVersion != nil || version < 1 {
+			//silently fallback to 1
+			version = 1
+		}
+		t, err1 := c.cli.Configuration.StartTransaction(version)
+		if err1 != nil {
+			return err1
+		}
+		//write id to peers
+		_, peerSections, errorGet := c.cli.Configuration.GetPeerSections(t.ID)
+		if errorGet != nil {
+			return errorGet
+		}
+		peerFound := false
+		dataplaneID := c.cfg.Cluster.ID.Load()
+		if dataplaneID == "" {
+			dataplaneID = "localhost"
+		}
+		for _, section := range peerSections {
+			_, peerEntries, err1 := c.cli.Configuration.GetPeerEntries(section.Name, t.ID)
+			if err1 != nil {
+				return err1
+			}
+			for _, peer := range peerEntries {
+				if peer.Name == dataplaneID {
+					peerFound = true
+					peer.Name = responseData.ID
+					errEdit := c.cli.Configuration.EditPeerEntry(dataplaneID, section.Name, peer, t.ID, 0)
+					if errEdit != nil {
+						_ = c.cli.Configuration.DeleteTransaction(t.ID)
+						return err
+					}
+				}
+			}
+		}
+		if !peerFound {
+			_ = c.cli.Configuration.DeleteTransaction(t.ID)
+			return fmt.Errorf("peer [%s] not found in HAProxy config", dataplaneID)
+		}
+		_, err = c.cli.Configuration.CommitTransaction(t.ID)
+		if err != nil {
+			return err
+		}
+		//restart HAProxy
+		errRestart := c.ReloadAgent.Restart()
+		if errRestart != nil {
+			return errRestart
+		}
 	}
 	c.cfg.Cluster.ID.Store(responseData.ID)
 	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
