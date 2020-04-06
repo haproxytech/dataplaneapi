@@ -146,9 +146,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 
 	// Applies when the Authorization header is set with the Basic scheme
-	api.BasicAuthAuth = func(user string, pass string) (interface{}, error) {
-		return authenticateUser(user, pass)
-	}
+	api.BasicAuthAuth = authenticateUser
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 		uriSlice := strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)
