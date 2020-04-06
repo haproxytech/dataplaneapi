@@ -20,24 +20,34 @@ import (
 	"os"
 	"sync"
 
-	"github.com/haproxytech/client-native/configuration"
 	parser "github.com/haproxytech/config-parser/v2"
 	"github.com/haproxytech/config-parser/v2/common"
 	"github.com/haproxytech/config-parser/v2/types"
 	log "github.com/sirupsen/logrus"
 )
 
-type User struct {
-	mu     sync.Mutex
-	users  []types.User
-	Parser *parser.Parser
+var usersStore *Users
+
+type Users struct {
+	mu    sync.Mutex
+	users []types.User
 }
 
-func (u *User) Get() []types.User {
+func GetUsersStore() *Users {
+	if usersStore == nil {
+		usersStore = &Users{}
+		if err := usersStore.Init(); err != nil {
+			log.Fatalf("Error initiating users: %s", err.Error())
+		}
+	}
+	return usersStore
+}
+
+func (u *Users) GetUsers() []types.User {
 	return u.users
 }
 
-func (u *User) setUser(data common.ParserData, file string) error {
+func (u *Users) setUser(data common.ParserData, file string) error {
 	if data == nil {
 		return fmt.Errorf("no users configured in %s", file)
 	}
@@ -53,28 +63,29 @@ func (u *User) setUser(data common.ParserData, file string) error {
 	return nil
 }
 
-func (u *User) saveUser(userlist, file string, user common.ParserData) error {
-	if err := u.Parser.LoadData(file); err != nil {
+func (u *Users) saveUsers(userlist, file string, user common.ParserData) error {
+	p := &parser.Parser{}
+	if err := p.LoadData(file); err != nil {
 		return fmt.Errorf("cannot read %s, err: %s", file, err.Error())
 	}
-	err := u.Parser.SectionsCreate(parser.UserList, userlist)
+	err := p.SectionsCreate(parser.UserList, userlist)
 	if err != nil {
 		return fmt.Errorf("error creating section: %v", parser.UserList)
 	}
 
-	err = u.Parser.Set(parser.UserList, userlist, "user", user)
+	err = p.Set(parser.UserList, userlist, "user", user)
 	if err != nil {
 		return fmt.Errorf("error setting userlist %v", userlist)
 	}
 
-	err = u.Parser.Save(file)
+	err = p.Save(file)
 	if err != nil {
 		return fmt.Errorf("error setting userlist %v", userlist)
 	}
 	return nil
 }
 
-func (u *User) createUserFile(file string) error {
+func (u *Users) createUserFile(file string) error {
 	u.mu.Lock()
 	defer u.mu.Unlock()
 	f, err := os.Create(file)
@@ -85,48 +96,47 @@ func (u *User) createUserFile(file string) error {
 	return nil
 }
 
-func (u *User) Init(client *configuration.Client) error {
-	if u.Parser == nil {
-		return fmt.Errorf("parser not initialized")
-	}
-
+func (u *Users) Init() error {
 	cfg := Get()
-	opt := cfg.HAProxy
-
-	if opt.UserListFile != "" {
+	p := &parser.Parser{}
+	if cfg.HAProxy.UserListFile != "" {
 		//if userlist file doesn't exists
-		if _, err := os.Stat(opt.UserListFile); os.IsNotExist(err) {
+		if _, err := os.Stat(cfg.HAProxy.UserListFile); os.IsNotExist(err) {
 			//get user from HAProxy config file
-			data, err := client.Parser.Get(parser.UserList, opt.Userlist, "user")
-			if err != nil {
-				return fmt.Errorf("error reading userlist %v userlist in conf: %s", opt.Userlist, err.Error())
+			if err := p.LoadData(cfg.HAProxy.ConfigFile); err != nil {
+				return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.ConfigFile, err.Error())
 			}
-			err = u.createUserFile(opt.UserListFile)
+			data, err := p.Get(parser.UserList, cfg.HAProxy.Userlist, "user")
+			if err != nil {
+				return fmt.Errorf("error reading userlist %v userlist in conf: %s", cfg.HAProxy.ConfigFile, err.Error())
+			}
+			err = u.createUserFile(cfg.HAProxy.UserListFile)
 			if err != nil {
 				return err
 			}
-			err = u.saveUser(opt.Userlist, opt.UserListFile, data)
+			err = u.saveUsers(cfg.HAProxy.Userlist, cfg.HAProxy.UserListFile, data)
 			if err != nil {
 				return err
 			}
-			log.Infof("userlist saved to %s", opt.UserListFile)
-			return u.setUser(data, opt.UserListFile)
+			return u.setUser(data, cfg.HAProxy.UserListFile)
 		}
 		//if userlist file exists
-		if err := u.Parser.LoadData(opt.UserListFile); err != nil {
-			return fmt.Errorf("cannot read %s, err: %s", opt.UserListFile, err.Error())
+		if err := p.LoadData(cfg.HAProxy.UserListFile); err != nil {
+			return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.UserListFile, err.Error())
 		}
-		data, err := u.Parser.Get(parser.UserList, opt.Userlist, "user")
+		data, err := p.Get(parser.UserList, cfg.HAProxy.Userlist, "user")
 		if err != nil {
-			return err
+			return fmt.Errorf("no users configured in %v, error: %s", cfg.HAProxy.UserListFile, err.Error())
 		}
-		return u.setUser(data, opt.UserListFile)
+		return u.setUser(data, cfg.HAProxy.UserListFile)
 	}
-
 	//get user from HAProxy config
-	user, err := client.Parser.Get(parser.UserList, opt.Userlist, "user")
-	if err != nil {
-		return fmt.Errorf("no users configured in %v, error: %s", opt.ConfigFile, err.Error())
+	if err := p.LoadData(cfg.HAProxy.ConfigFile); err != nil {
+		return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.ConfigFile, err.Error())
 	}
-	return u.setUser(user, opt.ConfigFile)
+	user, err := p.Get(parser.UserList, cfg.HAProxy.Userlist, "user")
+	if err != nil {
+		return fmt.Errorf("no users configured in %v, error: %s", cfg.HAProxy.ConfigFile, err.Error())
+	}
+	return u.setUser(user, cfg.HAProxy.ConfigFile)
 }

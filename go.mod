@@ -14,7 +14,7 @@ require (
 	github.com/go-openapi/strfmt v0.19.3
 	github.com/go-openapi/swag v0.19.5
 	github.com/go-openapi/validate v0.19.3
-	github.com/haproxytech/client-native v1.2.7-0.20200403123524-f37f24263555
+	github.com/haproxytech/client-native v1.2.7-0.20200406122222-3b5b737ad7ce
 	github.com/haproxytech/config-parser/v2 v2.0.0-rc2.0.20200330144517-5cf21c7b3a77
 	github.com/haproxytech/models v1.2.5-0.20200331170001-c1f211881473
 	github.com/jessevdk/go-flags v1.4.0

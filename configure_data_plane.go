@@ -30,7 +30,6 @@ import (
 	"strings"
 	"syscall"
 
-	parser "github.com/haproxytech/config-parser/v2"
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 
@@ -69,7 +68,6 @@ var Version string
 var BuildTime string
 
 var logFile *os.File
-var configuredUser dataplaneapi_config.User
 
 func configureFlags(api *operations.DataPlaneAPI) {
 	cfg := dataplaneapi_config.Get()
@@ -94,7 +92,6 @@ func configureFlags(api *operations.DataPlaneAPI) {
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
 	haproxyOptions := cfg.HAProxy
-
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
@@ -135,10 +132,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	client := configureNativeClient(haproxyOptions)
 
+	users := dataplaneapi_config.GetUsersStore()
+
 	// Handle reload signals
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
-	go handleSignals(sigs, client, haproxyOptions)
+	go handleSignals(sigs, client, haproxyOptions, users)
 
 	// Initialize reload agent
 	ra := &haproxy.ReloadAgent{}
@@ -148,7 +147,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// Applies when the Authorization header is set with the Basic scheme
 	api.BasicAuthAuth = func(user string, pass string) (interface{}, error) {
-		return authenticateUser(user, pass, client)
+		return authenticateUser(user, pass)
 	}
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
@@ -448,8 +447,8 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	return (logViaLogrus(handleCORS(recovery(handler))))
 }
 
-func authenticateUser(user string, pass string, cli *client_native.HAProxyClient) (interface{}, error) {
-	users := configuredUser.Get()
+func authenticateUser(user string, pass string) (interface{}, error) {
+	users := dataplaneapi_config.GetUsersStore().GetUsers()
 	if len(users) == 0 {
 		return nil, errors.New(401, "no configured users")
 	}
@@ -551,10 +550,6 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 		log.Fatalf("Error setting up native client: %v", err)
 	}
 
-	configuredUser = dataplaneapi_config.User{
-		Parser: &parser.Parser{},
-	}
-	err = configuredUser.Init(confClient)
 	if err != nil {
 		log.Fatalf("error initializing configuration user: %v", err)
 	}
@@ -655,7 +650,7 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 	return nil
 }
 
-func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration) {
+func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	//nolint:gosimple
 	for {
 		select {
@@ -666,6 +661,9 @@ func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, hap
 			} else if sig == syscall.SIGUSR2 {
 				confClient, err := configureConfigurationClient(haproxyOptions)
 				if err != nil {
+					log.Fatalf(err.Error())
+				}
+				if err := users.Init(); err != nil {
 					log.Fatalf(err.Error())
 				}
 				log.Info("Rereading Configuration Files")

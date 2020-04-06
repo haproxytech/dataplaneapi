@@ -31,7 +31,6 @@ import (
 	"time"
 
 	client_native "github.com/haproxytech/client-native"
-	parser "github.com/haproxytech/config-parser/v2"
 	"github.com/haproxytech/config-parser/v2/types"
 	log "github.com/sirupsen/logrus"
 )
@@ -146,15 +145,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath string, csr, key string) error {
 	url = fmt.Sprintf("%s:%s%s/%s", url, port, basePath, nodesPath)
 	serverCfg := c.cfg.Server
-
-	data, err := c.cli.Configuration.Parser.Get(parser.UserList, c.cfg.HAProxy.Userlist, "user")
-	if err != nil {
-		return fmt.Errorf("error reading userlist %v userlist in conf: %s", c.cfg.HAProxy.Userlist, err.Error())
-	}
-	users, ok := data.([]types.User)
-	if !ok {
-		return fmt.Errorf("error reading users from %v userlist in conf", c.cfg.HAProxy.Userlist)
-	}
+	users := GetUsersStore().GetUsers()
 	if len(users) == 0 {
 		return fmt.Errorf("no users configured in %v userlist in conf", c.cfg.HAProxy.Userlist)
 	}

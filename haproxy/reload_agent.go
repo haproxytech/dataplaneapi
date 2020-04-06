@@ -109,9 +109,10 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 	log.Debug("Reload finished.")
 	log.Debug("Time elapsed: ", time.Since(t))
 	if err != nil {
+		reloadFailedError := err
 		// if failed, return to last known good file and restart and return the original file
 		log.Info("Reload failed, restarting with last known good config...")
-		if err = copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
+		if err := copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
 			return fmt.Sprintf("Reload failed: %s, failed to backup original config file for restart.", output), err
 		}
 		defer func() {
@@ -119,15 +120,15 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 			copyFile(ra.configFile+".bck", ra.configFile)
 			os.Remove(ra.configFile + ".bck")
 		}()
-		if err = copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
+		if err := copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
 			return fmt.Sprintf("Reload failed: %s, failed to revert to last known good config file", output), err
 		}
-		if err = ra.restartHAProxy(); err != nil {
+		if err := ra.restartHAProxy(); err != nil {
 			log.Warn("Restart failed, please check the reason and restart manually: ", err)
 			return fmt.Sprintf("Reload failed: %s, failed to restart HAProxy, please check and start manually", output), err
 		}
 		log.Debug("HAProxy restarted with last known good config.")
-		return output, err
+		return output, reloadFailedError
 	}
 	log.Debug("Reload successful")
 	// if success, replace last known good file
