@@ -7672,22 +7672,27 @@ func init() {
           "properties": {
             "address": {
               "type": "string",
-              "pattern": "^[^\\s]+$"
+              "pattern": "^[^\\s]+$",
+              "readOnly": true
             },
             "api_base_path": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "description": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "name": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "port": {
               "type": "integer",
               "maximum": 65535,
               "minimum": 1,
-              "x-nullable": true
+              "x-nullable": true,
+              "readOnly": true
             }
           }
         },
@@ -23526,22 +23531,27 @@ func init() {
           "properties": {
             "address": {
               "type": "string",
-              "pattern": "^[^\\s]+$"
+              "pattern": "^[^\\s]+$",
+              "readOnly": true
             },
             "api_base_path": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "description": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "name": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "port": {
               "type": "integer",
               "maximum": 65535,
               "minimum": 1,
-              "x-nullable": true
+              "x-nullable": true,
+              "readOnly": true
             }
           }
         },
