@@ -264,7 +264,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 	c.cfg.Cluster.ActiveBootstrapKey.Store(c.cfg.BootstrapKey.Load())
 	c.cfg.Status.Store(responseData.Status)
 	log.Infof("Cluster joined, status: %s", responseData.Status)
-	if responseData.Status == "active" {
+	if responseData.Status == "active" || responseData.Status == "unreachable" {
 		err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
 		if err != nil {
 			return err
@@ -334,7 +334,7 @@ func (c *ClusterSync) fetchCert() {
 			c.cfg.Status.Store(responseData.Status)
 			log.Warningf("Fetching certificate, status: %s", responseData.Status)
 
-			if responseData.Status == "active" {
+			if responseData.Status == "active" || responseData.Status == "unreachable" {
 				err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
 				if err != nil {
 					log.Warning(err.Error())
