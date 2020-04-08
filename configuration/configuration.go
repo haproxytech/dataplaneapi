@@ -17,7 +17,9 @@ package configuration
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"os"
 
 	"math/rand"
 	"time"
@@ -180,7 +182,11 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 	id := ulid.MustNew(ulid.Timestamp(t), entropy)
 
 	if c.Name.Load() == "" {
-		c.Name.Store(id.String())
+		name, err := os.Hostname()
+		if err != nil {
+			panic(err)
+		}
+		c.Name.Store(fmt.Sprintf("%s-%s", name, id.String()))
 	}
 
 	return nil
