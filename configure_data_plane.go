@@ -89,6 +89,7 @@ var loggingOptions struct {
 	LogFormat string `long:"log-format" description:"Logging format" default:"text" choice:"text" choice:"JSON"`
 }
 
+var mWorker bool = false
 var logFile *os.File
 
 func configureFlags(api *operations.DataPlaneAPI) {
@@ -110,6 +111,7 @@ func configureFlags(api *operations.DataPlaneAPI) {
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
+
 	configureLogging()
 
 	defer func() {
@@ -136,7 +138,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.ServerShutdown = serverShutdown
 
-	client := configureNativeClient()
+	client := configureNativeClient(mWorker)
 
 	// Handle reload signals
 	sigs := make(chan os.Signal, 1)
@@ -493,9 +495,10 @@ func serverShutdown() {
 	}
 }
 
-func configureNativeClient() *client_native.HAProxyClient {
+func configureNativeClient(mWorker bool) *client_native.HAProxyClient {
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
+		mWorker = true
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
 		if masterRuntime != "" && !strings.HasPrefix(masterRuntime, "ipv4@") {
 			haproxyOptions.MasterRuntime = masterRuntime
@@ -507,7 +510,7 @@ func configureNativeClient() *client_native.HAProxyClient {
 		haproxyOptions.ConfigFile = cfg[0]
 	}
 	// Initialize HAProxy native client
-	confClient, err := configureConfigurationClient()
+	confClient, err := configureConfigurationClient(mWorker)
 	if err != nil {
 		log.Fatalf("Error initializing configuration client: %v", err)
 	}
@@ -521,7 +524,7 @@ func configureNativeClient() *client_native.HAProxyClient {
 	return client
 }
 
-func configureConfigurationClient() (*configuration.Client, error) {
+func configureConfigurationClient(mWorker bool) (*configuration.Client, error) {
 	confClient := &configuration.Client{}
 	confParams := configuration.ClientParams{
 		ConfigurationFile:      haproxyOptions.ConfigFile,
@@ -530,6 +533,7 @@ func configureConfigurationClient() (*configuration.Client, error) {
 		UseValidation:          false,
 		PersistentTransactions: true,
 		TransactionDir:         haproxyOptions.TransactionDir,
+		MasterWorker:           true,
 	}
 	err := confClient.Init(confParams)
 	if err != nil {
@@ -589,7 +593,7 @@ func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient) {
 				client.Runtime = configureRuntimeClient(client.Configuration)
 				log.Info("Reloaded Data Plane API")
 			} else if sig == syscall.SIGUSR2 {
-				confClient, err := configureConfigurationClient()
+				confClient, err := configureConfigurationClient(mWorker)
 				if err != nil {
 					log.Fatalf(err.Error())
 				}
