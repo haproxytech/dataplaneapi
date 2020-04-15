@@ -8890,10 +8890,27 @@ func init() {
         },
         "path_fmt": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-path"
+              "value": [
+                "set-path",
+                "replace-path"
+              ]
+            }
+          }
+        },
+        "path_match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-path",
+                "replace-path"
+              ]
             }
           }
         },
@@ -9056,6 +9073,7 @@ func init() {
             "set-header",
             "set-log-level",
             "set-path",
+            "replace-path",
             "set-query",
             "set-uri",
             "set-var",
@@ -24749,10 +24767,27 @@ func init() {
         },
         "path_fmt": {
           "type": "string",
+          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-path"
+              "value": [
+                "set-path",
+                "replace-path"
+              ]
+            }
+          }
+        },
+        "path_match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-path",
+                "replace-path"
+              ]
             }
           }
         },
@@ -24915,6 +24950,7 @@ func init() {
             "set-header",
             "set-log-level",
             "set-path",
+            "replace-path",
             "set-query",
             "set-uri",
             "set-var",

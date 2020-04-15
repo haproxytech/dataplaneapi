@@ -230,6 +230,8 @@ github.com/haproxytech/config-parser/v2 v2.0.0-rc2.0.20200327120530-f47020fbf2f0
 github.com/haproxytech/config-parser/v2 v2.0.0-rc2.0.20200327120530-f47020fbf2f0/go.mod h1:VjHOetXAJtwrtLAJPoDaD/kEYwCoixVp5SCsBitMcj8=
 github.com/haproxytech/config-parser/v2 v2.0.0-rc2.0.20200330144517-5cf21c7b3a77 h1:BsUn0Avx5qVHEwyx5BURv73wyxqaPMG5YToPyWcy1qE=
 github.com/haproxytech/config-parser/v2 v2.0.0-rc2.0.20200330144517-5cf21c7b3a77/go.mod h1:VjHOetXAJtwrtLAJPoDaD/kEYwCoixVp5SCsBitMcj8=
+github.com/haproxytech/config-parser/v2 v2.0.1-0.20200410235413-ecffcb50b648 h1:R+Jy/LygGyviQ/DCbayHTpExIIS0C2mishi953/p9tc=
+github.com/haproxytech/config-parser/v2 v2.0.1-0.20200410235413-ecffcb50b648/go.mod h1:VjHOetXAJtwrtLAJPoDaD/kEYwCoixVp5SCsBitMcj8=
 github.com/haproxytech/models v1.2.1/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
 github.com/haproxytech/models v1.2.2 h1:/lXf0e3zCF4jCH+QZ9LfcCS2YXPRXFrQrWWTirL6gOY=
 github.com/haproxytech/models v1.2.2/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
@@ -287,6 +289,8 @@ github.com/haproxytech/models v1.2.5-0.20200330082755-74167020e22d h1:Ghjr6SvuYK
 github.com/haproxytech/models v1.2.5-0.20200330082755-74167020e22d/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
 github.com/haproxytech/models v1.2.5-0.20200331170001-c1f211881473 h1:dSH3RFW5UyzSsAW6JvGD80eUfdnz9GGRuIOQxha78eM=
 github.com/haproxytech/models v1.2.5-0.20200331170001-c1f211881473/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
+github.com/haproxytech/models v1.2.5-0.20200414103449-1ad77053aff9 h1:okNyn0EK24pbO+cRr7qLm0ai48mYUwMoBAtQiuz2qBM=
+github.com/haproxytech/models v1.2.5-0.20200414103449-1ad77053aff9/go.mod h1:UXZVErm/XN6z10sM/enmxrdeEnwo7vz1JI+a8ycEvOQ=
 github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99/go.mod h1:1lJo3i6rXxKeerYnT8Nvf0QmHCRC1n8sfWVwXF2Frvo=
 github.com/jessevdk/go-flags v1.4.0 h1:4IU2WS7AumrZ/40jfhf4QVDMsQwqA7VEHozFRrGARJA=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
