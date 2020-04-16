@@ -102,6 +102,8 @@ If you are using secure passwords, supported algorithms are: md5, sha-256 and sh
 
 For more docs how to use the Data Plane API check our [documentation](https://www.haproxy.com/documentation/hapee/1-9r1/configuration/dataplaneapi/)
 
+Alternatively, dataplaneapi serves it's own interactive documentation relevant for the current build on the `/v1/docs` uri. Just point your browser to the host/port dataplane was started with (i.e. `http://localhost:5555/v1/docs`)
+
 ## Contributing
 
 If you wish to contribute to this project please check [Contributing Guide](CONTRIBUTING.md)
