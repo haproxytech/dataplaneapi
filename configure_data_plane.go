@@ -97,7 +97,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		mWorker = true
 		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
 		if misc.IsUnixSocketAddr(masterRuntime) {
-			haproxyOptions.MasterRuntime = masterRuntime
+			haproxyOptions.MasterRuntime = strings.Replace(masterRuntime, "unix@", "", 1)
 		}
 	}
 	cfgFiles := os.Getenv("HAPROXY_CFGFILES")
