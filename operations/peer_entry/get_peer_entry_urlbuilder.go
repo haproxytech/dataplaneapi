@@ -75,17 +75,17 @@ func (o *GetPeerEntryURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	peerSection := o.PeerSection
-	if peerSection != "" {
-		qs.Set("peer_section", peerSection)
+	peerSectionQ := o.PeerSection
+	if peerSectionQ != "" {
+		qs.Set("peer_section", peerSectionQ)
 	}
 
-	var transactionID string
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
 	_result.RawQuery = qs.Encode()

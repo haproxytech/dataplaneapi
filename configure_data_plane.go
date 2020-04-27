@@ -36,7 +36,7 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 
 	log "github.com/sirupsen/logrus"
 
@@ -45,10 +45,10 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 
-	client_native "github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native/v2"
 
-	"github.com/haproxytech/client-native/configuration"
-	runtime_api "github.com/haproxytech/client-native/runtime"
+	"github.com/haproxytech/client-native/v2/configuration"
+	runtime_api "github.com/haproxytech/client-native/v2/runtime"
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -626,7 +626,7 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
 			}
 		}
-		runtimeAPIs := globalConf.RuntimeApis
+		runtimeAPIs := globalConf.RuntimeAPIs
 		// if no master socket set, read from first valid socket if nbproc <= 1
 		if globalConf.Nbproc <= 1 {
 			socketList := make(map[int]string)

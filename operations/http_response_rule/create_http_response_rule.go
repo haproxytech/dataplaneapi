@@ -23,7 +23,7 @@ package http_response_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateHTTPResponseRuleHandlerFunc turns a function with the right signature into a create HTTP response rule handler

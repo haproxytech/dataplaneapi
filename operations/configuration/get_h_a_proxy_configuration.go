@@ -23,11 +23,11 @@ package configuration
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
-	validate "github.com/go-openapi/validate"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetHAProxyConfigurationHandlerFunc turns a function with the right signature into a get h a proxy configuration handler
@@ -92,6 +92,7 @@ func (o *GetHAProxyConfiguration) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 }
 
 // GetHAProxyConfigurationOKBody get h a proxy configuration o k body
+//
 // swagger:model GetHAProxyConfigurationOKBody
 type GetHAProxyConfigurationOKBody struct {
 

@@ -23,7 +23,7 @@ package nameserver
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteNameserverHandlerFunc turns a function with the right signature into a delete nameserver handler

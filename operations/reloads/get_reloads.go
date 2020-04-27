@@ -23,7 +23,7 @@ package reloads
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetReloadsHandlerFunc turns a function with the right signature into a get reloads handler

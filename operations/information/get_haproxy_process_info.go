@@ -23,7 +23,7 @@ package information
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetHaproxyProcessInfoHandlerFunc turns a function with the right signature into a get haproxy process info handler

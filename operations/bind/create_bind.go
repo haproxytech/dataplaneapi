@@ -23,7 +23,7 @@ package bind
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateBindHandlerFunc turns a function with the right signature into a create bind handler

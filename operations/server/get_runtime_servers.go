@@ -23,7 +23,7 @@ package server
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetRuntimeServersHandlerFunc turns a function with the right signature into a get runtime servers handler

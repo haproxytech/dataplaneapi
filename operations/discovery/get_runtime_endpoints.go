@@ -23,7 +23,7 @@ package discovery
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetRuntimeEndpointsHandlerFunc turns a function with the right signature into a get runtime endpoints handler

@@ -64,12 +64,12 @@ func (o *GetTransactionsURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var status string
+	var statusQ string
 	if o.Status != nil {
-		status = *o.Status
+		statusQ = *o.Status
 	}
-	if status != "" {
-		qs.Set("status", status)
+	if statusQ != "" {
+		qs.Set("status", statusQ)
 	}
 
 	_result.RawQuery = qs.Encode()

@@ -74,12 +74,12 @@ func (o *GetBackendURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var transactionID string
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
 	_result.RawQuery = qs.Encode()

@@ -23,7 +23,7 @@ package acl
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteACLHandlerFunc turns a function with the right signature into a delete Acl handler

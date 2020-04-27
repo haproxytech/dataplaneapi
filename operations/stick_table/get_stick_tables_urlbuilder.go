@@ -66,12 +66,12 @@ func (o *GetStickTablesURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var process string
+	var processQ string
 	if o.Process != nil {
-		process = swag.FormatInt64(*o.Process)
+		processQ = swag.FormatInt64(*o.Process)
 	}
-	if process != "" {
-		qs.Set("process", process)
+	if processQ != "" {
+		qs.Set("process", processQ)
 	}
 
 	_result.RawQuery = qs.Encode()

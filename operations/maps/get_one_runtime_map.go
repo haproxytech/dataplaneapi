@@ -23,7 +23,7 @@ package maps
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetOneRuntimeMapHandlerFunc turns a function with the right signature into a get one runtime map handler

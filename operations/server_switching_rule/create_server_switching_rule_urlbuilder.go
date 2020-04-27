@@ -69,33 +69,33 @@ func (o *CreateServerSwitchingRuleURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	backend := o.Backend
-	if backend != "" {
-		qs.Set("backend", backend)
+	backendQ := o.Backend
+	if backendQ != "" {
+		qs.Set("backend", backendQ)
 	}
 
-	var forceReload string
+	var forceReloadQ string
 	if o.ForceReload != nil {
-		forceReload = swag.FormatBool(*o.ForceReload)
+		forceReloadQ = swag.FormatBool(*o.ForceReload)
 	}
-	if forceReload != "" {
-		qs.Set("force_reload", forceReload)
+	if forceReloadQ != "" {
+		qs.Set("force_reload", forceReloadQ)
 	}
 
-	var transactionID string
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
-	var version string
+	var versionQ string
 	if o.Version != nil {
-		version = swag.FormatInt64(*o.Version)
+		versionQ = swag.FormatInt64(*o.Version)
 	}
-	if version != "" {
-		qs.Set("version", version)
+	if versionQ != "" {
+		qs.Set("version", versionQ)
 	}
 
 	_result.RawQuery = qs.Encode()

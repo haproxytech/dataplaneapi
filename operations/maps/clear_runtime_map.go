@@ -23,7 +23,7 @@ package maps
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ClearRuntimeMapHandlerFunc turns a function with the right signature into a clear runtime map handler

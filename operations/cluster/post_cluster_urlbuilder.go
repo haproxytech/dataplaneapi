@@ -66,12 +66,12 @@ func (o *PostClusterURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var version string
+	var versionQ string
 	if o.Version != nil {
-		version = swag.FormatInt64(*o.Version)
+		versionQ = swag.FormatInt64(*o.Version)
 	}
-	if version != "" {
-		qs.Set("version", version)
+	if versionQ != "" {
+		qs.Set("version", versionQ)
 	}
 
 	_result.RawQuery = qs.Encode()

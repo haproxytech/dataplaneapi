@@ -23,7 +23,7 @@ package resolver
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateResolverHandlerFunc turns a function with the right signature into a create resolver handler

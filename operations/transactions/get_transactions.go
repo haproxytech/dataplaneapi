@@ -23,7 +23,7 @@ package transactions
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetTransactionsHandlerFunc turns a function with the right signature into a get transactions handler

@@ -23,13 +23,13 @@ package backend
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
-	validate "github.com/go-openapi/validate"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetBackendsHandlerFunc turns a function with the right signature into a get backends handler
@@ -94,6 +94,7 @@ func (o *GetBackends) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetBackendsOKBody get backends o k body
+//
 // swagger:model GetBackendsOKBody
 type GetBackendsOKBody struct {
 

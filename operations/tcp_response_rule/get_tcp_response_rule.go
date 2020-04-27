@@ -23,12 +23,12 @@ package tcp_response_rule
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetTCPResponseRuleHandlerFunc turns a function with the right signature into a get TCP response rule handler
@@ -93,6 +93,7 @@ func (o *GetTCPResponseRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) 
 }
 
 // GetTCPResponseRuleOKBody get TCP response rule o k body
+//
 // swagger:model GetTCPResponseRuleOKBody
 type GetTCPResponseRuleOKBody struct {
 

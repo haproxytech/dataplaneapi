@@ -9164,6 +9164,19 @@ func init() {
         },
         "deny_status": {
           "type": "integer",
+          "enum": [
+            200,
+            400,
+            403,
+            405,
+            408,
+            425,
+            429,
+            500,
+            502,
+            503,
+            504
+          ],
           "x-dependency": {
             "type": {
               "value": [
@@ -12814,7 +12827,7 @@ func init() {
   },
   "security": [
     {
-      "basic_auth": null
+      "basic_auth": []
     }
   ],
   "tags": [
@@ -23905,6 +23918,401 @@ func init() {
     }
   },
   "definitions": {
+    "BackendHashType": {
+      "type": "object",
+      "properties": {
+        "function": {
+          "type": "string",
+          "enum": [
+            "sdbm",
+            "djb2",
+            "wt6",
+            "crc32"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "map-based",
+            "consistent"
+          ]
+        },
+        "modifier": {
+          "type": "string",
+          "enum": [
+            "avalanche"
+          ]
+        }
+      }
+    },
+    "BackendStickTable": {
+      "type": "object",
+      "properties": {
+        "expire": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "keylen": {
+          "type": "integer",
+          "x-display-name": "Key Length",
+          "x-nullable": true
+        },
+        "nopurge": {
+          "type": "boolean",
+          "x-display-name": "No Purge"
+        },
+        "peers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "size": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "store": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ip",
+            "ipv6",
+            "integer",
+            "string",
+            "binary"
+          ]
+        }
+      }
+    },
+    "ClusterSettingsCluster": {
+      "type": "object",
+      "title": "Cluster controller information",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "readOnly": true
+        },
+        "api_base_path": {
+          "type": "string",
+          "readOnly": true
+        },
+        "description": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true,
+          "readOnly": true
+        }
+      }
+    },
+    "CookieDomainItems0": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-name": "Domain"
+    },
+    "GlobalCPUMapsItems0": {
+      "type": "object",
+      "required": [
+        "process",
+        "cpu_set"
+      ],
+      "properties": {
+        "cpu_set": {
+          "type": "string",
+          "x-display-name": "CPU Set"
+        },
+        "process": {
+          "type": "string",
+          "x-display-name": "Process/Thread Set"
+        }
+      },
+      "x-go-name": "CPUMap"
+    },
+    "GlobalRuntimeApisItems0": {
+      "type": "object",
+      "required": [
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "exposeFdListeners": {
+          "type": "boolean",
+          "x-display-name": "Expose FD Listeners"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "user",
+            "operator",
+            "admin"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "process": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-name": "RuntimeAPI"
+    },
+    "InfoAPI": {
+      "type": "object",
+      "properties": {
+        "build_date": {
+          "description": "HAProxy Dataplane API build date",
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "description": "HAProxy Dataplane API version string",
+          "type": "string"
+        }
+      }
+    },
+    "InfoSystem": {
+      "type": "object",
+      "properties": {
+        "cpu_info": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string"
+            },
+            "num_cpus": {
+              "description": "Number of logical CPUs",
+              "type": "integer"
+            }
+          }
+        },
+        "hostname": {
+          "description": "Hostname where the HAProxy is running",
+          "type": "string"
+        },
+        "mem_info": {
+          "type": "object",
+          "properties": {
+            "dataplaneapi_memory": {
+              "type": "integer"
+            },
+            "free_memory": {
+              "type": "integer"
+            },
+            "total_memory": {
+              "type": "integer"
+            }
+          }
+        },
+        "os_string": {
+          "description": "OS string",
+          "type": "string"
+        },
+        "time": {
+          "description": "Current time in milliseconds since Epoch.",
+          "type": "integer"
+        },
+        "uptime": {
+          "description": "System uptime",
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "InfoSystemCPUInfo": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "num_cpus": {
+          "description": "Number of logical CPUs",
+          "type": "integer"
+        }
+      }
+    },
+    "InfoSystemMemInfo": {
+      "type": "object",
+      "properties": {
+        "dataplaneapi_memory": {
+          "type": "integer"
+        },
+        "free_memory": {
+          "type": "integer"
+        },
+        "total_memory": {
+          "type": "integer"
+        }
+      }
+    },
+    "SiteFarmsItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "use_as"
+      ],
+      "properties": {
+        "balance": {
+          "$ref": "#/definitions/balance"
+        },
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-dependency": {
+            "use_as": {
+              "required": true,
+              "value": "conditional"
+            }
+          },
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "use_as": {
+              "required": true,
+              "value": "conditional"
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "forwardfor": {
+          "$ref": "#/definitions/forwardfor"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "http",
+            "tcp"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "servers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/server"
+          }
+        },
+        "use_as": {
+          "type": "string",
+          "enum": [
+            "default",
+            "conditional"
+          ],
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "SiteFarm"
+    },
+    "SiteService": {
+      "type": "object",
+      "properties": {
+        "http_connection_mode": {
+          "type": "string",
+          "enum": [
+            "http-tunnel",
+            "httpclose",
+            "forced-close",
+            "http-server-close",
+            "http-keep-alive"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP Connection Mode"
+        },
+        "listeners": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bind"
+          }
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Connections",
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "http",
+            "tcp"
+          ]
+        }
+      }
+    },
+    "StickTableFieldsItems0": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string",
+          "enum": [
+            "server_id",
+            "gpc0",
+            "gpc0_rate",
+            "gpc1",
+            "gpc1_rate",
+            "conn_cnt",
+            "conn_cur",
+            "conn_rate",
+            "sess_cnt",
+            "sess_rate",
+            "http_req_cnt",
+            "http_req_rate",
+            "http_err_cnt",
+            "http_err_rate",
+            "bytes_in_cnt",
+            "bytes_in_rate",
+            "bytes_out_cnt",
+            "bytes_out_rate"
+          ]
+        },
+        "period": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "rate"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "rate",
+            "counter"
+          ]
+        }
+      },
+      "x-go-name": "StickTableField"
+    },
     "acl": {
       "description": "The use of Access Control Lists (ACL) provides a flexible solution to perform\ncontent switching and generally to take decisions based on content extracted\nfrom the request, the response or any environmental status.\n",
       "type": "object",
@@ -24589,14 +24997,7 @@ func init() {
         "domain": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              }
-            },
-            "x-go-name": "Domain"
+            "$ref": "#/definitions/CookieDomainItems0"
           },
           "x-go-name": "Domains"
         },
@@ -25391,22 +25792,7 @@ func init() {
         "cpu_maps": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "process",
-              "cpu_set"
-            ],
-            "properties": {
-              "cpu_set": {
-                "type": "string",
-                "x-display-name": "CPU Set"
-              },
-              "process": {
-                "type": "string",
-                "x-display-name": "Process/Thread Set"
-              }
-            },
-            "x-go-name": "CPUMap"
+            "$ref": "#/definitions/GlobalCPUMapsItems0"
           },
           "x-display-name": "CPU Maps",
           "x-go-name": "CPUMaps"
@@ -25450,37 +25836,7 @@ func init() {
         "runtime_apis": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "address"
-            ],
-            "properties": {
-              "address": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "exposeFdListeners": {
-                "type": "boolean",
-                "x-display-name": "Expose FD Listeners"
-              },
-              "level": {
-                "type": "string",
-                "enum": [
-                  "user",
-                  "operator",
-                  "admin"
-                ]
-              },
-              "mode": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "process": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              }
-            },
-            "x-go-name": "RuntimeAPI"
+            "$ref": "#/definitions/GlobalRuntimeApisItems0"
           },
           "x-display-name": "Runtime APIs",
           "x-go-name": "RuntimeAPIs"
@@ -25673,6 +26029,19 @@ func init() {
         },
         "deny_status": {
           "type": "integer",
+          "enum": [
+            200,
+            400,
+            403,
+            405,
+            408,
+            425,
+            429,
+            500,
+            502,
+            503,
+            504
+          ],
           "x-dependency": {
             "type": {
               "value": [
@@ -28227,70 +28596,7 @@ func init() {
         "farms": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "name",
-              "use_as"
-            ],
-            "properties": {
-              "balance": {
-                "$ref": "#/definitions/balance"
-              },
-              "cond": {
-                "type": "string",
-                "enum": [
-                  "if",
-                  "unless"
-                ],
-                "x-dependency": {
-                  "use_as": {
-                    "required": true,
-                    "value": "conditional"
-                  }
-                },
-                "x-display-name": "Condition"
-              },
-              "cond_test": {
-                "type": "string",
-                "x-dependency": {
-                  "use_as": {
-                    "required": true,
-                    "value": "conditional"
-                  }
-                },
-                "x-display-name": "Condition Test"
-              },
-              "forwardfor": {
-                "$ref": "#/definitions/forwardfor"
-              },
-              "mode": {
-                "type": "string",
-                "enum": [
-                  "http",
-                  "tcp"
-                ]
-              },
-              "name": {
-                "type": "string",
-                "pattern": "^[A-Za-z0-9-_.:]+$",
-                "x-nullable": false
-              },
-              "servers": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/server"
-                }
-              },
-              "use_as": {
-                "type": "string",
-                "enum": [
-                  "default",
-                  "conditional"
-                ],
-                "x-nullable": false
-              }
-            },
-            "x-go-name": "SiteFarm"
+            "$ref": "#/definitions/SiteFarmsItems0"
           }
         },
         "name": {
@@ -28510,48 +28816,7 @@ func init() {
         "fields": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "field": {
-                "type": "string",
-                "enum": [
-                  "server_id",
-                  "gpc0",
-                  "gpc0_rate",
-                  "gpc1",
-                  "gpc1_rate",
-                  "conn_cnt",
-                  "conn_cur",
-                  "conn_rate",
-                  "sess_cnt",
-                  "sess_rate",
-                  "http_req_cnt",
-                  "http_req_rate",
-                  "http_err_cnt",
-                  "http_err_rate",
-                  "bytes_in_cnt",
-                  "bytes_in_rate",
-                  "bytes_out_cnt",
-                  "bytes_out_rate"
-                ]
-              },
-              "period": {
-                "type": "integer",
-                "x-dependency": {
-                  "type": {
-                    "value": "rate"
-                  }
-                }
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "rate",
-                  "counter"
-                ]
-              }
-            },
-            "x-go-name": "StickTableField"
+            "$ref": "#/definitions/StickTableFieldsItems0"
           }
         },
         "name": {

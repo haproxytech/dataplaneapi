@@ -25,13 +25,13 @@ import (
 	"net/http"
 	"strings"
 
-	errors "github.com/go-openapi/errors"
-	loads "github.com/go-openapi/loads"
-	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
-	security "github.com/go-openapi/runtime/security"
-	spec "github.com/go-openapi/spec"
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/loads"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/security"
+	"github.com/go-openapi/spec"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/dataplaneapi/operations/acl"
@@ -70,433 +70,436 @@ import (
 // NewDataPlaneAPI creates a new DataPlane instance
 func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 	return &DataPlaneAPI{
-		handlers:              make(map[string]map[string]http.Handler),
-		formats:               strfmt.Default,
-		defaultConsumes:       "application/json",
-		defaultProduces:       "application/json",
-		customConsumers:       make(map[string]runtime.Consumer),
-		customProducers:       make(map[string]runtime.Producer),
-		ServerShutdown:        func() {},
-		spec:                  spec,
-		ServeError:            errors.ServeError,
-		BasicAuthenticator:    security.BasicAuth,
-		APIKeyAuthenticator:   security.APIKeyAuth,
-		BearerAuthenticator:   security.BearerAuth,
+		handlers:            make(map[string]map[string]http.Handler),
+		formats:             strfmt.Default,
+		defaultConsumes:     "application/json",
+		defaultProduces:     "application/json",
+		customConsumers:     make(map[string]runtime.Consumer),
+		customProducers:     make(map[string]runtime.Producer),
+		PreServerShutdown:   func() {},
+		ServerShutdown:      func() {},
+		spec:                spec,
+		ServeError:          errors.ServeError,
+		BasicAuthenticator:  security.BasicAuth,
+		APIKeyAuthenticator: security.APIKeyAuth,
+		BearerAuthenticator: security.BearerAuth,
+
 		JSONConsumer:          runtime.JSONConsumer(),
 		MultipartformConsumer: runtime.DiscardConsumer,
 		TxtConsumer:           runtime.TextConsumer(),
-		JSONProducer:          runtime.JSONProducer(),
+
+		JSONProducer: runtime.JSONProducer(),
+
 		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsAddMapEntry has not yet been implemented")
+			return middleware.NotImplemented("operation maps.AddMapEntry has not yet been implemented")
 		}),
 		MapsClearRuntimeMapHandler: maps.ClearRuntimeMapHandlerFunc(func(params maps.ClearRuntimeMapParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsClearRuntimeMap has not yet been implemented")
+			return middleware.NotImplemented("operation maps.ClearRuntimeMap has not yet been implemented")
 		}),
 		TransactionsCommitTransactionHandler: transactions.CommitTransactionHandlerFunc(func(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TransactionsCommitTransaction has not yet been implemented")
+			return middleware.NotImplemented("operation transactions.CommitTransaction has not yet been implemented")
 		}),
 		ACLCreateACLHandler: acl.CreateACLHandlerFunc(func(params acl.CreateACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLCreateACL has not yet been implemented")
+			return middleware.NotImplemented("operation acl.CreateACL has not yet been implemented")
 		}),
 		BackendCreateBackendHandler: backend.CreateBackendHandlerFunc(func(params backend.CreateBackendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendCreateBackend has not yet been implemented")
+			return middleware.NotImplemented("operation backend.CreateBackend has not yet been implemented")
 		}),
 		BackendSwitchingRuleCreateBackendSwitchingRuleHandler: backend_switching_rule.CreateBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.CreateBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleCreateBackendSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation backend_switching_rule.CreateBackendSwitchingRule has not yet been implemented")
 		}),
 		BindCreateBindHandler: bind.CreateBindHandlerFunc(func(params bind.CreateBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindCreateBind has not yet been implemented")
+			return middleware.NotImplemented("operation bind.CreateBind has not yet been implemented")
 		}),
 		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterCreateFilter has not yet been implemented")
+			return middleware.NotImplemented("operation filter.CreateFilter has not yet been implemented")
 		}),
 		FrontendCreateFrontendHandler: frontend.CreateFrontendHandlerFunc(func(params frontend.CreateFrontendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FrontendCreateFrontend has not yet been implemented")
+			return middleware.NotImplemented("operation frontend.CreateFrontend has not yet been implemented")
 		}),
 		HTTPRequestRuleCreateHTTPRequestRuleHandler: http_request_rule.CreateHTTPRequestRuleHandlerFunc(func(params http_request_rule.CreateHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleCreateHTTPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_request_rule.CreateHTTPRequestRule has not yet been implemented")
 		}),
 		HTTPResponseRuleCreateHTTPResponseRuleHandler: http_response_rule.CreateHTTPResponseRuleHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleCreateHTTPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_response_rule.CreateHTTPResponseRule has not yet been implemented")
 		}),
 		LogTargetCreateLogTargetHandler: log_target.CreateLogTargetHandlerFunc(func(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetCreateLogTarget has not yet been implemented")
+			return middleware.NotImplemented("operation log_target.CreateLogTarget has not yet been implemented")
 		}),
 		NameserverCreateNameserverHandler: nameserver.CreateNameserverHandlerFunc(func(params nameserver.CreateNameserverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation NameserverCreateNameserver has not yet been implemented")
+			return middleware.NotImplemented("operation nameserver.CreateNameserver has not yet been implemented")
 		}),
 		PeerCreatePeerHandler: peer.CreatePeerHandlerFunc(func(params peer.CreatePeerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerCreatePeer has not yet been implemented")
+			return middleware.NotImplemented("operation peer.CreatePeer has not yet been implemented")
 		}),
 		PeerEntryCreatePeerEntryHandler: peer_entry.CreatePeerEntryHandlerFunc(func(params peer_entry.CreatePeerEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerEntryCreatePeerEntry has not yet been implemented")
+			return middleware.NotImplemented("operation peer_entry.CreatePeerEntry has not yet been implemented")
 		}),
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ResolverCreateResolver has not yet been implemented")
+			return middleware.NotImplemented("operation resolver.CreateResolver has not yet been implemented")
 		}),
 		MapsCreateRuntimeMapHandler: maps.CreateRuntimeMapHandlerFunc(func(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsCreateRuntimeMap has not yet been implemented")
+			return middleware.NotImplemented("operation maps.CreateRuntimeMap has not yet been implemented")
 		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerCreateServer has not yet been implemented")
+			return middleware.NotImplemented("operation server.CreateServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleCreateServerSwitchingRuleHandler: server_switching_rule.CreateServerSwitchingRuleHandlerFunc(func(params server_switching_rule.CreateServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleCreateServerSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation server_switching_rule.CreateServerSwitchingRule has not yet been implemented")
 		}),
 		SitesCreateSiteHandler: sites.CreateSiteHandlerFunc(func(params sites.CreateSiteParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation SitesCreateSite has not yet been implemented")
+			return middleware.NotImplemented("operation sites.CreateSite has not yet been implemented")
 		}),
 		StickRuleCreateStickRuleHandler: stick_rule.CreateStickRuleHandlerFunc(func(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleCreateStickRule has not yet been implemented")
+			return middleware.NotImplemented("operation stick_rule.CreateStickRule has not yet been implemented")
 		}),
 		TCPRequestRuleCreateTCPRequestRuleHandler: tcp_request_rule.CreateTCPRequestRuleHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleCreateTCPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRule has not yet been implemented")
 		}),
 		TCPResponseRuleCreateTCPResponseRuleHandler: tcp_response_rule.CreateTCPResponseRuleHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleCreateTCPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_response_rule.CreateTCPResponseRule has not yet been implemented")
 		}),
 		ACLDeleteACLHandler: acl.DeleteACLHandlerFunc(func(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLDeleteACL has not yet been implemented")
+			return middleware.NotImplemented("operation acl.DeleteACL has not yet been implemented")
 		}),
 		BackendDeleteBackendHandler: backend.DeleteBackendHandlerFunc(func(params backend.DeleteBackendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendDeleteBackend has not yet been implemented")
+			return middleware.NotImplemented("operation backend.DeleteBackend has not yet been implemented")
 		}),
 		BackendSwitchingRuleDeleteBackendSwitchingRuleHandler: backend_switching_rule.DeleteBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.DeleteBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleDeleteBackendSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation backend_switching_rule.DeleteBackendSwitchingRule has not yet been implemented")
 		}),
 		BindDeleteBindHandler: bind.DeleteBindHandlerFunc(func(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindDeleteBind has not yet been implemented")
+			return middleware.NotImplemented("operation bind.DeleteBind has not yet been implemented")
 		}),
 		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterDeleteFilter has not yet been implemented")
+			return middleware.NotImplemented("operation filter.DeleteFilter has not yet been implemented")
 		}),
 		FrontendDeleteFrontendHandler: frontend.DeleteFrontendHandlerFunc(func(params frontend.DeleteFrontendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FrontendDeleteFrontend has not yet been implemented")
+			return middleware.NotImplemented("operation frontend.DeleteFrontend has not yet been implemented")
 		}),
 		HTTPRequestRuleDeleteHTTPRequestRuleHandler: http_request_rule.DeleteHTTPRequestRuleHandlerFunc(func(params http_request_rule.DeleteHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleDeleteHTTPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_request_rule.DeleteHTTPRequestRule has not yet been implemented")
 		}),
 		HTTPResponseRuleDeleteHTTPResponseRuleHandler: http_response_rule.DeleteHTTPResponseRuleHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleDeleteHTTPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_response_rule.DeleteHTTPResponseRule has not yet been implemented")
 		}),
 		LogTargetDeleteLogTargetHandler: log_target.DeleteLogTargetHandlerFunc(func(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetDeleteLogTarget has not yet been implemented")
+			return middleware.NotImplemented("operation log_target.DeleteLogTarget has not yet been implemented")
 		}),
 		NameserverDeleteNameserverHandler: nameserver.DeleteNameserverHandlerFunc(func(params nameserver.DeleteNameserverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation NameserverDeleteNameserver has not yet been implemented")
+			return middleware.NotImplemented("operation nameserver.DeleteNameserver has not yet been implemented")
 		}),
 		PeerDeletePeerHandler: peer.DeletePeerHandlerFunc(func(params peer.DeletePeerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerDeletePeer has not yet been implemented")
+			return middleware.NotImplemented("operation peer.DeletePeer has not yet been implemented")
 		}),
 		PeerEntryDeletePeerEntryHandler: peer_entry.DeletePeerEntryHandlerFunc(func(params peer_entry.DeletePeerEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerEntryDeletePeerEntry has not yet been implemented")
+			return middleware.NotImplemented("operation peer_entry.DeletePeerEntry has not yet been implemented")
 		}),
 		ResolverDeleteResolverHandler: resolver.DeleteResolverHandlerFunc(func(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ResolverDeleteResolver has not yet been implemented")
+			return middleware.NotImplemented("operation resolver.DeleteResolver has not yet been implemented")
 		}),
 		MapsDeleteRuntimeMapEntryHandler: maps.DeleteRuntimeMapEntryHandlerFunc(func(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsDeleteRuntimeMapEntry has not yet been implemented")
+			return middleware.NotImplemented("operation maps.DeleteRuntimeMapEntry has not yet been implemented")
 		}),
 		ServerDeleteServerHandler: server.DeleteServerHandlerFunc(func(params server.DeleteServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerDeleteServer has not yet been implemented")
+			return middleware.NotImplemented("operation server.DeleteServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleDeleteServerSwitchingRuleHandler: server_switching_rule.DeleteServerSwitchingRuleHandlerFunc(func(params server_switching_rule.DeleteServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleDeleteServerSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation server_switching_rule.DeleteServerSwitchingRule has not yet been implemented")
 		}),
 		SitesDeleteSiteHandler: sites.DeleteSiteHandlerFunc(func(params sites.DeleteSiteParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation SitesDeleteSite has not yet been implemented")
+			return middleware.NotImplemented("operation sites.DeleteSite has not yet been implemented")
 		}),
 		StickRuleDeleteStickRuleHandler: stick_rule.DeleteStickRuleHandlerFunc(func(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleDeleteStickRule has not yet been implemented")
+			return middleware.NotImplemented("operation stick_rule.DeleteStickRule has not yet been implemented")
 		}),
 		TCPRequestRuleDeleteTCPRequestRuleHandler: tcp_request_rule.DeleteTCPRequestRuleHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleDeleteTCPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRule has not yet been implemented")
 		}),
 		TCPResponseRuleDeleteTCPResponseRuleHandler: tcp_response_rule.DeleteTCPResponseRuleHandlerFunc(func(params tcp_response_rule.DeleteTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleDeleteTCPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_response_rule.DeleteTCPResponseRule has not yet been implemented")
 		}),
 		TransactionsDeleteTransactionHandler: transactions.DeleteTransactionHandlerFunc(func(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TransactionsDeleteTransaction has not yet been implemented")
+			return middleware.NotImplemented("operation transactions.DeleteTransaction has not yet been implemented")
 		}),
 		DiscoveryGetAPIEndpointsHandler: discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DiscoveryGetAPIEndpoints has not yet been implemented")
+			return middleware.NotImplemented("operation discovery.GetAPIEndpoints has not yet been implemented")
 		}),
 		ACLGetACLHandler: acl.GetACLHandlerFunc(func(params acl.GetACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLGetACL has not yet been implemented")
+			return middleware.NotImplemented("operation acl.GetACL has not yet been implemented")
 		}),
 		ACLGetAclsHandler: acl.GetAclsHandlerFunc(func(params acl.GetAclsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLGetAcls has not yet been implemented")
+			return middleware.NotImplemented("operation acl.GetAcls has not yet been implemented")
 		}),
 		MapsGetAllRuntimeMapFilesHandler: maps.GetAllRuntimeMapFilesHandlerFunc(func(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsGetAllRuntimeMapFiles has not yet been implemented")
+			return middleware.NotImplemented("operation maps.GetAllRuntimeMapFiles has not yet been implemented")
 		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendGetBackend has not yet been implemented")
+			return middleware.NotImplemented("operation backend.GetBackend has not yet been implemented")
 		}),
 		BackendSwitchingRuleGetBackendSwitchingRuleHandler: backend_switching_rule.GetBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.GetBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleGetBackendSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation backend_switching_rule.GetBackendSwitchingRule has not yet been implemented")
 		}),
 		BackendSwitchingRuleGetBackendSwitchingRulesHandler: backend_switching_rule.GetBackendSwitchingRulesHandlerFunc(func(params backend_switching_rule.GetBackendSwitchingRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleGetBackendSwitchingRules has not yet been implemented")
+			return middleware.NotImplemented("operation backend_switching_rule.GetBackendSwitchingRules has not yet been implemented")
 		}),
 		BackendGetBackendsHandler: backend.GetBackendsHandlerFunc(func(params backend.GetBackendsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendGetBackends has not yet been implemented")
+			return middleware.NotImplemented("operation backend.GetBackends has not yet been implemented")
 		}),
 		BindGetBindHandler: bind.GetBindHandlerFunc(func(params bind.GetBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindGetBind has not yet been implemented")
+			return middleware.NotImplemented("operation bind.GetBind has not yet been implemented")
 		}),
 		BindGetBindsHandler: bind.GetBindsHandlerFunc(func(params bind.GetBindsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindGetBinds has not yet been implemented")
+			return middleware.NotImplemented("operation bind.GetBinds has not yet been implemented")
 		}),
 		DiscoveryGetClusterHandler: discovery.GetClusterHandlerFunc(func(params discovery.GetClusterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DiscoveryGetCluster has not yet been implemented")
+			return middleware.NotImplemented("operation discovery.GetCluster has not yet been implemented")
 		}),
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DiscoveryGetConfigurationEndpoints has not yet been implemented")
+			return middleware.NotImplemented("operation discovery.GetConfigurationEndpoints has not yet been implemented")
 		}),
 		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DefaultsGetDefaults has not yet been implemented")
+			return middleware.NotImplemented("operation defaults.GetDefaults has not yet been implemented")
 		}),
 		FilterGetFilterHandler: filter.GetFilterHandlerFunc(func(params filter.GetFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterGetFilter has not yet been implemented")
+			return middleware.NotImplemented("operation filter.GetFilter has not yet been implemented")
 		}),
 		FilterGetFiltersHandler: filter.GetFiltersHandlerFunc(func(params filter.GetFiltersParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterGetFilters has not yet been implemented")
+			return middleware.NotImplemented("operation filter.GetFilters has not yet been implemented")
 		}),
 		FrontendGetFrontendHandler: frontend.GetFrontendHandlerFunc(func(params frontend.GetFrontendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FrontendGetFrontend has not yet been implemented")
+			return middleware.NotImplemented("operation frontend.GetFrontend has not yet been implemented")
 		}),
 		FrontendGetFrontendsHandler: frontend.GetFrontendsHandlerFunc(func(params frontend.GetFrontendsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FrontendGetFrontends has not yet been implemented")
+			return middleware.NotImplemented("operation frontend.GetFrontends has not yet been implemented")
 		}),
 		GlobalGetGlobalHandler: global.GetGlobalHandlerFunc(func(params global.GetGlobalParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation GlobalGetGlobal has not yet been implemented")
+			return middleware.NotImplemented("operation global.GetGlobal has not yet been implemented")
 		}),
 		ConfigurationGetHAProxyConfigurationHandler: configuration.GetHAProxyConfigurationHandlerFunc(func(params configuration.GetHAProxyConfigurationParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ConfigurationGetHAProxyConfiguration has not yet been implemented")
+			return middleware.NotImplemented("operation configuration.GetHAProxyConfiguration has not yet been implemented")
 		}),
 		HTTPRequestRuleGetHTTPRequestRuleHandler: http_request_rule.GetHTTPRequestRuleHandlerFunc(func(params http_request_rule.GetHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleGetHTTPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_request_rule.GetHTTPRequestRule has not yet been implemented")
 		}),
 		HTTPRequestRuleGetHTTPRequestRulesHandler: http_request_rule.GetHTTPRequestRulesHandlerFunc(func(params http_request_rule.GetHTTPRequestRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleGetHTTPRequestRules has not yet been implemented")
+			return middleware.NotImplemented("operation http_request_rule.GetHTTPRequestRules has not yet been implemented")
 		}),
 		HTTPResponseRuleGetHTTPResponseRuleHandler: http_response_rule.GetHTTPResponseRuleHandlerFunc(func(params http_response_rule.GetHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleGetHTTPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_response_rule.GetHTTPResponseRule has not yet been implemented")
 		}),
 		HTTPResponseRuleGetHTTPResponseRulesHandler: http_response_rule.GetHTTPResponseRulesHandlerFunc(func(params http_response_rule.GetHTTPResponseRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleGetHTTPResponseRules has not yet been implemented")
+			return middleware.NotImplemented("operation http_response_rule.GetHTTPResponseRules has not yet been implemented")
 		}),
 		DiscoveryGetHaproxyEndpointsHandler: discovery.GetHaproxyEndpointsHandlerFunc(func(params discovery.GetHaproxyEndpointsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DiscoveryGetHaproxyEndpoints has not yet been implemented")
+			return middleware.NotImplemented("operation discovery.GetHaproxyEndpoints has not yet been implemented")
 		}),
 		InformationGetHaproxyProcessInfoHandler: information.GetHaproxyProcessInfoHandlerFunc(func(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation InformationGetHaproxyProcessInfo has not yet been implemented")
+			return middleware.NotImplemented("operation information.GetHaproxyProcessInfo has not yet been implemented")
 		}),
 		InformationGetInfoHandler: information.GetInfoHandlerFunc(func(params information.GetInfoParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation InformationGetInfo has not yet been implemented")
+			return middleware.NotImplemented("operation information.GetInfo has not yet been implemented")
 		}),
 		LogTargetGetLogTargetHandler: log_target.GetLogTargetHandlerFunc(func(params log_target.GetLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetGetLogTarget has not yet been implemented")
+			return middleware.NotImplemented("operation log_target.GetLogTarget has not yet been implemented")
 		}),
 		LogTargetGetLogTargetsHandler: log_target.GetLogTargetsHandlerFunc(func(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetGetLogTargets has not yet been implemented")
+			return middleware.NotImplemented("operation log_target.GetLogTargets has not yet been implemented")
 		}),
 		NameserverGetNameserverHandler: nameserver.GetNameserverHandlerFunc(func(params nameserver.GetNameserverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation NameserverGetNameserver has not yet been implemented")
+			return middleware.NotImplemented("operation nameserver.GetNameserver has not yet been implemented")
 		}),
 		NameserverGetNameserversHandler: nameserver.GetNameserversHandlerFunc(func(params nameserver.GetNameserversParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation NameserverGetNameservers has not yet been implemented")
+			return middleware.NotImplemented("operation nameserver.GetNameservers has not yet been implemented")
 		}),
 		MapsGetOneRuntimeMapHandler: maps.GetOneRuntimeMapHandlerFunc(func(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsGetOneRuntimeMap has not yet been implemented")
+			return middleware.NotImplemented("operation maps.GetOneRuntimeMap has not yet been implemented")
 		}),
 		PeerEntryGetPeerEntriesHandler: peer_entry.GetPeerEntriesHandlerFunc(func(params peer_entry.GetPeerEntriesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerEntryGetPeerEntries has not yet been implemented")
+			return middleware.NotImplemented("operation peer_entry.GetPeerEntries has not yet been implemented")
 		}),
 		PeerEntryGetPeerEntryHandler: peer_entry.GetPeerEntryHandlerFunc(func(params peer_entry.GetPeerEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerEntryGetPeerEntry has not yet been implemented")
+			return middleware.NotImplemented("operation peer_entry.GetPeerEntry has not yet been implemented")
 		}),
 		PeerGetPeerSectionHandler: peer.GetPeerSectionHandlerFunc(func(params peer.GetPeerSectionParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerGetPeerSection has not yet been implemented")
+			return middleware.NotImplemented("operation peer.GetPeerSection has not yet been implemented")
 		}),
 		PeerGetPeerSectionsHandler: peer.GetPeerSectionsHandlerFunc(func(params peer.GetPeerSectionsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerGetPeerSections has not yet been implemented")
+			return middleware.NotImplemented("operation peer.GetPeerSections has not yet been implemented")
 		}),
 		ReloadsGetReloadHandler: reloads.GetReloadHandlerFunc(func(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ReloadsGetReload has not yet been implemented")
+			return middleware.NotImplemented("operation reloads.GetReload has not yet been implemented")
 		}),
 		ReloadsGetReloadsHandler: reloads.GetReloadsHandlerFunc(func(params reloads.GetReloadsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ReloadsGetReloads has not yet been implemented")
+			return middleware.NotImplemented("operation reloads.GetReloads has not yet been implemented")
 		}),
 		ResolverGetResolverHandler: resolver.GetResolverHandlerFunc(func(params resolver.GetResolverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ResolverGetResolver has not yet been implemented")
+			return middleware.NotImplemented("operation resolver.GetResolver has not yet been implemented")
 		}),
 		ResolverGetResolversHandler: resolver.GetResolversHandlerFunc(func(params resolver.GetResolversParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ResolverGetResolvers has not yet been implemented")
+			return middleware.NotImplemented("operation resolver.GetResolvers has not yet been implemented")
 		}),
 		DiscoveryGetRuntimeEndpointsHandler: discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DiscoveryGetRuntimeEndpoints has not yet been implemented")
+			return middleware.NotImplemented("operation discovery.GetRuntimeEndpoints has not yet been implemented")
 		}),
 		MapsGetRuntimeMapEntryHandler: maps.GetRuntimeMapEntryHandlerFunc(func(params maps.GetRuntimeMapEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsGetRuntimeMapEntry has not yet been implemented")
+			return middleware.NotImplemented("operation maps.GetRuntimeMapEntry has not yet been implemented")
 		}),
 		ServerGetRuntimeServerHandler: server.GetRuntimeServerHandlerFunc(func(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerGetRuntimeServer has not yet been implemented")
+			return middleware.NotImplemented("operation server.GetRuntimeServer has not yet been implemented")
 		}),
 		ServerGetRuntimeServersHandler: server.GetRuntimeServersHandlerFunc(func(params server.GetRuntimeServersParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerGetRuntimeServers has not yet been implemented")
+			return middleware.NotImplemented("operation server.GetRuntimeServers has not yet been implemented")
 		}),
 		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerGetServer has not yet been implemented")
+			return middleware.NotImplemented("operation server.GetServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleGetServerSwitchingRuleHandler: server_switching_rule.GetServerSwitchingRuleHandlerFunc(func(params server_switching_rule.GetServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleGetServerSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation server_switching_rule.GetServerSwitchingRule has not yet been implemented")
 		}),
 		ServerSwitchingRuleGetServerSwitchingRulesHandler: server_switching_rule.GetServerSwitchingRulesHandlerFunc(func(params server_switching_rule.GetServerSwitchingRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleGetServerSwitchingRules has not yet been implemented")
+			return middleware.NotImplemented("operation server_switching_rule.GetServerSwitchingRules has not yet been implemented")
 		}),
 		ServerGetServersHandler: server.GetServersHandlerFunc(func(params server.GetServersParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerGetServers has not yet been implemented")
+			return middleware.NotImplemented("operation server.GetServers has not yet been implemented")
 		}),
 		DiscoveryGetServicesEndpointsHandler: discovery.GetServicesEndpointsHandlerFunc(func(params discovery.GetServicesEndpointsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DiscoveryGetServicesEndpoints has not yet been implemented")
+			return middleware.NotImplemented("operation discovery.GetServicesEndpoints has not yet been implemented")
 		}),
 		SitesGetSiteHandler: sites.GetSiteHandlerFunc(func(params sites.GetSiteParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation SitesGetSite has not yet been implemented")
+			return middleware.NotImplemented("operation sites.GetSite has not yet been implemented")
 		}),
 		SitesGetSitesHandler: sites.GetSitesHandlerFunc(func(params sites.GetSitesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation SitesGetSites has not yet been implemented")
+			return middleware.NotImplemented("operation sites.GetSites has not yet been implemented")
 		}),
 		SpecificationGetSpecificationHandler: specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation SpecificationGetSpecification has not yet been implemented")
+			return middleware.NotImplemented("operation specification.GetSpecification has not yet been implemented")
 		}),
 		StatsGetStatsHandler: stats.GetStatsHandlerFunc(func(params stats.GetStatsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StatsGetStats has not yet been implemented")
+			return middleware.NotImplemented("operation stats.GetStats has not yet been implemented")
 		}),
 		DiscoveryGetStatsEndpointsHandler: discovery.GetStatsEndpointsHandlerFunc(func(params discovery.GetStatsEndpointsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DiscoveryGetStatsEndpoints has not yet been implemented")
+			return middleware.NotImplemented("operation discovery.GetStatsEndpoints has not yet been implemented")
 		}),
 		StickRuleGetStickRuleHandler: stick_rule.GetStickRuleHandlerFunc(func(params stick_rule.GetStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleGetStickRule has not yet been implemented")
+			return middleware.NotImplemented("operation stick_rule.GetStickRule has not yet been implemented")
 		}),
 		StickRuleGetStickRulesHandler: stick_rule.GetStickRulesHandlerFunc(func(params stick_rule.GetStickRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleGetStickRules has not yet been implemented")
+			return middleware.NotImplemented("operation stick_rule.GetStickRules has not yet been implemented")
 		}),
 		StickTableGetStickTableHandler: stick_table.GetStickTableHandlerFunc(func(params stick_table.GetStickTableParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickTableGetStickTable has not yet been implemented")
+			return middleware.NotImplemented("operation stick_table.GetStickTable has not yet been implemented")
 		}),
 		StickTableGetStickTableEntriesHandler: stick_table.GetStickTableEntriesHandlerFunc(func(params stick_table.GetStickTableEntriesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickTableGetStickTableEntries has not yet been implemented")
+			return middleware.NotImplemented("operation stick_table.GetStickTableEntries has not yet been implemented")
 		}),
 		StickTableGetStickTablesHandler: stick_table.GetStickTablesHandlerFunc(func(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickTableGetStickTables has not yet been implemented")
+			return middleware.NotImplemented("operation stick_table.GetStickTables has not yet been implemented")
 		}),
 		TCPRequestRuleGetTCPRequestRuleHandler: tcp_request_rule.GetTCPRequestRuleHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleGetTCPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRule has not yet been implemented")
 		}),
 		TCPRequestRuleGetTCPRequestRulesHandler: tcp_request_rule.GetTCPRequestRulesHandlerFunc(func(params tcp_request_rule.GetTCPRequestRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleGetTCPRequestRules has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRules has not yet been implemented")
 		}),
 		TCPResponseRuleGetTCPResponseRuleHandler: tcp_response_rule.GetTCPResponseRuleHandlerFunc(func(params tcp_response_rule.GetTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleGetTCPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_response_rule.GetTCPResponseRule has not yet been implemented")
 		}),
 		TCPResponseRuleGetTCPResponseRulesHandler: tcp_response_rule.GetTCPResponseRulesHandlerFunc(func(params tcp_response_rule.GetTCPResponseRulesParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleGetTCPResponseRules has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_response_rule.GetTCPResponseRules has not yet been implemented")
 		}),
 		TransactionsGetTransactionHandler: transactions.GetTransactionHandlerFunc(func(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TransactionsGetTransaction has not yet been implemented")
+			return middleware.NotImplemented("operation transactions.GetTransaction has not yet been implemented")
 		}),
 		TransactionsGetTransactionsHandler: transactions.GetTransactionsHandlerFunc(func(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TransactionsGetTransactions has not yet been implemented")
+			return middleware.NotImplemented("operation transactions.GetTransactions has not yet been implemented")
 		}),
 		ClusterInitiateCertificateRefreshHandler: cluster.InitiateCertificateRefreshHandlerFunc(func(params cluster.InitiateCertificateRefreshParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ClusterInitiateCertificateRefresh has not yet been implemented")
+			return middleware.NotImplemented("operation cluster.InitiateCertificateRefresh has not yet been implemented")
 		}),
 		ClusterPostClusterHandler: cluster.PostClusterHandlerFunc(func(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ClusterPostCluster has not yet been implemented")
+			return middleware.NotImplemented("operation cluster.PostCluster has not yet been implemented")
 		}),
 		ConfigurationPostHAProxyConfigurationHandler: configuration.PostHAProxyConfigurationHandlerFunc(func(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ConfigurationPostHAProxyConfiguration has not yet been implemented")
+			return middleware.NotImplemented("operation configuration.PostHAProxyConfiguration has not yet been implemented")
 		}),
 		ACLReplaceACLHandler: acl.ReplaceACLHandlerFunc(func(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ACLReplaceACL has not yet been implemented")
+			return middleware.NotImplemented("operation acl.ReplaceACL has not yet been implemented")
 		}),
 		BackendReplaceBackendHandler: backend.ReplaceBackendHandlerFunc(func(params backend.ReplaceBackendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendReplaceBackend has not yet been implemented")
+			return middleware.NotImplemented("operation backend.ReplaceBackend has not yet been implemented")
 		}),
 		BackendSwitchingRuleReplaceBackendSwitchingRuleHandler: backend_switching_rule.ReplaceBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.ReplaceBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BackendSwitchingRuleReplaceBackendSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation backend_switching_rule.ReplaceBackendSwitchingRule has not yet been implemented")
 		}),
 		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation BindReplaceBind has not yet been implemented")
+			return middleware.NotImplemented("operation bind.ReplaceBind has not yet been implemented")
 		}),
 		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation DefaultsReplaceDefaults has not yet been implemented")
+			return middleware.NotImplemented("operation defaults.ReplaceDefaults has not yet been implemented")
 		}),
 		FilterReplaceFilterHandler: filter.ReplaceFilterHandlerFunc(func(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FilterReplaceFilter has not yet been implemented")
+			return middleware.NotImplemented("operation filter.ReplaceFilter has not yet been implemented")
 		}),
 		FrontendReplaceFrontendHandler: frontend.ReplaceFrontendHandlerFunc(func(params frontend.ReplaceFrontendParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation FrontendReplaceFrontend has not yet been implemented")
+			return middleware.NotImplemented("operation frontend.ReplaceFrontend has not yet been implemented")
 		}),
 		GlobalReplaceGlobalHandler: global.ReplaceGlobalHandlerFunc(func(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation GlobalReplaceGlobal has not yet been implemented")
+			return middleware.NotImplemented("operation global.ReplaceGlobal has not yet been implemented")
 		}),
 		HTTPRequestRuleReplaceHTTPRequestRuleHandler: http_request_rule.ReplaceHTTPRequestRuleHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPRequestRuleReplaceHTTPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_request_rule.ReplaceHTTPRequestRule has not yet been implemented")
 		}),
 		HTTPResponseRuleReplaceHTTPResponseRuleHandler: http_response_rule.ReplaceHTTPResponseRuleHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HTTPResponseRuleReplaceHTTPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRule has not yet been implemented")
 		}),
 		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation LogTargetReplaceLogTarget has not yet been implemented")
+			return middleware.NotImplemented("operation log_target.ReplaceLogTarget has not yet been implemented")
 		}),
 		NameserverReplaceNameserverHandler: nameserver.ReplaceNameserverHandlerFunc(func(params nameserver.ReplaceNameserverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation NameserverReplaceNameserver has not yet been implemented")
+			return middleware.NotImplemented("operation nameserver.ReplaceNameserver has not yet been implemented")
 		}),
 		PeerEntryReplacePeerEntryHandler: peer_entry.ReplacePeerEntryHandlerFunc(func(params peer_entry.ReplacePeerEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PeerEntryReplacePeerEntry has not yet been implemented")
+			return middleware.NotImplemented("operation peer_entry.ReplacePeerEntry has not yet been implemented")
 		}),
 		ResolverReplaceResolverHandler: resolver.ReplaceResolverHandlerFunc(func(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ResolverReplaceResolver has not yet been implemented")
+			return middleware.NotImplemented("operation resolver.ReplaceResolver has not yet been implemented")
 		}),
 		MapsReplaceRuntimeMapEntryHandler: maps.ReplaceRuntimeMapEntryHandlerFunc(func(params maps.ReplaceRuntimeMapEntryParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsReplaceRuntimeMapEntry has not yet been implemented")
+			return middleware.NotImplemented("operation maps.ReplaceRuntimeMapEntry has not yet been implemented")
 		}),
 		ServerReplaceRuntimeServerHandler: server.ReplaceRuntimeServerHandlerFunc(func(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerReplaceRuntimeServer has not yet been implemented")
+			return middleware.NotImplemented("operation server.ReplaceRuntimeServer has not yet been implemented")
 		}),
 		ServerReplaceServerHandler: server.ReplaceServerHandlerFunc(func(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerReplaceServer has not yet been implemented")
+			return middleware.NotImplemented("operation server.ReplaceServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleReplaceServerSwitchingRuleHandler: server_switching_rule.ReplaceServerSwitchingRuleHandlerFunc(func(params server_switching_rule.ReplaceServerSwitchingRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation ServerSwitchingRuleReplaceServerSwitchingRule has not yet been implemented")
+			return middleware.NotImplemented("operation server_switching_rule.ReplaceServerSwitchingRule has not yet been implemented")
 		}),
 		SitesReplaceSiteHandler: sites.ReplaceSiteHandlerFunc(func(params sites.ReplaceSiteParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation SitesReplaceSite has not yet been implemented")
+			return middleware.NotImplemented("operation sites.ReplaceSite has not yet been implemented")
 		}),
 		StickRuleReplaceStickRuleHandler: stick_rule.ReplaceStickRuleHandlerFunc(func(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StickRuleReplaceStickRule has not yet been implemented")
+			return middleware.NotImplemented("operation stick_rule.ReplaceStickRule has not yet been implemented")
 		}),
 		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPRequestRuleReplaceTCPRequestRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRule has not yet been implemented")
 		}),
 		TCPResponseRuleReplaceTCPResponseRuleHandler: tcp_response_rule.ReplaceTCPResponseRuleHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TCPResponseRuleReplaceTCPResponseRule has not yet been implemented")
+			return middleware.NotImplemented("operation tcp_response_rule.ReplaceTCPResponseRule has not yet been implemented")
 		}),
 		MapsShowRuntimeMapHandler: maps.ShowRuntimeMapHandlerFunc(func(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation MapsShowRuntimeMap has not yet been implemented")
+			return middleware.NotImplemented("operation maps.ShowRuntimeMap has not yet been implemented")
 		}),
 		TransactionsStartTransactionHandler: transactions.StartTransactionHandlerFunc(func(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation TransactionsStartTransaction has not yet been implemented")
+			return middleware.NotImplemented("operation transactions.StartTransaction has not yet been implemented")
 		}),
 
 		// Applies when the Authorization header is set with the Basic scheme
 		BasicAuthAuth: func(user string, pass string) (interface{}, error) {
 			return nil, errors.NotImplemented("basic auth  (basic_auth) has not yet been implemented")
 		},
-
 		// default authorizer is authorized meaning no requests are blocked
 		APIAuthorizer: security.Authorized(),
 	}
@@ -526,14 +529,18 @@ type DataPlaneAPI struct {
 	// It has a default implementation in the security package, however you can replace it for your particular usage.
 	BearerAuthenticator func(string, security.ScopedTokenAuthentication) runtime.Authenticator
 
-	// JSONConsumer registers a consumer for a "application/json" mime type
+	// JSONConsumer registers a consumer for the following mime types:
+	//   - application/json
 	JSONConsumer runtime.Consumer
-	// MultipartformConsumer registers a consumer for a "multipart/form-data" mime type
+	// MultipartformConsumer registers a consumer for the following mime types:
+	//   - multipart/form-data
 	MultipartformConsumer runtime.Consumer
-	// TxtConsumer registers a consumer for a "text/plain" mime type
+	// TxtConsumer registers a consumer for the following mime types:
+	//   - text/plain
 	TxtConsumer runtime.Consumer
 
-	// JSONProducer registers a producer for a "application/json" mime type
+	// JSONProducer registers a producer for the following mime types:
+	//   - application/json
 	JSONProducer runtime.Producer
 
 	// BasicAuthAuth registers a function that takes username and password and returns a principal
@@ -813,10 +820,13 @@ type DataPlaneAPI struct {
 	MapsShowRuntimeMapHandler maps.ShowRuntimeMapHandler
 	// TransactionsStartTransactionHandler sets the operation handler for the start transaction operation
 	TransactionsStartTransactionHandler transactions.StartTransactionHandler
-
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
+
+	// PreServerShutdown is called before the HTTP(S) server is shutdown
+	// This allows for custom functions to get executed before the HTTP(S) server stops accepting traffic
+	PreServerShutdown func()
 
 	// ServerShutdown is called when the HTTP(S) server is shut down and done
 	// handling all active connections and does not accept connections any more
@@ -871,11 +881,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.JSONConsumer == nil {
 		unregistered = append(unregistered, "JSONConsumer")
 	}
-
 	if o.MultipartformConsumer == nil {
 		unregistered = append(unregistered, "MultipartformConsumer")
 	}
-
 	if o.TxtConsumer == nil {
 		unregistered = append(unregistered, "TxtConsumer")
 	}
@@ -891,539 +899,405 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.MapsAddMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.AddMapEntryHandler")
 	}
-
 	if o.MapsClearRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ClearRuntimeMapHandler")
 	}
-
 	if o.TransactionsCommitTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.CommitTransactionHandler")
 	}
-
 	if o.ACLCreateACLHandler == nil {
 		unregistered = append(unregistered, "acl.CreateACLHandler")
 	}
-
 	if o.BackendCreateBackendHandler == nil {
 		unregistered = append(unregistered, "backend.CreateBackendHandler")
 	}
-
 	if o.BackendSwitchingRuleCreateBackendSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "backend_switching_rule.CreateBackendSwitchingRuleHandler")
 	}
-
 	if o.BindCreateBindHandler == nil {
 		unregistered = append(unregistered, "bind.CreateBindHandler")
 	}
-
 	if o.FilterCreateFilterHandler == nil {
 		unregistered = append(unregistered, "filter.CreateFilterHandler")
 	}
-
 	if o.FrontendCreateFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.CreateFrontendHandler")
 	}
-
 	if o.HTTPRequestRuleCreateHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.CreateHTTPRequestRuleHandler")
 	}
-
 	if o.HTTPResponseRuleCreateHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleHandler")
 	}
-
 	if o.LogTargetCreateLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.CreateLogTargetHandler")
 	}
-
 	if o.NameserverCreateNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.CreateNameserverHandler")
 	}
-
 	if o.PeerCreatePeerHandler == nil {
 		unregistered = append(unregistered, "peer.CreatePeerHandler")
 	}
-
 	if o.PeerEntryCreatePeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.CreatePeerEntryHandler")
 	}
-
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
 	}
-
 	if o.MapsCreateRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.CreateRuntimeMapHandler")
 	}
-
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
 	}
-
 	if o.ServerSwitchingRuleCreateServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.CreateServerSwitchingRuleHandler")
 	}
-
 	if o.SitesCreateSiteHandler == nil {
 		unregistered = append(unregistered, "sites.CreateSiteHandler")
 	}
-
 	if o.StickRuleCreateStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.CreateStickRuleHandler")
 	}
-
 	if o.TCPRequestRuleCreateTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleHandler")
 	}
-
 	if o.TCPResponseRuleCreateTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleHandler")
 	}
-
 	if o.ACLDeleteACLHandler == nil {
 		unregistered = append(unregistered, "acl.DeleteACLHandler")
 	}
-
 	if o.BackendDeleteBackendHandler == nil {
 		unregistered = append(unregistered, "backend.DeleteBackendHandler")
 	}
-
 	if o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "backend_switching_rule.DeleteBackendSwitchingRuleHandler")
 	}
-
 	if o.BindDeleteBindHandler == nil {
 		unregistered = append(unregistered, "bind.DeleteBindHandler")
 	}
-
 	if o.FilterDeleteFilterHandler == nil {
 		unregistered = append(unregistered, "filter.DeleteFilterHandler")
 	}
-
 	if o.FrontendDeleteFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.DeleteFrontendHandler")
 	}
-
 	if o.HTTPRequestRuleDeleteHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.DeleteHTTPRequestRuleHandler")
 	}
-
 	if o.HTTPResponseRuleDeleteHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleHandler")
 	}
-
 	if o.LogTargetDeleteLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.DeleteLogTargetHandler")
 	}
-
 	if o.NameserverDeleteNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.DeleteNameserverHandler")
 	}
-
 	if o.PeerDeletePeerHandler == nil {
 		unregistered = append(unregistered, "peer.DeletePeerHandler")
 	}
-
 	if o.PeerEntryDeletePeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.DeletePeerEntryHandler")
 	}
-
 	if o.ResolverDeleteResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.DeleteResolverHandler")
 	}
-
 	if o.MapsDeleteRuntimeMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.DeleteRuntimeMapEntryHandler")
 	}
-
 	if o.ServerDeleteServerHandler == nil {
 		unregistered = append(unregistered, "server.DeleteServerHandler")
 	}
-
 	if o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.DeleteServerSwitchingRuleHandler")
 	}
-
 	if o.SitesDeleteSiteHandler == nil {
 		unregistered = append(unregistered, "sites.DeleteSiteHandler")
 	}
-
 	if o.StickRuleDeleteStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.DeleteStickRuleHandler")
 	}
-
 	if o.TCPRequestRuleDeleteTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleHandler")
 	}
-
 	if o.TCPResponseRuleDeleteTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.DeleteTCPResponseRuleHandler")
 	}
-
 	if o.TransactionsDeleteTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.DeleteTransactionHandler")
 	}
-
 	if o.DiscoveryGetAPIEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetAPIEndpointsHandler")
 	}
-
 	if o.ACLGetACLHandler == nil {
 		unregistered = append(unregistered, "acl.GetACLHandler")
 	}
-
 	if o.ACLGetAclsHandler == nil {
 		unregistered = append(unregistered, "acl.GetAclsHandler")
 	}
-
 	if o.MapsGetAllRuntimeMapFilesHandler == nil {
 		unregistered = append(unregistered, "maps.GetAllRuntimeMapFilesHandler")
 	}
-
 	if o.BackendGetBackendHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendHandler")
 	}
-
 	if o.BackendSwitchingRuleGetBackendSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "backend_switching_rule.GetBackendSwitchingRuleHandler")
 	}
-
 	if o.BackendSwitchingRuleGetBackendSwitchingRulesHandler == nil {
 		unregistered = append(unregistered, "backend_switching_rule.GetBackendSwitchingRulesHandler")
 	}
-
 	if o.BackendGetBackendsHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendsHandler")
 	}
-
 	if o.BindGetBindHandler == nil {
 		unregistered = append(unregistered, "bind.GetBindHandler")
 	}
-
 	if o.BindGetBindsHandler == nil {
 		unregistered = append(unregistered, "bind.GetBindsHandler")
 	}
-
 	if o.DiscoveryGetClusterHandler == nil {
 		unregistered = append(unregistered, "discovery.GetClusterHandler")
 	}
-
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
 	}
-
 	if o.DefaultsGetDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
 	}
-
 	if o.FilterGetFilterHandler == nil {
 		unregistered = append(unregistered, "filter.GetFilterHandler")
 	}
-
 	if o.FilterGetFiltersHandler == nil {
 		unregistered = append(unregistered, "filter.GetFiltersHandler")
 	}
-
 	if o.FrontendGetFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.GetFrontendHandler")
 	}
-
 	if o.FrontendGetFrontendsHandler == nil {
 		unregistered = append(unregistered, "frontend.GetFrontendsHandler")
 	}
-
 	if o.GlobalGetGlobalHandler == nil {
 		unregistered = append(unregistered, "global.GetGlobalHandler")
 	}
-
 	if o.ConfigurationGetHAProxyConfigurationHandler == nil {
 		unregistered = append(unregistered, "configuration.GetHAProxyConfigurationHandler")
 	}
-
 	if o.HTTPRequestRuleGetHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRuleHandler")
 	}
-
 	if o.HTTPRequestRuleGetHTTPRequestRulesHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRulesHandler")
 	}
-
 	if o.HTTPResponseRuleGetHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.GetHTTPResponseRuleHandler")
 	}
-
 	if o.HTTPResponseRuleGetHTTPResponseRulesHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.GetHTTPResponseRulesHandler")
 	}
-
 	if o.DiscoveryGetHaproxyEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetHaproxyEndpointsHandler")
 	}
-
 	if o.InformationGetHaproxyProcessInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetHaproxyProcessInfoHandler")
 	}
-
 	if o.InformationGetInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetInfoHandler")
 	}
-
 	if o.LogTargetGetLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.GetLogTargetHandler")
 	}
-
 	if o.LogTargetGetLogTargetsHandler == nil {
 		unregistered = append(unregistered, "log_target.GetLogTargetsHandler")
 	}
-
 	if o.NameserverGetNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.GetNameserverHandler")
 	}
-
 	if o.NameserverGetNameserversHandler == nil {
 		unregistered = append(unregistered, "nameserver.GetNameserversHandler")
 	}
-
 	if o.MapsGetOneRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.GetOneRuntimeMapHandler")
 	}
-
 	if o.PeerEntryGetPeerEntriesHandler == nil {
 		unregistered = append(unregistered, "peer_entry.GetPeerEntriesHandler")
 	}
-
 	if o.PeerEntryGetPeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.GetPeerEntryHandler")
 	}
-
 	if o.PeerGetPeerSectionHandler == nil {
 		unregistered = append(unregistered, "peer.GetPeerSectionHandler")
 	}
-
 	if o.PeerGetPeerSectionsHandler == nil {
 		unregistered = append(unregistered, "peer.GetPeerSectionsHandler")
 	}
-
 	if o.ReloadsGetReloadHandler == nil {
 		unregistered = append(unregistered, "reloads.GetReloadHandler")
 	}
-
 	if o.ReloadsGetReloadsHandler == nil {
 		unregistered = append(unregistered, "reloads.GetReloadsHandler")
 	}
-
 	if o.ResolverGetResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.GetResolverHandler")
 	}
-
 	if o.ResolverGetResolversHandler == nil {
 		unregistered = append(unregistered, "resolver.GetResolversHandler")
 	}
-
 	if o.DiscoveryGetRuntimeEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetRuntimeEndpointsHandler")
 	}
-
 	if o.MapsGetRuntimeMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.GetRuntimeMapEntryHandler")
 	}
-
 	if o.ServerGetRuntimeServerHandler == nil {
 		unregistered = append(unregistered, "server.GetRuntimeServerHandler")
 	}
-
 	if o.ServerGetRuntimeServersHandler == nil {
 		unregistered = append(unregistered, "server.GetRuntimeServersHandler")
 	}
-
 	if o.ServerGetServerHandler == nil {
 		unregistered = append(unregistered, "server.GetServerHandler")
 	}
-
 	if o.ServerSwitchingRuleGetServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.GetServerSwitchingRuleHandler")
 	}
-
 	if o.ServerSwitchingRuleGetServerSwitchingRulesHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.GetServerSwitchingRulesHandler")
 	}
-
 	if o.ServerGetServersHandler == nil {
 		unregistered = append(unregistered, "server.GetServersHandler")
 	}
-
 	if o.DiscoveryGetServicesEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetServicesEndpointsHandler")
 	}
-
 	if o.SitesGetSiteHandler == nil {
 		unregistered = append(unregistered, "sites.GetSiteHandler")
 	}
-
 	if o.SitesGetSitesHandler == nil {
 		unregistered = append(unregistered, "sites.GetSitesHandler")
 	}
-
 	if o.SpecificationGetSpecificationHandler == nil {
 		unregistered = append(unregistered, "specification.GetSpecificationHandler")
 	}
-
 	if o.StatsGetStatsHandler == nil {
 		unregistered = append(unregistered, "stats.GetStatsHandler")
 	}
-
 	if o.DiscoveryGetStatsEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetStatsEndpointsHandler")
 	}
-
 	if o.StickRuleGetStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.GetStickRuleHandler")
 	}
-
 	if o.StickRuleGetStickRulesHandler == nil {
 		unregistered = append(unregistered, "stick_rule.GetStickRulesHandler")
 	}
-
 	if o.StickTableGetStickTableHandler == nil {
 		unregistered = append(unregistered, "stick_table.GetStickTableHandler")
 	}
-
 	if o.StickTableGetStickTableEntriesHandler == nil {
 		unregistered = append(unregistered, "stick_table.GetStickTableEntriesHandler")
 	}
-
 	if o.StickTableGetStickTablesHandler == nil {
 		unregistered = append(unregistered, "stick_table.GetStickTablesHandler")
 	}
-
 	if o.TCPRequestRuleGetTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleHandler")
 	}
-
 	if o.TCPRequestRuleGetTCPRequestRulesHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRulesHandler")
 	}
-
 	if o.TCPResponseRuleGetTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRuleHandler")
 	}
-
 	if o.TCPResponseRuleGetTCPResponseRulesHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRulesHandler")
 	}
-
 	if o.TransactionsGetTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionHandler")
 	}
-
 	if o.TransactionsGetTransactionsHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionsHandler")
 	}
-
 	if o.ClusterInitiateCertificateRefreshHandler == nil {
 		unregistered = append(unregistered, "cluster.InitiateCertificateRefreshHandler")
 	}
-
 	if o.ClusterPostClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.PostClusterHandler")
 	}
-
 	if o.ConfigurationPostHAProxyConfigurationHandler == nil {
 		unregistered = append(unregistered, "configuration.PostHAProxyConfigurationHandler")
 	}
-
 	if o.ACLReplaceACLHandler == nil {
 		unregistered = append(unregistered, "acl.ReplaceACLHandler")
 	}
-
 	if o.BackendReplaceBackendHandler == nil {
 		unregistered = append(unregistered, "backend.ReplaceBackendHandler")
 	}
-
 	if o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "backend_switching_rule.ReplaceBackendSwitchingRuleHandler")
 	}
-
 	if o.BindReplaceBindHandler == nil {
 		unregistered = append(unregistered, "bind.ReplaceBindHandler")
 	}
-
 	if o.DefaultsReplaceDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
 	}
-
 	if o.FilterReplaceFilterHandler == nil {
 		unregistered = append(unregistered, "filter.ReplaceFilterHandler")
 	}
-
 	if o.FrontendReplaceFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.ReplaceFrontendHandler")
 	}
-
 	if o.GlobalReplaceGlobalHandler == nil {
 		unregistered = append(unregistered, "global.ReplaceGlobalHandler")
 	}
-
 	if o.HTTPRequestRuleReplaceHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleHandler")
 	}
-
 	if o.HTTPResponseRuleReplaceHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleHandler")
 	}
-
 	if o.LogTargetReplaceLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
 	}
-
 	if o.NameserverReplaceNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.ReplaceNameserverHandler")
 	}
-
 	if o.PeerEntryReplacePeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.ReplacePeerEntryHandler")
 	}
-
 	if o.ResolverReplaceResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.ReplaceResolverHandler")
 	}
-
 	if o.MapsReplaceRuntimeMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.ReplaceRuntimeMapEntryHandler")
 	}
-
 	if o.ServerReplaceRuntimeServerHandler == nil {
 		unregistered = append(unregistered, "server.ReplaceRuntimeServerHandler")
 	}
-
 	if o.ServerReplaceServerHandler == nil {
 		unregistered = append(unregistered, "server.ReplaceServerHandler")
 	}
-
 	if o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.ReplaceServerSwitchingRuleHandler")
 	}
-
 	if o.SitesReplaceSiteHandler == nil {
 		unregistered = append(unregistered, "sites.ReplaceSiteHandler")
 	}
-
 	if o.StickRuleReplaceStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.ReplaceStickRuleHandler")
 	}
-
 	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
 	}
-
 	if o.TCPResponseRuleReplaceTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleHandler")
 	}
-
 	if o.MapsShowRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ShowRuntimeMapHandler")
 	}
-
 	if o.TransactionsStartTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.StartTransactionHandler")
 	}
@@ -1442,44 +1316,34 @@ func (o *DataPlaneAPI) ServeErrorFor(operationID string) func(http.ResponseWrite
 
 // AuthenticatorsFor gets the authenticators for the specified security schemes
 func (o *DataPlaneAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
-
 	result := make(map[string]runtime.Authenticator)
-	for name, scheme := range schemes {
+	for name := range schemes {
 		switch name {
-
 		case "basic_auth":
-			_ = scheme
 			result[name] = o.BasicAuthenticator(o.BasicAuthAuth)
 
 		}
 	}
 	return result
-
 }
 
 // Authorizer returns the registered authorizer
 func (o *DataPlaneAPI) Authorizer() runtime.Authorizer {
-
 	return o.APIAuthorizer
-
 }
 
-// ConsumersFor gets the consumers for the specified media types
+// ConsumersFor gets the consumers for the specified media types.
+// MIME type parameters are ignored here.
 func (o *DataPlaneAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
-
-	result := make(map[string]runtime.Consumer)
+	result := make(map[string]runtime.Consumer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
-
 		case "application/json":
 			result["application/json"] = o.JSONConsumer
-
 		case "multipart/form-data":
 			result["multipart/form-data"] = o.MultipartformConsumer
-
 		case "text/plain":
 			result["text/plain"] = o.TxtConsumer
-
 		}
 
 		if c, ok := o.customConsumers[mt]; ok {
@@ -1487,19 +1351,16 @@ func (o *DataPlaneAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Cons
 		}
 	}
 	return result
-
 }
 
-// ProducersFor gets the producers for the specified media types
+// ProducersFor gets the producers for the specified media types.
+// MIME type parameters are ignored here.
 func (o *DataPlaneAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
-
-	result := make(map[string]runtime.Producer)
+	result := make(map[string]runtime.Producer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
-
 		case "application/json":
 			result["application/json"] = o.JSONProducer
-
 		}
 
 		if p, ok := o.customProducers[mt]; ok {
@@ -1507,7 +1368,6 @@ func (o *DataPlaneAPI) ProducersFor(mediaTypes []string) map[string]runtime.Prod
 		}
 	}
 	return result
-
 }
 
 // HandlerFor gets a http.Handler for the provided operation method and path
@@ -1537,7 +1397,6 @@ func (o *DataPlaneAPI) Context() *middleware.Context {
 
 func (o *DataPlaneAPI) initHandlerCache() {
 	o.Context() // don't care about the result, just that the initialization happened
-
 	if o.handlers == nil {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
@@ -1546,677 +1405,542 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/runtime/maps_entries"] = maps.NewAddMapEntry(o.context, o.MapsAddMapEntryHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/runtime/maps/{name}"] = maps.NewClearRuntimeMap(o.context, o.MapsClearRuntimeMapHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/transactions/{id}"] = transactions.NewCommitTransaction(o.context, o.TransactionsCommitTransactionHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/acls"] = acl.NewCreateACL(o.context, o.ACLCreateACLHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends"] = backend.NewCreateBackend(o.context, o.BackendCreateBackendHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/backend_switching_rules"] = backend_switching_rule.NewCreateBackendSwitchingRule(o.context, o.BackendSwitchingRuleCreateBackendSwitchingRuleHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/binds"] = bind.NewCreateBind(o.context, o.BindCreateBindHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/frontends"] = frontend.NewCreateFrontend(o.context, o.FrontendCreateFrontendHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/http_request_rules"] = http_request_rule.NewCreateHTTPRequestRule(o.context, o.HTTPRequestRuleCreateHTTPRequestRuleHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/http_response_rules"] = http_response_rule.NewCreateHTTPResponseRule(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/log_targets"] = log_target.NewCreateLogTarget(o.context, o.LogTargetCreateLogTargetHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/nameservers"] = nameserver.NewCreateNameserver(o.context, o.NameserverCreateNameserverHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/peer_section"] = peer.NewCreatePeer(o.context, o.PeerCreatePeerHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/peer_entries"] = peer_entry.NewCreatePeerEntry(o.context, o.PeerEntryCreatePeerEntryHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/resolvers"] = resolver.NewCreateResolver(o.context, o.ResolverCreateResolverHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/runtime/maps"] = maps.NewCreateRuntimeMap(o.context, o.MapsCreateRuntimeMapHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/server_switching_rules"] = server_switching_rule.NewCreateServerSwitchingRule(o.context, o.ServerSwitchingRuleCreateServerSwitchingRuleHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/sites"] = sites.NewCreateSite(o.context, o.SitesCreateSiteHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewCreateStickRule(o.context, o.StickRuleCreateStickRuleHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewCreateTCPRequestRule(o.context, o.TCPRequestRuleCreateTCPRequestRuleHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/acls/{index}"] = acl.NewDeleteACL(o.context, o.ACLDeleteACLHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{name}"] = backend.NewDeleteBackend(o.context, o.BackendDeleteBackendHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewDeleteBackendSwitchingRule(o.context, o.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/binds/{name}"] = bind.NewDeleteBind(o.context, o.BindDeleteBindHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/filters/{index}"] = filter.NewDeleteFilter(o.context, o.FilterDeleteFilterHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{name}"] = frontend.NewDeleteFrontend(o.context, o.FrontendDeleteFrontendHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/http_request_rules/{index}"] = http_request_rule.NewDeleteHTTPRequestRule(o.context, o.HTTPRequestRuleDeleteHTTPRequestRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewDeleteHTTPResponseRule(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewDeleteLogTarget(o.context, o.LogTargetDeleteLogTargetHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewDeleteNameserver(o.context, o.NameserverDeleteNameserverHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/peer_section/{name}"] = peer.NewDeletePeer(o.context, o.PeerDeletePeerHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewDeletePeerEntry(o.context, o.PeerEntryDeletePeerEntryHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewDeleteResolver(o.context, o.ResolverDeleteResolverHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/runtime/maps_entries/{id}"] = maps.NewDeleteRuntimeMapEntry(o.context, o.MapsDeleteRuntimeMapEntryHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/servers/{name}"] = server.NewDeleteServer(o.context, o.ServerDeleteServerHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewDeleteServerSwitchingRule(o.context, o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/sites/{name}"] = sites.NewDeleteSite(o.context, o.SitesDeleteSiteHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewDeleteStickRule(o.context, o.StickRuleDeleteStickRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewDeleteTCPRequestRule(o.context, o.TCPRequestRuleDeleteTCPRequestRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewDeleteTCPResponseRule(o.context, o.TCPResponseRuleDeleteTCPResponseRuleHandler)
-
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/transactions/{id}"] = transactions.NewDeleteTransaction(o.context, o.TransactionsDeleteTransactionHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"][""] = discovery.NewGetAPIEndpoints(o.context, o.DiscoveryGetAPIEndpointsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/acls/{index}"] = acl.NewGetACL(o.context, o.ACLGetACLHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/acls"] = acl.NewGetAcls(o.context, o.ACLGetAclsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps"] = maps.NewGetAllRuntimeMapFiles(o.context, o.MapsGetAllRuntimeMapFilesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{name}"] = backend.NewGetBackend(o.context, o.BackendGetBackendHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewGetBackendSwitchingRule(o.context, o.BackendSwitchingRuleGetBackendSwitchingRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backend_switching_rules"] = backend_switching_rule.NewGetBackendSwitchingRules(o.context, o.BackendSwitchingRuleGetBackendSwitchingRulesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends"] = backend.NewGetBackends(o.context, o.BackendGetBackendsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/binds/{name}"] = bind.NewGetBind(o.context, o.BindGetBindHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/binds"] = bind.NewGetBinds(o.context, o.BindGetBindsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/cluster"] = discovery.NewGetCluster(o.context, o.DiscoveryGetClusterHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration"] = discovery.NewGetConfigurationEndpoints(o.context, o.DiscoveryGetConfigurationEndpointsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/defaults"] = defaults.NewGetDefaults(o.context, o.DefaultsGetDefaultsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/filters/{index}"] = filter.NewGetFilter(o.context, o.FilterGetFilterHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/filters"] = filter.NewGetFilters(o.context, o.FilterGetFiltersHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends/{name}"] = frontend.NewGetFrontend(o.context, o.FrontendGetFrontendHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/frontends"] = frontend.NewGetFrontends(o.context, o.FrontendGetFrontendsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/global"] = global.NewGetGlobal(o.context, o.GlobalGetGlobalHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/raw"] = configuration.NewGetHAProxyConfiguration(o.context, o.ConfigurationGetHAProxyConfigurationHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/http_request_rules/{index}"] = http_request_rule.NewGetHTTPRequestRule(o.context, o.HTTPRequestRuleGetHTTPRequestRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/http_request_rules"] = http_request_rule.NewGetHTTPRequestRules(o.context, o.HTTPRequestRuleGetHTTPRequestRulesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewGetHTTPResponseRule(o.context, o.HTTPResponseRuleGetHTTPResponseRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/http_response_rules"] = http_response_rule.NewGetHTTPResponseRules(o.context, o.HTTPResponseRuleGetHTTPResponseRulesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy"] = discovery.NewGetHaproxyEndpoints(o.context, o.DiscoveryGetHaproxyEndpointsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/info"] = information.NewGetHaproxyProcessInfo(o.context, o.InformationGetHaproxyProcessInfoHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/info"] = information.NewGetInfo(o.context, o.InformationGetInfoHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewGetLogTarget(o.context, o.LogTargetGetLogTargetHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/log_targets"] = log_target.NewGetLogTargets(o.context, o.LogTargetGetLogTargetsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewGetNameserver(o.context, o.NameserverGetNameserverHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/nameservers"] = nameserver.NewGetNameservers(o.context, o.NameserverGetNameserversHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps/{name}"] = maps.NewGetOneRuntimeMap(o.context, o.MapsGetOneRuntimeMapHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/peer_entries"] = peer_entry.NewGetPeerEntries(o.context, o.PeerEntryGetPeerEntriesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewGetPeerEntry(o.context, o.PeerEntryGetPeerEntryHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/peer_section/{name}"] = peer.NewGetPeerSection(o.context, o.PeerGetPeerSectionHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/peer_section"] = peer.NewGetPeerSections(o.context, o.PeerGetPeerSectionsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/reloads/{id}"] = reloads.NewGetReload(o.context, o.ReloadsGetReloadHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/reloads"] = reloads.NewGetReloads(o.context, o.ReloadsGetReloadsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewGetResolver(o.context, o.ResolverGetResolverHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/resolvers"] = resolver.NewGetResolvers(o.context, o.ResolverGetResolversHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime"] = discovery.NewGetRuntimeEndpoints(o.context, o.DiscoveryGetRuntimeEndpointsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps_entries/{id}"] = maps.NewGetRuntimeMapEntry(o.context, o.MapsGetRuntimeMapEntryHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/servers/{name}"] = server.NewGetRuntimeServer(o.context, o.ServerGetRuntimeServerHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/servers"] = server.NewGetRuntimeServers(o.context, o.ServerGetRuntimeServersHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/servers/{name}"] = server.NewGetServer(o.context, o.ServerGetServerHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewGetServerSwitchingRule(o.context, o.ServerSwitchingRuleGetServerSwitchingRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/server_switching_rules"] = server_switching_rule.NewGetServerSwitchingRules(o.context, o.ServerSwitchingRuleGetServerSwitchingRulesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/servers"] = server.NewGetServers(o.context, o.ServerGetServersHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services"] = discovery.NewGetServicesEndpoints(o.context, o.DiscoveryGetServicesEndpointsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/sites/{name}"] = sites.NewGetSite(o.context, o.SitesGetSiteHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/sites"] = sites.NewGetSites(o.context, o.SitesGetSitesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/specification"] = specification.NewGetSpecification(o.context, o.SpecificationGetSpecificationHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/stats/native"] = stats.NewGetStats(o.context, o.StatsGetStatsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/stats"] = discovery.NewGetStatsEndpoints(o.context, o.DiscoveryGetStatsEndpointsHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewGetStickRule(o.context, o.StickRuleGetStickRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewGetStickRules(o.context, o.StickRuleGetStickRulesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/stick_tables/{name}"] = stick_table.NewGetStickTable(o.context, o.StickTableGetStickTableHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/stick_table_entries"] = stick_table.NewGetStickTableEntries(o.context, o.StickTableGetStickTableEntriesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/stick_tables"] = stick_table.NewGetStickTables(o.context, o.StickTableGetStickTablesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewGetTCPRequestRule(o.context, o.TCPRequestRuleGetTCPRequestRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewGetTCPRequestRules(o.context, o.TCPRequestRuleGetTCPRequestRulesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewGetTCPResponseRule(o.context, o.TCPResponseRuleGetTCPResponseRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewGetTCPResponseRules(o.context, o.TCPResponseRuleGetTCPResponseRulesHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/transactions/{id}"] = transactions.NewGetTransaction(o.context, o.TransactionsGetTransactionHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/transactions"] = transactions.NewGetTransactions(o.context, o.TransactionsGetTransactionsHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/cluster/certificate"] = cluster.NewInitiateCertificateRefresh(o.context, o.ClusterInitiateCertificateRefreshHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/cluster"] = cluster.NewPostCluster(o.context, o.ClusterPostClusterHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/raw"] = configuration.NewPostHAProxyConfiguration(o.context, o.ConfigurationPostHAProxyConfigurationHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/acls/{index}"] = acl.NewReplaceACL(o.context, o.ACLReplaceACLHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{name}"] = backend.NewReplaceBackend(o.context, o.BackendReplaceBackendHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewReplaceBackendSwitchingRule(o.context, o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/binds/{name}"] = bind.NewReplaceBind(o.context, o.BindReplaceBindHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/defaults"] = defaults.NewReplaceDefaults(o.context, o.DefaultsReplaceDefaultsHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/filters/{index}"] = filter.NewReplaceFilter(o.context, o.FilterReplaceFilterHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{name}"] = frontend.NewReplaceFrontend(o.context, o.FrontendReplaceFrontendHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/global"] = global.NewReplaceGlobal(o.context, o.GlobalReplaceGlobalHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_request_rules/{index}"] = http_request_rule.NewReplaceHTTPRequestRule(o.context, o.HTTPRequestRuleReplaceHTTPRequestRuleHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewReplaceHTTPResponseRule(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewReplaceNameserver(o.context, o.NameserverReplaceNameserverHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewReplacePeerEntry(o.context, o.PeerEntryReplacePeerEntryHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewReplaceResolver(o.context, o.ResolverReplaceResolverHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/runtime/maps_entries/{id}"] = maps.NewReplaceRuntimeMapEntry(o.context, o.MapsReplaceRuntimeMapEntryHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/runtime/servers/{name}"] = server.NewReplaceRuntimeServer(o.context, o.ServerReplaceRuntimeServerHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/servers/{name}"] = server.NewReplaceServer(o.context, o.ServerReplaceServerHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewReplaceServerSwitchingRule(o.context, o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/sites/{name}"] = sites.NewReplaceSite(o.context, o.SitesReplaceSiteHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewReplaceTCPRequestRule(o.context, o.TCPRequestRuleReplaceTCPRequestRuleHandler)
-
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
-
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps_entries"] = maps.NewShowRuntimeMap(o.context, o.MapsShowRuntimeMapHandler)
-
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/transactions"] = transactions.NewStartTransaction(o.context, o.TransactionsStartTransactionHandler)
-
 }
 
 // Serve creates a http handler to serve the API over HTTP
@@ -2245,4 +1969,16 @@ func (o *DataPlaneAPI) RegisterConsumer(mediaType string, consumer runtime.Consu
 // RegisterProducer allows you to add (or override) a producer for a media type.
 func (o *DataPlaneAPI) RegisterProducer(mediaType string, producer runtime.Producer) {
 	o.customProducers[mediaType] = producer
+}
+
+// AddMiddlewareFor adds a http middleware to existing handler
+func (o *DataPlaneAPI) AddMiddlewareFor(method, path string, builder middleware.Builder) {
+	um := strings.ToUpper(method)
+	if path == "/" {
+		path = ""
+	}
+	o.Init()
+	if h, ok := o.handlers[um][path]; ok {
+		o.handlers[method][path] = builder(h)
+	}
 }

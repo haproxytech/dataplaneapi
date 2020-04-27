@@ -23,12 +23,12 @@ package stick_rule
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetStickRuleHandlerFunc turns a function with the right signature into a get stick rule handler
@@ -93,6 +93,7 @@ func (o *GetStickRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetStickRuleOKBody get stick rule o k body
+//
 // swagger:model GetStickRuleOKBody
 type GetStickRuleOKBody struct {
 

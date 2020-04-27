@@ -78,22 +78,22 @@ func (o *GetLogTargetURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	parentName := o.ParentName
-	if parentName != "" {
-		qs.Set("parent_name", parentName)
+	parentNameQ := o.ParentName
+	if parentNameQ != "" {
+		qs.Set("parent_name", parentNameQ)
 	}
 
-	parentType := o.ParentType
-	if parentType != "" {
-		qs.Set("parent_type", parentType)
+	parentTypeQ := o.ParentType
+	if parentTypeQ != "" {
+		qs.Set("parent_type", parentTypeQ)
 	}
 
-	var transactionID string
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
 	_result.RawQuery = qs.Encode()

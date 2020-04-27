@@ -23,7 +23,7 @@ package tcp_request_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteTCPRequestRuleHandlerFunc turns a function with the right signature into a delete TCP request rule handler

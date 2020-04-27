@@ -23,7 +23,7 @@ package configuration
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // PostHAProxyConfigurationHandlerFunc turns a function with the right signature into a post h a proxy configuration handler

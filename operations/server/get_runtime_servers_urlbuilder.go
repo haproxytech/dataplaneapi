@@ -64,9 +64,9 @@ func (o *GetRuntimeServersURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	backend := o.Backend
-	if backend != "" {
-		qs.Set("backend", backend)
+	backendQ := o.Backend
+	if backendQ != "" {
+		qs.Set("backend", backendQ)
 	}
 
 	_result.RawQuery = qs.Encode()

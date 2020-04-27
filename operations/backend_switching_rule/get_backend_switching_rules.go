@@ -23,13 +23,13 @@ package backend_switching_rule
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
-	validate "github.com/go-openapi/validate"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetBackendSwitchingRulesHandlerFunc turns a function with the right signature into a get backend switching rules handler
@@ -94,6 +94,7 @@ func (o *GetBackendSwitchingRules) ServeHTTP(rw http.ResponseWriter, r *http.Req
 }
 
 // GetBackendSwitchingRulesOKBody get backend switching rules o k body
+//
 // swagger:model GetBackendSwitchingRulesOKBody
 type GetBackendSwitchingRulesOKBody struct {
 

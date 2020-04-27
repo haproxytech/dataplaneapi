@@ -77,17 +77,17 @@ func (o *GetServerSwitchingRuleURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	backend := o.Backend
-	if backend != "" {
-		qs.Set("backend", backend)
+	backendQ := o.Backend
+	if backendQ != "" {
+		qs.Set("backend", backendQ)
 	}
 
-	var transactionID string
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
 	_result.RawQuery = qs.Encode()

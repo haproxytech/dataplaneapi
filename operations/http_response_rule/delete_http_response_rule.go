@@ -23,7 +23,7 @@ package http_response_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteHTTPResponseRuleHandlerFunc turns a function with the right signature into a delete HTTP response rule handler

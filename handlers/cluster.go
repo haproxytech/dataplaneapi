@@ -22,7 +22,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/operations/cluster"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 //CreateClusterHandlerImpl implementation of the CreateClusterHandler interface

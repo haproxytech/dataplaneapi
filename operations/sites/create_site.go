@@ -23,7 +23,7 @@ package sites
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateSiteHandlerFunc turns a function with the right signature into a create site handler

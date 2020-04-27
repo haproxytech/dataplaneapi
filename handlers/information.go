@@ -30,10 +30,10 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	client_native "github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/information"
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 //GetHaproxyProcessInfoHandlerImpl implementation of the GetHaproxyProcessInfoHandler interface using client-native client

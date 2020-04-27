@@ -76,12 +76,12 @@ func (o *CommitTransactionURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var forceReload string
+	var forceReloadQ string
 	if o.ForceReload != nil {
-		forceReload = swag.FormatBool(*o.ForceReload)
+		forceReloadQ = swag.FormatBool(*o.ForceReload)
 	}
-	if forceReload != "" {
-		qs.Set("force_reload", forceReload)
+	if forceReloadQ != "" {
+		qs.Set("force_reload", forceReloadQ)
 	}
 
 	_result.RawQuery = qs.Encode()

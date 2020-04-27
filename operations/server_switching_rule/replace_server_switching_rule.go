@@ -23,7 +23,7 @@ package server_switching_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ReplaceServerSwitchingRuleHandlerFunc turns a function with the right signature into a replace server switching rule handler

@@ -23,7 +23,7 @@ package log_target
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteLogTargetHandlerFunc turns a function with the right signature into a delete log target handler

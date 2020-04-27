@@ -23,7 +23,7 @@ package backend_switching_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ReplaceBackendSwitchingRuleHandlerFunc turns a function with the right signature into a replace backend switching rule handler

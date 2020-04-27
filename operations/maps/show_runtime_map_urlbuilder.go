@@ -64,9 +64,9 @@ func (o *ShowRuntimeMapURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	mapVar := o.Map
-	if mapVar != "" {
-		qs.Set("map", mapVar)
+	mapVarQ := o.Map
+	if mapVarQ != "" {
+		qs.Set("map", mapVarQ)
 	}
 
 	_result.RawQuery = qs.Encode()

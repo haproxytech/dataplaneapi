@@ -23,7 +23,7 @@ package log_target
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateLogTargetHandlerFunc turns a function with the right signature into a create log target handler

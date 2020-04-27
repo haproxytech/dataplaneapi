@@ -27,11 +27,10 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // NewPostClusterParams creates a new PostClusterParams object

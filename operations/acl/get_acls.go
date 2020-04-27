@@ -23,13 +23,13 @@ package acl
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
-	validate "github.com/go-openapi/validate"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetAclsHandlerFunc turns a function with the right signature into a get acls handler
@@ -94,6 +94,7 @@ func (o *GetAcls) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetAclsOKBody get acls o k body
+//
 // swagger:model GetAclsOKBody
 type GetAclsOKBody struct {
 

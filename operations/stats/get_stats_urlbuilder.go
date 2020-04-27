@@ -66,28 +66,28 @@ func (o *GetStatsURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var name string
+	var nameQ string
 	if o.Name != nil {
-		name = *o.Name
+		nameQ = *o.Name
 	}
-	if name != "" {
-		qs.Set("name", name)
+	if nameQ != "" {
+		qs.Set("name", nameQ)
 	}
 
-	var parent string
+	var parentQ string
 	if o.Parent != nil {
-		parent = *o.Parent
+		parentQ = *o.Parent
 	}
-	if parent != "" {
-		qs.Set("parent", parent)
+	if parentQ != "" {
+		qs.Set("parent", parentQ)
 	}
 
-	var typeVar string
+	var typeVarQ string
 	if o.Type != nil {
-		typeVar = *o.Type
+		typeVarQ = *o.Type
 	}
-	if typeVar != "" {
-		qs.Set("type", typeVar)
+	if typeVarQ != "" {
+		qs.Set("type", typeVarQ)
 	}
 
 	_result.RawQuery = qs.Encode()

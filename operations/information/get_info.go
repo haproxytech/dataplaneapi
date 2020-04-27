@@ -23,7 +23,7 @@ package information
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetInfoHandlerFunc turns a function with the right signature into a get info handler

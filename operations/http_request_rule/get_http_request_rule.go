@@ -23,12 +23,12 @@ package http_request_rule
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetHTTPRequestRuleHandlerFunc turns a function with the right signature into a get HTTP request rule handler
@@ -93,6 +93,7 @@ func (o *GetHTTPRequestRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) 
 }
 
 // GetHTTPRequestRuleOKBody get HTTP request rule o k body
+//
 // swagger:model GetHTTPRequestRuleOKBody
 type GetHTTPRequestRuleOKBody struct {
 

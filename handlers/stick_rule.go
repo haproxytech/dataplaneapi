@@ -17,11 +17,11 @@ package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	client_native "github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 //CreateStickRuleHandlerImpl implementation of the CreateStickRuleHandler interface using client-native client

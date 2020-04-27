@@ -26,7 +26,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 
 	log "github.com/sirupsen/logrus"
 )

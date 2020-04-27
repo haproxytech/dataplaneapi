@@ -23,7 +23,7 @@ package nameserver
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ReplaceNameserverHandlerFunc turns a function with the right signature into a replace nameserver handler

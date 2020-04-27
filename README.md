@@ -6,7 +6,7 @@
 
 ## Building the Data Plane API
 
-In order to build the Data Plane API you need go 1.12 installed on your system with go modules support enabled, and execute the following steps:
+In order to build the Data Plane API you need go 1.14 installed on your system with go modules support enabled, and execute the following steps:
 
 1\. Clone dataplaneapi repository
 
@@ -71,6 +71,10 @@ HAProxy options:
   -i, --show-system-info                           Show system info on info endpoint
   -f=                                              Path to the dataplane configuration file
       --userlist-file=                             Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file
+      --fid=                                       Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster
+  -p, --maps-dir=                                  Path to maps directory (default: /etc/haproxy/maps)
+      --update-map-files                           Flag used for syncing map files with runtime maps values
+      --update-map-files-period=                   Elapsed time in seconds between two maps syncing operations (default: 10)
 
 Logging options:
       --log-to=[stdout|file]                       Log target, can be stdout or file (default: stdout)
@@ -96,7 +100,7 @@ You can test it by simply running:
 Test it out with curl, note that you need user/pass combination setup in HAProxy userlist in haproxy configuration (in above example: /etc/haproxy/haproxy.cfg, userlist controller):
 
 ```
-curl -u <user>:<pass> -H "Content-Type: application/json" "http://127.0.0.1:5555/v1/"
+curl -u <user>:<pass> -H "Content-Type: application/json" "http://127.0.0.1:5555/v2/"
 ```
 
 If you are using secure passwords, supported algorithms are: md5, sha-256 and sha-512.
@@ -105,7 +109,7 @@ If you are using secure passwords, supported algorithms are: md5, sha-256 and sh
 
 For more docs how to use the Data Plane API check our [documentation](https://www.haproxy.com/documentation/hapee/1-9r1/configuration/dataplaneapi/)
 
-Alternatively, dataplaneapi serves it's own interactive documentation relevant for the current build on the `/v1/docs` uri. Just point your browser to the host/port dataplane was started with (i.e. `http://localhost:5555/v1/docs`)
+Alternatively, dataplaneapi serves it's own interactive documentation relevant for the current build on the `/v2/docs` uri. Just point your browser to the host/port dataplane was started with (i.e. `http://localhost:5555/v2/docs`)
 
 ## Contributing
 

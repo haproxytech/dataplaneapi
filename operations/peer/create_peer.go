@@ -23,7 +23,7 @@ package peer
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreatePeerHandlerFunc turns a function with the right signature into a create peer handler

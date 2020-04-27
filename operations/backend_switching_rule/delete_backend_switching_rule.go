@@ -23,7 +23,7 @@ package backend_switching_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteBackendSwitchingRuleHandlerFunc turns a function with the right signature into a delete backend switching rule handler

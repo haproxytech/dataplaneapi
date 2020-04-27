@@ -23,12 +23,12 @@ package frontend
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetFrontendHandlerFunc turns a function with the right signature into a get frontend handler
@@ -93,6 +93,7 @@ func (o *GetFrontend) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetFrontendOKBody get frontend o k body
+//
 // swagger:model GetFrontendOKBody
 type GetFrontendOKBody struct {
 

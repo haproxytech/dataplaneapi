@@ -23,12 +23,12 @@ package log_target
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetLogTargetHandlerFunc turns a function with the right signature into a get log target handler
@@ -93,6 +93,7 @@ func (o *GetLogTarget) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetLogTargetOKBody get log target o k body
+//
 // swagger:model GetLogTargetOKBody
 type GetLogTargetOKBody struct {
 

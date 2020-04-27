@@ -76,12 +76,12 @@ func (o *ClearRuntimeMapURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var forceDelete string
+	var forceDeleteQ string
 	if o.ForceDelete != nil {
-		forceDelete = swag.FormatBool(*o.ForceDelete)
+		forceDeleteQ = swag.FormatBool(*o.ForceDelete)
 	}
-	if forceDelete != "" {
-		qs.Set("forceDelete", forceDelete)
+	if forceDeleteQ != "" {
+		qs.Set("forceDelete", forceDeleteQ)
 	}
 
 	_result.RawQuery = qs.Encode()

@@ -67,20 +67,20 @@ func (o *GetHAProxyConfigurationURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var transactionID string
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
-	var version string
+	var versionQ string
 	if o.Version != nil {
-		version = swag.FormatInt64(*o.Version)
+		versionQ = swag.FormatInt64(*o.Version)
 	}
-	if version != "" {
-		qs.Set("version", version)
+	if versionQ != "" {
+		qs.Set("version", versionQ)
 	}
 
 	_result.RawQuery = qs.Encode()

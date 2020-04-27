@@ -23,12 +23,12 @@ package bind
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetBindHandlerFunc turns a function with the right signature into a get bind handler
@@ -93,6 +93,7 @@ func (o *GetBind) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetBindOKBody get bind o k body
+//
 // swagger:model GetBindOKBody
 type GetBindOKBody struct {
 

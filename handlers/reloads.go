@@ -22,7 +22,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 //GetReloadHandlerImpl implementation of the GetReloadHandler interface using client-native client

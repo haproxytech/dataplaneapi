@@ -23,7 +23,7 @@ package stick_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ReplaceStickRuleHandlerFunc turns a function with the right signature into a replace stick rule handler

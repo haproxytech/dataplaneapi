@@ -23,7 +23,7 @@ package cluster
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // InitiateCertificateRefreshHandlerFunc turns a function with the right signature into a initiate certificate refresh handler

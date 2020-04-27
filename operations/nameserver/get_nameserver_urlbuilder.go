@@ -75,17 +75,17 @@ func (o *GetNameserverURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	resolver := o.Resolver
-	if resolver != "" {
-		qs.Set("resolver", resolver)
+	resolverQ := o.Resolver
+	if resolverQ != "" {
+		qs.Set("resolver", resolverQ)
 	}
 
-	var transactionID string
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
 	_result.RawQuery = qs.Encode()

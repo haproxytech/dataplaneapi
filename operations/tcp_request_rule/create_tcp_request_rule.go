@@ -23,7 +23,7 @@ package tcp_request_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateTCPRequestRuleHandlerFunc turns a function with the right signature into a create TCP request rule handler

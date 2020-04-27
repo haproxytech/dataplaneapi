@@ -23,7 +23,7 @@ package peer_entry
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ReplacePeerEntryHandlerFunc turns a function with the right signature into a replace peer entry handler

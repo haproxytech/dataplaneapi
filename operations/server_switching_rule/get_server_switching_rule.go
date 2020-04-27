@@ -23,12 +23,12 @@ package server_switching_rule
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetServerSwitchingRuleHandlerFunc turns a function with the right signature into a get server switching rule handler
@@ -93,6 +93,7 @@ func (o *GetServerSwitchingRule) ServeHTTP(rw http.ResponseWriter, r *http.Reque
 }
 
 // GetServerSwitchingRuleOKBody get server switching rule o k body
+//
 // swagger:model GetServerSwitchingRuleOKBody
 type GetServerSwitchingRuleOKBody struct {
 

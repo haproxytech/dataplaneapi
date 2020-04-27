@@ -69,36 +69,36 @@ func (o *PostHAProxyConfigurationURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var forceReload string
+	var forceReloadQ string
 	if o.ForceReload != nil {
-		forceReload = swag.FormatBool(*o.ForceReload)
+		forceReloadQ = swag.FormatBool(*o.ForceReload)
 	}
-	if forceReload != "" {
-		qs.Set("force_reload", forceReload)
+	if forceReloadQ != "" {
+		qs.Set("force_reload", forceReloadQ)
 	}
 
-	var skipReload string
+	var skipReloadQ string
 	if o.SkipReload != nil {
-		skipReload = swag.FormatBool(*o.SkipReload)
+		skipReloadQ = swag.FormatBool(*o.SkipReload)
 	}
-	if skipReload != "" {
-		qs.Set("skip_reload", skipReload)
+	if skipReloadQ != "" {
+		qs.Set("skip_reload", skipReloadQ)
 	}
 
-	var skipVersion string
+	var skipVersionQ string
 	if o.SkipVersion != nil {
-		skipVersion = swag.FormatBool(*o.SkipVersion)
+		skipVersionQ = swag.FormatBool(*o.SkipVersion)
 	}
-	if skipVersion != "" {
-		qs.Set("skip_version", skipVersion)
+	if skipVersionQ != "" {
+		qs.Set("skip_version", skipVersionQ)
 	}
 
-	var version string
+	var versionQ string
 	if o.Version != nil {
-		version = swag.FormatInt64(*o.Version)
+		versionQ = swag.FormatInt64(*o.Version)
 	}
-	if version != "" {
-		qs.Set("version", version)
+	if versionQ != "" {
+		qs.Set("version", versionQ)
 	}
 
 	_result.RawQuery = qs.Encode()

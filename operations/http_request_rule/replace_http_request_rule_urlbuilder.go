@@ -80,38 +80,38 @@ func (o *ReplaceHTTPRequestRuleURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var forceReload string
+	var forceReloadQ string
 	if o.ForceReload != nil {
-		forceReload = swag.FormatBool(*o.ForceReload)
+		forceReloadQ = swag.FormatBool(*o.ForceReload)
 	}
-	if forceReload != "" {
-		qs.Set("force_reload", forceReload)
-	}
-
-	parentName := o.ParentName
-	if parentName != "" {
-		qs.Set("parent_name", parentName)
+	if forceReloadQ != "" {
+		qs.Set("force_reload", forceReloadQ)
 	}
 
-	parentType := o.ParentType
-	if parentType != "" {
-		qs.Set("parent_type", parentType)
+	parentNameQ := o.ParentName
+	if parentNameQ != "" {
+		qs.Set("parent_name", parentNameQ)
 	}
 
-	var transactionID string
+	parentTypeQ := o.ParentType
+	if parentTypeQ != "" {
+		qs.Set("parent_type", parentTypeQ)
+	}
+
+	var transactionIDQ string
 	if o.TransactionID != nil {
-		transactionID = *o.TransactionID
+		transactionIDQ = *o.TransactionID
 	}
-	if transactionID != "" {
-		qs.Set("transaction_id", transactionID)
+	if transactionIDQ != "" {
+		qs.Set("transaction_id", transactionIDQ)
 	}
 
-	var version string
+	var versionQ string
 	if o.Version != nil {
-		version = swag.FormatInt64(*o.Version)
+		versionQ = swag.FormatInt64(*o.Version)
 	}
-	if version != "" {
-		qs.Set("version", version)
+	if versionQ != "" {
+		qs.Set("version", versionQ)
 	}
 
 	_result.RawQuery = qs.Encode()

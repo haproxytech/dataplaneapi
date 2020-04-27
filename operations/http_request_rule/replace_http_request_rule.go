@@ -23,7 +23,7 @@ package http_request_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ReplaceHTTPRequestRuleHandlerFunc turns a function with the right signature into a replace HTTP request rule handler

@@ -71,46 +71,46 @@ func (o *GetStickTableEntriesURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var count string
+	var countQ string
 	if o.Count != nil {
-		count = swag.FormatInt64(*o.Count)
+		countQ = swag.FormatInt64(*o.Count)
 	}
-	if count != "" {
-		qs.Set("count", count)
+	if countQ != "" {
+		qs.Set("count", countQ)
 	}
 
-	var filter string
+	var filterQ string
 	if o.Filter != nil {
-		filter = *o.Filter
+		filterQ = *o.Filter
 	}
-	if filter != "" {
-		qs.Set("filter", filter)
+	if filterQ != "" {
+		qs.Set("filter", filterQ)
 	}
 
-	var key string
+	var keyQ string
 	if o.Key != nil {
-		key = *o.Key
+		keyQ = *o.Key
 	}
-	if key != "" {
-		qs.Set("key", key)
+	if keyQ != "" {
+		qs.Set("key", keyQ)
 	}
 
-	var offset string
+	var offsetQ string
 	if o.Offset != nil {
-		offset = swag.FormatInt64(*o.Offset)
+		offsetQ = swag.FormatInt64(*o.Offset)
 	}
-	if offset != "" {
-		qs.Set("offset", offset)
-	}
-
-	process := swag.FormatInt64(o.Process)
-	if process != "" {
-		qs.Set("process", process)
+	if offsetQ != "" {
+		qs.Set("offset", offsetQ)
 	}
 
-	stickTable := o.StickTable
-	if stickTable != "" {
-		qs.Set("stick_table", stickTable)
+	processQ := swag.FormatInt64(o.Process)
+	if processQ != "" {
+		qs.Set("process", processQ)
+	}
+
+	stickTableQ := o.StickTable
+	if stickTableQ != "" {
+		qs.Set("stick_table", stickTableQ)
 	}
 
 	_result.RawQuery = qs.Encode()

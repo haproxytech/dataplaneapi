@@ -21,8 +21,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	client_native "github.com/haproxytech/client-native"
-	"github.com/haproxytech/models"
+	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/models/v2"
 )
 
 //RuntimeSupportedFields is a map of fields supported through the runtime API for

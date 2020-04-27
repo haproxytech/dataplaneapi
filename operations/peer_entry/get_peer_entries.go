@@ -23,13 +23,13 @@ package peer_entry
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
-	validate "github.com/go-openapi/validate"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetPeerEntriesHandlerFunc turns a function with the right signature into a get peer entries handler
@@ -94,6 +94,7 @@ func (o *GetPeerEntries) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetPeerEntriesOKBody get peer entries o k body
+//
 // swagger:model GetPeerEntriesOKBody
 type GetPeerEntriesOKBody struct {
 

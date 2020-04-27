@@ -66,9 +66,9 @@ func (o *StartTransactionURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	version := swag.FormatInt64(o.Version)
-	if version != "" {
-		qs.Set("version", version)
+	versionQ := swag.FormatInt64(o.Version)
+	if versionQ != "" {
+		qs.Set("version", versionQ)
 	}
 
 	_result.RawQuery = qs.Encode()

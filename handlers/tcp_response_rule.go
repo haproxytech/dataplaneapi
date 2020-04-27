@@ -17,11 +17,11 @@ package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	client_native "github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 //CreateTCPResponseRuleHandlerImpl implementation of the CreateTCPResponseRuleHandler interface using client-native client

@@ -23,7 +23,7 @@ package transactions
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CommitTransactionHandlerFunc turns a function with the right signature into a commit transaction handler

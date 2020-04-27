@@ -23,7 +23,7 @@ package backend
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteBackendHandlerFunc turns a function with the right signature into a delete backend handler

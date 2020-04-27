@@ -22,8 +22,8 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 
-	"github.com/haproxytech/client-native/configuration"
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/client-native/v2/configuration"
+	"github.com/haproxytech/models/v2"
 )
 
 const (

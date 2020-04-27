@@ -23,7 +23,7 @@ package tcp_response_rule
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateTCPResponseRuleHandlerFunc turns a function with the right signature into a create TCP response rule handler

@@ -23,7 +23,7 @@ package sites
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // DeleteSiteHandlerFunc turns a function with the right signature into a delete site handler

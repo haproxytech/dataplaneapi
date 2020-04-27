@@ -23,12 +23,12 @@ package server
 import (
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 )
 
 // GetServerHandlerFunc turns a function with the right signature into a get server handler
@@ -93,6 +93,7 @@ func (o *GetServer) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 // GetServerOKBody get server o k body
+//
 // swagger:model GetServerOKBody
 type GetServerOKBody struct {
 

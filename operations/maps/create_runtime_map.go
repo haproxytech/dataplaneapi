@@ -23,7 +23,7 @@ package maps
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateRuntimeMapHandlerFunc turns a function with the right signature into a create runtime map handler

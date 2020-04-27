@@ -24,7 +24,7 @@ import (
 
 	"github.com/docker/go-units"
 
-	"github.com/haproxytech/models"
+	"github.com/haproxytech/models/v2"
 
 	"github.com/sirupsen/logrus"
 )

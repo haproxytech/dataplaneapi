@@ -23,7 +23,7 @@ package filter
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // CreateFilterHandlerFunc turns a function with the right signature into a create filter handler

@@ -23,7 +23,7 @@ package stick_table
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // GetStickTablesHandlerFunc turns a function with the right signature into a get stick tables handler

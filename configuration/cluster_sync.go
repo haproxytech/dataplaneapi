@@ -30,7 +30,7 @@ import (
 	"net/http"
 	"time"
 
-	client_native "github.com/haproxytech/client-native"
+	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/config-parser/v2/types"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	log "github.com/sirupsen/logrus"

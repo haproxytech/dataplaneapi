@@ -23,7 +23,7 @@ package server
 import (
 	"net/http"
 
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // ReplaceServerHandlerFunc turns a function with the right signature into a replace server handler
