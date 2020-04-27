@@ -25,17 +25,30 @@ import (
 	"github.com/haproxytech/models"
 )
 
-//CreateClusterHandlerImpl implementation of the CreateClusterHandler interface using client-native client
+//CreateClusterHandlerImpl implementation of the CreateClusterHandler interface
 type CreateClusterHandlerImpl struct {
 	Config *configuration.Configuration
 }
 
-//GetClusterHandlerImpl implementation of the GetClusterHandler interface using client-native client
+//GetClusterHandlerImpl implementation of the GetClusterHandler interface
 type GetClusterHandlerImpl struct {
 	Config *configuration.Configuration
 }
 
+//ClusterInitiateCertificateRefreshHandlerImpl implementation of the ClusterInitiateCertificateRefreshHandler interface
+type ClusterInitiateCertificateRefreshHandlerImpl struct {
+	Config *configuration.Configuration
+}
+
 //Handle executing the request and returning a response
+func (h *ClusterInitiateCertificateRefreshHandlerImpl) Handle(params cluster.InitiateCertificateRefreshParams, principal interface{}) middleware.Responder {
+	if h.Config.Mode.Load() != "cluster" {
+		return cluster.NewInitiateCertificateRefreshForbidden()
+	}
+	h.Config.Notify.CertificateRefresh.Notify()
+	return cluster.NewInitiateCertificateRefreshOK()
+}
+
 func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
 	key := h.Config.BootstrapKey.Load()
 	if params.Data.BootstrapKey != "" && key != params.Data.BootstrapKey {

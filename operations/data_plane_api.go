@@ -410,6 +410,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TransactionsGetTransactionsHandler: transactions.GetTransactionsHandlerFunc(func(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation TransactionsGetTransactions has not yet been implemented")
 		}),
+		ClusterInitiateCertificateRefreshHandler: cluster.InitiateCertificateRefreshHandlerFunc(func(params cluster.InitiateCertificateRefreshParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ClusterInitiateCertificateRefresh has not yet been implemented")
+		}),
 		ClusterPostClusterHandler: cluster.PostClusterHandlerFunc(func(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ClusterPostCluster has not yet been implemented")
 		}),
@@ -756,6 +759,8 @@ type DataPlaneAPI struct {
 	TransactionsGetTransactionHandler transactions.GetTransactionHandler
 	// TransactionsGetTransactionsHandler sets the operation handler for the get transactions operation
 	TransactionsGetTransactionsHandler transactions.GetTransactionsHandler
+	// ClusterInitiateCertificateRefreshHandler sets the operation handler for the initiate certificate refresh operation
+	ClusterInitiateCertificateRefreshHandler cluster.InitiateCertificateRefreshHandler
 	// ClusterPostClusterHandler sets the operation handler for the post cluster operation
 	ClusterPostClusterHandler cluster.PostClusterHandler
 	// ConfigurationPostHAProxyConfigurationHandler sets the operation handler for the post h a proxy configuration operation
@@ -1313,6 +1318,10 @@ func (o *DataPlaneAPI) Validate() error {
 
 	if o.TransactionsGetTransactionsHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionsHandler")
+	}
+
+	if o.ClusterInitiateCertificateRefreshHandler == nil {
+		unregistered = append(unregistered, "cluster.InitiateCertificateRefreshHandler")
 	}
 
 	if o.ClusterPostClusterHandler == nil {
@@ -2072,6 +2081,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/transactions"] = transactions.NewGetTransactions(o.context, o.TransactionsGetTransactionsHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/cluster/certificate"] = cluster.NewInitiateCertificateRefresh(o.context, o.ClusterInitiateCertificateRefreshHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

@@ -36,6 +36,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const DataplaneAPIType = "community"
+
 //Node is structure required for connection to cluster
 type Node struct {
 	Address     string `json:"address"`
@@ -64,6 +66,9 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 	c.cli = cli
 
 	go c.monitorBootstrapKey()
+	if c.cfg.Mode.Load() == "cluster" {
+		go c.monitorCertificateRefresh()
+	}
 
 	c.certFetch = make(chan struct{}, 2)
 	go c.fetchCert()
@@ -74,6 +79,98 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 	if key != "" && !certFetched {
 		c.cfg.Notify.BootstrapKeyChanged.Notify()
 	}
+}
+
+func (c *ClusterSync) monitorCertificateRefresh() {
+	for range c.cfg.Notify.CertificateRefresh.Subscribe("monitorCertificateRefresh") {
+		log.Info("refreshing certificate")
+
+		key := c.cfg.BootstrapKey.Load()
+		data, err := decodeBootstrapKey(key)
+		if err != nil {
+			log.Warning(err)
+			continue
+		}
+		if len(data) != 8 {
+			log.Warning("bottstrap key in unrecognized format")
+			continue
+		}
+		url := fmt.Sprintf("%s://%s", data[0], data[1])
+
+		csr, key, err := generateCSR()
+		if err != nil {
+			log.Warning(err)
+			continue
+		}
+		err = ioutil.WriteFile(c.cfg.Cluster.CertificateCSR.Load(), []byte(csr), 0644)
+		if err != nil {
+			log.Warning(err)
+			continue
+		}
+		err = c.issueRefreshRequest(url, data[2], data[3], data[4], csr, key)
+		if err != nil {
+			log.Warning(err)
+			continue
+		}
+	}
+}
+
+func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath string, csr, key string) error {
+	url = fmt.Sprintf("%s:%s%s/%s/%s", url, port, basePath, nodesPath, c.cfg.Cluster.ID.Load())
+	nodeData := Node{
+		ID:          c.cfg.Cluster.ID.Load(),
+		Address:     c.cfg.Server.Host,
+		Certificate: csr,
+		Status:      cfg.Status.Load(),
+		Type:        DataplaneAPIType,
+	}
+	bytesRepresentation, _ := json.Marshal(nodeData)
+
+	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(bytesRepresentation))
+	if err != nil {
+		return fmt.Errorf("error creating new POST request for cluster comunication")
+	}
+	req.Header.Add("X-Node-Key", c.cfg.Cluster.Token.Load())
+	req.Header.Add("Content-Type", "application/json")
+	log.Infof("Refreshing certificate %s", url)
+	httpClient := createHTTPClient()
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != 202 {
+		return fmt.Errorf("status code not proper [%d] %s", resp.StatusCode, string(body))
+	}
+	var responseData Node
+	err = json.Unmarshal(body, &responseData)
+	if err != nil {
+		return err
+	}
+	log.Infof("Cluster re joined, status: %s", responseData.Status)
+	err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
+	if err != nil {
+		log.Warning(err)
+		return err
+	}
+	err = ioutil.WriteFile(c.cfg.Cluster.CertificateKeyPath.Load(), []byte(key), 0644)
+	if err != nil {
+		log.Warning(err)
+		return err
+	}
+	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
+	err = c.cfg.Save()
+	if err != nil {
+		log.Warning(err)
+		return err
+	}
+	c.cfg.Notify.Reload.Notify()
+	return nil
 }
 
 func (c *ClusterSync) monitorBootstrapKey() {
@@ -173,7 +270,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 		Name:        c.cfg.Name.Load(),
 		Port:        int64(serverCfg.Port),
 		Status:      "waiting_approval",
-		Type:        "community",
+		Type:        DataplaneAPIType,
 	}
 	bytesRepresentation, _ := json.Marshal(nodeData)
 

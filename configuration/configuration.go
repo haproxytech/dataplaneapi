@@ -95,6 +95,7 @@ type ServerConfiguration struct {
 
 type NotifyConfiguration struct {
 	BootstrapKeyChanged *ChanNotify `yaml:"-"`
+	CertificateRefresh  *ChanNotify `yaml:"-"`
 	Reload              *ChanNotify `yaml:"-"`
 	Shutdown            *ChanNotify `yaml:"-"`
 }
@@ -117,6 +118,7 @@ func Get() *Configuration {
 		cfg = &Configuration{}
 		cfg.initSignalHandler()
 		cfg.Notify.BootstrapKeyChanged = NewChanNotify()
+		cfg.Notify.CertificateRefresh = NewChanNotify()
 		cfg.Notify.Reload = NewChanNotify()
 		cfg.Notify.Shutdown = NewChanNotify()
 	}
@@ -134,6 +136,7 @@ func (c *Configuration) BotstrapKeyChanged(bootstrapKey string) {
 
 func (c *Configuration) UnSubscribeAll() {
 	c.Notify.BootstrapKeyChanged.UnSubscribeAll()
+	c.Notify.CertificateRefresh.UnSubscribeAll()
 	c.Notify.Reload.UnSubscribeAll()
 	c.Notify.Shutdown.UnSubscribeAll()
 }

@@ -138,6 +138,27 @@ func init() {
         }
       }
     },
+    "/cluster/certificate": {
+      "post": {
+        "description": "Initiates a certificate refresh",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Initiates a certificate refresh",
+        "operationId": "initiateCertificateRefresh",
+        "responses": {
+          "200": {
+            "description": "refresh activated"
+          },
+          "403": {
+            "description": "refresh not possible"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/info": {
       "get": {
         "description": "Return API, hardware and OS information",
@@ -13053,6 +13074,37 @@ func init() {
                 "description": "Configuration file version"
               }
             }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cluster/certificate": {
+      "post": {
+        "description": "Initiates a certificate refresh",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Initiates a certificate refresh",
+        "operationId": "initiateCertificateRefresh",
+        "responses": {
+          "200": {
+            "description": "refresh activated"
+          },
+          "403": {
+            "description": "refresh not possible"
           },
           "default": {
             "description": "General Error",
