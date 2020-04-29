@@ -76,18 +76,19 @@ func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, er
 	paths := m["paths"].(map[string]interface{})
 	for key, value := range paths {
 		v := value.(map[string]interface{})
-		g := v["get"].(map[string]interface{})
-		title := g["summary"].(string)
-		description := g["description"].(string)
+		if g, ok := v["get"].(map[string]interface{}); ok {
+			title := g["summary"].(string)
+			description := g["description"].(string)
 
-		if strings.HasPrefix(key, path) && key != path {
-			if len(strings.Split(key[len(path)+1:], "/")) == 1 {
-				e := models.Endpoint{
-					URL:         key,
-					Title:       title,
-					Description: description,
+			if strings.HasPrefix(key, path) && key != path {
+				if len(strings.Split(key[len(path)+1:], "/")) == 1 {
+					e := models.Endpoint{
+						URL:         key,
+						Title:       title,
+						Description: description,
+					}
+					es = append(es, &e)
 				}
-				es = append(es, &e)
 			}
 		}
 	}
