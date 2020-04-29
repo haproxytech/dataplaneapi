@@ -553,10 +553,13 @@ func checkPassword(pass, storedPass string) bool {
 }
 
 func serverShutdown() {
+	cfg := dataplaneapi_config.Get()
 	if logFile != nil {
 		logFile.Close()
 	}
-	MapQuitChan <- MapQuitNotice{}
+	if cfg.HAProxy.UpdateMapFiles {
+		MapQuitChan <- MapQuitNotice{}
+	}
 }
 
 func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) *client_native.HAProxyClient {
