@@ -31,7 +31,7 @@ type MapsCreateRuntimeMapHandlerImpl struct {
 }
 
 func (h *MapsCreateRuntimeMapHandlerImpl) Handle(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-	file, header, err := params.HTTPRequest.FormFile("file")
+	file, header, err := params.HTTPRequest.FormFile("fileUpload")
 	if err != nil {
 		return maps.NewCreateRuntimeMapBadRequest()
 	}
