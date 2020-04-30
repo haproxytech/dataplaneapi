@@ -16,13 +16,10 @@
 package handlers
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
-	"github.com/haproxytech/models/v2"
 )
 
 //MapsCreateRuntimeMapHandlerImpl implementation of the MapsCreateRuntimeMapHandler interface using client-native client
@@ -39,8 +36,8 @@ func (h *MapsCreateRuntimeMapHandlerImpl) Handle(params maps.CreateRuntimeMapPar
 
 	me, err := h.Client.Runtime.CreateMap(file, *header)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewCreateRuntimeMapDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewCreateRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	return maps.NewCreateRuntimeMapCreated().WithPayload(me)
 }
@@ -54,8 +51,8 @@ type GetMapsHandlerImpl struct {
 func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
 	mapFiles, err := h.Client.Runtime.ShowMaps()
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewShowRuntimeMapDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewShowRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(mapFiles)
 }
@@ -68,8 +65,8 @@ type GetMapHandlerImpl struct {
 func (h *GetMapHandlerImpl) Handle(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
 	m, err := h.Client.Runtime.GetMap(params.Name)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewGetOneRuntimeMapDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewGetOneRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	if m == nil {
 		return maps.NewGetOneRuntimeMapNotFound()
@@ -89,8 +86,8 @@ func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principa
 	}
 	err := h.Client.Runtime.ClearMap(params.Name, forceDelete)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewClearRuntimeMapDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	return maps.NewClearRuntimeMapNoContent()
 }
@@ -103,8 +100,8 @@ type ShowMapHandlerImpl struct {
 func (h *ShowMapHandlerImpl) Handle(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
 	m, err := h.Client.Runtime.ShowMapEntries(params.Map)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewShowRuntimeMapDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewShowRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	if m == nil {
 		return maps.NewShowRuntimeMapNotFound()
@@ -118,21 +115,10 @@ type AddMapEntryHandlerImpl struct {
 }
 
 func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
-	e, _ := h.Client.Runtime.GetMapEntry(params.Map, params.Data.Key)
-	if e != nil {
-		msg := fmt.Sprintf("Entry with key %s already exists!", params.Data.Key)
-		c := misc.ErrHTTPConflict
-		err := &models.Error{
-			Message: &msg,
-			Code:    &c,
-		}
-		return maps.NewAddMapEntryDefault(maps.AddMapEntryConflictCode).WithPayload(err)
-	}
-
 	err := h.Client.Runtime.AddMapEntry(params.Map, params.Data.Key, params.Data.Value)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewAddMapEntryDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	return maps.NewAddMapEntryCreated().WithPayload(params.Data)
 }
@@ -145,8 +131,8 @@ type GetRuntimeMapEntryHandlerImpl struct {
 func (h *GetRuntimeMapEntryHandlerImpl) Handle(params maps.GetRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 	m, err := h.Client.Runtime.GetMapEntry(params.Map, params.ID)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewGetRuntimeMapEntryDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	if m == nil {
 		return maps.NewGetRuntimeMapEntryNotFound()
@@ -162,8 +148,8 @@ type ReplaceRuntimeMapEntryHandlerImpl struct {
 func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 	err := h.Client.Runtime.SetMapEntry(params.Map, params.ID, *params.Data.Value)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewGetRuntimeMapEntryDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 
 	e, err := h.Client.Runtime.GetMapEntry(params.Map, params.ID)
@@ -181,8 +167,8 @@ type DeleteRuntimeMapEntryHandlerImpl struct {
 func (h *DeleteRuntimeMapEntryHandlerImpl) Handle(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 	err := h.Client.Runtime.DeleteMapEntry(params.Map, params.ID)
 	if err != nil {
-		e := misc.HandleError(err)
-		return maps.NewDeleteRuntimeMapEntryDefault(int(*e.Code)).WithPayload(e)
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	return maps.NewDeleteRuntimeMapEntryNoContent()
 }

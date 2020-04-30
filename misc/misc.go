@@ -17,12 +17,15 @@ package misc
 
 import (
 	"encoding/json"
+	"errors"
+	"net/http"
 	"strconv"
 	"strings"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 
 	"github.com/haproxytech/client-native/v2/configuration"
+	client_errors "github.com/haproxytech/client-native/v2/errors"
 	"github.com/haproxytech/models/v2"
 )
 
@@ -50,7 +53,7 @@ func HandleError(err error) *models.Error {
 			httpCode = ErrHTTPConflict
 		case configuration.ErrObjectIndexOutOfRange, configuration.ErrValidationError, configuration.ErrBothVersionTransaction,
 			configuration.ErrNoVersionTransaction, configuration.ErrNoParentSpecified, configuration.ErrParentDoesNotExist,
-			configuration.ErrTransactionDoesNotExist:
+			configuration.ErrTransactionDoesNotExist, configuration.ErrGeneralError:
 			httpCode = ErrHTTPBadRequest
 		}
 		return &models.Error{Code: &httpCode, Message: &msg}
@@ -131,4 +134,33 @@ func ParseTimeout(tOut string) *int64 {
 		return &v
 	}
 	return nil
+}
+
+func GetHTTPStatusFromErr(err error) int {
+	switch {
+	case errors.Is(err, client_errors.ErrAlreadyExists):
+		return http.StatusConflict
+	case errors.Is(err, client_errors.ErrNotFound):
+		return http.StatusNotFound
+	case errors.Is(err, client_errors.ErrGeneral):
+		return http.StatusBadRequest
+	default:
+		return http.StatusInternalServerError
+	}
+}
+
+func SetError(code int, msg string) *models.Error {
+	return &models.Error{
+		Code:    Int64P(code),
+		Message: StringP(msg),
+	}
+}
+
+func StringP(s string) *string {
+	return &s
+}
+
+func Int64P(i int) *int64 {
+	i64 := int64(i)
+	return &i64
 }
