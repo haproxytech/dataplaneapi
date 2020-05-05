@@ -17,16 +17,14 @@ package configuration
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
-	"os"
 
 	"math/rand"
 	"time"
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/oklog/ulid"
+	petname "github.com/dustinkirkland/golang-petname"
 	"gopkg.in/yaml.v2"
 )
 
@@ -183,16 +181,9 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 		c.Cluster.CertificateCSR.Store("csr.crt")
 	}
 
-	t := time.Now()
-	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
-	id := ulid.MustNew(ulid.Timestamp(t), entropy)
-
 	if c.Name.Load() == "" {
-		name, err := os.Hostname()
-		if err != nil {
-			panic(err)
-		}
-		c.Name.Store(fmt.Sprintf("%s-%s", name, id.String()))
+		rand.Seed(time.Now().UnixNano())
+		c.Name.Store(petname.Generate(2, "_"))
 	}
 
 	return nil
