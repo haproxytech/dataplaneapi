@@ -11282,31 +11282,32 @@ func init() {
       "properties": {
         "accepted_payload_size": {
           "type": "integer",
-          "minimum": 1232
+          "maximum": 8192,
+          "minimum": 512
         },
         "hold_nx": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_obsolete": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_other": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_refused": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_timeout": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_valid": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "name": {
           "type": "string",
@@ -11916,7 +11917,6 @@ func init() {
         },
         "stats_show_desc": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-nullable": true
         },
         "stats_show_legends": {
@@ -28147,31 +28147,32 @@ func init() {
       "properties": {
         "accepted_payload_size": {
           "type": "integer",
-          "minimum": 1232
+          "maximum": 8192,
+          "minimum": 512
         },
         "hold_nx": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_obsolete": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_other": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_refused": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_timeout": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "hold_valid": {
           "type": "integer",
-          "x-nullable": false
+          "x-nullable": true
         },
         "name": {
           "type": "string",
@@ -28719,7 +28720,6 @@ func init() {
         },
         "stats_show_desc": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-nullable": true
         },
         "stats_show_legends": {
