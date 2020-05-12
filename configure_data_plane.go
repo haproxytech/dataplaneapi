@@ -795,7 +795,7 @@ func equalSomeFileAndRuntimeEntries(fEntries, rEntries models.MapEntries) bool {
 
 	for i := 0; i < 10; i++ {
 		rand.Seed(time.Now().UTC().UnixNano())
-		r := rand.Intn(max-1) + 1
+		r := rand.Intn(max)
 		if rEntries[r].Key != fEntries[r].Key || rEntries[r].Value != fEntries[r].Value {
 			return false
 		}
