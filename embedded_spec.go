@@ -8204,6 +8204,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "sni": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -11581,6 +11585,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
         },
         "sni": {
           "type": "string",
@@ -25114,6 +25122,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "sni": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -28447,6 +28459,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
         },
         "sni": {
           "type": "string",
