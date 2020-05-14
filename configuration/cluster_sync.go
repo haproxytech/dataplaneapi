@@ -357,6 +357,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 		}
 	}
 	c.cfg.Cluster.ID.Store(responseData.ID)
+	c.cfg.Cluster.Name.Store(responseData.Name)
 	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
 	c.cfg.Cluster.ActiveBootstrapKey.Store(c.cfg.BootstrapKey.Load())
 	c.cfg.Status.Store(responseData.Status)

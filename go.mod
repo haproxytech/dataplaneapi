@@ -6,6 +6,7 @@ require (
 	github.com/GehirnInc/crypt v0.0.0-20200316065508-bb7000b8a962
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/docker/go-units v0.4.0
+	github.com/dustinkirkland/golang-petname v0.0.0-20191129215211-8e5a1ed0cff0
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/go-openapi/errors v0.19.4
 	github.com/go-openapi/loads v0.19.5
@@ -18,7 +19,6 @@ require (
 	github.com/haproxytech/config-parser/v2 v2.0.1
 	github.com/haproxytech/models/v2 v2.0.2-0.20200513093356-3f062770f1d6
 	github.com/jessevdk/go-flags v1.4.0
-	github.com/oklog/ulid v1.3.1
 	github.com/rs/cors v1.7.0
 	github.com/shirou/gopsutil v2.20.3+incompatible
 	github.com/sirupsen/logrus v1.5.0
