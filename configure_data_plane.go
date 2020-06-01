@@ -584,13 +584,14 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) (*configuration.Client, error) {
 	confClient := &configuration.Client{}
 	confParams := configuration.ClientParams{
-		ConfigurationFile:      haproxyOptions.ConfigFile,
-		Haproxy:                haproxyOptions.HAProxy,
-		BackupsNumber:          haproxyOptions.BackupsNumber,
-		UseValidation:          false,
-		PersistentTransactions: true,
-		TransactionDir:         haproxyOptions.TransactionDir,
-		MasterWorker:           true,
+		ConfigurationFile:         haproxyOptions.ConfigFile,
+		Haproxy:                   haproxyOptions.HAProxy,
+		BackupsNumber:             haproxyOptions.BackupsNumber,
+		UseValidation:             false,
+		PersistentTransactions:    true,
+		TransactionDir:            haproxyOptions.TransactionDir,
+		ValidateConfigurationFile: true,
+		MasterWorker:              true,
 	}
 	err := confClient.Init(confParams)
 	if err != nil {
