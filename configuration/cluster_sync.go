@@ -117,9 +117,13 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 
 func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath string, csr, key string) error {
 	url = fmt.Sprintf("%s:%s%s/%s/%s", url, port, basePath, nodesPath, c.cfg.Cluster.ID.Load())
+	apiAddress := c.cfg.APIOptions.APIAddress
+	if apiAddress == "" {
+		apiAddress = c.cfg.Server.Host
+	}
 	nodeData := Node{
 		ID:          c.cfg.Cluster.ID.Load(),
-		Address:     c.cfg.Server.Host,
+		Address:     apiAddress,
 		Certificate: csr,
 		Status:      cfg.Status.Load(),
 		Type:        DataplaneAPIType,
@@ -244,6 +248,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath string, csr, key string) error {
 	url = fmt.Sprintf("%s:%s%s/%s", url, port, basePath, nodesPath)
 	serverCfg := c.cfg.Server
+	apiCfg := c.cfg.APIOptions
 	users := GetUsersStore().GetUsers()
 	if len(users) == 0 {
 		return fmt.Errorf("no users configured in %v userlist in conf", c.cfg.HAProxy.Userlist)
@@ -259,16 +264,25 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 		user = &types.User{}
 	}
 
+	apiAddress := apiCfg.APIAddress
+	if apiAddress == "" {
+		apiAddress = serverCfg.Host
+	}
+	apiPort := apiCfg.APIPort
+	if apiPort == 0 {
+		apiPort = int64(serverCfg.Port)
+	}
+
 	nodeData := Node{
 		//ID:          "",
-		Address:     serverCfg.Host,
+		Address:     apiAddress,
 		APIBasePath: serverCfg.APIBasePath,
 		APIPassword: user.Password,
 		APIUser:     user.Name,
 		Certificate: csr,
 		Description: "",
 		Name:        c.cfg.Name.Load(),
-		Port:        int64(serverCfg.Port),
+		Port:        apiPort,
 		Status:      "waiting_approval",
 		Type:        DataplaneAPIType,
 	}

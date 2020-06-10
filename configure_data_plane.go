@@ -89,13 +89,21 @@ func configureFlags(api *operations.DataPlaneAPI) {
 		Options:          &cfg.Logging,
 	}
 
+	apiOptionsGroup := swag.CommandLineOptionsGroup{
+		ShortDescription: "API options",
+		LongDescription:  "Options for API usage for consumers and various integrations",
+		Options:          &cfg.APIOptions,
+	}
+
 	api.CommandLineOptionsGroups = make([]swag.CommandLineOptionsGroup, 0, 1)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, haproxyOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, loggingOptionsGroup)
+	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, apiOptionsGroup)
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
+
 	haproxyOptions := cfg.HAProxy
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {

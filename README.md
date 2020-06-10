@@ -53,9 +53,6 @@ Application Options:
       --tls-keep-alive=                            sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download)
       --tls-read-timeout=                          maximum duration before timing out read of the request
       --tls-write-timeout=                         maximum duration before timing out write of the response
-      -p, --maps-dir=                              path to maps directory (default:"/etc/haproxy/maps")
-      --update-map-files=                          flag used for periodic syncing map files entries with runtime maps entries. Missing runtime entries are appended to the corresponding map file
-      --update-map-files-period=                   elapsed time in seconds between two maps syncing operations (default: 10s)
 
 HAProxy options:
   -c, --config-file=                               Path to the haproxy configuration file (default: /etc/haproxy/haproxy.cfg)
@@ -81,6 +78,10 @@ Logging options:
       --log-file=                                  Location of the log file (default: /var/log/dataplaneapi/dataplaneapi.log)
       --log-level=[trace|debug|info|warning|error] Logging level (default: warning)
       --log-format=[text|JSON]                     Logging format (default: text)
+
+API options:
+      --api-address=                               Advertised API address
+      --api-port=                                  Advertised API port
 
 Show version:
   -v, --version                                    Version and build information

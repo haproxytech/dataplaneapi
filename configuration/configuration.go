@@ -50,6 +50,11 @@ type HAProxyConfiguration struct {
 	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10"`
 }
 
+type APIConfiguration struct {
+	APIAddress string `long:"api-address" description:"Advertised API address"`
+	APIPort    int64  `long:"api-port" description:"Advertised API port"`
+}
+
 type LoggingOptions struct {
 	LogTo     string `long:"log-to" description:"Log target, can be stdout or file" default:"stdout" choice:"stdout" choice:"file"`
 	LogFile   string `long:"log-file" description:"Location of the log file" default:"/var/log/dataplaneapi/dataplaneapi.log"`
@@ -101,6 +106,7 @@ type NotifyConfiguration struct {
 type Configuration struct {
 	HAProxy      HAProxyConfiguration `yaml:"-"`
 	Logging      LoggingOptions       `yaml:"-"`
+	APIOptions   APIConfiguration     `yaml:"-"`
 	Cluster      ClusterConfiguration `yaml:"cluster"`
 	Server       ServerConfiguration  `yaml:"-"`
 	Notify       NotifyConfiguration  `yaml:"-"`
