@@ -256,7 +256,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 		}
 	}
 	if user == nil {
-		return fmt.Errorf("no available user for cluster comunication")
+		user = &types.User{}
 	}
 
 	nodeData := Node{
