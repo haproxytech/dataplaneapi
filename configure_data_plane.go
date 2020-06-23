@@ -34,6 +34,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/haproxytech/config-parser/v2/types"
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/models/v2"
@@ -476,27 +477,51 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	return (logViaLogrus(handleCORS(recovery(handler))))
 }
 
+//extractEnvVar extracts and returns env variable from HAProxy variable
+//provided in "${SOME_VAR}" format
+func extractEnvVar(pass string) string {
+	return strings.TrimLeft(strings.TrimRight(pass, "\"}"), "\"${")
+}
+
+//findUser searches user by its name. If found, returns user, otherwise returns an error.
+func findUser(userName string, users []types.User) (*types.User, error) {
+	for _, u := range users {
+		if u.Name == userName {
+			return &u, nil
+		}
+	}
+	return nil, errors.New(401, "no configured users")
+}
+
 func authenticateUser(user string, pass string) (interface{}, error) {
 	users := dataplaneapi_config.GetUsersStore().GetUsers()
 	if len(users) == 0 {
 		return nil, errors.New(401, "no configured users")
 	}
 
-	for _, u := range users {
-		if u.Name == user {
-			if u.IsInsecure {
-				if u.Password == pass {
-					return user, nil
-				}
-			} else {
-				if checkPassword(pass, u.Password) {
-					return user, nil
-				}
-			}
-			return nil, errors.New(401, "Invalid username/password")
+	u, err := findUser(user, users)
+	if err != nil {
+		return nil, err
+	}
+
+	userPass := u.Password
+	if strings.HasPrefix(u.Password, "\"${") && strings.HasSuffix(u.Password, "}\"") {
+		userPass = os.Getenv(extractEnvVar(userPass))
+		if userPass == "" {
+			return nil, errors.New(401, fmt.Sprintf("%s %s", "can not read password from env variable:", u.Password))
 		}
 	}
-	return nil, errors.New(401, "Invalid username/password")
+
+	if u.IsInsecure {
+		if pass == userPass {
+			return user, nil
+		}
+		return nil, errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
+	}
+	if checkPassword(pass, userPass) {
+		return user, nil
+	}
+	return nil, errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
 }
 
 func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
