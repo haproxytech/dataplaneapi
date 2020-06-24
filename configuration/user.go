@@ -18,8 +18,13 @@ package configuration
 import (
 	"fmt"
 	"os"
+	"strings"
 	"sync"
 
+	"github.com/haproxytech/dataplaneapi/misc"
+
+	"github.com/GehirnInc/crypt"
+	api_errors "github.com/go-openapi/errors"
 	parser "github.com/haproxytech/config-parser/v2"
 	"github.com/haproxytech/config-parser/v2/common"
 	"github.com/haproxytech/config-parser/v2/types"
@@ -139,4 +144,67 @@ func (u *Users) Init() error {
 		return fmt.Errorf("no users configured in %v, error: %s", cfg.HAProxy.ConfigFile, err.Error())
 	}
 	return u.setUser(user, cfg.HAProxy.ConfigFile)
+}
+
+//findUser searches user by its name. If found, returns user, otherwise returns an error.
+func findUser(userName string, users []types.User) (*types.User, error) {
+	for _, u := range users {
+		if u.Name == userName {
+			return &u, nil
+		}
+	}
+	return nil, api_errors.New(401, "no configured users")
+}
+
+func AuthenticateUser(user string, pass string) (interface{}, error) {
+	users := GetUsersStore().GetUsers()
+	if len(users) == 0 {
+		return nil, api_errors.New(401, "no configured users")
+	}
+
+	u, err := findUser(user, users)
+	if err != nil {
+		return nil, err
+	}
+
+	userPass := u.Password
+	if strings.HasPrefix(u.Password, "\"${") && strings.HasSuffix(u.Password, "}\"") {
+		userPass = os.Getenv(misc.ExtractEnvVar(userPass))
+		if userPass == "" {
+			return nil, api_errors.New(401, fmt.Sprintf("%s %s", "can not read password from env variable:", u.Password))
+		}
+	}
+
+	if u.IsInsecure {
+		if pass == userPass {
+			return user, nil
+		}
+		return nil, api_errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
+	}
+	if checkPassword(pass, userPass) {
+		return user, nil
+	}
+	return nil, api_errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
+}
+
+func checkPassword(pass, storedPass string) bool {
+	parts := strings.Split(storedPass, "$")
+	if len(parts) == 4 {
+		var c crypt.Crypter
+		switch parts[1] {
+		case "1":
+			c = crypt.MD5.New()
+		case "5":
+			c = crypt.SHA256.New()
+		case "6":
+			c = crypt.SHA512.New()
+		default:
+			return false
+		}
+		if err := c.Verify(storedPass, []byte(pass)); err == nil {
+			return true
+		}
+	}
+
+	return false
 }

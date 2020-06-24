@@ -36,7 +36,6 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
-	"github.com/haproxytech/config-parser/v2/types"
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
@@ -64,7 +63,6 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/operations"
 
-	"github.com/GehirnInc/crypt"
 	// import various crypting algorithms
 	_ "github.com/GehirnInc/crypt/md5_crypt"
 	_ "github.com/GehirnInc/crypt/sha256_crypt"
@@ -169,7 +167,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 
 	// Applies when the Authorization header is set with the Basic scheme
-	api.BasicAuthAuth = authenticateUser
+	api.BasicAuthAuth = dataplaneapi_config.AuthenticateUser
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 		uriSlice := strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)
@@ -504,53 +502,6 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	return (logViaLogrus(handleCORS(recovery(handler))))
 }
 
-//extractEnvVar extracts and returns env variable from HAProxy variable
-//provided in "${SOME_VAR}" format
-func extractEnvVar(pass string) string {
-	return strings.TrimLeft(strings.TrimRight(pass, "\"}"), "\"${")
-}
-
-//findUser searches user by its name. If found, returns user, otherwise returns an error.
-func findUser(userName string, users []types.User) (*types.User, error) {
-	for _, u := range users {
-		if u.Name == userName {
-			return &u, nil
-		}
-	}
-	return nil, errors.New(401, "no configured users")
-}
-
-func authenticateUser(user string, pass string) (interface{}, error) {
-	users := dataplaneapi_config.GetUsersStore().GetUsers()
-	if len(users) == 0 {
-		return nil, errors.New(401, "no configured users")
-	}
-
-	u, err := findUser(user, users)
-	if err != nil {
-		return nil, err
-	}
-
-	userPass := u.Password
-	if strings.HasPrefix(u.Password, "\"${") && strings.HasSuffix(u.Password, "}\"") {
-		userPass = os.Getenv(extractEnvVar(userPass))
-		if userPass == "" {
-			return nil, errors.New(401, fmt.Sprintf("%s %s", "can not read password from env variable:", u.Password))
-		}
-	}
-
-	if u.IsInsecure {
-		if pass == userPass {
-			return user, nil
-		}
-		return nil, errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
-	}
-	if checkPassword(pass, userPass) {
-		return user, nil
-	}
-	return nil, errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
-}
-
 func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
 	switch loggingOptions.LogFormat {
 	case "text":
@@ -588,28 +539,6 @@ func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
 	case "error":
 		log.SetLevel(log.ErrorLevel)
 	}
-}
-
-func checkPassword(pass, storedPass string) bool {
-	parts := strings.Split(storedPass, "$")
-	if len(parts) == 4 {
-		var c crypt.Crypter
-		switch parts[1] {
-		case "1":
-			c = crypt.MD5.New()
-		case "5":
-			c = crypt.SHA256.New()
-		case "6":
-			c = crypt.SHA512.New()
-		default:
-			return false
-		}
-		if err := c.Verify(storedPass, []byte(pass)); err == nil {
-			return true
-		}
-	}
-
-	return false
 }
 
 func serverShutdown() {

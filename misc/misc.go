@@ -164,3 +164,9 @@ func Int64P(i int) *int64 {
 	i64 := int64(i)
 	return &i64
 }
+
+//extractEnvVar extracts and returns env variable from HAProxy variable
+//provided in "${SOME_VAR}" format
+func ExtractEnvVar(pass string) string {
+	return strings.TrimLeft(strings.TrimRight(pass, "\"}"), "\"${")
+}
