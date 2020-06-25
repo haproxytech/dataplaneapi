@@ -7402,6 +7402,30 @@ func init() {
           }
         }
       }
+    },
+    "/specification_openapiv3": {
+      "get": {
+        "description": "Return Data Plane API OpenAPI v3 specification",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SpecificationOpenapiv3"
+        ],
+        "summary": "Data Plane API v3 Specification",
+        "operationId": "getOpenapiv3Specification",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -13582,6 +13606,9 @@ func init() {
     },
     {
       "name": "Maps"
+    },
+    {
+      "name": "SpecificationOpenapiv3"
     }
   ],
   "externalDocs": {
@@ -24559,6 +24586,40 @@ func init() {
           }
         }
       }
+    },
+    "/specification_openapiv3": {
+      "get": {
+        "description": "Return Data Plane API OpenAPI v3 specification",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SpecificationOpenapiv3"
+        ],
+        "summary": "Data Plane API v3 Specification",
+        "operationId": "getOpenapiv3Specification",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -30982,6 +31043,9 @@ func init() {
     },
     {
       "name": "Maps"
+    },
+    {
+      "name": "SpecificationOpenapiv3"
     }
   ],
   "externalDocs": {

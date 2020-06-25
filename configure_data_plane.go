@@ -34,9 +34,12 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/getkin/kin-openapi/openapi2"
+	"github.com/getkin/kin-openapi/openapi2conv"
 	"github.com/haproxytech/config-parser/v2/types"
 	"github.com/haproxytech/dataplaneapi/adapters"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
+	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
 	"github.com/haproxytech/models/v2"
 
 	log "github.com/sirupsen/logrus"
@@ -431,6 +434,30 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			return specification.NewGetSpecificationDefault(int(*e.Code)).WithPayload(e)
 		}
 		return specification.NewGetSpecificationOK().WithPayload(&m)
+	})
+
+	// setup OpenAPI v3 specification handler
+	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
+		v2 := openapi2.Swagger{}
+		err := v2.UnmarshalJSON(SwaggerJSON)
+		if err != nil {
+			e := misc.HandleError(err)
+			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+		}
+
+		// if host is empty(dynamic hosts), server prop is empty,
+		// so we need to set it explicitly
+		if v2.Host == "" {
+			cfg := dataplaneapi_config.Get()
+			v2.Host = cfg.Server.Host
+		}
+
+		v3, err := openapi2conv.ToV3Swagger(&v2)
+		if err != nil {
+			e := misc.HandleError(err)
+			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+		}
+		return specification_openapiv3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
 	})
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))

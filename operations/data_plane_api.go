@@ -59,6 +59,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
+	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
 	"github.com/haproxytech/dataplaneapi/operations/stick_table"
@@ -314,6 +315,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsGetOneRuntimeMapHandler: maps.GetOneRuntimeMapHandlerFunc(func(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetOneRuntimeMap has not yet been implemented")
+		}),
+		SpecificationOpenapiv3GetOpenapiv3SpecificationHandler: specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation specification_openapiv3.GetOpenapiv3Specification has not yet been implemented")
 		}),
 		PeerEntryGetPeerEntriesHandler: peer_entry.GetPeerEntriesHandlerFunc(func(params peer_entry.GetPeerEntriesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer_entry.GetPeerEntries has not yet been implemented")
@@ -700,6 +704,8 @@ type DataPlaneAPI struct {
 	NameserverGetNameserversHandler nameserver.GetNameserversHandler
 	// MapsGetOneRuntimeMapHandler sets the operation handler for the get one runtime map operation
 	MapsGetOneRuntimeMapHandler maps.GetOneRuntimeMapHandler
+	// SpecificationOpenapiv3GetOpenapiv3SpecificationHandler sets the operation handler for the get openapiv3 specification operation
+	SpecificationOpenapiv3GetOpenapiv3SpecificationHandler specification_openapiv3.GetOpenapiv3SpecificationHandler
 	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
 	PeerEntryGetPeerEntriesHandler peer_entry.GetPeerEntriesHandler
 	// PeerEntryGetPeerEntryHandler sets the operation handler for the get peer entry operation
@@ -1120,6 +1126,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsGetOneRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.GetOneRuntimeMapHandler")
+	}
+	if o.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler == nil {
+		unregistered = append(unregistered, "specification_openapiv3.GetOpenapiv3SpecificationHandler")
 	}
 	if o.PeerEntryGetPeerEntriesHandler == nil {
 		unregistered = append(unregistered, "peer_entry.GetPeerEntriesHandler")
@@ -1701,6 +1710,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps/{name}"] = maps.NewGetOneRuntimeMap(o.context, o.MapsGetOneRuntimeMapHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/specification_openapiv3"] = specification_openapiv3.NewGetOpenapiv3Specification(o.context, o.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
