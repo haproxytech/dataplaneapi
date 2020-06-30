@@ -28,6 +28,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 
 	client_native "github.com/haproxytech/client-native/v2"
@@ -202,7 +203,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			log.Warning(err)
 		}
 		if len(data) != 8 {
-			log.Warning("bottstrap key in unrecognized format")
+			log.Warning("bootstrap key in unrecognized format")
 			continue
 		}
 		url := fmt.Sprintf("%s://%s", data[0], data[1])
@@ -374,21 +375,36 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 	c.cfg.Cluster.Name.Store(responseData.Name)
 	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
 	c.cfg.Cluster.ActiveBootstrapKey.Store(c.cfg.BootstrapKey.Load())
-	c.cfg.Status.Store(responseData.Status)
 	log.Infof("Cluster joined, status: %s", responseData.Status)
-	if responseData.Status == "active" || responseData.Status == "unreachable" {
-		err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
-		if err != nil {
-			return err
-		}
-		c.cfg.Cluster.CertFetched.Store(true)
-		c.cfg.Notify.Reload.Notify()
+	_, err = c.checkCertificate(responseData)
+	if err != nil {
+		return err
 	}
 	err = c.cfg.Save()
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+//checkCertificate checks if we have received valid certificate or we just got CSR back
+//
+// two options are possible here:
+//-----BEGIN CERTIFICATE----- or -----BEGIN CERTIFICATE REQUEST-----
+func (c *ClusterSync) checkCertificate(node Node) (fetched bool, err error) {
+	if !strings.HasPrefix(node.Certificate, "-----BEGIN CERTIFICATE-----") {
+		c.cfg.Status.Store("unconfigured")
+		return false, nil
+	}
+	err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(node.Certificate), 0644)
+	if err != nil {
+		c.cfg.Status.Store("unconfigured")
+		return false, err
+	}
+	c.cfg.Cluster.CertFetched.Store(true)
+	c.cfg.Notify.Reload.Notify()
+	c.cfg.Status.Store("active")
+	return true, nil
 }
 
 func (c *ClusterSync) activateFetchCert(err error) {
@@ -443,17 +459,12 @@ func (c *ClusterSync) fetchCert() {
 				c.activateFetchCert(err)
 				continue
 			}
-			c.cfg.Status.Store(responseData.Status)
 			log.Warningf("Fetching certificate, status: %s", responseData.Status)
 
-			if responseData.Status == "active" || responseData.Status == "unreachable" {
-				err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
-				if err != nil {
-					log.Warning(err.Error())
-					continue
-				}
-				c.cfg.Cluster.CertFetched.Store(true)
-				c.cfg.Notify.Reload.Notify()
+			certFetched, err = c.checkCertificate(responseData)
+			if err != nil {
+				log.Warning(err.Error())
+				continue
 			}
 			err = c.cfg.Save()
 			if err != nil {
