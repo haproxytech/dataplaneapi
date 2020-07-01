@@ -19,8 +19,10 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"os/exec"
+	"path"
 	"strconv"
 	"strings"
 	"sync"
@@ -367,22 +369,40 @@ func NewReloadError(msg string) *ReloadError {
 	return &ReloadError{msg: msg}
 }
 
+// copyFile copies the src file to a temporary file and then renames
+// the temporary file to the path specified by dest. This ensures an
+// atomic write, preventing the issue described at
+// https://github.com/haproxytech/dataplaneapi/issues/114.
 func copyFile(src, dest string) error {
-	srcContent, err := os.Open(src)
-	if err != nil {
-		return err
-	}
-	defer srcContent.Close()
+	copyToTempFile := func() (string, error) {
+		srcContent, err := os.Open(src)
+		if err != nil {
+			return "", err
+		}
+		defer srcContent.Close()
 
-	destContent, err := os.Create(dest)
-	if err != nil {
-		return err
+		// Create a temporary file in the same directory as the destination
+		// file. This is important since the subsequent os.Rename operation
+		// will fail if the source and target of the rename operation are on
+		// different filesystems.
+		tmpContent, err := ioutil.TempFile(path.Dir(dest), "")
+		if err != nil {
+			return "", err
+		}
+		defer tmpContent.Close()
+		_, err = io.Copy(tmpContent, srcContent)
+		if err != nil {
+			return "", err
+		}
+		if err := tmpContent.Sync(); err != nil {
+			return "", err
+		}
+		return tmpContent.Name(), nil
 	}
-	defer destContent.Close()
 
-	_, err = io.Copy(destContent, srcContent)
+	tmpContentPath, err := copyToTempFile()
 	if err != nil {
 		return err
 	}
-	return destContent.Sync()
+	return os.Rename(tmpContentPath, dest)
 }
