@@ -18,7 +18,7 @@ package haproxy
 import (
 	"bytes"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"strconv"
@@ -26,6 +26,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/google/renameio"
 	"github.com/haproxytech/models/v2"
 
 	log "github.com/sirupsen/logrus"
@@ -374,15 +375,9 @@ func copyFile(src, dest string) error {
 	}
 	defer srcContent.Close()
 
-	destContent, err := os.Create(dest)
+	data, err := ioutil.ReadAll(srcContent)
 	if err != nil {
 		return err
 	}
-	defer destContent.Close()
-
-	_, err = io.Copy(destContent, srcContent)
-	if err != nil {
-		return err
-	}
-	return destContent.Sync()
+	return renameio.WriteFile(dest, data, 0644)
 }
