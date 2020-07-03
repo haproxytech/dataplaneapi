@@ -7551,6 +7551,14 @@ func init() {
             }
           }
         },
+        "http-buffer-request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP bufferrequest"
+        },
         "http-check": {
           "$ref": "#/definitions/http-check"
         },
@@ -8335,6 +8343,14 @@ func init() {
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
+        "http-buffer-request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP bufferrequest"
+        },
         "http-check": {
           "$ref": "#/definitions/http-check"
         },
@@ -8734,6 +8750,14 @@ func init() {
           },
           "$ref": "#/definitions/forwardfor"
         },
+        "http-buffer-request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP bufferrequest"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -9112,6 +9136,17 @@ func init() {
           },
           "x-display-name": "Authentication Realm"
         },
+        "cache_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "cache-use"
+            }
+          },
+          "x-display-name": "Cache Name"
+        },
         "capture_id": {
           "type": "integer",
           "x-dependency": {
@@ -9191,6 +9226,24 @@ func init() {
           },
           "x-nullable": false
         },
+        "expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "do-resolve",
+                "set-dst",
+                "set-dst-port",
+                "set-priority-class",
+                "set-priority-offset",
+                "set-src",
+                "set-src-port"
+              ]
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
         "hdr_format": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -9238,6 +9291,28 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
+        "hint_format": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "early-hint"
+            }
+          },
+          "x-display-name": "Hint Format"
+        },
+        "hint_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "early-hint"
+            }
+          },
+          "x-display-name": "Hint Name"
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
@@ -9261,6 +9336,78 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "map_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          }
+        },
+        "map_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          },
+          "x-display-name": "Map Key Format"
+        },
+        "map_valuefmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-map"
+            }
+          },
+          "x-display-name": "Map Value Format"
+        },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-mark"
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "method_fmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-method"
+            }
+          }
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-nice"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
         },
         "path_fmt": {
           "type": "string",
@@ -9287,6 +9434,20 @@ func init() {
               ]
             }
           }
+        },
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": false,
+              "value": "do-resolve"
+            }
+          },
+          "x-display-name": "Protocol"
         },
         "query-fmt": {
           "type": "string",
@@ -9346,6 +9507,50 @@ func init() {
             }
           },
           "x-display-name": "Redirect Value"
+        },
+        "resolvers": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "do-resolve"
+            }
+          },
+          "x-display-name": "Resolvers"
+        },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
         },
         "spoe_engine": {
           "type": "string",
@@ -9457,7 +9662,27 @@ func init() {
             "capture",
             "track-sc0",
             "track-sc1",
-            "track-sc2"
+            "track-sc2",
+            "set-map",
+            "del-map",
+            "cache-use",
+            "disable-l7-retry",
+            "early-hint",
+            "replace-uri",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "do-resolve",
+            "set-dst",
+            "set-dst-port",
+            "sc-set-gpt0",
+            "set-mark",
+            "set-nice",
+            "set-method",
+            "set-priority-class",
+            "set-priority-offset",
+            "set-src",
+            "set-src-por",
+            "wait-for-handshake"
           ],
           "x-nullable": false
         },
@@ -9466,7 +9691,19 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-uri"
+              "value": [
+                "set-uri",
+                "replace-uri"
+              ]
+            }
+          }
+        },
+        "uri-match": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "replace-uri"
             }
           }
         },
@@ -9486,7 +9723,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "do-resolve"
+              ]
             }
           }
         },
@@ -9670,6 +9910,68 @@ func init() {
             }
           }
         },
+        "map_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          }
+        },
+        "map_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          },
+          "x-display-name": "Map Key Format"
+        },
+        "map_valuefmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-map"
+            }
+          },
+          "x-display-name": "Map Value Format"
+        },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-mark"
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-nice"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
+        },
         "redir_code": {
           "type": "integer",
           "enum": [
@@ -9719,6 +10021,40 @@ func init() {
             }
           },
           "x-display-name": "Redirect Value"
+        },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
         },
         "spoe_engine": {
           "type": "string",
@@ -9777,7 +10113,14 @@ func init() {
             "replace-value",
             "add-acl",
             "del-acl",
-            "capture"
+            "capture",
+            "set-map",
+            "del-map",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "set-mark",
+            "set-nice"
           ],
           "x-nullable": false
         },
@@ -11447,6 +11790,11 @@ func init() {
         "allow_0rtt": {
           "type": "boolean"
         },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
         "backup": {
           "type": "string",
           "enum": [
@@ -11545,6 +11893,22 @@ func init() {
         "proto": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
         },
         "resolve-net": {
           "type": "string",
@@ -24476,6 +24840,14 @@ func init() {
             }
           }
         },
+        "http-buffer-request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP bufferrequest"
+        },
         "http-check": {
           "$ref": "#/definitions/http-check"
         },
@@ -25253,6 +25625,14 @@ func init() {
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
         },
+        "http-buffer-request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP bufferrequest"
+        },
         "http-check": {
           "$ref": "#/definitions/http-check"
         },
@@ -25652,6 +26032,14 @@ func init() {
           },
           "$ref": "#/definitions/forwardfor"
         },
+        "http-buffer-request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP bufferrequest"
+        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -25985,6 +26373,17 @@ func init() {
           },
           "x-display-name": "Authentication Realm"
         },
+        "cache_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "cache-use"
+            }
+          },
+          "x-display-name": "Cache Name"
+        },
         "capture_id": {
           "type": "integer",
           "x-dependency": {
@@ -26064,6 +26463,24 @@ func init() {
           },
           "x-nullable": false
         },
+        "expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "do-resolve",
+                "set-dst",
+                "set-dst-port",
+                "set-priority-class",
+                "set-priority-offset",
+                "set-src",
+                "set-src-port"
+              ]
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
         "hdr_format": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -26111,6 +26528,28 @@ func init() {
           },
           "x-display-name": "Header Name"
         },
+        "hint_format": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "early-hint"
+            }
+          },
+          "x-display-name": "Hint Format"
+        },
+        "hint_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "early-hint"
+            }
+          },
+          "x-display-name": "Hint Name"
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
@@ -26134,6 +26573,78 @@ func init() {
               "value": "set-log-level"
             }
           }
+        },
+        "map_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          }
+        },
+        "map_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          },
+          "x-display-name": "Map Key Format"
+        },
+        "map_valuefmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-map"
+            }
+          },
+          "x-display-name": "Map Value Format"
+        },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-mark"
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "method_fmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-method"
+            }
+          }
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-nice"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
         },
         "path_fmt": {
           "type": "string",
@@ -26160,6 +26671,20 @@ func init() {
               ]
             }
           }
+        },
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": false,
+              "value": "do-resolve"
+            }
+          },
+          "x-display-name": "Protocol"
         },
         "query-fmt": {
           "type": "string",
@@ -26219,6 +26744,50 @@ func init() {
             }
           },
           "x-display-name": "Redirect Value"
+        },
+        "resolvers": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "do-resolve"
+            }
+          },
+          "x-display-name": "Resolvers"
+        },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
         },
         "spoe_engine": {
           "type": "string",
@@ -26330,7 +26899,27 @@ func init() {
             "capture",
             "track-sc0",
             "track-sc1",
-            "track-sc2"
+            "track-sc2",
+            "set-map",
+            "del-map",
+            "cache-use",
+            "disable-l7-retry",
+            "early-hint",
+            "replace-uri",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "do-resolve",
+            "set-dst",
+            "set-dst-port",
+            "sc-set-gpt0",
+            "set-mark",
+            "set-nice",
+            "set-method",
+            "set-priority-class",
+            "set-priority-offset",
+            "set-src",
+            "set-src-por",
+            "wait-for-handshake"
           ],
           "x-nullable": false
         },
@@ -26339,7 +26928,19 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-uri"
+              "value": [
+                "set-uri",
+                "replace-uri"
+              ]
+            }
+          }
+        },
+        "uri-match": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "replace-uri"
             }
           }
         },
@@ -26359,7 +26960,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "do-resolve"
+              ]
             }
           }
         },
@@ -26543,6 +27147,68 @@ func init() {
             }
           }
         },
+        "map_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          }
+        },
+        "map_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          },
+          "x-display-name": "Map Key Format"
+        },
+        "map_valuefmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-map"
+            }
+          },
+          "x-display-name": "Map Value Format"
+        },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-mark"
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-nice"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
+        },
         "redir_code": {
           "type": "integer",
           "enum": [
@@ -26592,6 +27258,40 @@ func init() {
             }
           },
           "x-display-name": "Redirect Value"
+        },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
         },
         "spoe_engine": {
           "type": "string",
@@ -26650,7 +27350,14 @@ func init() {
             "replace-value",
             "add-acl",
             "del-acl",
-            "capture"
+            "capture",
+            "set-map",
+            "del-map",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "set-mark",
+            "set-nice"
           ],
           "x-nullable": false
         },
@@ -28321,6 +29028,11 @@ func init() {
         "allow_0rtt": {
           "type": "boolean"
         },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
         "backup": {
           "type": "string",
           "enum": [
@@ -28419,6 +29131,22 @@ func init() {
         "proto": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
         },
         "resolve-net": {
           "type": "string",
