@@ -127,10 +127,6 @@ github.com/google/renameio v0.1.1-0.20200217212219-353f81969824/go.mod h1:t/HQoY
 github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v2 v2.0.2-0.20200514090330-dbb2ae2c092e h1:Elzeg8IT1xziavJjRzfg3rgdleXf3euvAQrUhAHaYtM=
-github.com/haproxytech/client-native/v2 v2.0.2-0.20200514090330-dbb2ae2c092e/go.mod h1:lTlteB7J4n02DpuS3jIMoJrdwj4QbLCPrfJCC93Glc0=
-github.com/haproxytech/client-native/v2 v2.0.2 h1:y6qzac8KoytYa5j6Xmh/EQ8cmWwxHOCfoiiypvydNeQ=
-github.com/haproxytech/client-native/v2 v2.0.2/go.mod h1:/0VxCIsS4kSWwtDkdXujZigjrHco+WzK7ad6WCfUEvQ=
 github.com/haproxytech/client-native/v2 v2.0.3-0.20200618114644-ad03bce441cc h1:p7XVnRxD0GRzaRbfc1Mz4L2O7x78x9HxRiccalVIHi4=
 github.com/haproxytech/client-native/v2 v2.0.3-0.20200618114644-ad03bce441cc/go.mod h1:jhtVQNwL/EVVs2qsYaSv+1M6jK/xZsnINJOf2OmsXNg=
 github.com/haproxytech/client-native/v2 v2.0.3-0.20200703142441-9b25120b86e3 h1:UTXw2uoR/dvcvM1V8f2zTmRafkmV5opSwjoMEhB7ac4=

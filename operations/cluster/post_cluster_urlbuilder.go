@@ -30,7 +30,8 @@ import (
 
 // PostClusterURL generates an URL for the post cluster operation
 type PostClusterURL struct {
-	Version *int64
+	Configuration *string
+	Version       *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -65,6 +66,14 @@ func (o *PostClusterURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var configurationQ string
+	if o.Configuration != nil {
+		configurationQ = *o.Configuration
+	}
+	if configurationQ != "" {
+		qs.Set("configuration", configurationQ)
+	}
 
 	var versionQ string
 	if o.Version != nil {

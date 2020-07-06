@@ -375,7 +375,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 	c.cfg.Cluster.Name.Store(responseData.Name)
 	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
 	c.cfg.Cluster.ActiveBootstrapKey.Store(c.cfg.BootstrapKey.Load())
-	log.Infof("Cluster joined, status: %s", responseData.Status)
+	log.Info("Cluster joined")
 	_, err = c.checkCertificate(responseData)
 	if err != nil {
 		return err

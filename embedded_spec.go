@@ -119,6 +119,15 @@ func init() {
             }
           },
           {
+            "enum": [
+              "keep"
+            ],
+            "type": "string",
+            "description": "In case of moving to single mode do we keep or clean configuration",
+            "name": "configuration",
+            "in": "query"
+          },
+          {
             "$ref": "#/parameters/version"
           }
         ],
@@ -13431,6 +13440,15 @@ func init() {
             "schema": {
               "$ref": "#/definitions/cluster_settings"
             }
+          },
+          {
+            "enum": [
+              "keep"
+            ],
+            "type": "string",
+            "description": "In case of moving to single mode do we keep or clean configuration",
+            "name": "configuration",
+            "in": "query"
           },
           {
             "type": "integer",

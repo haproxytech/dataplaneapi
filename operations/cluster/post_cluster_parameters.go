@@ -29,6 +29,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/models/v2"
 )
@@ -49,6 +50,10 @@ type PostClusterParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*In case of moving to single mode do we keep or clean configuration
+	  In: query
+	*/
+	Configuration *string
 	/*
 	  Required: true
 	  In: body
@@ -70,6 +75,11 @@ func (o *PostClusterParams) BindRequest(r *http.Request, route *middleware.Match
 	o.HTTPRequest = r
 
 	qs := runtime.Values(r.URL.Query())
+
+	qConfiguration, qhkConfiguration, _ := qs.GetOK("configuration")
+	if err := o.bindConfiguration(qConfiguration, qhkConfiguration, route.Formats); err != nil {
+		res = append(res, err)
+	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -101,6 +111,38 @@ func (o *PostClusterParams) BindRequest(r *http.Request, route *middleware.Match
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindConfiguration binds and validates parameter Configuration from query.
+func (o *PostClusterParams) bindConfiguration(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.Configuration = &raw
+
+	if err := o.validateConfiguration(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateConfiguration carries on validations for parameter Configuration
+func (o *PostClusterParams) validateConfiguration(formats strfmt.Registry) error {
+
+	if err := validate.Enum("configuration", "query", *o.Configuration, []interface{}{"keep"}); err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -417,7 +417,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// setup cluster handlers
 	api.DiscoveryGetClusterHandler = &handlers.GetClusterHandlerImpl{Config: cfg}
-	api.ClusterPostClusterHandler = &handlers.CreateClusterHandlerImpl{Config: cfg}
+	api.ClusterPostClusterHandler = &handlers.CreateClusterHandlerImpl{Client: client, Config: cfg, ReloadAgent: ra}
 	api.ClusterInitiateCertificateRefreshHandler = &handlers.ClusterInitiateCertificateRefreshHandlerImpl{Config: cfg}
 
 	clusterSync := dataplaneapi_config.ClusterSync{ReloadAgent: ra}
