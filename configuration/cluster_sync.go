@@ -92,11 +92,7 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 			log.Warning(err)
 			continue
 		}
-		if len(data) != 8 {
-			log.Warning("bottstrap key in unrecognized format")
-			continue
-		}
-		url := fmt.Sprintf("%s://%s", data[0], data[1])
+		url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
 
 		csr, key, err := generateCSR()
 		if err != nil {
@@ -108,7 +104,7 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 			log.Warning(err)
 			continue
 		}
-		err = c.issueRefreshRequest(url, data[2], data[3], data[4], csr, key)
+		err = c.issueRefreshRequest(url, data["port"], data["api-base-path"], data["path"], csr, key)
 		if err != nil {
 			log.Warning(err)
 			continue
@@ -202,17 +198,13 @@ func (c *ClusterSync) monitorBootstrapKey() {
 		if err != nil {
 			log.Warning(err)
 		}
-		if len(data) != 8 {
-			log.Warning("bootstrap key in unrecognized format")
-			continue
-		}
-		url := fmt.Sprintf("%s://%s", data[0], data[1])
+		url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
 		c.cfg.Cluster.URL.Store(url)
-		c.cfg.Cluster.Port.Store(data[2])
-		c.cfg.Cluster.APIBasePath.Store(data[3])
-		c.cfg.Cluster.APINodesPath.Store(data[4])
-		c.cfg.Cluster.Name.Store(data[5])
-		c.cfg.Cluster.Description.Store(data[6])
+		c.cfg.Cluster.Port.Store(data["port"])
+		c.cfg.Cluster.APIBasePath.Store(data["api-base-path"])
+		c.cfg.Cluster.APINodesPath.Store(data["path"])
+		c.cfg.Cluster.Name.Store(data["name"])
+		c.cfg.Cluster.Description.Store(data["description"])
 		c.cfg.Mode.Store("cluster")
 		err = c.cfg.Save()
 		if err != nil {
@@ -237,7 +229,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 		if err != nil {
 			log.Panic(err)
 		}
-		err = c.issueJoinRequest(url, data[2], data[3], data[4], csr, key)
+		err = c.issueJoinRequest(url, data["port"], data["api-base-path"], data["path"], csr, key)
 		if err != nil {
 			log.Warning(err)
 			continue
