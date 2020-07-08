@@ -18,10 +18,12 @@ package configuration
 import (
 	"encoding/json"
 	"io/ioutil"
+	"path/filepath"
 
 	"math/rand"
 	"time"
 
+	"github.com/google/renameio"
 	log "github.com/sirupsen/logrus"
 
 	petname "github.com/dustinkirkland/golang-petname"
@@ -48,6 +50,7 @@ type HAProxyConfiguration struct {
 	MapsDir              string `short:"p" long:"maps-dir" description:"Path to maps directory. If set, it reads from specified dir, otherwise it reads from config file"`
 	UpdateMapFiles       bool   `long:"update-map-files" description:"Flag used for syncing map files with runtime maps values"`
 	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10"`
+	ClusterTLSCertDir    string `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file"`
 }
 
 type APIConfiguration struct {
@@ -70,12 +73,13 @@ type ClusterConfiguration struct {
 	Port               AtomicString `yaml:"port"`
 	APIBasePath        AtomicString `yaml:"api_base_path"`
 	APINodesPath       AtomicString `yaml:"api_nodes_path"`
-	CertificatePath    AtomicString `yaml:"tls_certificate"`
-	CertificateKeyPath AtomicString `yaml:"tls_key"`
-	CertificateCSR     AtomicString `yaml:"tls_csr"`
-	CertFetched        AtomicBool   `yaml:"cert_fetched"`
+	Certificate        ClusterTLS   `yaml:"certificates"`
 	Name               AtomicString `yaml:"name"`
 	Description        AtomicString `yaml:"description"`
+}
+type ClusterTLS struct {
+	Dir     AtomicString `yaml:"path"`
+	Fetched AtomicBool   `yaml:"fetched"`
 }
 
 func (c *ClusterConfiguration) Clear() {
@@ -85,7 +89,7 @@ func (c *ClusterConfiguration) Clear() {
 	c.Port.Store("")
 	c.APIBasePath.Store("")
 	c.APINodesPath.Store("")
-	c.CertFetched.Store(false)
+	c.Certificate.Fetched.Store(false)
 	c.Name.Store("")
 	c.Description.Store("")
 }
@@ -177,15 +181,6 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 	if c.Mode.Load() == "" {
 		c.Mode.Store("single")
 	}
-	if c.Cluster.CertificatePath.Load() == "" {
-		c.Cluster.CertificatePath.Store("tls.crt")
-	}
-	if c.Cluster.CertificateKeyPath.Load() == "" {
-		c.Cluster.CertificateKeyPath.Store("tls.key")
-	}
-	if c.Cluster.CertificateCSR.Load() == "" {
-		c.Cluster.CertificateCSR.Store("csr.crt")
-	}
 
 	if c.Name.Load() == "" {
 		rand.Seed(time.Now().UnixNano())
@@ -205,9 +200,22 @@ func (c *Configuration) Save() error {
 		log.Fatalf("error: %v", err)
 	}
 
-	err = ioutil.WriteFile(c.HAProxy.DataplaneConfig, data, 0644)
+	err = renameio.WriteFile(c.HAProxy.DataplaneConfig, data, 0644)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func (c *Configuration) GetClusterCertDir() string {
+	dir := c.Cluster.Certificate.Dir.Load()
+	if dir == "" {
+		dir = c.HAProxy.ClusterTLSCertDir
+	}
+	if dir == "" {
+		// use same dir as dataplane config file
+		url := c.HAProxy.DataplaneConfig
+		dir = filepath.Dir(url)
+	}
+	return dir
 }

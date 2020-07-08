@@ -28,9 +28,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"path"
 	"strings"
 	"time"
 
+	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/config-parser/v2/types"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -75,7 +77,7 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 	go c.fetchCert()
 
 	key := c.cfg.BootstrapKey.Load()
-	certFetched := cfg.Cluster.CertFetched.Load()
+	certFetched := cfg.Cluster.Certificate.Fetched.Load()
 
 	if key != "" && !certFetched {
 		c.cfg.Notify.BootstrapKeyChanged.Notify()
@@ -99,7 +101,7 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 			log.Warning(err)
 			continue
 		}
-		err = ioutil.WriteFile(c.cfg.Cluster.CertificateCSR.Load(), []byte(csr), 0644)
+		err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
 		if err != nil {
 			log.Warning(err)
 			continue
@@ -154,12 +156,12 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 		return err
 	}
 	log.Infof("Cluster re joined, status: %s", responseData.Status)
-	err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(responseData.Certificate), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(csr), 0644)
 	if err != nil {
 		log.Warning(err)
 		return err
 	}
-	err = ioutil.WriteFile(c.cfg.Cluster.CertificateKeyPath.Load(), []byte(key), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
 	if err != nil {
 		log.Warning(err)
 		return err
@@ -177,7 +179,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 func (c *ClusterSync) monitorBootstrapKey() {
 	for range c.cfg.Notify.BootstrapKeyChanged.Subscribe("monitorBootstrapKey") {
 		key := c.cfg.BootstrapKey.Load()
-		c.cfg.Cluster.CertFetched.Store(false)
+		c.cfg.Cluster.Certificate.Fetched.Store(false)
 		if key == "" {
 			//do we need to delete cert here maybe?
 			c.cfg.Cluster.ActiveBootstrapKey.Store("")
@@ -188,7 +190,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			continue
 		}
 		if key == c.cfg.Cluster.ActiveBootstrapKey.Load() {
-			fetched := c.cfg.Cluster.CertFetched.Load()
+			fetched := c.cfg.Cluster.Certificate.Fetched.Load()
 			if !fetched {
 				c.certFetch <- struct{}{}
 			}
@@ -215,12 +217,12 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			log.Warning(err)
 			continue
 		}
-		err = ioutil.WriteFile(c.cfg.Cluster.CertificateKeyPath.Load(), []byte(key), 0644)
+		err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
 		if err != nil {
 			log.Warning(err)
 			continue
 		}
-		err = ioutil.WriteFile(c.cfg.Cluster.CertificateCSR.Load(), []byte(csr), 0644)
+		err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
 		if err != nil {
 			log.Warning(err)
 			continue
@@ -388,12 +390,12 @@ func (c *ClusterSync) checkCertificate(node Node) (fetched bool, err error) {
 		c.cfg.Status.Store("unconfigured")
 		return false, nil
 	}
-	err = ioutil.WriteFile(c.cfg.Cluster.CertificatePath.Load(), []byte(node.Certificate), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(node.Certificate), 0644)
 	if err != nil {
 		c.cfg.Status.Store("unconfigured")
 		return false, err
 	}
-	c.cfg.Cluster.CertFetched.Store(true)
+	c.cfg.Cluster.Certificate.Fetched.Store(true)
 	c.cfg.Notify.Reload.Notify()
 	c.cfg.Status.Store("active")
 	return true, nil
@@ -414,7 +416,7 @@ func (c *ClusterSync) fetchCert() {
 			continue
 		}
 		//if not, sleep and start all over again
-		certFetched := c.cfg.Cluster.CertFetched.Load()
+		certFetched := c.cfg.Cluster.Certificate.Fetched.Load()
 		if !certFetched {
 			url := c.cfg.Cluster.URL.Load()
 			port := c.cfg.Cluster.Port.Load()

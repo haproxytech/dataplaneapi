@@ -18,6 +18,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path"
 
 	log "github.com/sirupsen/logrus"
 
@@ -125,10 +126,10 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	log.Infof("Build date: %s", BuildTime)
 
 	if cfg.Mode.Load() == "cluster" {
-		if cfg.Cluster.CertFetched.Load() {
+		if cfg.Cluster.Certificate.Fetched.Load() {
 			log.Info("HAProxy Data Plane API in cluster mode")
-			server.TLSCertificate = flags.Filename(cfg.Cluster.CertificatePath.Load())
-			server.TLSCertificateKey = flags.Filename(cfg.Cluster.CertificateKeyPath.Load())
+			server.TLSCertificate = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", cfg.Name.Load())))
+			server.TLSCertificateKey = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", cfg.Name.Load())))
 			server.EnabledListeners = []string{"https"}
 			if server.TLSPort == 0 {
 				server.TLSPort = server.Port
