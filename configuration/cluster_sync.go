@@ -28,6 +28,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path"
 	"strings"
 	"time"
@@ -43,17 +44,18 @@ const DataplaneAPIType = "community"
 
 //Node is structure required for connection to cluster
 type Node struct {
-	Address     string `json:"address"`
-	APIBasePath string `json:"api_base_path"`
-	APIPassword string `json:"api_password"`
-	APIUser     string `json:"api_user"`
-	Certificate string `json:"certificate,omitempty"`
-	Description string `json:"description,omitempty"`
-	ID          string `json:"id,omitempty"`
-	Name        string `json:"name"`
-	Port        int64  `json:"port,omitempty"`
-	Status      string `json:"status"`
-	Type        string `json:"type"`
+	Address     string            `json:"address"`
+	APIBasePath string            `json:"api_base_path"`
+	APIPassword string            `json:"api_password"`
+	APIUser     string            `json:"api_user"`
+	Certificate string            `json:"certificate,omitempty"`
+	Description string            `json:"description,omitempty"`
+	ID          string            `json:"id,omitempty"`
+	Name        string            `json:"name"`
+	Port        int64             `json:"port,omitempty"`
+	Status      string            `json:"status"`
+	Type        string            `json:"type"`
+	Variables   map[string]string `json:"variables"`
 }
 
 //ClusterSync fetches certificates for joining cluster
@@ -281,6 +283,24 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 		Status:      "waiting_approval",
 		Type:        DataplaneAPIType,
 	}
+	nodeData.Variables = map[string]string{}
+
+	// report the dataplane_cmdline if started from within haproxy
+	if c.cfg.HAProxy.MasterWorkerMode || os.Getenv("HAPROXY_MWORKER") == "1" {
+		nodeData.Variables["dataplane_cmdline"] = c.cfg.Cmdline.String()
+	}
+
+	processInfos, err := c.cli.Runtime.GetInfo()
+	if err != nil || len(processInfos) < 1 {
+		log.Error("unable to fetch processInfo")
+	} else {
+		if processInfos[0].Info != nil {
+			nodeData.Variables["haproxy_version"] = processInfos[0].Info.Version
+		} else {
+			log.Error("empty process info")
+		}
+	}
+
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(bytesRepresentation))

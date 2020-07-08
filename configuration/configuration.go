@@ -17,8 +17,11 @@ package configuration
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"os"
 	"path/filepath"
+	"strings"
 
 	"math/rand"
 	"time"
@@ -51,6 +54,7 @@ type HAProxyConfiguration struct {
 	UpdateMapFiles       bool   `long:"update-map-files" description:"Flag used for syncing map files with runtime maps values"`
 	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10"`
 	ClusterTLSCertDir    string `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file"`
+	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy"`
 }
 
 type APIConfiguration struct {
@@ -118,6 +122,7 @@ type Configuration struct {
 	BootstrapKey AtomicString         `yaml:"bootstrap_key"`
 	Mode         AtomicString         `yaml:"mode" default:"single"`
 	Status       AtomicString         `yaml:"status"`
+	Cmdline      AtomicString         `yaml:"-"`
 }
 
 //Get returns pointer to configuration
@@ -129,6 +134,16 @@ func Get() *Configuration {
 		cfg.Notify.CertificateRefresh = NewChanNotify()
 		cfg.Notify.Reload = NewChanNotify()
 		cfg.Notify.Shutdown = NewChanNotify()
+
+		var sb strings.Builder
+		for _, v := range os.Args {
+			if !strings.HasPrefix(v, "-") && !strings.Contains(v, `\ `) && strings.ContainsAny(v, " ") {
+				fmt.Fprintf(&sb, "\"%s\" ", v)
+			}
+			fmt.Fprintf(&sb, "%s ", v)
+		}
+
+		cfg.Cmdline.Store(sb.String())
 	}
 	return cfg
 }
