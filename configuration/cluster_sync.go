@@ -249,9 +249,9 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath str
 		return fmt.Errorf("no users configured in %v userlist in conf", c.cfg.HAProxy.Userlist)
 	}
 	var user *types.User
-	for _, u := range users {
+	for index, u := range users {
 		if u.IsInsecure {
-			user = &u
+			user = &users[index]
 			break
 		}
 	}
