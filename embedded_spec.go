@@ -8955,6 +8955,22 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "lua_loads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "file"
+            ],
+            "properties": {
+              "file": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            },
+            "x-go-name": "LuaLoad"
+          }
+        },
         "master-worker": {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
@@ -9017,6 +9033,10 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Bind Ciphers"
         },
+        "ssl_default_bind_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphersuites"
+        },
         "ssl_default_bind_options": {
           "type": "string",
           "x-display-name": "SSL Default Bind Options"
@@ -9024,6 +9044,10 @@ func init() {
         "ssl_default_server_ciphers": {
           "type": "string",
           "x-display-name": "SSL Default Server Ciphers"
+        },
+        "ssl_default_server_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphersuites"
         },
         "ssl_default_server_options": {
           "type": "string",
@@ -9346,6 +9370,24 @@ func init() {
             }
           }
         },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "lua"
+            }
+          }
+        },
         "map_file": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -9583,6 +9625,30 @@ func init() {
           },
           "x-display-name": "SPOE Group"
         },
+        "strict_mode": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "strict-mode"
+            }
+          }
+        },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-tos"
+            }
+          },
+          "x-display-name": "Tos Value"
+        },
         "track-sc0-key": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -9691,7 +9757,12 @@ func init() {
             "set-priority-offset",
             "set-src",
             "set-src-por",
-            "wait-for-handshake"
+            "wait-for-handshake",
+            "set-tos",
+            "silent-drop",
+            "unset-var",
+            "strict-mode",
+            "lua"
           ],
           "x-nullable": false
         },
@@ -9734,7 +9805,8 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
-                "do-resolve"
+                "do-resolve",
+                "unset-var"
               ]
             }
           }
@@ -9745,7 +9817,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
             }
           }
         }
@@ -9916,6 +9991,24 @@ func init() {
             "type": {
               "required": true,
               "value": "set-log-level"
+            }
+          }
+        },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "lua"
             }
           }
         },
@@ -10105,6 +10198,93 @@ func init() {
             }
           }
         },
+        "strict_mode": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "strict-mode"
+            }
+          }
+        },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-tos"
+            }
+          },
+          "x-display-name": "Tos Value"
+        },
+        "track-sc0-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Key"
+        },
+        "track-sc0-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Table"
+        },
+        "track-sc1-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Key"
+        },
+        "track-sc1-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Table"
+        },
+        "track-sc2-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Key"
+        },
+        "track-sc2-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Table"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -10129,7 +10309,15 @@ func init() {
             "sc-inc-gpc1",
             "sc-set-gpt0",
             "set-mark",
-            "set-nice"
+            "set-nice",
+            "set-tos",
+            "silent-drop",
+            "unset-var",
+            "track-sc0",
+            "track-sc1",
+            "track-sc2",
+            "strict-mode",
+            "lua"
           ],
           "x-nullable": false
         },
@@ -10149,7 +10337,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
             }
           }
         },
@@ -10159,7 +10350,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
             }
           }
         }
@@ -12606,7 +12800,8 @@ func init() {
             "track-sc1",
             "track-sc2",
             "unset-var",
-            "use-service"
+            "use-service",
+            "lua"
           ],
           "x-dependency": {
             "type": {
@@ -12739,6 +12934,38 @@ func init() {
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "lua"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Lua action name"
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "lua"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Lua action params"
         },
         "priority_type": {
           "type": "string",
@@ -13009,7 +13236,8 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
-            "reject"
+            "reject",
+            "lua"
           ],
           "x-dependency": {
             "type": {
@@ -13052,6 +13280,32 @@ func init() {
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "lua"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Lua action name"
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "lua"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Lua action params"
         },
         "timeout": {
           "type": "integer",
@@ -24433,6 +24687,19 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
+    "GlobalLuaLoadsItems0": {
+      "type": "object",
+      "required": [
+        "file"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-name": "LuaLoad"
+    },
     "GlobalRuntimeApisItems0": {
       "type": "object",
       "required": [
@@ -26231,6 +26498,12 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "lua_loads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalLuaLoadsItems0"
+          }
+        },
         "master-worker": {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
@@ -26263,6 +26536,10 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Bind Ciphers"
         },
+        "ssl_default_bind_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphersuites"
+        },
         "ssl_default_bind_options": {
           "type": "string",
           "x-display-name": "SSL Default Bind Options"
@@ -26270,6 +26547,10 @@ func init() {
         "ssl_default_server_ciphers": {
           "type": "string",
           "x-display-name": "SSL Default Server Ciphers"
+        },
+        "ssl_default_server_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphersuites"
         },
         "ssl_default_server_options": {
           "type": "string",
@@ -26592,6 +26873,24 @@ func init() {
             }
           }
         },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "lua"
+            }
+          }
+        },
         "map_file": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -26829,6 +27128,30 @@ func init() {
           },
           "x-display-name": "SPOE Group"
         },
+        "strict_mode": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "strict-mode"
+            }
+          }
+        },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-tos"
+            }
+          },
+          "x-display-name": "Tos Value"
+        },
         "track-sc0-key": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -26937,7 +27260,12 @@ func init() {
             "set-priority-offset",
             "set-src",
             "set-src-por",
-            "wait-for-handshake"
+            "wait-for-handshake",
+            "set-tos",
+            "silent-drop",
+            "unset-var",
+            "strict-mode",
+            "lua"
           ],
           "x-nullable": false
         },
@@ -26980,7 +27308,8 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
-                "do-resolve"
+                "do-resolve",
+                "unset-var"
               ]
             }
           }
@@ -26991,7 +27320,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
             }
           }
         }
@@ -27162,6 +27494,24 @@ func init() {
             "type": {
               "required": true,
               "value": "set-log-level"
+            }
+          }
+        },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "lua"
+            }
+          }
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "lua"
             }
           }
         },
@@ -27351,6 +27701,93 @@ func init() {
             }
           }
         },
+        "strict_mode": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "strict-mode"
+            }
+          }
+        },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-tos"
+            }
+          },
+          "x-display-name": "Tos Value"
+        },
+        "track-sc0-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Key"
+        },
+        "track-sc0-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc0"
+            }
+          },
+          "x-display-name": "track-sc0 Table"
+        },
+        "track-sc1-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Key"
+        },
+        "track-sc1-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc1"
+            }
+          },
+          "x-display-name": "track-sc1 Table"
+        },
+        "track-sc2-key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Key"
+        },
+        "track-sc2-table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc2"
+            }
+          },
+          "x-display-name": "track-sc2 Table"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -27375,7 +27812,15 @@ func init() {
             "sc-inc-gpc1",
             "sc-set-gpt0",
             "set-mark",
-            "set-nice"
+            "set-nice",
+            "set-tos",
+            "silent-drop",
+            "unset-var",
+            "track-sc0",
+            "track-sc1",
+            "track-sc2",
+            "strict-mode",
+            "lua"
           ],
           "x-nullable": false
         },
@@ -27395,7 +27840,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
             }
           }
         },
@@ -27405,7 +27853,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "set-var"
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
             }
           }
         }
@@ -29749,7 +30200,8 @@ func init() {
             "track-sc1",
             "track-sc2",
             "unset-var",
-            "use-service"
+            "use-service",
+            "lua"
           ],
           "x-dependency": {
             "type": {
@@ -29882,6 +30334,38 @@ func init() {
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "lua"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Lua action name"
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "lua"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Lua action params"
         },
         "priority_type": {
           "type": "string",
@@ -30152,7 +30636,8 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
-            "reject"
+            "reject",
+            "lua"
           ],
           "x-dependency": {
             "type": {
@@ -30195,6 +30680,32 @@ func init() {
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "lua_action": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "lua"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Lua action name"
+        },
+        "lua_params": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "lua"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Lua action params"
         },
         "timeout": {
           "type": "integer",

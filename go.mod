@@ -16,9 +16,9 @@ require (
 	github.com/go-openapi/swag v0.19.9
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v0.1.1-0.20200217212219-353f81969824
-	github.com/haproxytech/client-native/v2 v2.0.3-0.20200703142441-9b25120b86e3
-	github.com/haproxytech/config-parser/v2 v2.0.3-0.20200701125902-edac4d079e8b
-	github.com/haproxytech/models/v2 v2.0.3-0.20200703141346-e05d89ace4fe
+	github.com/haproxytech/client-native/v2 v2.0.3-0.20200716072931-808a7fcf8fc7
+	github.com/haproxytech/config-parser/v2 v2.0.3
+	github.com/haproxytech/models/v2 v2.0.3-0.20200716072200-4ea9de34db93
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/rs/cors v1.7.0
 	github.com/shirou/gopsutil v2.20.3+incompatible
