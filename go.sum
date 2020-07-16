@@ -137,6 +137,8 @@ github.com/haproxytech/client-native/v2 v2.0.3-0.20200703142441-9b25120b86e3 h1:
 github.com/haproxytech/client-native/v2 v2.0.3-0.20200703142441-9b25120b86e3/go.mod h1:2SIMhkZYH5aeQ04989pJdESomOAwkT9yz84DPWKxcC4=
 github.com/haproxytech/client-native/v2 v2.0.3-0.20200716072931-808a7fcf8fc7 h1:UZDHsY6qelGRABV8vpnXTm0fTjFdZ6VYCDT2pBvKauM=
 github.com/haproxytech/client-native/v2 v2.0.3-0.20200716072931-808a7fcf8fc7/go.mod h1:NtDOosQ6ni4xZs+GgtdOmcNDvbeJjLbvoXoZMnMv28U=
+github.com/haproxytech/client-native/v2 v2.1.0 h1:1+AMkGPSr32ON5XMCvox6tHqEBHRb/DbSDp5Lo7OrE4=
+github.com/haproxytech/client-native/v2 v2.1.0/go.mod h1:5VP78CexAizAC45X3TRVCmLsoV9R2DyX0CLT6L7ScXE=
 github.com/haproxytech/config-parser/v2 v2.0.1 h1:737eWpu+qKCiEx8caeXdvIq599qKCBd18Lc9+zyzgx0=
 github.com/haproxytech/config-parser/v2 v2.0.1/go.mod h1:VjHOetXAJtwrtLAJPoDaD/kEYwCoixVp5SCsBitMcj8=
 github.com/haproxytech/config-parser/v2 v2.0.2 h1:t+CcSdasWKUCJXN9e7cbqZMCOToTgoAZ2Tm67GtCje8=
@@ -147,6 +149,8 @@ github.com/haproxytech/config-parser/v2 v2.0.3-0.20200701125902-edac4d079e8b/go.
 github.com/haproxytech/config-parser/v2 v2.0.3-0.20200713123648-f2c0d935d738/go.mod h1:8Q2UmqERLRfTrm2zwcPvn4Bp1rFbwOefw3XU16Wowmg=
 github.com/haproxytech/config-parser/v2 v2.0.3 h1:roLRTfsG9mV0ifevxpzuKjWW6XztQVfhRbY4B+4Mmrw=
 github.com/haproxytech/config-parser/v2 v2.0.3/go.mod h1:NRYPsVZr/jIqdVmNBUgsGUul+QLNVff7ToiKFYM+wrU=
+github.com/haproxytech/config-parser/v2 v2.0.4 h1:7Vv7HssRa5CFmr7EeHsLOwp+pc3hlaGr8Ee7SeFMRz8=
+github.com/haproxytech/config-parser/v2 v2.0.4/go.mod h1:NRYPsVZr/jIqdVmNBUgsGUul+QLNVff7ToiKFYM+wrU=
 github.com/haproxytech/models/v2 v2.0.2-0.20200513093356-3f062770f1d6 h1:6ILrYrcbD9bwaPX9aXjXJjKFvYt2SxDLfVhJvf9WA1U=
 github.com/haproxytech/models/v2 v2.0.2-0.20200513093356-3f062770f1d6/go.mod h1:HjM8x+j1/j4nHUA5lqh159OPZ3zQ5iGz13vHo9xeEk0=
 github.com/haproxytech/models/v2 v2.0.2 h1:+GOvVWT1ACjr7RZ+TP5xUOsRwd38rQ4ZP+7xSQUenPY=
@@ -156,6 +160,8 @@ github.com/haproxytech/models/v2 v2.0.3-0.20200703141346-e05d89ace4fe h1:8n9GY0f
 github.com/haproxytech/models/v2 v2.0.3-0.20200703141346-e05d89ace4fe/go.mod h1:HjM8x+j1/j4nHUA5lqh159OPZ3zQ5iGz13vHo9xeEk0=
 github.com/haproxytech/models/v2 v2.0.3-0.20200716072200-4ea9de34db93 h1:nKCsu4qmaWzQFuDdbHJ/BbZ9LvLCY1l4H/bkcfXrOUk=
 github.com/haproxytech/models/v2 v2.0.3-0.20200716072200-4ea9de34db93/go.mod h1:HjM8x+j1/j4nHUA5lqh159OPZ3zQ5iGz13vHo9xeEk0=
+github.com/haproxytech/models/v2 v2.1.0 h1:NH0pDR0Oxb0rwIVD9X1Zs6qOfqozcQQJAFPrP79vxXw=
+github.com/haproxytech/models/v2 v2.1.0/go.mod h1:HjM8x+j1/j4nHUA5lqh159OPZ3zQ5iGz13vHo9xeEk0=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/jessevdk/go-flags v1.4.0 h1:4IU2WS7AumrZ/40jfhf4QVDMsQwqA7VEHozFRrGARJA=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
