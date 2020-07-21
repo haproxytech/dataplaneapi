@@ -18,13 +18,15 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
 )
 
 //MapsCreateRuntimeMapHandlerImpl implementation of the MapsCreateRuntimeMapHandler interface using client-native client
 type MapsCreateRuntimeMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client      *client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (h *MapsCreateRuntimeMapHandlerImpl) Handle(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
@@ -39,7 +41,16 @@ func (h *MapsCreateRuntimeMapHandlerImpl) Handle(params maps.CreateRuntimeMapPar
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewCreateRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
-	return maps.NewCreateRuntimeMapCreated().WithPayload(me)
+	if *params.ForceReload {
+		err := h.ReloadAgent.ForceReload()
+		if err != nil {
+			e := misc.HandleError(err)
+			return maps.NewCreateRuntimeMapDefault(int(*e.Code)).WithPayload(e)
+		}
+		return maps.NewCreateRuntimeMapCreated().WithPayload(me)
+	}
+	rID := h.ReloadAgent.Reload()
+	return maps.NewCreateRuntimeMapAccepted().WithReloadID(rID).WithPayload(me)
 }
 
 //GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client

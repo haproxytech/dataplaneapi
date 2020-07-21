@@ -404,7 +404,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StickTableGetStickTableEntriesHandler = &handlers.GetStickTableEntriesHandlerImpl{Client: client}
 
 	// setup map handlers
-	api.MapsCreateRuntimeMapHandler = &handlers.MapsCreateRuntimeMapHandlerImpl{Client: client}
+	api.MapsCreateRuntimeMapHandler = &handlers.MapsCreateRuntimeMapHandlerImpl{Client: client, ReloadAgent: ra}
 	api.MapsGetAllRuntimeMapFilesHandler = &handlers.GetMapsHandlerImpl{Client: client}
 	api.MapsGetOneRuntimeMapHandler = &handlers.GetMapHandlerImpl{Client: client}
 	api.MapsClearRuntimeMapHandler = &handlers.ClearMapHandlerImpl{Client: client}

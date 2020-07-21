@@ -6294,6 +6294,9 @@ func init() {
             "description": "The map file to upload",
             "name": "fileUpload",
             "in": "formData"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -6301,6 +6304,18 @@ func init() {
             "description": "Map file created with its entries",
             "schema": {
               "$ref": "#/definitions/map_entries"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -24173,6 +24188,13 @@ func init() {
             "description": "The map file to upload",
             "name": "fileUpload",
             "in": "formData"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
           }
         ],
         "responses": {
@@ -24180,6 +24202,18 @@ func init() {
             "description": "Map file created with its entries",
             "schema": {
               "$ref": "#/definitions/map_entries"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {

@@ -28,13 +28,23 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewCreateRuntimeMapParams creates a new CreateRuntimeMapParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewCreateRuntimeMapParams() CreateRuntimeMapParams {
 
-	return CreateRuntimeMapParams{}
+	var (
+		// initialize parameters with default values
+
+		forceReloadDefault = bool(false)
+	)
+
+	return CreateRuntimeMapParams{
+		ForceReload: &forceReloadDefault,
+	}
 }
 
 // CreateRuntimeMapParams contains all the bound params for the create runtime map operation
@@ -50,6 +60,11 @@ type CreateRuntimeMapParams struct {
 	  In: formData
 	*/
 	FileUpload io.ReadCloser
+	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	  In: query
+	  Default: false
+	*/
+	ForceReload *bool
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -60,6 +75,8 @@ func (o *CreateRuntimeMapParams) BindRequest(r *http.Request, route *middleware.
 	var res []error
 
 	o.HTTPRequest = r
+
+	qs := runtime.Values(r.URL.Query())
 
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
 		if err != http.ErrNotMultipart {
@@ -80,6 +97,11 @@ func (o *CreateRuntimeMapParams) BindRequest(r *http.Request, route *middleware.
 		o.FileUpload = &runtime.File{Data: fileUpload, Header: fileUploadHeader}
 	}
 
+	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
+	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -90,5 +112,28 @@ func (o *CreateRuntimeMapParams) BindRequest(r *http.Request, route *middleware.
 //
 // The only supported validations on files are MinLength and MaxLength
 func (o *CreateRuntimeMapParams) bindFileUpload(file multipart.File, header *multipart.FileHeader) error {
+	return nil
+}
+
+// bindForceReload binds and validates parameter ForceReload from query.
+func (o *CreateRuntimeMapParams) bindForceReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewCreateRuntimeMapParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_reload", "query", "bool", raw)
+	}
+	o.ForceReload = &value
+
 	return nil
 }
