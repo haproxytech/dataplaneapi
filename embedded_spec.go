@@ -268,9 +268,6 @@ func init() {
       "get": {
         "description": "Returns all ACL lines that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Return an array of all ACL lines",
@@ -330,9 +327,6 @@ func init() {
       "post": {
         "description": "Adds a new ACL line of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Add a new ACL line",
@@ -409,9 +403,6 @@ func init() {
       "get": {
         "description": "Returns one ACL line configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Return one ACL line",
@@ -478,9 +469,6 @@ func init() {
       "put": {
         "description": "Replaces a ACL line configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Replace a ACL line",
@@ -562,9 +550,6 @@ func init() {
       "delete": {
         "description": "Deletes a ACL line configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Delete a ACL line",
@@ -631,8 +616,6 @@ func init() {
       "get": {
         "description": "Returns all Backend Switching Rules that are configured in specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Return an array of all Backend Switching Rules",
@@ -681,8 +664,6 @@ func init() {
       "post": {
         "description": "Adds a new Backend Switching Rule of the specified type in the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Add a new Backend Switching Rule",
@@ -748,8 +729,6 @@ func init() {
       "get": {
         "description": "Returns one Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Return one Backend Switching Rule",
@@ -805,8 +784,6 @@ func init() {
       "put": {
         "description": "Replaces a Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Replace a Backend Switching Rule",
@@ -877,8 +854,6 @@ func init() {
       "delete": {
         "description": "Deletes a Backend Switching Rule configuration by it's index from the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Delete a Backend Switching Rule",
@@ -934,8 +909,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured backends.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Return an array of backends",
         "operationId": "getBackends",
@@ -976,8 +950,7 @@ func init() {
       "post": {
         "description": "Adds a new backend to the configuration file.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Add a backend",
         "operationId": "createBackend",
@@ -1035,8 +1008,7 @@ func init() {
       "get": {
         "description": "Returns one backend configuration by it's name.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Return a backend",
         "operationId": "getBackend",
@@ -1084,8 +1056,7 @@ func init() {
       "put": {
         "description": "Replaces a backend configuration by it's name.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Replace a backend",
         "operationId": "replaceBackend",
@@ -1148,8 +1119,7 @@ func init() {
       "delete": {
         "description": "Deletes a frontend from the configuration by it's name.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Delete a backend",
         "operationId": "deleteBackend",
@@ -1197,9 +1167,7 @@ func init() {
       "get": {
         "description": "Returns an array of all binds that are configured in specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Return an array of binds",
         "operationId": "getBinds",
@@ -1247,9 +1215,7 @@ func init() {
       "post": {
         "description": "Adds a new bind in the specified frontend in the configuration file.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Add a new bind",
         "operationId": "createBind",
@@ -1314,9 +1280,7 @@ func init() {
       "get": {
         "description": "Returns one bind configuration by it's name in the specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Return one bind",
         "operationId": "getBind",
@@ -1371,9 +1335,7 @@ func init() {
       "put": {
         "description": "Replaces a bind configuration by it's name in the specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Replace a bind",
         "operationId": "replaceBind",
@@ -1443,9 +1405,7 @@ func init() {
       "delete": {
         "description": "Deletes a bind configuration by it's name in the specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Delete a bind",
         "operationId": "deleteBind",
@@ -1500,8 +1460,7 @@ func init() {
       "get": {
         "description": "Returns defaults part of configuration.",
         "tags": [
-          "Defaults",
-          "HAProxy configuration management"
+          "Defaults"
         ],
         "summary": "Return defaults part of configuration",
         "operationId": "getDefaults",
@@ -1539,8 +1498,7 @@ func init() {
       "put": {
         "description": "Replace defaults part of config",
         "tags": [
-          "Defaults",
-          "HAProxy configuration management"
+          "Defaults"
         ],
         "summary": "Replace defaults",
         "operationId": "replaceDefaults",
@@ -1595,9 +1553,6 @@ func init() {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Return an array of all Filters",
@@ -1657,9 +1612,6 @@ func init() {
       "post": {
         "description": "Adds a new Filter of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Add a new Filter",
@@ -1736,9 +1688,6 @@ func init() {
       "get": {
         "description": "Returns one Filter configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Return one Filter",
@@ -1805,9 +1754,6 @@ func init() {
       "put": {
         "description": "Replaces a Filter configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Replace a Filter",
@@ -1889,9 +1835,6 @@ func init() {
       "delete": {
         "description": "Deletes a Filter configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Delete a Filter",
@@ -1958,8 +1901,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured frontends.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Return an array of frontends",
         "operationId": "getFrontends",
@@ -2000,8 +1942,7 @@ func init() {
       "post": {
         "description": "Adds a new frontend to the configuration file.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Add a frontend",
         "operationId": "createFrontend",
@@ -2059,8 +2000,7 @@ func init() {
       "get": {
         "description": "Returns one frontend configuration by it's name.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Return a frontend",
         "operationId": "getFrontend",
@@ -2108,8 +2048,7 @@ func init() {
       "put": {
         "description": "Replaces a frontend configuration by it's name.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Replace a frontend",
         "operationId": "replaceFrontend",
@@ -2172,8 +2111,7 @@ func init() {
       "delete": {
         "description": "Deletes a frontend from the configuration by it's name.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Delete a frontend",
         "operationId": "deleteFrontend",
@@ -2221,8 +2159,7 @@ func init() {
       "get": {
         "description": "Returns global part of configuration.",
         "tags": [
-          "Global",
-          "HAProxy configuration management"
+          "Global"
         ],
         "summary": "Return a global part of configuration",
         "operationId": "getGlobal",
@@ -2260,8 +2197,7 @@ func init() {
       "put": {
         "description": "Replace global part of config",
         "tags": [
-          "Global",
-          "HAProxy configuration management"
+          "Global"
         ],
         "summary": "Replace global",
         "operationId": "replaceGlobal",
@@ -2316,9 +2252,6 @@ func init() {
       "get": {
         "description": "Returns all HTTP Request Rules that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Return an array of all HTTP Request Rules",
@@ -2378,9 +2311,6 @@ func init() {
       "post": {
         "description": "Adds a new HTTP Request Rule of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Add a new HTTP Request Rule",
@@ -2457,9 +2387,6 @@ func init() {
       "get": {
         "description": "Returns one HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Return one HTTP Request Rule",
@@ -2526,9 +2453,6 @@ func init() {
       "put": {
         "description": "Replaces a HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Replace a HTTP Request Rule",
@@ -2610,9 +2534,6 @@ func init() {
       "delete": {
         "description": "Deletes a HTTP Request Rule configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Delete a HTTP Request Rule",
@@ -2679,9 +2600,6 @@ func init() {
       "get": {
         "description": "Returns all HTTP Response Rules that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Return an array of all HTTP Response Rules",
@@ -2741,9 +2659,6 @@ func init() {
       "post": {
         "description": "Adds a new HTTP Response Rule of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Add a new HTTP Response Rule",
@@ -2820,9 +2735,6 @@ func init() {
       "get": {
         "description": "Returns one HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Return one HTTP Response Rule",
@@ -2889,9 +2801,6 @@ func init() {
       "put": {
         "description": "Replaces a HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Replace a HTTP Response Rule",
@@ -2973,9 +2882,6 @@ func init() {
       "delete": {
         "description": "Deletes a HTTP Response Rule configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Delete a HTTP Response Rule",
@@ -3042,9 +2948,6 @@ func init() {
       "get": {
         "description": "Returns all Log Targets that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Return an array of all Log Targets",
@@ -3104,9 +3007,6 @@ func init() {
       "post": {
         "description": "Adds a new Log Target of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Add a new Log Target",
@@ -3183,9 +3083,6 @@ func init() {
       "get": {
         "description": "Returns one Log Target configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Return one Log Target",
@@ -3252,9 +3149,6 @@ func init() {
       "put": {
         "description": "Replaces a Log Target configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Replace a Log Target",
@@ -3336,9 +3230,6 @@ func init() {
       "delete": {
         "description": "Deletes a Log Target configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Delete a Log Target",
@@ -3405,8 +3296,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured nameservers.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Return an array of nameservers",
         "operationId": "getNameservers",
@@ -3454,8 +3344,7 @@ func init() {
       "post": {
         "description": "Adds a new nameserver to the resolvers section.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Add a nameserver",
         "operationId": "createNameserver",
@@ -3520,8 +3409,7 @@ func init() {
       "get": {
         "description": "Returns one nameserver configuration by it's name.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Return a nameserver",
         "operationId": "getNameserver",
@@ -3576,8 +3464,7 @@ func init() {
       "put": {
         "description": "Replaces a nameserver configuration by it's name.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Replace a nameserver",
         "operationId": "replaceNameserver",
@@ -3647,8 +3534,7 @@ func init() {
       "delete": {
         "description": "Deletes a nameserver from the resolvers section by it's name.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Delete a nameserver",
         "operationId": "deleteNameserver",
@@ -3703,8 +3589,7 @@ func init() {
       "get": {
         "description": "Returns an array of all peer_entries that are configured in specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management"
+          "PeerEntry"
         ],
         "summary": "Return an array of peer_entries",
         "operationId": "getPeerEntries",
@@ -3752,8 +3637,7 @@ func init() {
       "post": {
         "description": "Adds a new peer entry in the specified peer section in the configuration file.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management"
+          "PeerEntry"
         ],
         "summary": "Add a new peer_entry",
         "operationId": "createPeerEntry",
@@ -3818,8 +3702,7 @@ func init() {
       "get": {
         "description": "Returns one peer_entry configuration by it's name in the specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management"
+          "PeerEntry"
         ],
         "summary": "Return one peer_entry",
         "operationId": "getPeerEntry",
@@ -3874,9 +3757,7 @@ func init() {
       "put": {
         "description": "Replaces a peer entry configuration by it's name in the specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management",
-          "Peers options"
+          "PeerEntry"
         ],
         "summary": "Replace a peer_entry",
         "operationId": "replacePeerEntry",
@@ -3946,9 +3827,7 @@ func init() {
       "delete": {
         "description": "Deletes a peer entry configuration by it's name in the specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management",
-          "Peers options"
+          "PeerEntry"
         ],
         "summary": "Delete a peer_entry",
         "operationId": "deletePeerEntry",
@@ -4003,8 +3882,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured peer_section.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Return an array of peer_section",
         "operationId": "getPeerSections",
@@ -4045,8 +3923,7 @@ func init() {
       "post": {
         "description": "Adds a new peer to the configuration file.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Add a peer",
         "operationId": "createPeer",
@@ -4104,8 +3981,7 @@ func init() {
       "get": {
         "description": "Returns one peer configuration by it's name.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Return a peer",
         "operationId": "getPeerSection",
@@ -4153,8 +4029,7 @@ func init() {
       "delete": {
         "description": "Deletes a peer from the configuration by it's name.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Delete a peer",
         "operationId": "deletePeer",
@@ -4205,8 +4080,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Configuration",
-          "HAProxy configuration management"
+          "Configuration"
         ],
         "summary": "Return HAProxy configuration",
         "operationId": "getHAProxyConfiguration",
@@ -4256,8 +4130,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Configuration",
-          "HAProxy configuration management"
+          "Configuration"
         ],
         "summary": "Push new haproxy configuration",
         "operationId": "postHAProxyConfiguration",
@@ -4329,8 +4202,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured resolvers.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Return an array of resolvers",
         "operationId": "getResolvers",
@@ -4371,8 +4243,7 @@ func init() {
       "post": {
         "description": "Adds a new resolver section to the configuration file.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Add a resolver",
         "operationId": "createResolver",
@@ -4430,8 +4301,7 @@ func init() {
       "get": {
         "description": "Returns one resolver section configuration by it's name.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Return a resolver",
         "operationId": "getResolver",
@@ -4479,8 +4349,7 @@ func init() {
       "put": {
         "description": "Replaces a resolver configuration by it's name.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Replace a resolver",
         "operationId": "replaceResolver",
@@ -4543,8 +4412,7 @@ func init() {
       "delete": {
         "description": "Deletes a resolver from the configuration by it's name.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Delete a resolver",
         "operationId": "deleteResolver",
@@ -4592,8 +4460,6 @@ func init() {
       "get": {
         "description": "Returns all Backend Switching Rules that are configured in specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Return an array of all Server Switching Rules",
@@ -4642,8 +4508,6 @@ func init() {
       "post": {
         "description": "Adds a new Server Switching Rule of the specified type in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Add a new Server Switching Rule",
@@ -4709,8 +4573,6 @@ func init() {
       "get": {
         "description": "Returns one Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Return one Server Switching Rule",
@@ -4766,8 +4628,6 @@ func init() {
       "put": {
         "description": "Replaces a Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Replace a Server Switching Rule",
@@ -4838,8 +4698,6 @@ func init() {
       "delete": {
         "description": "Deletes a Server Switching Rule configuration by it's index from the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Delete a Server Switching Rule",
@@ -4895,9 +4753,7 @@ func init() {
       "get": {
         "description": "Returns an array of all servers that are configured in specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return an array of servers",
         "operationId": "getServers",
@@ -4945,9 +4801,7 @@ func init() {
       "post": {
         "description": "Adds a new server in the specified backend in the configuration file.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Add a new server",
         "operationId": "createServer",
@@ -5012,9 +4866,7 @@ func init() {
       "get": {
         "description": "Returns one server configuration by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return one server",
         "operationId": "getServer",
@@ -5069,9 +4921,7 @@ func init() {
       "put": {
         "description": "Replaces a server configuration by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Replace a server",
         "operationId": "replaceServer",
@@ -5141,9 +4991,7 @@ func init() {
       "delete": {
         "description": "Deletes a server configuration by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Delete a server",
         "operationId": "deleteServer",
@@ -5198,8 +5046,6 @@ func init() {
       "get": {
         "description": "Returns all Stick Rules that are configured in specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Return an array of all Stick Rules",
@@ -5248,8 +5094,6 @@ func init() {
       "post": {
         "description": "Adds a new Stick Rule of the specified type in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Add a new Stick Rule",
@@ -5315,8 +5159,6 @@ func init() {
       "get": {
         "description": "Returns one Stick Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Return one Stick Rule",
@@ -5372,8 +5214,6 @@ func init() {
       "put": {
         "description": "Replaces a Stick Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Replace a Stick Rule",
@@ -5444,8 +5284,6 @@ func init() {
       "delete": {
         "description": "Deletes a Stick Rule configuration by it's index from the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Delete a Stick Rule",
@@ -5501,9 +5339,6 @@ func init() {
       "get": {
         "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Return an array of all TCP Request Rules",
@@ -5563,9 +5398,6 @@ func init() {
       "post": {
         "description": "Adds a new TCP Request Rule of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Add a new TCP Request Rule",
@@ -5642,9 +5474,6 @@ func init() {
       "get": {
         "description": "Returns one TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Return one TCP Request Rule",
@@ -5711,9 +5540,6 @@ func init() {
       "put": {
         "description": "Replaces a TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Replace a TCP Request Rule",
@@ -5795,9 +5621,6 @@ func init() {
       "delete": {
         "description": "Deletes a TCP Request Rule configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Delete a TCP Request Rule",
@@ -5864,9 +5687,6 @@ func init() {
       "get": {
         "description": "Returns all TCP Response Rules that are configured in specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Return an array of all TCP Response Rules",
@@ -5915,9 +5735,6 @@ func init() {
       "post": {
         "description": "Adds a new TCP Response Rule of the specified type in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Add a new TCP Response Rule",
@@ -5983,9 +5800,6 @@ func init() {
       "get": {
         "description": "Returns one TCP Response Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Return one TCP Response Rule",
@@ -6041,9 +5855,6 @@ func init() {
       "put": {
         "description": "Replaces a TCP Response Rule configuration by it's Index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Replace a TCP Response Rule",
@@ -6114,9 +5925,6 @@ func init() {
       "delete": {
         "description": "Deletes a TCP Response Rule configuration by it's index from the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Delete a TCP Response Rule",
@@ -6614,8 +6422,7 @@ func init() {
       "get": {
         "description": "Returns an array of all servers' runtime settings.",
         "tags": [
-          "Server",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return an array of runtime servers' setings",
         "operationId": "getRuntimeServers",
@@ -6645,8 +6452,7 @@ func init() {
       "get": {
         "description": "Returns one server runtime settings by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return one server runtime settings",
         "operationId": "getRuntimeServer",
@@ -6684,8 +6490,7 @@ func init() {
       "put": {
         "description": "Replaces a server transient settings by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "Backend options"
+          "Server"
         ],
         "summary": "Replace server transient settings",
         "operationId": "replaceRuntimeServer",
@@ -13541,20 +13346,8 @@ func init() {
       "name": "Server"
     },
     {
-      "description": "Various frontend options (advanced mode)",
-      "name": "Frontend options"
-    },
-    {
-      "description": "Various backend options (advanced mode)",
-      "name": "Backend options"
-    },
-    {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
-    },
-    {
-      "description": "Managing advanced haproxy configuration (advanced mode)",
-      "name": "HAProxy configuration management"
     },
     {
       "name": "TCPRequestRule"
@@ -13946,9 +13739,6 @@ func init() {
       "get": {
         "description": "Returns all ACL lines that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Return an array of all ACL lines",
@@ -14022,9 +13812,6 @@ func init() {
       "post": {
         "description": "Adds a new ACL line of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Add a new ACL line",
@@ -14143,9 +13930,6 @@ func init() {
       "get": {
         "description": "Returns one ACL line configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Return one ACL line",
@@ -14236,9 +14020,6 @@ func init() {
       "put": {
         "description": "Replaces a ACL line configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Replace a ACL line",
@@ -14362,9 +14143,6 @@ func init() {
       "delete": {
         "description": "Deletes a ACL line configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "ACL"
         ],
         "summary": "Delete a ACL line",
@@ -14463,8 +14241,6 @@ func init() {
       "get": {
         "description": "Returns all Backend Switching Rules that are configured in specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Return an array of all Backend Switching Rules",
@@ -14527,8 +14303,6 @@ func init() {
       "post": {
         "description": "Adds a new Backend Switching Rule of the specified type in the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Add a new Backend Switching Rule",
@@ -14636,8 +14410,6 @@ func init() {
       "get": {
         "description": "Returns one Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Return one Backend Switching Rule",
@@ -14717,8 +14489,6 @@ func init() {
       "put": {
         "description": "Replaces a Backend Switching Rule configuration by it's index in the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Replace a Backend Switching Rule",
@@ -14831,8 +14601,6 @@ func init() {
       "delete": {
         "description": "Deletes a Backend Switching Rule configuration by it's index from the specified frontend.",
         "tags": [
-          "HAProxy configuration management",
-          "Frontend options",
           "BackendSwitchingRule"
         ],
         "summary": "Delete a Backend Switching Rule",
@@ -14920,8 +14688,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured backends.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Return an array of backends",
         "operationId": "getBackends",
@@ -14976,8 +14743,7 @@ func init() {
       "post": {
         "description": "Adds a new backend to the configuration file.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Add a backend",
         "operationId": "createBackend",
@@ -15077,8 +14843,7 @@ func init() {
       "get": {
         "description": "Returns one backend configuration by it's name.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Return a backend",
         "operationId": "getBackend",
@@ -15150,8 +14915,7 @@ func init() {
       "put": {
         "description": "Replaces a backend configuration by it's name.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Replace a backend",
         "operationId": "replaceBackend",
@@ -15256,8 +15020,7 @@ func init() {
       "delete": {
         "description": "Deletes a frontend from the configuration by it's name.",
         "tags": [
-          "Backend",
-          "HAProxy configuration management"
+          "Backend"
         ],
         "summary": "Delete a backend",
         "operationId": "deleteBackend",
@@ -15337,9 +15100,7 @@ func init() {
       "get": {
         "description": "Returns an array of all binds that are configured in specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Return an array of binds",
         "operationId": "getBinds",
@@ -15401,9 +15162,7 @@ func init() {
       "post": {
         "description": "Adds a new bind in the specified frontend in the configuration file.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Add a new bind",
         "operationId": "createBind",
@@ -15510,9 +15269,7 @@ func init() {
       "get": {
         "description": "Returns one bind configuration by it's name in the specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Return one bind",
         "operationId": "getBind",
@@ -15591,9 +15348,7 @@ func init() {
       "put": {
         "description": "Replaces a bind configuration by it's name in the specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Replace a bind",
         "operationId": "replaceBind",
@@ -15705,9 +15460,7 @@ func init() {
       "delete": {
         "description": "Deletes a bind configuration by it's name in the specified frontend.",
         "tags": [
-          "Bind",
-          "HAProxy configuration management",
-          "Frontend options"
+          "Bind"
         ],
         "summary": "Delete a bind",
         "operationId": "deleteBind",
@@ -15794,8 +15547,7 @@ func init() {
       "get": {
         "description": "Returns defaults part of configuration.",
         "tags": [
-          "Defaults",
-          "HAProxy configuration management"
+          "Defaults"
         ],
         "summary": "Return defaults part of configuration",
         "operationId": "getDefaults",
@@ -15847,8 +15599,7 @@ func init() {
       "put": {
         "description": "Replace defaults part of config",
         "tags": [
-          "Defaults",
-          "HAProxy configuration management"
+          "Defaults"
         ],
         "summary": "Replace defaults",
         "operationId": "replaceDefaults",
@@ -15935,9 +15686,6 @@ func init() {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Return an array of all Filters",
@@ -16011,9 +15759,6 @@ func init() {
       "post": {
         "description": "Adds a new Filter of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Add a new Filter",
@@ -16132,9 +15877,6 @@ func init() {
       "get": {
         "description": "Returns one Filter configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Return one Filter",
@@ -16225,9 +15967,6 @@ func init() {
       "put": {
         "description": "Replaces a Filter configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Replace a Filter",
@@ -16351,9 +16090,6 @@ func init() {
       "delete": {
         "description": "Deletes a Filter configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "Filter"
         ],
         "summary": "Delete a Filter",
@@ -16452,8 +16188,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured frontends.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Return an array of frontends",
         "operationId": "getFrontends",
@@ -16508,8 +16243,7 @@ func init() {
       "post": {
         "description": "Adds a new frontend to the configuration file.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Add a frontend",
         "operationId": "createFrontend",
@@ -16609,8 +16343,7 @@ func init() {
       "get": {
         "description": "Returns one frontend configuration by it's name.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Return a frontend",
         "operationId": "getFrontend",
@@ -16682,8 +16415,7 @@ func init() {
       "put": {
         "description": "Replaces a frontend configuration by it's name.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Replace a frontend",
         "operationId": "replaceFrontend",
@@ -16788,8 +16520,7 @@ func init() {
       "delete": {
         "description": "Deletes a frontend from the configuration by it's name.",
         "tags": [
-          "Frontend",
-          "HAProxy configuration management"
+          "Frontend"
         ],
         "summary": "Delete a frontend",
         "operationId": "deleteFrontend",
@@ -16869,8 +16600,7 @@ func init() {
       "get": {
         "description": "Returns global part of configuration.",
         "tags": [
-          "Global",
-          "HAProxy configuration management"
+          "Global"
         ],
         "summary": "Return a global part of configuration",
         "operationId": "getGlobal",
@@ -16922,8 +16652,7 @@ func init() {
       "put": {
         "description": "Replace global part of config",
         "tags": [
-          "Global",
-          "HAProxy configuration management"
+          "Global"
         ],
         "summary": "Replace global",
         "operationId": "replaceGlobal",
@@ -17010,9 +16739,6 @@ func init() {
       "get": {
         "description": "Returns all HTTP Request Rules that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Return an array of all HTTP Request Rules",
@@ -17086,9 +16812,6 @@ func init() {
       "post": {
         "description": "Adds a new HTTP Request Rule of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Add a new HTTP Request Rule",
@@ -17207,9 +16930,6 @@ func init() {
       "get": {
         "description": "Returns one HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Return one HTTP Request Rule",
@@ -17300,9 +17020,6 @@ func init() {
       "put": {
         "description": "Replaces a HTTP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Replace a HTTP Request Rule",
@@ -17426,9 +17143,6 @@ func init() {
       "delete": {
         "description": "Deletes a HTTP Request Rule configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPRequestRule"
         ],
         "summary": "Delete a HTTP Request Rule",
@@ -17527,9 +17241,6 @@ func init() {
       "get": {
         "description": "Returns all HTTP Response Rules that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Return an array of all HTTP Response Rules",
@@ -17603,9 +17314,6 @@ func init() {
       "post": {
         "description": "Adds a new HTTP Response Rule of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Add a new HTTP Response Rule",
@@ -17724,9 +17432,6 @@ func init() {
       "get": {
         "description": "Returns one HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Return one HTTP Response Rule",
@@ -17817,9 +17522,6 @@ func init() {
       "put": {
         "description": "Replaces a HTTP Response Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Replace a HTTP Response Rule",
@@ -17943,9 +17645,6 @@ func init() {
       "delete": {
         "description": "Deletes a HTTP Response Rule configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "HTTPResponseRule"
         ],
         "summary": "Delete a HTTP Response Rule",
@@ -18044,9 +17743,6 @@ func init() {
       "get": {
         "description": "Returns all Log Targets that are configured in specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Return an array of all Log Targets",
@@ -18120,9 +17816,6 @@ func init() {
       "post": {
         "description": "Adds a new Log Target of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Add a new Log Target",
@@ -18241,9 +17934,6 @@ func init() {
       "get": {
         "description": "Returns one Log Target configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Return one Log Target",
@@ -18334,9 +18024,6 @@ func init() {
       "put": {
         "description": "Replaces a Log Target configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Replace a Log Target",
@@ -18460,9 +18147,6 @@ func init() {
       "delete": {
         "description": "Deletes a Log Target configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "LogTarget"
         ],
         "summary": "Delete a Log Target",
@@ -18561,8 +18245,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured nameservers.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Return an array of nameservers",
         "operationId": "getNameservers",
@@ -18624,8 +18307,7 @@ func init() {
       "post": {
         "description": "Adds a new nameserver to the resolvers section.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Add a nameserver",
         "operationId": "createNameserver",
@@ -18732,8 +18414,7 @@ func init() {
       "get": {
         "description": "Returns one nameserver configuration by it's name.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Return a nameserver",
         "operationId": "getNameserver",
@@ -18812,8 +18493,7 @@ func init() {
       "put": {
         "description": "Replaces a nameserver configuration by it's name.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Replace a nameserver",
         "operationId": "replaceNameserver",
@@ -18925,8 +18605,7 @@ func init() {
       "delete": {
         "description": "Deletes a nameserver from the resolvers section by it's name.",
         "tags": [
-          "Nameserver",
-          "HAProxy configuration management"
+          "Nameserver"
         ],
         "summary": "Delete a nameserver",
         "operationId": "deleteNameserver",
@@ -19013,8 +18692,7 @@ func init() {
       "get": {
         "description": "Returns an array of all peer_entries that are configured in specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management"
+          "PeerEntry"
         ],
         "summary": "Return an array of peer_entries",
         "operationId": "getPeerEntries",
@@ -19076,8 +18754,7 @@ func init() {
       "post": {
         "description": "Adds a new peer entry in the specified peer section in the configuration file.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management"
+          "PeerEntry"
         ],
         "summary": "Add a new peer_entry",
         "operationId": "createPeerEntry",
@@ -19184,8 +18861,7 @@ func init() {
       "get": {
         "description": "Returns one peer_entry configuration by it's name in the specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management"
+          "PeerEntry"
         ],
         "summary": "Return one peer_entry",
         "operationId": "getPeerEntry",
@@ -19264,9 +18940,7 @@ func init() {
       "put": {
         "description": "Replaces a peer entry configuration by it's name in the specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management",
-          "Peers options"
+          "PeerEntry"
         ],
         "summary": "Replace a peer_entry",
         "operationId": "replacePeerEntry",
@@ -19378,9 +19052,7 @@ func init() {
       "delete": {
         "description": "Deletes a peer entry configuration by it's name in the specified peer section.",
         "tags": [
-          "PeerEntry",
-          "HAProxy configuration management",
-          "Peers options"
+          "PeerEntry"
         ],
         "summary": "Delete a peer_entry",
         "operationId": "deletePeerEntry",
@@ -19467,8 +19139,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured peer_section.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Return an array of peer_section",
         "operationId": "getPeerSections",
@@ -19523,8 +19194,7 @@ func init() {
       "post": {
         "description": "Adds a new peer to the configuration file.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Add a peer",
         "operationId": "createPeer",
@@ -19624,8 +19294,7 @@ func init() {
       "get": {
         "description": "Returns one peer configuration by it's name.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Return a peer",
         "operationId": "getPeerSection",
@@ -19697,8 +19366,7 @@ func init() {
       "delete": {
         "description": "Deletes a peer from the configuration by it's name.",
         "tags": [
-          "Peer",
-          "HAProxy configuration management"
+          "Peer"
         ],
         "summary": "Delete a peer",
         "operationId": "deletePeer",
@@ -19781,8 +19449,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Configuration",
-          "HAProxy configuration management"
+          "Configuration"
         ],
         "summary": "Return HAProxy configuration",
         "operationId": "getHAProxyConfiguration",
@@ -19850,8 +19517,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Configuration",
-          "HAProxy configuration management"
+          "Configuration"
         ],
         "summary": "Push new haproxy configuration",
         "operationId": "postHAProxyConfiguration",
@@ -19951,8 +19617,7 @@ func init() {
       "get": {
         "description": "Returns an array of all configured resolvers.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Return an array of resolvers",
         "operationId": "getResolvers",
@@ -20007,8 +19672,7 @@ func init() {
       "post": {
         "description": "Adds a new resolver section to the configuration file.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Add a resolver",
         "operationId": "createResolver",
@@ -20108,8 +19772,7 @@ func init() {
       "get": {
         "description": "Returns one resolver section configuration by it's name.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Return a resolver",
         "operationId": "getResolver",
@@ -20181,8 +19844,7 @@ func init() {
       "put": {
         "description": "Replaces a resolver configuration by it's name.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Replace a resolver",
         "operationId": "replaceResolver",
@@ -20287,8 +19949,7 @@ func init() {
       "delete": {
         "description": "Deletes a resolver from the configuration by it's name.",
         "tags": [
-          "Resolver",
-          "HAProxy configuration management"
+          "Resolver"
         ],
         "summary": "Delete a resolver",
         "operationId": "deleteResolver",
@@ -20368,8 +20029,6 @@ func init() {
       "get": {
         "description": "Returns all Backend Switching Rules that are configured in specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Return an array of all Server Switching Rules",
@@ -20432,8 +20091,6 @@ func init() {
       "post": {
         "description": "Adds a new Server Switching Rule of the specified type in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Add a new Server Switching Rule",
@@ -20541,8 +20198,6 @@ func init() {
       "get": {
         "description": "Returns one Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Return one Server Switching Rule",
@@ -20622,8 +20277,6 @@ func init() {
       "put": {
         "description": "Replaces a Server Switching Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Replace a Server Switching Rule",
@@ -20736,8 +20389,6 @@ func init() {
       "delete": {
         "description": "Deletes a Server Switching Rule configuration by it's index from the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "ServerSwitchingRule"
         ],
         "summary": "Delete a Server Switching Rule",
@@ -20825,9 +20476,7 @@ func init() {
       "get": {
         "description": "Returns an array of all servers that are configured in specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return an array of servers",
         "operationId": "getServers",
@@ -20889,9 +20538,7 @@ func init() {
       "post": {
         "description": "Adds a new server in the specified backend in the configuration file.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Add a new server",
         "operationId": "createServer",
@@ -20998,9 +20645,7 @@ func init() {
       "get": {
         "description": "Returns one server configuration by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return one server",
         "operationId": "getServer",
@@ -21079,9 +20724,7 @@ func init() {
       "put": {
         "description": "Replaces a server configuration by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Replace a server",
         "operationId": "replaceServer",
@@ -21193,9 +20836,7 @@ func init() {
       "delete": {
         "description": "Deletes a server configuration by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "HAProxy configuration management",
-          "Backend options"
+          "Server"
         ],
         "summary": "Delete a server",
         "operationId": "deleteServer",
@@ -21282,8 +20923,6 @@ func init() {
       "get": {
         "description": "Returns all Stick Rules that are configured in specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Return an array of all Stick Rules",
@@ -21346,8 +20985,6 @@ func init() {
       "post": {
         "description": "Adds a new Stick Rule of the specified type in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Add a new Stick Rule",
@@ -21455,8 +21092,6 @@ func init() {
       "get": {
         "description": "Returns one Stick Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Return one Stick Rule",
@@ -21536,8 +21171,6 @@ func init() {
       "put": {
         "description": "Replaces a Stick Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Replace a Stick Rule",
@@ -21650,8 +21283,6 @@ func init() {
       "delete": {
         "description": "Deletes a Stick Rule configuration by it's index from the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
           "StickRule"
         ],
         "summary": "Delete a Stick Rule",
@@ -21739,9 +21370,6 @@ func init() {
       "get": {
         "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Return an array of all TCP Request Rules",
@@ -21815,9 +21443,6 @@ func init() {
       "post": {
         "description": "Adds a new TCP Request Rule of the specified type in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Add a new TCP Request Rule",
@@ -21936,9 +21561,6 @@ func init() {
       "get": {
         "description": "Returns one TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Return one TCP Request Rule",
@@ -22029,9 +21651,6 @@ func init() {
       "put": {
         "description": "Replaces a TCP Request Rule configuration by it's index in the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Replace a TCP Request Rule",
@@ -22155,9 +21774,6 @@ func init() {
       "delete": {
         "description": "Deletes a TCP Request Rule configuration by it's index from the specified parent.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPRequestRule"
         ],
         "summary": "Delete a TCP Request Rule",
@@ -22256,9 +21872,6 @@ func init() {
       "get": {
         "description": "Returns all TCP Response Rules that are configured in specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Return an array of all TCP Response Rules",
@@ -22321,9 +21934,6 @@ func init() {
       "post": {
         "description": "Adds a new TCP Response Rule of the specified type in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Add a new TCP Response Rule",
@@ -22431,9 +22041,6 @@ func init() {
       "get": {
         "description": "Returns one TCP Response Rule configuration by it's index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Return one TCP Response Rule",
@@ -22513,9 +22120,6 @@ func init() {
       "put": {
         "description": "Replaces a TCP Response Rule configuration by it's Index in the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Replace a TCP Response Rule",
@@ -22628,9 +22232,6 @@ func init() {
       "delete": {
         "description": "Deletes a TCP Response Rule configuration by it's index from the specified backend.",
         "tags": [
-          "HAProxy configuration management",
-          "Backend options",
-          "Frontend options",
           "TCPResponseRule"
         ],
         "summary": "Delete a TCP Response Rule",
@@ -23420,8 +23021,7 @@ func init() {
       "get": {
         "description": "Returns an array of all servers' runtime settings.",
         "tags": [
-          "Server",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return an array of runtime servers' setings",
         "operationId": "getRuntimeServers",
@@ -23461,8 +23061,7 @@ func init() {
       "get": {
         "description": "Returns one server runtime settings by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "Backend options"
+          "Server"
         ],
         "summary": "Return one server runtime settings",
         "operationId": "getRuntimeServer",
@@ -23520,8 +23119,7 @@ func init() {
       "put": {
         "description": "Replaces a server transient settings by it's name in the specified backend.",
         "tags": [
-          "Server",
-          "Backend options"
+          "Server"
         ],
         "summary": "Replace server transient settings",
         "operationId": "replaceRuntimeServer",
@@ -30978,20 +30576,8 @@ func init() {
       "name": "Server"
     },
     {
-      "description": "Various frontend options (advanced mode)",
-      "name": "Frontend options"
-    },
-    {
-      "description": "Various backend options (advanced mode)",
-      "name": "Backend options"
-    },
-    {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
-    },
-    {
-      "description": "Managing advanced haproxy configuration (advanced mode)",
-      "name": "HAProxy configuration management"
     },
     {
       "name": "TCPRequestRule"
