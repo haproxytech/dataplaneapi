@@ -127,7 +127,7 @@ func (o *GetACLParams) bindIndex(rawData []string, hasKey bool, formats strfmt.R
 // bindParentName binds and validates parameter ParentName from query.
 func (o *GetACLParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_name", "query")
+		return errors.Required("parent_name", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -148,7 +148,7 @@ func (o *GetACLParams) bindParentName(rawData []string, hasKey bool, formats str
 // bindParentType binds and validates parameter ParentType from query.
 func (o *GetACLParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_type", "query")
+		return errors.Required("parent_type", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

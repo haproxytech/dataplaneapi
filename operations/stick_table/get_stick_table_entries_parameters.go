@@ -205,7 +205,7 @@ func (o *GetStickTableEntriesParams) bindOffset(rawData []string, hasKey bool, f
 // bindProcess binds and validates parameter Process from query.
 func (o *GetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("process", "query")
+		return errors.Required("process", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -230,7 +230,7 @@ func (o *GetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, 
 // bindStickTable binds and validates parameter StickTable from query.
 func (o *GetStickTableEntriesParams) bindStickTable(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("stick_table", "query")
+		return errors.Required("stick_table", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

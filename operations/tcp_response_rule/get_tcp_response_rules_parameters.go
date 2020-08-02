@@ -87,7 +87,7 @@ func (o *GetTCPResponseRulesParams) BindRequest(r *http.Request, route *middlewa
 // bindBackend binds and validates parameter Backend from query.
 func (o *GetTCPResponseRulesParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

@@ -99,7 +99,7 @@ func (o *CreatePeerEntryParams) BindRequest(r *http.Request, route *middleware.M
 		var body models.PeerEntry
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -114,7 +114,7 @@ func (o *CreatePeerEntryParams) BindRequest(r *http.Request, route *middleware.M
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
@@ -168,7 +168,7 @@ func (o *CreatePeerEntryParams) bindForceReload(rawData []string, hasKey bool, f
 // bindPeerSection binds and validates parameter PeerSection from query.
 func (o *CreatePeerEntryParams) bindPeerSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("peer_section", "query")
+		return errors.Required("peer_section", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

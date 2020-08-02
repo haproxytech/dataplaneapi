@@ -103,7 +103,7 @@ func (o *GetRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, formats
 // bindMap binds and validates parameter Map from query.
 func (o *GetRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

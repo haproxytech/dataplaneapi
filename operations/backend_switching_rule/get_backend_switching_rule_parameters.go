@@ -98,7 +98,7 @@ func (o *GetBackendSwitchingRuleParams) BindRequest(r *http.Request, route *midd
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *GetBackendSwitchingRuleParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

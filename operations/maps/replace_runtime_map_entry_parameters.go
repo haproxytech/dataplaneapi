@@ -80,7 +80,7 @@ func (o *ReplaceRuntimeMapEntryParams) BindRequest(r *http.Request, route *middl
 		var body ReplaceRuntimeMapEntryBody
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -95,7 +95,7 @@ func (o *ReplaceRuntimeMapEntryParams) BindRequest(r *http.Request, route *middl
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	rID, rhkID, _ := route.Params.GetOK("id")
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
@@ -131,7 +131,7 @@ func (o *ReplaceRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, for
 // bindMap binds and validates parameter Map from query.
 func (o *ReplaceRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

@@ -104,7 +104,7 @@ func (o *GetStickTableParams) bindName(rawData []string, hasKey bool, formats st
 // bindProcess binds and validates parameter Process from query.
 func (o *GetStickTableParams) bindProcess(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("process", "query")
+		return errors.Required("process", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

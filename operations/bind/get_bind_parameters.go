@@ -97,7 +97,7 @@ func (o *GetBindParams) BindRequest(r *http.Request, route *middleware.MatchedRo
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *GetBindParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

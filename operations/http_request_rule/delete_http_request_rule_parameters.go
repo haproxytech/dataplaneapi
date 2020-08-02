@@ -177,7 +177,7 @@ func (o *DeleteHTTPRequestRuleParams) bindIndex(rawData []string, hasKey bool, f
 // bindParentName binds and validates parameter ParentName from query.
 func (o *DeleteHTTPRequestRuleParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_name", "query")
+		return errors.Required("parent_name", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -198,7 +198,7 @@ func (o *DeleteHTTPRequestRuleParams) bindParentName(rawData []string, hasKey bo
 // bindParentType binds and validates parameter ParentType from query.
 func (o *DeleteHTTPRequestRuleParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_type", "query")
+		return errors.Required("parent_type", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

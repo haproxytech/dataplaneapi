@@ -104,7 +104,7 @@ func (o *ReplaceBackendSwitchingRuleParams) BindRequest(r *http.Request, route *
 		var body models.BackendSwitchingRule
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -119,7 +119,7 @@ func (o *ReplaceBackendSwitchingRuleParams) BindRequest(r *http.Request, route *
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
@@ -178,7 +178,7 @@ func (o *ReplaceBackendSwitchingRuleParams) bindForceReload(rawData []string, ha
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *ReplaceBackendSwitchingRuleParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

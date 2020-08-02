@@ -104,7 +104,7 @@ func (o *CreateServerSwitchingRuleParams) BindRequest(r *http.Request, route *mi
 		var body models.ServerSwitchingRule
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -119,7 +119,7 @@ func (o *CreateServerSwitchingRuleParams) BindRequest(r *http.Request, route *mi
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
@@ -145,7 +145,7 @@ func (o *CreateServerSwitchingRuleParams) BindRequest(r *http.Request, route *mi
 // bindBackend binds and validates parameter Backend from query.
 func (o *CreateServerSwitchingRuleParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

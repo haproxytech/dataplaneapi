@@ -78,7 +78,7 @@ func (o *ShowRuntimeMapParams) BindRequest(r *http.Request, route *middleware.Ma
 // bindMap binds and validates parameter Map from query.
 func (o *ShowRuntimeMapParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

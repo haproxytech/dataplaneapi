@@ -104,7 +104,7 @@ func (o *CreateTCPRequestRuleParams) BindRequest(r *http.Request, route *middlew
 		var body models.TCPRequestRule
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -119,7 +119,7 @@ func (o *CreateTCPRequestRuleParams) BindRequest(r *http.Request, route *middlew
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
@@ -178,7 +178,7 @@ func (o *CreateTCPRequestRuleParams) bindForceReload(rawData []string, hasKey bo
 // bindParentName binds and validates parameter ParentName from query.
 func (o *CreateTCPRequestRuleParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_name", "query")
+		return errors.Required("parent_name", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -199,7 +199,7 @@ func (o *CreateTCPRequestRuleParams) bindParentName(rawData []string, hasKey boo
 // bindParentType binds and validates parameter ParentType from query.
 func (o *CreateTCPRequestRuleParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_type", "query")
+		return errors.Required("parent_type", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

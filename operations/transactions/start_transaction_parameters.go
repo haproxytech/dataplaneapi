@@ -79,7 +79,7 @@ func (o *StartTransactionParams) BindRequest(r *http.Request, route *middleware.
 // bindVersion binds and validates parameter Version from query.
 func (o *StartTransactionParams) bindVersion(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("version", "query")
+		return errors.Required("version", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

@@ -87,7 +87,7 @@ func (o *GetServerSwitchingRulesParams) BindRequest(r *http.Request, route *midd
 // bindBackend binds and validates parameter Backend from query.
 func (o *GetServerSwitchingRulesParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

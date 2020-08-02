@@ -103,7 +103,7 @@ func (o *DeleteRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, form
 // bindMap binds and validates parameter Map from query.
 func (o *DeleteRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

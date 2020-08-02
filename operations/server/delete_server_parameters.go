@@ -125,7 +125,7 @@ func (o *DeleteServerParams) BindRequest(r *http.Request, route *middleware.Matc
 // bindBackend binds and validates parameter Backend from query.
 func (o *DeleteServerParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

@@ -104,7 +104,7 @@ func (o *ReplaceBindParams) BindRequest(r *http.Request, route *middleware.Match
 		var body models.Bind
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -119,7 +119,7 @@ func (o *ReplaceBindParams) BindRequest(r *http.Request, route *middleware.Match
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
@@ -178,7 +178,7 @@ func (o *ReplaceBindParams) bindForceReload(rawData []string, hasKey bool, forma
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *ReplaceBindParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

@@ -148,7 +148,7 @@ func (o *DeleteBackendSwitchingRuleParams) bindForceReload(rawData []string, has
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *DeleteBackendSwitchingRuleParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

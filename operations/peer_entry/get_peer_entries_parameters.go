@@ -87,7 +87,7 @@ func (o *GetPeerEntriesParams) BindRequest(r *http.Request, route *middleware.Ma
 // bindPeerSection binds and validates parameter PeerSection from query.
 func (o *GetPeerEntriesParams) bindPeerSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("peer_section", "query")
+		return errors.Required("peer_section", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

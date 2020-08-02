@@ -109,7 +109,7 @@ func (o *ReplaceFilterParams) BindRequest(r *http.Request, route *middleware.Mat
 		var body models.Filter
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -124,7 +124,7 @@ func (o *ReplaceFilterParams) BindRequest(r *http.Request, route *middleware.Mat
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
@@ -207,7 +207,7 @@ func (o *ReplaceFilterParams) bindIndex(rawData []string, hasKey bool, formats s
 // bindParentName binds and validates parameter ParentName from query.
 func (o *ReplaceFilterParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_name", "query")
+		return errors.Required("parent_name", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -228,7 +228,7 @@ func (o *ReplaceFilterParams) bindParentName(rawData []string, hasKey bool, form
 // bindParentType binds and validates parameter ParentType from query.
 func (o *ReplaceFilterParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_type", "query")
+		return errors.Required("parent_type", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

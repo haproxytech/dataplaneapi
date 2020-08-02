@@ -77,7 +77,7 @@ func (o *AddMapEntryParams) BindRequest(r *http.Request, route *middleware.Match
 		var body models.MapEntry
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -92,7 +92,7 @@ func (o *AddMapEntryParams) BindRequest(r *http.Request, route *middleware.Match
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	qMap, qhkMap, _ := qs.GetOK("map")
 	if err := o.bindMap(qMap, qhkMap, route.Formats); err != nil {
@@ -108,7 +108,7 @@ func (o *AddMapEntryParams) BindRequest(r *http.Request, route *middleware.Match
 // bindMap binds and validates parameter Map from query.
 func (o *AddMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

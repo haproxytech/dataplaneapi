@@ -112,7 +112,7 @@ func (o *GetPeerEntryParams) bindName(rawData []string, hasKey bool, formats str
 // bindPeerSection binds and validates parameter PeerSection from query.
 func (o *GetPeerEntryParams) bindPeerSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("peer_section", "query")
+		return errors.Required("peer_section", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {

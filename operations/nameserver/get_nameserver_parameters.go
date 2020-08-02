@@ -112,7 +112,7 @@ func (o *GetNameserverParams) bindName(rawData []string, hasKey bool, formats st
 // bindResolver binds and validates parameter Resolver from query.
 func (o *GetNameserverParams) bindResolver(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("resolver", "query")
+		return errors.Required("resolver", "query", "")
 	}
 	var raw string
 	if len(rawData) > 0 {
