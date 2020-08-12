@@ -22,11 +22,13 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 
 	"math/rand"
 	"time"
 
 	"github.com/google/renameio"
+	"github.com/haproxytech/models/v2"
 	log "github.com/sirupsen/logrus"
 
 	petname "github.com/dustinkirkland/golang-petname"
@@ -110,19 +112,24 @@ type NotifyConfiguration struct {
 	Reload              *ChanNotify `yaml:"-"`
 	Shutdown            *ChanNotify `yaml:"-"`
 }
+type ServiceDiscovery struct {
+	mu      sync.Mutex
+	Consuls []*models.Consul `yaml:"consuls"`
+}
 
 type Configuration struct {
-	HAProxy      HAProxyConfiguration `yaml:"-"`
-	Logging      LoggingOptions       `yaml:"-"`
-	APIOptions   APIConfiguration     `yaml:"-"`
-	Cluster      ClusterConfiguration `yaml:"cluster"`
-	Server       ServerConfiguration  `yaml:"-"`
-	Notify       NotifyConfiguration  `yaml:"-"`
-	Name         AtomicString         `yaml:"name"`
-	BootstrapKey AtomicString         `yaml:"bootstrap_key"`
-	Mode         AtomicString         `yaml:"mode" default:"single"`
-	Status       AtomicString         `yaml:"status"`
-	Cmdline      AtomicString         `yaml:"-"`
+	HAProxy          HAProxyConfiguration `yaml:"-"`
+	Logging          LoggingOptions       `yaml:"-"`
+	APIOptions       APIConfiguration     `yaml:"-"`
+	Cluster          ClusterConfiguration `yaml:"cluster"`
+	Server           ServerConfiguration  `yaml:"-"`
+	Notify           NotifyConfiguration  `yaml:"-"`
+	ServiceDiscovery ServiceDiscovery     `yaml:"service_discovery"`
+	Name             AtomicString         `yaml:"name"`
+	BootstrapKey     AtomicString         `yaml:"bootstrap_key"`
+	Mode             AtomicString         `yaml:"mode" default:"single"`
+	Status           AtomicString         `yaml:"status"`
+	Cmdline          AtomicString         `yaml:"-"`
 }
 
 //Get returns pointer to configuration
@@ -193,6 +200,7 @@ func (c *Configuration) Load(swaggerJSON json.RawMessage, host string, port int)
 	c.Name.Store(cfgLoaded.Name.Load())
 	c.Mode.Store(cfgLoaded.Mode.Load())
 	c.Status.Store(cfgLoaded.Status.Load())
+	c.ServiceDiscovery.Consuls = cfgLoaded.ServiceDiscovery.Consuls
 
 	if c.Mode.Load() == "" {
 		c.Mode.Store("single")
@@ -234,4 +242,11 @@ func (c *Configuration) GetClusterCertDir() string {
 		dir = filepath.Dir(url)
 	}
 	return dir
+}
+
+func (c *Configuration) SaveConsuls(consuls []*models.Consul) error {
+	c.ServiceDiscovery.mu.Lock()
+	c.ServiceDiscovery.Consuls = consuls
+	c.ServiceDiscovery.mu.Unlock()
+	return c.Save()
 }

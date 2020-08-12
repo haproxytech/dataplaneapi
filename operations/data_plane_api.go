@@ -57,6 +57,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
+	"github.com/haproxytech/dataplaneapi/operations/service_discovery"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
@@ -111,6 +112,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindCreateBindHandler: bind.CreateBindHandlerFunc(func(params bind.CreateBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.CreateBind has not yet been implemented")
+		}),
+		ServiceDiscoveryCreateConsulHandler: service_discovery.CreateConsulHandlerFunc(func(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.CreateConsul has not yet been implemented")
 		}),
 		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.CreateFilter has not yet been implemented")
@@ -171,6 +175,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindDeleteBindHandler: bind.DeleteBindHandlerFunc(func(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.DeleteBind has not yet been implemented")
+		}),
+		ServiceDiscoveryDeleteConsulHandler: service_discovery.DeleteConsulHandlerFunc(func(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.DeleteConsul has not yet been implemented")
 		}),
 		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.DeleteFilter has not yet been implemented")
@@ -258,6 +265,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetConfigurationEndpoints has not yet been implemented")
+		}),
+		ServiceDiscoveryGetConsulHandler: service_discovery.GetConsulHandlerFunc(func(params service_discovery.GetConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetConsul has not yet been implemented")
+		}),
+		ServiceDiscoveryGetConsulsHandler: service_discovery.GetConsulsHandlerFunc(func(params service_discovery.GetConsulsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetConsuls has not yet been implemented")
 		}),
 		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.GetDefaults has not yet been implemented")
@@ -439,6 +452,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.ReplaceBind has not yet been implemented")
 		}),
+		ServiceDiscoveryReplaceConsulHandler: service_discovery.ReplaceConsulHandlerFunc(func(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.ReplaceConsul has not yet been implemented")
+		}),
 		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.ReplaceDefaults has not yet been implemented")
 		}),
@@ -568,6 +584,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleCreateBackendSwitchingRuleHandler backend_switching_rule.CreateBackendSwitchingRuleHandler
 	// BindCreateBindHandler sets the operation handler for the create bind operation
 	BindCreateBindHandler bind.CreateBindHandler
+	// ServiceDiscoveryCreateConsulHandler sets the operation handler for the create consul operation
+	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
 	// FilterCreateFilterHandler sets the operation handler for the create filter operation
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
@@ -608,6 +626,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleDeleteBackendSwitchingRuleHandler backend_switching_rule.DeleteBackendSwitchingRuleHandler
 	// BindDeleteBindHandler sets the operation handler for the delete bind operation
 	BindDeleteBindHandler bind.DeleteBindHandler
+	// ServiceDiscoveryDeleteConsulHandler sets the operation handler for the delete consul operation
+	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
 	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
 	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
@@ -666,6 +686,10 @@ type DataPlaneAPI struct {
 	DiscoveryGetClusterHandler discovery.GetClusterHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
+	// ServiceDiscoveryGetConsulHandler sets the operation handler for the get consul operation
+	ServiceDiscoveryGetConsulHandler service_discovery.GetConsulHandler
+	// ServiceDiscoveryGetConsulsHandler sets the operation handler for the get consuls operation
+	ServiceDiscoveryGetConsulsHandler service_discovery.GetConsulsHandler
 	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
 	DefaultsGetDefaultsHandler defaults.GetDefaultsHandler
 	// FilterGetFilterHandler sets the operation handler for the get filter operation
@@ -786,6 +810,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleReplaceBackendSwitchingRuleHandler backend_switching_rule.ReplaceBackendSwitchingRuleHandler
 	// BindReplaceBindHandler sets the operation handler for the replace bind operation
 	BindReplaceBindHandler bind.ReplaceBindHandler
+	// ServiceDiscoveryReplaceConsulHandler sets the operation handler for the replace consul operation
+	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
 	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
 	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
@@ -923,6 +949,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindCreateBindHandler == nil {
 		unregistered = append(unregistered, "bind.CreateBindHandler")
 	}
+	if o.ServiceDiscoveryCreateConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.CreateConsulHandler")
+	}
 	if o.FilterCreateFilterHandler == nil {
 		unregistered = append(unregistered, "filter.CreateFilterHandler")
 	}
@@ -982,6 +1011,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindDeleteBindHandler == nil {
 		unregistered = append(unregistered, "bind.DeleteBindHandler")
+	}
+	if o.ServiceDiscoveryDeleteConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.DeleteConsulHandler")
 	}
 	if o.FilterDeleteFilterHandler == nil {
 		unregistered = append(unregistered, "filter.DeleteFilterHandler")
@@ -1069,6 +1101,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
+	}
+	if o.ServiceDiscoveryGetConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetConsulHandler")
+	}
+	if o.ServiceDiscoveryGetConsulsHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetConsulsHandler")
 	}
 	if o.DefaultsGetDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
@@ -1249,6 +1287,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindReplaceBindHandler == nil {
 		unregistered = append(unregistered, "bind.ReplaceBindHandler")
+	}
+	if o.ServiceDiscoveryReplaceConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.ReplaceConsulHandler")
 	}
 	if o.DefaultsReplaceDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
@@ -1441,6 +1482,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/service_discovery/consul"] = service_discovery.NewCreateConsul(o.context, o.ServiceDiscoveryCreateConsulHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1518,6 +1563,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/binds/{name}"] = bind.NewDeleteBind(o.context, o.BindDeleteBindHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/service_discovery/consul/{id}"] = service_discovery.NewDeleteConsul(o.context, o.ServiceDiscoveryDeleteConsulHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -1634,6 +1683,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration"] = discovery.NewGetConfigurationEndpoints(o.context, o.DiscoveryGetConfigurationEndpointsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/consul/{id}"] = service_discovery.NewGetConsul(o.context, o.ServiceDiscoveryGetConsulHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/consul"] = service_discovery.NewGetConsuls(o.context, o.ServiceDiscoveryGetConsulsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1874,6 +1931,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/binds/{name}"] = bind.NewReplaceBind(o.context, o.BindReplaceBindHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/service_discovery/consul/{id}"] = service_discovery.NewReplaceConsul(o.context, o.ServiceDiscoveryReplaceConsulHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

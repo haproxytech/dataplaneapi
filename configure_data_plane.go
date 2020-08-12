@@ -37,6 +37,7 @@ import (
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
 	"github.com/haproxytech/dataplaneapi/adapters"
+	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
 	"github.com/haproxytech/models/v2"
@@ -433,6 +434,22 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 		return specification.NewGetSpecificationOK().WithPayload(&m)
 	})
+
+	//set up service discovery handlers
+	discovery := service_discovery.NewServiceDiscoveries(client.Configuration)
+	api.ServiceDiscoveryCreateConsulHandler = &handlers.CreateConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
+	api.ServiceDiscoveryDeleteConsulHandler = &handlers.DeleteConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
+	api.ServiceDiscoveryGetConsulHandler = &handlers.GetConsulHandlerImpl{Discovery: discovery}
+	api.ServiceDiscoveryGetConsulsHandler = &handlers.GetConsulsHandlerImpl{Discovery: discovery}
+	api.ServiceDiscoveryReplaceConsulHandler = &handlers.ReplaceConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
+
+	//create stored consul instances
+	for _, data := range cfg.ServiceDiscovery.Consuls {
+		err := discovery.AddNode("consul", *data.ID, data)
+		if err != nil {
+			log.Warning("Error creating consul instance: " + err.Error())
+		}
+	}
 
 	// setup OpenAPI v3 specification handler
 	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
