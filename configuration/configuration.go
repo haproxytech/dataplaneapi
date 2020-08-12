@@ -139,8 +139,9 @@ func Get() *Configuration {
 		for _, v := range os.Args {
 			if !strings.HasPrefix(v, "-") && !strings.Contains(v, `\ `) && strings.ContainsAny(v, " ") {
 				fmt.Fprintf(&sb, "\"%s\" ", v)
+			} else {
+				fmt.Fprintf(&sb, "%s ", v)
 			}
-			fmt.Fprintf(&sb, "%s ", v)
 		}
 
 		cfg.Cmdline.Store(sb.String())
