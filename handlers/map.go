@@ -18,6 +18,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
@@ -100,6 +101,19 @@ func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principa
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Name)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+	}
 	return maps.NewClearRuntimeMapNoContent()
 }
 
@@ -130,6 +144,19 @@ func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Map)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
 	}
 	return maps.NewAddMapEntryCreated().WithPayload(params.Data)
 }
@@ -162,10 +189,22 @@ func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMap
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
-
 	e, err := h.Client.Runtime.GetMapEntry(params.Map, params.ID)
 	if err != nil {
 		return maps.NewReplaceRuntimeMapEntryNotFound()
+	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Map)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
 	}
 	return maps.NewGetRuntimeMapEntryOK().WithPayload(e)
 }
@@ -180,6 +219,19 @@ func (h *DeleteRuntimeMapEntryHandlerImpl) Handle(params maps.DeleteRuntimeMapEn
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Map)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
 	}
 	return maps.NewDeleteRuntimeMapEntryNoContent()
 }

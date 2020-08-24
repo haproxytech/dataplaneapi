@@ -130,6 +130,7 @@ type Configuration struct {
 	Mode             AtomicString         `yaml:"mode" default:"single"`
 	Status           AtomicString         `yaml:"status"`
 	Cmdline          AtomicString         `yaml:"-"`
+	MapSync          *MapSync             `yaml:"-"`
 }
 
 //Get returns pointer to configuration
@@ -141,6 +142,7 @@ func Get() *Configuration {
 		cfg.Notify.CertificateRefresh = NewChanNotify()
 		cfg.Notify.Reload = NewChanNotify()
 		cfg.Notify.Shutdown = NewChanNotify()
+		cfg.MapSync = NewMapSync()
 
 		var sb strings.Builder
 		for _, v := range os.Args {

@@ -24953,6 +24953,13 @@ func init() {
             "required": true
           },
           {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
+          },
+          {
             "name": "data",
             "in": "body",
             "required": true,

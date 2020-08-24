@@ -27,14 +27,23 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // NewDeleteRuntimeMapEntryParams creates a new DeleteRuntimeMapEntryParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewDeleteRuntimeMapEntryParams() DeleteRuntimeMapEntryParams {
 
-	return DeleteRuntimeMapEntryParams{}
+	var (
+		// initialize parameters with default values
+
+		forceSyncDefault = bool(false)
+	)
+
+	return DeleteRuntimeMapEntryParams{
+		ForceSync: &forceSyncDefault,
+	}
 }
 
 // DeleteRuntimeMapEntryParams contains all the bound params for the delete runtime map entry operation
@@ -46,6 +55,11 @@ type DeleteRuntimeMapEntryParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*If true, immediately syncs changes to disk
+	  In: query
+	  Default: false
+	*/
+	ForceSync *bool
 	/*Map id
 	  Required: true
 	  In: path
@@ -69,6 +83,11 @@ func (o *DeleteRuntimeMapEntryParams) BindRequest(r *http.Request, route *middle
 
 	qs := runtime.Values(r.URL.Query())
 
+	qForceSync, qhkForceSync, _ := qs.GetOK("forceSync")
+	if err := o.bindForceSync(qForceSync, qhkForceSync, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rID, rhkID, _ := route.Params.GetOK("id")
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
@@ -82,6 +101,29 @@ func (o *DeleteRuntimeMapEntryParams) BindRequest(r *http.Request, route *middle
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindForceSync binds and validates parameter ForceSync from query.
+func (o *DeleteRuntimeMapEntryParams) bindForceSync(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewDeleteRuntimeMapEntryParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("forceSync", "query", "bool", raw)
+	}
+	o.ForceSync = &value
+
 	return nil
 }
 
