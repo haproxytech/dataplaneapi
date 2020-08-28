@@ -8784,6 +8784,26 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "log_send_hostname": {
+          "type": "object",
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ]
+            },
+            "param": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            }
+          },
+          "x-display-name": "Log Send Hostname"
+        },
         "lua_loads": {
           "type": "array",
           "items": {
@@ -24346,6 +24366,26 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
+    "GlobalLogSendHostname": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "param": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-display-name": "Log Send Hostname"
+    },
     "GlobalLuaLoadsItems0": {
       "type": "object",
       "required": [
@@ -26156,6 +26196,26 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
+        },
+        "log_send_hostname": {
+          "type": "object",
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ]
+            },
+            "param": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            }
+          },
+          "x-display-name": "Log Send Hostname"
         },
         "lua_loads": {
           "type": "array",
