@@ -192,6 +192,178 @@ func init() {
         }
       }
     },
+    "/service_discovery/consul": {
+      "get": {
+        "description": "Returns all configured Consul servers.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an array of all configured Consul servers",
+        "operationId": "getConsuls",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/consuls"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Consul server.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Add a new Consul server",
+        "operationId": "createConsul",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Consul created",
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/service_discovery/consul/{id}": {
+      "get": {
+        "description": "Returns one Consul server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return one Consul server",
+        "operationId": "getConsul",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Consul server id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/consul"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Consul server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Replace a Consul server",
+        "operationId": "replaceConsul",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Consul Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consul server replaced",
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Consul server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Delete a Consul server",
+        "operationId": "deleteConsul",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Consul server Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Consul server deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services": {
       "get": {
         "description": "Returns a list of API managed services endpoints.",
@@ -7917,6 +8089,95 @@ func init() {
         }
       }
     },
+    "consul": {
+      "description": "Consul server configuration",
+      "type": "object",
+      "title": "Consul server",
+      "required": [
+        "address",
+        "port",
+        "enabled",
+        "retry_timeout"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Auto generated ID.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "retry_timeout": {
+          "description": "Duration in seconds in-between data pulling requests to the consul server",
+          "type": "integer",
+          "minimum": 1
+        },
+        "server_slots_base": {
+          "type": "integer",
+          "default": 10
+        },
+        "server_slots_growth_increment": {
+          "type": "integer"
+        },
+        "server_slots_growth_type": {
+          "type": "string",
+          "default": "exponential",
+          "enum": [
+            "linear",
+            "exponential"
+          ]
+        },
+        "service-blacklist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "service-whitelist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "token": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "address": "127.0.0.1",
+        "id": 0,
+        "port": 90
+      }
+    },
+    "consuls": {
+      "description": "Consuls array",
+      "type": "array",
+      "title": "Consuls",
+      "items": {
+        "$ref": "#/definitions/consul"
+      }
+    },
     "cookie": {
       "type": "object",
       "required": [
@@ -9363,7 +9624,9 @@ func init() {
           "enum": [
             301,
             302,
-            303
+            303,
+            307,
+            308
           ],
           "x-dependency": {
             "type": {
@@ -13422,6 +13685,9 @@ func init() {
     },
     {
       "name": "SpecificationOpenapiv3"
+    },
+    {
+      "name": "ServiceDiscovery"
     }
   ],
   "externalDocs": {
@@ -13635,6 +13901,288 @@ func init() {
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/info"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_discovery/consul": {
+      "get": {
+        "description": "Returns all configured Consul servers.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an array of all configured Consul servers",
+        "operationId": "getConsuls",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/consuls"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Consul server.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Add a new Consul server",
+        "operationId": "createConsul",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Consul created",
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_discovery/consul/{id}": {
+      "get": {
+        "description": "Returns one Consul server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return one Consul server",
+        "operationId": "getConsul",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Consul server id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/consul"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Consul server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Replace a Consul server",
+        "operationId": "replaceConsul",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Consul Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consul server replaced",
+            "schema": {
+              "$ref": "#/definitions/consul"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Consul server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Delete a Consul server",
+        "operationId": "deleteConsul",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Consul server Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Consul server deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -25352,6 +25900,95 @@ func init() {
         }
       }
     },
+    "consul": {
+      "description": "Consul server configuration",
+      "type": "object",
+      "title": "Consul server",
+      "required": [
+        "address",
+        "port",
+        "enabled",
+        "retry_timeout"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Auto generated ID.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "retry_timeout": {
+          "description": "Duration in seconds in-between data pulling requests to the consul server",
+          "type": "integer",
+          "minimum": 1
+        },
+        "server_slots_base": {
+          "type": "integer",
+          "default": 10
+        },
+        "server_slots_growth_increment": {
+          "type": "integer"
+        },
+        "server_slots_growth_type": {
+          "type": "string",
+          "default": "exponential",
+          "enum": [
+            "linear",
+            "exponential"
+          ]
+        },
+        "service-blacklist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "service-whitelist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "token": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "address": "127.0.0.1",
+        "id": 0,
+        "port": 90
+      }
+    },
+    "consuls": {
+      "description": "Consuls array",
+      "type": "array",
+      "title": "Consuls",
+      "items": {
+        "$ref": "#/definitions/consul"
+      }
+    },
     "cookie": {
       "type": "object",
       "required": [
@@ -26736,7 +27373,9 @@ func init() {
           "enum": [
             301,
             302,
-            303
+            303,
+            307,
+            308
           ],
           "x-dependency": {
             "type": {
@@ -30692,6 +31331,9 @@ func init() {
     },
     {
       "name": "SpecificationOpenapiv3"
+    },
+    {
+      "name": "ServiceDiscovery"
     }
   ],
   "externalDocs": {
