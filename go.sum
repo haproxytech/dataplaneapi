@@ -151,6 +151,8 @@ github.com/haproxytech/client-native/v2 v2.1.0 h1:1+AMkGPSr32ON5XMCvox6tHqEBHRb/
 github.com/haproxytech/client-native/v2 v2.1.0/go.mod h1:5VP78CexAizAC45X3TRVCmLsoV9R2DyX0CLT6L7ScXE=
 github.com/haproxytech/client-native/v2 v2.1.1-0.20200902112434-ea460f56a189 h1:6mNtGfno9y908CGen/EPR6DkPYWnmVWb68a+XqFTQjQ=
 github.com/haproxytech/client-native/v2 v2.1.1-0.20200902112434-ea460f56a189/go.mod h1:fGQMY++QhN+NDyNDnLl2IW2y8jAU9QJsAOMxXphp1go=
+github.com/haproxytech/client-native/v2 v2.1.1-0.20200910133920-33c78bcf2701 h1:MN/vM8pVt9eGRiQq1+4lgwfdzswwoxm3kPvGze9Mwvo=
+github.com/haproxytech/client-native/v2 v2.1.1-0.20200910133920-33c78bcf2701/go.mod h1:kztiBFhjJWngwmr2tazHoqCSuH79LZvDbgUBOOXnlJg=
 github.com/haproxytech/config-parser/v2 v2.0.1 h1:737eWpu+qKCiEx8caeXdvIq599qKCBd18Lc9+zyzgx0=
 github.com/haproxytech/config-parser/v2 v2.0.1/go.mod h1:VjHOetXAJtwrtLAJPoDaD/kEYwCoixVp5SCsBitMcj8=
 github.com/haproxytech/config-parser/v2 v2.0.2 h1:t+CcSdasWKUCJXN9e7cbqZMCOToTgoAZ2Tm67GtCje8=
@@ -180,6 +182,8 @@ github.com/haproxytech/models/v2 v2.1.1-0.20200901114342-5255e3ec2fc2 h1:jGx9r0u
 github.com/haproxytech/models/v2 v2.1.1-0.20200901114342-5255e3ec2fc2/go.mod h1:HjM8x+j1/j4nHUA5lqh159OPZ3zQ5iGz13vHo9xeEk0=
 github.com/haproxytech/models/v2 v2.1.1-0.20200902120052-781ee294c48f h1:OGeGFh9UEIMw0UWv5Y4pP+OOAaF00xzwv08cZoNMdjI=
 github.com/haproxytech/models/v2 v2.1.1-0.20200902120052-781ee294c48f/go.mod h1:HjM8x+j1/j4nHUA5lqh159OPZ3zQ5iGz13vHo9xeEk0=
+github.com/haproxytech/models/v2 v2.1.1-0.20200910133011-f37d23fcd461 h1:wrHF21ckDZxYGFhK0jhN4+ww7ELgyGq+E3QRz7fGmgw=
+github.com/haproxytech/models/v2 v2.1.1-0.20200910133011-f37d23fcd461/go.mod h1:HjM8x+j1/j4nHUA5lqh159OPZ3zQ5iGz13vHo9xeEk0=
 github.com/hashicorp/consul v1.8.3 h1:oE4SO/f0mia+9zglR1D6+luprvlJhY21Yg3NRU+h4Q8=
 github.com/hashicorp/consul/api v1.6.0 h1:SZB2hQW8AcTOpfDmiVblQbijxzsRuiyy0JpHfabvHio=
 github.com/hashicorp/consul/api v1.6.0/go.mod h1:1NSuaUUkFaJzMasbfq/11wKYWSR67Xn6r2DXKhuDNFg=

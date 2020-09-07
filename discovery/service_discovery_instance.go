@@ -79,6 +79,7 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 	if err != nil {
 		return err
 	}
+	reload := false
 	s.markForDeletion()
 	for _, service := range services {
 		if s.serviceNotTracked(service.GetName()) {
@@ -87,17 +88,26 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 		if !service.Changed() {
 			continue
 		}
-		if err := s.initService(service); err != nil {
-			return err
-		}
-		se := s.services[service.GetName()]
-		if err := se.confService.Update(service.GetServers()); err != nil {
+		r, err := s.initService(service)
+		if err != nil {
 			s.deleteTransaction()
 			return err
 		}
+		reload = reload || r
+		se := s.services[service.GetName()]
+		r, err = se.confService.Update(service.GetServers())
+		if err != nil {
+			s.deleteTransaction()
+			return err
+		}
+		reload = reload || r
 	}
-	s.removeDeleted()
-	return s.commitTransaction()
+	reload = reload || s.removeDeleted()
+	if reload {
+		return s.commitTransaction()
+	}
+	s.deleteTransaction()
+	return nil
 }
 
 func (s *ServiceDiscoveryInstance) startTransaction() error {
@@ -133,11 +143,11 @@ func (s *ServiceDiscoveryInstance) serviceNotTracked(service string) bool {
 	return false
 }
 
-func (s *ServiceDiscoveryInstance) initService(service ServiceInstance) error {
+func (s *ServiceDiscoveryInstance) initService(service ServiceInstance) (bool, error) {
 	if se, ok := s.services[service.GetName()]; ok {
 		se.confService.SetTransactionID(s.transactionID)
 		se.deleted = false
-		return nil
+		return false, nil
 	}
 	se, err := s.client.NewService(service.GetBackendName(), configuration.ScalingParams{
 		BaseSlots:       s.params.ServerSlotsBase,
@@ -145,28 +155,31 @@ func (s *ServiceDiscoveryInstance) initService(service ServiceInstance) error {
 		SlotsIncrement:  s.params.SlotsIncrement,
 	})
 	if err != nil {
-		return err
+		return false, err
 	}
-	err = se.Init(s.transactionID)
+	reload, err := se.Init(s.transactionID)
 	if err != nil {
-		return err
+		return false, err
 	}
 	s.services[service.GetName()] = &confService{
 		confService: se,
 		deleted:     false,
 	}
-	return nil
+	return reload, nil
 }
 
-func (s *ServiceDiscoveryInstance) removeDeleted() {
+func (s *ServiceDiscoveryInstance) removeDeleted() bool {
+	reload := false
 	for service := range s.services {
 		if s.services[service].deleted {
 			err := s.services[service].confService.Delete()
 			if err == nil {
+				reload = true
 				delete(s.services, service)
 			}
 		}
 	}
+	return reload
 }
 
 func (s *ServiceDiscoveryInstance) deleteTransaction() {
