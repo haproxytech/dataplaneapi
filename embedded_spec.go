@@ -9367,7 +9367,7 @@ func init() {
               ]
             }
           },
-          "x-nullable": false
+          "x-nullable": true
         },
         "expr": {
           "type": "string",
@@ -9633,7 +9633,8 @@ func init() {
               "value": "redirect"
             }
           },
-          "x-display-name": "Redirect Code"
+          "x-display-name": "Redirect Code",
+          "x-nullable": true
         },
         "redir_option": {
           "type": "string",
@@ -10198,7 +10199,8 @@ func init() {
               "value": "redirect"
             }
           },
-          "x-display-name": "Redirect Code"
+          "x-display-name": "Redirect Code",
+          "x-nullable": true
         },
         "redir_option": {
           "type": "string",
@@ -27116,7 +27118,7 @@ func init() {
               ]
             }
           },
-          "x-nullable": false
+          "x-nullable": true
         },
         "expr": {
           "type": "string",
@@ -27382,7 +27384,8 @@ func init() {
               "value": "redirect"
             }
           },
-          "x-display-name": "Redirect Code"
+          "x-display-name": "Redirect Code",
+          "x-nullable": true
         },
         "redir_option": {
           "type": "string",
@@ -27947,7 +27950,8 @@ func init() {
               "value": "redirect"
             }
           },
-          "x-display-name": "Redirect Code"
+          "x-display-name": "Redirect Code",
+          "x-nullable": true
         },
         "redir_option": {
           "type": "string",
