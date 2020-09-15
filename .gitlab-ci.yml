@@ -11,4 +11,4 @@ reviewdog:
     - golangci-lint run -v --color always --timeout 120s
     #- go get -u github.com/reviewdog/reviewdog/cmd/reviewdog
     #- reviewdog -reporter=gitlab-mr-discussion
-    - go build .
+    - cd cmd/dataplaneapi/; go build .
