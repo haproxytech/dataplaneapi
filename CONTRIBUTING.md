@@ -17,6 +17,7 @@ Data Plane API is generated using [go-swagger](https://github.com/go-swagger/go-
     --skip-models \
     -s dataplaneapi \
     --tags=Discovery \
+    --tags=ServiceDiscovery \
     --tags=Information \
     --tags=Specification \
     --tags=SpecificationOpenapiv3 \
