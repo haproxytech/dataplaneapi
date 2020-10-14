@@ -157,7 +157,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	go func() {
 		for range cfg.Notify.Shutdown.Subscribe("main") {
-			log.Info("HAProxy Data Plane API shuting down")
+			log.Info("HAProxy Data Plane API shutting down")
 			err := server.Shutdown()
 			if err != nil {
 				log.Fatalln(err)
