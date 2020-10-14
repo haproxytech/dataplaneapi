@@ -7734,7 +7734,7 @@ func init() {
           "enabled": "enabled"
         },
         "httpchk": {
-          "method": "OPTIONS",
+          "method": "GET",
           "uri": "/check",
           "version": "HTTP/1.1"
         },
@@ -7792,7 +7792,7 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
-        "id": 0,
+        "index": 0,
         "name": "test_backend"
       }
     },
@@ -8189,6 +8189,12 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "port-range-end": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
         "prefer_client_ciphers": {
           "type": "boolean"
         },
@@ -8446,8 +8452,10 @@ func init() {
       "additionalProperties": false,
       "example": {
         "address": "127.0.0.1",
-        "id": 0,
-        "port": 90
+        "enabled": true,
+        "id": "0",
+        "port": 90,
+        "retry_timeout": 10
       }
     },
     "consuls": {
@@ -8523,7 +8531,64 @@ func init() {
     },
     "default_server": {
       "type": "object",
+      "title": "Default Server",
       "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "check-sni": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -8535,16 +8600,107 @@ func init() {
             "disabled"
           ]
         },
+        "check_alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Protocols"
+        },
+        "check_proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Name"
+        },
+        "check_via_socks4": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ciphers": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ciphersuites": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "crl_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
         "downinter": {
           "type": "integer",
           "x-nullable": true
         },
+        "error_limit": {
+          "type": "integer",
+          "x-display-name": "Error count"
+        },
         "fall": {
           "type": "integer",
+          "x-display-name": "Nr. of consecutive failed checks",
           "x-nullable": true
         },
         "fastinter": {
           "type": "integer",
+          "x-nullable": true
+        },
+        "force_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
           "x-nullable": true
         },
         "init-addr": {
@@ -8555,11 +8711,163 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log_proto": {
+          "type": "string",
+          "enum": [
+            "legacy",
+            "octet-count"
+          ]
+        },
+        "max_reuse": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Concurrent Connections",
+          "x-nullable": true
+        },
+        "maxqueue": {
+          "type": "integer",
+          "x-display-name": "Max Number of Connections",
+          "x-nullable": true
+        },
+        "minconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "no_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_verifyhost": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "npn": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "observe": {
+          "type": "string",
+          "enum": [
+            "layer4",
+            "layer7"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
+        "pool_low_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_purge_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
+        },
+        "redir": {
+          "type": "string",
+          "x-display-name": "Prefix"
         },
         "resolve-net": {
           "type": "string",
@@ -8573,11 +8881,19 @@ func init() {
         "resolve-prefer": {
           "type": "string",
           "pattern": "^[^\\s]+$",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
           "x-dependency": {
             "resolvers": {
               "required": true
             }
           }
+        },
+        "resolve_opts": {
+          "type": "string",
+          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
         },
         "resolvers": {
           "type": "string",
@@ -8591,6 +8907,34 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl_cn": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "slowstart": {
           "type": "integer",
           "x-nullable": true
@@ -8598,6 +8942,120 @@ func init() {
         "sni": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "socks4": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "check-via-socks4": {
+              "required": true
+            }
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_reuse": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "stick": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tcp_ut": {
+          "type": "integer"
+        },
+        "tfo": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "track": {
+          "type": "string"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verifyhost": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            },
+            "verify": {
+              "value": "required"
+            }
+          }
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
         }
       }
     },
@@ -8818,6 +9276,9 @@ func init() {
             "http"
           ]
         },
+        "monitor_uri": {
+          "$ref": "#/definitions/monitor_uri"
+        },
         "queue_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -9020,7 +9481,7 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
-        "id": 0,
+        "index": 0,
         "trace_name": "name",
         "trace_rnd_parsing": true,
         "type": "trace"
@@ -9227,6 +9688,12 @@ func init() {
             "http",
             "tcp"
           ]
+        },
+        "monitor_fail": {
+          "$ref": "#/definitions/monitor_fail"
+        },
+        "monitor_uri": {
+          "$ref": "#/definitions/monitor_uri"
         },
         "name": {
           "type": "string",
@@ -10234,7 +10701,7 @@ func init() {
         "cond_test": "{ src 192.168.0.0/16 }",
         "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "id": 0,
+        "index": 0,
         "type": "add-header"
       }
     },
@@ -10768,7 +11235,7 @@ func init() {
         "cond_test": "{ src 192.168.0.0/16 }",
         "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "id": 0,
+        "index": 0,
         "type": "add-header"
       }
     },
@@ -11098,6 +11565,35 @@ func init() {
       "items": {
         "$ref": "#/definitions/map"
       }
+    },
+    "monitor_fail": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      }
+    },
+    "monitor_uri": {
+      "type": "string"
     },
     "nameserver": {
       "description": "Nameserver used in Runtime DNS configuration",
@@ -12331,13 +12827,14 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
+          "minimum": 1,
           "x-nullable": true,
           "readOnly": true
         }
       },
       "example": {
         "address": "127.0.0.5",
-        "admin_state": "up",
+        "admin_state": "ready",
         "operational_state": "up",
         "port": 80,
         "server_id": 1,
@@ -12910,7 +13407,6 @@ func init() {
       "example": {
         "address": "10.1.1.1",
         "check": "enabled",
-        "max-connections": 500,
         "name": "www",
         "port": 8080,
         "weight": 80
@@ -12965,7 +13461,7 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
-        "id": 0,
+        "index": 0,
         "target_server": "www"
       }
     },
@@ -13257,9 +13753,9 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
-        "id": 0,
+        "index": 0,
         "pattern": "src",
-        "type": "storeonly"
+        "type": "match"
       }
     },
     "stick_rules": {
@@ -13901,8 +14397,8 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "id": 0,
-        "type": "accept"
+        "index": 0,
+        "type": "connection"
       }
     },
     "tcp_request_rules": {
@@ -14020,8 +14516,8 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "id": 0,
-        "type": "accept"
+        "index": 0,
+        "type": "content"
       }
     },
     "tcp_response_rules": {
@@ -26123,7 +26619,7 @@ func init() {
           "enabled": "enabled"
         },
         "httpchk": {
-          "method": "OPTIONS",
+          "method": "GET",
           "uri": "/check",
           "version": "HTTP/1.1"
         },
@@ -26181,7 +26677,7 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
-        "id": 0,
+        "index": 0,
         "name": "test_backend"
       }
     },
@@ -26578,6 +27074,12 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
+        "port-range-end": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
         "prefer_client_ciphers": {
           "type": "boolean"
         },
@@ -26835,8 +27337,10 @@ func init() {
       "additionalProperties": false,
       "example": {
         "address": "127.0.0.1",
-        "id": 0,
-        "port": 90
+        "enabled": true,
+        "id": "0",
+        "port": 90,
+        "retry_timeout": 10
       }
     },
     "consuls": {
@@ -26905,7 +27409,64 @@ func init() {
     },
     "default_server": {
       "type": "object",
+      "title": "Default Server",
       "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "check-sni": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -26917,16 +27478,107 @@ func init() {
             "disabled"
           ]
         },
+        "check_alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Protocols"
+        },
+        "check_proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Name"
+        },
+        "check_via_socks4": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ciphers": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ciphersuites": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "crl_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
         "downinter": {
           "type": "integer",
           "x-nullable": true
         },
+        "error_limit": {
+          "type": "integer",
+          "x-display-name": "Error count"
+        },
         "fall": {
           "type": "integer",
+          "x-display-name": "Nr. of consecutive failed checks",
           "x-nullable": true
         },
         "fastinter": {
           "type": "integer",
+          "x-nullable": true
+        },
+        "force_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
           "x-nullable": true
         },
         "init-addr": {
@@ -26937,11 +27589,163 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log_proto": {
+          "type": "string",
+          "enum": [
+            "legacy",
+            "octet-count"
+          ]
+        },
+        "max_reuse": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Concurrent Connections",
+          "x-nullable": true
+        },
+        "maxqueue": {
+          "type": "integer",
+          "x-display-name": "Max Number of Connections",
+          "x-nullable": true
+        },
+        "minconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "no_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_verifyhost": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "npn": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "observe": {
+          "type": "string",
+          "enum": [
+            "layer4",
+            "layer7"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
+        "pool_low_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_purge_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
+        },
+        "redir": {
+          "type": "string",
+          "x-display-name": "Prefix"
         },
         "resolve-net": {
           "type": "string",
@@ -26955,11 +27759,19 @@ func init() {
         "resolve-prefer": {
           "type": "string",
           "pattern": "^[^\\s]+$",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
           "x-dependency": {
             "resolvers": {
               "required": true
             }
           }
+        },
+        "resolve_opts": {
+          "type": "string",
+          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
         },
         "resolvers": {
           "type": "string",
@@ -26973,6 +27785,34 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl_cn": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "slowstart": {
           "type": "integer",
           "x-nullable": true
@@ -26980,6 +27820,120 @@ func init() {
         "sni": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "socks4": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "check-via-socks4": {
+              "required": true
+            }
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_reuse": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "stick": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tcp_ut": {
+          "type": "integer"
+        },
+        "tfo": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "track": {
+          "type": "string"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verifyhost": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            },
+            "verify": {
+              "value": "required"
+            }
+          }
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
         }
       }
     },
@@ -27200,6 +28154,9 @@ func init() {
             "http"
           ]
         },
+        "monitor_uri": {
+          "$ref": "#/definitions/monitor_uri"
+        },
         "queue_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -27402,7 +28359,7 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
-        "id": 0,
+        "index": 0,
         "trace_name": "name",
         "trace_rnd_parsing": true,
         "type": "trace"
@@ -27609,6 +28566,12 @@ func init() {
             "http",
             "tcp"
           ]
+        },
+        "monitor_fail": {
+          "$ref": "#/definitions/monitor_fail"
+        },
+        "monitor_uri": {
+          "$ref": "#/definitions/monitor_uri"
         },
         "name": {
           "type": "string",
@@ -28561,7 +29524,7 @@ func init() {
         "cond_test": "{ src 192.168.0.0/16 }",
         "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "id": 0,
+        "index": 0,
         "type": "add-header"
       }
     },
@@ -29095,7 +30058,7 @@ func init() {
         "cond_test": "{ src 192.168.0.0/16 }",
         "hdr_format": "%T",
         "hdr_name": "X-Haproxy-Current-Date",
-        "id": 0,
+        "index": 0,
         "type": "add-header"
       }
     },
@@ -29425,6 +30388,35 @@ func init() {
       "items": {
         "$ref": "#/definitions/map"
       }
+    },
+    "monitor_fail": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      }
+    },
+    "monitor_uri": {
+      "type": "string"
     },
     "nameserver": {
       "description": "Nameserver used in Runtime DNS configuration",
@@ -30658,14 +31650,14 @@ func init() {
         "port": {
           "type": "integer",
           "maximum": 65535,
-          "minimum": 0,
+          "minimum": 1,
           "x-nullable": true,
           "readOnly": true
         }
       },
       "example": {
         "address": "127.0.0.5",
-        "admin_state": "up",
+        "admin_state": "ready",
         "operational_state": "up",
         "port": 80,
         "server_id": 1,
@@ -31238,7 +32230,6 @@ func init() {
       "example": {
         "address": "10.1.1.1",
         "check": "enabled",
-        "max-connections": 500,
         "name": "www",
         "port": 8080,
         "weight": 80
@@ -31293,7 +32284,7 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ req_ssl_sni -i www.example.com }",
-        "id": 0,
+        "index": 0,
         "target_server": "www"
       }
     },
@@ -31522,9 +32513,9 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
-        "id": 0,
+        "index": 0,
         "pattern": "src",
-        "type": "storeonly"
+        "type": "match"
       }
     },
     "stick_rules": {
@@ -32125,8 +33116,8 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "id": 0,
-        "type": "accept"
+        "index": 0,
+        "type": "connection"
       }
     },
     "tcp_request_rules": {
@@ -32244,8 +33235,8 @@ func init() {
       "example": {
         "cond": "if",
         "cond_test": "{ src 192.168.0.0/16 }",
-        "id": 0,
-        "type": "accept"
+        "index": 0,
+        "type": "content"
       }
     },
     "tcp_response_rules": {
