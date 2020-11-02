@@ -6148,6 +6148,35 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/version": {
+      "get": {
+        "description": "Returns configuration version.",
+        "tags": [
+          "Configuration"
+        ],
+        "summary": "Return a configuration version",
+        "operationId": "getConfigurationVersion",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Configuration version",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/reloads": {
       "get": {
         "description": "Returns a list of HAProxy reloads.",
@@ -6382,6 +6411,13 @@ func init() {
             "description": "If true, deletes file from disk",
             "name": "forceDelete",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
           }
         ],
         "responses": {
@@ -6443,6 +6479,13 @@ func init() {
             "name": "map",
             "in": "query",
             "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
           },
           {
             "name": "data",
@@ -6534,6 +6577,13 @@ func init() {
             "required": true
           },
           {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
+          },
+          {
             "name": "data",
             "in": "body",
             "required": true,
@@ -6590,6 +6640,13 @@ func init() {
             "name": "map",
             "in": "query",
             "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
           }
         ],
         "responses": {
@@ -23972,6 +24029,59 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/version": {
+      "get": {
+        "description": "Returns configuration version.",
+        "tags": [
+          "Configuration"
+        ],
+        "summary": "Return a configuration version",
+        "operationId": "getConfigurationVersion",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Configuration version",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/reloads": {
       "get": {
         "description": "Returns a list of HAProxy reloads.",
@@ -24330,6 +24440,13 @@ func init() {
             "description": "If true, deletes file from disk",
             "name": "forceDelete",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
           }
         ],
         "responses": {
@@ -24431,6 +24548,13 @@ func init() {
             "name": "map",
             "in": "query",
             "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
           },
           {
             "name": "data",
@@ -24572,6 +24696,13 @@ func init() {
             "required": true
           },
           {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
+          },
+          {
             "name": "data",
             "in": "body",
             "required": true,
@@ -24658,6 +24789,13 @@ func init() {
             "name": "map",
             "in": "query",
             "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "forceSync",
+            "in": "query"
           }
         ],
         "responses": {

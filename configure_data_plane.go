@@ -451,6 +451,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 	}
 
+	api.ConfigurationGetConfigurationVersionHandler = &handlers.ConfigurationGetConfigurationVersionHandlerImpl{Client: client}
+
 	// setup OpenAPI v3 specification handler
 	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.Swagger{}

@@ -266,6 +266,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetConfigurationEndpoints has not yet been implemented")
 		}),
+		ConfigurationGetConfigurationVersionHandler: configuration.GetConfigurationVersionHandlerFunc(func(params configuration.GetConfigurationVersionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation configuration.GetConfigurationVersion has not yet been implemented")
+		}),
 		ServiceDiscoveryGetConsulHandler: service_discovery.GetConsulHandlerFunc(func(params service_discovery.GetConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.GetConsul has not yet been implemented")
 		}),
@@ -686,6 +689,8 @@ type DataPlaneAPI struct {
 	DiscoveryGetClusterHandler discovery.GetClusterHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
+	// ConfigurationGetConfigurationVersionHandler sets the operation handler for the get configuration version operation
+	ConfigurationGetConfigurationVersionHandler configuration.GetConfigurationVersionHandler
 	// ServiceDiscoveryGetConsulHandler sets the operation handler for the get consul operation
 	ServiceDiscoveryGetConsulHandler service_discovery.GetConsulHandler
 	// ServiceDiscoveryGetConsulsHandler sets the operation handler for the get consuls operation
@@ -1101,6 +1106,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
+	}
+	if o.ConfigurationGetConfigurationVersionHandler == nil {
+		unregistered = append(unregistered, "configuration.GetConfigurationVersionHandler")
 	}
 	if o.ServiceDiscoveryGetConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.GetConsulHandler")
@@ -1683,6 +1691,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration"] = discovery.NewGetConfigurationEndpoints(o.context, o.DiscoveryGetConfigurationEndpointsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/version"] = configuration.NewGetConfigurationVersion(o.context, o.ConfigurationGetConfigurationVersionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
