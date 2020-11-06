@@ -4330,6 +4330,13 @@ func init() {
             "in": "query"
           },
           {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, only validates configuration, without applying it",
+            "name": "only_validate",
+            "in": "query"
+          },
+          {
             "type": "string",
             "description": "List of Runtime API commands with parameters separated by ';'",
             "name": "X-Runtime-Actions",
@@ -21256,6 +21263,13 @@ func init() {
             "default": false,
             "description": "If set, no reload will be initiated and runtime actions from X-Runtime-Actions will be applied",
             "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, only validates configuration, without applying it",
+            "name": "only_validate",
             "in": "query"
           },
           {

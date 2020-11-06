@@ -77,10 +77,18 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 	if params.ForceReload != nil {
 		forceReload = *params.ForceReload
 	}
-	err := h.Client.Configuration.PostRawConfiguration(&params.Data, v, skipVersion)
+	onlyValidate := false
+	if params.OnlyValidate != nil {
+		onlyValidate = *params.OnlyValidate
+	}
+	err := h.Client.Configuration.PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+	}
+	if onlyValidate {
+		//return here without reloading, since config is only validated.
+		return configuration.NewPostHAProxyConfigurationAccepted().WithPayload(params.Data)
 	}
 	if skipReload {
 		if params.XRuntimeActions != nil {

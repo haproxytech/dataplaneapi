@@ -30,10 +30,11 @@ import (
 
 // PostHAProxyConfigurationURL generates an URL for the post h a proxy configuration operation
 type PostHAProxyConfigurationURL struct {
-	ForceReload *bool
-	SkipReload  *bool
-	SkipVersion *bool
-	Version     *int64
+	ForceReload  *bool
+	OnlyValidate *bool
+	SkipReload   *bool
+	SkipVersion  *bool
+	Version      *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -75,6 +76,14 @@ func (o *PostHAProxyConfigurationURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
+	}
+
+	var onlyValidateQ string
+	if o.OnlyValidate != nil {
+		onlyValidateQ = swag.FormatBool(*o.OnlyValidate)
+	}
+	if onlyValidateQ != "" {
+		qs.Set("only_validate", onlyValidateQ)
 	}
 
 	var skipReloadQ string
