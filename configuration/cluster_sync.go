@@ -35,7 +35,7 @@ import (
 
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/config-parser/v2/types"
+	"github.com/haproxytech/config-parser/v3/types"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	log "github.com/sirupsen/logrus"
 )

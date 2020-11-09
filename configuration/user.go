@@ -25,9 +25,9 @@ import (
 
 	"github.com/GehirnInc/crypt"
 	api_errors "github.com/go-openapi/errors"
-	parser "github.com/haproxytech/config-parser/v2"
-	"github.com/haproxytech/config-parser/v2/common"
-	"github.com/haproxytech/config-parser/v2/types"
+	parser "github.com/haproxytech/config-parser/v3"
+	"github.com/haproxytech/config-parser/v3/common"
+	"github.com/haproxytech/config-parser/v3/types"
 	log "github.com/sirupsen/logrus"
 )
 
