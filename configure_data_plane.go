@@ -32,6 +32,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
+
 	"github.com/haproxytech/dataplaneapi/adapters"
 	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
@@ -42,19 +43,21 @@ import (
 	"github.com/haproxytech/dataplaneapi/misc"
 
 	"github.com/go-openapi/runtime/middleware"
+
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 
 	client_native "github.com/haproxytech/client-native/v2"
 
 	"github.com/haproxytech/client-native/v2/configuration"
 	runtime_api "github.com/haproxytech/client-native/v2/runtime"
+
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 
-	errors "github.com/go-openapi/errors"
-	runtime "github.com/go-openapi/runtime"
-	swag "github.com/go-openapi/swag"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 	"github.com/rs/cors"
 
 	"github.com/haproxytech/dataplaneapi/operations"
@@ -69,7 +72,7 @@ import (
 
 var Version string
 var BuildTime string
-var mWorker bool = false
+var mWorker = false
 var logFile *os.File
 
 func configureFlags(api *operations.DataPlaneAPI) {
@@ -111,10 +114,37 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			haproxyOptions.MasterRuntime = strings.Replace(masterRuntime, "unix@", "", 1)
 		}
 	}
-	cfgFiles := os.Getenv("HAPROXY_CFGFILES")
-	if cfgFiles != "" {
-		cfg := strings.Split(cfgFiles, ";")
-		haproxyOptions.ConfigFile = cfg[0]
+	// Override options with env variables
+	if os.Getenv("HAPROXY_MWORKER") == "1" {
+		mWorker = true
+		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
+		if misc.IsUnixSocketAddr(masterRuntime) {
+			haproxyOptions.MasterRuntime = strings.Replace(masterRuntime, "unix@", "", 1)
+		}
+	}
+
+	if cfgFiles := os.Getenv("HAPROXY_CFGFILES"); cfgFiles != "" {
+		m := map[string]bool{}
+
+		if len(haproxyOptions.UserListFile) > 0 {
+			m["userlist"] = false
+		}
+		for _, f := range strings.Split(cfgFiles, ";") {
+			if f == haproxyOptions.ConfigFile {
+				m["configuration"] = true
+				continue
+			}
+			if len(haproxyOptions.UserListFile) > 0 && f == haproxyOptions.UserListFile {
+				m["userlist"] = true
+				continue
+			}
+			log.Warningf("The configuration file %s in HAPROXY_CFGFILES is not defined, neither using --config-file or --userlist-file flags.", f)
+		}
+		for f, ok := range m {
+			if !ok {
+				log.Fatalf("The %s file is not declared in the HAPROXY_CFGFILES environment variable, cannot start.", f)
+			}
+		}
 	}
 	// end overriding options with env variables
 
@@ -513,7 +543,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	}).Handler
 	recovery := adapters.RecoverMiddleware(log.StandardLogger())
 	logViaLogrus := adapters.LoggingMiddleware(log.StandardLogger())
-	return (logViaLogrus(handleCORS(recovery(handler))))
+	return logViaLogrus(handleCORS(recovery(handler)))
 }
 
 func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
