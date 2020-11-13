@@ -1289,7 +1289,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a frontend from the configuration by it's name.",
+        "description": "Deletes a backend from the configuration by it's name.",
         "tags": [
           "Backend"
         ],
@@ -16739,7 +16739,7 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes a frontend from the configuration by it's name.",
+        "description": "Deletes a backend from the configuration by it's name.",
         "tags": [
           "Backend"
         ],
