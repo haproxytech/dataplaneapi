@@ -48,6 +48,11 @@ func (h *MapsCreateRuntimeMapHandlerImpl) Handle(params maps.CreateRuntimeMapPar
 			e := misc.HandleError(err)
 			return maps.NewCreateRuntimeMapDefault(int(*e.Code)).WithPayload(e)
 		}
+		//if maps file is configured in HAProxy config, get it from runtime
+		re, _ := h.Client.Runtime.GetMap(header.Filename)
+		if re != nil {
+			return maps.NewCreateRuntimeMapCreated().WithPayload(re)
+		}
 		return maps.NewCreateRuntimeMapCreated().WithPayload(me)
 	}
 	rID := h.ReloadAgent.Reload()

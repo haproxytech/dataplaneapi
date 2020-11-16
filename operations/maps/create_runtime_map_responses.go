@@ -41,7 +41,7 @@ type CreateRuntimeMapCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload models.MapEntries `json:"body,omitempty"`
+	Payload *models.Map `json:"body,omitempty"`
 }
 
 // NewCreateRuntimeMapCreated creates CreateRuntimeMapCreated with default headers values
@@ -51,13 +51,13 @@ func NewCreateRuntimeMapCreated() *CreateRuntimeMapCreated {
 }
 
 // WithPayload adds the payload to the create runtime map created response
-func (o *CreateRuntimeMapCreated) WithPayload(payload models.MapEntries) *CreateRuntimeMapCreated {
+func (o *CreateRuntimeMapCreated) WithPayload(payload *models.Map) *CreateRuntimeMapCreated {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the create runtime map created response
-func (o *CreateRuntimeMapCreated) SetPayload(payload models.MapEntries) {
+func (o *CreateRuntimeMapCreated) SetPayload(payload *models.Map) {
 	o.Payload = payload
 }
 
@@ -65,14 +65,11 @@ func (o *CreateRuntimeMapCreated) SetPayload(payload models.MapEntries) {
 func (o *CreateRuntimeMapCreated) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(201)
-	payload := o.Payload
-	if payload == nil {
-		// return empty array
-		payload = models.MapEntries{}
-	}
-
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 
@@ -92,7 +89,7 @@ type CreateRuntimeMapAccepted struct {
 	/*
 	  In: Body
 	*/
-	Payload models.MapEntries `json:"body,omitempty"`
+	Payload *models.Map `json:"body,omitempty"`
 }
 
 // NewCreateRuntimeMapAccepted creates CreateRuntimeMapAccepted with default headers values
@@ -113,13 +110,13 @@ func (o *CreateRuntimeMapAccepted) SetReloadID(reloadID string) {
 }
 
 // WithPayload adds the payload to the create runtime map accepted response
-func (o *CreateRuntimeMapAccepted) WithPayload(payload models.MapEntries) *CreateRuntimeMapAccepted {
+func (o *CreateRuntimeMapAccepted) WithPayload(payload *models.Map) *CreateRuntimeMapAccepted {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the create runtime map accepted response
-func (o *CreateRuntimeMapAccepted) SetPayload(payload models.MapEntries) {
+func (o *CreateRuntimeMapAccepted) SetPayload(payload *models.Map) {
 	o.Payload = payload
 }
 
@@ -134,14 +131,11 @@ func (o *CreateRuntimeMapAccepted) WriteResponse(rw http.ResponseWriter, produce
 	}
 
 	rw.WriteHeader(202)
-	payload := o.Payload
-	if payload == nil {
-		// return empty array
-		payload = models.MapEntries{}
-	}
-
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 

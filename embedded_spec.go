@@ -6339,13 +6339,13 @@ func init() {
           "201": {
             "description": "Map file created with its entries",
             "schema": {
-              "$ref": "#/definitions/map_entries"
+              "$ref": "#/definitions/map"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/map_entries"
+              "$ref": "#/definitions/map"
             },
             "headers": {
               "Reload-ID": {
@@ -24325,13 +24325,13 @@ func init() {
           "201": {
             "description": "Map file created with its entries",
             "schema": {
-              "$ref": "#/definitions/map_entries"
+              "$ref": "#/definitions/map"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/map_entries"
+              "$ref": "#/definitions/map"
             },
             "headers": {
               "Reload-ID": {
@@ -24965,13 +24965,6 @@ func init() {
             "name": "backend",
             "in": "query",
             "required": true
-          },
-          {
-            "type": "boolean",
-            "default": false,
-            "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
-            "in": "query"
           },
           {
             "name": "data",
