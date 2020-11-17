@@ -79,6 +79,7 @@ type ClusterConfiguration struct {
 	Port               AtomicString `yaml:"port"`
 	APIBasePath        AtomicString `yaml:"api_base_path"`
 	APINodesPath       AtomicString `yaml:"api_nodes_path"`
+	APIRegisterPath    AtomicString `yaml:"api_register_path"`
 	Certificate        ClusterTLS   `yaml:"certificates"`
 	Name               AtomicString `yaml:"name"`
 	Description        AtomicString `yaml:"description"`
@@ -95,6 +96,7 @@ func (c *ClusterConfiguration) Clear() {
 	c.Port.Store("")
 	c.APIBasePath.Store("")
 	c.APINodesPath.Store("")
+	c.APIRegisterPath.Store("")
 	c.Certificate.Fetched.Store(false)
 	c.Name.Store("")
 	c.Description.Store("")

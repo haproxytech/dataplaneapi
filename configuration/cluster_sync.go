@@ -58,7 +58,7 @@ type Node struct {
 	Variables   map[string]string `json:"variables"`
 }
 
-//ClusterSync fetches certificates for joining cluster
+// ClusterSync fetches certificates for joining cluster
 type ClusterSync struct {
 	cfg         *Configuration
 	certFetch   chan struct{}
@@ -206,7 +206,14 @@ func (c *ClusterSync) monitorBootstrapKey() {
 		c.cfg.Cluster.URL.Store(url)
 		c.cfg.Cluster.Port.Store(data["port"])
 		c.cfg.Cluster.APIBasePath.Store(data["api-base-path"])
-		c.cfg.Cluster.APINodesPath.Store(data["path"])
+		registerPath, ok := data["register-path"]
+		if !ok {
+			c.cfg.Cluster.APIRegisterPath.Store(data["path"])
+			c.cfg.Cluster.APINodesPath.Store(data["path"])
+		} else {
+			c.cfg.Cluster.APIRegisterPath.Store(registerPath)
+			c.cfg.Cluster.APINodesPath.Store(data["nodes-path"])
+		}
 		c.cfg.Cluster.Name.Store(data["name"])
 		c.cfg.Cluster.Description.Store(data["description"])
 		c.cfg.Mode.Store("cluster")
@@ -233,7 +240,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 		if err != nil {
 			log.Panic(err)
 		}
-		err = c.issueJoinRequest(url, data["port"], data["api-base-path"], data["path"], csr, key)
+		err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), csr, key)
 		if err != nil {
 			log.Warning(err)
 			continue
@@ -242,8 +249,8 @@ func (c *ClusterSync) monitorBootstrapKey() {
 	}
 }
 
-func (c *ClusterSync) issueJoinRequest(url, port, basePath string, nodesPath string, csr, key string) error {
-	url = fmt.Sprintf("%s:%s%s/%s", url, port, basePath, nodesPath)
+func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath string, csr, key string) error {
+	url = fmt.Sprintf("%s:%s%s/%s", url, port, basePath, registerPath)
 	serverCfg := c.cfg.Server
 	apiCfg := c.cfg.APIOptions
 	users := GetUsersStore().GetUsers()
