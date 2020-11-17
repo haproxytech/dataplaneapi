@@ -52,7 +52,8 @@ type HAProxyConfiguration struct {
 	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"" yaml:"-"`
 	UserListFile         string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file"`
 	NodeIDFile           string `long:"fid" description:"Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster"`
-	MapsDir              string `short:"p" long:"maps-dir" description:"Path to maps directory. If set, it reads from specified dir, otherwise it reads from config file"`
+	MapsDir              string `short:"p" long:"maps-dir" description:"Path to runtime maps directory. If set, it reads from specified dir, otherwise it reads from config file"`
+	StorageMapsDir       string `long:"storage-maps-dir" description:"Path to maps directory"`
 	UpdateMapFiles       bool   `long:"update-map-files" description:"Flag used for syncing map files with runtime maps values"`
 	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10"`
 	ClusterTLSCertDir    string `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file"`

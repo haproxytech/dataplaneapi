@@ -64,6 +64,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/stats"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
 	"github.com/haproxytech/dataplaneapi/operations/stick_table"
+	"github.com/haproxytech/dataplaneapi/operations/storage"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
@@ -221,6 +222,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StickRuleDeleteStickRuleHandler: stick_rule.DeleteStickRuleHandlerFunc(func(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.DeleteStickRule has not yet been implemented")
 		}),
+		StorageDeleteStorageMapHandler: storage.DeleteStorageMapHandlerFunc(func(params storage.DeleteStorageMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.DeleteStorageMap has not yet been implemented")
+		}),
 		TCPRequestRuleDeleteTCPRequestRuleHandler: tcp_request_rule.DeleteTCPRequestRuleHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRule has not yet been implemented")
 		}),
@@ -241,6 +245,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsGetAllRuntimeMapFilesHandler: maps.GetAllRuntimeMapFilesHandlerFunc(func(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetAllRuntimeMapFiles has not yet been implemented")
+		}),
+		StorageGetAllStorageMapFilesHandler: storage.GetAllStorageMapFilesHandlerFunc(func(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetAllStorageMapFiles has not yet been implemented")
 		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.GetBackend has not yet been implemented")
@@ -331,6 +338,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsGetOneRuntimeMapHandler: maps.GetOneRuntimeMapHandlerFunc(func(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetOneRuntimeMap has not yet been implemented")
+		}),
+		StorageGetOneStorageMapHandler: storage.GetOneStorageMapHandlerFunc(func(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetOneStorageMap has not yet been implemented")
 		}),
 		SpecificationOpenapiv3GetOpenapiv3SpecificationHandler: specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation specification_openapiv3.GetOpenapiv3Specification has not yet been implemented")
@@ -506,6 +516,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StickRuleReplaceStickRuleHandler: stick_rule.ReplaceStickRuleHandlerFunc(func(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.ReplaceStickRule has not yet been implemented")
 		}),
+		StorageReplaceStorageMapFileHandler: storage.ReplaceStorageMapFileHandlerFunc(func(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReplaceStorageMapFile has not yet been implemented")
+		}),
 		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRule has not yet been implemented")
 		}),
@@ -659,6 +672,8 @@ type DataPlaneAPI struct {
 	SitesDeleteSiteHandler sites.DeleteSiteHandler
 	// StickRuleDeleteStickRuleHandler sets the operation handler for the delete stick rule operation
 	StickRuleDeleteStickRuleHandler stick_rule.DeleteStickRuleHandler
+	// StorageDeleteStorageMapHandler sets the operation handler for the delete storage map operation
+	StorageDeleteStorageMapHandler storage.DeleteStorageMapHandler
 	// TCPRequestRuleDeleteTCPRequestRuleHandler sets the operation handler for the delete TCP request rule operation
 	TCPRequestRuleDeleteTCPRequestRuleHandler tcp_request_rule.DeleteTCPRequestRuleHandler
 	// TCPResponseRuleDeleteTCPResponseRuleHandler sets the operation handler for the delete TCP response rule operation
@@ -673,6 +688,8 @@ type DataPlaneAPI struct {
 	ACLGetAclsHandler acl.GetAclsHandler
 	// MapsGetAllRuntimeMapFilesHandler sets the operation handler for the get all runtime map files operation
 	MapsGetAllRuntimeMapFilesHandler maps.GetAllRuntimeMapFilesHandler
+	// StorageGetAllStorageMapFilesHandler sets the operation handler for the get all storage map files operation
+	StorageGetAllStorageMapFilesHandler storage.GetAllStorageMapFilesHandler
 	// BackendGetBackendHandler sets the operation handler for the get backend operation
 	BackendGetBackendHandler backend.GetBackendHandler
 	// BackendSwitchingRuleGetBackendSwitchingRuleHandler sets the operation handler for the get backend switching rule operation
@@ -733,6 +750,8 @@ type DataPlaneAPI struct {
 	NameserverGetNameserversHandler nameserver.GetNameserversHandler
 	// MapsGetOneRuntimeMapHandler sets the operation handler for the get one runtime map operation
 	MapsGetOneRuntimeMapHandler maps.GetOneRuntimeMapHandler
+	// StorageGetOneStorageMapHandler sets the operation handler for the get one storage map operation
+	StorageGetOneStorageMapHandler storage.GetOneStorageMapHandler
 	// SpecificationOpenapiv3GetOpenapiv3SpecificationHandler sets the operation handler for the get openapiv3 specification operation
 	SpecificationOpenapiv3GetOpenapiv3SpecificationHandler specification_openapiv3.GetOpenapiv3SpecificationHandler
 	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
@@ -849,6 +868,8 @@ type DataPlaneAPI struct {
 	SitesReplaceSiteHandler sites.ReplaceSiteHandler
 	// StickRuleReplaceStickRuleHandler sets the operation handler for the replace stick rule operation
 	StickRuleReplaceStickRuleHandler stick_rule.ReplaceStickRuleHandler
+	// StorageReplaceStorageMapFileHandler sets the operation handler for the replace storage map file operation
+	StorageReplaceStorageMapFileHandler storage.ReplaceStorageMapFileHandler
 	// TCPRequestRuleReplaceTCPRequestRuleHandler sets the operation handler for the replace TCP request rule operation
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
@@ -1062,6 +1083,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StickRuleDeleteStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.DeleteStickRuleHandler")
 	}
+	if o.StorageDeleteStorageMapHandler == nil {
+		unregistered = append(unregistered, "storage.DeleteStorageMapHandler")
+	}
 	if o.TCPRequestRuleDeleteTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleHandler")
 	}
@@ -1082,6 +1106,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsGetAllRuntimeMapFilesHandler == nil {
 		unregistered = append(unregistered, "maps.GetAllRuntimeMapFilesHandler")
+	}
+	if o.StorageGetAllStorageMapFilesHandler == nil {
+		unregistered = append(unregistered, "storage.GetAllStorageMapFilesHandler")
 	}
 	if o.BackendGetBackendHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendHandler")
@@ -1172,6 +1199,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsGetOneRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.GetOneRuntimeMapHandler")
+	}
+	if o.StorageGetOneStorageMapHandler == nil {
+		unregistered = append(unregistered, "storage.GetOneStorageMapHandler")
 	}
 	if o.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler == nil {
 		unregistered = append(unregistered, "specification_openapiv3.GetOpenapiv3SpecificationHandler")
@@ -1346,6 +1376,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StickRuleReplaceStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.ReplaceStickRuleHandler")
+	}
+	if o.StorageReplaceStorageMapFileHandler == nil {
+		unregistered = append(unregistered, "storage.ReplaceStorageMapFileHandler")
 	}
 	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
@@ -1634,6 +1667,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/storage/maps/{name}"] = storage.NewDeleteStorageMap(o.context, o.StorageDeleteStorageMapHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewDeleteTCPRequestRule(o.context, o.TCPRequestRuleDeleteTCPRequestRuleHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1659,6 +1696,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps"] = maps.NewGetAllRuntimeMapFiles(o.context, o.MapsGetAllRuntimeMapFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/maps"] = storage.NewGetAllStorageMapFiles(o.context, o.StorageGetAllStorageMapFilesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1779,6 +1820,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps/{name}"] = maps.NewGetOneRuntimeMap(o.context, o.MapsGetOneRuntimeMapHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/maps/{name}"] = storage.NewGetOneStorageMap(o.context, o.StorageGetOneStorageMapHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2011,6 +2056,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/storage/maps/{name}"] = storage.NewReplaceStorageMapFile(o.context, o.StorageReplaceStorageMapFileHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

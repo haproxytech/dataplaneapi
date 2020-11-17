@@ -50,7 +50,7 @@ import (
 
 	"github.com/haproxytech/client-native/v2/configuration"
 	runtime_api "github.com/haproxytech/client-native/v2/runtime"
-
+	"github.com/haproxytech/client-native/v2/storage"
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -476,6 +476,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.ConfigurationGetConfigurationVersionHandler = &handlers.ConfigurationGetConfigurationVersionHandlerImpl{Client: client}
 
+	// map file storage handlers
+	api.StorageGetAllStorageMapFilesHandler = &handlers.GetAllStorageMapFilesHandlerImpl{Client: client}
+	api.StorageGetOneStorageMapHandler = &handlers.GetOneStorageMapHandlerImpl{Client: client}
+	api.StorageDeleteStorageMapHandler = &handlers.StorageDeleteStorageMapHandlerImpl{Client: client}
+	api.StorageReplaceStorageMapFileHandler = &handlers.StorageReplaceStorageMapFileHandlerImpl{Client: client}
+
 	// setup OpenAPI v3 specification handler
 	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.Swagger{}
@@ -611,6 +617,13 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 		log.Fatalf("Error setting up native client: %v", err)
 	}
 
+	if haproxyOptions.StorageMapsDir != "" {
+		mapStorage, err := storage.New(haproxyOptions.MapsDir, storage.MapsType)
+		if err != nil {
+			log.Fatalf("error initializing map storage: %v", err)
+		}
+		client.MapStorage = mapStorage
+	}
 	return client
 }
 
