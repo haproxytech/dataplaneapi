@@ -578,9 +578,6 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 		log.Fatalf("Error setting up native client: %v", err)
 	}
 
-	if err != nil {
-		log.Fatalf("error initializing configuration user: %v", err)
-	}
 	return client
 }
 
