@@ -31,10 +31,6 @@ install:
 	mkdir -p $(DESTDIR)/$(INSTALL_PREFIX)/bin/ 
 	cp -v $(ROOT)/build/dataplaneapi $(DESTDIR)/$(INSTALL_PREFIX)/bin/
 
-clean:
-	#
-	#$(MAKE) -C bindata clean
-
 package:
 	# Building deb
 	# 
