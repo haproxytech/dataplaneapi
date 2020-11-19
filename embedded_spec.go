@@ -7397,6 +7397,179 @@ func init() {
         }
       }
     },
+    "/services/haproxy/storage/ssl_certs": {
+      "get": {
+        "description": "Returns all available SSL certificates on disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return all available SSL certificates on disk",
+        "operationId": "getAllStorageSSLCertificates",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates SSL certificate.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Create SSL certificate",
+        "operationId": "createStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The SSL certificate to upload",
+            "name": "file_upload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SSL certificate created",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/ssl_certs/{name}": {
+      "get": {
+        "description": "Returns one SSL certificate from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return one SSL certificate from disk",
+        "operationId": "getOneStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces SSL certificate on disk.",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Replace SSL certificates on disk",
+        "operationId": "replaceStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SSL certificate replaced",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes SSL certificate from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Delete SSL certificate from disk",
+        "operationId": "deleteStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "SSL certificate deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/transactions": {
       "get": {
         "description": "Returns a list of HAProxy configuration transactions. Transactions can be filtered by their status.",
@@ -14089,6 +14262,7 @@ func init() {
                   "gpc0_rate",
                   "gpc1",
                   "gpc1_rate",
+                  "gpt0",
                   "conn_cnt",
                   "conn_cur",
                   "conn_rate",
@@ -14209,6 +14383,10 @@ func init() {
           "x-nullable": true
         },
         "gpc1_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpt0": {
           "type": "integer",
           "x-nullable": true
         },
@@ -26163,6 +26341,299 @@ func init() {
         }
       }
     },
+    "/services/haproxy/storage/ssl_certs": {
+      "get": {
+        "description": "Returns all available SSL certificates on disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return all available SSL certificates on disk",
+        "operationId": "getAllStorageSSLCertificates",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates SSL certificate.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Create SSL certificate",
+        "operationId": "createStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The SSL certificate to upload",
+            "name": "file_upload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SSL certificate created",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/ssl_certs/{name}": {
+      "get": {
+        "description": "Returns one SSL certificate from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return one SSL certificate from disk",
+        "operationId": "getOneStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces SSL certificate on disk.",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Replace SSL certificates on disk",
+        "operationId": "replaceStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SSL certificate replaced",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes SSL certificate from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Delete SSL certificate from disk",
+        "operationId": "deleteStorageSSLCertificate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "SSL certificate deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/transactions": {
       "get": {
         "description": "Returns a list of HAProxy configuration transactions. Transactions can be filtered by their status.",
@@ -26917,6 +27388,7 @@ func init() {
             "gpc0_rate",
             "gpc1",
             "gpc1_rate",
+            "gpt0",
             "conn_cnt",
             "conn_cur",
             "conn_rate",
@@ -33351,6 +33823,10 @@ func init() {
           "x-nullable": true
         },
         "gpc1_rate": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "gpt0": {
           "type": "integer",
           "x-nullable": true
         },

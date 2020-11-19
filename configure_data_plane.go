@@ -483,6 +483,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StorageDeleteStorageMapHandler = &handlers.StorageDeleteStorageMapHandlerImpl{Client: client}
 	api.StorageReplaceStorageMapFileHandler = &handlers.StorageReplaceStorageMapFileHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// SSL certs file storage handlers
+	api.StorageGetAllStorageSSLCertificatesHandler = &handlers.StorageGetAllStorageSSLCertificatesHandlerImpl{Client: client}
+	api.StorageGetOneStorageSSLCertificateHandler = &handlers.StorageGetOneStorageSSLCertificateHandlerImpl{Client: client}
+	api.StorageDeleteStorageSSLCertificateHandler = &handlers.StorageDeleteStorageSSLCertificateHandlerImpl{Client: client}
+	api.StorageReplaceStorageSSLCertificateHandler = &handlers.StorageReplaceStorageSSLCertificateHandlerImpl{Client: client}
+	api.StorageCreateStorageSSLCertificateHandler = &handlers.StorageCreateStorageSSLCertificateHandlerImpl{Client: client}
+
 	// setup OpenAPI v3 specification handler
 	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.Swagger{}
@@ -626,6 +633,14 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 		client.MapStorage = mapStorage
 	} else {
 		log.Fatalf("error trying to use empty string for managed map directory")
+	}
+
+	if haproxyOptions.StorageSSLCertsDir != "" {
+		sslCertStorage, err := storage.New(haproxyOptions.StorageSSLCertsDir, storage.SSLType)
+		if err != nil {
+			log.Fatalf("error initializing SSL certs storage: %v", err)
+		}
+		client.SSLCertStorage = sslCertStorage
 	}
 	return client
 }

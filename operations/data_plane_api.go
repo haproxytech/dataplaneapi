@@ -160,6 +160,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StickRuleCreateStickRuleHandler: stick_rule.CreateStickRuleHandlerFunc(func(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.CreateStickRule has not yet been implemented")
 		}),
+		StorageCreateStorageSSLCertificateHandler: storage.CreateStorageSSLCertificateHandlerFunc(func(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateStorageSSLCertificate has not yet been implemented")
+		}),
 		TCPRequestRuleCreateTCPRequestRuleHandler: tcp_request_rule.CreateTCPRequestRuleHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRule has not yet been implemented")
 		}),
@@ -226,6 +229,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageDeleteStorageMapHandler: storage.DeleteStorageMapHandlerFunc(func(params storage.DeleteStorageMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.DeleteStorageMap has not yet been implemented")
 		}),
+		StorageDeleteStorageSSLCertificateHandler: storage.DeleteStorageSSLCertificateHandlerFunc(func(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.DeleteStorageSSLCertificate has not yet been implemented")
+		}),
 		TCPRequestRuleDeleteTCPRequestRuleHandler: tcp_request_rule.DeleteTCPRequestRuleHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRule has not yet been implemented")
 		}),
@@ -249,6 +255,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StorageGetAllStorageMapFilesHandler: storage.GetAllStorageMapFilesHandlerFunc(func(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.GetAllStorageMapFiles has not yet been implemented")
+		}),
+		StorageGetAllStorageSSLCertificatesHandler: storage.GetAllStorageSSLCertificatesHandlerFunc(func(params storage.GetAllStorageSSLCertificatesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetAllStorageSSLCertificates has not yet been implemented")
 		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.GetBackend has not yet been implemented")
@@ -342,6 +351,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StorageGetOneStorageMapHandler: storage.GetOneStorageMapHandlerFunc(func(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.GetOneStorageMap has not yet been implemented")
+		}),
+		StorageGetOneStorageSSLCertificateHandler: storage.GetOneStorageSSLCertificateHandlerFunc(func(params storage.GetOneStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetOneStorageSSLCertificate has not yet been implemented")
 		}),
 		SpecificationOpenapiv3GetOpenapiv3SpecificationHandler: specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation specification_openapiv3.GetOpenapiv3Specification has not yet been implemented")
@@ -520,6 +532,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageReplaceStorageMapFileHandler: storage.ReplaceStorageMapFileHandlerFunc(func(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.ReplaceStorageMapFile has not yet been implemented")
 		}),
+		StorageReplaceStorageSSLCertificateHandler: storage.ReplaceStorageSSLCertificateHandlerFunc(func(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReplaceStorageSSLCertificate has not yet been implemented")
+		}),
 		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRule has not yet been implemented")
 		}),
@@ -634,6 +649,8 @@ type DataPlaneAPI struct {
 	SitesCreateSiteHandler sites.CreateSiteHandler
 	// StickRuleCreateStickRuleHandler sets the operation handler for the create stick rule operation
 	StickRuleCreateStickRuleHandler stick_rule.CreateStickRuleHandler
+	// StorageCreateStorageSSLCertificateHandler sets the operation handler for the create storage s s l certificate operation
+	StorageCreateStorageSSLCertificateHandler storage.CreateStorageSSLCertificateHandler
 	// TCPRequestRuleCreateTCPRequestRuleHandler sets the operation handler for the create TCP request rule operation
 	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
 	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
@@ -678,6 +695,8 @@ type DataPlaneAPI struct {
 	StickRuleDeleteStickRuleHandler stick_rule.DeleteStickRuleHandler
 	// StorageDeleteStorageMapHandler sets the operation handler for the delete storage map operation
 	StorageDeleteStorageMapHandler storage.DeleteStorageMapHandler
+	// StorageDeleteStorageSSLCertificateHandler sets the operation handler for the delete storage s s l certificate operation
+	StorageDeleteStorageSSLCertificateHandler storage.DeleteStorageSSLCertificateHandler
 	// TCPRequestRuleDeleteTCPRequestRuleHandler sets the operation handler for the delete TCP request rule operation
 	TCPRequestRuleDeleteTCPRequestRuleHandler tcp_request_rule.DeleteTCPRequestRuleHandler
 	// TCPResponseRuleDeleteTCPResponseRuleHandler sets the operation handler for the delete TCP response rule operation
@@ -694,6 +713,8 @@ type DataPlaneAPI struct {
 	MapsGetAllRuntimeMapFilesHandler maps.GetAllRuntimeMapFilesHandler
 	// StorageGetAllStorageMapFilesHandler sets the operation handler for the get all storage map files operation
 	StorageGetAllStorageMapFilesHandler storage.GetAllStorageMapFilesHandler
+	// StorageGetAllStorageSSLCertificatesHandler sets the operation handler for the get all storage s s l certificates operation
+	StorageGetAllStorageSSLCertificatesHandler storage.GetAllStorageSSLCertificatesHandler
 	// BackendGetBackendHandler sets the operation handler for the get backend operation
 	BackendGetBackendHandler backend.GetBackendHandler
 	// BackendSwitchingRuleGetBackendSwitchingRuleHandler sets the operation handler for the get backend switching rule operation
@@ -756,6 +777,8 @@ type DataPlaneAPI struct {
 	MapsGetOneRuntimeMapHandler maps.GetOneRuntimeMapHandler
 	// StorageGetOneStorageMapHandler sets the operation handler for the get one storage map operation
 	StorageGetOneStorageMapHandler storage.GetOneStorageMapHandler
+	// StorageGetOneStorageSSLCertificateHandler sets the operation handler for the get one storage s s l certificate operation
+	StorageGetOneStorageSSLCertificateHandler storage.GetOneStorageSSLCertificateHandler
 	// SpecificationOpenapiv3GetOpenapiv3SpecificationHandler sets the operation handler for the get openapiv3 specification operation
 	SpecificationOpenapiv3GetOpenapiv3SpecificationHandler specification_openapiv3.GetOpenapiv3SpecificationHandler
 	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
@@ -874,6 +897,8 @@ type DataPlaneAPI struct {
 	StickRuleReplaceStickRuleHandler stick_rule.ReplaceStickRuleHandler
 	// StorageReplaceStorageMapFileHandler sets the operation handler for the replace storage map file operation
 	StorageReplaceStorageMapFileHandler storage.ReplaceStorageMapFileHandler
+	// StorageReplaceStorageSSLCertificateHandler sets the operation handler for the replace storage s s l certificate operation
+	StorageReplaceStorageSSLCertificateHandler storage.ReplaceStorageSSLCertificateHandler
 	// TCPRequestRuleReplaceTCPRequestRuleHandler sets the operation handler for the replace TCP request rule operation
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
@@ -1027,6 +1052,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StickRuleCreateStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.CreateStickRuleHandler")
 	}
+	if o.StorageCreateStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.CreateStorageSSLCertificateHandler")
+	}
 	if o.TCPRequestRuleCreateTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleHandler")
 	}
@@ -1093,6 +1121,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StorageDeleteStorageMapHandler == nil {
 		unregistered = append(unregistered, "storage.DeleteStorageMapHandler")
 	}
+	if o.StorageDeleteStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.DeleteStorageSSLCertificateHandler")
+	}
 	if o.TCPRequestRuleDeleteTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleHandler")
 	}
@@ -1116,6 +1147,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StorageGetAllStorageMapFilesHandler == nil {
 		unregistered = append(unregistered, "storage.GetAllStorageMapFilesHandler")
+	}
+	if o.StorageGetAllStorageSSLCertificatesHandler == nil {
+		unregistered = append(unregistered, "storage.GetAllStorageSSLCertificatesHandler")
 	}
 	if o.BackendGetBackendHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendHandler")
@@ -1209,6 +1243,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StorageGetOneStorageMapHandler == nil {
 		unregistered = append(unregistered, "storage.GetOneStorageMapHandler")
+	}
+	if o.StorageGetOneStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.GetOneStorageSSLCertificateHandler")
 	}
 	if o.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler == nil {
 		unregistered = append(unregistered, "specification_openapiv3.GetOpenapiv3SpecificationHandler")
@@ -1386,6 +1423,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StorageReplaceStorageMapFileHandler == nil {
 		unregistered = append(unregistered, "storage.ReplaceStorageMapFileHandler")
+	}
+	if o.StorageReplaceStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.ReplaceStorageSSLCertificateHandler")
 	}
 	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
@@ -1592,6 +1632,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/storage/ssl_certs"] = storage.NewCreateStorageSSLCertificate(o.context, o.StorageCreateStorageSSLCertificateHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewCreateTCPRequestRule(o.context, o.TCPRequestRuleCreateTCPRequestRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1680,6 +1724,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/storage/ssl_certs/{name}"] = storage.NewDeleteStorageSSLCertificate(o.context, o.StorageDeleteStorageSSLCertificateHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewDeleteTCPRequestRule(o.context, o.TCPRequestRuleDeleteTCPRequestRuleHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -1709,6 +1757,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/storage/maps"] = storage.NewGetAllStorageMapFiles(o.context, o.StorageGetAllStorageMapFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/ssl_certs"] = storage.NewGetAllStorageSSLCertificates(o.context, o.StorageGetAllStorageSSLCertificatesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1833,6 +1885,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/storage/maps/{name}"] = storage.NewGetOneStorageMap(o.context, o.StorageGetOneStorageMapHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/ssl_certs/{name}"] = storage.NewGetOneStorageSSLCertificate(o.context, o.StorageGetOneStorageSSLCertificateHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2069,6 +2125,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/storage/maps/{name}"] = storage.NewReplaceStorageMapFile(o.context, o.StorageReplaceStorageMapFileHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/storage/ssl_certs/{name}"] = storage.NewReplaceStorageSSLCertificate(o.context, o.StorageReplaceStorageSSLCertificateHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
