@@ -19,14 +19,13 @@ require (
 	github.com/google/renameio v0.1.1-0.20200217212219-353f81969824
 	github.com/google/uuid v1.1.1
 	github.com/haproxytech/client-native/v2 v2.1.1-0.20201116103227-1420d747ec2c
-	github.com/haproxytech/config-parser/v3 v3.0.0-rc1.0.20201020114351-9bc741003081
+	github.com/haproxytech/config-parser/v3 v3.0.0-rc1.0.20201124101355-82ebcd4e6d2c
 	github.com/haproxytech/models/v2 v2.1.1-0.20201014070602-acf2baeea09a
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/rs/cors v1.7.0
 	github.com/shirou/gopsutil v2.20.3+incompatible
 	github.com/sirupsen/logrus v1.5.0
-	github.com/stretchr/testify v1.6.1
 	golang.org/x/net v0.0.0-20200425230154-ff2c4b7c35a0
 	golang.org/x/sys v0.0.0-20200420163511-1957bb5e6d1f
 	gopkg.in/yaml.v2 v2.3.0

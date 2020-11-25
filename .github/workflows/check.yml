@@ -1,0 +1,12 @@
+name: Commit subject
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 10
+      - name: check-commit
+        uses: docker://haproxytech/check-commit:latest
