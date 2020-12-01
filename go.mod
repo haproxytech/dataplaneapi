@@ -20,7 +20,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/haproxytech/client-native/v2 v2.1.1-0.20201116103227-1420d747ec2c
 	github.com/haproxytech/config-parser/v3 v3.0.0-rc1.0.20201124101355-82ebcd4e6d2c
-	github.com/haproxytech/models/v2 v2.1.1-0.20201014070602-acf2baeea09a
+	github.com/haproxytech/models/v2 v2.1.1-0.20201130111649-99002c70da1a
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/rs/cors v1.7.0
