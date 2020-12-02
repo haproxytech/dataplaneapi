@@ -192,8 +192,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		log.Fatalf("Cannot initialize reload agent: %v", err)
 	}
 
-	// Applies when the Authorization header is set with the Basic scheme
-	api.BasicAuthAuth = dataplaneapi_config.AuthenticateUser
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 		uriSlice := strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)

@@ -20,10 +20,11 @@ import (
 	"os"
 	"path"
 
-	log "github.com/sirupsen/logrus"
-
 	loads "github.com/go-openapi/loads"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime/security"
 	flags "github.com/jessevdk/go-flags"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
@@ -141,6 +142,18 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	err = cfg.Save()
 	if err != nil {
 		log.Fatalln(err)
+	}
+
+	// Applies when the Authorization header is set with the Basic scheme
+	api.BasicAuthAuth = configuration.AuthenticateUser
+	api.BasicAuthenticator = func(authentication security.UserPassAuthentication) runtime.Authenticator {
+		// if mTLS is enabled with backing Certificate Authority, skipping basic authentication
+		if len(server.TLSCACertificate) > 0 && server.TLSPort > 0 {
+			return runtime.AuthenticatorFunc(func(i interface{}) (bool, interface{}, error) {
+				return true, "", nil
+			})
+		}
+		return security.BasicAuthRealm("", authentication)
 	}
 
 	go func() {
