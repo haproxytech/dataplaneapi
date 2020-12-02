@@ -20,3 +20,11 @@ clean:
 build:
 	mkdir -p ${DATAPLANEAPI_PATH}/build
 	CGO_ENABLED=0 go build -gcflags "-N -l" -ldflags "-X main.GitRepo=${GIT_REPO} -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
+experimental-minified-build:
+	mkdir -p ${DATAPLANEAPI_PATH}/build
+	CGO_ENABLED=0 go build -gcflags "-N -l" -ldflags "-s -w -X main.GitRepo=${GIT_REPO} -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
+	upx --best --overlay=strip ${DATAPLANEAPI_PATH}/build/dataplaneapi
+experimental-minified-build-ultra-brute:
+	mkdir -p ${DATAPLANEAPI_PATH}/build
+	CGO_ENABLED=0 go build -gcflags "-N -l" -ldflags "-s -w -X main.GitRepo=${GIT_REPO} -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
+	upx --ultra-brute --overlay=strip ${DATAPLANEAPI_PATH}/build/dataplaneapi
