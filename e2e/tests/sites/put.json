@@ -1,0 +1,44 @@
+{
+  "farms": [
+    {
+      "balance": {
+        "algorithm": "leastconn"
+      },
+      "mode": "tcp",
+      "name": "tcp_backend",
+      "servers": [
+        {
+          "address": "127.0.1.1",
+          "name": "tcp_server",
+          "port": 4567,
+          "weight": 30
+        },
+        {
+          "address": "127.0.1.2",
+          "name": "tcp_server_new",
+          "port": 4567,
+          "weight": 70
+        }
+      ],
+      "use_as": "default"
+    }
+  ],
+  "name": "test_site",
+  "service": {
+    "http_connection_mode": "http-keep-alive",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "name": "test_listener",
+        "port": 8080
+      },
+      {
+        "address": "127.0.0.1",
+        "name": "test_listener_2",
+        "port": 8081
+      }
+    ],
+    "maxconn": 3000,
+    "mode": "tcp"
+  }
+}
