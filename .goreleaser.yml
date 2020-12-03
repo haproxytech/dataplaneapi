@@ -9,9 +9,6 @@ builds:
     id: my-build
     main: ./cmd/dataplaneapi/main.go
     binary: ./build/dataplaneapi
-    gcflags:
-      - -l
-      - -N
     ldflags:
       - -s -w -X main.GitRepo={{.GitURL}} -X main.GitTag={{.Tag}} -X main.GitCommit={{.ShortCommit}} -X main.GitDirty= -X main.BuildTime={{.Date}}
     env:
