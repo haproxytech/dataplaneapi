@@ -1,0 +1,6 @@
+{
+  "cond": "unless",
+  "cond_test": "{ path -i -m beg /path }",
+  "index": 0,
+  "name": "test_backend"
+}
