@@ -1,0 +1,12 @@
+{
+  "balance": {
+    "algorithm": "static-rr"
+  },
+  "httpchk": {
+    "method": "GET",
+    "uri": "/healthz",
+    "version": "HTTP/1.1"
+  },
+  "mode": "tcp",
+  "name": "test_backend"
+}
