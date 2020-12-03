@@ -16,13 +16,13 @@
 #
 set -eo pipefail
 
-HAPROXY_VERSION=${HAPROXY_VERSION:-2.3}
+HAPROXY_VERSION=${HAPROXY_VERSION:-2.2}
 DOCKER_BASE_IMAGE="${DOCKER_BASE_IMAGE:-haproxytech/haproxy-alpine}:${HAPROXY_VERSION}"
 DOCKER_CONTAINER_NAME="dataplaneapi-e2e"
 ROOT_DIR=$(git rev-parse --show-toplevel)
 export E2E_PORT=${E2E_PORT:-8042}
 export E2E_DIR=${ROOT_DIR}/e2e
-export LOCAL_IP_ADDRESS=${LOCAL_IP_ADDRESS:-localhost}
+export LOCAL_IP_ADDRESS=${LOCAL_IP_ADDRESS:-127.0.0.1}
 
 if ! docker version > /dev/null 2>&1; then
   echo '>>> Docker is not installed: cannot proceed for e2e test suite'
