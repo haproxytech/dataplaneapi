@@ -1,0 +1,8 @@
+{
+  "address": "127.0.0.5",
+  "admin_state": "ready",
+  "operational_state": "up",
+  "port": 80,
+  "server_id": 1,
+  "server_name": "test_server"
+}
