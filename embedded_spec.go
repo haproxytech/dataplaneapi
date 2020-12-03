@@ -6675,7 +6675,7 @@ func init() {
         "tags": [
           "Server"
         ],
-        "summary": "Return an array of runtime servers' setings",
+        "summary": "Return an array of runtime servers' settings",
         "operationId": "getRuntimeServers",
         "parameters": [
           {
@@ -7802,6 +7802,10 @@ func init() {
               ]
             }
           }
+        },
+        "tunnel_timeout": {
+          "type": "integer",
+          "x-nullable": true
         }
       },
       "additionalProperties": false,
@@ -7914,7 +7918,6 @@ func init() {
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "algorithm": {
               "required": true,
@@ -9380,6 +9383,10 @@ func init() {
           "type": "boolean",
           "x-display-name": "TCP Log"
         },
+        "tunnel_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "unique_id_format": {
           "type": "string",
           "x-display-name": "Unique ID format"
@@ -9989,6 +9996,14 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Server Options"
         },
+        "ssl_mode_async": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Asynchronous TLS I/O operations"
+        },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -10215,7 +10230,6 @@ func init() {
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -10231,7 +10245,6 @@ func init() {
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -10245,7 +10258,6 @@ func init() {
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -10874,7 +10886,6 @@ func init() {
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -10890,7 +10901,6 @@ func init() {
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -10904,7 +10914,6 @@ func init() {
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -24851,7 +24860,7 @@ func init() {
         "tags": [
           "Server"
         ],
-        "summary": "Return an array of runtime servers' setings",
+        "summary": "Return an array of runtime servers' settings",
         "operationId": "getRuntimeServers",
         "parameters": [
           {
@@ -26794,6 +26803,10 @@ func init() {
               ]
             }
           }
+        },
+        "tunnel_timeout": {
+          "type": "integer",
+          "x-nullable": true
         }
       },
       "additionalProperties": false,
@@ -26906,7 +26919,6 @@ func init() {
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "algorithm": {
               "required": true,
@@ -28365,6 +28377,10 @@ func init() {
           "type": "boolean",
           "x-display-name": "TCP Log"
         },
+        "tunnel_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "unique_id_format": {
           "type": "string",
           "x-display-name": "Unique ID format"
@@ -28919,6 +28935,14 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Server Options"
         },
+        "ssl_mode_async": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Asynchronous TLS I/O operations"
+        },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -29145,7 +29169,6 @@ func init() {
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -29161,7 +29184,6 @@ func init() {
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -29175,7 +29197,6 @@ func init() {
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -29804,7 +29825,6 @@ func init() {
         },
         "hdr_format": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -29820,7 +29840,6 @@ func init() {
         },
         "hdr_match": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -29834,7 +29853,6 @@ func init() {
         },
         "hdr_name": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
