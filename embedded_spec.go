@@ -7549,7 +7549,8 @@ func init() {
             "mysql-check",
             "pgsql-check",
             "tcp-check",
-            "redis-check"
+            "redis-check",
+            "httpchk"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -7721,13 +7722,13 @@ func init() {
             }
           }
         },
-        "httpchk": {
+        "httpchk_params": {
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
-          "$ref": "#/definitions/httpchk"
+          "$ref": "#/definitions/httpchk_params"
         },
         "log_tag": {
           "type": "string",
@@ -7740,10 +7741,16 @@ func init() {
             "tcp"
           ]
         },
+        "mysql_check_params": {
+          "$ref": "#/definitions/mysql_check_params"
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "pgsql_check_params": {
+          "$ref": "#/definitions/pgsql_check_params"
         },
         "queue_timeout": {
           "type": "integer",
@@ -7759,6 +7766,9 @@ func init() {
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "smtpchk_params": {
+          "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
@@ -7810,13 +7820,14 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
+        "adv_check": "httpchk",
         "balance": {
           "algorithm": "roundrobin"
         },
         "forwardfor": {
           "enabled": "enabled"
         },
-        "httpchk": {
+        "httpchk_params": {
           "method": "GET",
           "uri": "/check",
           "version": "HTTP/1.1"
@@ -9162,7 +9173,8 @@ func init() {
             "mysql-check",
             "pgsql-check",
             "tcp-check",
-            "redis-check"
+            "redis-check",
+            "httpchk"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -9313,8 +9325,8 @@ func init() {
             "safe"
           ]
         },
-        "httpchk": {
-          "$ref": "#/definitions/httpchk"
+        "httpchk_params": {
+          "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
           "type": "boolean",
@@ -9361,6 +9373,12 @@ func init() {
         "monitor_uri": {
           "$ref": "#/definitions/monitor_uri"
         },
+        "mysql_check_params": {
+          "$ref": "#/definitions/mysql_check_params"
+        },
+        "pgsql_check_params": {
+          "$ref": "#/definitions/pgsql_check_params"
+        },
         "queue_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -9375,6 +9393,9 @@ func init() {
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "smtpchk_params": {
+          "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
@@ -11335,7 +11356,7 @@ func init() {
         "$ref": "#/definitions/http_response_rule"
       }
     },
-    "httpchk": {
+    "httpchk_params": {
       "type": "object",
       "properties": {
         "method": {
@@ -11682,6 +11703,21 @@ func init() {
     },
     "monitor_uri": {
       "type": "string"
+    },
+    "mysql_check_params": {
+      "type": "object",
+      "properties": {
+        "client_version": {
+          "type": "string",
+          "enum": [
+            "pre-41",
+            "post-41"
+          ]
+        },
+        "username": {
+          "type": "string"
+        }
+      }
     },
     "nameserver": {
       "description": "Nameserver used in Runtime DNS configuration",
@@ -12476,6 +12512,14 @@ func init() {
       "title": "Peer_Section",
       "items": {
         "$ref": "#/definitions/peer_section"
+      }
+    },
+    "pgsql_check_params": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        }
       }
     },
     "process_info": {
@@ -13743,6 +13787,17 @@ func init() {
       "title": "Sites",
       "items": {
         "$ref": "#/definitions/site"
+      }
+    },
+    "smtpchk_params": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "hello": {
+          "type": "string"
+        }
       }
     },
     "stats_options": {
@@ -26550,7 +26605,8 @@ func init() {
             "mysql-check",
             "pgsql-check",
             "tcp-check",
-            "redis-check"
+            "redis-check",
+            "httpchk"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -26722,13 +26778,13 @@ func init() {
             }
           }
         },
-        "httpchk": {
+        "httpchk_params": {
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
-          "$ref": "#/definitions/httpchk"
+          "$ref": "#/definitions/httpchk_params"
         },
         "log_tag": {
           "type": "string",
@@ -26741,10 +26797,16 @@ func init() {
             "tcp"
           ]
         },
+        "mysql_check_params": {
+          "$ref": "#/definitions/mysql_check_params"
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "pgsql_check_params": {
+          "$ref": "#/definitions/pgsql_check_params"
         },
         "queue_timeout": {
           "type": "integer",
@@ -26760,6 +26822,9 @@ func init() {
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "smtpchk_params": {
+          "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
@@ -26811,13 +26876,14 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
+        "adv_check": "httpchk",
         "balance": {
           "algorithm": "roundrobin"
         },
         "forwardfor": {
           "enabled": "enabled"
         },
-        "httpchk": {
+        "httpchk_params": {
           "method": "GET",
           "uri": "/check",
           "version": "HTTP/1.1"
@@ -28156,7 +28222,8 @@ func init() {
             "mysql-check",
             "pgsql-check",
             "tcp-check",
-            "redis-check"
+            "redis-check",
+            "httpchk"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -28307,8 +28374,8 @@ func init() {
             "safe"
           ]
         },
-        "httpchk": {
-          "$ref": "#/definitions/httpchk"
+        "httpchk_params": {
+          "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
           "type": "boolean",
@@ -28355,6 +28422,12 @@ func init() {
         "monitor_uri": {
           "$ref": "#/definitions/monitor_uri"
         },
+        "mysql_check_params": {
+          "$ref": "#/definitions/mysql_check_params"
+        },
+        "pgsql_check_params": {
+          "$ref": "#/definitions/pgsql_check_params"
+        },
         "queue_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -28369,6 +28442,9 @@ func init() {
         "server_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "smtpchk_params": {
+          "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
@@ -30274,7 +30350,7 @@ func init() {
         "$ref": "#/definitions/http_response_rule"
       }
     },
-    "httpchk": {
+    "httpchk_params": {
       "type": "object",
       "properties": {
         "method": {
@@ -30621,6 +30697,21 @@ func init() {
     },
     "monitor_uri": {
       "type": "string"
+    },
+    "mysql_check_params": {
+      "type": "object",
+      "properties": {
+        "client_version": {
+          "type": "string",
+          "enum": [
+            "pre-41",
+            "post-41"
+          ]
+        },
+        "username": {
+          "type": "string"
+        }
+      }
     },
     "nameserver": {
       "description": "Nameserver used in Runtime DNS configuration",
@@ -31415,6 +31506,14 @@ func init() {
       "title": "Peer_Section",
       "items": {
         "$ref": "#/definitions/peer_section"
+      }
+    },
+    "pgsql_check_params": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        }
       }
     },
     "process_info": {
@@ -32619,6 +32718,17 @@ func init() {
       "title": "Sites",
       "items": {
         "$ref": "#/definitions/site"
+      }
+    },
+    "smtpchk_params": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "hello": {
+          "type": "string"
+        }
       }
     },
     "stats_options": {
