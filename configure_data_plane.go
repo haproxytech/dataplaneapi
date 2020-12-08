@@ -124,7 +124,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 
 	if cfgFiles := os.Getenv("HAPROXY_CFGFILES"); cfgFiles != "" {
-		m := map[string]bool{}
+		m := map[string]bool{"configuration": false}
 
 		if len(haproxyOptions.UserListFile) > 0 {
 			m["userlist"] = false
