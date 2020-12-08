@@ -105,6 +105,8 @@ func configureFlags(api *operations.DataPlaneAPI) {
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
 
+	configureLogging(cfg.Logging)
+
 	haproxyOptions := cfg.HAProxy
 	// Override options with env variables
 	if os.Getenv("HAPROXY_MWORKER") == "1" {
@@ -147,8 +149,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 	}
 	// end overriding options with env variables
-
-	configureLogging(cfg.Logging)
 
 	defer func() {
 		if err := recover(); err != nil {
