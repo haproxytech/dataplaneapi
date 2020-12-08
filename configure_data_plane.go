@@ -138,7 +138,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 				m["userlist"] = true
 				continue
 			}
-			log.Warningf("The configuration file %s in HAPROXY_CFGFILES is not defined, neither using --config-file or --userlist-file flags.", f)
+			log.Warningf("The configuration file %s in HAPROXY_CFGFILES is not defined, neither by --config-file or --userlist-file flags.", f)
 		}
 		for f, ok := range m {
 			if !ok {
