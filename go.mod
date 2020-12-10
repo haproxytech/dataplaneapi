@@ -23,6 +23,7 @@ require (
 	github.com/haproxytech/models/v2 v2.1.1-0.20201208104308-ea0dd4a520f9
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/jessevdk/go-flags v1.4.0
+	github.com/oklog/ulid/v2 v2.0.2
 	github.com/rs/cors v1.7.0
 	github.com/shirou/gopsutil v2.20.3+incompatible
 	github.com/sirupsen/logrus v1.5.0

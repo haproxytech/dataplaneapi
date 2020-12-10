@@ -539,9 +539,14 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 		AllowCredentials: true,
 		MaxAge:           86400,
 	}).Handler
-	recovery := adapters.RecoverMiddleware(log.StandardLogger())
-	logViaLogrus := adapters.LoggingMiddleware(log.StandardLogger())
-	return logViaLogrus(handleCORS(recovery(handler)))
+	logger := log.StandardLogger()
+	entry := log.NewEntry(logger)
+	// middlewares
+	uniqueID := adapters.UniqueIDMiddleware(entry)
+	recovery := adapters.RecoverMiddleware(entry)
+	logViaLogrus := adapters.LoggingMiddleware(entry)
+
+	return uniqueID(logViaLogrus(handleCORS(recovery(handler))))
 }
 
 func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
