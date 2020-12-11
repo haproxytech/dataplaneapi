@@ -90,10 +90,11 @@ teardown() {
 
 If you need some assets as a request payload, put these fixtures in the same
 test folder in order to load it locally: try to avoid inline declaration.
+`/path/to/post/endpoint` is withouth base path (curently `/v2`)
 
 ```bash
 @test "Add a new TCP Request Rule to backend" {
-	read -r SC _ < <(auth_curl POST "/path/to/post/endpoint" "@${E2E_DIR}/path/to/payload.json")
+	read -r SC _ < <(dataplaneapi POST "/path/to/post/endpoint" payload.json)
 	[ "${SC}" = 201 ]
 }
 ```
@@ -103,9 +104,11 @@ test folder in order to load it locally: try to avoid inline declaration.
 Some utilities have been developed to make test expectation and execution
 smoother.
 
+- [`dataplaneapi`](./libs/dataplaneapi.bash)
 - [`auth_curl`](./libs/auth_curl.bash#)
 - [`get_json_path`](./libs/get_json_path.bash)
 - [`version`](./libs/version.bash)
+- [`haproxy_config_setup`](./libs/haproxy_config_setup.bash)
 
 Each library can be loaded using the relative path according to test file
 location, as following:

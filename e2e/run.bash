@@ -16,6 +16,8 @@
 #
 set -eo pipefail
 
+export BASE_PATH="/v2"
+
 HAPROXY_VERSION=${HAPROXY_VERSION:-2.2}
 DOCKER_BASE_IMAGE="${DOCKER_BASE_IMAGE:-haproxytech/haproxy-alpine}:${HAPROXY_VERSION}"
 DOCKER_CONTAINER_NAME="dataplaneapi-e2e"
@@ -43,7 +45,7 @@ docker run \
 docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
 docker cp "${E2E_DIR}/fixtures/haproxy.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg
 docker cp "${E2E_DIR}/fixtures/userlist.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/userlist.cfg
-docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1'"
+docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1'"
 
 echo '>>> Waiting dataplane API to be up and running'
 until nc -z "${LOCAL_IP_ADDRESS}" "${E2E_PORT}" 2>&1; do sleep 1; done
