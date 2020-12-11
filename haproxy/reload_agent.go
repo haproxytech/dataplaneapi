@@ -66,8 +66,13 @@ func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, conf
 	ra.reloadCmd = reloadCmd
 	ra.restartCmd = restartCmd
 	ra.configFile = configFile
+	delay *= 1000 // delay is defined in seconds - internally in miliseconds
+	d := os.Getenv("CI_DATAPLANE_RELOAD_DELAY_OVERRIDE")
+	if d != "" {
+		delay, _ = strconv.Atoi(d) // in case of err in conversion 0 is returned
+	}
 	if delay == 0 {
-		delay = 5
+		delay = 5000
 	}
 	ra.delay = delay
 	ra.lkgConfigFile = configFile + ".lkg"
@@ -85,7 +90,7 @@ func (ra *ReloadAgent) handleReloads() {
 	//nolint:gosimple
 	for {
 		select {
-		case <-time.After(time.Duration(ra.delay) * time.Second):
+		case <-time.After(time.Duration(ra.delay) * time.Millisecond):
 			if ra.cache.next != "" {
 				ra.cache.mu.Lock()
 				ra.cache.current = ra.cache.next
