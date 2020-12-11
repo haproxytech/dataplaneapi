@@ -54,6 +54,7 @@ import (
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/rate"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -100,6 +101,15 @@ func configureFlags(api *operations.DataPlaneAPI) {
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, haproxyOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, loggingOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, apiOptionsGroup)
+}
+
+func currentOpenTransactions(client *client_native.HAProxyClient) int {
+	ts, err := client.Configuration.GetTransactions("in_progress")
+	if err != nil {
+		log.Errorf("Cannot retrieve current open transactions for rate limit, default to zero (%s)", err.Error())
+		return 0
+	}
+	return len(*ts)
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
@@ -261,6 +271,23 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.TransactionsGetTransactionHandler = &handlers.GetTransactionHandlerImpl{Client: client}
 	api.TransactionsGetTransactionsHandler = &handlers.GetTransactionsHandlerImpl{Client: client}
 	api.TransactionsCommitTransactionHandler = &handlers.CommitTransactionHandlerImpl{Client: client, ReloadAgent: ra}
+	if cfg.HAProxy.MaxOpenTransactions > 0 {
+		// creating the threshold limit using the CLI flag as hard quota and current open transactions as starting point
+		transactionLimiter := rate.NewThresholdLimit(uint64(cfg.HAProxy.MaxOpenTransactions), uint64(currentOpenTransactions(client)))
+
+		api.TransactionsStartTransactionHandler = &handlers.RateLimitedStartTransactionHandlerImpl{
+			TransactionCounter: transactionLimiter,
+			Handler:            api.TransactionsStartTransactionHandler,
+		}
+		api.TransactionsDeleteTransactionHandler = &handlers.RateLimitedDeleteTransactionHandlerImpl{
+			TransactionCounter: transactionLimiter,
+			Handler:            api.TransactionsDeleteTransactionHandler,
+		}
+		api.TransactionsCommitTransactionHandler = &handlers.RateLimitedCommitTransactionHandlerImpl{
+			TransactionCounter: transactionLimiter,
+			Handler:            api.TransactionsCommitTransactionHandler,
+		}
+	}
 
 	// setup sites handlers
 	api.SitesCreateSiteHandler = &handlers.CreateSiteHandlerImpl{Client: client, ReloadAgent: ra}

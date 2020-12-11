@@ -58,6 +58,7 @@ type HAProxyConfiguration struct {
 	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10"`
 	ClusterTLSCertDir    string `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file"`
 	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy"`
+	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20"`
 }
 
 type APIConfiguration struct {

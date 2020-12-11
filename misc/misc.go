@@ -22,11 +22,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/haproxytech/dataplaneapi/haproxy"
-
 	"github.com/haproxytech/client-native/v2/configuration"
 	client_errors "github.com/haproxytech/client-native/v2/errors"
 	"github.com/haproxytech/models/v2"
+
+	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/rate"
 )
 
 const (
@@ -38,6 +39,8 @@ const (
 	ErrHTTPInternalServerError = int64(500)
 	// ErrHTTPBadRequest HTTP status code 400
 	ErrHTTPBadRequest = int64(400)
+	// ErrHTTPRateLimit HTTP status code 429
+	ErrHTTPRateLimit = int64(429)
 )
 
 // HandleError translates error codes from client native into models.Error with appropriate http status code
@@ -59,6 +62,10 @@ func HandleError(err error) *models.Error {
 		return &models.Error{Code: &httpCode, Message: &msg}
 	case *haproxy.ReloadError:
 		httpCode := ErrHTTPBadRequest
+		msg := t.Error()
+		return &models.Error{Code: &httpCode, Message: &msg}
+	case *rate.TransactionLimitReachedErr:
+		httpCode := ErrHTTPRateLimit
 		msg := t.Error()
 		return &models.Error{Code: &httpCode, Message: &msg}
 	default:
