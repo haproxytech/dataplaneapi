@@ -1,0 +1,46 @@
+#!/usr/bin/env bats
+#
+# Copyright 2020 HAProxy Technologies
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http:#www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+load '../../libs/dataplaneapi'
+load '../../libs/get_json_path'
+load '../../libs/haproxy_config_setup'
+
+@test "int.247 runtime admin-state of backend app2" {
+	read -r SC BODY < <(dataplaneapi GET "/services/haproxy/runtime/servers/app2?backend=bug_int_247")
+	[ "${SC}" = 200 ]
+
+	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.admin_state')
+	echo "ACTUAL: ${ACTUAL}"
+	[ "${ACTUAL}" = "maint" ]
+}
+
+@test "int.247 runtime admin-state of backend app1" {
+	read -r SC BODY < <(dataplaneapi GET "/services/haproxy/runtime/servers/app1?backend=bug_int_247")
+	[ "${SC}" = 200 ]
+
+	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.admin_state')
+	echo "ACTUAL: ${ACTUAL}"
+	[ "${ACTUAL}" = "ready" ]
+}
+
+@test "int.247 admin-state always reports admin_state of maint if disabled keyword is used" {
+	read -r SC BODY < <(dataplaneapi PUT "/services/haproxy/runtime/servers/app2?backend=bug_int_247" enable.json)
+    [ "${SC}" = 200 ]
+
+	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.admin_state')
+	[ "${ACTUAL}" = "ready" ]
+}
