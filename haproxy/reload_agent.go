@@ -213,7 +213,7 @@ func (rc *reloadCache) failReload(response string) {
 
 	r := &models.Reload{
 		ID:              rc.current,
-		Status:          "failed",
+		Status:          models.ReloadStatusFailed,
 		Response:        response,
 		ReloadTimestamp: time.Now().Unix(),
 	}
@@ -229,7 +229,7 @@ func (rc *reloadCache) succeedReload(response string) {
 
 	r := &models.Reload{
 		ID:              rc.current,
-		Status:          "succeeded",
+		Status:          models.ReloadStatusSucceeded,
 		Response:        response,
 		ReloadTimestamp: time.Now().Unix(),
 	}
@@ -264,7 +264,7 @@ func (ra *ReloadAgent) GetReloads() models.Reloads {
 	if ra.cache.current != "" {
 		r := &models.Reload{
 			ID:     ra.cache.current,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 		v = append(v, r)
 	}
@@ -272,7 +272,7 @@ func (ra *ReloadAgent) GetReloads() models.Reloads {
 	if ra.cache.next != "" {
 		r := &models.Reload{
 			ID:     ra.cache.next,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 		v = append(v, r)
 	}
@@ -286,13 +286,13 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 	if ra.cache.current == id {
 		return &models.Reload{
 			ID:     ra.cache.current,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 	}
 	if ra.cache.next == id {
 		return &models.Reload{
 			ID:     ra.cache.current,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 	}
 
@@ -318,14 +318,14 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 		if gDate.Before(sDate) {
 			return &models.Reload{
 				ID:     id,
-				Status: "succeeded",
+				Status: models.ReloadStatusSucceeded,
 			}
 		}
 
 		if sIndex > gIndex {
 			return &models.Reload{
 				ID:     id,
-				Status: "succeeded",
+				Status: models.ReloadStatusSucceeded,
 			}
 		}
 	}
