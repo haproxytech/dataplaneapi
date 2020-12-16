@@ -28,6 +28,7 @@ import (
 	"runtime/debug"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 
 	"github.com/getkin/kin-openapi/openapi2"
@@ -71,10 +72,12 @@ import (
 
 //go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
 
-var Version string
-var BuildTime string
-var mWorker = false
-var logFile *os.File
+var (
+	Version   string
+	BuildTime string
+	mWorker   = false
+	logFile   *os.File
+)
 
 func configureFlags(api *operations.DataPlaneAPI) {
 	cfg := dataplaneapi_config.Get()
@@ -270,7 +273,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.TransactionsDeleteTransactionHandler = &handlers.DeleteTransactionHandlerImpl{Client: client}
 	api.TransactionsGetTransactionHandler = &handlers.GetTransactionHandlerImpl{Client: client}
 	api.TransactionsGetTransactionsHandler = &handlers.GetTransactionsHandlerImpl{Client: client}
-	api.TransactionsCommitTransactionHandler = &handlers.CommitTransactionHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TransactionsCommitTransactionHandler = &handlers.CommitTransactionHandlerImpl{Client: client, ReloadAgent: ra, Mutex: &sync.Mutex{}}
 	if cfg.HAProxy.MaxOpenTransactions > 0 {
 		// creating the threshold limit using the CLI flag as hard quota and current open transactions as starting point
 		transactionLimiter := rate.NewThresholdLimit(uint64(cfg.HAProxy.MaxOpenTransactions), uint64(currentOpenTransactions(client)))
@@ -484,7 +487,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		return specification.NewGetSpecificationOK().WithPayload(&m)
 	})
 
-	//set up service discovery handlers
+	// set up service discovery handlers
 	discovery := service_discovery.NewServiceDiscoveries(client.Configuration)
 	api.ServiceDiscoveryCreateConsulHandler = &handlers.CreateConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
 	api.ServiceDiscoveryDeleteConsulHandler = &handlers.DeleteConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
@@ -492,7 +495,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.ServiceDiscoveryGetConsulsHandler = &handlers.GetConsulsHandlerImpl{Discovery: discovery}
 	api.ServiceDiscoveryReplaceConsulHandler = &handlers.ReplaceConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
 
-	//create stored consul instances
+	// create stored consul instances
 	for _, data := range cfg.ServiceDiscovery.Consuls {
 		err := discovery.AddNode("consul", *data.ID, data)
 		if err != nil {

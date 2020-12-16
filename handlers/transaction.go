@@ -16,6 +16,8 @@
 package handlers
 
 import (
+	"sync"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -66,6 +68,7 @@ type RateLimitedCommitTransactionHandlerImpl struct {
 type CommitTransactionHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
+	Mutex       *sync.Mutex
 }
 
 //Handle executing the request and returning a response
@@ -114,6 +117,8 @@ func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactions
 
 //Handle executing the request and returning a response
 func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
+	th.Mutex.Lock()
+	defer th.Mutex.Unlock()
 	t, err := th.Client.Configuration.CommitTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
