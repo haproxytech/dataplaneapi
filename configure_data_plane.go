@@ -34,6 +34,8 @@ import (
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
 
+	parser "github.com/haproxytech/config-parser/v3"
+	"github.com/haproxytech/config-parser/v3/types"
 	"github.com/haproxytech/dataplaneapi/adapters"
 	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
@@ -692,6 +694,31 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 	err := confClient.Init(confParams)
 	if err != nil {
 		return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())
+	}
+
+	p := confClient.Parser
+	comments, err := p.Get(parser.Comments, parser.CommentsSectionName, "#")
+	insertDisclaimer := false
+	if err != nil {
+		insertDisclaimer = true
+	}
+	data, ok := comments.([]types.Comments)
+	if !ok {
+		insertDisclaimer = true
+	} else if len(data) == 0 || data[0].Value != "Dataplaneapi managed File" {
+		insertDisclaimer = true
+	}
+	if insertDisclaimer {
+		commentsNew := types.Comments{Value: "Dataplaneapi managed File"}
+		err = p.Insert(parser.Comments, parser.CommentsSectionName, "#", commentsNew, 0)
+		if err != nil {
+			return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())
+		}
+		commentsNew = types.Comments{Value: "changing file directly can cause a conflict if dataplaneapi is running"}
+		err = p.Insert(parser.Comments, parser.CommentsSectionName, "#", commentsNew, 1)
+		if err != nil {
+			return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())
+		}
 	}
 
 	return confClient, nil
