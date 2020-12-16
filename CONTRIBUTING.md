@@ -49,7 +49,6 @@ Data Plane API is generated using [go-swagger](https://github.com/go-swagger/go-
     --tags=Peer \
     --tags=PeerEntry \
     --tags=Resolver \
-    --tags=ServiceDiscovery \
     -r ~/dataplaneapi-specification/copyright.txt
 ```
 
