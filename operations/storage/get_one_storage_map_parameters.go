@@ -44,7 +44,7 @@ type GetOneStorageMapParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Map file name
+	/*Map file storage_name
 	  Required: true
 	  In: path
 	*/

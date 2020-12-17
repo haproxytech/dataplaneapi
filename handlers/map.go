@@ -19,45 +19,9 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
 	config "github.com/haproxytech/dataplaneapi/configuration"
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
 )
-
-//MapsCreateRuntimeMapHandlerImpl implementation of the MapsCreateRuntimeMapHandler interface using client-native client
-type MapsCreateRuntimeMapHandlerImpl struct {
-	Client      *client_native.HAProxyClient
-	ReloadAgent haproxy.IReloadAgent
-}
-
-func (h *MapsCreateRuntimeMapHandlerImpl) Handle(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-	file, header, err := params.HTTPRequest.FormFile("fileUpload")
-	if err != nil {
-		return maps.NewCreateRuntimeMapBadRequest()
-	}
-	defer file.Close()
-
-	me, err := h.Client.Runtime.CreateMap(file, *header)
-	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return maps.NewCreateRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
-	}
-	if *params.ForceReload {
-		err := h.ReloadAgent.ForceReload()
-		if err != nil {
-			e := misc.HandleError(err)
-			return maps.NewCreateRuntimeMapDefault(int(*e.Code)).WithPayload(e)
-		}
-		//if maps file is configured in HAProxy config, get it from runtime
-		re, _ := h.Client.Runtime.GetMap(header.Filename)
-		if re != nil {
-			return maps.NewCreateRuntimeMapCreated().WithPayload(re)
-		}
-		return maps.NewCreateRuntimeMapCreated().WithPayload(me)
-	}
-	rID := h.ReloadAgent.Reload()
-	return maps.NewCreateRuntimeMapAccepted().WithReloadID(rID).WithPayload(me)
-}
 
 //GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
 type GetMapsHandlerImpl struct {

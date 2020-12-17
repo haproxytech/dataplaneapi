@@ -16,11 +16,37 @@
 package handlers
 
 import (
+	"path/filepath"
+	"strings"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/storage"
+	models "github.com/haproxytech/models/v2"
 )
+
+//StorageCreateRuntimeMapHandlerImpl implementation of the StorageCreateRuntimeMapHandler interface using client-native client
+type StorageCreateRuntimeMapHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+func (h *StorageCreateRuntimeMapHandlerImpl) Handle(params storage.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
+	file, header, err := params.HTTPRequest.FormFile("fileUpload")
+	if err != nil {
+		return storage.NewCreateRuntimeMapBadRequest()
+	}
+	defer file.Close()
+
+	me, err := h.Client.Runtime.CreateMap(file, *header)
+	if err != nil {
+		status := misc.GetHTTPStatusFromErr(err)
+		return storage.NewCreateRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+	// no reload or force reload since this is just a file upload,
+	// haproxy configuration has not been changed
+	return storage.NewCreateRuntimeMapAccepted().WithPayload(me)
+}
 
 //GetMapStorageHandlerImpl implementation of the StorageGetAllStorageMapFilesHandler interface
 type GetAllStorageMapFilesHandlerImpl struct {
@@ -29,12 +55,46 @@ type GetAllStorageMapFilesHandlerImpl struct {
 
 //Handle executing the request and returning a response
 func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
-	files, err := h.Client.MapStorage.GetAll()
+	tempMaps := map[string]*models.Map{}
+
+	// get filenames for files in storage
+	filenames, err := h.Client.MapStorage.GetAll()
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetAllStorageMapFilesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return &storage.GetAllStorageMapFilesOK{Payload: files}
+
+	for _, f := range filenames {
+		tempMaps[f] = &models.Map{
+			Description: "managed but not loaded map file (no runtime ID)",
+			File:        f,
+			ID:          "",
+			StorageName: filepath.Base(f),
+		}
+	}
+
+	// get Map model instances for runtime-loaded files
+	runtimeMaps, err := h.Client.Runtime.ShowMaps()
+	if err != nil {
+		status := misc.GetHTTPStatusFromErr(err)
+		return storage.NewGetAllStorageMapFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+
+	// update (overwrite) info for on-disk files with runtime info
+	for _, m := range runtimeMaps {
+		// files outside of MapsDir are not managed, so shouldn't be returned
+		if strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
+			tempMaps[m.File] = m
+		}
+	}
+
+	// convert to a list to return
+	var retMaps []*models.Map
+	for _, v := range tempMaps {
+		retMaps = append(retMaps, v)
+	}
+
+	return &storage.GetAllStorageMapFilesOK{Payload: retMaps}
 }
 
 // StorageGetOneStorageMapHandlerImpl implementation of the StorageGetOneStorageMapHandler interface

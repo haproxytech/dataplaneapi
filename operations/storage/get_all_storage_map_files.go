@@ -46,9 +46,9 @@ func NewGetAllStorageMapFiles(ctx *middleware.Context, handler GetAllStorageMapF
 
 /*GetAllStorageMapFiles swagger:route GET /services/haproxy/storage/maps Storage getAllStorageMapFiles
 
-Return all available map files on disk
+Return a list of all managed map files
 
-Returns all available map files on disk.
+Returns a list of all managed map files
 
 */
 type GetAllStorageMapFiles struct {

@@ -6292,12 +6292,21 @@ func init() {
     },
     "/services/haproxy/runtime/maps": {
       "get": {
-        "description": "Returns all available map files.",
+        "description": "Returns runtime map files.",
         "tags": [
           "Maps"
         ],
-        "summary": "Return all available map files",
+        "summary": "Return runtime map files",
         "operationId": "getAllRuntimeMapFiles",
+        "parameters": [
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, also show unmanaged map files loaded in haproxy",
+            "name": "includeUnmanaged",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -6307,58 +6316,6 @@ func init() {
           },
           "404": {
             "$ref": "#/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "post": {
-        "description": "Creates runtime map file with its entries.",
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "tags": [
-          "Maps"
-        ],
-        "summary": "Creates runtime map file with its entries",
-        "operationId": "createRuntimeMap",
-        "parameters": [
-          {
-            "type": "file",
-            "x-mimetype": "text/plain",
-            "description": "The map file to upload",
-            "name": "fileUpload",
-            "in": "formData"
-          },
-          {
-            "$ref": "#/parameters/force_reload"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Map file created with its entries",
-            "schema": {
-              "$ref": "#/definitions/map"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/map"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "409": {
-            "$ref": "#/responses/AlreadyExists"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -6451,7 +6408,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6482,7 +6439,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6540,7 +6497,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6578,7 +6535,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6643,7 +6600,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -7260,20 +7217,17 @@ func init() {
     },
     "/services/haproxy/storage/maps": {
       "get": {
-        "description": "Returns all available map files on disk.",
+        "description": "Returns a list of all managed map files",
         "tags": [
           "Storage"
         ],
-        "summary": "Return all available map files on disk",
+        "summary": "Return a list of all managed map files",
         "operationId": "getAllStorageMapFiles",
         "responses": {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "$ref": "#/definitions/maps"
             }
           },
           "404": {
@@ -7283,20 +7237,69 @@ func init() {
             "$ref": "#/responses/DefaultError"
           }
         }
+      },
+      "post": {
+        "description": "Creates a managed runtime map file with its entries.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Creates a managed runtime map file with its entries",
+        "operationId": "createRuntimeMap",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The map file contents",
+            "name": "fileUpload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map file created with its entries",
+            "schema": {
+              "$ref": "#/definitions/map"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/map"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
       }
     },
     "/services/haproxy/storage/maps/{name}": {
       "get": {
-        "description": "Returns one map file from disk.",
+        "description": "Returns the contents of one managed map file from disk",
         "tags": [
           "Storage"
         ],
-        "summary": "Return one map file from disk",
+        "summary": "Return the contents of one managed map file from disk",
         "operationId": "getOneStorageMap",
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map file storage_name",
             "name": "name",
             "in": "path",
             "required": true
@@ -7318,7 +7321,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Map file on disk.",
+        "description": "Replaces the contents of a managed map file on disk",
         "consumes": [
           "text/plain"
         ],
@@ -7328,12 +7331,12 @@ func init() {
         "tags": [
           "Storage"
         ],
-        "summary": "Replace a Map file on disk",
+        "summary": "Replace contents of a managed map file on disk",
         "operationId": "replaceStorageMapFile",
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map file storage_name",
             "name": "name",
             "in": "path",
             "required": true
@@ -7345,6 +7348,9 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -7366,16 +7372,16 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes map file from disk.",
+        "description": "Deletes a managed map file from disk.",
         "tags": [
           "Storage"
         ],
-        "summary": "Deletes map file from disk",
+        "summary": "Deletes a managed map file from disk",
         "operationId": "deleteStorageMap",
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map file storage_name",
             "name": "name",
             "in": "path",
             "required": true
@@ -24474,12 +24480,21 @@ func init() {
     },
     "/services/haproxy/runtime/maps": {
       "get": {
-        "description": "Returns all available map files.",
+        "description": "Returns runtime map files.",
         "tags": [
           "Maps"
         ],
-        "summary": "Return all available map files",
+        "summary": "Return runtime map files",
         "operationId": "getAllRuntimeMapFiles",
+        "parameters": [
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, also show unmanaged map files loaded in haproxy",
+            "name": "includeUnmanaged",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -24489,92 +24504,6 @@ func init() {
           },
           "404": {
             "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
-                "description": "Configuration file version"
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates runtime map file with its entries.",
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "tags": [
-          "Maps"
-        ],
-        "summary": "Creates runtime map file with its entries",
-        "operationId": "createRuntimeMap",
-        "parameters": [
-          {
-            "type": "file",
-            "x-mimetype": "text/plain",
-            "description": "The map file to upload",
-            "name": "fileUpload",
-            "in": "formData"
-          },
-          {
-            "type": "boolean",
-            "default": false,
-            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
-            "name": "force_reload",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Map file created with its entries",
-            "schema": {
-              "$ref": "#/definitions/map"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/map"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "409": {
-            "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -24727,7 +24656,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -24778,7 +24707,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -24866,7 +24795,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -24924,7 +24853,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -25019,7 +24948,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -25930,20 +25859,17 @@ func init() {
     },
     "/services/haproxy/storage/maps": {
       "get": {
-        "description": "Returns all available map files on disk.",
+        "description": "Returns a list of all managed map files",
         "tags": [
           "Storage"
         ],
-        "summary": "Return all available map files on disk",
+        "summary": "Return a list of all managed map files",
         "operationId": "getAllStorageMapFiles",
         "responses": {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "$ref": "#/definitions/maps"
             }
           },
           "404": {
@@ -25973,20 +25899,99 @@ func init() {
             }
           }
         }
+      },
+      "post": {
+        "description": "Creates a managed runtime map file with its entries.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Creates a managed runtime map file with its entries",
+        "operationId": "createRuntimeMap",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The map file contents",
+            "name": "fileUpload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map file created with its entries",
+            "schema": {
+              "$ref": "#/definitions/map"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/map"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
       }
     },
     "/services/haproxy/storage/maps/{name}": {
       "get": {
-        "description": "Returns one map file from disk.",
+        "description": "Returns the contents of one managed map file from disk",
         "tags": [
           "Storage"
         ],
-        "summary": "Return one map file from disk",
+        "summary": "Return the contents of one managed map file from disk",
         "operationId": "getOneStorageMap",
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map file storage_name",
             "name": "name",
             "in": "path",
             "required": true
@@ -26028,7 +26033,7 @@ func init() {
         }
       },
       "put": {
-        "description": "Replaces a Map file on disk.",
+        "description": "Replaces the contents of a managed map file on disk",
         "consumes": [
           "text/plain"
         ],
@@ -26038,12 +26043,12 @@ func init() {
         "tags": [
           "Storage"
         ],
-        "summary": "Replace a Map file on disk",
+        "summary": "Replace contents of a managed map file on disk",
         "operationId": "replaceStorageMapFile",
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map file storage_name",
             "name": "name",
             "in": "path",
             "required": true
@@ -26055,6 +26060,13 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
           }
         ],
         "responses": {
@@ -26106,16 +26118,16 @@ func init() {
         }
       },
       "delete": {
-        "description": "Deletes map file from disk.",
+        "description": "Deletes a managed map file from disk.",
         "tags": [
           "Storage"
         ],
-        "summary": "Deletes map file from disk",
+        "summary": "Deletes a managed map file from disk",
         "operationId": "deleteStorageMap",
         "parameters": [
           {
             "type": "string",
-            "description": "Map file name",
+            "description": "Map file storage_name",
             "name": "name",
             "in": "path",
             "required": true

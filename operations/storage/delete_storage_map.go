@@ -46,9 +46,9 @@ func NewDeleteStorageMap(ctx *middleware.Context, handler DeleteStorageMapHandle
 
 /*DeleteStorageMap swagger:route DELETE /services/haproxy/storage/maps/{name} Storage deleteStorageMap
 
-Deletes map file from disk
+Deletes a managed map file from disk
 
-Deletes map file from disk.
+Deletes a managed map file from disk.
 
 */
 type DeleteStorageMap struct {

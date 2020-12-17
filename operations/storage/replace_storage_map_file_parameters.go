@@ -28,13 +28,22 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewReplaceStorageMapFileParams creates a new ReplaceStorageMapFileParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewReplaceStorageMapFileParams() ReplaceStorageMapFileParams {
 
-	return ReplaceStorageMapFileParams{}
+	var (
+		// initialize parameters with default values
+
+		forceReloadDefault = bool(false)
+	)
+
+	return ReplaceStorageMapFileParams{
+		ForceReload: &forceReloadDefault,
+	}
 }
 
 // ReplaceStorageMapFileParams contains all the bound params for the replace storage map file operation
@@ -51,7 +60,12 @@ type ReplaceStorageMapFileParams struct {
 	  In: body
 	*/
 	Data string
-	/*Map file name
+	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	  In: query
+	  Default: false
+	*/
+	ForceReload *bool
+	/*Map file storage_name
 	  Required: true
 	  In: path
 	*/
@@ -66,6 +80,8 @@ func (o *ReplaceStorageMapFileParams) BindRequest(r *http.Request, route *middle
 	var res []error
 
 	o.HTTPRequest = r
+
+	qs := runtime.Values(r.URL.Query())
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -83,6 +99,11 @@ func (o *ReplaceStorageMapFileParams) BindRequest(r *http.Request, route *middle
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
+	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
+	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
@@ -91,6 +112,29 @@ func (o *ReplaceStorageMapFileParams) BindRequest(r *http.Request, route *middle
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindForceReload binds and validates parameter ForceReload from query.
+func (o *ReplaceStorageMapFileParams) bindForceReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewReplaceStorageMapFileParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_reload", "query", "bool", raw)
+	}
+	o.ForceReload = &value
+
 	return nil
 }
 

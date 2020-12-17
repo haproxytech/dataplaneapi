@@ -46,9 +46,9 @@ func NewGetOneStorageMap(ctx *middleware.Context, handler GetOneStorageMapHandle
 
 /*GetOneStorageMap swagger:route GET /services/haproxy/storage/maps/{name} Storage getOneStorageMap
 
-Return one map file from disk
+Return the contents of one managed map file from disk
 
-Returns one map file from disk.
+Returns the contents of one managed map file from disk
 
 */
 type GetOneStorageMap struct {

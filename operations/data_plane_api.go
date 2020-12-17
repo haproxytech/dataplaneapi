@@ -144,8 +144,8 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.CreateResolver has not yet been implemented")
 		}),
-		MapsCreateRuntimeMapHandler: maps.CreateRuntimeMapHandlerFunc(func(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation maps.CreateRuntimeMap has not yet been implemented")
+		StorageCreateRuntimeMapHandler: storage.CreateRuntimeMapHandlerFunc(func(params storage.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateRuntimeMap has not yet been implemented")
 		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.CreateServer has not yet been implemented")
@@ -620,8 +620,8 @@ type DataPlaneAPI struct {
 	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
 	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
-	// MapsCreateRuntimeMapHandler sets the operation handler for the create runtime map operation
-	MapsCreateRuntimeMapHandler maps.CreateRuntimeMapHandler
+	// StorageCreateRuntimeMapHandler sets the operation handler for the create runtime map operation
+	StorageCreateRuntimeMapHandler storage.CreateRuntimeMapHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
@@ -1005,8 +1005,8 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
 	}
-	if o.MapsCreateRuntimeMapHandler == nil {
-		unregistered = append(unregistered, "maps.CreateRuntimeMapHandler")
+	if o.StorageCreateRuntimeMapHandler == nil {
+		unregistered = append(unregistered, "storage.CreateRuntimeMapHandler")
 	}
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
@@ -1563,7 +1563,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/runtime/maps"] = maps.NewCreateRuntimeMap(o.context, o.MapsCreateRuntimeMapHandler)
+	o.handlers["POST"]["/services/haproxy/storage/maps"] = storage.NewCreateRuntimeMap(o.context, o.StorageCreateRuntimeMapHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

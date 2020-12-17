@@ -46,9 +46,9 @@ func NewReplaceStorageMapFile(ctx *middleware.Context, handler ReplaceStorageMap
 
 /*ReplaceStorageMapFile swagger:route PUT /services/haproxy/storage/maps/{name} Storage replaceStorageMapFile
 
-Replace a Map file on disk
+Replace contents of a managed map file on disk
 
-Replaces a Map file on disk.
+Replaces the contents of a managed map file on disk
 
 */
 type ReplaceStorageMapFile struct {

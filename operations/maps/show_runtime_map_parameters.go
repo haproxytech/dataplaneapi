@@ -46,7 +46,7 @@ type ShowRuntimeMapParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Map file name
+	/*Map storage_name
 	  Required: true
 	  In: query
 	*/

@@ -41,7 +41,7 @@ type GetAllStorageMapFilesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []string `json:"body,omitempty"`
+	Payload models.Maps `json:"body,omitempty"`
 }
 
 // NewGetAllStorageMapFilesOK creates GetAllStorageMapFilesOK with default headers values
@@ -51,13 +51,13 @@ func NewGetAllStorageMapFilesOK() *GetAllStorageMapFilesOK {
 }
 
 // WithPayload adds the payload to the get all storage map files o k response
-func (o *GetAllStorageMapFilesOK) WithPayload(payload []string) *GetAllStorageMapFilesOK {
+func (o *GetAllStorageMapFilesOK) WithPayload(payload models.Maps) *GetAllStorageMapFilesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get all storage map files o k response
-func (o *GetAllStorageMapFilesOK) SetPayload(payload []string) {
+func (o *GetAllStorageMapFilesOK) SetPayload(payload models.Maps) {
 	o.Payload = payload
 }
 
@@ -68,7 +68,7 @@ func (o *GetAllStorageMapFilesOK) WriteResponse(rw http.ResponseWriter, producer
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]string, 0, 50)
+		payload = models.Maps{}
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {
