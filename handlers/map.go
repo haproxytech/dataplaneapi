@@ -16,11 +16,15 @@
 package handlers
 
 import (
+	"path/filepath"
+	"strings"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
 	config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
+	"github.com/haproxytech/models/v2"
 )
 
 //GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
@@ -30,12 +34,23 @@ type GetMapsHandlerImpl struct {
 
 //Handle executing the request and returning a response
 func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
-	mapFiles, err := h.Client.Runtime.ShowMaps()
+	mapList := &[]*models.Map{}
+
+	runtimeMaps, err := h.Client.Runtime.ShowMaps()
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewShowRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
-	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(mapFiles)
+
+	for _, m := range runtimeMaps {
+		if *params.IncludeUnmanaged || strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
+			if strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
+				m.StorageName = filepath.Base(m.File)
+			}
+			*mapList = append(*mapList, m)
+		}
+	}
+	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(*mapList)
 }
 
 //GetMapHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface using client-native client
