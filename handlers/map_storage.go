@@ -16,6 +16,7 @@
 package handlers
 
 import (
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -110,15 +111,20 @@ type GetOneStorageMapHandlerImpl struct {
 }
 
 func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
-	m, err := h.Client.MapStorage.Get(params.Name)
+	filename, err := h.Client.MapStorage.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageMapDefault(int(*e.Code)).WithPayload(e)
 	}
-	if m == "" {
+	if filename == "" {
 		return storage.NewGetOneStorageMapNotFound()
 	}
-	return storage.NewGetOneStorageMapOK().WithPayload(m)
+	f, err := os.Open(filename)
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewGetOneStorageMapDefault(int(*e.Code)).WithPayload(e)
+	}
+	return storage.NewGetOneStorageMapOK().WithPayload(f)
 }
 
 //StorageDeleteStorageMapHandlerImpl implementation of the StorageDeleteStorageMapHandler interface
@@ -141,10 +147,10 @@ type StorageReplaceStorageMapFileHandlerImpl struct {
 }
 
 func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
-	f, err := h.Client.MapStorage.Replace(params.Name, params.Data)
+	_, err := h.Client.MapStorage.Replace(params.Name, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
 	}
-	return storage.NewReplaceStorageMapFileOK().WithPayload(f)
+	return storage.NewReplaceStorageMapFileOK()
 }

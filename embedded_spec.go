@@ -7291,6 +7291,9 @@ func init() {
     "/services/haproxy/storage/maps/{name}": {
       "get": {
         "description": "Returns the contents of one managed map file from disk",
+        "produces": [
+          "application/octet-stream"
+        ],
         "tags": [
           "Storage"
         ],
@@ -7309,7 +7312,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "string"
+              "type": "file"
             }
           },
           "404": {
@@ -7355,10 +7358,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Map file replaced",
-            "schema": {
-              "type": "string"
-            }
+            "description": "Map file replaced"
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -25986,6 +25986,9 @@ func init() {
     "/services/haproxy/storage/maps/{name}": {
       "get": {
         "description": "Returns the contents of one managed map file from disk",
+        "produces": [
+          "application/octet-stream"
+        ],
         "tags": [
           "Storage"
         ],
@@ -26004,7 +26007,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "string"
+              "type": "file"
             }
           },
           "404": {
@@ -26074,10 +26077,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Map file replaced",
-            "schema": {
-              "type": "string"
-            }
+            "description": "Map file replaced"
           },
           "400": {
             "description": "Bad request",

@@ -32,6 +32,7 @@
 //    - text/plain
 //
 //  Produces:
+//    - application/octet-stream
 //    - application/json
 //
 // swagger:meta

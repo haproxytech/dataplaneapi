@@ -91,6 +91,7 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MultipartformConsumer: runtime.DiscardConsumer,
 		TxtConsumer:           runtime.TextConsumer(),
 
+		BinProducer:  runtime.ByteStreamProducer(),
 		JSONProducer: runtime.JSONProducer(),
 
 		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
@@ -575,6 +576,9 @@ type DataPlaneAPI struct {
 	//   - text/plain
 	TxtConsumer runtime.Consumer
 
+	// BinProducer registers a producer for the following mime types:
+	//   - application/octet-stream
+	BinProducer runtime.Producer
 	// JSONProducer registers a producer for the following mime types:
 	//   - application/json
 	JSONProducer runtime.Producer
@@ -946,6 +950,9 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "TxtConsumer")
 	}
 
+	if o.BinProducer == nil {
+		unregistered = append(unregistered, "BinProducer")
+	}
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
 	}
@@ -1450,6 +1457,8 @@ func (o *DataPlaneAPI) ProducersFor(mediaTypes []string) map[string]runtime.Prod
 	result := make(map[string]runtime.Producer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
+		case "application/octet-stream":
+			result["application/octet-stream"] = o.BinProducer
 		case "application/json":
 			result["application/json"] = o.JSONProducer
 		}

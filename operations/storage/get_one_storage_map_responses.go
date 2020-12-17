@@ -21,6 +21,7 @@ package storage
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"io"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
@@ -41,7 +42,7 @@ type GetOneStorageMapOK struct {
 	/*
 	  In: Body
 	*/
-	Payload string `json:"body,omitempty"`
+	Payload io.ReadCloser `json:"body,omitempty"`
 }
 
 // NewGetOneStorageMapOK creates GetOneStorageMapOK with default headers values
@@ -51,13 +52,13 @@ func NewGetOneStorageMapOK() *GetOneStorageMapOK {
 }
 
 // WithPayload adds the payload to the get one storage map o k response
-func (o *GetOneStorageMapOK) WithPayload(payload string) *GetOneStorageMapOK {
+func (o *GetOneStorageMapOK) WithPayload(payload io.ReadCloser) *GetOneStorageMapOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get one storage map o k response
-func (o *GetOneStorageMapOK) SetPayload(payload string) {
+func (o *GetOneStorageMapOK) SetPayload(payload io.ReadCloser) {
 	o.Payload = payload
 }
 

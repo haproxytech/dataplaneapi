@@ -37,11 +37,6 @@ const ReplaceStorageMapFileOKCode int = 200
 swagger:response replaceStorageMapFileOK
 */
 type ReplaceStorageMapFileOK struct {
-
-	/*
-	  In: Body
-	*/
-	Payload string `json:"body,omitempty"`
 }
 
 // NewReplaceStorageMapFileOK creates ReplaceStorageMapFileOK with default headers values
@@ -50,25 +45,12 @@ func NewReplaceStorageMapFileOK() *ReplaceStorageMapFileOK {
 	return &ReplaceStorageMapFileOK{}
 }
 
-// WithPayload adds the payload to the replace storage map file o k response
-func (o *ReplaceStorageMapFileOK) WithPayload(payload string) *ReplaceStorageMapFileOK {
-	o.Payload = payload
-	return o
-}
-
-// SetPayload sets the payload to the replace storage map file o k response
-func (o *ReplaceStorageMapFileOK) SetPayload(payload string) {
-	o.Payload = payload
-}
-
 // WriteResponse to the client
 func (o *ReplaceStorageMapFileOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
 	rw.WriteHeader(200)
-	payload := o.Payload
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
-	}
 }
 
 // ReplaceStorageMapFileBadRequestCode is the HTTP code returned for type ReplaceStorageMapFileBadRequest
