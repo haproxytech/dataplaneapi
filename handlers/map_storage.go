@@ -19,6 +19,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -32,16 +33,22 @@ type StorageCreateRuntimeMapHandlerImpl struct {
 }
 
 func (h *StorageCreateRuntimeMapHandlerImpl) Handle(params storage.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-	file, header, err := params.HTTPRequest.FormFile("fileUpload")
-	if err != nil {
+
+	file, ok := params.FileUpload.(*runtime.File)
+	if !ok {
 		return storage.NewCreateRuntimeMapBadRequest()
 	}
-	defer file.Close()
 
-	me, err := h.Client.Runtime.CreateMap(file, *header)
+	filename, err := h.Client.MapStorage.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return storage.NewCreateRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+
+	me := &models.Map{
+		Description: "managed but not loaded map file (no runtime ID)",
+		File:        filename,
+		StorageName: filepath.Base(filename),
 	}
 	// no reload or force reload since this is just a file upload,
 	// haproxy configuration has not been changed

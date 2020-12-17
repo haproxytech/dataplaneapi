@@ -11801,6 +11801,9 @@ func init() {
         },
         "id": {
           "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
         }
       }
     },
@@ -31046,6 +31049,9 @@ func init() {
           "type": "string"
         },
         "id": {
+          "type": "string"
+        },
+        "storage_name": {
           "type": "string"
         }
       }
