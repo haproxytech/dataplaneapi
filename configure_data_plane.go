@@ -617,12 +617,14 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 		log.Fatalf("Error setting up native client: %v", err)
 	}
 
-	if haproxyOptions.StorageMapsDir != "" {
+	if haproxyOptions.MapsDir != "" {
 		mapStorage, err := storage.New(haproxyOptions.MapsDir, storage.MapsType)
 		if err != nil {
 			log.Fatalf("error initializing map storage: %v", err)
 		}
 		client.MapStorage = mapStorage
+	} else {
+		log.Fatalf("error trying to use empty string for managed map directory")
 	}
 	return client
 }
