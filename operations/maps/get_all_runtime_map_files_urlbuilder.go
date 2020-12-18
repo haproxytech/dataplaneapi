@@ -71,7 +71,7 @@ func (o *GetAllRuntimeMapFilesURL) Build() (*url.URL, error) {
 		includeUnmanagedQ = swag.FormatBool(*o.IncludeUnmanaged)
 	}
 	if includeUnmanagedQ != "" {
-		qs.Set("includeUnmanaged", includeUnmanagedQ)
+		qs.Set("include_unmanaged", includeUnmanagedQ)
 	}
 
 	_result.RawQuery = qs.Encode()

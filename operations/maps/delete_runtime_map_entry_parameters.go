@@ -65,7 +65,7 @@ type DeleteRuntimeMapEntryParams struct {
 	  In: path
 	*/
 	ID string
-	/*Map storage_name
+	/*Mapfile attribute storage_name
 	  Required: true
 	  In: query
 	*/

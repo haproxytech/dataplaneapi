@@ -6303,7 +6303,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, also show unmanaged map files loaded in haproxy",
-            "name": "includeUnmanaged",
+            "name": "include_unmanaged",
             "in": "query"
           }
         ],
@@ -6408,7 +6408,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6439,7 +6439,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6497,7 +6497,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6535,7 +6535,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -6600,7 +6600,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -7253,7 +7253,7 @@ func init() {
             "type": "file",
             "x-mimetype": "text/plain",
             "description": "The map file contents",
-            "name": "fileUpload",
+            "name": "file_upload",
             "in": "formData"
           }
         ],
@@ -7262,18 +7262,6 @@ func init() {
             "description": "Map file created with its entries",
             "schema": {
               "$ref": "#/definitions/map"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/map"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
             }
           },
           "400": {
@@ -7357,7 +7345,16 @@ func init() {
           }
         ],
         "responses": {
-          "200": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
             "description": "Map file replaced"
           },
           "400": {
@@ -24494,7 +24491,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, also show unmanaged map files loaded in haproxy",
-            "name": "includeUnmanaged",
+            "name": "include_unmanaged",
             "in": "query"
           }
         ],
@@ -24659,7 +24656,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -24710,7 +24707,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -24798,7 +24795,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -24856,7 +24853,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -24951,7 +24948,7 @@ func init() {
           },
           {
             "type": "string",
-            "description": "Map storage_name",
+            "description": "Mapfile attribute storage_name",
             "name": "map",
             "in": "query",
             "required": true
@@ -25918,7 +25915,7 @@ func init() {
             "type": "file",
             "x-mimetype": "text/plain",
             "description": "The map file contents",
-            "name": "fileUpload",
+            "name": "file_upload",
             "in": "formData"
           }
         ],
@@ -25927,18 +25924,6 @@ func init() {
             "description": "Map file created with its entries",
             "schema": {
               "$ref": "#/definitions/map"
-            }
-          },
-          "202": {
-            "description": "Configuration change accepted and reload requested",
-            "schema": {
-              "$ref": "#/definitions/map"
-            },
-            "headers": {
-              "Reload-ID": {
-                "type": "string",
-                "description": "ID of the requested reload"
-              }
             }
           },
           "400": {
@@ -26076,7 +26061,16 @@ func init() {
           }
         ],
         "responses": {
-          "200": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
             "description": "Map file replaced"
           },
           "400": {

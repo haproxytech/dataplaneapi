@@ -69,7 +69,7 @@ func (o *CreateRuntimeMapParams) BindRequest(r *http.Request, route *middleware.
 		}
 	}
 
-	fileUpload, fileUploadHeader, err := r.FormFile("fileUpload")
+	fileUpload, fileUploadHeader, err := r.FormFile("file_upload")
 	if err != nil && err != http.ErrMissingFile {
 		res = append(res, errors.New(400, "reading file %q failed: %v", "fileUpload", err))
 	} else if err == http.ErrMissingFile {

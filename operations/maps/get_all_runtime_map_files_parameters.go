@@ -72,7 +72,7 @@ func (o *GetAllRuntimeMapFilesParams) BindRequest(r *http.Request, route *middle
 
 	qs := runtime.Values(r.URL.Query())
 
-	qIncludeUnmanaged, qhkIncludeUnmanaged, _ := qs.GetOK("includeUnmanaged")
+	qIncludeUnmanaged, qhkIncludeUnmanaged, _ := qs.GetOK("include_unmanaged")
 	if err := o.bindIncludeUnmanaged(qIncludeUnmanaged, qhkIncludeUnmanaged, route.Formats); err != nil {
 		res = append(res, err)
 	}
@@ -99,7 +99,7 @@ func (o *GetAllRuntimeMapFilesParams) bindIncludeUnmanaged(rawData []string, has
 
 	value, err := swag.ConvertBool(raw)
 	if err != nil {
-		return errors.InvalidType("includeUnmanaged", "query", "bool", raw)
+		return errors.InvalidType("include_unmanaged", "query", "bool", raw)
 	}
 	o.IncludeUnmanaged = &value
 

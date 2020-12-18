@@ -29,28 +29,74 @@ import (
 	"github.com/haproxytech/models/v2"
 )
 
-// ReplaceStorageMapFileOKCode is the HTTP code returned for type ReplaceStorageMapFileOK
-const ReplaceStorageMapFileOKCode int = 200
+// ReplaceStorageMapFileAcceptedCode is the HTTP code returned for type ReplaceStorageMapFileAccepted
+const ReplaceStorageMapFileAcceptedCode int = 202
 
-/*ReplaceStorageMapFileOK Map file replaced
+/*ReplaceStorageMapFileAccepted Configuration change accepted and reload requested
 
-swagger:response replaceStorageMapFileOK
+swagger:response replaceStorageMapFileAccepted
 */
-type ReplaceStorageMapFileOK struct {
+type ReplaceStorageMapFileAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
 }
 
-// NewReplaceStorageMapFileOK creates ReplaceStorageMapFileOK with default headers values
-func NewReplaceStorageMapFileOK() *ReplaceStorageMapFileOK {
+// NewReplaceStorageMapFileAccepted creates ReplaceStorageMapFileAccepted with default headers values
+func NewReplaceStorageMapFileAccepted() *ReplaceStorageMapFileAccepted {
 
-	return &ReplaceStorageMapFileOK{}
+	return &ReplaceStorageMapFileAccepted{}
+}
+
+// WithReloadID adds the reloadId to the replace storage map file accepted response
+func (o *ReplaceStorageMapFileAccepted) WithReloadID(reloadID string) *ReplaceStorageMapFileAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the replace storage map file accepted response
+func (o *ReplaceStorageMapFileAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
 }
 
 // WriteResponse to the client
-func (o *ReplaceStorageMapFileOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+func (o *ReplaceStorageMapFileAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
 
 	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
 
-	rw.WriteHeader(200)
+	rw.WriteHeader(202)
+}
+
+// ReplaceStorageMapFileNoContentCode is the HTTP code returned for type ReplaceStorageMapFileNoContent
+const ReplaceStorageMapFileNoContentCode int = 204
+
+/*ReplaceStorageMapFileNoContent Map file replaced
+
+swagger:response replaceStorageMapFileNoContent
+*/
+type ReplaceStorageMapFileNoContent struct {
+}
+
+// NewReplaceStorageMapFileNoContent creates ReplaceStorageMapFileNoContent with default headers values
+func NewReplaceStorageMapFileNoContent() *ReplaceStorageMapFileNoContent {
+
+	return &ReplaceStorageMapFileNoContent{}
+}
+
+// WriteResponse to the client
+func (o *ReplaceStorageMapFileNoContent) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(204)
 }
 
 // ReplaceStorageMapFileBadRequestCode is the HTTP code returned for type ReplaceStorageMapFileBadRequest

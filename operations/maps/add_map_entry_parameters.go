@@ -68,7 +68,7 @@ type AddMapEntryParams struct {
 	  Default: false
 	*/
 	ForceSync *bool
-	/*Map storage_name
+	/*Mapfile attribute storage_name
 	  Required: true
 	  In: query
 	*/

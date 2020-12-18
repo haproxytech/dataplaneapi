@@ -23,6 +23,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/storage"
 	models "github.com/haproxytech/models/v2"
@@ -53,7 +54,7 @@ func (h *StorageCreateRuntimeMapHandlerImpl) Handle(params storage.CreateRuntime
 	}
 	// no reload or force reload since this is just a file upload,
 	// haproxy configuration has not been changed
-	return storage.NewCreateRuntimeMapAccepted().WithPayload(me)
+	return storage.NewCreateRuntimeMapCreated().WithPayload(me)
 }
 
 //GetMapStorageHandlerImpl implementation of the StorageGetAllStorageMapFilesHandler interface
@@ -143,7 +144,8 @@ func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorage
 
 //StorageReplaceStorageMapFileHandlerImpl implementation of the StorageReplaceStorageMapFileHandler interface
 type StorageReplaceStorageMapFileHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client      *client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
@@ -152,5 +154,16 @@ func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceS
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
 	}
-	return storage.NewReplaceStorageMapFileOK()
+
+	if *params.ForceReload {
+		err := h.ReloadAgent.ForceReload()
+		if err != nil {
+			e := misc.HandleError(err)
+			return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+		}
+		return storage.NewReplaceStorageMapFileNoContent()
+	}
+	rID := h.ReloadAgent.Reload()
+	return storage.NewReplaceStorageMapFileAccepted().WithReloadID(rID)
+
 }
