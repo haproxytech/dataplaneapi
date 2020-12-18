@@ -57,6 +57,8 @@ type HAProxyConfiguration struct {
 	UpdateMapFiles       bool   `long:"update-map-files" description:"Flag used for syncing map files with runtime maps values"`
 	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10"`
 	ClusterTLSCertDir    string `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file"`
+	SpoeDir              string `long:"spoe-dir" description:"Path to SPOE directory." default:"/etc/haproxy/spoe"`
+	SpoeTransactionDir   string `long:"spoe-transaction-dir" description:"Path to the SPOE transaction directory" default:"/tmp/spoe-haproxy"`
 	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy"`
 	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20"`
 }

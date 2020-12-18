@@ -7133,6 +7133,1438 @@ func init() {
         }
       }
     },
+    "/services/haproxy/spoe/spoe_agents": {
+      "get": {
+        "description": "Returns an array of all configured spoe agents in one scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of spoe agents in one scope",
+        "operationId": "getSpoeAgents",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_agents"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new spoe agent to the spoe scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new spoe agent to scope",
+        "operationId": "createSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe agent created",
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_agents/{name}": {
+      "get": {
+        "description": "Returns one spoe agent configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a spoe agent",
+        "operationId": "getSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe agent name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_agent"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a SPOE agent configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Replace a SPOE agent",
+        "operationId": "replaceSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe agent name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spoe agent replaced",
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a SPOE agent from the configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a SPOE agent",
+        "operationId": "deleteSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe agent name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe agent deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_files": {
+      "get": {
+        "description": "Returns all available SPOE files.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return all available SPOE files",
+        "operationId": "getAllSpoeFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/spoe_files"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates SPOE file with its entries.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Creates SPOE file with its entries",
+        "operationId": "createSpoe",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The spoe file to upload",
+            "name": "file_upload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SPOE file created with its entries",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_files/{name}": {
+      "get": {
+        "description": "Returns one SPOE file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return one SPOE file",
+        "operationId": "getOneSpoeFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SPOE file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes SPOE file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete SPOE file",
+        "operationId": "deleteSpoeFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SPOE file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "SPOE file deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_groups": {
+      "get": {
+        "description": "Returns an array of all configured SPOE groups in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of SPOE groups",
+        "operationId": "getSpoeGroups",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_groups"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new SPOE groups to the SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new SPOE groups",
+        "operationId": "createSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe groups created",
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_groups/{name}": {
+      "get": {
+        "description": "Returns one SPOE groups configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a SPOE groups",
+        "operationId": "getSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe group name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_group"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a SPOE groups configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Replace a SPOE groups",
+        "operationId": "replaceSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe group name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spoe groups replaced",
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a SPOE groups from the one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a SPOE groups",
+        "operationId": "deleteSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe group name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe group deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_messages": {
+      "get": {
+        "description": "Returns an array of all configured spoe messages in one scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of spoe messages in one scope",
+        "operationId": "getSpoeMessages",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_messages"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new spoe message to the spoe scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new spoe message to scope",
+        "operationId": "createSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe message created",
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_messages/{name}": {
+      "get": {
+        "description": "Returns one spoe message configuration in SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a spoe message",
+        "operationId": "getSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe message name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_message"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a spoe message configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Replace a spoe message",
+        "operationId": "replaceSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe message name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spoe message replaced",
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a spoe message from the SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a spoe message",
+        "operationId": "deleteSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe message name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe message deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_scopes": {
+      "get": {
+        "description": "Returns an array of all configured spoe scopes.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of spoe scopes",
+        "operationId": "getSpoeScopes",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_scopes"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new spoe scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new spoe scope",
+        "operationId": "createSpoeScope",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_scope"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe scope created",
+            "schema": {
+              "$ref": "#/definitions/spoe_scope"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_scopes/{name}": {
+      "get": {
+        "description": "Returns one SPOE scope in one SPOE file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return one SPOE scope",
+        "operationId": "getSpoeScope",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_scope"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a SPOE scope from the configuration file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a SPOE scope",
+        "operationId": "deleteSpoeScope",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe scope deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe_transactions": {
+      "get": {
+        "description": "Returns a list of SPOE configuration transactions. Transactions can be filtered by their status.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Return list of SPOE configuration transactions.",
+        "operationId": "getSpoeTransactions",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "failed",
+              "in_progress"
+            ],
+            "type": "string",
+            "description": "Filter by transaction status",
+            "name": "status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/spoe_transactions"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Starts a new transaction and returns it's id",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Start a new transaction",
+        "operationId": "startSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Configuration version on which to work on",
+            "name": "version",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transaction started",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            }
+          },
+          "429": {
+            "description": "Too many open transactions",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "code": 429,
+                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe_transactions/{id}": {
+      "get": {
+        "description": "Returns one SPOE configuration transactions.",
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Return one SPOE configuration transactions",
+        "operationId": "getSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Commit transaction, execute all operations in transaction and return msg",
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Commit transaction",
+        "operationId": "commitSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction succesfully commited",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a transaction.",
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Delete a transaction",
+        "operationId": "deleteSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Transaction deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/stats": {
       "get": {
         "description": "Returns a list of HAProxy stats endpoints.",
@@ -14132,6 +15564,267 @@ func init() {
         }
       }
     },
+    "spoe_agent": {
+      "description": "SPOE agent configuration",
+      "type": "object",
+      "title": "SPOE agent",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "async": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "continue-on-error": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ]
+        },
+        "dontlog-normal": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "engine-name": {
+          "type": "string"
+        },
+        "force-set-var": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ]
+        },
+        "groups": {
+          "type": "string"
+        },
+        "hello_timeout": {
+          "type": "integer"
+        },
+        "idle_timeout": {
+          "type": "integer"
+        },
+        "log": {
+          "$ref": "#/definitions/log_targets"
+        },
+        "max-frame-size": {
+          "type": "integer"
+        },
+        "max-waiting-frames": {
+          "type": "integer"
+        },
+        "maxconnrate": {
+          "type": "integer"
+        },
+        "maxerrrate": {
+          "type": "integer"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "option_set-on-error": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "option_set-process-time": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "option_set-total-time": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "option_var-prefix": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "pipelining": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "processing_timeout": {
+          "type": "integer"
+        },
+        "register-var-names": {
+          "type": "string"
+        },
+        "send-frag-payload": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "use-backend": {
+          "type": "string"
+        }
+      }
+    },
+    "spoe_agents": {
+      "description": "SPOE Agents of one scope in SPOE file",
+      "type": "array",
+      "title": "SPOE Agents",
+      "items": {
+        "$ref": "#/definitions/spoe_agent"
+      }
+    },
+    "spoe_files": {
+      "description": "SPOE files",
+      "type": "array",
+      "title": "SPOE files",
+      "items": {
+        "type": "string"
+      }
+    },
+    "spoe_group": {
+      "description": "SPOE group section configuration",
+      "type": "object",
+      "title": "SPOE group",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "spoe_groups": {
+      "description": "SPOE Groups of one scope in SPOE file",
+      "type": "array",
+      "title": "SPOE Groups",
+      "items": {
+        "$ref": "#/definitions/spoe_group"
+      }
+    },
+    "spoe_message": {
+      "description": "SPOE message section configuration",
+      "type": "object",
+      "title": "SPOE message",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "acl": {
+          "$ref": "#/definitions/acls"
+        },
+        "args": {
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "cond": {
+              "type": "string",
+              "enum": [
+                "if",
+                "unless"
+              ],
+              "x-display-name": "Condition"
+            },
+            "cond_test": {
+              "type": "string",
+              "x-dependency": {
+                "cond": {
+                  "required": true
+                }
+              },
+              "x-display-name": "Condition Test"
+            },
+            "name": {
+              "type": "string",
+              "enum": [
+                "on-client-session",
+                "on-server-session",
+                "on-frontend-tcp-request",
+                "on-backend-tcp-request",
+                "on-tcp-response",
+                "on-frontend-http-request",
+                "on-backend-http-request",
+                "on-http-response"
+              ]
+            }
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "spoe_messages": {
+      "description": "SPOE Messages of one scope in SPOE file",
+      "type": "array",
+      "title": "SPOE Messages",
+      "items": {
+        "$ref": "#/definitions/spoe_message"
+      }
+    },
+    "spoe_scope": {
+      "description": "SPOE scope name",
+      "type": "string",
+      "title": "SPOE scope"
+    },
+    "spoe_scopes": {
+      "description": "All SPOE Scopes",
+      "type": "array",
+      "title": "SPOE Scopes",
+      "items": {
+        "$ref": "#/definitions/spoe_scope"
+      }
+    },
+    "spoe_transaction": {
+      "description": "SPOE configuration transaction",
+      "type": "object",
+      "title": "SPOE configuration transaction",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "failed",
+            "in_progress",
+            "success"
+          ]
+        }
+      },
+      "example": {
+        "_version": 2,
+        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
+        "status": "in_progress"
+      }
+    },
+    "spoe_transactions": {
+      "description": "SPOE Configuration transactions array",
+      "type": "array",
+      "title": "SPOE Transactions array",
+      "items": {
+        "$ref": "#/definitions/spoe_transaction"
+      }
+    },
     "ssl_certificate": {
       "description": "A file containing one or more SSL/TLS certificates and keys",
       "type": "object",
@@ -15263,6 +16956,12 @@ func init() {
     },
     {
       "name": "ServiceDiscovery"
+    },
+    {
+      "name": "Spoe"
+    },
+    {
+      "name": "SpoeTransactions"
     }
   ],
   "externalDocs": {
@@ -25951,6 +27650,2152 @@ func init() {
         }
       }
     },
+    "/services/haproxy/spoe/spoe_agents": {
+      "get": {
+        "description": "Returns an array of all configured spoe agents in one scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of spoe agents in one scope",
+        "operationId": "getSpoeAgents",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_agents"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new spoe agent to the spoe scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new spoe agent to scope",
+        "operationId": "createSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe agent created",
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_agents/{name}": {
+      "get": {
+        "description": "Returns one spoe agent configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a spoe agent",
+        "operationId": "getSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe agent name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_agent"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a SPOE agent configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Replace a SPOE agent",
+        "operationId": "replaceSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe agent name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spoe agent replaced",
+            "schema": {
+              "$ref": "#/definitions/spoe_agent"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a SPOE agent from the configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a SPOE agent",
+        "operationId": "deleteSpoeAgent",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe agent name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe agent deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_files": {
+      "get": {
+        "description": "Returns all available SPOE files.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return all available SPOE files",
+        "operationId": "getAllSpoeFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/spoe_files"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates SPOE file with its entries.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Creates SPOE file with its entries",
+        "operationId": "createSpoe",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The spoe file to upload",
+            "name": "file_upload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SPOE file created with its entries",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_files/{name}": {
+      "get": {
+        "description": "Returns one SPOE file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return one SPOE file",
+        "operationId": "getOneSpoeFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SPOE file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes SPOE file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete SPOE file",
+        "operationId": "deleteSpoeFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SPOE file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "SPOE file deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_groups": {
+      "get": {
+        "description": "Returns an array of all configured SPOE groups in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of SPOE groups",
+        "operationId": "getSpoeGroups",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_groups"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new SPOE groups to the SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new SPOE groups",
+        "operationId": "createSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe groups created",
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_groups/{name}": {
+      "get": {
+        "description": "Returns one SPOE groups configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a SPOE groups",
+        "operationId": "getSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe group name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_group"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a SPOE groups configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Replace a SPOE groups",
+        "operationId": "replaceSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe group name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spoe groups replaced",
+            "schema": {
+              "$ref": "#/definitions/spoe_group"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a SPOE groups from the one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a SPOE groups",
+        "operationId": "deleteSpoeGroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe group name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe group deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_messages": {
+      "get": {
+        "description": "Returns an array of all configured spoe messages in one scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of spoe messages in one scope",
+        "operationId": "getSpoeMessages",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_messages"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new spoe message to the spoe scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new spoe message to scope",
+        "operationId": "createSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe message created",
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_messages/{name}": {
+      "get": {
+        "description": "Returns one spoe message configuration in SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a spoe message",
+        "operationId": "getSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe message name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_message"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a spoe message configuration in one SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Replace a spoe message",
+        "operationId": "replaceSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe message name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spoe message replaced",
+            "schema": {
+              "$ref": "#/definitions/spoe_message"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a spoe message from the SPOE scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a spoe message",
+        "operationId": "deleteSpoeMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "scope",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe message name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe message deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_scopes": {
+      "get": {
+        "description": "Returns an array of all configured spoe scopes.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return an array of spoe scopes",
+        "operationId": "getSpoeScopes",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_scopes"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new spoe scope.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Add a new spoe scope",
+        "operationId": "createSpoeScope",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/spoe_scope"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spoe scope created",
+            "schema": {
+              "$ref": "#/definitions/spoe_scope"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/spoe_scopes/{name}": {
+      "get": {
+        "description": "Returns one SPOE scope in one SPOE file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return one SPOE scope",
+        "operationId": "getSpoeScope",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/spoe_scope"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Spoe configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a SPOE scope from the configuration file.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Delete a SPOE scope",
+        "operationId": "deleteSpoeScope",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Spoe scope name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Spoe scope deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe_transactions": {
+      "get": {
+        "description": "Returns a list of SPOE configuration transactions. Transactions can be filtered by their status.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Return list of SPOE configuration transactions.",
+        "operationId": "getSpoeTransactions",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "failed",
+              "in_progress"
+            ],
+            "type": "string",
+            "description": "Filter by transaction status",
+            "name": "status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/spoe_transactions"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Starts a new transaction and returns it's id",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Start a new transaction",
+        "operationId": "startSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Configuration version on which to work on",
+            "name": "version",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transaction started",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            }
+          },
+          "429": {
+            "description": "Too many open transactions",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "code": 429,
+                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe_transactions/{id}": {
+      "get": {
+        "description": "Returns one SPOE configuration transactions.",
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Return one SPOE configuration transactions",
+        "operationId": "getSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Commit transaction, execute all operations in transaction and return msg",
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Commit transaction",
+        "operationId": "commitSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction succesfully commited",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/spoe_transaction"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a transaction.",
+        "tags": [
+          "SpoeTransactions"
+        ],
+        "summary": "Delete a transaction",
+        "operationId": "deleteSpoeTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Transaction deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/stats": {
       "get": {
         "description": "Returns a list of HAProxy stats endpoints.",
@@ -27388,6 +31233,44 @@ func init() {
           "enum": [
             "http",
             "tcp"
+          ]
+        }
+      }
+    },
+    "SpoeMessageEvent": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "on-client-session",
+            "on-server-session",
+            "on-frontend-tcp-request",
+            "on-backend-tcp-request",
+            "on-tcp-response",
+            "on-frontend-http-request",
+            "on-backend-http-request",
+            "on-http-response"
           ]
         }
       }
@@ -33632,6 +37515,267 @@ func init() {
         }
       }
     },
+    "spoe_agent": {
+      "description": "SPOE agent configuration",
+      "type": "object",
+      "title": "SPOE agent",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "async": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "continue-on-error": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ]
+        },
+        "dontlog-normal": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "engine-name": {
+          "type": "string"
+        },
+        "force-set-var": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ]
+        },
+        "groups": {
+          "type": "string"
+        },
+        "hello_timeout": {
+          "type": "integer"
+        },
+        "idle_timeout": {
+          "type": "integer"
+        },
+        "log": {
+          "$ref": "#/definitions/log_targets"
+        },
+        "max-frame-size": {
+          "type": "integer"
+        },
+        "max-waiting-frames": {
+          "type": "integer"
+        },
+        "maxconnrate": {
+          "type": "integer"
+        },
+        "maxerrrate": {
+          "type": "integer"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "option_set-on-error": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "option_set-process-time": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "option_set-total-time": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "option_var-prefix": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.]+$"
+        },
+        "pipelining": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "processing_timeout": {
+          "type": "integer"
+        },
+        "register-var-names": {
+          "type": "string"
+        },
+        "send-frag-payload": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "use-backend": {
+          "type": "string"
+        }
+      }
+    },
+    "spoe_agents": {
+      "description": "SPOE Agents of one scope in SPOE file",
+      "type": "array",
+      "title": "SPOE Agents",
+      "items": {
+        "$ref": "#/definitions/spoe_agent"
+      }
+    },
+    "spoe_files": {
+      "description": "SPOE files",
+      "type": "array",
+      "title": "SPOE files",
+      "items": {
+        "type": "string"
+      }
+    },
+    "spoe_group": {
+      "description": "SPOE group section configuration",
+      "type": "object",
+      "title": "SPOE group",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "spoe_groups": {
+      "description": "SPOE Groups of one scope in SPOE file",
+      "type": "array",
+      "title": "SPOE Groups",
+      "items": {
+        "$ref": "#/definitions/spoe_group"
+      }
+    },
+    "spoe_message": {
+      "description": "SPOE message section configuration",
+      "type": "object",
+      "title": "SPOE message",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "acl": {
+          "$ref": "#/definitions/acls"
+        },
+        "args": {
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "cond": {
+              "type": "string",
+              "enum": [
+                "if",
+                "unless"
+              ],
+              "x-display-name": "Condition"
+            },
+            "cond_test": {
+              "type": "string",
+              "x-dependency": {
+                "cond": {
+                  "required": true
+                }
+              },
+              "x-display-name": "Condition Test"
+            },
+            "name": {
+              "type": "string",
+              "enum": [
+                "on-client-session",
+                "on-server-session",
+                "on-frontend-tcp-request",
+                "on-backend-tcp-request",
+                "on-tcp-response",
+                "on-frontend-http-request",
+                "on-backend-http-request",
+                "on-http-response"
+              ]
+            }
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "spoe_messages": {
+      "description": "SPOE Messages of one scope in SPOE file",
+      "type": "array",
+      "title": "SPOE Messages",
+      "items": {
+        "$ref": "#/definitions/spoe_message"
+      }
+    },
+    "spoe_scope": {
+      "description": "SPOE scope name",
+      "type": "string",
+      "title": "SPOE scope"
+    },
+    "spoe_scopes": {
+      "description": "All SPOE Scopes",
+      "type": "array",
+      "title": "SPOE Scopes",
+      "items": {
+        "$ref": "#/definitions/spoe_scope"
+      }
+    },
+    "spoe_transaction": {
+      "description": "SPOE configuration transaction",
+      "type": "object",
+      "title": "SPOE configuration transaction",
+      "properties": {
+        "_version": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "failed",
+            "in_progress",
+            "success"
+          ]
+        }
+      },
+      "example": {
+        "_version": 2,
+        "id": "273e3385-2d0c-4fb1-aa27-93cbb31ff203",
+        "status": "in_progress"
+      }
+    },
+    "spoe_transactions": {
+      "description": "SPOE Configuration transactions array",
+      "type": "array",
+      "title": "SPOE Transactions array",
+      "items": {
+        "$ref": "#/definitions/spoe_transaction"
+      }
+    },
     "ssl_certificate": {
       "description": "A file containing one or more SSL/TLS certificates and keys",
       "type": "object",
@@ -34721,6 +38865,12 @@ func init() {
     },
     {
       "name": "ServiceDiscovery"
+    },
+    {
+      "name": "Spoe"
+    },
+    {
+      "name": "SpoeTransactions"
     }
   ],
   "externalDocs": {

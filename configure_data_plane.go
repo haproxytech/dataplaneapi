@@ -53,7 +53,9 @@ import (
 
 	"github.com/haproxytech/client-native/v2/configuration"
 	runtime_api "github.com/haproxytech/client-native/v2/runtime"
+	"github.com/haproxytech/client-native/v2/spoe"
 	"github.com/haproxytech/client-native/v2/storage"
+
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -293,6 +295,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			Handler:            api.TransactionsCommitTransactionHandler,
 		}
 	}
+
+	// setup transaction handlers
+	api.SpoeTransactionsStartSpoeTransactionHandler = &handlers.SpoeTransactionsStartSpoeTransactionHandlerImpl{Client: client}
+	api.SpoeTransactionsDeleteSpoeTransactionHandler = &handlers.SpoeTransactionsDeleteSpoeTransactionHandlerImpl{Client: client}
+	api.SpoeTransactionsGetSpoeTransactionHandler = &handlers.SpoeTransactionsGetSpoeTransactionHandlerImpl{Client: client}
+	api.SpoeTransactionsGetSpoeTransactionsHandler = &handlers.SpoeTransactionsGetSpoeTransactionsHandlerImpl{Client: client}
+	api.SpoeTransactionsCommitSpoeTransactionHandler = &handlers.SpoeTransactionsCommitSpoeTransactionHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup sites handlers
 	api.SitesCreateSiteHandler = &handlers.CreateSiteHandlerImpl{Client: client, ReloadAgent: ra}
@@ -546,6 +555,40 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		return specification_openapiv3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
 	})
 
+	// TODO: do we need a ReloadAgent for SPOE
+	// setup SPOE handlers
+	api.SpoeCreateSpoeHandler = &handlers.SpoeCreateSpoeHandlerImpl{Client: client}
+	api.SpoeDeleteSpoeFileHandler = &handlers.SpoeDeleteSpoeFileHandlerImpl{Client: client}
+	api.SpoeGetAllSpoeFilesHandler = &handlers.SpoeGetAllSpoeFilesHandlerImpl{Client: client}
+	api.SpoeGetOneSpoeFileHandler = &handlers.SpoeGetOneSpoeFileHandlerImpl{Client: client}
+
+	// SPOE scope
+	api.SpoeGetSpoeScopesHandler = &handlers.SpoeGetSpoeScopesHandlerImpl{Client: client}
+	api.SpoeGetSpoeScopeHandler = &handlers.SpoeGetSpoeScopeHandlerImpl{Client: client}
+	api.SpoeCreateSpoeScopeHandler = &handlers.SpoeCreateSpoeScopeHandlerImpl{Client: client}
+	api.SpoeDeleteSpoeScopeHandler = &handlers.SpoeDeleteSpoeScopeHandlerImpl{Client: client}
+
+	// SPOE agent
+	api.SpoeGetSpoeAgentsHandler = &handlers.SpoeGetSpoeAgentsHandlerImpl{Client: client}
+	api.SpoeGetSpoeAgentHandler = &handlers.SpoeGetSpoeAgentHandlerImpl{Client: client}
+	api.SpoeCreateSpoeAgentHandler = &handlers.SpoeCreateSpoeAgentHandlerImpl{Client: client}
+	api.SpoeDeleteSpoeAgentHandler = &handlers.SpoeDeleteSpoeAgentHandlerImpl{Client: client}
+	api.SpoeReplaceSpoeAgentHandler = &handlers.SpoeReplaceSpoeAgentHandlerImpl{Client: client}
+
+	// SPOE messages
+	api.SpoeGetSpoeMessagesHandler = &handlers.SpoeGetSpoeMessagesHandlerImpl{Client: client}
+	api.SpoeGetSpoeMessageHandler = &handlers.SpoeGetSpoeMessageHandlerImpl{Client: client}
+	api.SpoeCreateSpoeMessageHandler = &handlers.SpoeCreateSpoeMessageHandlerImpl{Client: client}
+	api.SpoeDeleteSpoeMessageHandler = &handlers.SpoeDeleteSpoeMessageHandlerImpl{Client: client}
+	api.SpoeReplaceSpoeMessageHandler = &handlers.SpoeReplaceSpoeMessageHandlerImpl{Client: client}
+
+	// SPOE groups
+	api.SpoeGetSpoeGroupsHandler = &handlers.SpoeGetSpoeGroupsHandlerImpl{Client: client}
+	api.SpoeGetSpoeGroupHandler = &handlers.SpoeGetSpoeGroupHandlerImpl{Client: client}
+	api.SpoeCreateSpoeGroupHandler = &handlers.SpoeCreateSpoeGroupHandlerImpl{Client: client}
+	api.SpoeDeleteSpoeGroupHandler = &handlers.SpoeDeleteSpoeGroupHandlerImpl{Client: client}
+	api.SpoeReplaceSpoeGroupHandler = &handlers.SpoeReplaceSpoeGroupHandlerImpl{Client: client}
+
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }
 
@@ -658,23 +701,34 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 	}
 
 	if haproxyOptions.MapsDir != "" {
-		mapStorage, err := storage.New(haproxyOptions.MapsDir, storage.MapsType)
+		client.MapStorage, err = storage.New(haproxyOptions.MapsDir, storage.MapsType)
 		if err != nil {
 			log.Fatalf("error initializing map storage: %v", err)
 		}
-		client.MapStorage = mapStorage
 	} else {
 		log.Fatalf("error trying to use empty string for managed map directory")
 	}
 
 	if haproxyOptions.StorageSSLCertsDir != "" {
-		sslCertStorage, err := storage.New(haproxyOptions.StorageSSLCertsDir, storage.SSLType)
+		client.SSLCertStorage, err = storage.New(haproxyOptions.StorageSSLCertsDir, storage.SSLType)
 		if err != nil {
 			log.Fatalf("error initializing SSL certs storage: %v", err)
 		}
-		client.SSLCertStorage = sslCertStorage
 	} else {
 		log.Fatalf("error trying to use empty string for managed map directory")
+	}
+
+	if haproxyOptions.SpoeDir != "" {
+		prms := spoe.Params{
+			SpoeDir:        haproxyOptions.SpoeDir,
+			TransactionDir: haproxyOptions.SpoeTransactionDir,
+		}
+		client.Spoe, err = spoe.NewSpoe(prms)
+		if err != nil {
+			log.Fatalf("error setting up spoe: %v", err)
+		}
+	} else {
+		log.Fatalf("error trying to use empty string for SPOE configuration directory")
 	}
 	return client
 }

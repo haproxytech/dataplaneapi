@@ -18,9 +18,9 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v0.1.1-0.20200217212219-353f81969824
 	github.com/google/uuid v1.1.1
-	github.com/haproxytech/client-native/v2 v2.1.1-0.20201228194609-5b4d6f70700b
+	github.com/haproxytech/client-native/v2 v2.1.1-0.20210104115405-0279991ef650
 	github.com/haproxytech/config-parser/v3 v3.0.0-rc1.0.20201218192213-cf1331eaac44
-	github.com/haproxytech/models/v2 v2.1.1-0.20201230141107-6b1eb779f593
+	github.com/haproxytech/models/v2 v2.1.1-0.20201231125426-fddb29589894
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/oklog/ulid/v2 v2.0.2
