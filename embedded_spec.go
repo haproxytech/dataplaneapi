@@ -7319,6 +7319,24 @@ func init() {
               "$ref": "#/definitions/transaction"
             }
           },
+          "429": {
+            "description": "Too many open transactions",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "code": 429,
+                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              }
+            }
+          },
           "default": {
             "$ref": "#/responses/DefaultError"
           }
@@ -11058,7 +11076,9 @@ func init() {
           "enum": [
             301,
             302,
-            303
+            303,
+            307,
+            308
           ],
           "x-dependency": {
             "type": {
@@ -25843,6 +25863,24 @@ func init() {
               "$ref": "#/definitions/transaction"
             }
           },
+          "429": {
+            "description": "Too many open transactions",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "code": 429,
+                "message": "cannot start a new transaction, reached the maximum amount of 20 active transactions available"
+              }
+            }
+          },
           "default": {
             "description": "General Error",
             "schema": {
@@ -30052,7 +30090,9 @@ func init() {
           "enum": [
             301,
             302,
-            303
+            303,
+            307,
+            308
           ],
           "x-dependency": {
             "type": {
