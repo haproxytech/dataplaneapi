@@ -26,6 +26,8 @@ export E2E_PORT=${E2E_PORT:-8042}
 export E2E_DIR=${ROOT_DIR}/e2e
 export LOCAL_IP_ADDRESS=${LOCAL_IP_ADDRESS:-127.0.0.1}
 
+source "${E2E_DIR}/libs/cleanup.bash"
+
 if ! docker version > /dev/null 2>&1; then
   echo '>>> Docker is not installed: cannot proceed for e2e test suite'
 fi
@@ -35,25 +37,41 @@ if ! docker inspect "${DOCKER_BASE_IMAGE}" > /dev/null 2>&1; then
   docker pull "${DOCKER_BASE_IMAGE}"
 fi
 
-echo '>>> Provisioning the e2e environment'
-docker run \
-  --rm \
-  --detach \
-  --name ${DOCKER_CONTAINER_NAME} \
-  --publish "${E2E_PORT}":8080 \
-  "${DOCKER_BASE_IMAGE}" > /dev/null 2>&1
-docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
-docker cp "${E2E_DIR}/fixtures/haproxy.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg
-docker cp "${E2E_DIR}/fixtures/userlist.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/userlist.cfg
-docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy"
+if [ ! -z $PREWIPE ] && [ "$PREWIPE" == "y" ]; then
+   cleanup ${DOCKER_CONTAINER_NAME}
+fi
+
+if [ ! -z $(docker ps -q -f name=${DOCKER_CONTAINER_NAME}) ]; then
+    echo ">>> Skipping provisioning the e2e environment, ${DOCKER_CONTAINER_NAME} already present"
+else
+    echo '>>> Provisioning the e2e environment'
+    docker run \
+      --rm \
+      --detach \
+      --name ${DOCKER_CONTAINER_NAME} \
+      --publish "${E2E_PORT}":8080 \
+      "${DOCKER_BASE_IMAGE}" > /dev/null 2>&1
+    docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
+    docker cp "${E2E_DIR}/fixtures/haproxy.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg
+    docker cp "${E2E_DIR}/fixtures/userlist.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/userlist.cfg
+    docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
+fi
 
 echo '>>> Waiting dataplane API to be up and running'
 until nc -z "${LOCAL_IP_ADDRESS}" "${E2E_PORT}" 2>&1; do sleep 1; done
 
 # deferring Docker container removal
 # shellcheck disable=SC1090
-source "${E2E_DIR}/libs/cleanup.bash"
-trap 'cleanup ${DOCKER_CONTAINER_NAME}' EXIT
+
+if [ ! -z $SKIP_CLEANUP ] && [ "$SKIP_CLEANUP" == "y" ]; then
+    echo ">>> Container will be left running: ${DOCKER_CONTAINER_NAME}"
+else
+    trap 'cleanup ${DOCKER_CONTAINER_NAME}' EXIT
+fi
 
 echo '>>> Starting test suite'
-bats -t "${E2E_DIR}"/tests/*
+if [ -z $TESTNAME ]; then
+    bats -t "${E2E_DIR}"/tests/*
+else
+    bats -t "${E2E_DIR}"/tests/${TESTNAME}
+fi

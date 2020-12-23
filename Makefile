@@ -23,4 +23,4 @@ build:
 
 .PHONY: e2e
 e2e: build
-	./e2e/run.bash
+	TESTNAME=$(TESTNAME) SKIP_CLEANUP=$(SKIP_CLEANUP) PREWIPE=$(PREWIPE) HAPROXY_VERSION=$(HAPROXY_VERSION) ./e2e/run.bash
