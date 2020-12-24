@@ -147,10 +147,17 @@ func (c *consulInstance) updateServices() error {
 func (c *consulInstance) convertToServers(nodes []*api.ServiceEntry) []configuration.ServiceServer {
 	servers := make([]configuration.ServiceServer, 0)
 	for _, node := range nodes {
-		servers = append(servers, configuration.ServiceServer{
-			Address: node.Service.Address,
-			Port:    node.Service.Port,
-		})
+		if node.Service.Address != "" {
+			servers = append(servers, configuration.ServiceServer{
+				Address: node.Service.Address,
+				Port:    node.Service.Port,
+			})
+		} else {
+			servers = append(servers, configuration.ServiceServer{
+				Address: node.Node.Address,
+				Port:    node.Service.Port,
+			})
+		}
 	}
 	return servers
 }
