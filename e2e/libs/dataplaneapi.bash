@@ -50,6 +50,33 @@ function dataplaneapi_text_plain() {
   echo "$status_code $response"
 }
 
+function dataplaneapi_file_upload() {
+  verb=$1; shift
+  endpoint=$1; shift
+  data=${1:-"/dev/null"}
+  response=$(curl -s -H "Content-type: multipart/form-data" --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --form "file_upload=${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
+  status_code=$(tail -n1 <<< "$response")
+  response=$(sed '$ d' <<< "$response")
+  echo "$status_code $response"
+}
+
+# function dataplaneapi_download returns values differently to allow for multiline body contents, it should be used as follows:
+# local BODY;
+# local SC;
+# dataplaneapi_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+# echo "Status Code: ${SC}"
+# echo "Body: ${BODY}"
+function dataplaneapi_download() {
+  verb=$1; shift
+  endpoint=$1; shift
+  data=${1:-"/dev/null"}
+  response=$(curl -v -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}" 2>/tmp/headers)
+  #echo "$status_code $body"
+  status_code=$(tail -n1 <<< "$response")
+  body=$(head -n -1 <<< "$response")
+  eval SC="'$status_code'"
+  eval BODY="'$body'"
+}
 
 # version return the current HAProxy configuration file version, useful to
 # avoid keeping track of it at each POST/PUT call.
