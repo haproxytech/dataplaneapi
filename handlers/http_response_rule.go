@@ -159,7 +159,10 @@ func (h *GetHTTPResponseRulesHandlerImpl) Handle(params http_response_rule.GetHT
 
 	v, rules, err := h.Client.Configuration.GetHTTPResponseRules(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(&http_response_rule.GetHTTPResponseRulesOKBody{Version: v, Data: models.HTTPResponseRules{}}).WithConfigurationVersion(v)
+		}
 		return http_response_rule.NewGetHTTPResponseRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(&http_response_rule.GetHTTPResponseRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)

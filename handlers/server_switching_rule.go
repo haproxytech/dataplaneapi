@@ -160,7 +160,10 @@ func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule
 
 	v, rules, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: models.ServerSwitchingRules{}}).WithConfigurationVersion(v)
+		}
 		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)

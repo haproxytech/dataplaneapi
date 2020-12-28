@@ -158,7 +158,10 @@ func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal
 
 	v, fs, err := h.Client.Configuration.GetFilters(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: models.Filters{}}).WithConfigurationVersion(v)
+		}
 		return filter.NewGetFiltersDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: fs}).WithConfigurationVersion(v)

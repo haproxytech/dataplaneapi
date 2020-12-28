@@ -158,7 +158,10 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 
 	v, bs, err := h.Client.Configuration.GetBinds(params.Frontend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: models.Binds{}}).WithConfigurationVersion(v)
+		}
 		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: bs}).WithConfigurationVersion(v)

@@ -159,7 +159,10 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 
 	v, srvs, err := h.Client.Configuration.GetServers(params.Backend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: models.Servers{}}).WithConfigurationVersion(v)
+		}
 		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: srvs}).WithConfigurationVersion(v)

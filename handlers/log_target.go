@@ -160,7 +160,10 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 
 	v, logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return log_target.NewGetLogTargetsOK().WithPayload(&log_target.GetLogTargetsOKBody{Version: v, Data: models.LogTargets{}}).WithConfigurationVersion(v)
+		}
 		return log_target.NewGetLogTargetsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return log_target.NewGetLogTargetsOK().WithPayload(&log_target.GetLogTargetsOKBody{Version: v, Data: logTargets}).WithConfigurationVersion(v)

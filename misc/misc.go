@@ -41,6 +41,8 @@ const (
 	ErrHTTPBadRequest = int64(400)
 	// ErrHTTPRateLimit HTTP status code 429
 	ErrHTTPRateLimit = int64(429)
+	// ErrHTTPOk HTTP status code 200
+	ErrHTTPOk = int64(200)
 )
 
 // HandleError translates error codes from client native into models.Error with appropriate http status code
@@ -73,6 +75,17 @@ func HandleError(err error) *models.Error {
 		code := ErrHTTPInternalServerError
 		return &models.Error{Code: &code, Message: &msg}
 	}
+}
+
+//HandleContainerGetError translates error codes from client native into models.Error with appropriate http status code. Intended for get requests on container endpoints.
+func HandleContainerGetError(err error) *models.Error {
+	if t, ok := err.(*configuration.ConfError); ok {
+		if t.Code() == configuration.ErrParentDoesNotExist {
+			code := ErrHTTPOk
+			return &models.Error{Code: &code}
+		}
+	}
+	return HandleError(err)
 }
 
 // DiscoverChildPaths return children models.Endpoints given path

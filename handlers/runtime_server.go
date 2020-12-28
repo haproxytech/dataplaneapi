@@ -63,7 +63,10 @@ func (h *GetRuntimeServersHandlerImpl) Handle(params server.GetRuntimeServersPar
 	rs, err := h.Client.Runtime.GetServersState(params.Backend)
 
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return server.NewGetRuntimeServersOK().WithPayload(models.RuntimeServers{})
+		}
 		return server.NewGetRuntimeServersDefault(int(*e.Code)).WithPayload(e)
 	}
 

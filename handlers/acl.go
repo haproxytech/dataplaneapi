@@ -160,7 +160,10 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 
 	v, rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: models.Acls{}}).WithConfigurationVersion(v)
+		}
 		return acl.NewGetAclsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)

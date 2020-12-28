@@ -158,7 +158,10 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 
 	v, bckRules, err := h.Client.Configuration.GetBackendSwitchingRules(params.Frontend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: models.BackendSwitchingRules{}}).WithConfigurationVersion(v)
+		}
 		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: bckRules}).WithConfigurationVersion(v)

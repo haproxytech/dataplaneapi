@@ -159,7 +159,10 @@ func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPR
 
 	v, rules, err := h.Client.Configuration.GetTCPResponseRules(params.Backend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return tcp_response_rule.NewGetTCPResponseRulesOK().WithPayload(&tcp_response_rule.GetTCPResponseRulesOKBody{Version: v, Data: models.TCPResponseRules{}}).WithConfigurationVersion(v)
+		}
 		return tcp_response_rule.NewGetTCPResponseRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return tcp_response_rule.NewGetTCPResponseRulesOK().WithPayload(&tcp_response_rule.GetTCPResponseRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)

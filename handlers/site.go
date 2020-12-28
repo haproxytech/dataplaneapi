@@ -158,7 +158,10 @@ func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal inte
 
 	v, s, err := h.Client.Configuration.GetSites(t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: models.Sites{}}).WithConfigurationVersion(v)
+		}
 		return sites.NewGetSitesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: s}).WithConfigurationVersion(v)
