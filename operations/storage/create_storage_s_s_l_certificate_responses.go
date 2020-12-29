@@ -41,7 +41,7 @@ type CreateStorageSSLCertificateCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload string `json:"body,omitempty"`
+	Payload *models.SslCertificate `json:"body,omitempty"`
 }
 
 // NewCreateStorageSSLCertificateCreated creates CreateStorageSSLCertificateCreated with default headers values
@@ -51,13 +51,13 @@ func NewCreateStorageSSLCertificateCreated() *CreateStorageSSLCertificateCreated
 }
 
 // WithPayload adds the payload to the create storage s s l certificate created response
-func (o *CreateStorageSSLCertificateCreated) WithPayload(payload string) *CreateStorageSSLCertificateCreated {
+func (o *CreateStorageSSLCertificateCreated) WithPayload(payload *models.SslCertificate) *CreateStorageSSLCertificateCreated {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the create storage s s l certificate created response
-func (o *CreateStorageSSLCertificateCreated) SetPayload(payload string) {
+func (o *CreateStorageSSLCertificateCreated) SetPayload(payload *models.SslCertificate) {
 	o.Payload = payload
 }
 
@@ -65,9 +65,11 @@ func (o *CreateStorageSSLCertificateCreated) SetPayload(payload string) {
 func (o *CreateStorageSSLCertificateCreated) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(201)
-	payload := o.Payload
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 

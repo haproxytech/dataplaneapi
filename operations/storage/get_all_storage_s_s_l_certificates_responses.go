@@ -41,7 +41,7 @@ type GetAllStorageSSLCertificatesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []string `json:"body,omitempty"`
+	Payload models.SslCertificates `json:"body,omitempty"`
 }
 
 // NewGetAllStorageSSLCertificatesOK creates GetAllStorageSSLCertificatesOK with default headers values
@@ -51,13 +51,13 @@ func NewGetAllStorageSSLCertificatesOK() *GetAllStorageSSLCertificatesOK {
 }
 
 // WithPayload adds the payload to the get all storage s s l certificates o k response
-func (o *GetAllStorageSSLCertificatesOK) WithPayload(payload []string) *GetAllStorageSSLCertificatesOK {
+func (o *GetAllStorageSSLCertificatesOK) WithPayload(payload models.SslCertificates) *GetAllStorageSSLCertificatesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get all storage s s l certificates o k response
-func (o *GetAllStorageSSLCertificatesOK) SetPayload(payload []string) {
+func (o *GetAllStorageSSLCertificatesOK) SetPayload(payload models.SslCertificates) {
 	o.Payload = payload
 }
 
@@ -68,7 +68,7 @@ func (o *GetAllStorageSSLCertificatesOK) WriteResponse(rw http.ResponseWriter, p
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]string, 0, 50)
+		payload = models.SslCertificates{}
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

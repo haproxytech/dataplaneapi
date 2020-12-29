@@ -29,45 +29,47 @@ import (
 	"github.com/haproxytech/models/v2"
 )
 
-// ReplaceStorageSSLCertificateOKCode is the HTTP code returned for type ReplaceStorageSSLCertificateOK
-const ReplaceStorageSSLCertificateOKCode int = 200
+// ReplaceStorageSSLCertificateAcceptedCode is the HTTP code returned for type ReplaceStorageSSLCertificateAccepted
+const ReplaceStorageSSLCertificateAcceptedCode int = 202
 
-/*ReplaceStorageSSLCertificateOK SSL certificate replaced
+/*ReplaceStorageSSLCertificateAccepted SSL certificate replaced
 
-swagger:response replaceStorageSSLCertificateOK
+swagger:response replaceStorageSSLCertificateAccepted
 */
-type ReplaceStorageSSLCertificateOK struct {
+type ReplaceStorageSSLCertificateAccepted struct {
 
 	/*
 	  In: Body
 	*/
-	Payload string `json:"body,omitempty"`
+	Payload *models.SslCertificate `json:"body,omitempty"`
 }
 
-// NewReplaceStorageSSLCertificateOK creates ReplaceStorageSSLCertificateOK with default headers values
-func NewReplaceStorageSSLCertificateOK() *ReplaceStorageSSLCertificateOK {
+// NewReplaceStorageSSLCertificateAccepted creates ReplaceStorageSSLCertificateAccepted with default headers values
+func NewReplaceStorageSSLCertificateAccepted() *ReplaceStorageSSLCertificateAccepted {
 
-	return &ReplaceStorageSSLCertificateOK{}
+	return &ReplaceStorageSSLCertificateAccepted{}
 }
 
-// WithPayload adds the payload to the replace storage s s l certificate o k response
-func (o *ReplaceStorageSSLCertificateOK) WithPayload(payload string) *ReplaceStorageSSLCertificateOK {
+// WithPayload adds the payload to the replace storage s s l certificate accepted response
+func (o *ReplaceStorageSSLCertificateAccepted) WithPayload(payload *models.SslCertificate) *ReplaceStorageSSLCertificateAccepted {
 	o.Payload = payload
 	return o
 }
 
-// SetPayload sets the payload to the replace storage s s l certificate o k response
-func (o *ReplaceStorageSSLCertificateOK) SetPayload(payload string) {
+// SetPayload sets the payload to the replace storage s s l certificate accepted response
+func (o *ReplaceStorageSSLCertificateAccepted) SetPayload(payload *models.SslCertificate) {
 	o.Payload = payload
 }
 
 // WriteResponse to the client
-func (o *ReplaceStorageSSLCertificateOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+func (o *ReplaceStorageSSLCertificateAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.WriteHeader(200)
-	payload := o.Payload
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	rw.WriteHeader(202)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 

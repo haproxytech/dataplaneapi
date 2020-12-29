@@ -16,11 +16,14 @@
 package handlers
 
 import (
+	"path/filepath"
+
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/storage"
+	models "github.com/haproxytech/models/v2"
 )
 
 // StorageGetAllStorageSSLCertificatesHandlerImpl implementation of the StorageGetAllStorageSSLCertificatesHandler interface
@@ -30,12 +33,20 @@ type StorageGetAllStorageSSLCertificatesHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *StorageGetAllStorageSSLCertificatesHandlerImpl) Handle(params storage.GetAllStorageSSLCertificatesParams, principal interface{}) middleware.Responder {
-	files, err := h.Client.SSLCertStorage.GetAll()
+	filelist, err := h.Client.SSLCertStorage.GetAll()
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetAllStorageSSLCertificatesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return &storage.GetAllStorageSSLCertificatesOK{Payload: files}
+
+	retFiles := []*models.SslCertificate{}
+	for _, f := range filelist {
+		retFiles = append(retFiles, &models.SslCertificate{
+			Description: "managed but not loaded map file (no runtime ID)",
+			StorageName: filepath.Base(f),
+		})
+	}
+	return &storage.GetAllStorageSSLCertificatesOK{Payload: retFiles}
 }
 
 // StorageGetOneStorageMapHandlerImpl implementation of the StorageGetOneStorageSSLCertificateHandler interface
@@ -44,15 +55,19 @@ type StorageGetOneStorageSSLCertificateHandlerImpl struct {
 }
 
 func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.GetOneStorageSSLCertificateParams, principal interface{}) middleware.Responder {
-	ssl, err := h.Client.SSLCertStorage.Get(params.Name)
+	filename, err := h.Client.SSLCertStorage.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
-	if ssl == "" {
+	if filename == "" {
 		return storage.NewGetOneStorageSSLCertificateNotFound()
 	}
-	return storage.NewGetOneStorageSSLCertificateOK().WithPayload(ssl)
+	retf := &models.SslCertificate{
+		Description: "managed but not loaded map file (no runtime ID)",
+		StorageName: filepath.Base(filename),
+	}
+	return storage.NewGetOneStorageSSLCertificateOK().WithPayload(retf)
 }
 
 // StorageDeleteStorageSSLCertificateHandlerImpl implementation of the StorageDeleteStorageSSLCertificateHandler interface
@@ -75,12 +90,16 @@ type StorageReplaceStorageSSLCertificateHandlerImpl struct {
 }
 
 func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
-	f, err := h.Client.SSLCertStorage.Replace(params.Name, params.Data)
+	filename, err := h.Client.SSLCertStorage.Replace(params.Name, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
-	return storage.NewReplaceStorageSSLCertificateOK().WithPayload(f)
+	retf := &models.SslCertificate{
+		Description: "managed but not loaded map file (no runtime ID)",
+		StorageName: filepath.Base(filename),
+	}
+	return storage.NewReplaceStorageSSLCertificateAccepted().WithPayload(retf)
 }
 
 // StorageCreateStorageSSLCertificateHandlerImpl implementation of the StorageCreateStorageSSLCertificateHandler interface
@@ -93,10 +112,14 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 	if !ok {
 		return storage.NewCreateStorageSSLCertificateBadRequest()
 	}
-	path, err := h.Client.SSLCertStorage.Create(file.Header.Filename, params.FileUpload)
+	filename, err := h.Client.SSLCertStorage.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewCreateStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
-	return storage.NewCreateStorageSSLCertificateCreated().WithPayload(path)
+	retf := &models.SslCertificate{
+		Description: "managed but not loaded map file (no runtime ID)",
+		StorageName: filepath.Base(filename),
+	}
+	return storage.NewCreateStorageSSLCertificateCreated().WithPayload(retf)
 }

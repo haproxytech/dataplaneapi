@@ -55,7 +55,7 @@ func (o *ReplaceStorageSSLCertificateURL) SetBasePath(bp string) {
 func (o *ReplaceStorageSSLCertificateURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/storage/ssl_certs/{name}"
+	var _path = "/services/haproxy/storage/ssl_certificates/{name}"
 
 	name := o.Name
 	if name != "" {

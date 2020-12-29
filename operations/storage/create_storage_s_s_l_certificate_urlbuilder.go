@@ -50,7 +50,7 @@ func (o *CreateStorageSSLCertificateURL) SetBasePath(bp string) {
 func (o *CreateStorageSSLCertificateURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/storage/ssl_certs"
+	var _path = "/services/haproxy/storage/ssl_certificates"
 
 	_basePath := o._basePath
 	if _basePath == "" {

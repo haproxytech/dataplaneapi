@@ -1632,7 +1632,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/storage/ssl_certs"] = storage.NewCreateStorageSSLCertificate(o.context, o.StorageCreateStorageSSLCertificateHandler)
+	o.handlers["POST"]["/services/haproxy/storage/ssl_certificates"] = storage.NewCreateStorageSSLCertificate(o.context, o.StorageCreateStorageSSLCertificateHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -1724,7 +1724,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/storage/ssl_certs/{name}"] = storage.NewDeleteStorageSSLCertificate(o.context, o.StorageDeleteStorageSSLCertificateHandler)
+	o.handlers["DELETE"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewDeleteStorageSSLCertificate(o.context, o.StorageDeleteStorageSSLCertificateHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -1760,7 +1760,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/storage/ssl_certs"] = storage.NewGetAllStorageSSLCertificates(o.context, o.StorageGetAllStorageSSLCertificatesHandler)
+	o.handlers["GET"]["/services/haproxy/storage/ssl_certificates"] = storage.NewGetAllStorageSSLCertificates(o.context, o.StorageGetAllStorageSSLCertificatesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1888,7 +1888,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/storage/ssl_certs/{name}"] = storage.NewGetOneStorageSSLCertificate(o.context, o.StorageGetOneStorageSSLCertificateHandler)
+	o.handlers["GET"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewGetOneStorageSSLCertificate(o.context, o.StorageGetOneStorageSSLCertificateHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2128,7 +2128,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/storage/ssl_certs/{name}"] = storage.NewReplaceStorageSSLCertificate(o.context, o.StorageReplaceStorageSSLCertificateHandler)
+	o.handlers["PUT"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewReplaceStorageSSLCertificate(o.context, o.StorageReplaceStorageSSLCertificateHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

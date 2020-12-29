@@ -7397,7 +7397,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/storage/ssl_certs": {
+    "/services/haproxy/storage/ssl_certificates": {
       "get": {
         "description": "Returns all available SSL certificates on disk.",
         "tags": [
@@ -7409,10 +7409,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "$ref": "#/definitions/ssl_certificates"
             }
           },
           "404": {
@@ -7446,7 +7443,7 @@ func init() {
           "201": {
             "description": "SSL certificate created",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ssl_certificate"
             }
           },
           "400": {
@@ -7461,7 +7458,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/storage/ssl_certs/{name}": {
+    "/services/haproxy/storage/ssl_certificates/{name}": {
       "get": {
         "description": "Returns one SSL certificate from disk.",
         "tags": [
@@ -7482,7 +7479,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ssl_certificate"
             }
           },
           "404": {
@@ -7524,10 +7521,10 @@ func init() {
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": "SSL certificate replaced",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ssl_certificate"
             }
           },
           "400": {
@@ -14133,6 +14130,27 @@ func init() {
         "hello": {
           "type": "string"
         }
+      }
+    },
+    "ssl_certificate": {
+      "description": "A file containing one or more SSL/TLS certificates and keys",
+      "type": "object",
+      "title": "SSL File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_certificates": {
+      "description": "Array of ssl certificate files",
+      "type": "array",
+      "title": "SSL Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_certificate"
       }
     },
     "stats_options": {
@@ -26341,7 +26359,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/storage/ssl_certs": {
+    "/services/haproxy/storage/ssl_certificates": {
       "get": {
         "description": "Returns all available SSL certificates on disk.",
         "tags": [
@@ -26353,10 +26371,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "$ref": "#/definitions/ssl_certificates"
             }
           },
           "404": {
@@ -26410,7 +26425,7 @@ func init() {
           "201": {
             "description": "SSL certificate created",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ssl_certificate"
             }
           },
           "400": {
@@ -26455,7 +26470,7 @@ func init() {
         }
       }
     },
-    "/services/haproxy/storage/ssl_certs/{name}": {
+    "/services/haproxy/storage/ssl_certificates/{name}": {
       "get": {
         "description": "Returns one SSL certificate from disk.",
         "tags": [
@@ -26476,7 +26491,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ssl_certificate"
             }
           },
           "404": {
@@ -26538,10 +26553,10 @@ func init() {
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": "SSL certificate replaced",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ssl_certificate"
             }
           },
           "400": {
@@ -33615,6 +33630,27 @@ func init() {
         "hello": {
           "type": "string"
         }
+      }
+    },
+    "ssl_certificate": {
+      "description": "A file containing one or more SSL/TLS certificates and keys",
+      "type": "object",
+      "title": "SSL File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_certificates": {
+      "description": "Array of ssl certificate files",
+      "type": "array",
+      "title": "SSL Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_certificate"
       }
     },
     "stats_options": {

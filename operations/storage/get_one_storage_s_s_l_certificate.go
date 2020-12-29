@@ -44,7 +44,7 @@ func NewGetOneStorageSSLCertificate(ctx *middleware.Context, handler GetOneStora
 	return &GetOneStorageSSLCertificate{Context: ctx, Handler: handler}
 }
 
-/*GetOneStorageSSLCertificate swagger:route GET /services/haproxy/storage/ssl_certs/{name} Storage getOneStorageSSLCertificate
+/*GetOneStorageSSLCertificate swagger:route GET /services/haproxy/storage/ssl_certificates/{name} Storage getOneStorageSSLCertificate
 
 Return one SSL certificate from disk
 
