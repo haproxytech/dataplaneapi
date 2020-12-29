@@ -58,7 +58,9 @@ else
 fi
 
 echo '>>> Waiting dataplane API to be up and running'
-until nc -z "${LOCAL_IP_ADDRESS}" "${E2E_PORT}" 2>&1; do sleep 1; done
+DATAPLANE_USER=$(grep insecure-password ${E2E_DIR}/fixtures/userlist.cfg | awk '{print $2}')
+DATAPLANE_PASS=$(grep insecure-password ${E2E_DIR}/fixtures/userlist.cfg | awk '{print $4}')
+until curl -s "${DATAPLANE_USER}:${DATAPLANE_PASS}@${LOCAL_IP_ADDRESS}":"${E2E_PORT}${BASE_PATH}/specification" 2>&1 1>/dev/null; do sleep 1; done
 
 # deferring Docker container removal
 # shellcheck disable=SC1090

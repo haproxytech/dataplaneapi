@@ -33,7 +33,7 @@ function dataplaneapi() {
   if [ -z "$1" ]; then
     data="/dev/null"
   fi
-  response=$(curl -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
+  response=$(curl -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
   status_code=$(tail -n1 <<< "$response")
   response=$(sed '$ d' <<< "$response")
   echo "$status_code $response"
@@ -44,7 +44,7 @@ function dataplaneapi_text_plain() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
-  response=$(curl -s -H 'content-type: text/plain' --user dataplaneapi:mypassword "-X${verb}" -w "%{http_code}" --data-binary "${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
+  response=$(curl -s -H 'content-type: text/plain' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --data-binary "${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
   status_code=$(tail -n1 <<< "$response")
   response=$(sed '$ d' <<< "$response")
   echo "$status_code $response"
