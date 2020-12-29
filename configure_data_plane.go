@@ -641,6 +641,8 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 			log.Fatalf("error initializing SSL certs storage: %v", err)
 		}
 		client.SSLCertStorage = sslCertStorage
+	} else {
+		log.Fatalf("error trying to use empty string for managed map directory")
 	}
 	return client
 }
