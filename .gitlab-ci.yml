@@ -1,8 +1,10 @@
 stages:
   - lint
+  - build
   - e2e
 variables:
   DOCKER_HOST: tcp://docker:2375
+  DOCKER_BASE_IMAGE: $CI_REGISTRY_GO/haproxy-alpine
 
 golangci-lint:
   stage: lint
@@ -10,54 +12,64 @@ golangci-lint:
     paths:
       - build
   image:
-    name: golangci/golangci-lint:v1.21.0
+    name: $CI_REGISTRY_GO/golangci/golangci-lint:v1.21.0
     entrypoint: [ "" ]
   tags:
-    - docker
+    - go
   script:
-    - go env
-    - go mod verify
     - golangci-lint run -v --color always --timeout 120s
-    - make build
-
 lint-commit-msg:
   stage: lint
   image:
-    name: haproxytech/check-commit:latest
-    entrypoint: [ "" ]
+    name: $CI_REGISTRY_GO/check-commit:latest
+    entrypoint: [""]
   tags:
     - go
   script:
     - go run /check.go
 
+build:
+  stage: build
+  artifacts:
+    paths:
+      - build
+  image:
+    name: $CI_REGISTRY_GO/golang:1.15
+    entrypoint: [ "" ]
+  tags:
+    - go
+  script:
+    - go env
+    - go mod verify
+    - make build
+
 .e2e:
   stage: e2e
   image:
-    name: docker:stable
+    name: $CI_REGISTRY_GO/docker:stable
     entrypoint: [ "" ]
   services:
-    - name: docker:18.09.7-dind
+    - name: $CI_REGISTRY_GO/docker:18.09.7-dind
       alias: docker
   tags:
     - go
   before_script:
     - apk add git bash curl jq bats
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY_GO
   script:
     - bash -x ./e2e/run.bash
 
-v21:
+HAProxy_2_1:
   extends: .e2e
   variables:
     LOCAL_IP_ADDRESS: docker
     HAPROXY_VERSION: "2.1"
-
-v22:
+HAProxy_2_2:
   extends: .e2e
   variables:
     LOCAL_IP_ADDRESS: docker
     HAPROXY_VERSION: "2.2"
-
-v23:
+HAProxy_2_3:
   extends: .e2e
   variables:
     LOCAL_IP_ADDRESS: docker
