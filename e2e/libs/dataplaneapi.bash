@@ -33,7 +33,7 @@ function dpa_curl() {
   if [ -z "$1" ]; then
     data="/dev/null"
   fi
-  response=$(curl -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
+  response=$(curl -m 10 -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
   status_code=$(tail -n1 <<< "$response")
   response=$(sed '$ d' <<< "$response")
   echo "$status_code $response"
@@ -44,7 +44,7 @@ function dpa_curl_text_plain() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
-  response=$(curl -s -H 'content-type: text/plain' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --data-binary "${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
+  response=$(curl -m 10 -s -H 'content-type: text/plain' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --data-binary "${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
   status_code=$(tail -n1 <<< "$response")
   response=$(sed '$ d' <<< "$response")
   echo "$status_code $response"
@@ -54,7 +54,7 @@ function dpa_curl_file_upload() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
-  response=$(curl -s -H "Content-type: multipart/form-data" --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --form "file_upload=${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
+  response=$(curl -m 10 -s -H "Content-type: multipart/form-data" --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --form "file_upload=${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
   status_code=$(tail -n1 <<< "$response")
   response=$(sed '$ d' <<< "$response")
   echo "$status_code $response"
@@ -70,7 +70,7 @@ function dpa_curl_download() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
-  response=$(curl -v -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}" 2>/tmp/headers)
+  response=$(curl -m 10 -v -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}" 2>/tmp/headers)
   #echo "$status_code $body"
   status_code=$(tail -n1 <<< "$response")
   body=$(head -n -1 <<< "$response")
