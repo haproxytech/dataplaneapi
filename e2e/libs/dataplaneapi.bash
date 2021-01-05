@@ -92,12 +92,26 @@ function dpa_curl_status_body_safe() {
   eval BODY="'$body'"
 }
 
+# compare contents of a variable and a local file with diff
 function dpa_diff_var_file() {
   eval arg1=$1
   eval arg2=$2
   echo "> dpa_diff_var_file arg1 is $arg1"
   echo "> dpa_diff_var_file arg2 is $arg2"
-  diff <(echo -e "$arg1") ${BATS_TEST_DIRNAME}/$arg2
+  diff <(echo -e "${arg1}") "${BATS_TEST_DIRNAME}/${arg2}"
+}
+
+function dpa_docker_exec() {
+    docker exec "${DOCKER_CONTAINER_NAME}" sh -c "$@"
+}
+
+# compare contents of a file in docker container and a local file with diff
+function dpa_diff_docker_file() {
+  eval arg1=$1
+  eval arg2=$2
+  echo "> dpa_diff_docker_file arg1 is $arg1"
+  echo "> dpa_diff_docker_file arg2 is $arg2"
+  diff <(dpa_docker_exec "cat ${arg1}") "${BATS_TEST_DIRNAME}/${arg2}"
 }
 
 # version return the current HAProxy configuration file version, useful to

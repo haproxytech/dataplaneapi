@@ -20,6 +20,10 @@ load "../../libs/get_json_path"
 load '../../libs/version'
 
 @test "Add a ssl certificate file" {
+
+    run dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+    assert_failure
+
     run dpa_curl_file_upload POST "/services/haproxy/storage/ssl_certificates" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem"
     assert_success
 
@@ -28,7 +32,8 @@ load '../../libs/version'
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
 
-    assert [ ! -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/ssl/ | grep 1.pem')" ]
+    run dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+    assert_success
 }
 
 @test "Get a list of managed ssl certificate files" {
@@ -51,8 +56,10 @@ load '../../libs/version'
     dpa_curl_status_body '$output'
     assert_equal $SC 200
 
-    assert [ -z "$(diff <(echo -e "$BODY") ${E2E_DIR}/fixtures/1.pem)" ]
+    assert_output --partial "1.pem"
 
+    # we opted to not return the certificate contents (i.e. secret keys, just the identifier)
+    #assert dpa_diff_var_file '$BODY' "1.pem"
 }
 
 @test "Replace a ssl certificate file contents" {
@@ -70,5 +77,6 @@ load '../../libs/version'
     dpa_curl_status_body_safe '$output'
     assert_equal $SC 204
 
-    assert [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/ssl/ | grep 1.pem')" ]
+    run dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+    assert_failure
 }

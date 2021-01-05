@@ -26,13 +26,13 @@ setup() {
   fi
   assert_success
 
-  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'kill -SIGUSR2 1'
+  run dpa_docker_exec 'kill -SIGUSR2 1'
   assert_success
 
-  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'pkill -9 dataplaneapi'
+  run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
   assert_success
   until dpa_curl GET "/info"; do
       sleep 0.1
@@ -44,13 +44,13 @@ teardown() {
   run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   assert_success
 
-  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'kill -SIGUSR2 1'
+  run dpa_docker_exec 'kill -SIGUSR2 1'
   assert_success
 
-  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'pkill -9 dataplaneapi'
+  run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
   assert_success
   until dpa_curl GET "/info"; do
       sleep 0.1

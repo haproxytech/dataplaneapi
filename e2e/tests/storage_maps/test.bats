@@ -21,7 +21,8 @@ load '../../libs/version'
 
 @test "Add a mapfile" {
 
-    assert [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
+    run dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
+    assert_failure
 
     run dpa_curl_file_upload POST "/services/haproxy/storage/maps" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map"
     assert_success
@@ -31,14 +32,15 @@ load '../../libs/version'
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "mapfile_example.map"
 
-    assert [ ! -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
+    run dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
+    assert_success
 }
 
 @test "Get a list of managed mapfiles" {
 
     # sometimes we can't establish a connection to the haproxy stat socket
     # forcing haproxy to restart seems to fix that
-    run docker exec dataplaneapi-e2e /bin/sh -c 'kill -SIGUSR2 1'
+    run dpa_docker_exec 'kill -SIGUSR2 1'
     assert_success
     sleep 1
 
@@ -62,6 +64,8 @@ load '../../libs/version'
     assert_equal $SC 200
 
     assert dpa_diff_var_file '$BODY' 'mapfile_example.map'
+
+    assert dpa_diff_docker_file '/etc/haproxy/maps/mapfile_example.map' "mapfile_example.map"
 }
 
 @test "Try to get unavailable mapfile contents" {
@@ -88,6 +92,8 @@ load '../../libs/version'
     assert_equal $SC 200
 
     assert dpa_diff_var_file '$BODY' 'mapfile_example2.map'
+
+    assert dpa_diff_docker_file '/etc/haproxy/maps/mapfile_example.map' "mapfile_example2.map"
 }
 
 @test "Delete a mapfile" {
@@ -98,5 +104,6 @@ load '../../libs/version'
     dpa_curl_status_body '$output'
     assert_equal $SC 204
 
-    assert [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
+    run dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
+    assert_failure
 }
