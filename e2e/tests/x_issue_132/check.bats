@@ -19,6 +19,9 @@ load '../../libs/dataplaneapi'
 load '../../libs/haproxy_config_setup'
 
 @test "https://github.com/haproxytech/dataplaneapi/issues/132" {
-	read -r SC BODY < <(dpa_curl POST "/services/haproxy/configuration/servers?backend=bug_132&force_reload=true&version=$(version)" add_server.json)
-	[ "${SC}" = 201 ]
+    run dpa_curl POST "/services/haproxy/configuration/servers?backend=bug_132&force_reload=true&version=$(version)" add_server.json
+    assert_success
+
+    dpa_curl_status_body '$output'
+    assert_equal $SC 201
 }

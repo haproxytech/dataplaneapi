@@ -20,6 +20,9 @@ load '../../libs/version'
 load '../../libs/get_json_path'
 
 @test "specification v2" {
-	read -r SC BODY < <(dpa_curl GET "/specification")
-	[ "${SC}" = 200 ]
+    run dpa_curl GET "/specification"
+    assert_success
+
+    dpa_curl_status_body_safe '$output'
+    assert_equal $SC 200
 }

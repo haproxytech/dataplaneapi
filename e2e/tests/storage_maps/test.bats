@@ -21,64 +21,82 @@ load '../../libs/version'
 
 @test "Add a mapfile" {
 
-    [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
+    assert [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
 
-    read -r SC BODY < <(dpa_curl_file_upload POST "/services/haproxy/storage/maps" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map")
+    run dpa_curl_file_upload POST "/services/haproxy/storage/maps" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map"
+    assert_success
 
-    [ "${SC}" = 201 ]
+    dpa_curl_status_body '$output'
+    assert_equal $SC 201
 
-    local STORAGE_NAME; STORAGE_NAME=$(get_json_path "$BODY" '.storage_name')
-    [ "${STORAGE_NAME}" = "mapfile_example.map" ]
+    assert_equal $(get_json_path "$BODY" '.storage_name') "mapfile_example.map"
 
-    [ ! -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
+    assert [ ! -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
 }
 
 @test "Get a list of managed mapfiles" {
 
-    read -r SC BODY < <(dpa_curl GET "/services/haproxy/storage/maps/")
+    # sometimes we can't establish a connection to the haproxy stat socket
+    # forcing haproxy to restart seems to fix that
+    run docker exec dataplaneapi-e2e /bin/sh -c 'kill -SIGUSR2 1'
+    assert_success
+    sleep 1
 
-    [ "${SC}" = 200 ]
+    run dpa_curl GET "/services/haproxy/storage/maps/"
+    assert_success
 
-    local LENGTH; LENGTH=$(get_json_path "$BODY" '.|length')
-    [ "${LENGTH}" == 1 ]
+    dpa_curl_status_body '$output'
+    assert_equal $SC 200
 
-    local STORAGE_NAME; STORAGE_NAME=$(get_json_path "$BODY" '.[0].storage_name')
-    [ "${STORAGE_NAME}" = "mapfile_example.map" ]
+    assert_equal $(get_json_path "$BODY" '.|length') 1
+
+    assert_equal $(get_json_path "$BODY" '.[0].storage_name') "mapfile_example.map"
 }
 
 @test "Get a mapfile contents" {
-    local BODY;
-    local SC;
 
-    dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+    run dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+    assert_success
 
-    [ "${SC}" = 200 ]
+    dpa_curl_status_body '$output'
+    assert_equal $SC 200
 
-    [ -z "$(diff <(echo -e "$BODY") ${E2E_DIR}/fixtures/mapfile_example.map)" ]
+    assert dpa_diff_var_file '$BODY' 'mapfile_example.map'
 }
 
 @test "Try to get unavailable mapfile contents" {
 
-    read -r SC BODY < <(dpa_curl GET "/services/haproxy/storage/maps/not_here.map")
+    run dpa_curl GET "/services/haproxy/storage/maps/not_here.map"
+    assert_success
 
-    [ "${SC}" = 404 ]
+    dpa_curl_status_body_safe '$output'
+    assert_equal $SC 404
 }
 
 @test "Replace a mapfile contents" {
 
-    read -r SC BODY < <(dpa_curl_text_plain PUT "/services/haproxy/storage/maps/mapfile_example.map" "@${BATS_TEST_DIRNAME}/mapfile_example2.map")
+    run dpa_curl_text_plain PUT "/services/haproxy/storage/maps/mapfile_example.map" "@${BATS_TEST_DIRNAME}/mapfile_example2.map"
+    assert_success
 
-    [ "${SC}" = 202 ]
+    dpa_curl_status_body '$output'
+    assert_equal $SC 202
 
-    dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
-    [ -z "$(diff <(echo -e "$BODY") ${BATS_TEST_DIRNAME}/mapfile_example2.map)" ]
+    run dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+    assert_success
+
+    dpa_curl_status_body '$output'
+    assert_equal $SC 200
+
+    assert dpa_diff_var_file '$BODY' 'mapfile_example2.map'
 }
 
 @test "Delete a mapfile" {
 
-    read -r SC BODY < <(dpa_curl DELETE "/services/haproxy/storage/maps/mapfile_example.map")
+    run dpa_curl DELETE "/services/haproxy/storage/maps/mapfile_example.map"
+    assert_success
 
-    [ "${SC}" = 204 ]
+    dpa_curl_status_body '$output'
+    assert_equal $SC 204
 
-    [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
+    assert [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
 }

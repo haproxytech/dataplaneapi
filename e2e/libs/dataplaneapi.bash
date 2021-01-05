@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 
+load '../../libs/bats-support/load'
+load '../../libs/bats-assert/load'
+
 # dpa_curl is going to return the response status code along with the body
 # these values can be easily read as following
 #
@@ -33,10 +36,7 @@ function dpa_curl() {
   if [ -z "$1" ]; then
     data="/dev/null"
   fi
-  response=$(curl -m 10 -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
-  status_code=$(tail -n1 <<< "$response")
-  response=$(sed '$ d' <<< "$response")
-  echo "$status_code $response"
+  curl -m 10 -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}"
 }
 
 # dpa_curl_text_plain behaves in same manner as api, but uses content-type: text/plain
@@ -44,20 +44,14 @@ function dpa_curl_text_plain() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
-  response=$(curl -m 10 -s -H 'content-type: text/plain' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --data-binary "${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
-  status_code=$(tail -n1 <<< "$response")
-  response=$(sed '$ d' <<< "$response")
-  echo "$status_code $response"
+  curl -m 10 -s -H 'content-type: text/plain' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --data-binary "${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}"
 }
 
 function dpa_curl_file_upload() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
-  response=$(curl -m 10 -s -H "Content-type: multipart/form-data" --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --form "file_upload=${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}")
-  status_code=$(tail -n1 <<< "$response")
-  response=$(sed '$ d' <<< "$response")
-  echo "$status_code $response"
+  curl -m 10 -s -H "Content-type: multipart/form-data" --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" --form "file_upload=${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}"
 }
 
 # function dpa_curl_download returns values differently to allow for multiline body contents, it should be used as follows:
@@ -70,12 +64,40 @@ function dpa_curl_download() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
-  response=$(curl -m 10 -v -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}" 2>/tmp/headers)
-  #echo "$status_code $body"
+  curl -m 10 -v -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${BASE_PATH}${endpoint}" 2>/tmp/headers
+}
+
+# extracts the resulting http status code and body from dpa_curl_* functions into variables
+# note: will not work properly if body contains ' characters
+function dpa_curl_status_body() {
+  eval response=$1
+  assert [ ! -z "$response" ]
+  echo "> dpa_curl_status_body argument is"
+  echo "$response"
   status_code=$(tail -n1 <<< "$response")
   body=$(head -n -1 <<< "$response")
   eval SC="'$status_code'"
   eval BODY="'$body'"
+}
+
+# behaves like dpa_curl_status_body but handles ' in contents safely
+function dpa_curl_status_body_safe() {
+  eval response=$1
+  assert [ ! -z "$response" ]
+  echo "> dpa_curl_status_body argument is"
+  echo "$response"
+  status_code=$(tail -n1 <<< "$response")
+  body=$(head -n -1 <<< "$response" | sed -e "s/'//g")
+  eval SC="'$status_code'"
+  eval BODY="'$body'"
+}
+
+function dpa_diff_var_file() {
+  eval arg1=$1
+  eval arg2=$2
+  echo "> dpa_diff_var_file arg1 is $arg1"
+  echo "> dpa_diff_var_file arg2 is $arg2"
+  diff <(echo -e "$arg1") ${BATS_TEST_DIRNAME}/$arg2
 }
 
 # version return the current HAProxy configuration file version, useful to
