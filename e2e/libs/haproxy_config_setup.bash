@@ -19,51 +19,40 @@
 
 # setup puts configuration from test folder as the one active in dataplane
 setup() {
-  assert_equal 0 1
-  run dpa_curl_text_plain POST "/services/haproxy/configuration/raw?skip_version=true" "@${BATS_TEST_DIRNAME}/haproxy.cfg"
+  if [ -f "${BATS_TEST_DIRNAME}/haproxy.cfg" ]; then
+      run docker cp "${BATS_TEST_DIRNAME}/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+  else
+      run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+  fi
   assert_success
 
-  dpa_curl_status_body '$output'
-  assert_equal $SC 202
-  sleep 0.002
-
-  run dpa_curl GET "/services/haproxy/configuration/global"
+  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'kill -SIGUSR2 1'
   assert_success
 
-  dpa_curl_status_body '$output'
-  V="$(RES=${BODY} jq -n 'env.RES | fromjson | ._version')"
-  while [ "$V" = "42" ]
-  do
-    sleep 0.001
-    dpa_curl GET "/services/haproxy/configuration/global"
-    assert_success
+  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'pkill -9 dataplaneapi'
+  assert_success
 
-    dpa_curl_status_body '$output'
-    V="$(RES=${BODY} jq -n 'env.RES | fromjson | ._version')"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
+  assert_success
+  until dpa_curl GET "/info"; do
+      sleep 0.1
   done
-  exit 0
 }
 
 # teardown returns original configuration to dataplane
 teardown() {
-  dpa_curl_text_plain POST "/services/haproxy/configuration/raw?skip_version=true" "@${E2E_DIR}/fixtures/haproxy.cfg"
+  run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   assert_success
 
-  assert_equal $SC 202
-
-  sleep 0.002
-  dpa_curl GET "/services/haproxy/configuration/global"
+  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'kill -SIGUSR2 1'
   assert_success
 
-  dpa_curl_status_body '$output'
-  V="$(RES=${BODY} jq -n 'env.RES | fromjson | ._version')"
-  while [ "$V" != "42" ]
-  do
-    sleep 0.001
-    dpa_curl GET "/services/haproxy/configuration/global"
-    assert_success
+  run docker exec "${DOCKER_CONTAINER_NAME}" /bin/sh -c 'pkill -9 dataplaneapi'
+  assert_success
 
-    dpa_curl_status_body '$output'
-    V="$(RES=${BODY} jq -n 'env.RES | fromjson | ._version')"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
+  assert_success
+  until dpa_curl GET "/info"; do
+      sleep 0.1
   done
 }

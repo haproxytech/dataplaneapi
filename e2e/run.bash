@@ -21,6 +21,8 @@ export BASE_PATH="/v2"
 HAPROXY_VERSION=${HAPROXY_VERSION:-2.2}
 DOCKER_BASE_IMAGE="${DOCKER_BASE_IMAGE:-haproxytech/haproxy-alpine}:${HAPROXY_VERSION}"
 DOCKER_CONTAINER_NAME="dataplaneapi-e2e"
+export DOCKER_CONTAINER_NAME
+
 ROOT_DIR=$(git rev-parse --show-toplevel)
 export E2E_PORT=${E2E_PORT:-8042}
 export E2E_DIR=${ROOT_DIR}/e2e
