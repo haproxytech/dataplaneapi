@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# dataplaneapi is going to return the response status code along with the body
+# dpa_curl is going to return the response status code along with the body
 # these values can be easily read as following
 #
 # read -r SC BODY < <(api GET /services/haproxy/runtime/info)
@@ -26,7 +26,7 @@
 # - HTTP verb
 # - original URL
 # - HTTP POST data
-function dataplaneapi() {
+function dpa_curl() {
   verb=$1; shift
   endpoint=$1; shift
   data="@${BATS_TEST_DIRNAME}/$1";
@@ -39,8 +39,8 @@ function dataplaneapi() {
   echo "$status_code $response"
 }
 
-# dataplaneapi_text_plain behaves in same manner as api, but uses content-type: text/plain
-function dataplaneapi_text_plain() {
+# dpa_curl_text_plain behaves in same manner as api, but uses content-type: text/plain
+function dpa_curl_text_plain() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
@@ -50,7 +50,7 @@ function dataplaneapi_text_plain() {
   echo "$status_code $response"
 }
 
-function dataplaneapi_file_upload() {
+function dpa_curl_file_upload() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
@@ -60,13 +60,13 @@ function dataplaneapi_file_upload() {
   echo "$status_code $response"
 }
 
-# function dataplaneapi_download returns values differently to allow for multiline body contents, it should be used as follows:
+# function dpa_curl_download returns values differently to allow for multiline body contents, it should be used as follows:
 # local BODY;
 # local SC;
-# dataplaneapi_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+# dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
 # echo "Status Code: ${SC}"
 # echo "Body: ${BODY}"
-function dataplaneapi_download() {
+function dpa_curl_download() {
   verb=$1; shift
   endpoint=$1; shift
   data=${1:-"/dev/null"}
@@ -87,7 +87,7 @@ function dataplaneapi_download() {
 # version
 # >>> 10
 function version() {
-  read -r SC RES < <(dataplaneapi GET "/services/haproxy/configuration/global")
+  read -r SC RES < <(dpa_curl GET "/services/haproxy/configuration/global")
   V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
   echo "$V"
 }

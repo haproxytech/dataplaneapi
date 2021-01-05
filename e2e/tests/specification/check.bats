@@ -20,6 +20,6 @@ load '../../libs/version'
 load '../../libs/get_json_path'
 
 @test "specification v2" {
-	read -r SC BODY < <(dataplaneapi GET "/specification")
+	read -r SC BODY < <(dpa_curl GET "/specification")
 	[ "${SC}" = 200 ]
 }

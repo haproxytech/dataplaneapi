@@ -19,32 +19,32 @@
 
 # setup puts configuration from test folder as the one active in dataplane
 setup() {
-  read -r SC BODY < <(dataplaneapi_text_plain POST "/services/haproxy/configuration/raw?skip_version=true" "@${BATS_TEST_DIRNAME}/haproxy.cfg")
+  read -r SC BODY < <(dpa_curl_text_plain POST "/services/haproxy/configuration/raw?skip_version=true" "@${BATS_TEST_DIRNAME}/haproxy.cfg")
 	#echo "Status Code: ${SC}"
 	#echo "Body: ${BODY}"
 	[ "${SC}" = 202 ]
   sleep 0.002
-  read -r SC RES < <(dataplaneapi GET "/services/haproxy/configuration/global")
+  read -r SC RES < <(dpa_curl GET "/services/haproxy/configuration/global")
   V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
   while [ "$V" = "42" ]
   do
     sleep 0.001
-    read -r SC RES < <(dataplaneapi GET "/services/haproxy/configuration/global")
+    read -r SC RES < <(dpa_curl GET "/services/haproxy/configuration/global")
     V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
   done
 }
 
 # teardown returns original configuration to dataplane
 teardown() {
-  read -r SC _ < <(dataplaneapi_text_plain POST "/services/haproxy/configuration/raw?skip_version=true" "@${E2E_DIR}/fixtures/haproxy.cfg")
+  read -r SC _ < <(dpa_curl_text_plain POST "/services/haproxy/configuration/raw?skip_version=true" "@${E2E_DIR}/fixtures/haproxy.cfg")
   [ "${SC}" = 202 ]
   sleep 0.002
-  read -r SC RES < <(dataplaneapi GET "/services/haproxy/configuration/global")
+  read -r SC RES < <(dpa_curl GET "/services/haproxy/configuration/global")
   V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
   while [ "$V" != "42" ]
   do
     sleep 0.001
-    read -r SC RES < <(dataplaneapi GET "/services/haproxy/configuration/global")
+    read -r SC RES < <(dpa_curl GET "/services/haproxy/configuration/global")
     V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
   done
 }

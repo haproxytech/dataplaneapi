@@ -23,7 +23,7 @@ load '../../libs/version'
 
     [ -z "$(docker exec dataplaneapi-e2e /bin/sh -c 'ls /etc/haproxy/maps/ | grep mapfile_example.map')" ]
 
-    read -r SC BODY < <(dataplaneapi_file_upload POST "/services/haproxy/storage/maps" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map")
+    read -r SC BODY < <(dpa_curl_file_upload POST "/services/haproxy/storage/maps" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map")
 
     [ "${SC}" = 201 ]
 
@@ -35,7 +35,7 @@ load '../../libs/version'
 
 @test "Get a list of managed mapfiles" {
 
-    read -r SC BODY < <(dataplaneapi GET "/services/haproxy/storage/maps/")
+    read -r SC BODY < <(dpa_curl GET "/services/haproxy/storage/maps/")
 
     [ "${SC}" = 200 ]
 
@@ -50,7 +50,7 @@ load '../../libs/version'
     local BODY;
     local SC;
 
-    dataplaneapi_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+    dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
 
     [ "${SC}" = 200 ]
 
@@ -59,24 +59,24 @@ load '../../libs/version'
 
 @test "Try to get unavailable mapfile contents" {
 
-    read -r SC BODY < <(dataplaneapi GET "/services/haproxy/storage/maps/not_here.map")
+    read -r SC BODY < <(dpa_curl GET "/services/haproxy/storage/maps/not_here.map")
 
     [ "${SC}" = 404 ]
 }
 
 @test "Replace a mapfile contents" {
 
-    read -r SC BODY < <(dataplaneapi_text_plain PUT "/services/haproxy/storage/maps/mapfile_example.map" "@${BATS_TEST_DIRNAME}/mapfile_example2.map")
+    read -r SC BODY < <(dpa_curl_text_plain PUT "/services/haproxy/storage/maps/mapfile_example.map" "@${BATS_TEST_DIRNAME}/mapfile_example2.map")
 
     [ "${SC}" = 202 ]
 
-    dataplaneapi_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+    dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
     [ -z "$(diff <(echo -e "$BODY") ${BATS_TEST_DIRNAME}/mapfile_example2.map)" ]
 }
 
 @test "Delete a mapfile" {
 
-    read -r SC BODY < <(dataplaneapi DELETE "/services/haproxy/storage/maps/mapfile_example.map")
+    read -r SC BODY < <(dpa_curl DELETE "/services/haproxy/storage/maps/mapfile_example.map")
 
     [ "${SC}" = 204 ]
 

@@ -20,7 +20,7 @@ load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
 
 @test "int.247 runtime admin-state of backend app2" {
-	read -r SC BODY < <(dataplaneapi GET "/services/haproxy/runtime/servers/app2?backend=bug_int_247")
+	read -r SC BODY < <(dpa_curl GET "/services/haproxy/runtime/servers/app2?backend=bug_int_247")
 	[ "${SC}" = 200 ]
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.admin_state')
@@ -29,7 +29,7 @@ load '../../libs/haproxy_config_setup'
 }
 
 @test "int.247 runtime admin-state of backend app1" {
-	read -r SC BODY < <(dataplaneapi GET "/services/haproxy/runtime/servers/app1?backend=bug_int_247")
+	read -r SC BODY < <(dpa_curl GET "/services/haproxy/runtime/servers/app1?backend=bug_int_247")
 	[ "${SC}" = 200 ]
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.admin_state')
@@ -38,7 +38,7 @@ load '../../libs/haproxy_config_setup'
 }
 
 @test "int.247 admin-state always reports admin_state of maint if disabled keyword is used" {
-	read -r SC BODY < <(dataplaneapi PUT "/services/haproxy/runtime/servers/app2?backend=bug_int_247" enable.json)
+	read -r SC BODY < <(dpa_curl PUT "/services/haproxy/runtime/servers/app2?backend=bug_int_247" enable.json)
     [ "${SC}" = 200 ]
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.admin_state')

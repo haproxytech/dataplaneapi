@@ -20,7 +20,7 @@ load "../../libs/get_json_path"
 load '../../libs/version'
 
 @test "Add a ssl certificate file" {
-	read -r SC BODY < <(dataplaneapi_file_upload POST "/services/haproxy/storage/ssl_certificates" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem")
+	read -r SC BODY < <(dpa_curl_file_upload POST "/services/haproxy/storage/ssl_certificates" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem")
 
 	[ "${SC}" = 201 ]
 
@@ -31,7 +31,7 @@ load '../../libs/version'
 }
 
 @test "Get a list of managed ssl certificate files" {
-	read -r SC BODY < <(dataplaneapi GET "/services/haproxy/storage/ssl_certificates/")
+	read -r SC BODY < <(dpa_curl GET "/services/haproxy/storage/ssl_certificates/")
 
 	[ "${SC}" = 200 ]
 
@@ -46,7 +46,7 @@ load '../../libs/version'
     local BODY;
     local SC;
 
-	dataplaneapi_download GET "/services/haproxy/storage/ssl_certificates/1.pem"
+	dpa_curl_download GET "/services/haproxy/storage/ssl_certificates/1.pem"
 
 	[ "${SC}" = 200 ]
 
@@ -55,13 +55,13 @@ load '../../libs/version'
 }
 
 @test "Replace a ssl certificate file contents" {
-	read -r SC BODY < <(dataplaneapi_text_plain PUT "/services/haproxy/storage/ssl_certificates/1.pem" "@${BATS_TEST_DIRNAME}/2.pem")
+	read -r SC BODY < <(dpa_curl_text_plain PUT "/services/haproxy/storage/ssl_certificates/1.pem" "@${BATS_TEST_DIRNAME}/2.pem")
 
     [ "${SC}" = 202 ]
 }
 
 @test "Delete a ssl certificate file" {
-	read -r SC BODY < <(dataplaneapi DELETE "/services/haproxy/storage/ssl_certificates/1.pem")
+	read -r SC BODY < <(dpa_curl DELETE "/services/haproxy/storage/ssl_certificates/1.pem")
 
 	[ "${SC}" = 204 ]
 
