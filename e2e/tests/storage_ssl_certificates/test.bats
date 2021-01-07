@@ -21,8 +21,7 @@ load '../../libs/version'
 
 @test "Add a ssl certificate file" {
 
-    run dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
-    assert_failure
+    refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 
     run dpa_curl_file_upload POST "/services/haproxy/storage/ssl_certificates" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem"
     assert_success
@@ -32,8 +31,7 @@ load '../../libs/version'
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
 
-    run dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
-    assert_success
+    assert dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 }
 
 @test "Get a list of managed ssl certificate files" {
@@ -77,6 +75,5 @@ load '../../libs/version'
     dpa_curl_status_body_safe '$output'
     assert_equal $SC 204
 
-    run dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
-    assert_failure
+    refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 }

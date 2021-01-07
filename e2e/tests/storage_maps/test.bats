@@ -21,8 +21,7 @@ load '../../libs/version'
 
 @test "Add a mapfile" {
 
-    run dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
-    assert_failure
+    refute dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 
     run dpa_curl_file_upload POST "/services/haproxy/storage/maps" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map"
     assert_success
@@ -32,16 +31,14 @@ load '../../libs/version'
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "mapfile_example.map"
 
-    run dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
-    assert_success
+    assert dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 }
 
 @test "Get a list of managed mapfiles" {
 
     # sometimes we can't establish a connection to the haproxy stat socket
     # forcing haproxy to restart seems to fix that
-    run dpa_docker_exec 'kill -SIGUSR2 1'
-    assert_success
+    assert dpa_docker_exec 'kill -SIGUSR2 1'
     sleep 1
 
     run dpa_curl GET "/services/haproxy/storage/maps/"
@@ -104,6 +101,5 @@ load '../../libs/version'
     dpa_curl_status_body '$output'
     assert_equal $SC 204
 
-    run dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
-    assert_failure
+    refute dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 }
