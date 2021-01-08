@@ -42,7 +42,8 @@ func (h *StorageGetAllStorageSSLCertificatesHandlerImpl) Handle(params storage.G
 	retFiles := []*models.SslCertificate{}
 	for _, f := range filelist {
 		retFiles = append(retFiles, &models.SslCertificate{
-			Description: "managed but not loaded map file (no runtime ID)",
+			File:        f,
+			Description: "managed SSL file",
 			StorageName: filepath.Base(f),
 		})
 	}
@@ -64,7 +65,8 @@ func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.Ge
 		return storage.NewGetOneStorageSSLCertificateNotFound()
 	}
 	retf := &models.SslCertificate{
-		Description: "managed but not loaded map file (no runtime ID)",
+		File:        filename,
+		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
 	}
 	return storage.NewGetOneStorageSSLCertificateOK().WithPayload(retf)
@@ -96,7 +98,8 @@ func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.R
 		return storage.NewReplaceStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
 	retf := &models.SslCertificate{
-		Description: "managed but not loaded map file (no runtime ID)",
+		File:        filename,
+		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
 	}
 	return storage.NewReplaceStorageSSLCertificateAccepted().WithPayload(retf)
@@ -118,7 +121,8 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 		return storage.NewCreateStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
 	retf := &models.SslCertificate{
-		Description: "managed but not loaded map file (no runtime ID)",
+		File:        filename,
+		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
 	}
 	return storage.NewCreateStorageSSLCertificateCreated().WithPayload(retf)

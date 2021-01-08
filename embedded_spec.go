@@ -15833,6 +15833,9 @@ func init() {
         "description": {
           "type": "string"
         },
+        "file": {
+          "type": "string"
+        },
         "storage_name": {
           "type": "string"
         }
@@ -37782,6 +37785,9 @@ func init() {
       "title": "SSL File",
       "properties": {
         "description": {
+          "type": "string"
+        },
+        "file": {
           "type": "string"
         },
         "storage_name": {
