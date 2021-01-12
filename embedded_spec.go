@@ -8869,6 +8869,9 @@ func init() {
             "description": "The SSL certificate to upload",
             "name": "file_upload",
             "in": "formData"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -8950,6 +8953,9 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
@@ -30313,6 +30319,13 @@ func init() {
             "description": "The SSL certificate to upload",
             "name": "file_upload",
             "in": "formData"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
           }
         ],
         "responses": {
@@ -30444,6 +30457,13 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
           }
         ],
         "responses": {

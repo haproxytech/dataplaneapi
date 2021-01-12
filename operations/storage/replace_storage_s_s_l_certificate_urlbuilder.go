@@ -25,11 +25,15 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // ReplaceStorageSSLCertificateURL generates an URL for the replace storage s s l certificate operation
 type ReplaceStorageSSLCertificateURL struct {
 	Name string
+
+	ForceReload *bool
 
 	_basePath string
 	// avoid unkeyed usage
@@ -69,6 +73,18 @@ func (o *ReplaceStorageSSLCertificateURL) Build() (*url.URL, error) {
 		_basePath = "/v2"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var forceReloadQ string
+	if o.ForceReload != nil {
+		forceReloadQ = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReloadQ != "" {
+		qs.Set("force_reload", forceReloadQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

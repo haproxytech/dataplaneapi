@@ -21,6 +21,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/storage"
 	models "github.com/haproxytech/models/v2"
@@ -88,7 +89,8 @@ func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.De
 
 // StorageReplaceStorageSSLCertificateHandlerImpl implementation of the StorageReplaceStorageSSLCertificateHandler interface
 type StorageReplaceStorageSSLCertificateHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client      *client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
@@ -102,12 +104,20 @@ func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.R
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
 	}
+	if *params.ForceReload {
+		err := h.ReloadAgent.ForceReload()
+		if err != nil {
+			e := misc.HandleError(err)
+			return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+		}
+	}
 	return storage.NewReplaceStorageSSLCertificateAccepted().WithPayload(retf)
 }
 
 // StorageCreateStorageSSLCertificateHandlerImpl implementation of the StorageCreateStorageSSLCertificateHandler interface
 type StorageCreateStorageSSLCertificateHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client      *client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
@@ -124,6 +134,13 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 		File:        filename,
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
+	}
+	if *params.ForceReload {
+		err := h.ReloadAgent.ForceReload()
+		if err != nil {
+			e := misc.HandleError(err)
+			return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+		}
 	}
 	return storage.NewCreateStorageSSLCertificateCreated().WithPayload(retf)
 }

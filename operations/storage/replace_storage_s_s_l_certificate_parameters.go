@@ -28,13 +28,22 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewReplaceStorageSSLCertificateParams creates a new ReplaceStorageSSLCertificateParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewReplaceStorageSSLCertificateParams() ReplaceStorageSSLCertificateParams {
 
-	return ReplaceStorageSSLCertificateParams{}
+	var (
+		// initialize parameters with default values
+
+		forceReloadDefault = bool(false)
+	)
+
+	return ReplaceStorageSSLCertificateParams{
+		ForceReload: &forceReloadDefault,
+	}
 }
 
 // ReplaceStorageSSLCertificateParams contains all the bound params for the replace storage s s l certificate operation
@@ -51,6 +60,11 @@ type ReplaceStorageSSLCertificateParams struct {
 	  In: body
 	*/
 	Data string
+	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	  In: query
+	  Default: false
+	*/
+	ForceReload *bool
 	/*SSL certificate name
 	  Required: true
 	  In: path
@@ -66,6 +80,8 @@ func (o *ReplaceStorageSSLCertificateParams) BindRequest(r *http.Request, route 
 	var res []error
 
 	o.HTTPRequest = r
+
+	qs := runtime.Values(r.URL.Query())
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -83,6 +99,11 @@ func (o *ReplaceStorageSSLCertificateParams) BindRequest(r *http.Request, route 
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
+	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
+	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
@@ -91,6 +112,29 @@ func (o *ReplaceStorageSSLCertificateParams) BindRequest(r *http.Request, route 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindForceReload binds and validates parameter ForceReload from query.
+func (o *ReplaceStorageSSLCertificateParams) bindForceReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewReplaceStorageSSLCertificateParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_reload", "query", "bool", raw)
+	}
+	o.ForceReload = &value
+
 	return nil
 }
 

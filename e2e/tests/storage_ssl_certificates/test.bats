@@ -22,6 +22,7 @@ load '../../libs/version'
 @test "Add a ssl certificate file" {
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+    pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
 
     run dpa_curl_file_upload POST "/services/haproxy/storage/ssl_certificates" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem"
     assert_success
@@ -32,6 +33,11 @@ load '../../libs/version'
     assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
 
     assert dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+
+    # confirm haproxy wasn't reloaded or restarted
+    post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
+    new_logs_count=$(( $pre_logs_count - $post_logs_count ))
+    assert [ $new_logs_count = 0 ]
 }
 
 @test "Get a list of managed ssl certificate files" {
@@ -61,11 +67,19 @@ load '../../libs/version'
 }
 
 @test "Replace a ssl certificate file contents" {
+
+    pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
+
     run dpa_curl_text_plain PUT "/services/haproxy/storage/ssl_certificates/1.pem" "@${BATS_TEST_DIRNAME}/2.pem"
     assert_success
 
     dpa_curl_status_body '$output'
     assert_equal $SC 202
+
+    # confirm haproxy wasn't reloaded or restarted
+    post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
+    new_logs_count=$(( $pre_logs_count - $post_logs_count ))
+    assert [ $new_logs_count = 0 ]
 }
 
 @test "Delete a ssl certificate file" {
@@ -76,4 +90,51 @@ load '../../libs/version'
     assert_equal $SC 204
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+}
+
+@test "Add a ssl certificate file and reload HAProxy" {
+
+    refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+
+    pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
+
+    run dpa_curl_file_upload POST "/services/haproxy/storage/ssl_certificates?force_reload=true" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem"
+    assert_success
+
+    dpa_curl_status_body '$output'
+    assert_equal $SC 201
+
+    assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
+
+    assert dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+
+    post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
+    new_logs_count=$(( $pre_logs_count - $post_logs_count ))
+
+    new_logs=$(docker logs dataplaneapi-e2e 2>&1 | tail -n $new_logs_count)
+
+    echo -e "$new_logs" # this will help debugging if the test fails
+    assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+}
+
+@test "Replace a ssl certificate file contents and reload HAPRoxy" {
+
+    pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
+
+    run dpa_curl_text_plain PUT "/services/haproxy/storage/ssl_certificates/1.pem?force_reload=true" "@${BATS_TEST_DIRNAME}/2.pem"
+    assert_success
+
+    dpa_curl_status_body '$output'
+    assert_equal $SC 202
+
+    post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
+    new_logs_count=$(( $pre_logs_count - $post_logs_count ))
+
+    new_logs=$(docker logs dataplaneapi-e2e 2>&1 | tail -n $new_logs_count)
+
+    echo -e "$new_logs" # this will help debugging if the test fails
+    assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+
+    # clean up after the test
+    dpa_docker_exec 'rm /etc/haproxy/ssl/1.pem'
 }

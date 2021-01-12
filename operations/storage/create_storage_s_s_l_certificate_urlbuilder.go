@@ -24,11 +24,17 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+
+	"github.com/go-openapi/swag"
 )
 
 // CreateStorageSSLCertificateURL generates an URL for the create storage s s l certificate operation
 type CreateStorageSSLCertificateURL struct {
+	ForceReload *bool
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -57,6 +63,18 @@ func (o *CreateStorageSSLCertificateURL) Build() (*url.URL, error) {
 		_basePath = "/v2"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var forceReloadQ string
+	if o.ForceReload != nil {
+		forceReloadQ = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReloadQ != "" {
+		qs.Set("force_reload", forceReloadQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }
