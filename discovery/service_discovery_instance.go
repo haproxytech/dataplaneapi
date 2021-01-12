@@ -130,10 +130,13 @@ func (s *ServiceDiscoveryInstance) markForDeletion() {
 }
 
 func (s *ServiceDiscoveryInstance) serviceNotTracked(service string) bool {
-	for _, se := range s.params.Whitelist {
-		if se == service {
-			return false
+	if len(s.params.Whitelist) > 0 {
+		for _, se := range s.params.Whitelist {
+			if se == service {
+				return false
+			}
 		}
+		return true
 	}
 	for _, se := range s.params.Blacklist {
 		if se == service {
