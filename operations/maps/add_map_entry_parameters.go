@@ -108,7 +108,7 @@ func (o *AddMapEntryParams) BindRequest(r *http.Request, route *middleware.Match
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
-	qForceSync, qhkForceSync, _ := qs.GetOK("forceSync")
+	qForceSync, qhkForceSync, _ := qs.GetOK("force_sync")
 	if err := o.bindForceSync(qForceSync, qhkForceSync, route.Formats); err != nil {
 		res = append(res, err)
 	}
@@ -140,7 +140,7 @@ func (o *AddMapEntryParams) bindForceSync(rawData []string, hasKey bool, formats
 
 	value, err := swag.ConvertBool(raw)
 	if err != nil {
-		return errors.InvalidType("forceSync", "query", "bool", raw)
+		return errors.InvalidType("force_sync", "query", "bool", raw)
 	}
 	o.ForceSync = &value
 

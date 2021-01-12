@@ -82,7 +82,7 @@ func (o *ReplaceRuntimeMapEntryURL) Build() (*url.URL, error) {
 		forceSyncQ = swag.FormatBool(*o.ForceSync)
 	}
 	if forceSyncQ != "" {
-		qs.Set("forceSync", forceSyncQ)
+		qs.Set("force_sync", forceSyncQ)
 	}
 
 	mapVarQ := o.Map

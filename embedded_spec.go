@@ -6380,7 +6380,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           }
         ],
@@ -6448,7 +6448,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           },
           {
@@ -6544,7 +6544,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           },
           {
@@ -6609,7 +6609,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           }
         ],
@@ -26552,7 +26552,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           }
         ],
@@ -26660,7 +26660,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           },
           {
@@ -26806,7 +26806,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           },
           {
@@ -26901,7 +26901,7 @@ func init() {
             "type": "boolean",
             "default": false,
             "description": "If true, immediately syncs changes to disk",
-            "name": "forceSync",
+            "name": "force_sync",
             "in": "query"
           }
         ],

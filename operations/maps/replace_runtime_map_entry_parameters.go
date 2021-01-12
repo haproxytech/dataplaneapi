@@ -111,7 +111,7 @@ func (o *ReplaceRuntimeMapEntryParams) BindRequest(r *http.Request, route *middl
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
-	qForceSync, qhkForceSync, _ := qs.GetOK("forceSync")
+	qForceSync, qhkForceSync, _ := qs.GetOK("force_sync")
 	if err := o.bindForceSync(qForceSync, qhkForceSync, route.Formats); err != nil {
 		res = append(res, err)
 	}
@@ -148,7 +148,7 @@ func (o *ReplaceRuntimeMapEntryParams) bindForceSync(rawData []string, hasKey bo
 
 	value, err := swag.ConvertBool(raw)
 	if err != nil {
-		return errors.InvalidType("forceSync", "query", "bool", raw)
+		return errors.InvalidType("force_sync", "query", "bool", raw)
 	}
 	o.ForceSync = &value
 
