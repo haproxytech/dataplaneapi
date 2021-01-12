@@ -9276,6 +9276,52 @@ func init() {
       },
       "additionalProperties": false
     },
+    "acl_file": {
+      "description": "ACL File",
+      "type": "object",
+      "title": "ACL File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "acl_file_entry": {
+      "description": "One ACL File Entry",
+      "type": "object",
+      "title": "One ACL File Entry",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "acl_files": {
+      "description": "Array of runtime acl files",
+      "type": "array",
+      "title": "ACL Files Array",
+      "items": {
+        "$ref": "#/definitions/acl_file"
+      }
+    },
+    "acl_files_entries": {
+      "description": "Array of entries of one runtime acl file",
+      "type": "array",
+      "title": "ACL Files Entries",
+      "items": {
+        "$ref": "#/definitions/acl_file_entry"
+      }
+    },
     "acls": {
       "description": "HAProxy ACL lines array (corresponds to acl directives)",
       "type": "array",
@@ -31354,6 +31400,52 @@ func init() {
         }
       },
       "additionalProperties": false
+    },
+    "acl_file": {
+      "description": "ACL File",
+      "type": "object",
+      "title": "ACL File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "acl_file_entry": {
+      "description": "One ACL File Entry",
+      "type": "object",
+      "title": "One ACL File Entry",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "acl_files": {
+      "description": "Array of runtime acl files",
+      "type": "array",
+      "title": "ACL Files Array",
+      "items": {
+        "$ref": "#/definitions/acl_file"
+      }
+    },
+    "acl_files_entries": {
+      "description": "Array of entries of one runtime acl file",
+      "type": "array",
+      "title": "ACL Files Entries",
+      "items": {
+        "$ref": "#/definitions/acl_file_entry"
+      }
     },
     "acls": {
       "description": "HAProxy ACL lines array (corresponds to acl directives)",
