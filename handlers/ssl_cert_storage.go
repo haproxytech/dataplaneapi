@@ -16,7 +16,10 @@
 package handlers
 
 import (
+	"bufio"
+	"fmt"
 	"path/filepath"
+	"strings"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
@@ -79,7 +82,31 @@ type StorageDeleteStorageSSLCertificateHandlerImpl struct {
 }
 
 func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
-	err := h.Client.SSLCertStorage.Delete(params.Name)
+	runningConf := strings.NewReader(h.Client.Configuration.Parser.String())
+
+	filename, err := h.Client.SSLCertStorage.Get(params.Name)
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	// this is far from perfect but should provide a basic level of protection
+	scanner := bufio.NewScanner(runningConf)
+
+	lineNr := 0
+
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if strings.Contains(line, filename) && !strings.HasPrefix(line, "#") {
+			errCode := misc.ErrHTTPConflict
+			errMsg := fmt.Sprintf("rejecting attempt to delete file %s referenced in haproxy conf at line %d: %s", filename, lineNr-1, line)
+			e := &models.Error{Code: &errCode, Message: &errMsg}
+			return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+		}
+		lineNr++
+	}
+
+	err = h.Client.SSLCertStorage.Delete(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
