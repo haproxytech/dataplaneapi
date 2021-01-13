@@ -709,8 +709,8 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 		log.Fatalf("error trying to use empty string for managed map directory")
 	}
 
-	if haproxyOptions.StorageSSLCertsDir != "" {
-		client.SSLCertStorage, err = storage.New(haproxyOptions.StorageSSLCertsDir, storage.SSLType)
+	if haproxyOptions.SSLCertsDir != "" {
+		client.SSLCertStorage, err = storage.New(haproxyOptions.SSLCertsDir, storage.SSLType)
 		if err != nil {
 			log.Fatalf("error initializing SSL certs storage: %v", err)
 		}

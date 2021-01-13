@@ -19,12 +19,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
-
-	"math/rand"
 	"time"
 
 	"github.com/google/renameio"
@@ -53,7 +52,7 @@ type HAProxyConfiguration struct {
 	UserListFile         string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file"`
 	NodeIDFile           string `long:"fid" description:"Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster"`
 	MapsDir              string `short:"p" long:"maps-dir" description:"Path to directory of map files managed by dataplane" default:"/etc/haproxy/maps"`
-	StorageSSLCertsDir   string `long:"storage-ssl-certs-dir" description:"Path to SSL certificates directory" default:"/etc/haproxy/ssl"`
+	SSLCertsDir          string `long:"ssl-certs-dir" description:"Path to SSL certificates directory" default:"/etc/haproxy/ssl"`
 	UpdateMapFiles       bool   `long:"update-map-files" description:"Flag used for syncing map files with runtime maps values"`
 	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10"`
 	ClusterTLSCertDir    string `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file"`
@@ -88,6 +87,7 @@ type ClusterConfiguration struct {
 	Name               AtomicString `yaml:"name"`
 	Description        AtomicString `yaml:"description"`
 }
+
 type ClusterTLS struct {
 	Dir     AtomicString `yaml:"path"`
 	Fetched AtomicBool   `yaml:"fetched"`
@@ -118,6 +118,7 @@ type NotifyConfiguration struct {
 	Reload              *ChanNotify `yaml:"-"`
 	Shutdown            *ChanNotify `yaml:"-"`
 }
+
 type ServiceDiscovery struct {
 	mu      sync.Mutex
 	Consuls []*models.Consul `yaml:"consuls"`
@@ -139,7 +140,7 @@ type Configuration struct {
 	MapSync          *MapSync             `yaml:"-"`
 }
 
-//Get returns pointer to configuration
+// Get returns pointer to configuration
 func Get() *Configuration {
 	if cfg == nil {
 		cfg = &Configuration{}
