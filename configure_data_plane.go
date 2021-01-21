@@ -745,9 +745,11 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 		UseValidation:             false,
 		PersistentTransactions:    true,
 		TransactionDir:            haproxyOptions.TransactionDir,
+		ValidateCmd:               haproxyOptions.ValidateCmd,
 		ValidateConfigurationFile: true,
 		MasterWorker:              true,
 	}
+
 	err := confClient.Init(confParams)
 	if err != nil {
 		return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())

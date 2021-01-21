@@ -60,6 +60,7 @@ type HAProxyConfiguration struct {
 	SpoeTransactionDir   string `long:"spoe-transaction-dir" description:"Path to the SPOE transaction directory" default:"/tmp/spoe-haproxy"`
 	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy"`
 	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20"`
+	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check"`
 }
 
 type APIConfiguration struct {
