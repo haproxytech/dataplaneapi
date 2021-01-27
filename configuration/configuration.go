@@ -46,6 +46,7 @@ type HAProxyConfiguration struct {
 	ReloadRetention      int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1"`
 	TransactionDir       string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy"`
 	BackupsNumber        int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0"`
+	BackupsDir           string `long:"backups-dir" description:"Path to directory in which to place backup files"`
 	MasterRuntime        string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket"`
 	ShowSystemInfo       bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint"`
 	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"" yaml:"-"`

@@ -21,6 +21,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -33,7 +34,7 @@ import (
 )
 
 type IReloadAgent interface {
-	Init(delay int, reloadCmd string, restartCmd string, configFile string, retention int) error
+	Init(delay int, reloadCmd string, restartCmd string, configFile string, backupDir string, retention int) error
 	Reload() string
 	Restart() error
 	ForceReload() error
@@ -62,7 +63,7 @@ type ReloadAgent struct {
 }
 
 // Init a new reload agent
-func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, configFile string, retention int) error {
+func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, configFile string, backupDir string, retention int) error {
 	ra.reloadCmd = reloadCmd
 	ra.restartCmd = restartCmd
 	ra.configFile = configFile
@@ -75,7 +76,8 @@ func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, conf
 		delay = 5000
 	}
 	ra.delay = delay
-	ra.lkgConfigFile = configFile + ".lkg"
+
+	ra.setLkgPath(configFile, backupDir)
 
 	// create last known good file, assume it is valid when starting
 	if err := copyFile(ra.configFile, ra.lkgConfigFile); err != nil {
@@ -84,6 +86,14 @@ func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, conf
 	ra.cache.Init(retention)
 	go ra.handleReloads()
 	return nil
+}
+
+func (ra *ReloadAgent) setLkgPath(configFile, path string) {
+	if path != "" {
+		ra.lkgConfigFile = fmt.Sprintf("%s/%s.lkg", path, filepath.Base(configFile))
+		return
+	}
+	ra.lkgConfigFile = configFile + ".lkg"
 }
 
 func (ra *ReloadAgent) handleReloads() {
