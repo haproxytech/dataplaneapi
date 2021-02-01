@@ -29,11 +29,15 @@ import (
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/google/renameio"
 	"github.com/haproxytech/models/v2"
+	apache_log "github.com/lestrrat-go/apache-logformat"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 )
 
-var cfg *Configuration
+var (
+	cfg                       *Configuration
+	defaultApacheLogFormat, _ = apache_log.New(`%h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i" %{us}T`)
+)
 
 type HAProxyConfiguration struct {
 	ConfigFile           string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
@@ -73,6 +77,7 @@ type LoggingOptions struct {
 	LogFile   string `long:"log-file" description:"Location of the log file" default:"/var/log/dataplaneapi/dataplaneapi.log"`
 	LogLevel  string `long:"log-level" description:"Logging level" default:"warning" choice:"trace" choice:"debug" choice:"info" choice:"warning" choice:"error"`
 	LogFormat string `long:"log-format" description:"Logging format" default:"text" choice:"text" choice:"JSON"`
+	ACLFormat string `long:"apache-common-log-format" description:"Apache Common Log Format to format the access log entries" default:"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" %{us}T"`
 }
 
 type SyslogOptions struct {
@@ -173,6 +178,14 @@ func Get() *Configuration {
 		cfg.Cmdline.Store(sb.String())
 	}
 	return cfg
+}
+
+func (c *Configuration) ApacheLogFormat() (out *apache_log.ApacheLog, err error) {
+	out, err = apache_log.New(c.Logging.ACLFormat)
+	if err != nil {
+		out = defaultApacheLogFormat
+	}
+	return
 }
 
 func (c *Configuration) BotstrapKeyChanged(bootstrapKey string) {

@@ -46,6 +46,7 @@ import (
 	parser "github.com/haproxytech/config-parser/v3"
 	"github.com/haproxytech/config-parser/v3/types"
 	"github.com/haproxytech/dataplaneapi/syslog"
+	apachelog "github.com/lestrrat-go/apache-logformat"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
@@ -598,7 +599,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 	}()
 
-	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
+	al, err := cfg.ApacheLogFormat()
+	if err != nil {
+		println("Cannot setup custom Apache Log Format", err.Error())
+	}
+
+	return setupGlobalMiddleware(api.Serve(setupMiddlewares), al)
 }
 
 // The TLS configuration before HTTPS server starts.
@@ -621,7 +627,7 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
-func setupGlobalMiddleware(handler http.Handler) http.Handler {
+func setupGlobalMiddleware(handler http.Handler, apacheLogFormat *apachelog.ApacheLog) http.Handler {
 	handleCORS := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{
@@ -642,9 +648,10 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	// middlewares
 	uniqueID := adapters.UniqueIDMiddleware(entry)
 	recovery := adapters.RecoverMiddleware(entry)
+	logViaAL := adapters.ApacheLogMiddleware(entry, apacheLogFormat)
 	logViaLogrus := adapters.LoggingMiddleware(entry)
 
-	return uniqueID(logViaLogrus(handleCORS(recovery(handler))))
+	return uniqueID(logViaAL(logViaLogrus(handleCORS(recovery(handler)))))
 }
 
 func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions, syslogOptions dataplaneapi_config.SyslogOptions) {

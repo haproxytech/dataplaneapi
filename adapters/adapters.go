@@ -25,6 +25,7 @@ import (
 
 	"github.com/docker/go-units"
 	"github.com/haproxytech/models/v2"
+	apachelog "github.com/lestrrat-go/apache-logformat"
 	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"
 )
@@ -170,6 +171,12 @@ func UniqueIDMiddleware(entry *logrus.Entry) Adapter {
 
 			h.ServeHTTP(w, r)
 		})
+	}
+}
+
+func ApacheLogMiddleware(entry *logrus.Entry, format *apachelog.ApacheLog) Adapter {
+	return func(h http.Handler) http.Handler {
+		return format.Wrap(h, entry.Logger.Writer())
 	}
 }
 
