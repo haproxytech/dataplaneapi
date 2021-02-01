@@ -35,12 +35,6 @@ func (r RFC5424Hook) Levels() []logrus.Level {
 }
 
 func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
-	var line []byte
-	line, err = entry.Bytes()
-	if err != nil {
-		return fmt.Errorf("unable to read entry, %w", err)
-	}
-
 	var sev syslog5424.Priority
 	switch entry.Level {
 	case logrus.PanicLevel:
@@ -57,7 +51,14 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 		sev = syslog5424.LogDEBUG
 	}
 
-	_, err = r.syslog.Channel(sev).Write(line)
+	messages := []string{entry.Message}
+	for k, v := range entry.Data {
+		messages = append(messages, fmt.Sprintf("%s=%v", k, v))
+	}
+
+	msg := strings.Join(messages, " ")
+
+	_, err = r.syslog.Channel(sev).Write([]byte(msg))
 
 	return
 }
