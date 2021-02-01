@@ -21,6 +21,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"os/signal"
@@ -44,6 +45,7 @@ import (
 	"github.com/haproxytech/client-native/v2/storage"
 	parser "github.com/haproxytech/config-parser/v3"
 	"github.com/haproxytech/config-parser/v3/types"
+	"github.com/haproxytech/dataplaneapi/syslog"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
@@ -89,6 +91,12 @@ func configureFlags(api *operations.DataPlaneAPI) {
 		Options:          &cfg.Logging,
 	}
 
+	syslogOptionsGroup := swag.CommandLineOptionsGroup{
+		ShortDescription: "Syslog options",
+		LongDescription:  "Options for configuring syslog logging.",
+		Options:          &cfg.Syslog,
+	}
+
 	apiOptionsGroup := swag.CommandLineOptionsGroup{
 		ShortDescription: "API options",
 		LongDescription:  "Options for API usage for consumers and various integrations",
@@ -98,6 +106,7 @@ func configureFlags(api *operations.DataPlaneAPI) {
 	api.CommandLineOptionsGroups = make([]swag.CommandLineOptionsGroup, 0, 1)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, haproxyOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, loggingOptionsGroup)
+	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, syslogOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, apiOptionsGroup)
 }
 
@@ -113,7 +122,7 @@ func currentOpenTransactions(client *client_native.HAProxyClient) int {
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
 
-	configureLogging(cfg.Logging)
+	configureLogging(cfg.Logging, cfg.Syslog)
 
 	haproxyOptions := cfg.HAProxy
 	// Override options with env variables
@@ -638,7 +647,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	return uniqueID(logViaLogrus(handleCORS(recovery(handler))))
 }
 
-func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
+func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions, syslogOptions dataplaneapi_config.SyslogOptions) {
 	switch loggingOptions.LogFormat {
 	case "text":
 		log.SetFormatter(&log.TextFormatter{
@@ -663,6 +672,14 @@ func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
 			log.Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
 		log.SetOutput(logFile)
+	case "syslog":
+		log.SetOutput(ioutil.Discard)
+		hook, err := syslog.NewRFC5424Hook(syslogOptions)
+		if err != nil {
+			log.Warningf("Error configuring Syslog logging: %s", err.Error())
+			break
+		}
+		log.AddHook(hook)
 	}
 
 	switch loggingOptions.LogLevel {

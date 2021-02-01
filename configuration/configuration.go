@@ -69,10 +69,18 @@ type APIConfiguration struct {
 }
 
 type LoggingOptions struct {
-	LogTo     string `long:"log-to" description:"Log target, can be stdout or file" default:"stdout" choice:"stdout" choice:"file"`
+	LogTo     string `long:"log-to" description:"Log target, can be stdout, file, or syslog" default:"stdout" choice:"stdout" choice:"file" choice:"syslog"`
 	LogFile   string `long:"log-file" description:"Location of the log file" default:"/var/log/dataplaneapi/dataplaneapi.log"`
 	LogLevel  string `long:"log-level" description:"Logging level" default:"warning" choice:"trace" choice:"debug" choice:"info" choice:"warning" choice:"error"`
 	LogFormat string `long:"log-format" description:"Logging format" default:"text" choice:"text" choice:"JSON"`
+}
+
+type SyslogOptions struct {
+	SyslogSrv      string `long:"syslog-server" description:"Syslog server where logs should be forwarded" default:""`
+	SyslogPort     uint   `long:"syslog-port" description:"Syslog server port" default:"514"`
+	SyslogProto    string `long:"syslog-protocol" description:"Syslog server protocol" default:"tcp" choice:"tcp" choice:"tcp4" choice:"tcp6"`
+	SyslogTag      string `long:"syslog-tag" description:"String to tag the syslog messages" default:"dataplaneapi"`
+	SyslogPriority string `long:"syslog-priority" description:"Define the syslog messages priority" default:"debug"`
 }
 
 type ClusterConfiguration struct {
@@ -128,6 +136,7 @@ type ServiceDiscovery struct {
 type Configuration struct {
 	HAProxy          HAProxyConfiguration `yaml:"-"`
 	Logging          LoggingOptions       `yaml:"-"`
+	Syslog           SyslogOptions        `yaml:"-"`
 	APIOptions       APIConfiguration     `yaml:"-"`
 	Cluster          ClusterConfiguration `yaml:"cluster"`
 	Server           ServerConfiguration  `yaml:"-"`
