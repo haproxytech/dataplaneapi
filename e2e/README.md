@@ -28,6 +28,13 @@ $ make e2e
 In any case, at the end of execution, a clean-up will occur, removing the
 Docker container.
 
+### Run specific tests
+When adding new tests, you may not want to run all tests at once.
+To run tests in specific directory, you can use the following command:
+```bash
+TESTNAME="dir_name" make e2e
+```
+
 ### Parameters
 
 #### Host port
