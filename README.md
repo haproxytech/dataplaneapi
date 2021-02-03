@@ -90,6 +90,7 @@ Logging options:
       --log-file=                                  Location of the log file (default: /var/log/dataplaneapi/dataplaneapi.log)
       --log-level=[trace|debug|info|warning|error] Logging level (default: warning)
       --log-format=[text|JSON]                     Logging format (default: text)
+      --apache-common-log-format=                  Apache Common Log Format to format the access log entries (default: %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i" %{us}T)
 
 Syslog options:
       --syslog-server=                             Syslog server where logs should be forwarded
