@@ -28,6 +28,7 @@ import (
 
 type RFC5424Hook struct {
 	syslog *syslog5424.Syslog
+	msgID  string
 }
 
 func (r RFC5424Hook) Levels() []logrus.Level {
@@ -58,7 +59,7 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 
 	msg := strings.Join(messages, " ")
 
-	_, err = r.syslog.Channel(sev).Write([]byte(msg))
+	_, err = r.syslog.Channel(sev).Msgid(r.msgID).Write([]byte(msg))
 
 	return
 }
@@ -90,10 +91,50 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		return nil, fmt.Errorf("unrecognized severity: %s", opts.SyslogPriority)
 	}
 
-	var err error
 	var facility syslog5424.Priority
-	if err = facility.Set(opts.SyslogFacility); err != nil {
-		return nil, err
+	switch opts.SyslogFacility {
+	case "kern":
+		facility = syslog5424.LogKERN
+	case "user":
+		facility = syslog5424.LogUSER
+	case "mail":
+		facility = syslog5424.LogMAIL
+	case "daemon":
+		facility = syslog5424.LogDAEMON
+	case "auth":
+		facility = syslog5424.LogAUTH
+	case "syslog":
+		facility = syslog5424.LogSYSLOG
+	case "lpr":
+		facility = syslog5424.LogLPR
+	case "news":
+		facility = syslog5424.LogNEWS
+	case "uucp":
+		facility = syslog5424.LogUUCP
+	case "cron":
+		facility = syslog5424.LogCRON
+	case "authpriv":
+		facility = syslog5424.LogAUTHPRIV
+	case "ftp":
+		facility = syslog5424.LogFTP
+	case "local0":
+		facility = syslog5424.LogLOCAL0
+	case "local1":
+		facility = syslog5424.LogLOCAL1
+	case "local2":
+		facility = syslog5424.LogLOCAL2
+	case "local3":
+		facility = syslog5424.LogLOCAL3
+	case "local4":
+		facility = syslog5424.LogLOCAL4
+	case "local5":
+		facility = syslog5424.LogLOCAL5
+	case "local6":
+		facility = syslog5424.LogLOCAL6
+	case "local7":
+		facility = syslog5424.LogLOCAL7
+	default:
+		return nil, fmt.Errorf("unrecognized facility: %s", opts.SyslogFacility)
 	}
 
 	connector := syslog5424.TCPConnector(opts.SyslogProto, fmt.Sprintf("%s:%d", opts.SyslogSrv, opts.SyslogPort))
@@ -110,5 +151,5 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		return nil, err
 	}
 
-	return &RFC5424Hook{syslog: syslogServer}, nil
+	return &RFC5424Hook{syslog: syslogServer, msgID: opts.SyslogMsgID}, nil
 }

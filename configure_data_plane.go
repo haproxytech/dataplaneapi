@@ -46,7 +46,6 @@ import (
 	parser "github.com/haproxytech/config-parser/v3"
 	"github.com/haproxytech/config-parser/v3/types"
 	"github.com/haproxytech/dataplaneapi/syslog"
-	apachelog "github.com/lestrrat-go/apache-logformat"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
@@ -122,8 +121,6 @@ func currentOpenTransactions(client *client_native.HAProxyClient) int {
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
-
-	configureLogging(cfg.Logging, cfg.Syslog)
 
 	haproxyOptions := cfg.HAProxy
 	// Override options with env variables
@@ -604,7 +601,46 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		println("Cannot setup custom Apache Log Format", err.Error())
 	}
 
-	return setupGlobalMiddleware(api.Serve(setupMiddlewares), al)
+	appLogger := log.StandardLogger()
+	configureLogging(appLogger, cfg.Logging, func(opts dataplaneapi_config.SyslogOptions) dataplaneapi_config.SyslogOptions {
+		opts.SyslogMsgID = "app"
+		return opts
+	}(cfg.Syslog))
+
+	accLogger := log.New()
+	configureLogging(accLogger, cfg.Logging, func(opts dataplaneapi_config.SyslogOptions) dataplaneapi_config.SyslogOptions {
+		opts.SyslogMsgID = "accesslog"
+		return opts
+	}(cfg.Syslog))
+
+	applicationEntry := log.NewEntry(appLogger)
+	accessEntry := log.NewEntry(accLogger)
+
+	// middlewares
+	var adpts []adapters.Adapter
+	adpts = append(adpts,
+		adapters.RecoverMiddleware(applicationEntry),
+		cors.New(cors.Options{
+			AllowedOrigins: []string{"*"},
+			AllowedMethods: []string{
+				http.MethodHead,
+				http.MethodGet,
+				http.MethodPost,
+				http.MethodPut,
+				http.MethodPatch,
+				http.MethodDelete,
+			},
+			AllowedHeaders:   []string{"*"},
+			ExposedHeaders:   []string{"Reload-ID", "Configuration-Version"},
+			AllowCredentials: true,
+			MaxAge:           86400,
+		}).Handler,
+		adapters.UniqueIDMiddleware(applicationEntry),
+		adapters.LoggingMiddleware(applicationEntry),
+		adapters.ApacheLogMiddleware(accessEntry, al),
+	)
+
+	return setupGlobalMiddleware(api.Serve(setupMiddlewares), adpts...)
 }
 
 // The TLS configuration before HTTPS server starts.
@@ -627,51 +663,32 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
-func setupGlobalMiddleware(handler http.Handler, apacheLogFormat *apachelog.ApacheLog) http.Handler {
-	handleCORS := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{
-			http.MethodHead,
-			http.MethodGet,
-			http.MethodPost,
-			http.MethodPut,
-			http.MethodPatch,
-			http.MethodDelete,
-		},
-		AllowedHeaders:   []string{"*"},
-		ExposedHeaders:   []string{"Reload-ID", "Configuration-Version"},
-		AllowCredentials: true,
-		MaxAge:           86400,
-	}).Handler
-	logger := log.StandardLogger()
-	entry := log.NewEntry(logger)
-	// middlewares
-	uniqueID := adapters.UniqueIDMiddleware(entry)
-	recovery := adapters.RecoverMiddleware(entry)
-	logViaAL := adapters.ApacheLogMiddleware(entry, apacheLogFormat)
-	logViaLogrus := adapters.LoggingMiddleware(entry)
+func setupGlobalMiddleware(handler http.Handler, adapters ...adapters.Adapter) http.Handler {
+	for _, adpt := range adapters {
+		handler = adpt(handler)
+	}
 
-	return uniqueID(logViaAL(logViaLogrus(handleCORS(recovery(handler)))))
+	return handler
 }
 
-func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions, syslogOptions dataplaneapi_config.SyslogOptions) {
+func configureLogging(logger *log.Logger, loggingOptions dataplaneapi_config.LoggingOptions, syslogOptions dataplaneapi_config.SyslogOptions) {
 	switch loggingOptions.LogFormat {
 	case "text":
-		log.SetFormatter(&log.TextFormatter{
+		logger.SetFormatter(&log.TextFormatter{
 			FullTimestamp: true,
 			DisableColors: true,
 		})
 	case "JSON":
-		log.SetFormatter(&log.JSONFormatter{})
+		logger.SetFormatter(&log.JSONFormatter{})
 	}
 
 	switch loggingOptions.LogTo {
 	case "stdout":
-		log.SetOutput(os.Stdout)
+		logger.SetOutput(os.Stdout)
 	case "file":
 		dir := filepath.Dir(loggingOptions.LogFile)
 		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
-			log.Warning("Error opening log file, no logging implemented: " + err.Error())
+			logger.Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
 		//nolint:govet
 		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
@@ -680,24 +697,24 @@ func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions, syslogO
 		}
 		log.SetOutput(logFile)
 	case "syslog":
-		log.SetOutput(ioutil.Discard)
+		logger.SetOutput(ioutil.Discard)
 		hook, err := syslog.NewRFC5424Hook(syslogOptions)
 		if err != nil {
-			log.Warningf("Error configuring Syslog logging: %s", err.Error())
+			logger.Warningf("Error configuring Syslog logging: %s", err.Error())
 			break
 		}
-		log.AddHook(hook)
+		logger.AddHook(hook)
 	}
 
 	switch loggingOptions.LogLevel {
 	case "debug":
-		log.SetLevel(log.DebugLevel)
+		logger.SetLevel(log.DebugLevel)
 	case "info":
-		log.SetLevel(log.InfoLevel)
+		logger.SetLevel(log.InfoLevel)
 	case "warning":
-		log.SetLevel(log.WarnLevel)
+		logger.SetLevel(log.WarnLevel)
 	case "error":
-		log.SetLevel(log.ErrorLevel)
+		logger.SetLevel(log.ErrorLevel)
 	}
 }
 

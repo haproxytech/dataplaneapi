@@ -87,6 +87,7 @@ type SyslogOptions struct {
 	SyslogTag      string `long:"syslog-tag" description:"String to tag the syslog messages" default:"dataplaneapi"`
 	SyslogPriority string `long:"syslog-priority" description:"Define the syslog messages priority" default:"debug"`
 	SyslogFacility string `long:"syslog-facility" description:"Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7" default:"local0"`
+	SyslogMsgID    string
 }
 
 type ClusterConfiguration struct {
