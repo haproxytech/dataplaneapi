@@ -36,8 +36,8 @@ func (h *SpoeCreateSpoeHandlerImpl) Handle(params spoe.CreateSpoeParams, princip
 	}
 	path, err := h.Client.Spoe.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewCreateSpoeCreated().WithPayload(path)
 }
@@ -65,8 +65,8 @@ type SpoeGetAllSpoeFilesHandlerImpl struct {
 func (h *SpoeGetAllSpoeFilesHandlerImpl) Handle(params spoe.GetAllSpoeFilesParams, principal interface{}) middleware.Responder {
 	files, err := h.Client.Spoe.GetAll()
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetAllSpoeFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewGetAllSpoeFilesOK().WithPayload(files)
 }
@@ -79,8 +79,8 @@ type SpoeGetOneSpoeFileHandlerImpl struct {
 func (h *SpoeGetOneSpoeFileHandlerImpl) Handle(params spoe.GetOneSpoeFileParams, principal interface{}) middleware.Responder {
 	path, err := h.Client.Spoe.Get(params.Name)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetOneSpoeFileDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetOneSpoeFileDefault(int(*e.Code)).WithPayload(e)
 	}
 	if path == "" {
 		return spoe.NewGetOneSpoeFileNotFound()

@@ -34,8 +34,8 @@ type SpoeTransactionsStartSpoeTransactionHandlerImpl struct {
 func (th *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_transactions.StartSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe_transactions.NewStartSpoeTransactionDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	t, err := ss.Transaction.StartTransaction(params.Version)
 	if err != nil {
@@ -59,8 +59,8 @@ type SpoeTransactionsDeleteSpoeTransactionHandlerImpl struct {
 func (th *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_transactions.DeleteSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe_transactions.NewStartSpoeTransactionDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	err = ss.Transaction.DeleteTransaction(params.ID)
 	if err != nil {
@@ -79,8 +79,8 @@ type SpoeTransactionsGetSpoeTransactionHandlerImpl struct {
 func (th *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe_transactions.NewStartSpoeTransactionDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	t, err := ss.Transaction.GetTransaction(params.ID)
 	if err != nil {
@@ -104,8 +104,8 @@ type SpoeTransactionsGetSpoeTransactionsHandlerImpl struct {
 func (th *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionsParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe_transactions.NewStartSpoeTransactionDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	s := ""
 	if params.Status != nil {
@@ -140,8 +140,8 @@ type SpoeTransactionsCommitSpoeTransactionHandlerImpl struct {
 func (th *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_transactions.CommitSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe_transactions.NewStartSpoeTransactionDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	t, err := ss.Transaction.CommitTransaction(params.ID)
 	if err != nil {

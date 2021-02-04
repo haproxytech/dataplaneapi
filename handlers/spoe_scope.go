@@ -31,8 +31,8 @@ type SpoeCreateSpoeScopeHandlerImpl struct {
 func (s *SpoeCreateSpoeScopeHandlerImpl) Handle(params spoe.CreateSpoeScopeParams, principal interface{}) middleware.Responder {
 	ss, err := s.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -44,8 +44,8 @@ func (s *SpoeCreateSpoeScopeHandlerImpl) Handle(params spoe.CreateSpoeScopeParam
 	}
 	err = ss.CreateScope(&params.Data, t, v)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewCreateSpoeScopeCreated().WithPayload(spoe.NewCreateSpoeScopeCreated().Payload)
 }
@@ -58,8 +58,8 @@ type SpoeDeleteSpoeScopeHandlerImpl struct {
 func (s *SpoeDeleteSpoeScopeHandlerImpl) Handle(params spoe.DeleteSpoeScopeParams, principal interface{}) middleware.Responder {
 	ss, err := s.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewDeleteSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewDeleteSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -86,8 +86,8 @@ type SpoeGetSpoeScopesHandlerImpl struct {
 func (s *SpoeGetSpoeScopesHandlerImpl) Handle(params spoe.GetSpoeScopesParams, principal interface{}) middleware.Responder {
 	ss, err := s.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetAllSpoeFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -95,8 +95,8 @@ func (s *SpoeGetSpoeScopesHandlerImpl) Handle(params spoe.GetSpoeScopesParams, p
 	}
 	_, scopes, err := ss.GetScopes(t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetAllSpoeFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewGetSpoeScopesOK().WithPayload(&spoe.GetSpoeScopesOKBody{Data: scopes})
 }
@@ -109,8 +109,8 @@ type SpoeGetSpoeScopeHandlerImpl struct {
 func (s *SpoeGetSpoeScopeHandlerImpl) Handle(params spoe.GetSpoeScopeParams, principal interface{}) middleware.Responder {
 	ss, err := s.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -118,8 +118,8 @@ func (s *SpoeGetSpoeScopeHandlerImpl) Handle(params spoe.GetSpoeScopeParams, pri
 	}
 	v, scope, err := ss.GetScope(params.Name, t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 	if scope == nil {
 		return spoe.NewGetSpoeScopeNotFound()

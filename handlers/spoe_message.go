@@ -31,8 +31,8 @@ type SpoeCreateSpoeMessageHandlerImpl struct {
 func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeMessageDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -44,8 +44,8 @@ func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageP
 	}
 	err = ss.CreateMessage(params.Scope, params.Data, t, v)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeMessageDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewCreateSpoeMessageCreated().WithPayload(spoe.NewCreateSpoeMessageCreated().Payload)
 }
@@ -58,8 +58,8 @@ type SpoeDeleteSpoeMessageHandlerImpl struct {
 func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewDeleteSpoeMessageDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewDeleteSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -86,8 +86,8 @@ type SpoeGetSpoeMessagesHandlerImpl struct {
 func (h *SpoeGetSpoeMessagesHandlerImpl) Handle(params spoe.GetSpoeMessagesParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeMessagesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeMessagesDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -95,8 +95,8 @@ func (h *SpoeGetSpoeMessagesHandlerImpl) Handle(params spoe.GetSpoeMessagesParam
 	}
 	v, messages, err := ss.GetMessages(params.Scope, t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeMessagesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeMessagesDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewGetSpoeMessagesOK().WithPayload(&spoe.GetSpoeMessagesOKBody{Version: v, Data: messages})
 }
@@ -109,8 +109,8 @@ type SpoeGetSpoeMessageHandlerImpl struct {
 func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams, c interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeMessageDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -118,8 +118,8 @@ func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams,
 	}
 	v, message, err := ss.GetMessage(params.Scope, params.Name, t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeMessageDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	if message == nil {
 		return spoe.NewGetSpoeMessageNotFound()
@@ -135,8 +135,8 @@ type SpoeReplaceSpoeMessageHandlerImpl struct {
 func (h *SpoeReplaceSpoeMessageHandlerImpl) Handle(params spoe.ReplaceSpoeMessageParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewReplaceSpoeMessageDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewReplaceSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -148,8 +148,8 @@ func (h *SpoeReplaceSpoeMessageHandlerImpl) Handle(params spoe.ReplaceSpoeMessag
 	}
 	err = ss.EditMessage(params.Scope, params.Data, params.Name, t, v)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewReplaceSpoeMessageDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewReplaceSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewReplaceSpoeMessageOK()
 }

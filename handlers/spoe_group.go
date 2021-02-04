@@ -31,8 +31,8 @@ type SpoeCreateSpoeGroupHandlerImpl struct {
 func (h *SpoeCreateSpoeGroupHandlerImpl) Handle(params spoe.CreateSpoeGroupParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeGroupDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -44,8 +44,8 @@ func (h *SpoeCreateSpoeGroupHandlerImpl) Handle(params spoe.CreateSpoeGroupParam
 	}
 	err = ss.CreateGroup(params.Scope, params.Data, t, v)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeGroupDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewCreateSpoeGroupCreated().WithPayload(spoe.NewCreateSpoeGroupCreated().Payload)
 }
@@ -58,8 +58,8 @@ type SpoeDeleteSpoeGroupHandlerImpl struct {
 func (h *SpoeDeleteSpoeGroupHandlerImpl) Handle(params spoe.DeleteSpoeGroupParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewDeleteSpoeGroupDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewDeleteSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -86,8 +86,8 @@ type SpoeGetSpoeGroupsHandlerImpl struct {
 func (h *SpoeGetSpoeGroupsHandlerImpl) Handle(params spoe.GetSpoeGroupsParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeGroupsDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeGroupsDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -95,8 +95,8 @@ func (h *SpoeGetSpoeGroupsHandlerImpl) Handle(params spoe.GetSpoeGroupsParams, p
 	}
 	v, groups, err := ss.GetGroups(params.Scope, t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeGroupsDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeGroupsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewGetSpoeGroupsOK().WithPayload(&spoe.GetSpoeGroupsOKBody{Version: v, Data: groups})
 }
@@ -109,8 +109,8 @@ type SpoeGetSpoeGroupHandlerImpl struct {
 func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeGroupDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -118,8 +118,8 @@ func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c i
 	}
 	v, group, err := ss.GetGroup(params.Scope, params.Name, t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeGroupDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	if group == nil {
 		return spoe.NewGetSpoeGroupNotFound()
@@ -135,8 +135,8 @@ type SpoeReplaceSpoeGroupHandlerImpl struct {
 func (h *SpoeReplaceSpoeGroupHandlerImpl) Handle(params spoe.ReplaceSpoeGroupParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewReplaceSpoeGroupDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewReplaceSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -148,8 +148,8 @@ func (h *SpoeReplaceSpoeGroupHandlerImpl) Handle(params spoe.ReplaceSpoeGroupPar
 	}
 	err = ss.EditGroup(params.Scope, params.Data, params.Name, t, v)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewReplaceSpoeGroupDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewReplaceSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewReplaceSpoeGroupOK()
 }

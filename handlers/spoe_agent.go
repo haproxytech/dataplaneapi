@@ -31,8 +31,8 @@ type SpoeCreateSpoeAgentHandlerImpl struct {
 func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeAgentDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -44,8 +44,8 @@ func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParam
 	}
 	err = ss.CreateAgent(params.Scope, params.Data, t, v)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewCreateSpoeAgentDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewCreateSpoeAgentCreated().WithPayload(spoe.NewCreateSpoeAgentCreated().Payload)
 }
@@ -58,8 +58,8 @@ type SpoeDeleteSpoeAgentHandlerImpl struct {
 func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewDeleteSpoeAgentDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewDeleteSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -86,8 +86,8 @@ type SpoeGetSpoeAgentsHandlerImpl struct {
 func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetAllSpoeFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -95,8 +95,8 @@ func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, p
 	}
 	_, agents, err := ss.GetAgents(params.Scope, t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetAllSpoeFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewGetSpoeAgentsOK().WithPayload(&spoe.GetSpoeAgentsOKBody{Data: agents})
 }
@@ -109,8 +109,8 @@ type SpoeGetSpoeAgentHandlerImpl struct {
 func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeAgentDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -118,8 +118,8 @@ func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, pri
 	}
 	v, agent, err := ss.GetAgent(params.Scope, params.Name, t)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewGetSpoeAgentDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 	if agent == nil {
 		return spoe.NewGetSpoeAgentNotFound()
@@ -135,8 +135,8 @@ type SpoeReplaceSpoeAgentHandlerImpl struct {
 func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentParams, principal interface{}) middleware.Responder {
 	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewReplaceSpoeAgentDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
@@ -148,8 +148,8 @@ func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentPar
 	}
 	err = ss.EditAgent(params.Scope, params.Data, t, v)
 	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return spoe.NewReplaceSpoeAgentDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		e := misc.HandleError(err)
+		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 	return spoe.NewReplaceSpoeAgentOK()
 }
