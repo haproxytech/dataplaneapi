@@ -90,6 +90,12 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		return nil, fmt.Errorf("unrecognized severity: %s", opts.SyslogPriority)
 	}
 
+	var err error
+	var facility syslog5424.Priority
+	if err = facility.Set(opts.SyslogFacility); err != nil {
+		return nil, err
+	}
+
 	connector := syslog5424.TCPConnector(opts.SyslogProto, fmt.Sprintf("%s:%d", opts.SyslogSrv, opts.SyslogPort))
 	slConn, chErr := syslog5424.NewSender(connector, syslog5424.TransportRFC5425, time.NewTicker(500*time.Millisecond).C)
 
@@ -99,7 +105,7 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		}
 	}(chErr)
 
-	syslogServer, err := syslog5424.New(slConn, syslog5424.LogUSER|priority, opts.SyslogTag)
+	syslogServer, err := syslog5424.New(slConn, facility|priority, opts.SyslogTag)
 	if err != nil {
 		return nil, err
 	}
