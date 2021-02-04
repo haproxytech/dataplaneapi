@@ -34,6 +34,19 @@ To run tests in specific directory, you can use the following command:
 ```bash
 TESTNAME="dir_name" make e2e
 ```
+### Run only one test in specific dir
+To run only one test by its description:
+```bash
+TESTNAME="dir_name" TESTDESCRIPTION="Test description"  make e2e
+```
+
+Alternatively, you can run it by its BATS number ($BATS_TEST_NUMBER is used):
+```bash
+TESTNAME="dir_name" TESTNUMBER=2  make e2e
+```
+
+Prerequisite to run test like this is to use BATS convenient `setup` function
+in tests and invoke `run_only` function inside of that function
 
 ### Parameters
 
