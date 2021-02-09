@@ -1,0 +1,31 @@
+{
+    "async": "enabled",
+    "continue-on-error": "enabled",
+    "dontlog-normal": "disabled",
+    "engine-name": "engine1",
+    "force-set-var": "enabled",
+    "groups": "mygroup",
+    "hello_timeout": 3000,
+    "idle_timeout": 14000,
+    "log": [
+      {
+        "global": true,
+        "index": 1
+      }
+    ],
+    "max-frame-size": 5,
+    "max-waiting-frames": 8,
+    "maxconnrate": 5000,
+    "maxerrrate": 3,
+    "messages": "msg1",
+    "name": "post_agent1",
+    "option_set-on-error": "seterr1",
+    "option_set-process-time": "setproc1",
+    "option_set-total-time": "settotalname1",
+    "option_var-prefix": "pref1",
+    "pipelining": "disabled",
+    "processing_timeout": 300,
+    "register-var-names": "regvarname1",
+    "send-frag-payload": "disabled",
+    "use-backend": "backend1"
+  }
