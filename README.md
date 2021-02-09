@@ -83,6 +83,7 @@ HAProxy options:
       --spoe-transaction-dir=                      Path to the SPOE transaction directory (default: /tmp/spoe-haproxy)
       --master-worker-mode                         Flag to enable helpers when running within HAProxy
       --max-open-transactions=                     Limit for active transaction in pending state (default: 20)
+      --validate-cmd=                              Executes a custom command to perform the HAProxy configuration check
 
 Logging options:
       --log-to=[stdout|file]                       Log target, can be stdout or file (default: stdout)
