@@ -589,6 +589,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.SpoeDeleteSpoeGroupHandler = &handlers.SpoeDeleteSpoeGroupHandlerImpl{Client: client}
 	api.SpoeReplaceSpoeGroupHandler = &handlers.SpoeReplaceSpoeGroupHandlerImpl{Client: client}
 
+	// SPOE version
+	api.SpoeGetSpoeConfigurationVersionHandler = &handlers.SpoeGetSpoeConfigurationVersionHandlerImpl{Client: client}
+
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }
 

@@ -144,6 +144,8 @@ github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/haproxytech/client-native/v2 v2.2.0 h1:qdPKYTK5CpkzIECZNj4oxlPssuSF6I06YIFOBQ35xr0=
 github.com/haproxytech/client-native/v2 v2.2.0/go.mod h1:PwZEyFw1UlwUp+OPETx/0hpUhNPYmgdLJ/+ss/FVv2w=
+github.com/haproxytech/client-native/v2 v2.2.1-0.20210209083840-bbf757d7f196 h1:vcWIZ1/X1x/bOHlil4GWwMGa2MKO6jcJpIeSjH2jB8E=
+github.com/haproxytech/client-native/v2 v2.2.1-0.20210209083840-bbf757d7f196/go.mod h1:oixz9NtAXDQW8V5TqNmDs7fQgjavYjqjOaBSWzZZLk0=
 github.com/haproxytech/config-parser/v3 v3.0.0-rc1.0.20201218192213-cf1331eaac44 h1:lWMn14Si9rseZ3UfTI2w7nqKRjjTIUkyJc7PCHI9928=
 github.com/haproxytech/config-parser/v3 v3.0.0-rc1.0.20201218192213-cf1331eaac44/go.mod h1:68k+xwy1wGoufI/VKOOilrx/65M85eeQP6Atg+a29Ds=
 github.com/haproxytech/config-parser/v3 v3.0.0 h1:ksbmMWB3uvKiuvKkd0MWWKWrVB05WEkhpLpwEI5+SXc=
@@ -191,6 +193,8 @@ github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJS
 github.com/joho/godotenv v1.3.0/go.mod h1:7hK45KPybAkOC6peb+G5yklZfMxEjkZhHbwpqxOKXbg=
 github.com/karrick/godirwalk v1.8.0/go.mod h1:H5KPZjojv4lE+QYImBI8xVtrBRgYrIVsaRPx4tDPEn4=
 github.com/karrick/godirwalk v1.10.3/go.mod h1:RoGL9dQei4vP9ilrpETWE8CLOZ1kiN0LhBygSwrAsHA=
+github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 h1:Z9n2FFNUXsshfwJMBgNA0RU6/i7WVaAegv3PtuIHPMs=
+github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51/go.mod h1:CzGEWj7cYgsdH8dAjBGEr58BoE7ScuLd+fwFZ44+/x8=
 github.com/kisielk/errcheck v1.2.0/go.mod h1:/BMXB+zMLi60iA8Vv6Ksmxu/1UDYcXs4uQLJ+jE2L00=
 github.com/klauspost/compress v1.9.5/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=

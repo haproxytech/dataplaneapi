@@ -8335,6 +8335,42 @@ func init() {
         }
       }
     },
+    "/services/haproxy/spoe/version": {
+      "get": {
+        "description": "Returns SPOE configuration version.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a SPOE configuration version",
+        "operationId": "getSpoeConfigurationVersion",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SPOE configuration version",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/spoe_transactions": {
       "get": {
         "description": "Returns a list of SPOE configuration transactions. Transactions can be filtered by their status.",
@@ -29497,6 +29533,66 @@ func init() {
         "responses": {
           "204": {
             "description": "Spoe scope deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/spoe/version": {
+      "get": {
+        "description": "Returns SPOE configuration version.",
+        "tags": [
+          "Spoe"
+        ],
+        "summary": "Return a SPOE configuration version",
+        "operationId": "getSpoeConfigurationVersion",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Spoe file name",
+            "name": "spoe",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SPOE configuration version",
+            "schema": {
+              "type": "integer"
+            }
           },
           "404": {
             "description": "The specified resource was not found",

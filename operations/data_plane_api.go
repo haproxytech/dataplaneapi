@@ -468,6 +468,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SpoeGetSpoeAgentsHandler: spoe.GetSpoeAgentsHandlerFunc(func(params spoe.GetSpoeAgentsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation spoe.GetSpoeAgents has not yet been implemented")
 		}),
+		SpoeGetSpoeConfigurationVersionHandler: spoe.GetSpoeConfigurationVersionHandlerFunc(func(params spoe.GetSpoeConfigurationVersionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeConfigurationVersion has not yet been implemented")
+		}),
 		SpoeGetSpoeGroupHandler: spoe.GetSpoeGroupHandlerFunc(func(params spoe.GetSpoeGroupParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation spoe.GetSpoeGroup has not yet been implemented")
 		}),
@@ -939,6 +942,8 @@ type DataPlaneAPI struct {
 	SpoeGetSpoeAgentHandler spoe.GetSpoeAgentHandler
 	// SpoeGetSpoeAgentsHandler sets the operation handler for the get spoe agents operation
 	SpoeGetSpoeAgentsHandler spoe.GetSpoeAgentsHandler
+	// SpoeGetSpoeConfigurationVersionHandler sets the operation handler for the get spoe configuration version operation
+	SpoeGetSpoeConfigurationVersionHandler spoe.GetSpoeConfigurationVersionHandler
 	// SpoeGetSpoeGroupHandler sets the operation handler for the get spoe group operation
 	SpoeGetSpoeGroupHandler spoe.GetSpoeGroupHandler
 	// SpoeGetSpoeGroupsHandler sets the operation handler for the get spoe groups operation
@@ -1499,6 +1504,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.SpoeGetSpoeAgentsHandler == nil {
 		unregistered = append(unregistered, "spoe.GetSpoeAgentsHandler")
+	}
+	if o.SpoeGetSpoeConfigurationVersionHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeConfigurationVersionHandler")
 	}
 	if o.SpoeGetSpoeGroupHandler == nil {
 		unregistered = append(unregistered, "spoe.GetSpoeGroupHandler")
@@ -2263,6 +2271,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/spoe/spoe_agents"] = spoe.NewGetSpoeAgents(o.context, o.SpoeGetSpoeAgentsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/version"] = spoe.NewGetSpoeConfigurationVersion(o.context, o.SpoeGetSpoeConfigurationVersionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
