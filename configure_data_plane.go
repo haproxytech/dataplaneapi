@@ -144,20 +144,25 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	if cfgFiles := os.Getenv("HAPROXY_CFGFILES"); cfgFiles != "" {
 		m := map[string]bool{"configuration": false}
-
 		if len(haproxyOptions.UserListFile) > 0 {
 			m["userlist"] = false
 		}
+
 		for _, f := range strings.Split(cfgFiles, ";") {
+			var conf bool
+			var user bool
+
 			if f == haproxyOptions.ConfigFile {
+				conf = true
 				m["configuration"] = true
-				continue
 			}
 			if len(haproxyOptions.UserListFile) > 0 && f == haproxyOptions.UserListFile {
+				user = true
 				m["userlist"] = true
-				continue
 			}
-			log.Warningf("The configuration file %s in HAPROXY_CFGFILES is not defined, neither by --config-file or --userlist-file flags.", f)
+			if !conf && !user {
+				log.Warningf("The configuration file %s in HAPROXY_CFGFILES is not defined, neither by --config-file or --userlist-file flags.", f)
+			}
 		}
 		for f, ok := range m {
 			if !ok {
