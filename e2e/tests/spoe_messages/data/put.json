@@ -1,0 +1,17 @@
+{
+  "acl": [
+    {
+      "acl_name": "careful_ips",
+      "criterion": "src",
+      "index": 0,
+      "value": "127.0.0.1/32"
+    }
+  ],
+  "args": "ip=src",
+  "event": {
+    "cond": "if",
+    "cond_test": "{ src -f /etc/haproxy/whitelist.lst }",
+    "name": "on-tcp-response"
+  },
+  "name": "check-ip"
+}

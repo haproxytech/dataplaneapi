@@ -1,0 +1,17 @@
+{
+  "acl": [
+    {
+      "acl_name": "h_xff_exists",
+      "criterion": "req.hdr(X-Forwarded-For)",
+      "index": 0,
+      "value": "-m found"
+    }
+  ],
+  "args": "ip=src",
+  "event": {
+    "cond": "unless",
+    "cond_test": "{ src -f /etc/haproxy/blacklist.lst }",
+    "name": "on-frontend-tcp-request"
+  },
+  "name": "message1"
+}

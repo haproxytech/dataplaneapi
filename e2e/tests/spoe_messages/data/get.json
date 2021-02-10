@@ -1,0 +1,9 @@
+{
+  "args": "ip=src",
+  "event": {
+    "cond": "if",
+    "cond_test": "! { src -f /etc/haproxy/blacklist.lst }",
+    "name": "on-client-session"
+  },
+  "name": "check-ip"
+}
