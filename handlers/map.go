@@ -21,18 +21,19 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/models/v2"
+
 	config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
-	"github.com/haproxytech/models/v2"
 )
 
-//GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
+// GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
 type GetMapsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
 	mapList := &[]*models.Map{}
 
@@ -53,7 +54,7 @@ func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, pri
 	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(*mapList)
 }
 
-//GetMapHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface using client-native client
+// GetMapHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface using client-native client
 type GetMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -70,7 +71,7 @@ func (h *GetMapHandlerImpl) Handle(params maps.GetOneRuntimeMapParams, principal
 	return maps.NewGetOneRuntimeMapOK().WithPayload(m)
 }
 
-//ClearMapHandlerImpl implementation of the ClearRuntimeMapHandler interface using client-native client
+// ClearMapHandlerImpl implementation of the ClearRuntimeMapHandler interface using client-native client
 type ClearMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -101,7 +102,7 @@ func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principa
 	return maps.NewClearRuntimeMapNoContent()
 }
 
-//ShowMapHandlerImpl implementation of the ShowMapHandlerImpl interface using client-native client
+// ShowMapHandlerImpl implementation of the ShowMapHandlerImpl interface using client-native client
 type ShowMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -118,7 +119,7 @@ func (h *ShowMapHandlerImpl) Handle(params maps.ShowRuntimeMapParams, principal 
 	return maps.NewShowRuntimeMapOK().WithPayload(m)
 }
 
-//AddMapEntryHandlerImpl implementation of the AddMapEntryHandler interface using client-native client
+// AddMapEntryHandlerImpl implementation of the AddMapEntryHandler interface using client-native client
 type AddMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -145,7 +146,7 @@ func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal
 	return maps.NewAddMapEntryCreated().WithPayload(params.Data)
 }
 
-//GetRuntimeMapEntryHandlerImpl implementation of the GetRuntimeMapEntryHandler interface using client-native client
+// GetRuntimeMapEntryHandlerImpl implementation of the GetRuntimeMapEntryHandler interface using client-native client
 type GetRuntimeMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -162,7 +163,7 @@ func (h *GetRuntimeMapEntryHandlerImpl) Handle(params maps.GetRuntimeMapEntryPar
 	return maps.NewGetRuntimeMapEntryOK().WithPayload(m)
 }
 
-//ReplaceRuntimeMapEntryHandlerImpl implementation of the ReplaceRuntimeMapEntryHandler interface using client-native client
+// ReplaceRuntimeMapEntryHandlerImpl implementation of the ReplaceRuntimeMapEntryHandler interface using client-native client
 type ReplaceRuntimeMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -193,7 +194,7 @@ func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMap
 	return maps.NewGetRuntimeMapEntryOK().WithPayload(e)
 }
 
-//DeleteRuntimeMapEntryHandlerImpl implementation of the DeleteRuntimeMapEntryHandler interface using client-native client
+// DeleteRuntimeMapEntryHandlerImpl implementation of the DeleteRuntimeMapEntryHandler interface using client-native client
 type DeleteRuntimeMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }

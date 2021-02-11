@@ -25,13 +25,14 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	models "github.com/haproxytech/models/v2"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/storage"
-	models "github.com/haproxytech/models/v2"
 )
 
-//StorageCreateRuntimeMapHandlerImpl implementation of the StorageCreateRuntimeMapHandler interface using client-native client
+// StorageCreateRuntimeMapHandlerImpl implementation of the StorageCreateRuntimeMapHandler interface using client-native client
 type StorageCreateRuntimeMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -59,12 +60,12 @@ func (h *StorageCreateRuntimeMapHandlerImpl) Handle(params storage.CreateRuntime
 	return storage.NewCreateRuntimeMapCreated().WithPayload(me)
 }
 
-//GetMapStorageHandlerImpl implementation of the StorageGetAllStorageMapFilesHandler interface
+// GetMapStorageHandlerImpl implementation of the StorageGetAllStorageMapFilesHandler interface
 type GetAllStorageMapFilesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
 	tempMaps := map[string]*models.Map{}
 
@@ -130,7 +131,7 @@ func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapPara
 	return storage.NewGetOneStorageMapOK().WithPayload(f)
 }
 
-//StorageDeleteStorageMapHandlerImpl implementation of the StorageDeleteStorageMapHandler interface
+// StorageDeleteStorageMapHandlerImpl implementation of the StorageDeleteStorageMapHandler interface
 type StorageDeleteStorageMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -168,7 +169,7 @@ func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorage
 	return storage.NewDeleteStorageMapNoContent()
 }
 
-//StorageReplaceStorageMapFileHandlerImpl implementation of the StorageReplaceStorageMapFileHandler interface
+// StorageReplaceStorageMapFileHandlerImpl implementation of the StorageReplaceStorageMapFileHandler interface
 type StorageReplaceStorageMapFileHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent

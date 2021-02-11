@@ -19,7 +19,7 @@ import (
 	"github.com/haproxytech/client-native/v2/configuration"
 )
 
-//ServiceInstance specifies the needed information required from the service to provide for the ServiceDiscoveryInstance.
+// ServiceInstance specifies the needed information required from the service to provide for the ServiceDiscoveryInstance.
 type ServiceInstance interface {
 	GetName() string
 	GetBackendName() string
@@ -40,7 +40,7 @@ type discoveryInstanceParams struct {
 	SlotsIncrement  int
 }
 
-//ServiceDiscoveryInstance manages and updates all services of a single service discovery.
+// ServiceDiscoveryInstance manages and updates all services of a single service discovery.
 type ServiceDiscoveryInstance struct {
 	services      map[string]*confService
 	client        *configuration.Client
@@ -48,7 +48,7 @@ type ServiceDiscoveryInstance struct {
 	transactionID string
 }
 
-//NewServiceDiscoveryInstance creates a new ServiceDiscoveryInstance.
+// NewServiceDiscoveryInstance creates a new ServiceDiscoveryInstance.
 func NewServiceDiscoveryInstance(client *configuration.Client, params discoveryInstanceParams) *ServiceDiscoveryInstance {
 	return &ServiceDiscoveryInstance{
 		client:   client,
@@ -57,7 +57,7 @@ func NewServiceDiscoveryInstance(client *configuration.Client, params discoveryI
 	}
 }
 
-//UpdateParams updates the scaling params for each service associated with the service discovery.
+// UpdateParams updates the scaling params for each service associated with the service discovery.
 func (s *ServiceDiscoveryInstance) UpdateParams(params discoveryInstanceParams) error {
 	s.params = params
 	for _, se := range s.services {
@@ -73,7 +73,7 @@ func (s *ServiceDiscoveryInstance) UpdateParams(params discoveryInstanceParams) 
 	return nil
 }
 
-//UpdateServices updates each service and persists the changes inside a single transaction.
+// UpdateServices updates each service and persists the changes inside a single transaction.
 func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) error {
 	err := s.startTransaction()
 	if err != nil {

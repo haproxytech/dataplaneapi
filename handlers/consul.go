@@ -20,43 +20,44 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"github.com/haproxytech/models/v2"
+
 	sc "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/service_discovery"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateConsulHandlerImpl implementation of the CreateConsulHandler interface using client-native client
+// CreateConsulHandlerImpl implementation of the CreateConsulHandler interface using client-native client
 type CreateConsulHandlerImpl struct {
 	Discovery       sc.ServiceDiscoveries
 	UseValidation   bool
 	PersistCallback func([]*models.Consul) error
 }
 
-//DeleteConsulHandlerImpl implementation of the DeleteConsulHandler interface using client-native client
+// DeleteConsulHandlerImpl implementation of the DeleteConsulHandler interface using client-native client
 type DeleteConsulHandlerImpl struct {
 	Discovery       sc.ServiceDiscoveries
 	PersistCallback func([]*models.Consul) error
 }
 
-//GetConsulHandlerImpl implementation of the GetConsulHandler interface using client-native client
+// GetConsulHandlerImpl implementation of the GetConsulHandler interface using client-native client
 type GetConsulHandlerImpl struct {
 	Discovery sc.ServiceDiscoveries
 }
 
-//GetConsulsHandlerImpl implementation of the GetConsulsHandler interface using client-native client
+// GetConsulsHandlerImpl implementation of the GetConsulsHandler interface using client-native client
 type GetConsulsHandlerImpl struct {
 	Discovery sc.ServiceDiscoveries
 }
 
-//ReplaceConsulHandlerImpl implementation of the ReplaceConsulHandler interface using client-native client
+// ReplaceConsulHandlerImpl implementation of the ReplaceConsulHandler interface using client-native client
 type ReplaceConsulHandlerImpl struct {
 	Discovery       sc.ServiceDiscoveries
 	UseValidation   bool
 	PersistCallback func([]*models.Consul) error
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
 	id := uuid.New().String()
 	params.Data.ID = &id
@@ -82,7 +83,7 @@ func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulPa
 	return service_discovery.NewCreateConsulCreated().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (c *DeleteConsulHandlerImpl) Handle(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
 	err := c.Discovery.RemoveNode("consul", params.ID)
 	if err != nil {
@@ -102,7 +103,7 @@ func (c *DeleteConsulHandlerImpl) Handle(params service_discovery.DeleteConsulPa
 	return service_discovery.NewDeleteConsulNoContent()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (c *GetConsulHandlerImpl) Handle(params service_discovery.GetConsulParams, principal interface{}) middleware.Responder {
 	nodes, err := c.Discovery.GetNode("consul", params.ID)
 	if err != nil {
@@ -117,7 +118,7 @@ func (c *GetConsulHandlerImpl) Handle(params service_discovery.GetConsulParams, 
 	return service_discovery.NewGetConsulOK().WithPayload(&service_discovery.GetConsulOKBody{Data: consul})
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (c *GetConsulsHandlerImpl) Handle(params service_discovery.GetConsulsParams, principal interface{}) middleware.Responder {
 	consuls, err := getConsuls(c.Discovery)
 	if err != nil {
@@ -127,7 +128,7 @@ func (c *GetConsulsHandlerImpl) Handle(params service_discovery.GetConsulsParams
 	return service_discovery.NewGetConsulsOK().WithPayload(&service_discovery.GetConsulsOKBody{Data: consuls})
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
 	if err := validateData(params.Data, c.UseValidation); err != nil {
 		e := misc.HandleError(err)

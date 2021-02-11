@@ -39,13 +39,13 @@ func NewMapSync() *MapSync {
 	}
 }
 
-//Stop stops maps syncing
+// Stop stops maps syncing
 func (ms *MapSync) Stop() {
 	ms.mapQuitChan <- struct{}{}
 }
 
-//SyncAll sync maps file entries with runtime maps entries for all configured files.
-//Missing runtime entries are appended to the map file
+// SyncAll sync maps file entries with runtime maps entries for all configured files.
+// Missing runtime entries are appended to the map file
 func (ms *MapSync) SyncAll(client client_native.IHAProxyClient) {
 	cfg := Get()
 	haproxyOptions := cfg.HAProxy
@@ -75,7 +75,7 @@ func (ms *MapSync) SyncAll(client client_native.IHAProxyClient) {
 	}
 }
 
-//Sync syncs one map file to runtime entries
+// Sync syncs one map file to runtime entries
 func (ms *MapSync) Sync(mp *models.Map, client client_native.IHAProxyClient) (bool, error) {
 	ms.mu.Lock()
 	defer ms.mu.Unlock()
@@ -87,7 +87,7 @@ func (ms *MapSync) Sync(mp *models.Map, client client_native.IHAProxyClient) (bo
 	fileEntries := client.GetRuntime().ParseMapEntriesFromFile(rawFile, false)
 	sort.Slice(fileEntries, func(i, j int) bool { return fileEntries[i].Key < fileEntries[j].Key })
 
-	//runtime map entries
+	// runtime map entries
 	id := fmt.Sprintf("#%s", mp.ID)
 	runtimeEntries, err := client.GetRuntime().ShowMapEntries(id)
 	if err != nil {
@@ -109,8 +109,8 @@ func (ms *MapSync) Sync(mp *models.Map, client client_native.IHAProxyClient) (bo
 	return true, nil
 }
 
-//equalSomeEntries compares last few runtime entries with file entries
-//if records differs, check is run against random entries
+// equalSomeEntries compares last few runtime entries with file entries
+// if records differs, check is run against random entries
 func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 	if len(fEntries) != len(rEntries) {
 		return false
@@ -138,7 +138,8 @@ func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 
 	for i := 0; i < maxRandom; i++ {
 		rand.Seed(time.Now().UTC().UnixNano())
-		r := rand.Intn(max)
+		// There's no need for strong number generation, here, just need for performance
+		r := rand.Intn(max) // nolint:gosec
 		if len(index) > 0 {
 			r = index[0]
 		}
@@ -149,8 +150,8 @@ func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 	return true
 }
 
-//equal compares runtime and map entries
-//Returns true if all entries are same, otherwise returns false
+// equal compares runtime and map entries
+// Returns true if all entries are same, otherwise returns false
 func equal(a, b models.MapEntries) bool {
 	if len(a) != len(b) {
 		return false
@@ -164,8 +165,8 @@ func equal(a, b models.MapEntries) bool {
 	return true
 }
 
-//dumpRuntimeEntries dumps runtime entries into map file
-//Returns true,nil if succeed, otherwise retuns false,error
+// dumpRuntimeEntries dumps runtime entries into map file
+// Returns true,nil if succeed, otherwise retuns false,error
 func dumpRuntimeEntries(file string, me models.MapEntries) (bool, error) {
 	f, err := os.OpenFile(file, os.O_APPEND|os.O_WRONLY|os.O_TRUNC, 0600)
 	if err != nil {

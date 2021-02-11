@@ -26,11 +26,10 @@ import (
 	"sync"
 	"time"
 
+	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/google/renameio"
 	"github.com/haproxytech/models/v2"
 	log "github.com/sirupsen/logrus"
-
-	petname "github.com/dustinkirkland/golang-petname"
 	"gopkg.in/yaml.v2"
 )
 

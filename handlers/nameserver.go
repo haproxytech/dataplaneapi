@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/models/v2"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/nameserver"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateNameserverHandlerImpl implementation of the CreateNameserverHandler interface using client-native client
+// CreateNameserverHandlerImpl implementation of the CreateNameserverHandler interface using client-native client
 type CreateNameserverHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteNameserverHandlerImpl implementation of the DeleteNameserverHandler interface using client-native client
+// DeleteNameserverHandlerImpl implementation of the DeleteNameserverHandler interface using client-native client
 type DeleteNameserverHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetNameserverHandlerImpl implementation of the GetNameserverHandler interface using client-native client
+// GetNameserverHandlerImpl implementation of the GetNameserverHandler interface using client-native client
 type GetNameserverHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetNameserversHandlerImpl implementation of the GetNameserversHandler interface using client-native client
+// GetNameserversHandlerImpl implementation of the GetNameserversHandler interface using client-native client
 type GetNameserversHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceNameserverHandlerImpl implementation of the ReplaceNameserverHandler interface using client-native client
+// ReplaceNameserverHandlerImpl implementation of the ReplaceNameserverHandler interface using client-native client
 type ReplaceNameserverHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateNameserverHandlerImpl) Handle(params nameserver.CreateNameserverParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -93,7 +94,7 @@ func (h *CreateNameserverHandlerImpl) Handle(params nameserver.CreateNameserverP
 	return nameserver.NewCreateNameserverAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteNameserverHandlerImpl) Handle(params nameserver.DeleteNameserverParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -134,7 +135,7 @@ func (h *DeleteNameserverHandlerImpl) Handle(params nameserver.DeleteNameserverP
 	return nameserver.NewDeleteNameserverAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetNameserverHandlerImpl) Handle(params nameserver.GetNameserverParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -149,7 +150,7 @@ func (h *GetNameserverHandlerImpl) Handle(params nameserver.GetNameserverParams,
 	return nameserver.NewGetNameserverOK().WithPayload(&nameserver.GetNameserverOKBody{Version: v, Data: b}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetNameserversHandlerImpl) Handle(params nameserver.GetNameserversParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -164,7 +165,7 @@ func (h *GetNameserversHandlerImpl) Handle(params nameserver.GetNameserversParam
 	return nameserver.NewGetNameserversOK().WithPayload(&nameserver.GetNameserversOKBody{Version: v, Data: bs}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceNameserverHandlerImpl) Handle(params nameserver.ReplaceNameserverParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

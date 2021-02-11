@@ -21,14 +21,14 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/haproxytech/dataplaneapi/misc"
-
 	"github.com/GehirnInc/crypt"
 	api_errors "github.com/go-openapi/errors"
 	parser "github.com/haproxytech/config-parser/v3"
 	"github.com/haproxytech/config-parser/v3/common"
 	"github.com/haproxytech/config-parser/v3/types"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/haproxytech/dataplaneapi/misc"
 )
 
 var usersStore *Users
@@ -105,9 +105,9 @@ func (u *Users) Init() error {
 	cfg := Get()
 	p := &parser.Parser{}
 	if cfg.HAProxy.UserListFile != "" {
-		//if userlist file doesn't exists
+		// if userlist file doesn't exists
 		if _, err := os.Stat(cfg.HAProxy.UserListFile); os.IsNotExist(err) {
-			//get user from HAProxy config file
+			// get user from HAProxy config file
 			if err := p.LoadData(cfg.HAProxy.ConfigFile); err != nil {
 				return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.ConfigFile, err.Error())
 			}
@@ -125,7 +125,7 @@ func (u *Users) Init() error {
 			}
 			return u.setUser(data, cfg.HAProxy.UserListFile)
 		}
-		//if userlist file exists
+		// if userlist file exists
 		if err := p.LoadData(cfg.HAProxy.UserListFile); err != nil {
 			return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.UserListFile, err.Error())
 		}
@@ -135,7 +135,7 @@ func (u *Users) Init() error {
 		}
 		return u.setUser(data, cfg.HAProxy.UserListFile)
 	}
-	//get user from HAProxy config
+	// get user from HAProxy config
 	if err := p.LoadData(cfg.HAProxy.ConfigFile); err != nil {
 		return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.ConfigFile, err.Error())
 	}
@@ -146,7 +146,7 @@ func (u *Users) Init() error {
 	return u.setUser(user, cfg.HAProxy.ConfigFile)
 }
 
-//findUser searches user by its name. If found, returns user, otherwise returns an error.
+// findUser searches user by its name. If found, returns user, otherwise returns an error.
 func findUser(userName string, users []types.User) (*types.User, error) {
 	for _, u := range users {
 		if u.Name == userName {

@@ -33,40 +33,31 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
-
-	parser "github.com/haproxytech/config-parser/v3"
-	"github.com/haproxytech/config-parser/v3/types"
-	"github.com/haproxytech/dataplaneapi/adapters"
-	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
-	"github.com/haproxytech/dataplaneapi/operations/specification"
-	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
-
-	log "github.com/sirupsen/logrus"
-
-	"github.com/haproxytech/dataplaneapi/misc"
-
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/haproxytech/dataplaneapi/operations/discovery"
-
+	"github.com/go-openapi/swag"
 	client_native "github.com/haproxytech/client-native/v2"
-
 	"github.com/haproxytech/client-native/v2/configuration"
 	runtime_api "github.com/haproxytech/client-native/v2/runtime"
 	"github.com/haproxytech/client-native/v2/spoe"
 	"github.com/haproxytech/client-native/v2/storage"
+	parser "github.com/haproxytech/config-parser/v3"
+	"github.com/haproxytech/config-parser/v3/types"
+	"github.com/rs/cors"
+	log "github.com/sirupsen/logrus"
 
+	"github.com/haproxytech/dataplaneapi/adapters"
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
+	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
-	"github.com/haproxytech/dataplaneapi/rate"
-
-	"github.com/go-openapi/errors"
-	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
-	"github.com/rs/cors"
-
+	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations"
+	"github.com/haproxytech/dataplaneapi/operations/discovery"
+	"github.com/haproxytech/dataplaneapi/operations/specification"
+	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
+	"github.com/haproxytech/dataplaneapi/rate"
 
 	// import various crypting algorithms
 	_ "github.com/GehirnInc/crypt/md5_crypt"
@@ -74,7 +65,7 @@ import (
 	_ "github.com/GehirnInc/crypt/sha512_crypt"
 )
 
-//go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
+// go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
 
 var (
 	Version   string
@@ -172,11 +163,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 	// end overriding options with env variables
 
-	defer func() {
-		if err := recover(); err != nil {
-			log.Fatalf("Error starting Data Plane API: %s\n Stacktrace from panic: \n%s", err, string(debug.Stack()))
-		}
-	}()
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -596,6 +582,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// SPOE version
 	api.SpoeGetSpoeConfigurationVersionHandler = &handlers.SpoeGetSpoeConfigurationVersionHandlerImpl{Client: client}
+
+	defer func() {
+		if err := recover(); err != nil {
+			log.Fatalf("Error starting Data Plane API: %s\n Stacktrace from panic: \n%s", err, string(debug.Stack()))
+		}
+	}()
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }

@@ -18,18 +18,19 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/models/v2"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/spoe_transactions"
-	"github.com/haproxytech/models/v2"
 )
 
-//SpoeTransactionsStartSpoeTransactionHandlerImpl implementation of the SpoeTransactionsStartSpoeTransactionHandler interface
+// SpoeTransactionsStartSpoeTransactionHandlerImpl implementation of the SpoeTransactionsStartSpoeTransactionHandler interface
 type SpoeTransactionsStartSpoeTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_transactions.StartSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
@@ -49,12 +50,12 @@ func (th *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_tr
 	return spoe_transactions.NewStartSpoeTransactionCreated().WithPayload(m)
 }
 
-//SpoeTransactionsDeleteSpoeTransactionHandlerImpl implementation of the DeleteTransactionHandler interface
+// SpoeTransactionsDeleteSpoeTransactionHandlerImpl implementation of the DeleteTransactionHandler interface
 type SpoeTransactionsDeleteSpoeTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_transactions.DeleteSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
@@ -69,12 +70,12 @@ func (th *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_t
 	return spoe_transactions.NewDeleteSpoeTransactionNoContent()
 }
 
-//SpoeTransactionsGetSpoeTransactionHandlerImpl implementation of the SpoeTransactionsGetSpoeTransactionHandler interface
+// SpoeTransactionsGetSpoeTransactionHandlerImpl implementation of the SpoeTransactionsGetSpoeTransactionHandler interface
 type SpoeTransactionsGetSpoeTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
@@ -94,12 +95,12 @@ func (th *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_tran
 	return spoe_transactions.NewGetSpoeTransactionOK().WithPayload(m)
 }
 
-//SpoeTransactionsGetSpoeTransactionsHandlerImpl implementation of the SpoeTransactionsGetSpoeTransactionsHandler interface
+// SpoeTransactionsGetSpoeTransactionsHandlerImpl implementation of the SpoeTransactionsGetSpoeTransactionsHandler interface
 type SpoeTransactionsGetSpoeTransactionsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionsParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {
@@ -129,13 +130,13 @@ func (th *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_tra
 	return spoe_transactions.NewGetSpoeTransactionsOK().WithPayload(ms)
 }
 
-//SpoeTransactionsCommitSpoeTransactionHandlerImpl implementation of the SpoeTransactionsCommitSpoeTransactionHandler interface
+// SpoeTransactionsCommitSpoeTransactionHandlerImpl implementation of the SpoeTransactionsCommitSpoeTransactionHandler interface
 type SpoeTransactionsCommitSpoeTransactionHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_transactions.CommitSpoeTransactionParams, principal interface{}) middleware.Responder {
 	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
 	if err != nil {

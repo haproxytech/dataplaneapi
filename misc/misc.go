@@ -77,7 +77,7 @@ func HandleError(err error) *models.Error {
 	}
 }
 
-//HandleContainerGetError translates error codes from client native into models.Error with appropriate http status code. Intended for get requests on container endpoints.
+// HandleContainerGetError translates error codes from client native into models.Error with appropriate http status code. Intended for get requests on container endpoints.
 func HandleContainerGetError(err error) *models.Error {
 	if t, ok := err.(*configuration.ConfError); ok {
 		if t.Code() == configuration.ErrParentDoesNotExist {
@@ -185,8 +185,8 @@ func Int64P(i int) *int64 {
 	return &i64
 }
 
-//extractEnvVar extracts and returns env variable from HAProxy variable
-//provided in "${SOME_VAR}" format
+// extractEnvVar extracts and returns env variable from HAProxy variable
+// provided in "${SOME_VAR}" format
 func ExtractEnvVar(pass string) string {
 	return strings.TrimLeft(strings.TrimRight(pass, "\"}"), "\"${")
 }

@@ -20,6 +20,7 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
@@ -32,7 +33,7 @@ type RateLimitedStartTransactionHandlerImpl struct {
 	Handler            transactions.StartTransactionHandler
 }
 
-//StartTransactionHandlerImpl implementation of the StartTransactionHandler interface using client-native client
+// StartTransactionHandlerImpl implementation of the StartTransactionHandler interface using client-native client
 type StartTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -43,17 +44,17 @@ type RateLimitedDeleteTransactionHandlerImpl struct {
 	Handler            transactions.DeleteTransactionHandler
 }
 
-//DeleteTransactionHandlerImpl implementation of the DeleteTransactionHandler interface using client-native client
+// DeleteTransactionHandlerImpl implementation of the DeleteTransactionHandler interface using client-native client
 type DeleteTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetTransactionHandlerImpl implementation of the GetTransactionHandler interface using client-native client
+// GetTransactionHandlerImpl implementation of the GetTransactionHandler interface using client-native client
 type GetTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetTransactionsHandlerImpl implementation of the GetTransactionsHandler interface using client-native client
+// GetTransactionsHandlerImpl implementation of the GetTransactionsHandler interface using client-native client
 type GetTransactionsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -64,14 +65,14 @@ type RateLimitedCommitTransactionHandlerImpl struct {
 	Handler            transactions.CommitTransactionHandler
 }
 
-//CommitTransactionHandlerImpl implementation of the CommitTransactionHandlerImpl interface using client-native client
+// CommitTransactionHandlerImpl implementation of the CommitTransactionHandlerImpl interface using client-native client
 type CommitTransactionHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 	Mutex       *sync.Mutex
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *StartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
 	t, err := th.Client.Configuration.StartTransaction(params.Version)
 	if err != nil {
@@ -81,7 +82,7 @@ func (th *StartTransactionHandlerImpl) Handle(params transactions.StartTransacti
 	return transactions.NewStartTransactionCreated().WithPayload(t)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
 	err := th.Client.Configuration.DeleteTransaction(params.ID)
 	if err != nil {
@@ -91,7 +92,7 @@ func (th *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransac
 	return transactions.NewDeleteTransactionNoContent()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
 	t, err := th.Client.Configuration.GetTransaction(params.ID)
 	if err != nil {
@@ -101,7 +102,7 @@ func (th *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionPa
 	return transactions.NewGetTransactionOK().WithPayload(t)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
 	s := ""
 	if params.Status != nil {
@@ -115,7 +116,7 @@ func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactions
 	return transactions.NewGetTransactionsOK().WithPayload(*ts)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 	th.Mutex.Lock()
 	defer th.Mutex.Unlock()

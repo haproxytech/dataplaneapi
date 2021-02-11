@@ -22,31 +22,32 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/models/v2"
+
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/operations/cluster"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateClusterHandlerImpl implementation of the CreateClusterHandler interface
+// CreateClusterHandlerImpl implementation of the CreateClusterHandler interface
 type CreateClusterHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	Config      *configuration.Configuration
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetClusterHandlerImpl implementation of the GetClusterHandler interface
+// GetClusterHandlerImpl implementation of the GetClusterHandler interface
 type GetClusterHandlerImpl struct {
 	Config *configuration.Configuration
 }
 
-//ClusterInitiateCertificateRefreshHandlerImpl implementation of the ClusterInitiateCertificateRefreshHandler interface
+// ClusterInitiateCertificateRefreshHandlerImpl implementation of the ClusterInitiateCertificateRefreshHandler interface
 type ClusterInitiateCertificateRefreshHandlerImpl struct {
 	Config *configuration.Configuration
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ClusterInitiateCertificateRefreshHandlerImpl) Handle(params cluster.InitiateCertificateRefreshParams, principal interface{}) middleware.Responder {
 	if h.Config.Mode.Load() != "cluster" {
 		return cluster.NewInitiateCertificateRefreshForbidden()
@@ -80,7 +81,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 		if params.Configuration == nil || *params.Configuration != "keep" {
 			version, errVersion := h.Client.Configuration.GetVersion("")
 			if errVersion != nil || version < 1 {
-				//silently fallback to 1
+				// silently fallback to 1
 				version = 1
 			}
 			transaction, err := h.Client.Configuration.StartTransaction(version)
@@ -110,7 +111,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 				}
 			}
 
-			//now create dummy frontend so haproxy does not complain
+			// now create dummy frontend so haproxy does not complain
 			err = h.Client.Configuration.CreateFrontend(&models.Frontend{Name: "disabled"}, transaction.ID, 0)
 			if err != nil {
 				return h.err500(err, transaction)
@@ -158,7 +159,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 			if err != nil {
 				return h.err500(err, nil)
 			}
-			//we need to restart haproxy
+			// we need to restart haproxy
 			err = h.ReloadAgent.Restart()
 			if err != nil {
 				return h.err500(err, nil)
@@ -185,7 +186,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 	return cluster.NewPostClusterOK().WithPayload(&result)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetClusterHandlerImpl) Handle(params discovery.GetClusterParams, principal interface{}) middleware.Responder {
 
 	portStr := h.Config.Cluster.Port.Load()
