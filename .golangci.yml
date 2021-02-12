@@ -31,6 +31,9 @@ issues:
     - linters:
         - staticcheck
       text: "duplicate struct tag"
+    - linters:
+        - gosec
+      text: "G[501]"
 
 run:
   skip-dirs:
