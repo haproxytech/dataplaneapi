@@ -196,6 +196,19 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
 	go handleSignals(sigs, client, haproxyOptions, users)
 
+	cb := func() {
+		reloadConfigurationFile(client, haproxyOptions, users)
+		if err := client.Configuration.IncrementVersion(); err != nil {
+			log.Warningf("Failed to increment configuration version: %v", err)
+		}
+	}
+
+	watcher, _ := dataplaneapi_config.NewConfigWatcher(dataplaneapi_config.ConfigWatcherParams{
+		FilePath: cfg.HAProxy.ConfigFile,
+		Callback: cb,
+	})
+	go watcher.Listen()
+
 	// Sync map physical file with runtime map entries
 	if haproxyOptions.UpdateMapFiles {
 		go cfg.MapSync.SyncAll(client)
@@ -786,6 +799,7 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 		ValidateCmd:               haproxyOptions.ValidateCmd,
 		ValidateConfigurationFile: true,
 		MasterWorker:              true,
+		UseMd5Hash:                true,
 	}
 
 	err := confClient.Init(confParams)
@@ -910,16 +924,20 @@ func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, hap
 				client.Runtime = configureRuntimeClient(client.Configuration, haproxyOptions)
 				log.Info("Reloaded Data Plane API")
 			} else if sig == syscall.SIGUSR2 {
-				confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
-				if err != nil {
-					log.Fatalf(err.Error())
-				}
-				if err := users.Init(); err != nil {
-					log.Fatalf(err.Error())
-				}
-				log.Info("Rereading Configuration Files")
-				client.Configuration = confClient
+				reloadConfigurationFile(client, haproxyOptions, users)
 			}
 		}
 	}
+}
+
+func reloadConfigurationFile(client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
+	confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	if err := users.Init(); err != nil {
+		log.Fatalf(err.Error())
+	}
+	log.Info("Rereading Configuration Files")
+	client.Configuration = confClient
 }
