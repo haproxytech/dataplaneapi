@@ -196,18 +196,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
 	go handleSignals(sigs, client, haproxyOptions, users)
 
-	cb := func() {
-		reloadConfigurationFile(client, haproxyOptions, users)
-		if err := client.Configuration.IncrementVersion(); err != nil {
-			log.Warningf("Failed to increment configuration version: %v", err)
+	if !haproxyOptions.DisableInotify {
+		if err := startWatcher(client, haproxyOptions, users); err != nil {
+			haproxyOptions.DisableInotify = true
+			client = configureNativeClient(haproxyOptions, mWorker)
 		}
 	}
-
-	watcher, _ := dataplaneapi_config.NewConfigWatcher(dataplaneapi_config.ConfigWatcherParams{
-		FilePath: cfg.HAProxy.ConfigFile,
-		Callback: cb,
-	})
-	go watcher.Listen()
 
 	// Sync map physical file with runtime map entries
 	if haproxyOptions.UpdateMapFiles {
@@ -799,7 +793,7 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 		ValidateCmd:               haproxyOptions.ValidateCmd,
 		ValidateConfigurationFile: true,
 		MasterWorker:              true,
-		UseMd5Hash:                true,
+		UseMd5Hash:                !haproxyOptions.DisableInotify,
 	}
 
 	err := confClient.Init(confParams)
@@ -940,4 +934,23 @@ func reloadConfigurationFile(client *client_native.HAProxyClient, haproxyOptions
 	}
 	log.Info("Rereading Configuration Files")
 	client.Configuration = confClient
+}
+
+func startWatcher(client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
+	cb := func() {
+		reloadConfigurationFile(client, haproxyOptions, users)
+		if err := client.Configuration.IncrementVersion(); err != nil {
+			log.Warningf("Failed to increment configuration version: %v", err)
+		}
+	}
+
+	watcher, err := dataplaneapi_config.NewConfigWatcher(dataplaneapi_config.ConfigWatcherParams{
+		FilePath: haproxyOptions.ConfigFile,
+		Callback: cb,
+	})
+	if err != nil {
+		return err
+	}
+	go watcher.Listen()
+	return nil
 }

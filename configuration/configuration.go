@@ -65,6 +65,7 @@ type HAProxyConfiguration struct {
 	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy"`
 	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20"`
 	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check"`
+	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher watcher for the configuration file"`
 }
 
 type APIConfiguration struct {
