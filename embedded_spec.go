@@ -12388,6 +12388,90 @@ func init() {
           },
           "x-display-name": "Resolvers"
         },
+        "return_content": {
+          "type": "string",
+          "x-dependency": {
+            "return_content_format": {
+              "required": true,
+              "value": [
+                "errofile",
+                "errorfiles",
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          }
+        },
+        "return_content_format": {
+          "type": "string",
+          "enum": [
+            "default-errorfile",
+            "errorfile",
+            "errorfiles",
+            "file",
+            "lf-file",
+            "string",
+            "lf-string"
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          }
+        },
+        "return_content_type": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          },
+          "x-display-name": "Return content type",
+          "x-nullable": true
+        },
+        "return_hdrs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "fmt"
+            ],
+            "properties": {
+              "fmt": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "x-dependency": {
+            "return_content_format": {
+              "value": [
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          },
+          "x-go-name": "ReturnHeaders"
+        },
+        "return_status_code": {
+          "type": "integer",
+          "maximum": 599,
+          "minimum": 200,
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          },
+          "x-display-name": "Return Error Code",
+          "x-nullable": true
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -12591,7 +12675,8 @@ func init() {
             "unset-var",
             "strict-mode",
             "lua",
-            "use-service"
+            "use-service",
+            "return"
           ],
           "x-nullable": false
         },
@@ -31209,6 +31294,21 @@ func init() {
       },
       "x-go-name": "RuntimeAPI"
     },
+    "HTTPRequestRuleReturnHdrsItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "fmt"
+      ],
+      "properties": {
+        "fmt": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
     "InfoAPI": {
       "type": "object",
       "properties": {
@@ -34525,6 +34625,78 @@ func init() {
           },
           "x-display-name": "Resolvers"
         },
+        "return_content": {
+          "type": "string",
+          "x-dependency": {
+            "return_content_format": {
+              "required": true,
+              "value": [
+                "errofile",
+                "errorfiles",
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          }
+        },
+        "return_content_format": {
+          "type": "string",
+          "enum": [
+            "default-errorfile",
+            "errorfile",
+            "errorfiles",
+            "file",
+            "lf-file",
+            "string",
+            "lf-string"
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          }
+        },
+        "return_content_type": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          },
+          "x-display-name": "Return content type",
+          "x-nullable": true
+        },
+        "return_hdrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HTTPRequestRuleReturnHdrsItems0"
+          },
+          "x-dependency": {
+            "return_content_format": {
+              "value": [
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          },
+          "x-go-name": "ReturnHeaders"
+        },
+        "return_status_code": {
+          "type": "integer",
+          "maximum": 599,
+          "minimum": 200,
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          },
+          "x-display-name": "Return Error Code",
+          "x-nullable": true
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -34728,7 +34900,8 @@ func init() {
             "unset-var",
             "strict-mode",
             "lua",
-            "use-service"
+            "use-service",
+            "return"
           ],
           "x-nullable": false
         },
