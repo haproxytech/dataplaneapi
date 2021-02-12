@@ -7,6 +7,7 @@ require (
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/docker/go-units v0.4.0
 	github.com/dustinkirkland/golang-petname v0.0.0-20191129215211-8e5a1ed0cff0
+	github.com/fsnotify/fsnotify v1.4.9
 	github.com/getkin/kin-openapi v0.17.0
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/go-openapi/errors v0.19.4
@@ -18,9 +19,9 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v0.1.1-0.20200217212219-353f81969824
 	github.com/google/uuid v1.1.1
-	github.com/haproxytech/client-native/v2 v2.2.1-0.20210209083840-bbf757d7f196
-	github.com/haproxytech/config-parser/v3 v3.0.0
-	github.com/haproxytech/models/v2 v2.2.0
+	github.com/haproxytech/client-native/v2 v2.2.1-0.20210212150250-26193e15aaeb
+	github.com/haproxytech/config-parser/v3 v3.0.1-0.20210212144342-183eb1988d86
+	github.com/haproxytech/models/v2 v2.2.1-0.20210202072505-661110a4df53
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
