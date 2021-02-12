@@ -63,6 +63,7 @@ type HAProxyConfiguration struct {
 	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20" group:"transaction"`
 	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check" group:"reload"`
 	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher watcher for the configuration file" group:"dataplaneapi"`
+	PIDFile              string `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi"`
 }
 
 type APIConfiguration struct {

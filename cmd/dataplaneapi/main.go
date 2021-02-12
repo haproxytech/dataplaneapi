@@ -129,6 +129,8 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	log.Infof("Build from: %s", GitRepo)
 	log.Infof("Build date: %s", BuildTime)
 
+	configuration.HandlePIDFile(cfg.HAProxy)
+
 	if cfg.Mode.Load() == "cluster" {
 		if cfg.Cluster.CertificateFetched.Load() {
 			log.Info("HAProxy Data Plane API in cluster mode")

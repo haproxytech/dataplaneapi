@@ -19,6 +19,8 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"os"
+	"syscall"
 )
 
 func decodeBootstrapKey(key string) (map[string]string, error) {
@@ -32,4 +34,21 @@ func decodeBootstrapKey(key string) (map[string]string, error) {
 		return nil, fmt.Errorf("%s - %w", key, err)
 	}
 	return decodedKey, nil
+}
+
+func processExists(pid int) bool {
+	process, err := os.FindProcess(pid)
+	if err != nil {
+		return false
+	}
+	err = process.Signal(syscall.Signal(0))
+	return err == nil
+}
+
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }

@@ -739,6 +739,7 @@ func serverShutdown() {
 }
 
 func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) *client_native.HAProxyClient {
+
 	// Initialize HAProxy native client
 	confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
 	if err != nil {
@@ -781,6 +782,7 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 	} else {
 		log.Fatalf("error trying to use empty string for SPOE configuration directory")
 	}
+
 	return client
 }
 
