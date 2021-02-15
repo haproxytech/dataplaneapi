@@ -541,7 +541,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		// if host is empty(dynamic hosts), server prop is empty,
 		// so we need to set it explicitly
 		if v2.Host == "" {
-			cfg := dataplaneapi_config.Get()
+			cfg = dataplaneapi_config.Get()
 			v2.Host = cfg.Server.Host
 		}
 
