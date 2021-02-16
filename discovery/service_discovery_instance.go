@@ -17,6 +17,7 @@ package discovery
 
 import (
 	"github.com/haproxytech/client-native/v2/configuration"
+	"github.com/haproxytech/dataplaneapi/haproxy"
 )
 
 // ServiceInstance specifies the needed information required from the service to provide for the ServiceDiscoveryInstance.
@@ -44,16 +45,18 @@ type discoveryInstanceParams struct {
 type ServiceDiscoveryInstance struct {
 	services      map[string]*confService
 	client        *configuration.Client
+	reloadAgent   haproxy.IReloadAgent
 	params        discoveryInstanceParams
 	transactionID string
 }
 
 // NewServiceDiscoveryInstance creates a new ServiceDiscoveryInstance.
-func NewServiceDiscoveryInstance(client *configuration.Client, params discoveryInstanceParams) *ServiceDiscoveryInstance {
+func NewServiceDiscoveryInstance(client *configuration.Client, reloadAgent haproxy.IReloadAgent, params discoveryInstanceParams) *ServiceDiscoveryInstance {
 	return &ServiceDiscoveryInstance{
-		client:   client,
-		params:   params,
-		services: make(map[string]*confService),
+		client:      client,
+		reloadAgent: reloadAgent,
+		params:      params,
+		services:    make(map[string]*confService),
 	}
 }
 
@@ -104,7 +107,11 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 	}
 	reload = reload || s.removeDeleted()
 	if reload {
-		return s.commitTransaction()
+		if err := s.commitTransaction(); err != nil {
+			return err
+		}
+		s.reloadAgent.Reload()
+		return nil
 	}
 	s.deleteTransaction()
 	return nil

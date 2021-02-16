@@ -22,20 +22,23 @@ import (
 	"time"
 
 	"github.com/haproxytech/client-native/v2/configuration"
+	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/models/v2"
 )
 
 type consulServiceDiscovery struct {
 	consulServices map[string]*consulInstance
 	client         *configuration.Client
+	reloadAgent    haproxy.IReloadAgent
 	mu             sync.RWMutex
 }
 
 // NewConsulDiscoveryService creates a new ServiceDiscovery that connects to consul
-func NewConsulDiscoveryService(client *configuration.Client) ServiceDiscovery {
+func NewConsulDiscoveryService(params ServiceDiscoveriesParams) ServiceDiscovery {
 	return &consulServiceDiscovery{
 		consulServices: make(map[string]*consulInstance),
-		client:         client,
+		client:         params.Client,
+		reloadAgent:    params.ReloadAgent,
 	}
 }
 
@@ -57,7 +60,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 	instance := &consulInstance{
 		params:  cParams,
 		timeout: timeout,
-		discoveryConfig: NewServiceDiscoveryInstance(c.client, discoveryInstanceParams{
+		discoveryConfig: NewServiceDiscoveryInstance(c.client, c.reloadAgent, discoveryInstanceParams{
 			Whitelist:       cParams.ServiceWhitelist,
 			Blacklist:       cParams.ServiceBlacklist,
 			ServerSlotsBase: int(*cParams.ServerSlotsBase),

@@ -20,6 +20,7 @@ import (
 	"sync"
 
 	"github.com/haproxytech/client-native/v2/configuration"
+	"github.com/haproxytech/dataplaneapi/haproxy"
 )
 
 // ServiceDiscoveryParams configuration for a specific service discovery
@@ -45,19 +46,23 @@ type ServiceDiscoveries interface {
 	UpdateNode(serviceName string, id string, params ServiceDiscoveryParams) error
 }
 
+// ServiceDiscoveriesParams contain the parameters for the service discovery initialization
+type ServiceDiscoveriesParams struct {
+	Client      *configuration.Client
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // NewServiceDiscoveries creates a new ServiceDiscoveries instance
-func NewServiceDiscoveries(client *configuration.Client) ServiceDiscoveries {
+func NewServiceDiscoveries(params ServiceDiscoveriesParams) ServiceDiscoveries {
 	sd := &serviceDiscoveryImpl{
 		services: make(map[string]ServiceDiscovery),
-		client:   client,
 	}
 	//nolint
-	sd.AddService("consul", NewConsulDiscoveryService(client))
+	sd.AddService("consul", NewConsulDiscoveryService(params))
 	return sd
 }
 
 type serviceDiscoveryImpl struct {
-	client   *configuration.Client
 	services map[string]ServiceDiscovery
 	mu       sync.RWMutex
 }
