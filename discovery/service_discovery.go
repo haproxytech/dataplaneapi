@@ -22,10 +22,10 @@ import (
 	"github.com/haproxytech/client-native/v2/configuration"
 )
 
-//ServiceDiscoveryParams configuration for a specific service discovery
+// ServiceDiscoveryParams configuration for a specific service discovery
 type ServiceDiscoveryParams interface{}
 
-//ServiceDiscovery represents the required methods for a service discovery
+// ServiceDiscovery represents the required methods for a service discovery
 type ServiceDiscovery interface {
 	AddNode(id string, params ServiceDiscoveryParams) error
 	GetNode(id string) (ServiceDiscoveryParams, error)
@@ -45,7 +45,7 @@ type ServiceDiscoveries interface {
 	UpdateNode(serviceName string, id string, params ServiceDiscoveryParams) error
 }
 
-//NewServiceDiscoveries creates a new ServiceDiscoveries instance
+// NewServiceDiscoveries creates a new ServiceDiscoveries instance
 func NewServiceDiscoveries(client *configuration.Client) ServiceDiscoveries {
 	sd := &serviceDiscoveryImpl{
 		services: make(map[string]ServiceDiscovery),

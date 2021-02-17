@@ -36,13 +36,14 @@ import (
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/config-parser/v3/types"
-	"github.com/haproxytech/dataplaneapi/haproxy"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/haproxytech/dataplaneapi/haproxy"
 )
 
 const DataplaneAPIType = "community"
 
-//Node is structure required for connection to cluster
+// Node is structure required for connection to cluster
 type Node struct {
 	Address     string            `json:"address"`
 	APIBasePath string            `json:"api_base_path"`
@@ -183,7 +184,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 		key := c.cfg.BootstrapKey.Load()
 		c.cfg.Cluster.Certificate.Fetched.Store(false)
 		if key == "" {
-			//do we need to delete cert here maybe?
+			// do we need to delete cert here maybe?
 			c.cfg.Cluster.ActiveBootstrapKey.Store("")
 			err := c.cfg.Save()
 			if err != nil {
@@ -337,21 +338,22 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		return err
 	}
 	if c.cfg.HAProxy.NodeIDFile != "" {
-		//write id to file
+		// write id to file
+		// nolint:gosec
 		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0644)
 		if errFID != nil {
 			return errFID
 		}
 		version, errVersion := c.cli.Configuration.GetVersion("")
 		if errVersion != nil || version < 1 {
-			//silently fallback to 1
+			// silently fallback to 1
 			version = 1
 		}
 		t, err1 := c.cli.Configuration.StartTransaction(version)
 		if err1 != nil {
 			return err1
 		}
-		//write id to peers
+		// write id to peers
 		_, peerSections, errorGet := c.cli.Configuration.GetPeerSections(t.ID)
 		if errorGet != nil {
 			return errorGet
@@ -386,7 +388,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		if err != nil {
 			return err
 		}
-		//restart HAProxy
+		// restart HAProxy
 		errRestart := c.ReloadAgent.Restart()
 		if errRestart != nil {
 			return errRestart
@@ -408,10 +410,10 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	return nil
 }
 
-//checkCertificate checks if we have received valid certificate or we just got CSR back
+// checkCertificate checks if we have received valid certificate or we just got CSR back
 //
 // two options are possible here:
-//-----BEGIN CERTIFICATE----- or -----BEGIN CERTIFICATE REQUEST-----
+// -----BEGIN CERTIFICATE----- or -----BEGIN CERTIFICATE REQUEST-----
 func (c *ClusterSync) checkCertificate(node Node) (fetched bool, err error) {
 	if !strings.HasPrefix(node.Certificate, "-----BEGIN CERTIFICATE-----") {
 		c.cfg.Status.Store("unconfigured")
@@ -442,7 +444,7 @@ func (c *ClusterSync) fetchCert() {
 		if key == "" || c.cfg.Cluster.Token.Load() == "" {
 			continue
 		}
-		//if not, sleep and start all over again
+		// if not, sleep and start all over again
 		certFetched := c.cfg.Cluster.Certificate.Fetched.Load()
 		if !certFetched {
 			url := c.cfg.Cluster.URL.Load()

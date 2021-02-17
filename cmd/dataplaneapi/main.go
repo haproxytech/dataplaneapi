@@ -31,19 +31,19 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations"
 )
 
-//GitRepo ...
+// GitRepo ...
 var GitRepo = ""
 
-//GitTag ...
+// GitTag ...
 var GitTag = ""
 
-//GitCommit ...
+// GitCommit ...
 var GitCommit = "dev"
 
-//GitDirty ...
+// GitDirty ...
 var GitDirty = ".dirty"
 
-//BuildTime ...
+// BuildTime ...
 var BuildTime = ""
 
 func init() {
@@ -80,8 +80,6 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	api := operations.NewDataPlaneAPI(swaggerSpec)
 	server := dataplaneapi.NewServer(api)
-	//nolint
-	defer server.Shutdown()
 
 	parser := flags.NewParser(server, flags.Default)
 	parser.ShortDescription = "HAProxy Data Plane API"
@@ -183,5 +181,8 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
 	}
+
+	defer server.Shutdown() // nolint:errcheck
+
 	return reload
 }

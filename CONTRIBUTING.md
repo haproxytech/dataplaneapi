@@ -51,6 +51,7 @@ Data Plane API is generated using [go-swagger](https://github.com/go-swagger/go-
     --tags=Resolver \
     --tags=Spoe \
     --tags=SpoeTransactions \
+    --tags=Storage \
     -r ~/dataplaneapi-specification/copyright.txt
 ```
 

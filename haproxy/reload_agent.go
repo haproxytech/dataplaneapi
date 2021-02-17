@@ -29,7 +29,6 @@ import (
 
 	"github.com/google/renameio"
 	"github.com/haproxytech/models/v2"
-
 	log "github.com/sirupsen/logrus"
 )
 

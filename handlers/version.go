@@ -18,16 +18,17 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
 )
 
-//GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
+// GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
 type ConfigurationGetConfigurationVersionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ConfigurationGetConfigurationVersionHandlerImpl) Handle(params configuration.GetConfigurationVersionParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 #
-# Copyright 2020 HAProxy Technologies
+# Copyright 2019 HAProxy Technologies
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,13 +15,18 @@
 # limitations under the License.
 #
 
+load '../../libs/auth_curl'
+load '../../libs/get_json_path'
 load '../../libs/dataplaneapi'
 load '../../libs/haproxy_config_setup'
 
-@test "https://github.com/haproxytech/dataplaneapi/issues/132" {
-    run dpa_curl POST "/services/haproxy/configuration/servers?backend=bug_132&force_reload=true&version=2" add_server.json
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 201
+@test "Trigger inotify on setup" {
+	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/raw")
+	[ "${SC}" = 200 ]
+	
+	local DATA; DATA=$(get_json_path "$BODY" '.data')
+	local VERSION; VERSION=$(get_json_path "$BODY" '._version')
+	[ "${VERSION}" = 2 ]
+	assert dpa_diff_var_file  '$DATA' 'haproxy_inotify.cfg'
 }
+

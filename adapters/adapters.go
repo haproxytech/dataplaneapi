@@ -25,7 +25,8 @@ import (
 
 	"github.com/docker/go-units"
 	"github.com/haproxytech/models/v2"
-	ulid "github.com/oklog/ulid/v2"
+	apachelog "github.com/lestrrat-go/apache-logformat"
+	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"
 )
 
@@ -140,9 +141,9 @@ func RecoverMiddleware(entry logrus.FieldLogger) func(h http.Handler) http.Handl
 					}
 
 					errMsg, _ := e.MarshalJSON()
-					ct := r.Header.Get(http.CanonicalHeaderKey("Content-Type"))
+					ct := r.Header.Get("Content-Type")
 					if strings.HasPrefix(ct, "application/json") {
-						w.Header().Set(http.CanonicalHeaderKey("Content-Type"), "application/json")
+						w.Header().Set("Content-Type", "application/json")
 					}
 					// nolint:errcheck
 					w.Write(errMsg)
@@ -160,13 +161,22 @@ func UniqueIDMiddleware(entry *logrus.Entry) Adapter {
 			reqID := r.Header.Get("X-Request-Id")
 			if len(reqID) == 0 {
 				t := time.Now()
-				entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+				// we need performance and math/rand does the trick, although it's "unsafe":
+				// speed is absolutely required here since we're going to generate an ULID for each request
+				// that doesn't contain a prefilled X-Request-Id header.
+				entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0) // nolint:gosec
 				reqID = ulid.MustNew(ulid.Timestamp(t), entropy).String()
 			}
 			*entry = *entry.WithField("request_id", reqID)
 
 			h.ServeHTTP(w, r)
 		})
+	}
+}
+
+func ApacheLogMiddleware(entry *logrus.Entry, format *apachelog.ApacheLog) Adapter {
+	return func(h http.Handler) http.Handler {
+		return format.Wrap(h, entry.Logger.Writer())
 	}
 }
 

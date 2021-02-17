@@ -31,7 +31,7 @@ type consulServiceDiscovery struct {
 	mu             sync.RWMutex
 }
 
-//NewConsulDiscoveryService creates a new ServiceDiscovery that connects to consul
+// NewConsulDiscoveryService creates a new ServiceDiscovery that connects to consul
 func NewConsulDiscoveryService(client *configuration.Client) ServiceDiscovery {
 	return &consulServiceDiscovery{
 		consulServices: make(map[string]*consulInstance),

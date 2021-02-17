@@ -26,15 +26,18 @@ import (
 	"sync"
 	"time"
 
+	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/google/renameio"
 	"github.com/haproxytech/models/v2"
+	apache_log "github.com/lestrrat-go/apache-logformat"
 	log "github.com/sirupsen/logrus"
-
-	petname "github.com/dustinkirkland/golang-petname"
 	"gopkg.in/yaml.v2"
 )
 
-var cfg *Configuration
+var (
+	cfg                       *Configuration
+	defaultApacheLogFormat, _ = apache_log.New(`%h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i" %{us}T`)
+)
 
 type HAProxyConfiguration struct {
 	ConfigFile           string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg"`
@@ -62,6 +65,7 @@ type HAProxyConfiguration struct {
 	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy"`
 	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20"`
 	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check"`
+	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher watcher for the configuration file"`
 }
 
 type APIConfiguration struct {
@@ -70,10 +74,21 @@ type APIConfiguration struct {
 }
 
 type LoggingOptions struct {
-	LogTo     string `long:"log-to" description:"Log target, can be stdout or file" default:"stdout" choice:"stdout" choice:"file"`
+	LogTo     string `long:"log-to" description:"Log target, can be stdout, file, or syslog" default:"stdout" choice:"stdout" choice:"file" choice:"syslog"`
 	LogFile   string `long:"log-file" description:"Location of the log file" default:"/var/log/dataplaneapi/dataplaneapi.log"`
 	LogLevel  string `long:"log-level" description:"Logging level" default:"warning" choice:"trace" choice:"debug" choice:"info" choice:"warning" choice:"error"`
 	LogFormat string `long:"log-format" description:"Logging format" default:"text" choice:"text" choice:"JSON"`
+	ACLFormat string `long:"apache-common-log-format" description:"Apache Common Log Format to format the access log entries" default:"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" %{us}T"`
+}
+
+type SyslogOptions struct {
+	SyslogSrv      string `long:"syslog-server" description:"Syslog server where logs should be forwarded" default:""`
+	SyslogPort     uint   `long:"syslog-port" description:"Syslog server port" default:"514"`
+	SyslogProto    string `long:"syslog-protocol" description:"Syslog server protocol" default:"tcp" choice:"tcp" choice:"tcp4" choice:"tcp6"`
+	SyslogTag      string `long:"syslog-tag" description:"String to tag the syslog messages" default:"dataplaneapi"`
+	SyslogPriority string `long:"syslog-priority" description:"Define the syslog messages priority" default:"debug"`
+	SyslogFacility string `long:"syslog-facility" description:"Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7" default:"local0"`
+	SyslogMsgID    string
 }
 
 type ClusterConfiguration struct {
@@ -129,6 +144,7 @@ type ServiceDiscovery struct {
 type Configuration struct {
 	HAProxy          HAProxyConfiguration `yaml:"-"`
 	Logging          LoggingOptions       `yaml:"-"`
+	Syslog           SyslogOptions        `yaml:"-"`
 	APIOptions       APIConfiguration     `yaml:"-"`
 	Cluster          ClusterConfiguration `yaml:"cluster"`
 	Server           ServerConfiguration  `yaml:"-"`
@@ -165,6 +181,14 @@ func Get() *Configuration {
 		cfg.Cmdline.Store(sb.String())
 	}
 	return cfg
+}
+
+func (c *Configuration) ApacheLogFormat() (out *apache_log.ApacheLog, err error) {
+	out, err = apache_log.New(c.Logging.ACLFormat)
+	if err != nil {
+		out = defaultApacheLogFormat
+	}
+	return
 }
 
 func (c *Configuration) BotstrapKeyChanged(bootstrapKey string) {

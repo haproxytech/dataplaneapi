@@ -18,6 +18,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/spoe"
 )
@@ -49,7 +50,7 @@ func (s *SpoeCreateSpoeScopeHandlerImpl) Handle(params spoe.CreateSpoeScopeParam
 	return spoe.NewCreateSpoeScopeCreated().WithPayload(spoe.NewCreateSpoeScopeCreated().Payload)
 }
 
-//SpoeDeleteSpoeScopeHandlerImpl implementation of the SpoeDeleteSpoeScopeHandler interface
+// SpoeDeleteSpoeScopeHandlerImpl implementation of the SpoeDeleteSpoeScopeHandler interface
 type SpoeDeleteSpoeScopeHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }

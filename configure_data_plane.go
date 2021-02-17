@@ -21,6 +21,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"os/signal"
@@ -33,40 +34,32 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
-
-	parser "github.com/haproxytech/config-parser/v3"
-	"github.com/haproxytech/config-parser/v3/types"
-	"github.com/haproxytech/dataplaneapi/adapters"
-	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
-	"github.com/haproxytech/dataplaneapi/operations/specification"
-	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
-
-	log "github.com/sirupsen/logrus"
-
-	"github.com/haproxytech/dataplaneapi/misc"
-
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/haproxytech/dataplaneapi/operations/discovery"
-
+	"github.com/go-openapi/swag"
 	client_native "github.com/haproxytech/client-native/v2"
-
 	"github.com/haproxytech/client-native/v2/configuration"
 	runtime_api "github.com/haproxytech/client-native/v2/runtime"
 	"github.com/haproxytech/client-native/v2/spoe"
 	"github.com/haproxytech/client-native/v2/storage"
+	parser "github.com/haproxytech/config-parser/v3"
+	"github.com/haproxytech/config-parser/v3/types"
+	"github.com/haproxytech/dataplaneapi/syslog"
+	"github.com/rs/cors"
+	log "github.com/sirupsen/logrus"
 
+	"github.com/haproxytech/dataplaneapi/adapters"
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
+	service_discovery "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/handlers"
 	"github.com/haproxytech/dataplaneapi/haproxy"
-	"github.com/haproxytech/dataplaneapi/rate"
-
-	"github.com/go-openapi/errors"
-	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
-	"github.com/rs/cors"
-
+	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations"
+	"github.com/haproxytech/dataplaneapi/operations/discovery"
+	"github.com/haproxytech/dataplaneapi/operations/specification"
+	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
+	"github.com/haproxytech/dataplaneapi/rate"
 
 	// import various crypting algorithms
 	_ "github.com/GehirnInc/crypt/md5_crypt"
@@ -74,7 +67,7 @@ import (
 	_ "github.com/GehirnInc/crypt/sha512_crypt"
 )
 
-//go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
+// go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
 
 var (
 	Version   string
@@ -98,6 +91,12 @@ func configureFlags(api *operations.DataPlaneAPI) {
 		Options:          &cfg.Logging,
 	}
 
+	syslogOptionsGroup := swag.CommandLineOptionsGroup{
+		ShortDescription: "Syslog options",
+		LongDescription:  "Options for configuring syslog logging.",
+		Options:          &cfg.Syslog,
+	}
+
 	apiOptionsGroup := swag.CommandLineOptionsGroup{
 		ShortDescription: "API options",
 		LongDescription:  "Options for API usage for consumers and various integrations",
@@ -107,6 +106,7 @@ func configureFlags(api *operations.DataPlaneAPI) {
 	api.CommandLineOptionsGroups = make([]swag.CommandLineOptionsGroup, 0, 1)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, haproxyOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, loggingOptionsGroup)
+	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, syslogOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, apiOptionsGroup)
 }
 
@@ -121,8 +121,6 @@ func currentOpenTransactions(client *client_native.HAProxyClient) int {
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
-
-	configureLogging(cfg.Logging)
 
 	haproxyOptions := cfg.HAProxy
 	// Override options with env variables
@@ -172,11 +170,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 	// end overriding options with env variables
 
-	defer func() {
-		if err := recover(); err != nil {
-			log.Fatalf("Error starting Data Plane API: %s\n Stacktrace from panic: \n%s", err, string(debug.Stack()))
-		}
-	}()
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -202,6 +195,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
 	go handleSignals(sigs, client, haproxyOptions, users)
+
+	if !haproxyOptions.DisableInotify {
+		if err := startWatcher(client, haproxyOptions, users); err != nil {
+			haproxyOptions.DisableInotify = true
+			client = configureNativeClient(haproxyOptions, mWorker)
+		}
+	}
 
 	// Sync map physical file with runtime map entries
 	if haproxyOptions.UpdateMapFiles {
@@ -548,7 +548,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		// if host is empty(dynamic hosts), server prop is empty,
 		// so we need to set it explicitly
 		if v2.Host == "" {
-			cfg := dataplaneapi_config.Get()
+			cfg = dataplaneapi_config.Get()
 			v2.Host = cfg.Server.Host
 		}
 
@@ -597,7 +597,57 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// SPOE version
 	api.SpoeGetSpoeConfigurationVersionHandler = &handlers.SpoeGetSpoeConfigurationVersionHandlerImpl{Client: client}
 
-	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
+	defer func() {
+		if err := recover(); err != nil {
+			log.Fatalf("Error starting Data Plane API: %s\n Stacktrace from panic: \n%s", err, string(debug.Stack()))
+		}
+	}()
+
+	al, err := cfg.ApacheLogFormat()
+	if err != nil {
+		println("Cannot setup custom Apache Log Format", err.Error())
+	}
+
+	appLogger := log.StandardLogger()
+	configureLogging(appLogger, cfg.Logging, func(opts dataplaneapi_config.SyslogOptions) dataplaneapi_config.SyslogOptions {
+		opts.SyslogMsgID = "app"
+		return opts
+	}(cfg.Syslog))
+
+	accLogger := log.New()
+	configureLogging(accLogger, cfg.Logging, func(opts dataplaneapi_config.SyslogOptions) dataplaneapi_config.SyslogOptions {
+		opts.SyslogMsgID = "accesslog"
+		return opts
+	}(cfg.Syslog))
+
+	applicationEntry := log.NewEntry(appLogger)
+	accessEntry := log.NewEntry(accLogger)
+
+	// middlewares
+	var adpts []adapters.Adapter
+	adpts = append(adpts,
+		adapters.RecoverMiddleware(applicationEntry),
+		cors.New(cors.Options{
+			AllowedOrigins: []string{"*"},
+			AllowedMethods: []string{
+				http.MethodHead,
+				http.MethodGet,
+				http.MethodPost,
+				http.MethodPut,
+				http.MethodPatch,
+				http.MethodDelete,
+			},
+			AllowedHeaders:   []string{"*"},
+			ExposedHeaders:   []string{"Reload-ID", "Configuration-Version"},
+			AllowCredentials: true,
+			MaxAge:           86400,
+		}).Handler,
+		adapters.UniqueIDMiddleware(applicationEntry),
+		adapters.LoggingMiddleware(applicationEntry),
+		adapters.ApacheLogMiddleware(accessEntry, al),
+	)
+
+	return setupGlobalMiddleware(api.Serve(setupMiddlewares), adpts...)
 }
 
 // The TLS configuration before HTTPS server starts.
@@ -620,50 +670,32 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
-func setupGlobalMiddleware(handler http.Handler) http.Handler {
-	handleCORS := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{
-			http.MethodHead,
-			http.MethodGet,
-			http.MethodPost,
-			http.MethodPut,
-			http.MethodPatch,
-			http.MethodDelete,
-		},
-		AllowedHeaders:   []string{"*"},
-		ExposedHeaders:   []string{"Reload-ID", "Configuration-Version"},
-		AllowCredentials: true,
-		MaxAge:           86400,
-	}).Handler
-	logger := log.StandardLogger()
-	entry := log.NewEntry(logger)
-	// middlewares
-	uniqueID := adapters.UniqueIDMiddleware(entry)
-	recovery := adapters.RecoverMiddleware(entry)
-	logViaLogrus := adapters.LoggingMiddleware(entry)
+func setupGlobalMiddleware(handler http.Handler, adapters ...adapters.Adapter) http.Handler {
+	for _, adpt := range adapters {
+		handler = adpt(handler)
+	}
 
-	return uniqueID(logViaLogrus(handleCORS(recovery(handler))))
+	return handler
 }
 
-func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
+func configureLogging(logger *log.Logger, loggingOptions dataplaneapi_config.LoggingOptions, syslogOptions dataplaneapi_config.SyslogOptions) {
 	switch loggingOptions.LogFormat {
 	case "text":
-		log.SetFormatter(&log.TextFormatter{
+		logger.SetFormatter(&log.TextFormatter{
 			FullTimestamp: true,
 			DisableColors: true,
 		})
 	case "JSON":
-		log.SetFormatter(&log.JSONFormatter{})
+		logger.SetFormatter(&log.JSONFormatter{})
 	}
 
 	switch loggingOptions.LogTo {
 	case "stdout":
-		log.SetOutput(os.Stdout)
+		logger.SetOutput(os.Stdout)
 	case "file":
 		dir := filepath.Dir(loggingOptions.LogFile)
 		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
-			log.Warning("Error opening log file, no logging implemented: " + err.Error())
+			logger.Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
 		//nolint:govet
 		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
@@ -671,17 +703,25 @@ func configureLogging(loggingOptions dataplaneapi_config.LoggingOptions) {
 			log.Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
 		log.SetOutput(logFile)
+	case "syslog":
+		logger.SetOutput(ioutil.Discard)
+		hook, err := syslog.NewRFC5424Hook(syslogOptions)
+		if err != nil {
+			logger.Warningf("Error configuring Syslog logging: %s", err.Error())
+			break
+		}
+		logger.AddHook(hook)
 	}
 
 	switch loggingOptions.LogLevel {
 	case "debug":
-		log.SetLevel(log.DebugLevel)
+		logger.SetLevel(log.DebugLevel)
 	case "info":
-		log.SetLevel(log.InfoLevel)
+		logger.SetLevel(log.InfoLevel)
 	case "warning":
-		log.SetLevel(log.WarnLevel)
+		logger.SetLevel(log.WarnLevel)
 	case "error":
-		log.SetLevel(log.ErrorLevel)
+		logger.SetLevel(log.ErrorLevel)
 	}
 }
 
@@ -753,6 +793,7 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 		ValidateCmd:               haproxyOptions.ValidateCmd,
 		ValidateConfigurationFile: true,
 		MasterWorker:              true,
+		UseMd5Hash:                !haproxyOptions.DisableInotify,
 	}
 
 	err := confClient.Init(confParams)
@@ -877,16 +918,39 @@ func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, hap
 				client.Runtime = configureRuntimeClient(client.Configuration, haproxyOptions)
 				log.Info("Reloaded Data Plane API")
 			} else if sig == syscall.SIGUSR2 {
-				confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
-				if err != nil {
-					log.Fatalf(err.Error())
-				}
-				if err := users.Init(); err != nil {
-					log.Fatalf(err.Error())
-				}
-				log.Info("Rereading Configuration Files")
-				client.Configuration = confClient
+				reloadConfigurationFile(client, haproxyOptions, users)
 			}
 		}
 	}
+}
+
+func reloadConfigurationFile(client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
+	confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	if err := users.Init(); err != nil {
+		log.Fatalf(err.Error())
+	}
+	log.Info("Rereading Configuration Files")
+	client.Configuration = confClient
+}
+
+func startWatcher(client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
+	cb := func() {
+		reloadConfigurationFile(client, haproxyOptions, users)
+		if err := client.Configuration.IncrementVersion(); err != nil {
+			log.Warningf("Failed to increment configuration version: %v", err)
+		}
+	}
+
+	watcher, err := dataplaneapi_config.NewConfigWatcher(dataplaneapi_config.ConfigWatcherParams{
+		FilePath: haproxyOptions.ConfigFile,
+		Callback: cb,
+	})
+	if err != nil {
+		return err
+	}
+	go watcher.Listen()
+	return nil
 }

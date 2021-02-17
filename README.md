@@ -86,10 +86,21 @@ HAProxy options:
       --validate-cmd=                              Executes a custom command to perform the HAProxy configuration check
 
 Logging options:
-      --log-to=[stdout|file]                       Log target, can be stdout or file (default: stdout)
+      --log-to=[stdout|file|syslog]                Log target, can be stdout, file, or syslog (default: stdout)
       --log-file=                                  Location of the log file (default: /var/log/dataplaneapi/dataplaneapi.log)
       --log-level=[trace|debug|info|warning|error] Logging level (default: warning)
       --log-format=[text|JSON]                     Logging format (default: text)
+      --apache-common-log-format=                  Apache Common Log Format to format the access log entries (default: %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i" %{us}T)
+
+Syslog options:
+      --syslog-server=                             Syslog server where logs should be forwarded
+      --syslog-port=                               Syslog server port (default: 514)
+      --syslog-protocol=[tcp|tcp4|tcp6]            Syslog server protocol (default: udp)
+      --syslog-tag=                                String to tag the syslog messages (default: dataplaneapi)
+      --syslog-priority=                           Define the syslog messages priority (default: debug)
+      --syslog-facility=                           Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7
+                                                   (default: local0)      
+
 
 API options:
       --api-address=                               Advertised API address
