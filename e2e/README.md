@@ -90,7 +90,7 @@ teardown() {
 
 If you need some assets as a request payload, put these fixtures in the same
 test folder in order to load it locally: try to avoid inline declaration.
-`/path/to/post/endpoint` is withouth base path (curently `/v2`)
+`/path/to/post/endpoint` is without base path (currently `/v2`)
 
 ```bash
 @test "Add a new TCP Request Rule to backend" {
