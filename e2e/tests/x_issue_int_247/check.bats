@@ -20,6 +20,9 @@ load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
 
 @test "int.247 runtime admin-state of backend app2" {
+    #run dpa_docker_exec 'started" >> /etc/haproxy/log.log'
+    #assert_success
+
     run dpa_curl GET "/services/haproxy/runtime/servers/app2?backend=bug_int_247"
     assert_success
 

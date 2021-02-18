@@ -552,7 +552,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		// so we need to set it explicitly
 		if v2.Host == "" {
 			cfg = dataplaneapi_config.Get()
-			v2.Host = cfg.Server.Host
+			v2.Host = cfg.RuntimeData.Host
 		}
 
 		v3, err := openapi2conv.ToV3Swagger(&v2)

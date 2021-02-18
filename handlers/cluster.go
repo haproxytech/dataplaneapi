@@ -69,10 +69,10 @@ func (h *CreateClusterHandlerImpl) err500(err error, transaction *models.Transac
 }
 
 func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
-	key := h.Config.BootstrapKey.Load()
+	key := h.Config.Cluster.BootstrapKey.Load()
 	if params.Data.BootstrapKey != "" && key != params.Data.BootstrapKey {
 		h.Config.Mode.Store("cluster")
-		h.Config.BootstrapKey.Store(params.Data.BootstrapKey)
+		h.Config.Cluster.BootstrapKey.Store(params.Data.BootstrapKey)
 		h.Config.Cluster.Clear()
 		h.Config.Notify.BootstrapKeyChanged.Notify()
 	}
@@ -166,7 +166,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 			}
 		}
 
-		h.Config.BootstrapKey.Store("")
+		h.Config.Cluster.BootstrapKey.Store("")
 		h.Config.Mode.Store(params.Data.Mode)
 		h.Config.Status.Store("active")
 		h.Config.Cluster.Clear()
@@ -179,7 +179,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 		return h.err500(err, nil)
 	}
 	result := models.ClusterSettings{
-		BootstrapKey: h.Config.BootstrapKey.Load(),
+		BootstrapKey: h.Config.Cluster.BootstrapKey.Load(),
 		Mode:         h.Config.Mode.Load(),
 		Status:       h.Config.Status.Load(),
 	}
@@ -188,7 +188,6 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 
 // Handle executing the request and returning a response
 func (h *GetClusterHandlerImpl) Handle(params discovery.GetClusterParams, principal interface{}) middleware.Responder {
-
 	portStr := h.Config.Cluster.Port.Load()
 	p, err := strconv.Atoi(portStr)
 	if err != nil {
@@ -206,7 +205,7 @@ func (h *GetClusterHandlerImpl) Handle(params discovery.GetClusterParams, princi
 		}
 	}
 	settings := &models.ClusterSettings{
-		BootstrapKey: h.Config.BootstrapKey.Load(),
+		BootstrapKey: h.Config.Cluster.BootstrapKey.Load(),
 		Cluster:      clusterSettings,
 		Mode:         h.Config.Mode.Load(),
 		Status:       h.Config.Status.Load(),

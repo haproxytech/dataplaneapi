@@ -69,7 +69,6 @@ func main() {
 }
 
 func startServer(cfg *configuration.Configuration) (reload configuration.AtomicBool) {
-
 	swaggerSpec, err := loads.Embedded(dataplaneapi.SwaggerJSON, dataplaneapi.FlatSwaggerJSON)
 	if err != nil {
 		log.Fatalln(err)
@@ -115,7 +114,13 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		return
 	}
 
-	err = cfg.Load(dataplaneapi.SwaggerJSON, server.Host, server.Port)
+	err = cfg.Load()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	// incorporate changes from file to global settings
+	dataplaneapi.SyncWithFileSettings(server, cfg)
+	err = cfg.LoadRuntimeVars(dataplaneapi.SwaggerJSON, server.Host, server.Port)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -125,7 +130,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	log.Infof("Build date: %s", BuildTime)
 
 	if cfg.Mode.Load() == "cluster" {
-		if cfg.Cluster.Certificate.Fetched.Load() {
+		if cfg.Cluster.CertificateFetched.Load() {
 			log.Info("HAProxy Data Plane API in cluster mode")
 			server.TLSCertificate = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", cfg.Name.Load())))
 			server.TLSCertificateKey = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", cfg.Name.Load())))
@@ -137,6 +142,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			cfg.Notify.BootstrapKeyChanged.NotifyWithRetry()
 		}
 	}
+
 	err = cfg.Save()
 	if err != nil {
 		log.Fatalln(err)

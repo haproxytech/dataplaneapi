@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -189,4 +190,34 @@ func Int64P(i int) *int64 {
 // provided in "${SOME_VAR}" format
 func ExtractEnvVar(pass string) string {
 	return strings.TrimLeft(strings.TrimRight(pass, "\"}"), "\"${")
+}
+
+func HasOSArg(short, long, env string) bool {
+	if short == "" && long == "" && env == "" {
+		return false
+	}
+	target1 := "--" + long
+	hasShort := short != ""
+	target2 := "-" + short
+
+	if env != "" {
+		if os.Getenv(env) != "" {
+			return true
+		}
+	}
+	for _, arg := range os.Args {
+		if hasShort && arg == target2 {
+			return true
+		}
+		if arg == target1 {
+			return true
+		}
+		if strings.HasPrefix(arg, target1) {
+			p := strings.Split(arg, "=")
+			if len(p) > 1 {
+				return true
+			}
+		}
+	}
+	return false
 }
