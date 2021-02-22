@@ -17,6 +17,7 @@ golangci-lint:
   tags:
     - go
   script:
+    - golangci-lint cache clean && go clean -modcache -cache -i
     - golangci-lint run -v --color always --timeout 120s
 lint-commit-msg:
   stage: lint
