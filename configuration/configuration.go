@@ -266,6 +266,10 @@ func (c *Configuration) LoadRuntimeVars(swaggerJSON json.RawMessage, host string
 
 func (c *Configuration) Save() error {
 	copyConfigurationToStorage(c)
+	if len(c.ServiceDiscovery.Consuls) == 0 {
+		cfg := c.storage.Get()
+		cfg.ServiceDiscovery = nil
+	}
 	return c.storage.Save()
 }
 

@@ -32,7 +32,7 @@ setup() {
   run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.hcl"
   assert_success
   until dpa_curl GET "/info"; do
       sleep 0.1
@@ -50,7 +50,7 @@ teardown() {
   run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi --log-level=debug --userlist-file=/etc/haproxy/userlist.cfg --host=0.0.0.0 --port=8080 --reload-cmd='kill -SIGUSR2 1' --restart-cmd='kill -SIGUSR2 1' --haproxy-bin=/usr/local/sbin/haproxy --log-to=file"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.hcl"
   assert_success
   until dpa_curl GET "/info"; do
       sleep 0.1
