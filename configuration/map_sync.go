@@ -47,8 +47,8 @@ func (ms *MapSync) Stop() {
 // SyncAll sync maps file entries with runtime maps entries for all configured files.
 // Missing runtime entries are appended to the map file
 func (ms *MapSync) SyncAll(client client_native.IHAProxyClient) {
-	cfg := Get()
-	haproxyOptions := cfg.HAProxy
+
+	haproxyOptions := Get().HAProxy
 
 	d := time.Duration(haproxyOptions.UpdateMapFilesPeriod)
 	ticker := time.NewTicker(d * time.Second)
