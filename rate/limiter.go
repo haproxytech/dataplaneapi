@@ -16,6 +16,4 @@ package rate
 
 type Threshold interface {
 	LimitReached() error
-	Increase()
-	Decrease()
 }

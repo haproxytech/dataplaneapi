@@ -15,75 +15,28 @@
 package rate
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewThresholdLimit(t *testing.T) {
-	type tc struct {
-		limit  uint64
-		actual uint64
-	}
-	for name, tc := range map[string]tc{
-		"from zero": {10, 0},
-		"reached":   {5, 5},
-	} {
-		t.Run(name, func(t *testing.T) {
-			l := NewThresholdLimit(tc.limit, tc.actual).(*thresholdLimit)
-			assert.Equal(t, *l.limit, tc.limit)
-			assert.Equal(t, *l.actual, tc.actual)
-		})
-	}
-}
-
-func Test_thresholdLimit_Decrease(t *testing.T) {
-	for _, tc := range []uint64{5, 10} {
-		t.Run(fmt.Sprintf("%d", tc), func(t *testing.T) {
-			l := thresholdLimit{
-				limit: func(v uint64) *uint64 {
-					return &v
-				}(tc),
-				actual: func(v uint64) *uint64 {
-					return &v
-				}(tc),
-			}
-			var counter uint64
-			for *l.actual > 0 {
-				l.Decrease()
-				counter++
-			}
-			assert.Equal(t, tc, counter)
-		})
-	}
-}
-
-func Test_thresholdLimit_Increase(t *testing.T) {
-	t.Run("success", func(t *testing.T) {
-		l := thresholdLimit{
-			limit: func(v uint64) *uint64 {
-				return &v
-			}(10),
-			actual: func(v uint64) *uint64 {
-				return &v
-			}(10),
+func Test_thresholdLimit_LimitReached(t *testing.T) {
+	t.Run("ko", func(t *testing.T) {
+		tl := thresholdLimit{
+			actual: func() uint64 {
+				return 10
+			},
+			limit: 10,
 		}
-		var counter int
-		for *l.actual < *l.limit {
-			l.Increase()
-			counter++
-		}
+		assert.Error(t, tl.LimitReached())
 	})
-	t.Run("failure", func(t *testing.T) {
-		l := thresholdLimit{
-			limit: func(v uint64) *uint64 {
-				return &v
-			}(10),
-			actual: func(v uint64) *uint64 {
-				return &v
-			}(10),
+	t.Run("ok", func(t *testing.T) {
+		tl := thresholdLimit{
+			actual: func() uint64 {
+				return 0
+			},
+			limit: 10,
 		}
-		assert.NotNil(t, l.LimitReached())
+		assert.Nil(t, tl.LimitReached())
 	})
 }

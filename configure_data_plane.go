@@ -111,15 +111,6 @@ func configureFlags(api *operations.DataPlaneAPI) {
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, apiOptionsGroup)
 }
 
-func currentOpenTransactions(client *client_native.HAProxyClient) int {
-	ts, err := client.Configuration.GetTransactions("in_progress")
-	if err != nil {
-		log.Errorf("Cannot retrieve current open transactions for rate limit, default to zero (%s)", err.Error())
-		return 0
-	}
-	return len(*ts)
-}
-
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	cfg := dataplaneapi_config.Get()
 
@@ -296,19 +287,18 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.TransactionsCommitTransactionHandler = &handlers.CommitTransactionHandlerImpl{Client: client, ReloadAgent: ra, Mutex: &sync.Mutex{}}
 	if cfg.HAProxy.MaxOpenTransactions > 0 {
 		// creating the threshold limit using the CLI flag as hard quota and current open transactions as starting point
-		transactionLimiter := rate.NewThresholdLimit(uint64(cfg.HAProxy.MaxOpenTransactions), uint64(currentOpenTransactions(client)))
-
+		actualCount := func() uint64 {
+			ts, err := client.Configuration.GetTransactions(models.TransactionStatusInProgress)
+			if err != nil {
+				log.Errorf("Cannot retrieve current open transactions for rate limit, default to zero (%s)", err.Error())
+				return 0
+			}
+			return uint64(len(*ts))
+		}
+		transactionLimiter := rate.NewThresholdLimit(uint64(cfg.HAProxy.MaxOpenTransactions), actualCount)
 		api.TransactionsStartTransactionHandler = &handlers.RateLimitedStartTransactionHandlerImpl{
 			TransactionCounter: transactionLimiter,
 			Handler:            api.TransactionsStartTransactionHandler,
-		}
-		api.TransactionsDeleteTransactionHandler = &handlers.RateLimitedDeleteTransactionHandlerImpl{
-			TransactionCounter: transactionLimiter,
-			Handler:            api.TransactionsDeleteTransactionHandler,
-		}
-		api.TransactionsCommitTransactionHandler = &handlers.RateLimitedCommitTransactionHandlerImpl{
-			TransactionCounter: transactionLimiter,
-			Handler:            api.TransactionsCommitTransactionHandler,
 		}
 	}
 

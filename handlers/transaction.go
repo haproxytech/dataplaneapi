@@ -39,12 +39,6 @@ type StartTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-// RateLimitedDeleteTransactionHandlerImpl decorates the DeleteTransactionHandlerImpl with the rate limiting logic
-type RateLimitedDeleteTransactionHandlerImpl struct {
-	TransactionCounter rate.Threshold
-	Handler            transactions.DeleteTransactionHandler
-}
-
 // DeleteTransactionHandlerImpl implementation of the DeleteTransactionHandler interface using client-native client
 type DeleteTransactionHandlerImpl struct {
 	Client *client_native.HAProxyClient
@@ -58,12 +52,6 @@ type GetTransactionHandlerImpl struct {
 // GetTransactionsHandlerImpl implementation of the GetTransactionsHandler interface using client-native client
 type GetTransactionsHandlerImpl struct {
 	Client *client_native.HAProxyClient
-}
-
-// RateLimitedCommitTransactionHandlerImpl decorates the CommitTransactionHandlerImpl with the rate limiting logic
-type RateLimitedCommitTransactionHandlerImpl struct {
-	TransactionCounter rate.Threshold
-	Handler            transactions.CommitTransactionHandler
 }
 
 // CommitTransactionHandlerImpl implementation of the CommitTransactionHandlerImpl interface using client-native client
@@ -156,40 +144,11 @@ func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransac
 	return transactions.NewCommitTransactionAccepted().WithReloadID(rID).WithPayload(t)
 }
 
-// Handle executes the decorated Handler and, in case of successful deletion, decrease the counter
-func (r RateLimitedDeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
-	res := r.Handler.Handle(params, principal)
-	if _, ok := res.(*transactions.DeleteTransactionNoContent); ok {
-		r.TransactionCounter.Decrease()
-	}
-	return res
-}
-
 // Handle executes the decorated Handler and, in case of successful creation, increase the counter if this is
 func (r RateLimitedStartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
 	if err := r.TransactionCounter.LimitReached(); err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewStartTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
-	res := r.Handler.Handle(params, principal)
-	if _, ok := res.(*transactions.StartTransactionCreated); ok {
-		r.TransactionCounter.Increase()
-	}
-	return res
-}
-
-func (r RateLimitedCommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
-	res := r.Handler.Handle(params, principal)
-	switch t := res.(type) {
-	case *transactions.CommitTransactionOK:
-		r.TransactionCounter.Decrease()
-	case *transactions.CommitTransactionAccepted:
-		r.TransactionCounter.Decrease()
-	case *transactions.CommitTransactionDefault:
-		// Decreasing the counter in case of failed transactions
-		if *t.Payload.Code == 409 {
-			r.TransactionCounter.Decrease()
-		}
-	}
-	return res
+	return r.Handler.Handle(params, principal)
 }

@@ -14,33 +14,21 @@
 
 package rate
 
-import (
-	"sync/atomic"
-)
-
 type thresholdLimit struct {
-	limit  *uint64
-	actual *uint64
+	actual func() uint64
+	limit  uint64
 }
 
 func (t *thresholdLimit) LimitReached() (err error) {
-	if *t.actual >= *t.limit {
-		err = NewTransactionLimitReachedError(*t.limit)
+	if t.actual() >= t.limit {
+		err = NewTransactionLimitReachedError(t.limit)
 	}
 	return
 }
 
-func NewThresholdLimit(limit uint64, startingFrom uint64) Threshold {
+func NewThresholdLimit(limit uint64, actual func() uint64) Threshold {
 	return &thresholdLimit{
-		actual: &startingFrom,
-		limit:  &limit,
+		actual: actual,
+		limit:  limit,
 	}
-}
-
-func (t *thresholdLimit) Increase() {
-	atomic.AddUint64(t.actual, 1)
-}
-
-func (t thresholdLimit) Decrease() {
-	atomic.AddUint64(t.actual, ^uint64(0))
 }
