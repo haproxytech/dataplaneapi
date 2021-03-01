@@ -99,7 +99,7 @@ Syslog options:
       --syslog-tag=                                String to tag the syslog messages (default: dataplaneapi)
       --syslog-priority=                           Define the syslog messages priority (default: debug)
       --syslog-facility=                           Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7
-                                                   (default: local0)      
+                                                   (default: local0)
 
 
 API options:
@@ -113,6 +113,8 @@ Help Options:
   -h, --help                                       Show this help message
 
 ```
+
+Beside those options, everything can be defined in side of configuration file. See [configuration file](configuration/README.md)
 
 ## Example
 

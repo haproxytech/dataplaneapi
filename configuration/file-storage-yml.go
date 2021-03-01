@@ -53,15 +53,19 @@ func (s *StorageYML) Set(cfg *StorageDataplaneAPIConfiguration) {
 	s.cfg = cfg
 }
 
-func (s *StorageYML) Save() error {
+func (s *StorageYML) SaveAs(filename string) error {
 	data, err := yaml.Marshal(s.cfg)
 	if err != nil {
 		return err
 	}
 
-	err = renameio.WriteFile(s.filename, data, 0644)
+	err = renameio.WriteFile(filename, data, 0644)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func (s *StorageYML) Save() error {
+	return s.SaveAs(s.filename)
 }

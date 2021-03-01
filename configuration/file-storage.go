@@ -19,5 +19,6 @@ type Storage interface {
 	Load(filename string) error
 	Get() *StorageDataplaneAPIConfiguration
 	Set(cfg *StorageDataplaneAPIConfiguration)
+	SaveAs(filename string) error
 	Save() error
 }

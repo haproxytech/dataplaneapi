@@ -31,6 +31,10 @@ func (s *StorageDummy) Get() *StorageDataplaneAPIConfiguration {
 func (s *StorageDummy) Set(cfg *StorageDataplaneAPIConfiguration) {
 }
 
+func (s *StorageDummy) SaveAs(filename string) error {
+	return nil
+}
+
 func (s *StorageDummy) Save() error {
 	return nil
 }

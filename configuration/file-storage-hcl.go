@@ -53,15 +53,19 @@ func (s *StorageHCL) Set(cfg *StorageDataplaneAPIConfiguration) {
 	s.cfg = cfg
 }
 
-func (s *StorageHCL) Save() error {
+func (s *StorageHCL) SaveAs(filename string) error {
 	hcl, err := hclencoder.Encode(s.cfg)
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(s.filename, hcl, 0644) //nolint:gosec
+	err = ioutil.WriteFile(filename, hcl, 0644) //nolint:gosec
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func (s *StorageHCL) Save() error {
+	return s.SaveAs(s.filename)
 }
