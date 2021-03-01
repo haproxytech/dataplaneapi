@@ -160,11 +160,16 @@ func (r RateLimitedStartTransactionHandlerImpl) Handle(params transactions.Start
 
 func (r RateLimitedCommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 	res := r.Handler.Handle(params, principal)
-	switch res.(type) {
+	switch t := res.(type) {
 	case *transactions.CommitTransactionOK:
 		r.TransactionCounter.Decrease()
 	case *transactions.CommitTransactionAccepted:
 		r.TransactionCounter.Decrease()
+	case *transactions.CommitTransactionDefault:
+		// Decreasing the counter in case of failed transactions
+		if *t.Payload.Code == 409 {
+			r.TransactionCounter.Decrease()
+		}
 	}
 	return res
 }
