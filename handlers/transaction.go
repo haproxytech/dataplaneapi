@@ -20,6 +20,7 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -120,11 +121,29 @@ func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactions
 func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 	th.Mutex.Lock()
 	defer th.Mutex.Unlock()
-	t, err := th.Client.Configuration.CommitTransaction(params.ID)
+
+	var err error
+
+	var t *models.Transaction
+	t, err = th.Client.Configuration.CommitTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
+
+	// Deleting outdated transactions with mismatching version ID
+	var txs *models.Transactions
+	txs, err = th.Client.Configuration.GetTransactions(models.TransactionStatusInProgress)
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	for _, tx := range *txs {
+		if tx.Version <= t.Version {
+			_ = th.Client.Configuration.MarkTransactionOutdated(tx.ID)
+		}
+	}
+
 	if *params.ForceReload {
 		err := th.ReloadAgent.ForceReload()
 		if err != nil {

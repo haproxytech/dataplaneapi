@@ -40,6 +40,7 @@ import (
 	"github.com/go-openapi/swag"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/client-native/v2/configuration"
+	"github.com/haproxytech/client-native/v2/models"
 	runtime_api "github.com/haproxytech/client-native/v2/runtime"
 	"github.com/haproxytech/client-native/v2/spoe"
 	"github.com/haproxytech/client-native/v2/storage"
