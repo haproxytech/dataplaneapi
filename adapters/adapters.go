@@ -24,7 +24,7 @@ import (
 	"time"
 
 	"github.com/docker/go-units"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 	apachelog "github.com/lestrrat-go/apache-logformat"
 	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"

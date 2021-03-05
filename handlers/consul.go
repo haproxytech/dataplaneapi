@@ -20,7 +20,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	sc "github.com/haproxytech/dataplaneapi/discovery"
 	"github.com/haproxytech/dataplaneapi/misc"

@@ -28,7 +28,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 )
 
 // GetSpoeScopeHandlerFunc turns a function with the right signature into a get spoe scope handler

@@ -20,7 +20,7 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server"
@@ -44,7 +44,6 @@ type ReplaceRuntimeServerHandlerImpl struct {
 // Handle executing the request and returning a response
 func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
 	rs, err := h.Client.Runtime.GetServerState(params.Backend, params.Name)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -62,7 +61,6 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 // Handle executing the request and returning a response
 func (h *GetRuntimeServersHandlerImpl) Handle(params server.GetRuntimeServersParams, principal interface{}) middleware.Responder {
 	rs, err := h.Client.Runtime.GetServersState(params.Backend)
-
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -77,7 +75,6 @@ func (h *GetRuntimeServersHandlerImpl) Handle(params server.GetRuntimeServersPar
 // Handle executing the request and returning a response
 func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
 	rs, err := h.Client.Runtime.GetServerState(params.Backend, params.Name)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)

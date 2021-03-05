@@ -28,7 +28,7 @@ import (
 	"time"
 
 	"github.com/google/renameio"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -359,7 +359,6 @@ func getTimeIndexFromID(id string) (time.Time, int64, error) {
 		return time.Now(), 0, err
 	}
 	date, err := time.Parse("2006-01-02", strings.Join(data[:len(data)-1], "-"))
-
 	if err != nil {
 		return date, 0, err
 	}

@@ -22,8 +22,8 @@ import (
 	"time"
 
 	"github.com/haproxytech/client-native/v2/configuration"
+	"github.com/haproxytech/client-native/v2/models"
 	"github.com/haproxytech/dataplaneapi/haproxy"
-	"github.com/haproxytech/models/v2"
 )
 
 type consulServiceDiscovery struct {

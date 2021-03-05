@@ -19,7 +19,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 )
 
 func data(differentAtIndex ...int) (fileEntries models.MapEntries, runtimeEntries models.MapEntries) {

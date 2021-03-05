@@ -25,7 +25,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
-	models "github.com/haproxytech/models/v2"
+	models "github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -38,7 +38,6 @@ type StorageCreateRuntimeMapHandlerImpl struct {
 }
 
 func (h *StorageCreateRuntimeMapHandlerImpl) Handle(params storage.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-
 	file, ok := params.FileUpload.(*runtime.File)
 	if !ok {
 		return storage.NewCreateRuntimeMapBadRequest()
@@ -192,5 +191,4 @@ func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceS
 	}
 	rID := h.ReloadAgent.Reload()
 	return storage.NewReplaceStorageMapFileAccepted().WithReloadID(rID)
-
 }

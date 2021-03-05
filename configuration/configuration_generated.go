@@ -22,7 +22,7 @@ import (
 	"github.com/go-openapi/runtime/flagext"
 	"github.com/jessevdk/go-flags"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 )
@@ -452,5 +452,4 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.ServiceDiscovery = &configTypeServiceDiscovery{}
 	}
 	cfgStorage.ServiceDiscovery.Consuls = &cfg.ServiceDiscovery.Consuls
-
 }

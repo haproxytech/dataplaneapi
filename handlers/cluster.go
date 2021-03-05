@@ -22,7 +22,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"

@@ -18,7 +18,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -92,7 +92,6 @@ func (h *CreateTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.CreateT
 		return tcp_request_rule.NewCreateTCPRequestRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return tcp_request_rule.NewCreateTCPRequestRuleAccepted().WithPayload(params.Data)
-
 }
 
 // Handle executing the request and returning a response

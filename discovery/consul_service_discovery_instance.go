@@ -20,7 +20,7 @@ import (
 	"time"
 
 	"github.com/haproxytech/client-native/v2/configuration"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 	"github.com/hashicorp/consul/api"
 )
 
@@ -169,6 +169,7 @@ func (c *consulInstance) hasServiceChanged(service string, index uint64) bool {
 	}
 	return prevIndex == index
 }
+
 func (c *consulInstance) updateTimeout(timeoutSeconds int) error {
 	timeout, err := time.ParseDuration(fmt.Sprintf("%ds", timeoutSeconds))
 	if err != nil {

@@ -26,7 +26,7 @@ import (
 	"time"
 
 	petname "github.com/dustinkirkland/golang-petname"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 	apache_log "github.com/lestrrat-go/apache-logformat"
 	log "github.com/sirupsen/logrus"
 )

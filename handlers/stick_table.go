@@ -21,7 +21,7 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/stick_table"
@@ -49,7 +49,6 @@ func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesPara
 		process = int(*params.Process)
 	}
 	stkTS, err := h.Client.Runtime.ShowTables(process)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTablesDefault(int(*e.Code)).WithPayload(e)
@@ -57,11 +56,9 @@ func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesPara
 
 	for _, table := range stkTS {
 		table.Fields = findTableFields(table.Name, h.Client)
-
 	}
 
 	return stick_table.NewGetStickTablesOK().WithPayload(stkTS)
-
 }
 
 // Handle executing the request and returning a response

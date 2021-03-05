@@ -18,7 +18,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -73,7 +73,6 @@ func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParam
 	}
 
 	err := h.Client.Configuration.PushDefaultsConfiguration(params.Data, t, v)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)

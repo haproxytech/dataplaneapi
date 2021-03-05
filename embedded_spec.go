@@ -9815,7 +9815,6 @@ func init() {
         },
         "uri_depth": {
           "type": "integer",
-          "pattern": "^[^\\d+$]",
           "x-dependency": {
             "algorithm": {
               "value": "uri"
@@ -9825,7 +9824,6 @@ func init() {
         },
         "uri_len": {
           "type": "integer",
-          "pattern": "^[^\\d+$]",
           "x-dependency": {
             "algorithm": {
               "value": "uri"
@@ -9864,7 +9862,6 @@ func init() {
         },
         "url_param_max_wait": {
           "type": "integer",
-          "pattern": "^[^\\d+$]",
           "x-dependency": {
             "algorithm": {
               "value": "url_param"
@@ -10436,12 +10433,10 @@ func init() {
           "type": "boolean"
         },
         "maxidle": {
-          "type": "integer",
-          "pattern": "^[^\\d+$]"
+          "type": "integer"
         },
         "maxlife": {
-          "type": "integer",
-          "pattern": "^[^\\d+$]"
+          "type": "integer"
         },
         "name": {
           "type": "string",
@@ -15998,6 +15993,62 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
+    "ssl_cert_entries": {
+      "description": "Array of entries of runtime SSL Certificate Entry",
+      "type": "array",
+      "title": "SSL Certificate Entries",
+      "items": {
+        "$ref": "#/definitions/ssl_cert_entry"
+      }
+    },
+    "ssl_cert_entry": {
+      "description": "One SSL/TLS certificate",
+      "type": "object",
+      "title": "One SSL Certificate Entry",
+      "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "chain_issuer": {
+          "type": "string"
+        },
+        "chain_subject": {
+          "type": "string"
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "not_after": {
+          "type": "string",
+          "format": "date"
+        },
+        "not_before": {
+          "type": "string",
+          "format": "date"
+        },
+        "serial": {
+          "type": "string"
+        },
+        "sha1_finger_print": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "subject_alternative_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "ssl_certificate": {
       "description": "A file containing one or more SSL/TLS certificates and keys",
       "type": "object",
@@ -16020,6 +16071,54 @@ func init() {
       "title": "SSL Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
+      }
+    },
+    "ssl_crt_list": {
+      "description": "One SSL/TLS certificate",
+      "type": "object",
+      "title": "crt-list",
+      "properties": {
+        "file": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_entries": {
+      "description": "Array of entries of runtime SSL Certificate Entry",
+      "type": "array",
+      "title": "SSL Certificate Entries",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_entry"
+      }
+    },
+    "ssl_crt_list_entry": {
+      "description": "One SSL/TLS certificate",
+      "type": "object",
+      "title": "One crt-list Entry",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "line_number": {
+          "type": "string"
+        },
+        "sni_filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ssl_bind_config": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_lists": {
+      "description": "Array of entries of runtime crt-list",
+      "type": "array",
+      "title": "SSL crt-list",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "stats_options": {
@@ -32114,7 +32213,6 @@ func init() {
         },
         "uri_depth": {
           "type": "integer",
-          "pattern": "^[^\\d+$]",
           "x-dependency": {
             "algorithm": {
               "value": "uri"
@@ -32124,7 +32222,6 @@ func init() {
         },
         "uri_len": {
           "type": "integer",
-          "pattern": "^[^\\d+$]",
           "x-dependency": {
             "algorithm": {
               "value": "uri"
@@ -32163,7 +32260,6 @@ func init() {
         },
         "url_param_max_wait": {
           "type": "integer",
-          "pattern": "^[^\\d+$]",
           "x-dependency": {
             "algorithm": {
               "value": "url_param"
@@ -32728,12 +32824,10 @@ func init() {
           "type": "boolean"
         },
         "maxidle": {
-          "type": "integer",
-          "pattern": "^[^\\d+$]"
+          "type": "integer"
         },
         "maxlife": {
-          "type": "integer",
-          "pattern": "^[^\\d+$]"
+          "type": "integer"
         },
         "name": {
           "type": "string",
@@ -38160,6 +38254,62 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
+    "ssl_cert_entries": {
+      "description": "Array of entries of runtime SSL Certificate Entry",
+      "type": "array",
+      "title": "SSL Certificate Entries",
+      "items": {
+        "$ref": "#/definitions/ssl_cert_entry"
+      }
+    },
+    "ssl_cert_entry": {
+      "description": "One SSL/TLS certificate",
+      "type": "object",
+      "title": "One SSL Certificate Entry",
+      "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "chain_issuer": {
+          "type": "string"
+        },
+        "chain_subject": {
+          "type": "string"
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "not_after": {
+          "type": "string",
+          "format": "date"
+        },
+        "not_before": {
+          "type": "string",
+          "format": "date"
+        },
+        "serial": {
+          "type": "string"
+        },
+        "sha1_finger_print": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "subject_alternative_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "ssl_certificate": {
       "description": "A file containing one or more SSL/TLS certificates and keys",
       "type": "object",
@@ -38182,6 +38332,54 @@ func init() {
       "title": "SSL Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
+      }
+    },
+    "ssl_crt_list": {
+      "description": "One SSL/TLS certificate",
+      "type": "object",
+      "title": "crt-list",
+      "properties": {
+        "file": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_entries": {
+      "description": "Array of entries of runtime SSL Certificate Entry",
+      "type": "array",
+      "title": "SSL Certificate Entries",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_entry"
+      }
+    },
+    "ssl_crt_list_entry": {
+      "description": "One SSL/TLS certificate",
+      "type": "object",
+      "title": "One crt-list Entry",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "line_number": {
+          "type": "string"
+        },
+        "sni_filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ssl_bind_config": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_lists": {
+      "description": "Array of entries of runtime crt-list",
+      "type": "array",
+      "title": "SSL crt-list",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "stats_options": {

@@ -26,7 +26,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 )
 
 // ReplaceServerSwitchingRuleOKCode is the HTTP code returned for type ReplaceServerSwitchingRuleOK

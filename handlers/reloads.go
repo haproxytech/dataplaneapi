@@ -19,7 +19,7 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"

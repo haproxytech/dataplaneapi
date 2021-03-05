@@ -24,7 +24,7 @@ import (
 	"time"
 
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 	log "github.com/sirupsen/logrus"
 )
 

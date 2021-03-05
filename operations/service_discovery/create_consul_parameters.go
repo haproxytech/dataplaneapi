@@ -28,7 +28,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 )
 
 // NewCreateConsulParams creates a new CreateConsulParams object
