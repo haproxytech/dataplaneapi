@@ -66,6 +66,12 @@ type HAProxyConfiguration struct {
 	PIDFile              string `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi"`
 }
 
+type User struct {
+	Name     string `long:"name" description:"User name" group:"user" hcl:"name,key"`
+	Insecure bool   `long:"insecure" description:"insecure password" group:"user"`
+	Password string `long:"password" description:"password" group:"user"`
+}
+
 type APIConfiguration struct {
 	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised"`
 	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised"`
@@ -147,6 +153,7 @@ type Configuration struct {
 	RuntimeData            RuntimeData          `yaml:"-"`
 	Notify                 NotifyConfiguration  `yaml:"-"`
 	ServiceDiscovery       ServiceDiscovery     `yaml:"-"`
+	Users                  []User               `yaml:"-"`
 	Mode                   AtomicString         `yaml:"mode" default:"single"`
 	DeprecatedBootstrapKey AtomicString         `yaml:"bootstrap_key,omitempty" deprecated:"true"` // deprecated - use Cluster.BootstrapKey
 	Status                 AtomicString         `yaml:"status,omitempty"`

@@ -64,86 +64,52 @@ func (u *Users) setUser(data common.ParserData, file string) error {
 	if len(users) == 0 {
 		return fmt.Errorf("no users configured in %s", file)
 	}
-	u.users = users
-	return nil
-}
-
-func (u *Users) saveUsers(userlist, file string, user common.ParserData) error {
-	p := &parser.Parser{}
-	if err := p.LoadData(file); err != nil {
-		return fmt.Errorf("cannot read %s, err: %s", file, err.Error())
-	}
-	err := p.SectionsCreate(parser.UserList, userlist)
-	if err != nil {
-		return fmt.Errorf("error creating section: %v", parser.UserList)
-	}
-
-	err = p.Set(parser.UserList, userlist, "user", user)
-	if err != nil {
-		return fmt.Errorf("error setting userlist %v", userlist)
-	}
-
-	err = p.Save(file)
-	if err != nil {
-		return fmt.Errorf("error setting userlist %v", userlist)
-	}
-	return nil
-}
-
-func (u *Users) createUserFile(file string) error {
 	u.mu.Lock()
 	defer u.mu.Unlock()
-	f, err := os.Create(file)
-	if err != nil {
-		return fmt.Errorf("file %s does not exist and cannot be created: %s", file, err.Error())
-	}
-	defer f.Close()
+
+	u.users = append(u.users, users...)
 	return nil
 }
 
 func (u *Users) Init() error {
-	cfg := Get()
+	configuration := Get()
+	u.users = []types.User{}
+	if len(configuration.Users) > 0 {
+		for _, user := range configuration.Users {
+			u.users = append(u.users, types.User{
+				Name:       user.Name,
+				IsInsecure: user.Insecure,
+				Password:   user.Password,
+			})
+		}
+		return nil
+	}
+	if configuration.HAProxy.UserListFile != "" {
+		errUserList := u.getUsersFromUsersListSection(configuration.HAProxy.UserListFile, configuration.HAProxy.Userlist)
+		if errUserList != nil {
+			return errUserList // file was specified, but errors exists, exit
+		}
+		return nil
+	}
+	return u.getUsersFromUsersListSection(configuration.HAProxy.ConfigFile, configuration.HAProxy.Userlist)
+}
+
+func (u *Users) getUsersFromUsersListSection(filename, userlistSection string) error {
 	p := &parser.Parser{}
-	if cfg.HAProxy.UserListFile != "" {
-		// if userlist file doesn't exists
-		if _, err := os.Stat(cfg.HAProxy.UserListFile); os.IsNotExist(err) {
-			// get user from HAProxy config file
-			if err := p.LoadData(cfg.HAProxy.ConfigFile); err != nil {
-				return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.ConfigFile, err.Error())
-			}
-			data, err := p.Get(parser.UserList, cfg.HAProxy.Userlist, "user")
-			if err != nil {
-				return fmt.Errorf("error reading userlist %v userlist in conf: %s", cfg.HAProxy.ConfigFile, err.Error())
-			}
-			err = u.createUserFile(cfg.HAProxy.UserListFile)
-			if err != nil {
-				return err
-			}
-			err = u.saveUsers(cfg.HAProxy.Userlist, cfg.HAProxy.UserListFile, data)
-			if err != nil {
-				return err
-			}
-			return u.setUser(data, cfg.HAProxy.UserListFile)
-		}
-		// if userlist file exists
-		if err := p.LoadData(cfg.HAProxy.UserListFile); err != nil {
-			return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.UserListFile, err.Error())
-		}
-		data, err := p.Get(parser.UserList, cfg.HAProxy.Userlist, "user")
-		if err != nil {
-			return fmt.Errorf("no users configured in %v, error: %s", cfg.HAProxy.UserListFile, err.Error())
-		}
-		return u.setUser(data, cfg.HAProxy.UserListFile)
+	// if file doesn't exists
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		return fmt.Errorf("cannot read %s, file does not exist", filename)
 	}
-	// get user from HAProxy config
-	if err := p.LoadData(cfg.HAProxy.ConfigFile); err != nil {
-		return fmt.Errorf("cannot read %s, err: %s", cfg.HAProxy.ConfigFile, err.Error())
+	// if file exists
+	if err := p.LoadData(filename); err != nil {
+		return fmt.Errorf("cannot read %s, err: %s", filename, err.Error())
 	}
-	user, err := p.Get(parser.UserList, cfg.HAProxy.Userlist, "user")
+	data, err := p.Get(parser.UserList, userlistSection, "user")
 	if err != nil {
-		return fmt.Errorf("no users configured in %v, error: %s", cfg.HAProxy.ConfigFile, err.Error())
+		return fmt.Errorf("no users configured in %v, error: %s", filename, err.Error())
 	}
-	return u.setUser(user, cfg.HAProxy.ConfigFile)
+
+	return u.setUser(data, cfg.HAProxy.UserListFile)
 }
 
 // findUser searches user by its name. If found, returns user, otherwise returns an error.

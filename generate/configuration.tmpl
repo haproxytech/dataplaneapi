@@ -36,12 +36,20 @@ import (
 			{{- else if eq .Type "AtomicBool"}}
 				{{ .Name }} *bool `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
 			{{- else }}
-				{{ .Name }} *{{ .Type }}  `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{- if .IsHCLKey}}
+						{{ .Name }} {{ .Type }}  `yaml:"{{ .FileName }}" hcl:"{{ .FileName }},key"`
+					{{- else }}
+						{{ .Name }} *{{ .Type }}  `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{- end}}
 			{{- end}}
 		{{- end}}
 		{{- range $.Groups}}
 			{{- if eq $MainGroup.Name .Parent }}
-				{{ .Name | Capitalize }} *configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty" hcl:"{{ .Name }},omitempty"`
+				{{- if .IsList }}
+					{{ .Name | Capitalize }} []configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty" hcl:"{{ .Name }},omitempty"`
+				{{- else}}
+					{{ .Name | Capitalize }} *configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty" hcl:"{{ .Name }},omitempty"`
+				{{- end}}
 			{{- end}}
 		{{- end}}
 		}
@@ -74,30 +82,53 @@ type StorageDataplaneAPIConfiguration struct {
 func copyToConfiguration(cfg *Configuration) {
 	cfgStorage := cfg.storage.Get()
 {{- range $group := .Groups}}
-	{{- range .Attributes}}
-		{{- if eq $group.AttName "-" }}
-			if cfgStorage.{{ .Name }} != nil {
-				cfg.{{ .Name }}.Store(*cfgStorage.{{ .Name }})
+	{{- if $group.IsList }}
+		if cfgStorage.{{ $group.Parent | Capitalize }} != nil && cfgStorage.{{ $group.Parent | Capitalize }}.{{ .Name | Capitalize}} != nil {
+			cfg.{{ .AttName }} = []{{ .OriginalGroup }}{}
+			for _, item := range cfgStorage.{{ $group.Parent | Capitalize }}.{{ .Name | Capitalize}} {
+				item{{ $group.OriginalGroup }} := {{ .OriginalGroup }}{
+					{{- range .Attributes}}
+						{{- if .IsHCLKey }}
+							{{ .Name }}: item.{{ .Name }},
+						{{- end}}
+					{{- end}}
+				}
+				{{- range .Attributes}}
+					{{- if not .IsHCLKey }}
+						if item.{{ .Name }} != nil {
+							item{{ $group.OriginalGroup }}.{{ .Name }}= *item.{{ .Name }}
+						}
+					{{- end}}
+				{{- end}}
+				cfg.{{ .AttName }} = append(cfg.{{ .AttName }}, item{{ $group.OriginalGroup }})
 			}
-		{{- else if ne $group.AttName "" }}
-			{{- if eq $group.Parent "" }}
+		}
+	{{- else}}
+		{{- range .Attributes}}
+			{{- if eq $group.AttName "-" }}
+				if cfgStorage.{{ .Name }} != nil {
+					cfg.{{ .Name }}.Store(*cfgStorage.{{ .Name }})
+				}
+			{{- else if ne $group.AttName "" }}
+				{{- if eq $group.Parent "" }}
+					if cfgStorage.{{ $group.Name | Capitalize }} != nil && cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
+						{{- if eq .Type "AtomicString"}}
+							cfg.{{ .AttName }}.{{ .Name }}.Store(*cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
+						{{- else if eq .Type "AtomicBool"}}
+							cfg.{{ .AttName }}.{{ .Name }}.Store(*cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
+						{{- else}}
+							cfg.{{ .AttName }}.{{ .Name }} = *cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }}
+						{{- end }}
+				{{- else }}
+					if cfgStorage.{{ $group.Parent | Capitalize }} !=nil && cfgStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }} != nil && cfgStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
+						cfg.{{ .AttName }}.{{ .Name }} = *cfgStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }}.{{ .Name }}
+				{{- end }}
+				}
+			{{- else if ne .StructName "Server"}}
 				if cfgStorage.{{ $group.Name | Capitalize }} != nil && cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
-					{{- if eq .Type "AtomicString"}}
-						cfg.{{ .AttName }}.{{ .Name }}.Store(*cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
-					{{- else if eq .Type "AtomicBool"}}
-						cfg.{{ .AttName }}.{{ .Name }}.Store(*cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
-					{{- else}}
-						cfg.{{ .AttName }}.{{ .Name }} = *cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }}
-					{{- end }}
-			{{- else }}
-				if cfgStorage.{{ $group.Parent | Capitalize }} !=nil && cfgStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }} != nil && cfgStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
-					cfg.{{ .AttName }}.{{ .Name }} = *cfgStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }}.{{ .Name }}
-			{{- end }}
-			}
-		{{- else if ne .StructName "Server"}}
-			if cfgStorage.{{ $group.Name | Capitalize }} != nil && cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
-				cfg.{{ .AttName }}.{{ .Name }} = *cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }}
-			}
+					cfg.{{ .AttName }}.{{ .Name }} = *cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }}
+				}
+			{{- end}}
 		{{- end}}
 	{{- end}}
 {{- end}}

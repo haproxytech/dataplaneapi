@@ -57,6 +57,7 @@ var groupParents = map[string]string{
 	"resources":   "dataplaneapi",
 	"transaction": "dataplaneapi",
 	"tls":         "dataplaneapi",
+	"user":        "dataplaneapi",
 	"reload":      "haproxy",
 	"syslog":      "log",
 }
@@ -75,23 +76,26 @@ type Attribute struct {
 	SpecName   string
 	Save       bool
 	Deprecated bool
+	IsHCLKey   bool
 }
 
 type ParseGroup struct {
-	Name        string
-	AttName     string
-	MaxSize     int
-	MaxTypeSize int
-	Parent      string
-	Elements    []string
-	Attributes  []Attribute
+	OriginalGroup string
+	Name          string
+	AttName       string
+	MaxSize       int
+	MaxTypeSize   int
+	Parent        string
+	Elements      []string
+	Attributes    []Attribute
+	IsList        bool
 }
 
 type ParseData struct {
 	Groups []ParseGroup
 }
 
-func readServerData(filePath string, pd *ParseData, structName string, attName string, groupName string) {
+func readServerData(filePath string, pd *ParseData, structName string, attName string, groupName string, isList bool) {
 	typeStruct := fmt.Sprintf("type %s struct {", structName)
 	dat, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -142,12 +146,14 @@ func readServerData(filePath string, pd *ParseData, structName string, attName s
 			}
 			if !found {
 				pd.Groups = append(pd.Groups, ParseGroup{
-					Name:        res.Group,
-					AttName:     attName,
-					Parent:      groupParents[res.Group],
-					MaxSize:     len(res.Name),
-					MaxTypeSize: len(res.Type),
-					Attributes:  []Attribute{res},
+					OriginalGroup: structName,
+					Name:          res.Group,
+					AttName:       attName,
+					Parent:        groupParents[res.Group],
+					MaxSize:       len(res.Name),
+					MaxTypeSize:   len(res.Type),
+					Attributes:    []Attribute{res},
+					IsList:        isList,
 				})
 			}
 		}
@@ -208,16 +214,18 @@ func main() {
 	})
 	// ######################################## server.go
 	filePath := path.Join(dir, "server.go")
-	readServerData(filePath, pd, "Server", "", "")
+	readServerData(filePath, pd, "Server", "", "", false)
 	// ######################################## configuration.go
-	filePath = path.Join(dir, "configuration", "configuration.go", "")
-	readServerData(filePath, pd, "Configuration", "-", "")
-	readServerData(filePath, pd, "HAProxyConfiguration", "HAProxy", "")
-	readServerData(filePath, pd, "APIConfiguration", "APIOptions", "")
-	readServerData(filePath, pd, "ServiceDiscovery", "ServiceDiscovery", "")
-	readServerData(filePath, pd, "ClusterConfiguration", "Cluster", "cluster")
-	readServerData(filePath, pd, "SyslogOptions", "Syslog", "")
-	readServerData(filePath, pd, "LoggingOptions", "Logging", "")
+	filePath = path.Join(dir, "configuration", "configuration.go")
+	readServerData(filePath, pd, "Configuration", "-", "", false)
+	readServerData(filePath, pd, "User", "Users", "", true)
+	readServerData(filePath, pd, "HAProxyConfiguration", "HAProxy", "", false)
+	readServerData(filePath, pd, "APIConfiguration", "APIOptions", "", false)
+	readServerData(filePath, pd, "ServiceDiscovery", "ServiceDiscovery", "", false)
+	readServerData(filePath, pd, "ClusterConfiguration", "Cluster", "cluster", false)
+	readServerData(filePath, pd, "SyslogOptions", "Syslog", "", false)
+	readServerData(filePath, pd, "LoggingOptions", "Logging", "", false)
+	// readServerData(filePath, pd, "User", "User", "")
 	// ########################################
 
 	// prepare template function
@@ -276,6 +284,7 @@ func processLine(line string) (Attribute, error) {
 	var specName string
 	var save bool
 	var deprecated bool
+	var isHCLKey bool
 	for _, part := range parts[2:] {
 		if strings.Contains(part, "long:") {
 			p := strings.Split(part, `"`)
@@ -302,6 +311,9 @@ func processLine(line string) (Attribute, error) {
 		}
 		if strings.Contains(part, `deprecated:"true"`) {
 			deprecated = true
+		}
+		if strings.HasPrefix(part, `hcl:"`) && strings.Contains(part, `,key"`) {
+			isHCLKey = true
 		}
 		if strings.Contains(part, `yaml:"-"`) {
 			return Attribute{}, errors.New("ignore this attribute")
@@ -331,6 +343,7 @@ func processLine(line string) (Attribute, error) {
 		SpecName:   specName,
 		Save:       save,
 		Deprecated: deprecated,
+		IsHCLKey:   isHCLKey,
 	}, nil
 }
 

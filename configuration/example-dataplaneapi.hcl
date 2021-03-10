@@ -4,8 +4,9 @@ dataplaneapi {
   host = "0.0.0.0"
   port = 8080
 
-  userlist {
-    userlist-file = "/etc/haproxy/userlist.cfg"
+  user "admin" {
+    insecure = true
+    password = "adminpwd"
   }
 
   resources {

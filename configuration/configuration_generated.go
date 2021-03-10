@@ -43,6 +43,7 @@ type configTypeDataplaneapi struct {
 	DisableInotify   *bool                  `yaml:"disable-inotify,omitempty" hcl:"disable-inotify,omitempty"`
 	PIDFile          *string                `yaml:"pid-file,omitempty" hcl:"pid-file,omitempty"`
 	Tls              *configTypeTls         `yaml:"tls,omitempty" hcl:"tls,omitempty"`
+	User             []configTypeUser       `yaml:"user,omitempty" hcl:"user,omitempty"`
 	Userlist         *configTypeUserlist    `yaml:"userlist,omitempty" hcl:"userlist,omitempty"`
 	Transaction      *configTypeTransaction `yaml:"transaction,omitempty" hcl:"transaction,omitempty"`
 	Resources        *configTypeResources   `yaml:"resources,omitempty" hcl:"resources,omitempty"`
@@ -59,6 +60,12 @@ type configTypeTls struct {
 	TLSKeepAlive      *time.Duration  `yaml:"tls-keep-alive,omitempty" hcl:"tls-keep-alive,omitempty"`
 	TLSReadTimeout    *time.Duration  `yaml:"tls-read-timeout,omitempty" hcl:"tls-read-timeout,omitempty"`
 	TLSWriteTimeout   *time.Duration  `yaml:"tls-write-timeout,omitempty" hcl:"tls-write-timeout,omitempty"`
+}
+
+type configTypeUser struct {
+	Name     string  `yaml:"name" hcl:"name,key"`
+	Insecure *bool   `yaml:"insecure,omitempty" hcl:"insecure,omitempty"`
+	Password *string `yaml:"password,omitempty" hcl:"password,omitempty"`
 }
 
 type configTypeHaproxy struct {
@@ -178,6 +185,21 @@ func copyToConfiguration(cfg *Configuration) {
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.PIDFile != nil && !misc.HasOSArg("", "pid-file", "") {
 		cfg.HAProxy.PIDFile = *cfgStorage.Dataplaneapi.PIDFile
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.User != nil {
+		cfg.Users = []User{}
+		for _, item := range cfgStorage.Dataplaneapi.User {
+			itemUser := User{
+				Name: item.Name,
+			}
+			if item.Insecure != nil {
+				itemUser.Insecure = *item.Insecure
+			}
+			if item.Password != nil {
+				itemUser.Password = *item.Password
+			}
+			cfg.Users = append(cfg.Users, itemUser)
+		}
 	}
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.ConfigFile != nil && !misc.HasOSArg("c", "config-file", "") {
 		cfg.HAProxy.ConfigFile = *cfgStorage.Haproxy.ConfigFile
@@ -456,4 +478,5 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.ServiceDiscovery = &configTypeServiceDiscovery{}
 	}
 	cfgStorage.ServiceDiscovery.Consuls = &cfg.ServiceDiscovery.Consuls
+
 }
