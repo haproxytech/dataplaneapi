@@ -41,6 +41,7 @@ type configTypeDataplaneapi struct {
 	WriteTimeout     *time.Duration         `yaml:"write-timeout,omitempty" hcl:"write-timeout,omitempty"`
 	ShowSystemInfo   *bool                  `yaml:"show-system-info,omitempty" hcl:"show-system-info,omitempty"`
 	DisableInotify   *bool                  `yaml:"disable-inotify,omitempty" hcl:"disable-inotify,omitempty"`
+	PIDFile          *string                `yaml:"pid-file,omitempty" hcl:"pid-file,omitempty"`
 	Tls              *configTypeTls         `yaml:"tls,omitempty" hcl:"tls,omitempty"`
 	Userlist         *configTypeUserlist    `yaml:"userlist,omitempty" hcl:"userlist,omitempty"`
 	Transaction      *configTypeTransaction `yaml:"transaction,omitempty" hcl:"transaction,omitempty"`
@@ -174,6 +175,9 @@ func copyToConfiguration(cfg *Configuration) {
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.DisableInotify != nil && !misc.HasOSArg("", "disable-inotify", "") {
 		cfg.HAProxy.DisableInotify = *cfgStorage.Dataplaneapi.DisableInotify
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.PIDFile != nil && !misc.HasOSArg("", "pid-file", "") {
+		cfg.HAProxy.PIDFile = *cfgStorage.Dataplaneapi.PIDFile
 	}
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.ConfigFile != nil && !misc.HasOSArg("c", "config-file", "") {
 		cfg.HAProxy.ConfigFile = *cfgStorage.Haproxy.ConfigFile
