@@ -65,8 +65,8 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 }
 
 func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
-	if len(opts.SyslogSrv) == 0 {
-		return nil, fmt.Errorf("no server has been declared")
+	if len(opts.SyslogAddr) == 0 {
+		return nil, fmt.Errorf("no address has been declared")
 	}
 
 	var priority syslog5424.Priority
@@ -140,9 +140,9 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 	var connector syslog5424.Connector
 	switch opts.SyslogProto {
 	case "unix", "unixgram":
-		connector = syslog5424.LocalConnector(opts.SyslogProto, opts.SyslogSrv)
+		connector = syslog5424.LocalConnector(opts.SyslogProto, opts.SyslogAddr)
 	default:
-		connector = syslog5424.TCPConnector(opts.SyslogProto, fmt.Sprintf("%s:%d", opts.SyslogSrv, opts.SyslogPort))
+		connector = syslog5424.TCPConnector(opts.SyslogProto, opts.SyslogAddr)
 	}
 	slConn, chErr := syslog5424.NewSender(connector, syslog5424.TransportRFC5425, time.NewTicker(500*time.Millisecond).C)
 

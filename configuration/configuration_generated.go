@@ -133,8 +133,7 @@ type configTypeServiceDiscovery struct {
 }
 
 type configTypeSyslog struct {
-	SyslogSrv      *string `yaml:"syslog-server,omitempty" hcl:"syslog-server,omitempty"`
-	SyslogPort     *uint   `yaml:"syslog-port,omitempty" hcl:"syslog-port,omitempty"`
+	SyslogAddr     *string `yaml:"syslog-address,omitempty" hcl:"syslog-address,omitempty"`
 	SyslogProto    *string `yaml:"syslog-protocol,omitempty" hcl:"syslog-protocol,omitempty"`
 	SyslogTag      *string `yaml:"syslog-tag,omitempty" hcl:"syslog-tag,omitempty"`
 	SyslogPriority *string `yaml:"syslog-priority,omitempty" hcl:"syslog-priority,omitempty"`
@@ -318,11 +317,8 @@ func copyToConfiguration(cfg *Configuration) {
 	if cfgStorage.ServiceDiscovery != nil && cfgStorage.ServiceDiscovery.Consuls != nil && !misc.HasOSArg("", "", "") {
 		cfg.ServiceDiscovery.Consuls = *cfgStorage.ServiceDiscovery.Consuls
 	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogSrv != nil && !misc.HasOSArg("", "syslog-server", "") {
-		cfg.Syslog.SyslogSrv = *cfgStorage.Log.Syslog.SyslogSrv
-	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogPort != nil && !misc.HasOSArg("", "syslog-port", "") {
-		cfg.Syslog.SyslogPort = *cfgStorage.Log.Syslog.SyslogPort
+	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogAddr != nil && !misc.HasOSArg("", "syslog-address", "") {
+		cfg.Syslog.SyslogAddr = *cfgStorage.Log.Syslog.SyslogAddr
 	}
 	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogProto != nil && !misc.HasOSArg("", "syslog-protocol", "") {
 		cfg.Syslog.SyslogProto = *cfgStorage.Log.Syslog.SyslogProto
