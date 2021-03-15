@@ -86,9 +86,9 @@ type LoggingOptions struct {
 }
 
 type SyslogOptions struct {
-	SyslogSrv      string `long:"syslog-server" description:"Syslog server where logs should be forwarded" default:"" group:"syslog"`
+	SyslogSrv      string `long:"syslog-server" description:"Syslog server where logs should be forwarded, accepting socket path in case of unix or unixgram" default:"" group:"syslog"`
 	SyslogPort     uint   `long:"syslog-port" description:"Syslog server port" default:"514" group:"syslog"`
-	SyslogProto    string `long:"syslog-protocol" description:"Syslog server protocol" default:"tcp" choice:"tcp" choice:"tcp4" choice:"tcp6" group:"syslog"`
+	SyslogProto    string `long:"syslog-protocol" description:"Syslog server protocol" default:"tcp" choice:"tcp" choice:"tcp4" choice:"tcp6" choice:"unix" choice:"unixgram" group:"syslog"`
 	SyslogTag      string `long:"syslog-tag" description:"String to tag the syslog messages" default:"dataplaneapi" group:"syslog"`
 	SyslogPriority string `long:"syslog-priority" description:"Define the syslog messages priority" default:"debug" group:"syslog"`
 	SyslogFacility string `long:"syslog-facility" description:"Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7" default:"local0" group:"syslog"`

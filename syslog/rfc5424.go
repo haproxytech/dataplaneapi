@@ -137,7 +137,13 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		return nil, fmt.Errorf("unrecognized facility: %s", opts.SyslogFacility)
 	}
 
-	connector := syslog5424.TCPConnector(opts.SyslogProto, fmt.Sprintf("%s:%d", opts.SyslogSrv, opts.SyslogPort))
+	var connector syslog5424.Connector
+	switch opts.SyslogProto {
+	case "unix", "unixgram":
+		connector = syslog5424.LocalConnector(opts.SyslogProto, opts.SyslogSrv)
+	default:
+		connector = syslog5424.TCPConnector(opts.SyslogProto, fmt.Sprintf("%s:%d", opts.SyslogSrv, opts.SyslogPort))
+	}
 	slConn, chErr := syslog5424.NewSender(connector, syslog5424.TransportRFC5425, time.NewTicker(500*time.Millisecond).C)
 
 	go func(ch <-chan error) {

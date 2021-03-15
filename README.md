@@ -95,7 +95,7 @@ Logging options:
 Syslog options:
       --syslog-server=                             Syslog server where logs should be forwarded
       --syslog-port=                               Syslog server port (default: 514)
-      --syslog-protocol=[tcp|tcp4|tcp6]            Syslog server protocol (default: udp)
+      --syslog-protocol=[tcp|tcp4|tcp6|]            Syslog server protocol (default: udp)
       --syslog-tag=                                String to tag the syslog messages (default: dataplaneapi)
       --syslog-priority=                           Define the syslog messages priority (default: debug)
       --syslog-facility=                           Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7
