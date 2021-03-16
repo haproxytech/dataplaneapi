@@ -28,7 +28,6 @@ import (
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/haproxytech/client-native/v2/models"
 	apache_log "github.com/lestrrat-go/apache-logformat"
-	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -192,15 +191,6 @@ func (c *Configuration) ApacheLogFormat() (out *apache_log.ApacheLog, err error)
 		out = defaultApacheLogFormat
 	}
 	return
-}
-
-func (c *Configuration) BotstrapKeyChanged(bootstrapKey string) {
-	c.Cluster.BootstrapKey.Store(bootstrapKey)
-	err := c.Save()
-	if err != nil {
-		log.Println(err)
-	}
-	c.Notify.BootstrapKeyChanged.Notify()
 }
 
 func (c *Configuration) GetStorageData() *StorageDataplaneAPIConfiguration {
