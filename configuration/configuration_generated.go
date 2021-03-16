@@ -42,6 +42,8 @@ type configTypeDataplaneapi struct {
 	ShowSystemInfo   *bool                  `yaml:"show-system-info,omitempty" hcl:"show-system-info,omitempty"`
 	DisableInotify   *bool                  `yaml:"disable-inotify,omitempty" hcl:"disable-inotify,omitempty"`
 	PIDFile          *string                `yaml:"pid-file,omitempty" hcl:"pid-file,omitempty"`
+	UID              *int                   `yaml:"uid,omitempty" hcl:"uid,omitempty"`
+	GID              *int                   `yaml:"gid,omitempty" hcl:"gid,omitempty"`
 	Tls              *configTypeTls         `yaml:"tls,omitempty" hcl:"tls,omitempty"`
 	User             []configTypeUser       `yaml:"user,omitempty" hcl:"user,omitempty"`
 	Userlist         *configTypeUserlist    `yaml:"userlist,omitempty" hcl:"userlist,omitempty"`
@@ -186,6 +188,12 @@ func copyToConfiguration(cfg *Configuration) {
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.PIDFile != nil && !misc.HasOSArg("", "pid-file", "") {
 		cfg.HAProxy.PIDFile = *cfgStorage.Dataplaneapi.PIDFile
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.UID != nil && !misc.HasOSArg("", "uid", "") {
+		cfg.HAProxy.UID = *cfgStorage.Dataplaneapi.UID
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.GID != nil && !misc.HasOSArg("", "gid", "") {
+		cfg.HAProxy.GID = *cfgStorage.Dataplaneapi.GID
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.User != nil {
 		cfg.Users = []User{}

@@ -63,6 +63,8 @@ type HAProxyConfiguration struct {
 	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check" group:"reload"`
 	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher watcher for the configuration file" group:"dataplaneapi"`
 	PIDFile              string `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi" example:"/tmp/dataplane.pid"`
+	UID                  int    `long:"uid" description:"User id value to set on start" group:"dataplaneapi"`
+	GID                  int    `long:"gid" description:"Group id value to set on start" group:"dataplaneapi"`
 }
 
 type User struct {

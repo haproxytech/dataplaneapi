@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"syscall"
 
 	loads "github.com/go-openapi/loads"
 	"github.com/go-openapi/runtime"
@@ -119,6 +120,19 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	if cfg.HAProxy.UID != 0 {
+		if err = syscall.Setuid(cfg.HAProxy.UID); err != nil {
+			log.Fatalln("set uid:", err)
+		}
+	}
+
+	if cfg.HAProxy.GID != 0 {
+		if err = syscall.Setgid(cfg.HAProxy.GID); err != nil {
+			log.Fatalln("set gid:", err)
+		}
+	}
+
 	// incorporate changes from file to global settings
 	dataplaneapi.SyncWithFileSettings(server, cfg)
 	err = cfg.LoadRuntimeVars(dataplaneapi.SwaggerJSON, server.Host, server.Port)
