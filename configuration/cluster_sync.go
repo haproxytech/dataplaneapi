@@ -30,6 +30,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"runtime"
 	"strings"
 	"time"
 
@@ -83,6 +84,7 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 	certFetched := cfg.Cluster.CertificateFetched.Load()
 
 	if key != "" && !certFetched {
+		runtime.Gosched()
 		c.cfg.Notify.BootstrapKeyChanged.Notify()
 	}
 }
