@@ -136,7 +136,7 @@ type configTypeSyslog struct {
 	SyslogAddr     *string `yaml:"syslog-address,omitempty" hcl:"syslog-address,omitempty"`
 	SyslogProto    *string `yaml:"syslog-protocol,omitempty" hcl:"syslog-protocol,omitempty"`
 	SyslogTag      *string `yaml:"syslog-tag,omitempty" hcl:"syslog-tag,omitempty"`
-	SyslogPriority *string `yaml:"syslog-priority,omitempty" hcl:"syslog-priority,omitempty"`
+	SyslogLevel    *string `yaml:"syslog-level,omitempty" hcl:"syslog-level,omitempty"`
 	SyslogFacility *string `yaml:"syslog-facility,omitempty" hcl:"syslog-facility,omitempty"`
 }
 
@@ -326,8 +326,8 @@ func copyToConfiguration(cfg *Configuration) {
 	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogTag != nil && !misc.HasOSArg("", "syslog-tag", "") {
 		cfg.Syslog.SyslogTag = *cfgStorage.Log.Syslog.SyslogTag
 	}
-	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogPriority != nil && !misc.HasOSArg("", "syslog-priority", "") {
-		cfg.Syslog.SyslogPriority = *cfgStorage.Log.Syslog.SyslogPriority
+	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogLevel != nil && !misc.HasOSArg("", "syslog-level", "") {
+		cfg.Syslog.SyslogLevel = *cfgStorage.Log.Syslog.SyslogLevel
 	}
 	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogFacility != nil && !misc.HasOSArg("", "syslog-facility", "") {
 		cfg.Syslog.SyslogFacility = *cfgStorage.Log.Syslog.SyslogFacility

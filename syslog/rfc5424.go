@@ -38,7 +38,7 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 	var sev syslog5424.Priority
 	switch entry.Level {
 	case logrus.PanicLevel:
-		sev = syslog5424.LogCRIT
+		sev = syslog5424.LogALERT
 	case logrus.FatalLevel:
 		sev = syslog5424.LogCRIT
 	case logrus.ErrorLevel:
@@ -69,26 +69,26 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		return nil, fmt.Errorf("no address has been declared")
 	}
 
-	var priority syslog5424.Priority
-	switch strings.ToLower(opts.SyslogPriority) {
+	var severity syslog5424.Priority
+	switch strings.ToLower(opts.SyslogLevel) {
 	case "debug":
-		priority = syslog5424.LogDEBUG
+		severity = syslog5424.LogDEBUG
 	case "info":
-		priority = syslog5424.LogINFO
+		severity = syslog5424.LogINFO
 	case "notice":
-		priority = syslog5424.LogNOTICE
+		severity = syslog5424.LogNOTICE
 	case "warning":
-		priority = syslog5424.LogWARNING
+		severity = syslog5424.LogWARNING
 	case "error":
-		priority = syslog5424.LogERR
+		severity = syslog5424.LogERR
 	case "critical":
-		priority = syslog5424.LogCRIT
+		severity = syslog5424.LogCRIT
 	case "alert":
-		priority = syslog5424.LogALERT
+		severity = syslog5424.LogALERT
 	case "emergency":
-		priority = syslog5424.LogEMERG
+		severity = syslog5424.LogEMERG
 	default:
-		return nil, fmt.Errorf("unrecognized severity: %s", opts.SyslogPriority)
+		return nil, fmt.Errorf("unrecognized severity: %s", opts.SyslogLevel)
 	}
 
 	var facility syslog5424.Priority
@@ -148,7 +148,7 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		}
 	}(chErr)
 
-	syslogServer, err := syslog5424.New(slConn, facility|priority, opts.SyslogTag)
+	syslogServer, err := syslog5424.New(slConn, facility|severity, opts.SyslogTag)
 	if err != nil {
 		return nil, err
 	}
