@@ -18,7 +18,6 @@ package syslog
 import (
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/nathanaelle/syslog5424/v2"
 	"github.com/sirupsen/logrus"
@@ -54,12 +53,13 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 
 	messages := []string{entry.Message}
 	for k, v := range entry.Data {
+		// TODO: we should deal with structured data properly
 		messages = append(messages, fmt.Sprintf("%s=%v", k, v))
 	}
 
 	msg := strings.Join(messages, " ")
 
-	_, err = r.syslog.Channel(sev).Msgid(r.msgID).Write([]byte(msg))
+	r.syslog.Channel(sev).Log(msg)
 
 	return
 }
@@ -137,18 +137,14 @@ func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
 		return nil, fmt.Errorf("unrecognized facility: %s", opts.SyslogFacility)
 	}
 
-	var connector syslog5424.Connector
-	switch opts.SyslogProto {
-	case "unix", "unixgram":
-		connector = syslog5424.LocalConnector(opts.SyslogProto, opts.SyslogAddr)
-	default:
-		connector = syslog5424.TCPConnector(opts.SyslogProto, opts.SyslogAddr)
+	slConn, chErr, err := syslog5424.Dial(opts.SyslogProto, opts.SyslogAddr)
+	if err != nil {
+		fmt.Printf("error establishing syslog output: %s\n", err)
 	}
-	slConn, chErr := syslog5424.NewSender(connector, syslog5424.TransportRFC5425, time.NewTicker(500*time.Millisecond).C)
 
 	go func(ch <-chan error) {
 		for i := range ch {
-			fmt.Printf("Error received from the syslog server: %s", i.Error())
+			fmt.Printf("Error received from the syslog server: %s\n", i.Error())
 		}
 	}(chErr)
 
