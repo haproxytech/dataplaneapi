@@ -26,7 +26,7 @@ lint-commit-msg:
   tags:
     - go
   script:
-    - go run /check.go
+    - /check
 
 build:
   stage: build
