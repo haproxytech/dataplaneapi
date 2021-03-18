@@ -216,15 +216,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// setup discovery handlers
 	api.DiscoveryGetAPIEndpointsHandler = discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
-		uriSlice := strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)
-		rURI := ""
-		if len(uriSlice) < 2 {
-			rURI = "/"
-		} else {
-			rURI = "/" + uriSlice[1]
-		}
-
-		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
+		ends, err := misc.DiscoverChildPaths("", SwaggerJSON)
 		if err != nil {
 			e := misc.HandleError(err)
 			return discovery.NewGetAPIEndpointsDefault(int(*e.Code)).WithPayload(e)
@@ -275,6 +267,24 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			return discovery.NewGetStatsEndpointsDefault(int(*e.Code)).WithPayload(e)
 		}
 		return discovery.NewGetStatsEndpointsOK().WithPayload(ends)
+	})
+	api.DiscoveryGetSpoeEndpointsHandler = discovery.GetSpoeEndpointsHandlerFunc(func(params discovery.GetSpoeEndpointsParams, principal interface{}) middleware.Responder {
+		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
+		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
+		if err != nil {
+			e := misc.HandleError(err)
+			return discovery.NewGetSpoeEndpointsDefault(int(*e.Code)).WithPayload(e)
+		}
+		return discovery.NewGetSpoeEndpointsOK().WithPayload(ends)
+	})
+	api.DiscoveryGetStorageEndpointsHandler = discovery.GetStorageEndpointsHandlerFunc(func(params discovery.GetStorageEndpointsParams, principal interface{}) middleware.Responder {
+		rURI := "/" + strings.SplitN(params.HTTPRequest.RequestURI[1:], "/", 2)[1]
+		ends, err := misc.DiscoverChildPaths(rURI, SwaggerJSON)
+		if err != nil {
+			e := misc.HandleError(err)
+			return discovery.NewGetStorageEndpointsDefault(int(*e.Code)).WithPayload(e)
+		}
+		return discovery.NewGetStorageEndpointsOK().WithPayload(ends)
 	})
 
 	// setup transaction handlers

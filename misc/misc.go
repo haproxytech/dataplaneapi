@@ -105,7 +105,8 @@ func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, er
 			description := g["description"].(string)
 
 			if strings.HasPrefix(key, path) && key != path {
-				if len(strings.Split(key[len(path)+1:], "/")) == 1 {
+				resource := key[len(path):]
+				if strings.HasPrefix(resource, "/") && len(strings.Split(resource[1:], "/")) == 1 {
 					e := models.Endpoint{
 						URL:         key,
 						Title:       title,

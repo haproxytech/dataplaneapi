@@ -7133,6 +7133,30 @@ func init() {
         }
       }
     },
+    "/services/haproxy/spoe": {
+      "get": {
+        "description": "Returns a list of endpoints to be used for SPOE settings of HAProxy.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return list of HAProxy SPOE endpoints",
+        "operationId": "getSpoeEndpoints",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/endpoints"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/spoe/spoe_agents": {
       "get": {
         "description": "Returns an array of all configured spoe agents in one scope.",
@@ -8675,6 +8699,30 @@ func init() {
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/native_stats"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage": {
+      "get": {
+        "description": "Returns a list of endpoints that use HAProxy storage for persistency, e.g. maps, ssl certificates...",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return list of HAProxy storage endpoints",
+        "operationId": "getStorageEndpoints",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/endpoints"
             }
           },
           "default": {
@@ -27925,6 +27973,40 @@ func init() {
         }
       }
     },
+    "/services/haproxy/spoe": {
+      "get": {
+        "description": "Returns a list of endpoints to be used for SPOE settings of HAProxy.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return list of HAProxy SPOE endpoints",
+        "operationId": "getSpoeEndpoints",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/endpoints"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/spoe/spoe_agents": {
       "get": {
         "description": "Returns an array of all configured spoe agents in one scope.",
@@ -30215,6 +30297,40 @@ func init() {
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/native_stats"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage": {
+      "get": {
+        "description": "Returns a list of endpoints that use HAProxy storage for persistency, e.g. maps, ssl certificates...",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Return list of HAProxy storage endpoints",
+        "operationId": "getStorageEndpoints",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/endpoints"
             }
           },
           "default": {

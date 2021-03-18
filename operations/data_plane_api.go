@@ -471,6 +471,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SpoeGetSpoeConfigurationVersionHandler: spoe.GetSpoeConfigurationVersionHandlerFunc(func(params spoe.GetSpoeConfigurationVersionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation spoe.GetSpoeConfigurationVersion has not yet been implemented")
 		}),
+		DiscoveryGetSpoeEndpointsHandler: discovery.GetSpoeEndpointsHandlerFunc(func(params discovery.GetSpoeEndpointsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation discovery.GetSpoeEndpoints has not yet been implemented")
+		}),
 		SpoeGetSpoeGroupHandler: spoe.GetSpoeGroupHandlerFunc(func(params spoe.GetSpoeGroupParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation spoe.GetSpoeGroup has not yet been implemented")
 		}),
@@ -515,6 +518,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StickTableGetStickTablesHandler: stick_table.GetStickTablesHandlerFunc(func(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_table.GetStickTables has not yet been implemented")
+		}),
+		DiscoveryGetStorageEndpointsHandler: discovery.GetStorageEndpointsHandlerFunc(func(params discovery.GetStorageEndpointsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation discovery.GetStorageEndpoints has not yet been implemented")
 		}),
 		TCPRequestRuleGetTCPRequestRuleHandler: tcp_request_rule.GetTCPRequestRuleHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRule has not yet been implemented")
@@ -944,6 +950,8 @@ type DataPlaneAPI struct {
 	SpoeGetSpoeAgentsHandler spoe.GetSpoeAgentsHandler
 	// SpoeGetSpoeConfigurationVersionHandler sets the operation handler for the get spoe configuration version operation
 	SpoeGetSpoeConfigurationVersionHandler spoe.GetSpoeConfigurationVersionHandler
+	// DiscoveryGetSpoeEndpointsHandler sets the operation handler for the get spoe endpoints operation
+	DiscoveryGetSpoeEndpointsHandler discovery.GetSpoeEndpointsHandler
 	// SpoeGetSpoeGroupHandler sets the operation handler for the get spoe group operation
 	SpoeGetSpoeGroupHandler spoe.GetSpoeGroupHandler
 	// SpoeGetSpoeGroupsHandler sets the operation handler for the get spoe groups operation
@@ -974,6 +982,8 @@ type DataPlaneAPI struct {
 	StickTableGetStickTableEntriesHandler stick_table.GetStickTableEntriesHandler
 	// StickTableGetStickTablesHandler sets the operation handler for the get stick tables operation
 	StickTableGetStickTablesHandler stick_table.GetStickTablesHandler
+	// DiscoveryGetStorageEndpointsHandler sets the operation handler for the get storage endpoints operation
+	DiscoveryGetStorageEndpointsHandler discovery.GetStorageEndpointsHandler
 	// TCPRequestRuleGetTCPRequestRuleHandler sets the operation handler for the get TCP request rule operation
 	TCPRequestRuleGetTCPRequestRuleHandler tcp_request_rule.GetTCPRequestRuleHandler
 	// TCPRequestRuleGetTCPRequestRulesHandler sets the operation handler for the get TCP request rules operation
@@ -1508,6 +1518,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.SpoeGetSpoeConfigurationVersionHandler == nil {
 		unregistered = append(unregistered, "spoe.GetSpoeConfigurationVersionHandler")
 	}
+	if o.DiscoveryGetSpoeEndpointsHandler == nil {
+		unregistered = append(unregistered, "discovery.GetSpoeEndpointsHandler")
+	}
 	if o.SpoeGetSpoeGroupHandler == nil {
 		unregistered = append(unregistered, "spoe.GetSpoeGroupHandler")
 	}
@@ -1552,6 +1565,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StickTableGetStickTablesHandler == nil {
 		unregistered = append(unregistered, "stick_table.GetStickTablesHandler")
+	}
+	if o.DiscoveryGetStorageEndpointsHandler == nil {
+		unregistered = append(unregistered, "discovery.GetStorageEndpointsHandler")
 	}
 	if o.TCPRequestRuleGetTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleHandler")
@@ -2278,6 +2294,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/spoe"] = discovery.NewGetSpoeEndpoints(o.context, o.DiscoveryGetSpoeEndpointsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/spoe/spoe_groups/{name}"] = spoe.NewGetSpoeGroup(o.context, o.SpoeGetSpoeGroupHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -2335,6 +2355,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/stick_tables"] = stick_table.NewGetStickTables(o.context, o.StickTableGetStickTablesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage"] = discovery.NewGetStorageEndpoints(o.context, o.DiscoveryGetStorageEndpointsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
