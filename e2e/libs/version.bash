@@ -15,6 +15,27 @@
 # limitations under the License.
 #
 
+# auth_curl is going to return the response status code along with the body
+# these values can be easily read as following
+#
+# read -r SC BODY < <(auth_curl GET /v2/services/haproxy/runtime/info)
+# echo "Status Code: ${SC}"
+# echo "Body: ${BODY}"
+#
+# Arguments:
+# - HTTP verb
+# - original URL
+# - HTTP POST data
+function deprecated_auth_curl() {
+  verb=$1; shift
+  endpoint=$1; shift
+  data=${1:-"/dev/null"}
+  response=$(curl -m 10 -s -H 'content-type: application/json' --user dataplaneapi:mypassword "-X${verb}" -w "\n%{http_code}" "-d${data}" "http://${LOCAL_IP_ADDRESS}:${E2E_PORT}${endpoint}")
+  status_code=$(tail -n1 <<< "$response")
+  response=$(sed '$ d' <<< "$response")
+  echo "$status_code $response"
+}
+
 # version return the current HAProxy configuration file version, useful to
 # avoid keeping track of it at each POST/PUT call.
 #
@@ -24,7 +45,7 @@
 # version
 # >>> 10
 function version() {
-  read -r SC RES < <(auth_curl GET "/v2/services/haproxy/configuration/global")
+  read -r SC RES < <(deprecated_auth_curl GET "/v2/services/haproxy/configuration/global")
   V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
   echo "$V"
 }

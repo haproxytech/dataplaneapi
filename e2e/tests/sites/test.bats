@@ -15,37 +15,52 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
 
 @test "sites: Add a site" {
-	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/sites?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/sites/post.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/sites?force_reload=true&version=$(version)" "../sites/post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 @test "sites: Return a site" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/sites/test_site")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/sites/test_site"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data.name')
 	[ "${ACTUAL}" = "test_site" ]
 }
 
 @test "sites: Replace a site" {
-	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/sites/test_site?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/sites/put.json")
-	[ "${SC}" = 200 ]
+	run dpa_curl PUT "/services/haproxy/sites/test_site?force_reload=true&version=$(version)" "../sites/put.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 }
 
 @test "sites: Return an array of sites" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/sites?force_reload=true&version=$(version)")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/sites?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data[0].name')
 	[ "${ACTUAL}" = "test_site" ]
 }
 
 @test "sites: Delete a site" {
-	read -r SC BODY < <(auth_curl DELETE "/v2/services/haproxy/sites/test_site?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/sites/test_site?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }

@@ -15,47 +15,68 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
 
 @test "binds: setup" {
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/post.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 @test "binds: Add a new bind" {
-	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/configuration/binds?frontend=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/binds/post.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/binds?frontend=test_frontend&force_reload=true&version=$(version)" "../binds/post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 @test "binds: Return one bind" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/binds/test_bind?frontend=test_frontend")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/binds/test_bind?frontend=test_frontend"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local NAME; NAME=$(get_json_path "$BODY" '.data.name')
 	[ "${NAME}" = "test_bind" ]
 }
 
 @test "binds: Replace a bind" {
-	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/binds/test_bind?frontend=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/binds/put.json")
-	[ "${SC}" = 200 ]
+	run dpa_curl PUT "/services/haproxy/configuration/binds/test_bind?frontend=test_frontend&force_reload=true&version=$(version)" "../binds/put.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 }
 
 @test "binds: Return an array of binds" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/binds?frontend=test_frontend")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/binds?frontend=test_frontend"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data[0].name')
 	[ "${ACTUAL}" = "test_bind" ]
 }
 
 @test "binds: Delete a bind" {
-	read -r SC BODY < <(auth_curl DELETE "/v2/services/haproxy/configuration/binds/test_bind?frontend=test_frontend&force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/binds/test_bind?frontend=test_frontend&force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }
 
 @test "binds: teardown" {
-	read -r SC < <(auth_curl DELETE "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }

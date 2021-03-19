@@ -15,15 +15,21 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/version'
 
 @test "http_request_rules: Fail creating a HTTP request rule when frontend doesn't exist" {
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/http_request_rules?parent_type=frontend&parent_name=ghost&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/unless.json")
-	[ "${SC}" = 400 ]
+	run dpa_curl POST "/services/haproxy/configuration/http_request_rules?parent_type=frontend&parent_name=ghost&force_reload=true&version=$(version)" "../http_request_rules/unless.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 400
 }
 
 @test "http_request_rules: Fail creating a HTTP request rule when backend doesn't exist" {
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/http_request_rules?parent_type=backend&parent_name=ghost&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/unless.json")
-	[ "${SC}" = 400 ]
+	run dpa_curl POST "/services/haproxy/configuration/http_request_rules?parent_type=backend&parent_name=ghost&force_reload=true&version=$(version)" "../http_request_rules/unless.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 400
 }

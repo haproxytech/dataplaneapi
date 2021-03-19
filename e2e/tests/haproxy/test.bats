@@ -15,9 +15,12 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 
 @test "haproxy: Return HAProxy process information" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/runtime/info")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/runtime/info"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 }

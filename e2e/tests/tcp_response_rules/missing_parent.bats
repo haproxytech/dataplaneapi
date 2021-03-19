@@ -15,10 +15,13 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/version'
 
 @test "tcp_response_rules: Fail creating a TCP Response rule when backend doesn't exist" {
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/tcp_response_rules?backend=ghost&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_response_rules/if.json")
-	[ "${SC}" = 400 ]
+	run dpa_curl POST "/services/haproxy/configuration/tcp_response_rules?backend=ghost&force_reload=true&version=$(version)" "../tcp_response_rules/if.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 400
 }

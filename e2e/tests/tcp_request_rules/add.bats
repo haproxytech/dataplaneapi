@@ -15,29 +15,47 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/version'
 
 setup() {
-	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/post.json")
-	[ "${SC}" = 201 ]
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/post.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 teardown() {
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
+	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }
 
 @test "tcp_request_rules: Add a new TCP Request Rule to frontend" {
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/tcp_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_request_rules/accept.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 @test "tcp_request_rules: Add a new TCP Request Rule to backend" {
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/tcp_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_request_rules/accept.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }

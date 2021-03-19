@@ -15,38 +15,62 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/version'
 
 setup() {
 	# creating frontend and related TCP request rule
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/post.json")
-	[ "${SC}" = 201 ]
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/tcp_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_request_rules/accept.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 	# creating backend and related TCP request rule
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/post.json")
-	[ "${SC}" = 201 ]
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/tcp_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_request_rules/accept.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 teardown() {
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
+	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }
 
 @test "tcp_request_rules: Return one TCP Request Rule from frontend" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=frontend&parent_name=test_frontend")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/tcp_request_rules/0?parent_type=frontend&parent_name=test_frontend"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 	[ "$(get_json_path "${BODY}" ".data.type")" = "content" ]
 }
 
 @test "tcp_request_rules: Return one TCP Request Rule from backend" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=backend&parent_name=test_backend")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/tcp_request_rules/0?parent_type=backend&parent_name=test_backend"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 	[ "$(get_json_path "${BODY}" ".data.type")" = "content" ]
 }

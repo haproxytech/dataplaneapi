@@ -15,38 +15,62 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/version'
 
 setup() {
 	# creating frontend and related HTTP request rule
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/post.json")
-	[ "${SC}" = 201 ]
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/http_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/unless.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/http_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../http_request_rules/unless.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 	# creating backend and related HTTP request rule
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/post.json")
-	[ "${SC}" = 201 ]
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/http_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/unless.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/http_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../http_request_rules/unless.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 teardown() {
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
+	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }
 
 @test "http_request_rules: Replace a HTTP Request Rule of frontend" {
-	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/http_request_rules/0?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/put.json")
-	[ "${SC}" = 200 ]
+	run dpa_curl PUT "/services/haproxy/configuration/http_request_rules/0?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../http_request_rules/put.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 	[ "$(get_json_path "${BODY}" ".cond")" = "if" ]
 }
 
 @test "http_request_rules: Replace a HTTP Request Rule of backend" {
-	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/http_request_rules/0?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/put.json")
-	[ "${SC}" = 200 ]
+	run dpa_curl PUT "/services/haproxy/configuration/http_request_rules/0?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../http_request_rules/put.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 	[ "$(get_json_path "${BODY}" ".cond")" = "if" ]
 }

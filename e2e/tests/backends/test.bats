@@ -15,37 +15,52 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/version'
 
 @test "backends: Add a backend" {
-	read -r SC RES < <(auth_curl POST "/v2/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/post.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 @test "backends: Return a backend" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/backends/test_backend")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/backends/test_backend"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data.name')
 	[ "${ACTUAL}" = "test_backend" ]
 }
 
 @test "backends: Replace a backend" {
-	read -r SC RES < <(auth_curl PUT "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/put.json")
-	[ "${SC}" = 200 ]
+	run dpa_curl PUT "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)" "/put.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 }
 
 @test "backends: Return an array of backends" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/backends")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/backends"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data[0].name')
 	[ "${ACTUAL}" = "test_backend" ]
 }
 
 @test "backends: Delete a backend" {
-	read -r SC RES < <(auth_curl DELETE "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }

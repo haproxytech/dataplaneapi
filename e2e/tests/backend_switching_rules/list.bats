@@ -15,31 +15,52 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/version'
 
 setup() {
-	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/post.json")
-	[ "${SC}" = 201 ]
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/post.json")
-	[ "${SC}" = 201 ]
-	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backend_switching_rules/if.json")
-	[ "${SC}" = 201 ]
-	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backend_switching_rules/list.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "../backend_switching_rules/if.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
+	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "../backend_switching_rules/list.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 teardown() {
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
-	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
+	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }
 
 @test "backend_switching_rules: Replace a Backend Switching Rule" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]
 	[ "$(get_json_path "${BODY}" ".data[0].cond_test")" = "{ path -i -m beg /path }" ]
 	[ "$(get_json_path "${BODY}" ".data[1].cond_test")" = "{ req_ssl_sni -i www.example.com }" ]

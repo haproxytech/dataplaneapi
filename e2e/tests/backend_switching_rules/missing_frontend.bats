@@ -15,10 +15,13 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/version'
 
 @test "backend_switching_rules: Fail creating a Backend Switching Rule rule when frontend doesn't exist" {
-	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/backend_switching_rules?frontend=ghost&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backend_switching_rules/if.json")
-	[ "${SC}" = 400 ]
+	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=ghost&force_reload=true&version=$(version)" "../backend_switching_rules/if.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 400
 }

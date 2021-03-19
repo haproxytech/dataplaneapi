@@ -15,37 +15,52 @@
 # limitations under the License.
 #
 
-load '../../libs/auth_curl'
+load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/version'
 
 @test "frontends: Add a frontend" {
-	read -r SC RES < <(auth_curl POST "/v2/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/post.json")
-	[ "${SC}" = 201 ]
+	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/post.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 201
 }
 
 @test "frontends: Return a frontend" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/frontends/test_frontend")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/frontends/test_frontend"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data.name')
 	[ "${ACTUAL}" = "test_frontend" ]
 }
 
 @test "frontends: Replace a frontend" {
-	read -r SC RES < <(auth_curl PUT "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/put.json")
-	[ "${SC}" = 200 ]
+	run dpa_curl PUT "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)" "/put.json"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 }
 
 @test "frontends: Return an array of frontends" {
-	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/frontends")
-	[ "${SC}" = 200 ]
+	run dpa_curl GET "/services/haproxy/configuration/frontends"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 200
 
 	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data[0].name')
 	[ "${ACTUAL}" = "test_frontend" ]
 }
 
 @test "frontends: Delete a frontend" {
-	read -r SC RES < <(auth_curl DELETE "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)")
-	[ "${SC}" = 204 ]
+	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
 }
