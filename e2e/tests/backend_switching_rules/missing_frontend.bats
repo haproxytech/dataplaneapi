@@ -18,7 +18,7 @@
 load '../../libs/auth_curl'
 load '../../libs/version'
 
-@test "Fail creating a Backend Switching Rule rule when frontend doesn't exist" {
+@test "backend_switching_rules: Fail creating a Backend Switching Rule rule when frontend doesn't exist" {
 	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/backend_switching_rules?frontend=ghost&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backend_switching_rules/if.json")
 	[ "${SC}" = 400 ]
 }

@@ -20,7 +20,7 @@ load "../../libs/get_json_path"
 load './haproxy_config_setup'
 
 
-@test "Return one runtime map file" {
+@test "runtime_maps_files: Return one runtime map file" {
     run dpa_curl GET "/services/haproxy/runtime/maps/mapfile1.map"
     assert_success
 
@@ -30,7 +30,7 @@ load './haproxy_config_setup'
     assert_equal "$(get_json_path "${BODY}" " select(.file | contains(\"/tmp/maps/mapfile1.map\") ).file" )" "/tmp/maps/mapfile1.map"
 }
 
-@test "Return an error when one map runtime file doesn't exists" {
+@test "runtime_maps_files: Return an error when one map runtime file doesn't exists" {
     run dpa_curl GET "/services/haproxy/runtime/maps/not-exists.map"
     assert_success
 

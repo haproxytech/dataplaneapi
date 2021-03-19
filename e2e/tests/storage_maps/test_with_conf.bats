@@ -20,7 +20,7 @@ load "../../libs/get_json_path"
 load '../../libs/version'
 load '../../libs/haproxy_config_setup'
 
-@test "Refuse to delete still used ssl certificate file" {
+@test "storage_maps: Refuse to delete still used ssl certificate file" {
     run docker cp "${BATS_TEST_DIRNAME}/mapfile_example.map" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/maps/"
     assert_success
 
@@ -37,7 +37,7 @@ load '../../libs/haproxy_config_setup'
     assert dpa_docker_exec 'rm /etc/haproxy/maps/mapfile_example.map'
 }
 
-@test "Allow to delete ssl certificate file referenced in comments" {
+@test "storage_maps: Allow to delete ssl certificate file referenced in comments" {
     run docker cp "${BATS_TEST_DIRNAME}/mapfile_example2.map" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/maps/"
     assert_success
 

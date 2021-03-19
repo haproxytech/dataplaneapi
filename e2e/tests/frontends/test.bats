@@ -19,12 +19,12 @@ load '../../libs/auth_curl'
 load '../../libs/get_json_path'
 load '../../libs/version'
 
-@test "Add a frontend" {
+@test "frontends: Add a frontend" {
 	read -r SC RES < <(auth_curl POST "/v2/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/post.json")
 	[ "${SC}" = 201 ]
 }
 
-@test "Return a frontend" {
+@test "frontends: Return a frontend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/frontends/test_frontend")
 	[ "${SC}" = 200 ]
 
@@ -32,12 +32,12 @@ load '../../libs/version'
 	[ "${ACTUAL}" = "test_frontend" ]
 }
 
-@test "Replace a frontend" {
+@test "frontends: Replace a frontend" {
 	read -r SC RES < <(auth_curl PUT "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/frontends/put.json")
 	[ "${SC}" = 200 ]
 }
 
-@test "Return an array of frontends" {
+@test "frontends: Return an array of frontends" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/frontends")
 	[ "${SC}" = 200 ]
 
@@ -45,7 +45,7 @@ load '../../libs/version'
 	[ "${ACTUAL}" = "test_frontend" ]
 }
 
-@test "Delete a frontend" {
+@test "frontends: Delete a frontend" {
 	read -r SC RES < <(auth_curl DELETE "/v2/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }

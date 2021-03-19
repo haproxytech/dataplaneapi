@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load './haproxy_config_setup'
 
-@test "Return one map runtime entries" {
+@test "runtime_maps_entries: Return one map runtime entries" {
     run dpa_curl GET "/services/haproxy/runtime/maps_entries?map=mapfile1.map"
     assert_success
 
@@ -33,7 +33,7 @@ load './haproxy_config_setup'
     assert_equal "$(get_json_path "${BODY}" " .[] | select(.value | contains(\"be_api\") ).value" )" "be_api"
 }
 
-@test "https://github.com/haproxytech/dataplaneapi/issues/159" {
+@test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/159" {
     run dpa_curl GET "/services/haproxy/runtime/maps_entries?map=not-exists.map"
     assert_success
 

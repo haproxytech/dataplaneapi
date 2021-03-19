@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Get one spoe agent" {
+@test "spoe_agents: Get one spoe agent" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_agents/iprep-agent?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 
@@ -45,7 +45,7 @@ teardown() {
     assert_equal $(get_json_path "${BODY}" ".data | .[]") $(cat ${BATS_TEST_DIRNAME}/data/post.json)
 }
 
-@test "Return an error when trying to get non existing spoe agent" {
+@test "spoe_agents: Return an error when trying to get non existing spoe agent" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_agents/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 

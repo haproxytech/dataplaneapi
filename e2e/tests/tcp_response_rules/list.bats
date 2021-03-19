@@ -33,7 +33,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Return one TCP Response Rule from backend" {
+@test "tcp_response_rules: Return one TCP Response Rule from backend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/tcp_response_rules?backend=test_backend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]

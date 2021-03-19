@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "List all spoe scopes" {
+@test "spoe_scopes: List all spoe scopes" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_scopes?spoe=spoefile_example2.cfg&version=1"
     assert_success
 

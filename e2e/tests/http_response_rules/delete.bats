@@ -38,12 +38,12 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Delete a HTTP Response Rule from frontend" {
+@test "http_response_rules: Delete a HTTP Response Rule from frontend" {
 	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/http_response_rules/0?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }
 
-@test "Delete a HTTP Response Rule from backend" {
+@test "http_response_rules: Delete a HTTP Response Rule from backend" {
 	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/http_response_rules/0?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }

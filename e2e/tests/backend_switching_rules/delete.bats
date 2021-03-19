@@ -34,7 +34,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Delete a Backend Switching Rule" {
+@test "backend_switching_rules: Delete a Backend Switching Rule" {
 	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/backend_switching_rules/0?frontend=test_frontend&force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }

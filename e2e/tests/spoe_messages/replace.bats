@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Replace a spoe message" {
+@test "spoe_messages: Replace a spoe message" {
     run dpa_curl PUT "/services/haproxy/spoe/spoe_messages/check-ip?spoe=spoefile_example2.cfg&version=1&scope=%5Bip-reputation%5D" /data/put.json
     assert_success
 

@@ -38,12 +38,12 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Delete a TCP Request Rule from frontend" {
+@test "tcp_request_rules: Delete a TCP Request Rule from frontend" {
 	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }
 
-@test "Delete a TCP Request Rule from backend" {
+@test "tcp_request_rules: Delete a TCP Request Rule from backend" {
 	read -r SC _ < <(auth_curl DELETE "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }

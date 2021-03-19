@@ -17,7 +17,7 @@
 
 load '../../libs/auth_curl'
 
-@test "Return HAProxy process information" {
+@test "haproxy: Return HAProxy process information" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/runtime/info")
 	[ "${SC}" = 200 ]
 }

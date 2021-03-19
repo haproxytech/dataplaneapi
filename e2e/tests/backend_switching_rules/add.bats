@@ -32,7 +32,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Add a new Backend Switching Rule" {
+@test "backend_switching_rules: Add a new Backend Switching Rule" {
 	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backend_switching_rules/if.json")
 
 	[ "${SC}" = 201 ]

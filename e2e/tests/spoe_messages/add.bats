@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example.cfg'
 }
 
-@test "Add a spoe message" {
+@test "spoe_messages: Add a spoe message" {
     run dpa_curl POST "/services/haproxy/spoe/spoe_messages?spoe=spoefile_example.cfg&version=1&scope=%5Bip-reputation%5D" /data/post.json
     assert_success
 
@@ -51,7 +51,7 @@ teardown() {
     assert_equal "$(get_json_path "${BODY}" ".data")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
 }
 
-@test "Refuse adding an existing spoe message" {
+@test "spoe_messages: Refuse adding an existing spoe message" {
     run dpa_curl POST "/services/haproxy/spoe/spoe_messages?spoe=spoefile_example.cfg&version=2&scope=%5Bip-reputation%5D" /data/post.json
     assert_success
 

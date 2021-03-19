@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
 
-@test "Add a mapfile" {
+@test "storage_maps: Add a mapfile" {
 
     refute dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 
@@ -34,7 +34,7 @@ load '../../libs/version'
     assert dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 }
 
-@test "Get a list of managed mapfiles" {
+@test "storage_maps: Get a list of managed mapfiles" {
 
     # sometimes we can't establish a connection to the haproxy stat socket
     # forcing haproxy to restart seems to fix that
@@ -52,7 +52,7 @@ load '../../libs/version'
     assert_equal $(get_json_path "$BODY" '.[0].storage_name') "mapfile_example.map"
 }
 
-@test "Get a mapfile contents" {
+@test "storage_maps: Get a mapfile contents" {
 
     run dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
     assert_success
@@ -65,7 +65,7 @@ load '../../libs/version'
     assert dpa_diff_docker_file '/etc/haproxy/maps/mapfile_example.map' "mapfile_example.map"
 }
 
-@test "Try to get unavailable mapfile contents" {
+@test "storage_maps: Try to get unavailable mapfile contents" {
 
     run dpa_curl GET "/services/haproxy/storage/maps/not_here.map"
     assert_success
@@ -74,7 +74,7 @@ load '../../libs/version'
     assert_equal $SC 404
 }
 
-@test "Replace a mapfile contents" {
+@test "storage_maps: Replace a mapfile contents" {
 
     run dpa_curl_text_plain PUT "/services/haproxy/storage/maps/mapfile_example.map" "@${BATS_TEST_DIRNAME}/mapfile_example2.map"
     assert_success
@@ -93,7 +93,7 @@ load '../../libs/version'
     assert dpa_diff_docker_file '/etc/haproxy/maps/mapfile_example.map' "mapfile_example2.map"
 }
 
-@test "Delete a mapfile" {
+@test "storage_maps: Delete a mapfile" {
 
     run dpa_curl DELETE "/services/haproxy/storage/maps/mapfile_example.map"
     assert_success

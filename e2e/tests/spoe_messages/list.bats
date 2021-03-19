@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "List all spoe messages" {
+@test "spoe_messages: List all spoe messages" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_messages?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 

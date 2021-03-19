@@ -30,7 +30,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Add a new TCP Response Rule to backend" {
+@test "tcp_response_rules: Add a new TCP Response Rule to backend" {
 	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/configuration/tcp_response_rules?backend=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_response_rules/if.json")
 	[ "${SC}" = 201 ]
 }

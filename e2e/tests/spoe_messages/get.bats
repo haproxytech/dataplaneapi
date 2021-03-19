@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Get one spoe message" {
+@test "spoe_messages: Get one spoe message" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_messages/check-ip?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 
@@ -45,7 +45,7 @@ teardown() {
     assert_equal "$(get_json_path "$BODY" ".data")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
 }
 
-@test "Return an error when trying to get non existing spoe message" {
+@test "spoe_messages: Return an error when trying to get non existing spoe message" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_messages/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 

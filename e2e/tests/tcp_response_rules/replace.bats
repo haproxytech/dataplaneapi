@@ -31,7 +31,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Replace a TCP Response Rule" {
+@test "tcp_response_rules: Replace a TCP Response Rule" {
 	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/tcp_response_rules/0?backend=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_response_rules/put.json")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".action")" = "reject" ]

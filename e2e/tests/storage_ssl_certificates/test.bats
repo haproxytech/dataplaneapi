@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
 
-@test "Add a ssl certificate file" {
+@test "storage_ssl_certificates: Add a ssl certificate file" {
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
@@ -40,7 +40,7 @@ load '../../libs/version'
     assert [ $new_logs_count = 0 ]
 }
 
-@test "Get a list of managed ssl certificate files" {
+@test "storage_ssl_certificates: Get a list of managed ssl certificate files" {
     run dpa_curl GET "/services/haproxy/storage/ssl_certificates/"
     assert_success
 
@@ -52,7 +52,7 @@ load '../../libs/version'
     assert_equal $(get_json_path "$BODY" '.[0].storage_name') "1.pem"
 }
 
-@test "Get a ssl certificate file contents" {
+@test "storage_ssl_certificates: Get a ssl certificate file contents" {
 
     run dpa_curl_download GET "/services/haproxy/storage/ssl_certificates/1.pem"
     assert_success
@@ -66,7 +66,7 @@ load '../../libs/version'
     #assert dpa_diff_var_file '$BODY' "1.pem"
 }
 
-@test "Replace a ssl certificate file contents" {
+@test "storage_ssl_certificates: Replace a ssl certificate file contents" {
 
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
 
@@ -82,7 +82,7 @@ load '../../libs/version'
     assert [ $new_logs_count = 0 ]
 }
 
-@test "Delete a ssl certificate file" {
+@test "storage_ssl_certificates: Delete a ssl certificate file" {
     run dpa_curl DELETE "/services/haproxy/storage/ssl_certificates/1.pem"
     assert_success
 
@@ -92,7 +92,7 @@ load '../../libs/version'
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 }
 
-@test "Add a ssl certificate file and reload HAProxy" {
+@test "storage_ssl_certificates: Add a ssl certificate file and reload HAProxy" {
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 
@@ -117,7 +117,7 @@ load '../../libs/version'
     assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
 }
 
-@test "Replace a ssl certificate file contents and reload HAPRoxy" {
+@test "storage_ssl_certificates: Replace a ssl certificate file contents and reload HAPRoxy" {
 
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
 

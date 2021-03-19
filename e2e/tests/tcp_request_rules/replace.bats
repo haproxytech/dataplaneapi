@@ -39,13 +39,13 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Replace a TCP Request Rule of frontend" {
+@test "tcp_request_rules: Replace a TCP Request Rule of frontend" {
 	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_request_rules/put.json")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".action")" = "reject" ]
 }
 
-@test "Replace a TCP Request Rule of backend" {
+@test "tcp_request_rules: Replace a TCP Request Rule of backend" {
 	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/tcp_request_rules/put.json")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".action")" = "reject" ]

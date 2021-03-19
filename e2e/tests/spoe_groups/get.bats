@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Get one spoe group" {
+@test "spoe_groups: Get one spoe group" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_groups/newgroup?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 
@@ -45,7 +45,7 @@ teardown() {
     assert_equal "$(get_json_path "$BODY" ".data")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
 }
 
-@test "Return an error when trying to get non existing spoe group" {
+@test "spoe_groups: Return an error when trying to get non existing spoe group" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_groups/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 

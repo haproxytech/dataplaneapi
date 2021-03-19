@@ -34,7 +34,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example.cfg'
 }
 
-@test "Add a spoe scope" {
+@test "spoe_scopes: Add a spoe scope" {
     run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=spoefile_example.cfg&version=1" /data/add_scope.txt
     assert_success
 
@@ -42,7 +42,7 @@ teardown() {
     assert_equal $SC 201
 }
 
-@test "Refuse adding an existing spoe scope" {
+@test "spoe_scopes: Refuse adding an existing spoe scope" {
     run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=spoefile_example.cfg&version=2" /data/add_scope.txt
     assert_success
 
@@ -50,7 +50,7 @@ teardown() {
     assert_equal $SC 409
 }
 
-@test "Return an error when spoe file doesn't exists" {
+@test "spoe_scopes: Return an error when spoe file doesn't exists" {
     run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=not_exists.cfg&version=3" /data/add_scope.txt
     assert_success
 
@@ -58,7 +58,7 @@ teardown() {
     assert_equal $SC 500
 }
 
-@test "Return an error when version not matched" {
+@test "spoe_scopes: Return an error when version not matched" {
     run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=spoefile_example.cfg&version=10000" /data/new_scope.txt
     assert_success
 

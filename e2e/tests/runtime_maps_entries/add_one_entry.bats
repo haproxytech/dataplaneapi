@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load './haproxy_config_setup'
 
-@test "Adds an entry into the map file" {
+@test "runtime_maps_entries: Adds an entry into the map file" {
     run dpa_curl POST "/services/haproxy/runtime/maps_entries?map=mapfile1.map" /data/post.json
     assert_success
 
@@ -34,7 +34,7 @@ load './haproxy_config_setup'
     assert_equal $SC 200
 }
 
-@test "Refuse adding an existing map entry into the map file" {
+@test "runtime_maps_entries: Refuse adding an existing map entry into the map file" {
     run dpa_curl POST "/services/haproxy/runtime/maps_entries?map=mapfile1.map" /data/existing.json
     assert_success
 

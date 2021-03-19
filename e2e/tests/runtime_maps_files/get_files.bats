@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load './haproxy_config_setup'
 
-@test "Return runtime map files" {
+@test "runtime_maps_files: Return runtime map files" {
     run dpa_curl GET "/services/haproxy/runtime/maps"
     assert_success
 

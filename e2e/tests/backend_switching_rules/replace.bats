@@ -35,7 +35,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Replace a Backend Switching Rule" {
+@test "backend_switching_rules: Replace a Backend Switching Rule" {
 	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/backend_switching_rules/0?frontend=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backend_switching_rules/put.json")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".cond_test")" = "{ req_ssl_sni -i example.com }" ]

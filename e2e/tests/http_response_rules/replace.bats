@@ -39,13 +39,13 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Replace a HTTP Response Rule of frontend" {
+@test "http_response_rules: Replace a HTTP Response Rule of frontend" {
 	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/http_response_rules/0?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_response_rules/put.json")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".cond")" = "if" ]
 }
 
-@test "Replace a HTTP Response Rule of backend" {
+@test "http_response_rules: Replace a HTTP Response Rule of backend" {
 	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/configuration/http_response_rules/0?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_response_rules/put.json")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".cond")" = "if" ]

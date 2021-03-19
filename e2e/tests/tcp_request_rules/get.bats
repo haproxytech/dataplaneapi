@@ -39,13 +39,13 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Return one TCP Request Rule from frontend" {
+@test "tcp_request_rules: Return one TCP Request Rule from frontend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=frontend&parent_name=test_frontend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data.type")" = "content" ]
 }
 
-@test "Return one TCP Request Rule from backend" {
+@test "tcp_request_rules: Return one TCP Request Rule from backend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/tcp_request_rules/0?parent_type=backend&parent_name=test_backend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data.type")" = "content" ]

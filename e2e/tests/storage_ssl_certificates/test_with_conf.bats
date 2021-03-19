@@ -20,7 +20,7 @@ load "../../libs/get_json_path"
 load '../../libs/version'
 load '../../libs/haproxy_config_setup'
 
-@test "Refuse to delete still used ssl certificate file" {
+@test "storage_ssl_certificates: Refuse to delete still used ssl certificate file" {
     run docker cp "${BATS_TEST_DIRNAME}/3.pem" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/ssl/"
     assert_success
 
@@ -37,7 +37,7 @@ load '../../libs/haproxy_config_setup'
     assert dpa_docker_exec 'rm /etc/haproxy/ssl/3.pem'
 }
 
-@test "Allow to delete ssl certificate file referenced in comments" {
+@test "storage_ssl_certificates: Allow to delete ssl certificate file referenced in comments" {
     run docker cp "${BATS_TEST_DIRNAME}/4.pem" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/ssl/"
     assert_success
 

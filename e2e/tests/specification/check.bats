@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load '../../libs/version'
 load '../../libs/get_json_path'
 
-@test "specification v2" {
+@test "specification: specification v2" {
     run dpa_curl GET "/specification"
     assert_success
 

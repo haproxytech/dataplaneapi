@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Replace a spoe group" {
+@test "spoe_groups: Replace a spoe group" {
     run dpa_curl PUT "/services/haproxy/spoe/spoe_groups/newgroup?spoe=spoefile_example2.cfg&version=1&scope=%5Bip-reputation%5D" /data/put.json
     assert_success
 

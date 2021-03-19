@@ -19,12 +19,12 @@ load '../../libs/auth_curl'
 load '../../libs/get_json_path'
 load '../../libs/version'
 
-@test "Add a backend" {
+@test "backends: Add a backend" {
 	read -r SC RES < <(auth_curl POST "/v2/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/post.json")
 	[ "${SC}" = 201 ]
 }
 
-@test "Return a backend" {
+@test "backends: Return a backend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/backends/test_backend")
 	[ "${SC}" = 200 ]
 
@@ -32,12 +32,12 @@ load '../../libs/version'
 	[ "${ACTUAL}" = "test_backend" ]
 }
 
-@test "Replace a backend" {
+@test "backends: Replace a backend" {
 	read -r SC RES < <(auth_curl PUT "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/backends/put.json")
 	[ "${SC}" = 200 ]
 }
 
-@test "Return an array of backends" {
+@test "backends: Return an array of backends" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/backends")
 	[ "${SC}" = 200 ]
 
@@ -45,7 +45,7 @@ load '../../libs/version'
 	[ "${ACTUAL}" = "test_backend" ]
 }
 
-@test "Delete a backend" {
+@test "backends: Delete a backend" {
 	read -r SC RES < <(auth_curl DELETE "/v2/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }

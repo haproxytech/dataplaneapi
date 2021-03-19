@@ -37,7 +37,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Replace a Backend Switching Rule" {
+@test "backend_switching_rules: Replace a Backend Switching Rule" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]

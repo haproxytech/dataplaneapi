@@ -19,12 +19,12 @@ load '../../libs/auth_curl'
 load "../../libs/get_json_path"
 load '../../libs/version'
 
-@test "Add a site" {
+@test "sites: Add a site" {
 	read -r SC BODY < <(auth_curl POST "/v2/services/haproxy/sites?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/sites/post.json")
 	[ "${SC}" = 201 ]
 }
 
-@test "Return a site" {
+@test "sites: Return a site" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/sites/test_site")
 	[ "${SC}" = 200 ]
 
@@ -32,12 +32,12 @@ load '../../libs/version'
 	[ "${ACTUAL}" = "test_site" ]
 }
 
-@test "Replace a site" {
+@test "sites: Replace a site" {
 	read -r SC BODY < <(auth_curl PUT "/v2/services/haproxy/sites/test_site?force_reload=true&version=$(version)" "@${E2E_DIR}/tests/sites/put.json")
 	[ "${SC}" = 200 ]
 }
 
-@test "Return an array of sites" {
+@test "sites: Return an array of sites" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/sites?force_reload=true&version=$(version)")
 	[ "${SC}" = 200 ]
 
@@ -45,7 +45,7 @@ load '../../libs/version'
 	[ "${ACTUAL}" = "test_site" ]
 }
 
-@test "Delete a site" {
+@test "sites: Delete a site" {
 	read -r SC BODY < <(auth_curl DELETE "/v2/services/haproxy/sites/test_site?force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }

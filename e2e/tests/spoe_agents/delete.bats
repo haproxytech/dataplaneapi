@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Delete a spoe agent" {
+@test "spoe_agents: Delete a spoe agent" {
     run dpa_curl DELETE "/services/haproxy/spoe/spoe_agents/iprep-agent?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg&version=1"
     assert_success
 
@@ -47,7 +47,7 @@ teardown() {
     assert_equal $SC 404
 }
 
-@test "Return an error when trying to delete non existing spoe agent" {
+@test "spoe_agents: Return an error when trying to delete non existing spoe agent" {
     run dpa_curl DELETE "/services/haproxy/spoe/spoe_agents/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg&version=1"
     assert_success
 

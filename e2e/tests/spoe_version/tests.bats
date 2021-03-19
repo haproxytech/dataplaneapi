@@ -33,7 +33,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example.cfg'
 }
 
-@test "Get a spoe version" {
+@test "spoe_version: Get a spoe version" {
     run dpa_curl GET "/services/haproxy/spoe/version?spoe=spoefile_example.cfg"
     assert_success
 
@@ -43,7 +43,7 @@ teardown() {
     assert_equal $(get_json_path "${BODY}" ".") 12
 }
 
-@test "Return error when getting version for non existing spoe transaction" {
+@test "spoe_version: Return error when getting version for non existing spoe transaction" {
     run dpa_curl GET "/services/haproxy/spoe/version?spoe=spoefile_example.cfg?transaction_id=263166c2-3093-40ff-a750-4a4d114dfd99"
     assert_success
 

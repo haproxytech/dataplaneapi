@@ -38,7 +38,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example.cfg'
 }
 
-@test "Get a list of spoefiles" {
+@test "spoe: Get a list of spoefiles" {
 
     run dpa_curl GET "/services/haproxy/spoe/spoe_files"
     assert_success
@@ -51,7 +51,7 @@ teardown() {
     assert_equal $(get_json_path "$BODY" '.[0]') "/etc/haproxy/spoe/spoefile_example.cfg"
 }
 
-@test "Get a spoefile contents" {
+@test "spoe: Get a spoefile contents" {
 
     run dpa_curl_download GET "/services/haproxy/spoe/spoe_files/spoefile_example.cfg"
     assert_success
@@ -62,7 +62,7 @@ teardown() {
     assert dpa_diff_docker_file '/etc/haproxy/spoe/spoefile_example.cfg' "spoefile_example.cfg"
 }
 
-@test "Try to get unavailable spoefile contents" {
+@test "spoe: Try to get unavailable spoefile contents" {
 
     run dpa_curl GET "/services/haproxy/spoe/spoe_files/not_here.cfg"
     assert_success
@@ -71,7 +71,7 @@ teardown() {
     assert_equal $SC 404
 }
 
-@test "Delete a spoefile" {
+@test "spoe: Delete a spoefile" {
 
     run dpa_curl DELETE "/services/haproxy/spoe/spoe_files/spoefile_example.cfg"
     assert_success

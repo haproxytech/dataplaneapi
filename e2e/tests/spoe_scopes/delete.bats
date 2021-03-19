@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Delete a spoe scope" {
+@test "spoe_scopes: Delete a spoe scope" {
     run dpa_curl DELETE "/services/haproxy/spoe/spoe_scopes/%5Bip-reputation%5D?spoe=spoefile_example2.cfg&version=1"
     assert_success
 
@@ -46,7 +46,7 @@ teardown() {
     assert_equal $SC 204
 }
 
-@test "Return an error when trying to delete non existing spoe scope" {
+@test "spoe_scopes: Return an error when trying to delete non existing spoe scope" {
     run dpa_curl DELETE "/services/haproxy/spoe/spoe_scopes/%5Bnot-exists%5D?spoe=spoefile_example2.cfg&version=1"
     assert_success
 

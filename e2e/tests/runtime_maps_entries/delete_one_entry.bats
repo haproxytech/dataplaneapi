@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load './haproxy_config_setup'
 
-@test "Deletes all the map entries from the map by its id" {
+@test "runtime_maps_entries: Deletes all the map entries from the map by its id" {
     run dpa_curl DELETE "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map"
     assert_success
 
@@ -34,7 +34,7 @@ load './haproxy_config_setup'
     assert_equal $SC 404
 }
 
-@test "https://github.com/haproxytech/dataplaneapi/issues/160 with non existing key" {
+@test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/160 with non existing key" {
     run dpa_curl DELETE "/services/haproxy/runtime/maps_entries/not-exists?map=mapfile1.map"
     assert_success
 
@@ -42,7 +42,7 @@ load './haproxy_config_setup'
     assert_equal $SC 404
 }
 
-@test "https://github.com/haproxytech/dataplaneapi/issues/160 with non existing map file" {
+@test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/160 with non existing map file" {
     run dpa_curl DELETE "/services/haproxy/runtime/maps_entries/key1?map=not-exists.map"
     assert_success
 

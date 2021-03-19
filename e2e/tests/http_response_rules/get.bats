@@ -39,13 +39,13 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Return one HTTP Response Rule from frontend" {
+@test "http_response_rules: Return one HTTP Response Rule from frontend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/http_response_rules/0?parent_type=frontend&parent_name=test_frontend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data.type")" = "add-header" ]
 }
 
-@test "Return one HTTP Response Rule from backend" {
+@test "http_response_rules: Return one HTTP Response Rule from backend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/http_response_rules/0?parent_type=backend&parent_name=test_backend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data.type")" = "add-header" ]

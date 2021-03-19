@@ -19,7 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load './haproxy_config_setup'
 
-@test "Replace the value corresponding to each id in a map" {
+@test "runtime_maps_entries: Replace the value corresponding to each id in a map" {
     run dpa_curl PUT "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map&force_sync=true" /data/put.json
     assert_success
 
@@ -36,7 +36,7 @@ load './haproxy_config_setup'
     assert_equal "$(get_json_path "${BODY}" " select(.value | contains(\"replacedvalue\") ).value" )" "replacedvalue"
 }
 
-@test "Return an error when trying to replace non existing map key" {
+@test "runtime_maps_entries: Return an error when trying to replace non existing map key" {
     run dpa_curl PUT "/services/haproxy/runtime/maps_entries/not-exists?map=mapfile1.map&force_sync=true" /data/put.json
     assert_success
 

@@ -43,7 +43,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Return an array of all HTTP Response Rules from frontend" {
+@test "http_response_rules: Return an array of all HTTP Response Rules from frontend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/http_response_rules?parent_type=frontend&parent_name=test_frontend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]
@@ -53,7 +53,7 @@ teardown() {
 	[ "$(get_json_path "${BODY}" ".data[1].cond_test")" = "{ src 192.168.0.0/16 }" ]
 }
 
-@test "Return one HTTP Response Rule from backend" {
+@test "http_response_rules: Return one HTTP Response Rule from backend" {
 	read -r SC BODY < <(auth_curl GET "/v2/services/haproxy/configuration/http_response_rules?parent_type=backend&parent_name=test_backend")
 	[ "${SC}" = 200 ]
 	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]

@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "List all spoe groups" {
+@test "spoe_groups: List all spoe groups" {
     run dpa_curl GET "/services/haproxy/spoe/spoe_groups?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
     assert_success
 

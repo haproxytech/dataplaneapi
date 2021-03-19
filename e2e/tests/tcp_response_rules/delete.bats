@@ -30,7 +30,7 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Delete a TCP Response Rule" {
+@test "tcp_response_rules: Delete a TCP Response Rule" {
 	read -r SC BODY < <(auth_curl DELETE "/v2/services/haproxy/configuration/tcp_response_rules/0?backend=test_backend&force_reload=true&version=$(version)")
 	[ "${SC}" = 204 ]
 }

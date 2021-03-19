@@ -35,7 +35,7 @@ teardown() {
     run dpa_docker_exec 'rm -rf /etc/haproxy/spoe/spoefile_example2.cfg'
 }
 
-@test "Delete a spoe message" {
+@test "spoe_messages: Delete a spoe message" {
     run dpa_curl DELETE "/services/haproxy/spoe/spoe_messages/check-ip?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg&version=1"
     assert_success
 
@@ -47,7 +47,7 @@ teardown() {
     assert_equal $SC 404
 }
 
-@test "Return an error when trying to delete non existing spoe message" {
+@test "spoe_messages: Return an error when trying to delete non existing spoe message" {
     run dpa_curl DELETE "/services/haproxy/spoe/spoe_messages/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg&version=1"
     assert_success
 

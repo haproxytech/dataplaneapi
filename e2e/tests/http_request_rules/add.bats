@@ -32,12 +32,12 @@ teardown() {
 	[ "${SC}" = 204 ]
 }
 
-@test "Add a new HTTP Request Rule to frontend" {
+@test "http_request_rules: Add a new HTTP Request Rule to frontend" {
 	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/http_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/unless.json")
 	[ "${SC}" = 201 ]
 }
 
-@test "Add a new HTTP Request Rule to backend" {
+@test "http_request_rules: Add a new HTTP Request Rule to backend" {
 	read -r SC _ < <(auth_curl POST "/v2/services/haproxy/configuration/http_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "@${E2E_DIR}/tests/http_request_rules/unless.json")
 	[ "${SC}" = 201 ]
 }
