@@ -49,6 +49,7 @@ type reloadCache struct {
 	index         int64
 	retention     int
 	mu            sync.RWMutex
+	channel       chan string
 }
 
 // ReloadAgent handles all reloads, scheduled or forced
@@ -95,25 +96,32 @@ func (ra *ReloadAgent) setLkgPath(configFile, path string) {
 	ra.lkgConfigFile = configFile + ".lkg"
 }
 
+func (ra *ReloadAgent) handleReload(id string) {
+	ra.cache.mu.Lock()
+	ra.cache.current = id
+
+	defer func() {
+		ra.cache.next = ""
+		ra.cache.mu.Unlock()
+	}()
+
+	response, err := ra.reloadHAProxy()
+	if err != nil {
+		ra.cache.failReload(response)
+		log.Warning("Reload failed " + err.Error())
+	} else {
+		ra.cache.succeedReload(response)
+
+		d := time.Duration(ra.delay) * time.Millisecond
+		log.Debugf("Delaying reload for %s", d.String())
+		time.Sleep(d)
+		log.Debugf("Handling reload completed, waiting for new requests")
+	}
+}
+
 func (ra *ReloadAgent) handleReloads() {
-	//nolint:gosimple
-	for {
-		select {
-		case <-time.After(time.Duration(ra.delay) * time.Millisecond):
-			if ra.cache.next != "" {
-				ra.cache.mu.Lock()
-				ra.cache.current = ra.cache.next
-				ra.cache.next = ""
-				ra.cache.mu.Unlock()
-				response, err := ra.reloadHAProxy()
-				if err != nil {
-					ra.cache.failReload(response)
-					log.Warning("Reload failed " + err.Error())
-				} else {
-					ra.cache.succeedReload(response)
-				}
-			}
-		}
+	for id := range ra.cache.channel {
+		ra.handleReload(id)
 	}
 }
 
@@ -208,18 +216,17 @@ func (rc *reloadCache) Init(retention int) {
 	rc.lastSuccess = nil
 	rc.index = 0
 	rc.retention = retention
+	rc.channel = make(chan string)
 }
 
 func (rc *reloadCache) newReload() {
 	rc.mu.Lock()
 	defer rc.mu.Unlock()
 	rc.next = rc.generateID()
+	rc.channel <- rc.next
 }
 
 func (rc *reloadCache) failReload(response string) {
-	rc.mu.Lock()
-	defer rc.mu.Unlock()
-
 	r := &models.Reload{
 		ID:              rc.current,
 		Status:          models.ReloadStatusFailed,
@@ -233,9 +240,6 @@ func (rc *reloadCache) failReload(response string) {
 }
 
 func (rc *reloadCache) succeedReload(response string) {
-	rc.mu.Lock()
-	defer rc.mu.Unlock()
-
 	r := &models.Reload{
 		ID:              rc.current,
 		Status:          models.ReloadStatusSucceeded,
