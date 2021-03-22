@@ -52,6 +52,8 @@ build:
   services:
     - name: $CI_REGISTRY_GO/docker:18.09.7-dind
       alias: docker
+  variables:
+    LOCAL_IP_ADDRESS: docker
   tags:
     - go
   before_script:
@@ -62,16 +64,20 @@ build:
 
 HAProxy_2_1:
   extends: .e2e
-  variables:
-    LOCAL_IP_ADDRESS: docker
-    HAPROXY_VERSION: "2.1"
+  parallel:
+    matrix:
+      - TESTPART: [ "1/2", "2/2" ]
+        HAPROXY_VERSION: "2.1"
 HAProxy_2_2:
   extends: .e2e
-  variables:
-    LOCAL_IP_ADDRESS: docker
-    HAPROXY_VERSION: "2.2"
+  parallel:
+    matrix:
+      - TESTPART: [ "1/2", "2/2" ]
+        HAPROXY_VERSION: "2.2"
 HAProxy_2_3:
   extends: .e2e
-  variables:
-    LOCAL_IP_ADDRESS: docker
-    HAPROXY_VERSION: "2.3"
+  parallel:
+    matrix:
+      - TESTPART: [ "1/2", "2/2" ]
+        HAPROXY_VERSION: "2.3"
+

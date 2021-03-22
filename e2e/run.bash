@@ -83,8 +83,31 @@ else
 fi
 
 echo '>>> Starting test suite'
-if [ -z $TESTNAME ]; then
-    bats -t "${E2E_DIR}"/tests/*
-else
+if [ ! -z $TESTNAME ]; then
     bats -t "${E2E_DIR}"/tests/${TESTNAME}
+elif [ ! -z $TESTPART ]; then
+    set +e
+    echo $TESTPART | grep -q -e "[[:digit:]]/[[:digit:]]"
+    if [ $? != 0 ]; then
+        echo "invalid TESTPART argument: ${TESTPART}"
+        exit 1
+    fi
+    set -e
+    PARALLEL_RUNS=$(echo $TESTPART | cut -d\/ -f 2)
+    THIS_RUN=$(($(echo $TESTPART | cut -d\/ -f 1) - 1))
+
+    declare -a SELECTED_TESTS
+
+    echo ">>> Selected partial run via TESTPART variable, running ${TESTPART} of tests:"
+    ALL_TESTS=($(ls "${E2E_DIR}"/tests))
+    ALL_TESTS_COUNT=${#ALL_TESTS[@]}
+    for TESTNR in $(seq 0 $(( $ALL_TESTS_COUNT - 1 )) ); do
+        if [ $(($TESTNR % $PARALLEL_RUNS)) == $THIS_RUN ]; then
+            echo ">>> -> ${ALL_TESTS[$TESTNR]}"
+            SELECTED_TESTS+=("${E2E_DIR}"/tests/${ALL_TESTS[$TESTNR]})
+        fi
+    done
+    bats -t ${SELECTED_TESTS[*]}
+else
+    bats -t "${E2E_DIR}"/tests/*
 fi
