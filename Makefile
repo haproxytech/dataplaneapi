@@ -34,7 +34,7 @@ generate:
 		--build-arg UID=$(shell id -u) \
 		--build-arg GID=$(shell id -g) \
 		-t dataplaneapi-swagger-gen .
-	docker run --rm -it -v "$(PWD)":/data dataplaneapi-swagger-gen
+	docker run --rm -v "$(PWD)":/data dataplaneapi-swagger-gen
 	generate/post_swagger.sh
 
 .PHONY: generate-native
