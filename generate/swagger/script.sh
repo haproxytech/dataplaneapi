@@ -17,7 +17,6 @@ fi
 # check if version is there, if not, use one from require
 [ -z "$CN_VERSION" ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Require | .[] | select(.Path | contains("github.com/haproxytech/client-native/v2")) | .Version' 2>/dev/null | awk -F"-" '{print $NF}')
 echo " ---> version of client native used: $CN_VERSION"
-
 # extract repository
 REPO_PATH=$(go mod edit -json | jq -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Path'  2>/dev/null |  awk -F"/" '{print $2 "/" $3}') || ""
 [ -z "$REPO_PATH" ] && REPO_PATH=haproxytech/client-native
@@ -41,6 +40,7 @@ if [ "$REMOTE_VERSION" = "null" ]; then
 else
   echo " ---> URL path: $URL_PATH"
   echo " ---> repository path: $REPO_PATH"
+  echo " ---> client native version: $CN_VERSION"
   SPEC_URL=https://$URL_PATH/$REPO_PATH/$EXTRA_PATH$CN_VERSION/specification
 
   echo " ---> fetching specification: $SPEC_URL/build/haproxy_spec.yaml"
