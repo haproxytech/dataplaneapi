@@ -37,11 +37,13 @@ func NewCommitTransactionParams() CommitTransactionParams {
 	var (
 		// initialize parameters with default values
 
-		forceReloadDefault = bool(false)
+		forceReloadDefault   = bool(false)
+		enableReverseDefault = bool(false)
 	)
 
 	return CommitTransactionParams{
-		ForceReload: &forceReloadDefault,
+		ForceReload:  &forceReloadDefault,
+		EnableRevert: &enableReverseDefault,
 	}
 }
 
@@ -59,6 +61,8 @@ type CommitTransactionParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+
+	EnableRevert *bool
 	/*Transaction id
 	  Required: true
 	  In: path
@@ -79,6 +83,11 @@ func (o *CommitTransactionParams) BindRequest(r *http.Request, route *middleware
 
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qEnableRevert, qhkEnableRevert, _ := qs.GetOK("enable_revert")
+	if err := o.bindEnableRevert(qEnableRevert, qhkEnableRevert, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -112,6 +121,29 @@ func (o *CommitTransactionParams) bindForceReload(rawData []string, hasKey bool,
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindEnableRevert binds and validates parameter EnableRevert from query.
+func (o *CommitTransactionParams) bindEnableRevert(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewCommitTransactionParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("enable_revert", "query", "bool", raw)
+	}
+	o.EnableRevert = &value
 
 	return nil
 }

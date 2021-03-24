@@ -21,6 +21,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
+	log "github.com/sirupsen/logrus"
 )
 
 //StartTransactionHandlerImpl implementation of the StartTransactionHandler interface using client-native client
@@ -103,6 +104,12 @@ func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransac
 	if *params.ForceReload {
 		err := th.ReloadAgent.ForceReload()
 		if err != nil {
+			if *params.EnableRevert {
+				var errR error
+				if errR = th.Client.Configuration.RevertTransaction(t); errR != nil {
+					log.Debug("revert fail", errR)
+				}
+			}
 			e := misc.HandleError(err)
 			return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 		}
