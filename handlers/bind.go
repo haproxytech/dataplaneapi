@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateBindHandlerImpl implementation of the CreateBindHandler interface using client-native client
+// CreateBindHandlerImpl implementation of the CreateBindHandler interface using client-native client
 type CreateBindHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteBindHandlerImpl implementation of the DeleteBindHandler interface using client-native client
+// DeleteBindHandlerImpl implementation of the DeleteBindHandler interface using client-native client
 type DeleteBindHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetBindHandlerImpl implementation of the GetBindHandler interface using client-native client
+// GetBindHandlerImpl implementation of the GetBindHandler interface using client-native client
 type GetBindHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetBindsHandlerImpl implementation of the GetBindsHandler interface using client-native client
+// GetBindsHandlerImpl implementation of the GetBindsHandler interface using client-native client
 type GetBindsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceBindHandlerImpl implementation of the ReplaceBindHandler interface using client-native client
+// ReplaceBindHandlerImpl implementation of the ReplaceBindHandler interface using client-native client
 type ReplaceBindHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -93,7 +94,7 @@ func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal i
 	return bind.NewCreateBindAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -134,7 +135,7 @@ func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal i
 	return bind.NewDeleteBindAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -149,7 +150,7 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 	return bind.NewGetBindOK().WithPayload(&bind.GetBindOKBody{Version: v, Data: b}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -158,13 +159,16 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 
 	v, bs, err := h.Client.Configuration.GetBinds(params.Frontend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: models.Binds{}}).WithConfigurationVersion(v)
+		}
 		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: bs}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceBindHandlerImpl) Handle(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

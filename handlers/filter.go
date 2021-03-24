@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateFilterHandlerImpl implementation of the CreateFilterHandler interface using client-native client
+// CreateFilterHandlerImpl implementation of the CreateFilterHandler interface using client-native client
 type CreateFilterHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteFilterHandlerImpl implementation of the DeleteFilterHandler interface using client-native client
+// DeleteFilterHandlerImpl implementation of the DeleteFilterHandler interface using client-native client
 type DeleteFilterHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetFilterHandlerImpl implementation of the GetFilterHandler interface using client-native client
+// GetFilterHandlerImpl implementation of the GetFilterHandler interface using client-native client
 type GetFilterHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetFiltersHandlerImpl implementation of the GetFiltersHandler interface using client-native client
+// GetFiltersHandlerImpl implementation of the GetFiltersHandler interface using client-native client
 type GetFiltersHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceFilterHandlerImpl implementation of the ReplaceFilterHandler interface using client-native client
+// ReplaceFilterHandlerImpl implementation of the ReplaceFilterHandler interface using client-native client
 type ReplaceFilterHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -93,7 +94,7 @@ func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, princ
 	return filter.NewCreateFilterAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -134,7 +135,7 @@ func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, princ
 	return filter.NewDeleteFilterAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -149,7 +150,7 @@ func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal i
 	return filter.NewGetFilterOK().WithPayload(&filter.GetFilterOKBody{Version: v, Data: f}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -158,13 +159,16 @@ func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal
 
 	v, fs, err := h.Client.Configuration.GetFilters(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: models.Filters{}}).WithConfigurationVersion(v)
+		}
 		return filter.NewGetFiltersDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: fs}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceFilterHandlerImpl) Handle(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

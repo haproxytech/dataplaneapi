@@ -20,30 +20,30 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server"
-	"github.com/haproxytech/models/v2"
 )
 
-//GetRuntimeServerHandlerImpl implementation of the GetRuntimeServerHandler interface using client-native client
+// GetRuntimeServerHandlerImpl implementation of the GetRuntimeServerHandler interface using client-native client
 type GetRuntimeServerHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetRuntimeServersHandlerImpl implementation of the GetRuntimeServersHandler interface using client-native client
+// GetRuntimeServersHandlerImpl implementation of the GetRuntimeServersHandler interface using client-native client
 type GetRuntimeServersHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceRuntimeServerHandlerImpl implementation of the ReplaceRuntimeServerHandler interface using client-native client
+// ReplaceRuntimeServerHandlerImpl implementation of the ReplaceRuntimeServerHandler interface using client-native client
 type ReplaceRuntimeServerHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
 	rs, err := h.Client.Runtime.GetServerState(params.Backend, params.Name)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -58,22 +58,23 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 	return server.NewGetRuntimeServerOK().WithPayload(rs)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetRuntimeServersHandlerImpl) Handle(params server.GetRuntimeServersParams, principal interface{}) middleware.Responder {
 	rs, err := h.Client.Runtime.GetServersState(params.Backend)
-
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return server.NewGetRuntimeServersOK().WithPayload(models.RuntimeServers{})
+		}
 		return server.NewGetRuntimeServersDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	return server.NewGetRuntimeServersOK().WithPayload(rs)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
 	rs, err := h.Client.Runtime.GetServerState(params.Backend, params.Name)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)

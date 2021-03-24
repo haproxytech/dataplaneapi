@@ -24,14 +24,25 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetAllRuntimeMapFilesParams creates a new GetAllRuntimeMapFilesParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewGetAllRuntimeMapFilesParams() GetAllRuntimeMapFilesParams {
 
-	return GetAllRuntimeMapFilesParams{}
+	var (
+		// initialize parameters with default values
+
+		includeUnmanagedDefault = bool(false)
+	)
+
+	return GetAllRuntimeMapFilesParams{
+		IncludeUnmanaged: &includeUnmanagedDefault,
+	}
 }
 
 // GetAllRuntimeMapFilesParams contains all the bound params for the get all runtime map files operation
@@ -42,6 +53,12 @@ type GetAllRuntimeMapFilesParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
+
+	/*If true, also show unmanaged map files loaded in haproxy
+	  In: query
+	  Default: false
+	*/
+	IncludeUnmanaged *bool
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -53,8 +70,38 @@ func (o *GetAllRuntimeMapFilesParams) BindRequest(r *http.Request, route *middle
 
 	o.HTTPRequest = r
 
+	qs := runtime.Values(r.URL.Query())
+
+	qIncludeUnmanaged, qhkIncludeUnmanaged, _ := qs.GetOK("include_unmanaged")
+	if err := o.bindIncludeUnmanaged(qIncludeUnmanaged, qhkIncludeUnmanaged, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindIncludeUnmanaged binds and validates parameter IncludeUnmanaged from query.
+func (o *GetAllRuntimeMapFilesParams) bindIncludeUnmanaged(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetAllRuntimeMapFilesParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("include_unmanaged", "query", "bool", raw)
+	}
+	o.IncludeUnmanaged = &value
+
 	return nil
 }

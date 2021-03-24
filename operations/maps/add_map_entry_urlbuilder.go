@@ -24,11 +24,14 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+
+	"github.com/go-openapi/swag"
 )
 
 // AddMapEntryURL generates an URL for the add map entry operation
 type AddMapEntryURL struct {
-	Map string
+	ForceSync *bool
+	Map       string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -63,6 +66,14 @@ func (o *AddMapEntryURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var forceSyncQ string
+	if o.ForceSync != nil {
+		forceSyncQ = swag.FormatBool(*o.ForceSync)
+	}
+	if forceSyncQ != "" {
+		qs.Set("force_sync", forceSyncQ)
+	}
 
 	mapVarQ := o.Map
 	if mapVarQ != "" {

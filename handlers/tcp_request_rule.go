@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateTCPRequestRuleHandlerImpl implementation of the CreateTCPRequestRuleHandler interface using client-native client
+// CreateTCPRequestRuleHandlerImpl implementation of the CreateTCPRequestRuleHandler interface using client-native client
 type CreateTCPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteTCPRequestRuleHandlerImpl implementation of the DeleteTCPRequestRuleHandler interface using client-native client
+// DeleteTCPRequestRuleHandlerImpl implementation of the DeleteTCPRequestRuleHandler interface using client-native client
 type DeleteTCPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetTCPRequestRuleHandlerImpl implementation of the GetTCPRequestRuleHandler interface using client-native client
+// GetTCPRequestRuleHandlerImpl implementation of the GetTCPRequestRuleHandler interface using client-native client
 type GetTCPRequestRuleHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetTCPRequestRulesHandlerImpl implementation of the GetTCPRequestRulesHandler interface using client-native client
+// GetTCPRequestRulesHandlerImpl implementation of the GetTCPRequestRulesHandler interface using client-native client
 type GetTCPRequestRulesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceTCPRequestRuleHandlerImpl implementation of the ReplaceTCPRequestRuleHandler interface using client-native client
+// ReplaceTCPRequestRuleHandlerImpl implementation of the ReplaceTCPRequestRuleHandler interface using client-native client
 type ReplaceTCPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -91,10 +92,9 @@ func (h *CreateTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.CreateT
 		return tcp_request_rule.NewCreateTCPRequestRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return tcp_request_rule.NewCreateTCPRequestRuleAccepted().WithPayload(params.Data)
-
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -136,7 +136,7 @@ func (h *DeleteTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.DeleteT
 	return tcp_request_rule.NewDeleteTCPRequestRuleAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -151,7 +151,7 @@ func (h *GetTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.GetTCPRequ
 	return tcp_request_rule.NewGetTCPRequestRuleOK().WithPayload(&tcp_request_rule.GetTCPRequestRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRulesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -160,13 +160,16 @@ func (h *GetTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.GetTCPReq
 
 	v, rules, err := h.Client.Configuration.GetTCPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(&tcp_request_rule.GetTCPRequestRulesOKBody{Version: v, Data: models.TCPRequestRules{}}).WithConfigurationVersion(v)
+		}
 		return tcp_request_rule.NewGetTCPRequestRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(&tcp_request_rule.GetTCPRequestRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

@@ -20,29 +20,30 @@ import (
 	"os"
 	"path"
 
-	log "github.com/sirupsen/logrus"
-
 	loads "github.com/go-openapi/loads"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime/security"
 	flags "github.com/jessevdk/go-flags"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/operations"
 )
 
-//GitRepo ...
+// GitRepo ...
 var GitRepo = ""
 
-//GitTag ...
+// GitTag ...
 var GitTag = ""
 
-//GitCommit ...
+// GitCommit ...
 var GitCommit = "dev"
 
-//GitDirty ...
+// GitDirty ...
 var GitDirty = ".dirty"
 
-//BuildTime ...
+// BuildTime ...
 var BuildTime = ""
 
 func init() {
@@ -68,7 +69,6 @@ func main() {
 }
 
 func startServer(cfg *configuration.Configuration) (reload configuration.AtomicBool) {
-
 	swaggerSpec, err := loads.Embedded(dataplaneapi.SwaggerJSON, dataplaneapi.FlatSwaggerJSON)
 	if err != nil {
 		log.Fatalln(err)
@@ -79,8 +79,6 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	api := operations.NewDataPlaneAPI(swaggerSpec)
 	server := dataplaneapi.NewServer(api)
-	//nolint
-	defer server.Shutdown()
 
 	parser := flags.NewParser(server, flags.Default)
 	parser.ShortDescription = "HAProxy Data Plane API"
@@ -116,7 +114,13 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		return
 	}
 
-	err = cfg.Load(dataplaneapi.SwaggerJSON, server.Host, server.Port)
+	err = cfg.Load()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	// incorporate changes from file to global settings
+	dataplaneapi.SyncWithFileSettings(server, cfg)
+	err = cfg.LoadRuntimeVars(dataplaneapi.SwaggerJSON, server.Host, server.Port)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -125,8 +129,10 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	log.Infof("Build from: %s", GitRepo)
 	log.Infof("Build date: %s", BuildTime)
 
+	configuration.HandlePIDFile(cfg.HAProxy)
+
 	if cfg.Mode.Load() == "cluster" {
-		if cfg.Cluster.Certificate.Fetched.Load() {
+		if cfg.Cluster.CertificateFetched.Load() {
 			log.Info("HAProxy Data Plane API in cluster mode")
 			server.TLSCertificate = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", cfg.Name.Load())))
 			server.TLSCertificateKey = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", cfg.Name.Load())))
@@ -138,9 +144,22 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			cfg.Notify.BootstrapKeyChanged.NotifyWithRetry()
 		}
 	}
+
 	err = cfg.Save()
 	if err != nil {
 		log.Fatalln(err)
+	}
+
+	// Applies when the Authorization header is set with the Basic scheme
+	api.BasicAuthAuth = configuration.AuthenticateUser
+	api.BasicAuthenticator = func(authentication security.UserPassAuthentication) runtime.Authenticator {
+		// if mTLS is enabled with backing Certificate Authority, skipping basic authentication
+		if len(server.TLSCACertificate) > 0 && server.TLSPort > 0 {
+			return runtime.AuthenticatorFunc(func(i interface{}) (bool, interface{}, error) {
+				return true, "", nil
+			})
+		}
+		return security.BasicAuthRealm("", authentication)
 	}
 
 	go func() {
@@ -157,7 +176,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	go func() {
 		for range cfg.Notify.Shutdown.Subscribe("main") {
-			log.Info("HAProxy Data Plane API shuting down")
+			log.Info("HAProxy Data Plane API shutting down")
 			err := server.Shutdown()
 			if err != nil {
 				log.Fatalln(err)
@@ -170,5 +189,8 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
 	}
+
+	defer server.Shutdown() // nolint:errcheck
+
 	return reload
 }

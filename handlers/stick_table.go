@@ -21,49 +21,47 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/stick_table"
-	"github.com/haproxytech/models/v2"
 )
 
-//GetStickTablesHandlerImpl implementation of the GetStickTablesHandler interface using client-native client
+// GetStickTablesHandlerImpl implementation of the GetStickTablesHandler interface using client-native client
 type GetStickTablesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetStickTableHandlerImpl implementation of the GetStickTableHandler interface using client-native client
+// GetStickTableHandlerImpl implementation of the GetStickTableHandler interface using client-native client
 type GetStickTableHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetStickTableEntriesHandlerImpl implementation of the GetStickTableEntriesHandler interface using client-native client
+// GetStickTableEntriesHandlerImpl implementation of the GetStickTableEntriesHandler interface using client-native client
 type GetStickTableEntriesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
 	process := 0
 	if params.Process != nil {
 		process = int(*params.Process)
 	}
-	stkTs, err := h.Client.Runtime.ShowTables(process)
-
+	stkTS, err := h.Client.Runtime.ShowTables(process)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTablesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	for _, table := range stkTs {
+	for _, table := range stkTS {
 		table.Fields = findTableFields(table.Name, h.Client)
-
 	}
 
-	return stick_table.NewGetStickTablesOK().WithPayload(stkTs)
-
+	return stick_table.NewGetStickTablesOK().WithPayload(stkTS)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams, principal interface{}) middleware.Responder {
 	stkT, err := h.Client.Runtime.ShowTable(params.Name, int(params.Process))
 	if stkT == nil {
@@ -85,7 +83,7 @@ func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams
 	return stick_table.NewGetStickTableOK().WithPayload(stkT)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTableEntriesParams, principal interface{}) middleware.Responder {
 	filter := make([]string, 0)
 	if params.Filter != nil {

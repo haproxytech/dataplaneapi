@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/acl"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateACLHandlerImpl implementation of the CreateACLHandler interface using client-native client
+// CreateACLHandlerImpl implementation of the CreateACLHandler interface using client-native client
 type CreateACLHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteACLHandlerImpl implementation of the DeleteACLHandler interface using client-native client
+// DeleteACLHandlerImpl implementation of the DeleteACLHandler interface using client-native client
 type DeleteACLHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetACLHandlerImpl implementation of the GetACLHandler interface using client-native client
+// GetACLHandlerImpl implementation of the GetACLHandler interface using client-native client
 type GetACLHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetAclsHandlerImpl implementation of the GetAclsHandler interface using client-native client
+// GetAclsHandlerImpl implementation of the GetAclsHandler interface using client-native client
 type GetAclsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceACLHandlerImpl implementation of the ReplaceACLHandler interface using client-native client
+// ReplaceACLHandlerImpl implementation of the ReplaceACLHandler interface using client-native client
 type ReplaceACLHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -94,7 +95,7 @@ func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal inte
 	return acl.NewCreateACLAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -135,7 +136,7 @@ func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal inte
 	return acl.NewDeleteACLAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -151,7 +152,7 @@ func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{
 	return acl.NewGetACLOK().WithPayload(&acl.GetACLOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -160,13 +161,16 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 
 	v, rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: models.Acls{}}).WithConfigurationVersion(v)
+		}
 		return acl.NewGetAclsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

@@ -17,15 +17,16 @@ package adapters
 
 import (
 	"fmt"
+	"math/rand"
 	"net/http"
 	"runtime"
 	"strings"
 	"time"
 
 	"github.com/docker/go-units"
-
-	"github.com/haproxytech/models/v2"
-
+	"github.com/haproxytech/client-native/v2/models"
+	apachelog "github.com/lestrrat-go/apache-logformat"
+	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"
 )
 
@@ -120,15 +121,14 @@ func stripPackage(n string) string {
 }
 
 // RecoverMiddleware used for recovering from panic, logs the panic to given logger and returns 500
-func RecoverMiddleware(logger *logrus.Logger) func(h http.Handler) http.Handler {
+func RecoverMiddleware(entry logrus.FieldLogger) func(h http.Handler) http.Handler {
 	return func(h http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
 			defer func() {
 				if err := recover(); err != nil {
 					frames := callers()
 
-					entry := logrus.NewEntry(logger)
-					entry = entry.WithField("stack_trace", frames.String())
+					entry := entry.WithField("stack_trace", frames.String())
 					entry.Error(fmt.Sprintf("Panic %v", err))
 
 					w.WriteHeader(http.StatusInternalServerError)
@@ -141,9 +141,9 @@ func RecoverMiddleware(logger *logrus.Logger) func(h http.Handler) http.Handler 
 					}
 
 					errMsg, _ := e.MarshalJSON()
-					ct := r.Header.Get(http.CanonicalHeaderKey("Content-Type"))
+					ct := r.Header.Get("Content-Type")
 					if strings.HasPrefix(ct, "application/json") {
-						w.Header().Set(http.CanonicalHeaderKey("Content-Type"), "application/json")
+						w.Header().Set("Content-Type", "application/json")
 					}
 					// nolint:errcheck
 					w.Write(errMsg)
@@ -155,40 +155,62 @@ func RecoverMiddleware(logger *logrus.Logger) func(h http.Handler) http.Handler 
 	}
 }
 
+func UniqueIDMiddleware(entry *logrus.Entry) Adapter {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			reqID := r.Header.Get("X-Request-Id")
+			if len(reqID) == 0 {
+				t := time.Now()
+				// we need performance and math/rand does the trick, although it's "unsafe":
+				// speed is absolutely required here since we're going to generate an ULID for each request
+				// that doesn't contain a prefilled X-Request-Id header.
+				entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0) // nolint:gosec
+				reqID = ulid.MustNew(ulid.Timestamp(t), entropy).String()
+			}
+			*entry = *entry.WithField("request_id", reqID)
+
+			h.ServeHTTP(w, r)
+		})
+	}
+}
+
+func ApacheLogMiddleware(entry *logrus.Entry, format *apachelog.ApacheLog) Adapter {
+	return func(h http.Handler) http.Handler {
+		return format.Wrap(h, entry.Logger.Writer())
+	}
+}
+
 // LoggingMiddleware logs before and after the response to given logger
-func LoggingMiddleware(logger *logrus.Logger) Adapter {
+func LoggingMiddleware(entry *logrus.Entry) Adapter {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
-			logBefore(logger, r)
+			logBefore(entry, r)
 			res := newStatusResponseWriter(w)
-			defer logAfter(logger, res, start)
+			defer logAfter(entry, res, start)
 			h.ServeHTTP(res, r)
 		})
 	}
 }
 
-func logBefore(logger *logrus.Logger, req *http.Request) {
-	e := logrus.NewEntry(logger)
-	if reqID := req.Header.Get("X-Request-Id"); reqID != "" {
-		e = e.WithField("request_id", reqID)
-	}
-	e = e.WithField("request", req.RequestURI)
-	e = e.WithField("method", req.Method)
-	remote := req.RemoteAddr
-	if realIP := req.Header.Get("X-Real-IP"); realIP != "" {
-		remote = realIP
-	}
-	e = e.WithField("remote", remote)
-
-	e.Info("started handling request")
+func logBefore(entry *logrus.Entry, req *http.Request) {
+	entry.WithFields(logrus.Fields{
+		"request": req.RequestURI,
+		"method":  req.Method,
+		"remote": func() (remote string) {
+			remote = req.RemoteAddr
+			if realIP := req.Header.Get("X-Real-IP"); realIP != "" {
+				remote = realIP
+			}
+			return
+		}(),
+	}).Info("started handling request")
 }
 
-func logAfter(logger *logrus.Logger, res *statusResponseWriter, start time.Time) {
-	latency := time.Since(start)
-	e := logrus.NewEntry(logger)
-	e = e.WithField("status", res.Status())
-	e = e.WithField("length", units.HumanSize(float64(res.Length())))
-	e = e.WithField("took", latency)
-	e.Info("completed handling request")
+func logAfter(entry *logrus.Entry, res *statusResponseWriter, start time.Time) {
+	entry.WithFields(logrus.Fields{
+		"status": res.Status(),
+		"length": units.HumanSize(float64(res.Length())),
+		"took":   time.Since(start),
+	}).Info("completed handling request")
 }

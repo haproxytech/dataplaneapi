@@ -18,14 +18,14 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/dataplaneapi/operations/global"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/global"
 )
 
-//GetGlobalHandlerImpl implementation of the GetGlobalHandler interface
+// GetGlobalHandlerImpl implementation of the GetGlobalHandler interface
 type GetGlobalHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -36,7 +36,7 @@ type ReplaceGlobalHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -51,7 +51,7 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 	return global.NewGetGlobalOK().WithPayload(&global.GetGlobalOKBody{Version: v, Data: data}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -73,7 +73,6 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 	}
 
 	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, t, v)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)

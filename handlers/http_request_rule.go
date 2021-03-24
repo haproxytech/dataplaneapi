@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateHTTPRequestRuleHandlerImpl implementation of the CreateHTTPRequestRuleHandler interface using client-native client
+// CreateHTTPRequestRuleHandlerImpl implementation of the CreateHTTPRequestRuleHandler interface using client-native client
 type CreateHTTPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteHTTPRequestRuleHandlerImpl implementation of the DeleteHTTPRequestRuleHandler interface using client-native client
+// DeleteHTTPRequestRuleHandlerImpl implementation of the DeleteHTTPRequestRuleHandler interface using client-native client
 type DeleteHTTPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetHTTPRequestRuleHandlerImpl implementation of the GetHTTPRequestRuleHandler interface using client-native client
+// GetHTTPRequestRuleHandlerImpl implementation of the GetHTTPRequestRuleHandler interface using client-native client
 type GetHTTPRequestRuleHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetHTTPRequestRulesHandlerImpl implementation of the GetHTTPRequestRulesHandler interface using client-native client
+// GetHTTPRequestRulesHandlerImpl implementation of the GetHTTPRequestRulesHandler interface using client-native client
 type GetHTTPRequestRulesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceHTTPRequestRuleHandlerImpl implementation of the ReplaceHTTPRequestRuleHandler interface using client-native client
+// ReplaceHTTPRequestRuleHandlerImpl implementation of the ReplaceHTTPRequestRuleHandler interface using client-native client
 type ReplaceHTTPRequestRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.CreateHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -94,7 +95,7 @@ func (h *CreateHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.Creat
 	return http_request_rule.NewCreateHTTPRequestRuleAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.DeleteHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -135,7 +136,7 @@ func (h *DeleteHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.Delet
 	return http_request_rule.NewDeleteHTTPRequestRuleAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.GetHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -150,7 +151,7 @@ func (h *GetHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.GetHTTPR
 	return http_request_rule.NewGetHTTPRequestRuleOK().WithPayload(&http_request_rule.GetHTTPRequestRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetHTTPRequestRulesHandlerImpl) Handle(params http_request_rule.GetHTTPRequestRulesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -159,13 +160,16 @@ func (h *GetHTTPRequestRulesHandlerImpl) Handle(params http_request_rule.GetHTTP
 
 	v, rules, err := h.Client.Configuration.GetHTTPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return http_request_rule.NewGetHTTPRequestRulesOK().WithPayload(&http_request_rule.GetHTTPRequestRulesOKBody{Version: v, Data: models.HTTPRequestRules{}}).WithConfigurationVersion(v)
+		}
 		return http_request_rule.NewGetHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return http_request_rule.NewGetHTTPRequestRulesOK().WithPayload(&http_request_rule.GetHTTPRequestRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.ReplaceHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

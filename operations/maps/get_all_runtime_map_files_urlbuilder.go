@@ -24,11 +24,17 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetAllRuntimeMapFilesURL generates an URL for the get all runtime map files operation
 type GetAllRuntimeMapFilesURL struct {
+	IncludeUnmanaged *bool
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -57,6 +63,18 @@ func (o *GetAllRuntimeMapFilesURL) Build() (*url.URL, error) {
 		_basePath = "/v2"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var includeUnmanagedQ string
+	if o.IncludeUnmanaged != nil {
+		includeUnmanagedQ = swag.FormatBool(*o.IncludeUnmanaged)
+	}
+	if includeUnmanagedQ != "" {
+		qs.Set("include_unmanaged", includeUnmanagedQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

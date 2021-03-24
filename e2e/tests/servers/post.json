@@ -1,0 +1,7 @@
+{
+  "address": "10.1.1.1",
+  "check": "enabled",
+  "name": "test_server",
+  "port": 8080,
+  "weight": 80
+}

@@ -48,7 +48,7 @@ func NewDeleteBackend(ctx *middleware.Context, handler DeleteBackendHandler) *De
 
 Delete a backend
 
-Deletes a frontend from the configuration by it's name.
+Deletes a backend from the configuration by it's name.
 
 */
 type DeleteBackend struct {

@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateBackendHandlerImpl implementation of the CreateBackendHandler interface using client-native client
+// CreateBackendHandlerImpl implementation of the CreateBackendHandler interface using client-native client
 type CreateBackendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteBackendHandlerImpl implementation of the DeleteBackendHandler interface using client-native client
+// DeleteBackendHandlerImpl implementation of the DeleteBackendHandler interface using client-native client
 type DeleteBackendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetBackendHandlerImpl implementation of the GetBackendHandler interface using client-native client
+// GetBackendHandlerImpl implementation of the GetBackendHandler interface using client-native client
 type GetBackendHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetBackendsHandlerImpl implementation of the GetBackendsHandler interface using client-native client
+// GetBackendsHandlerImpl implementation of the GetBackendsHandler interface using client-native client
 type GetBackendsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceBackendHandlerImpl implementation of the ReplaceBackendHandler interface using client-native client
+// ReplaceBackendHandlerImpl implementation of the ReplaceBackendHandler interface using client-native client
 type ReplaceBackendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -94,7 +95,7 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 	return backend.NewCreateBackendAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -135,7 +136,7 @@ func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, pr
 	return backend.NewDeleteBackendAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -150,7 +151,7 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 	return backend.NewGetBackendOK().WithPayload(&backend.GetBackendOKBody{Version: v, Data: bck}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -165,7 +166,7 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 	return backend.NewGetBackendsOK().WithPayload(&backend.GetBackendsOKBody{Version: v, Data: bcks}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

@@ -1,43 +1,59 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/peer"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreatePeerHandlerImpl implementation of the CreatePeerHandler interface using client-native client
+// CreatePeerHandlerImpl implementation of the CreatePeerHandler interface using client-native client
 type CreatePeerHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeletePeerHandlerImpl implementation of the DeletePeerHandler interface using client-native client
+// DeletePeerHandlerImpl implementation of the DeletePeerHandler interface using client-native client
 type DeletePeerHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetPeerHandlerImpl implementation of the GetPeerHandler interface using client-native client
+// GetPeerHandlerImpl implementation of the GetPeerHandler interface using client-native client
 type GetPeerHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetPeersHandlerImpl implementation of the GetPeersHandler interface using client-native client
+// GetPeersHandlerImpl implementation of the GetPeersHandler interface using client-native client
 type GetPeersHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplacePeerHandlerImpl implementation of the ReplacePeerHandler interface using client-native client
+// ReplacePeerHandlerImpl implementation of the ReplacePeerHandler interface using client-native client
 type ReplacePeerHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -79,7 +95,7 @@ func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal i
 	return peer.NewCreatePeerAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeletePeerHandlerImpl) Handle(params peer.DeletePeerParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -120,7 +136,7 @@ func (h *DeletePeerHandlerImpl) Handle(params peer.DeletePeerParams, principal i
 	return peer.NewDeletePeerAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -135,7 +151,7 @@ func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal 
 	return peer.NewGetPeerSectionOK().WithPayload(&peer.GetPeerSectionOKBody{Version: v, Data: p}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {

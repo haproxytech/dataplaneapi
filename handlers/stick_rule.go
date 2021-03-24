@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateStickRuleHandlerImpl implementation of the CreateStickRuleHandler interface using client-native client
+// CreateStickRuleHandlerImpl implementation of the CreateStickRuleHandler interface using client-native client
 type CreateStickRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteStickRuleHandlerImpl implementation of the DeleteStickRuleHandler interface using client-native client
+// DeleteStickRuleHandlerImpl implementation of the DeleteStickRuleHandler interface using client-native client
 type DeleteStickRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetStickRuleHandlerImpl implementation of the GetStickRuleHandler interface using client-native client
+// GetStickRuleHandlerImpl implementation of the GetStickRuleHandler interface using client-native client
 type GetStickRuleHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetStickRulesHandlerImpl implementation of the GetStickRulesHandler interface using client-native client
+// GetStickRulesHandlerImpl implementation of the GetStickRulesHandler interface using client-native client
 type GetStickRulesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceStickRuleHandlerImpl implementation of the ReplaceStickRuleHandler interface using client-native client
+// ReplaceStickRuleHandlerImpl implementation of the ReplaceStickRuleHandler interface using client-native client
 type ReplaceStickRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateStickRuleHandlerImpl) Handle(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -93,7 +94,7 @@ func (h *CreateStickRuleHandlerImpl) Handle(params stick_rule.CreateStickRulePar
 	return stick_rule.NewCreateStickRuleAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -135,7 +136,7 @@ func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRulePar
 	return stick_rule.NewDeleteStickRuleAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -150,7 +151,7 @@ func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, p
 	return stick_rule.NewGetStickRuleOK().WithPayload(&stick_rule.GetStickRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -159,13 +160,16 @@ func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams,
 
 	v, rules, err := h.Client.Configuration.GetStickRules(params.Backend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return stick_rule.NewGetStickRulesOK().WithPayload(&stick_rule.GetStickRulesOKBody{Version: v, Data: models.StickRules{}}).WithConfigurationVersion(v)
+		}
 		return stick_rule.NewGetStickRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return stick_rule.NewGetStickRulesOK().WithPayload(&stick_rule.GetStickRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceStickRuleHandlerImpl) Handle(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

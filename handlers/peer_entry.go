@@ -1,43 +1,59 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/peer_entry"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreatePeerEntryHandlerImpl implementation of the CreatePeerEntryHandler interface using client-native client
+// CreatePeerEntryHandlerImpl implementation of the CreatePeerEntryHandler interface using client-native client
 type CreatePeerEntryHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeletePeerEntryHandlerImpl implementation of the DeletePeerEntryHandler interface using client-native client
+// DeletePeerEntryHandlerImpl implementation of the DeletePeerEntryHandler interface using client-native client
 type DeletePeerEntryHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetPeerEntryHandlerImpl implementation of the GetPeerEntryHandler interface using client-native client
+// GetPeerEntryHandlerImpl implementation of the GetPeerEntryHandler interface using client-native client
 type GetPeerEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetPeerEntriesHandlerImpl implementation of the GetPeerEntrysHandler interface using client-native client
+// GetPeerEntriesHandlerImpl implementation of the GetPeerEntrysHandler interface using client-native client
 type GetPeerEntriesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplacePeerEntryHandlerImpl implementation of the ReplacePeerEntryHandler interface using client-native client
+// ReplacePeerEntryHandlerImpl implementation of the ReplacePeerEntryHandler interface using client-native client
 type ReplacePeerEntryHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreatePeerEntryHandlerImpl) Handle(params peer_entry.CreatePeerEntryParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -78,7 +94,7 @@ func (h *CreatePeerEntryHandlerImpl) Handle(params peer_entry.CreatePeerEntryPar
 	return peer_entry.NewCreatePeerEntryAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeletePeerEntryHandlerImpl) Handle(params peer_entry.DeletePeerEntryParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -119,7 +135,7 @@ func (h *DeletePeerEntryHandlerImpl) Handle(params peer_entry.DeletePeerEntryPar
 	return peer_entry.NewDeletePeerEntryAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetPeerEntryHandlerImpl) Handle(params peer_entry.GetPeerEntryParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -134,7 +150,7 @@ func (h *GetPeerEntryHandlerImpl) Handle(params peer_entry.GetPeerEntryParams, p
 	return peer_entry.NewGetPeerEntryOK().WithPayload(&peer_entry.GetPeerEntryOKBody{Version: v, Data: pe}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetPeerEntriesHandlerImpl) Handle(params peer_entry.GetPeerEntriesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -149,7 +165,7 @@ func (h *GetPeerEntriesHandlerImpl) Handle(params peer_entry.GetPeerEntriesParam
 	return peer_entry.NewGetPeerEntriesOK().WithPayload(&peer_entry.GetPeerEntriesOKBody{Version: v, Data: pes}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplacePeerEntryHandlerImpl) Handle(params peer_entry.ReplacePeerEntryParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

@@ -1,0 +1,7 @@
+# A comment begins with a hash sign
+static.example.com  be_static
+www.example.com     be_static
+
+# You can add additional comments, but they must be on a new line
+example.com         be_api
+api.example.com     be_api

@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateFrontendHandlerImpl implementation of the CreateFrontendHandler interface using client-native client
+// CreateFrontendHandlerImpl implementation of the CreateFrontendHandler interface using client-native client
 type CreateFrontendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteFrontendHandlerImpl implementation of the DeleteFrontendHandler interface using client-native client
+// DeleteFrontendHandlerImpl implementation of the DeleteFrontendHandler interface using client-native client
 type DeleteFrontendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetFrontendHandlerImpl implementation of the GetFrontendHandler interface using client-native client
+// GetFrontendHandlerImpl implementation of the GetFrontendHandler interface using client-native client
 type GetFrontendHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetFrontendsHandlerImpl implementation of the GetFrontendsHandler interface using client-native client
+// GetFrontendsHandlerImpl implementation of the GetFrontendsHandler interface using client-native client
 type GetFrontendsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceFrontendHandlerImpl implementation of the ReplaceFrontendHandler interface using client-native client
+// ReplaceFrontendHandlerImpl implementation of the ReplaceFrontendHandler interface using client-native client
 type ReplaceFrontendHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateFrontendHandlerImpl) Handle(params frontend.CreateFrontendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -93,7 +94,7 @@ func (h *CreateFrontendHandlerImpl) Handle(params frontend.CreateFrontendParams,
 	return frontend.NewCreateFrontendAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteFrontendHandlerImpl) Handle(params frontend.DeleteFrontendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -134,7 +135,7 @@ func (h *DeleteFrontendHandlerImpl) Handle(params frontend.DeleteFrontendParams,
 	return frontend.NewDeleteFrontendAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetFrontendHandlerImpl) Handle(params frontend.GetFrontendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -149,7 +150,7 @@ func (h *GetFrontendHandlerImpl) Handle(params frontend.GetFrontendParams, princ
 	return frontend.NewGetFrontendOK().WithPayload(&frontend.GetFrontendOKBody{Version: v, Data: f}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetFrontendsHandlerImpl) Handle(params frontend.GetFrontendsParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -164,7 +165,7 @@ func (h *GetFrontendsHandlerImpl) Handle(params frontend.GetFrontendsParams, pri
 	return frontend.NewGetFrontendsOK().WithPayload(&frontend.GetFrontendsOKBody{Version: v, Data: fs}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

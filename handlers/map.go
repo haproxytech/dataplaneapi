@@ -16,48 +16,45 @@
 package handlers
 
 import (
+	"path/filepath"
+	"strings"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
+	config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
 )
 
-//MapsCreateRuntimeMapHandlerImpl implementation of the MapsCreateRuntimeMapHandler interface using client-native client
-type MapsCreateRuntimeMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
-}
-
-func (h *MapsCreateRuntimeMapHandlerImpl) Handle(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-	file, header, err := params.HTTPRequest.FormFile("fileUpload")
-	if err != nil {
-		return maps.NewCreateRuntimeMapBadRequest()
-	}
-	defer file.Close()
-
-	me, err := h.Client.Runtime.CreateMap(file, *header)
-	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return maps.NewCreateRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
-	}
-	return maps.NewCreateRuntimeMapCreated().WithPayload(me)
-}
-
-//GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
+// GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
 type GetMapsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
-	mapFiles, err := h.Client.Runtime.ShowMaps()
+	mapList := &[]*models.Map{}
+
+	runtimeMaps, err := h.Client.Runtime.ShowMaps()
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewShowRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
-	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(mapFiles)
+
+	for _, m := range runtimeMaps {
+		if *params.IncludeUnmanaged || strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
+			if strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
+				m.StorageName = filepath.Base(m.File)
+			}
+			*mapList = append(*mapList, m)
+		}
+	}
+	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(*mapList)
 }
 
-//GetMapHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface using client-native client
+// GetMapHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface using client-native client
 type GetMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -74,7 +71,7 @@ func (h *GetMapHandlerImpl) Handle(params maps.GetOneRuntimeMapParams, principal
 	return maps.NewGetOneRuntimeMapOK().WithPayload(m)
 }
 
-//ClearMapHandlerImpl implementation of the ClearRuntimeMapHandler interface using client-native client
+// ClearMapHandlerImpl implementation of the ClearRuntimeMapHandler interface using client-native client
 type ClearMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -89,10 +86,23 @@ func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principa
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Name)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+	}
 	return maps.NewClearRuntimeMapNoContent()
 }
 
-//ShowMapHandlerImpl implementation of the ShowMapHandlerImpl interface using client-native client
+// ShowMapHandlerImpl implementation of the ShowMapHandlerImpl interface using client-native client
 type ShowMapHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -109,7 +119,7 @@ func (h *ShowMapHandlerImpl) Handle(params maps.ShowRuntimeMapParams, principal 
 	return maps.NewShowRuntimeMapOK().WithPayload(m)
 }
 
-//AddMapEntryHandlerImpl implementation of the AddMapEntryHandler interface using client-native client
+// AddMapEntryHandlerImpl implementation of the AddMapEntryHandler interface using client-native client
 type AddMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -120,10 +130,23 @@ func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Map)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+	}
 	return maps.NewAddMapEntryCreated().WithPayload(params.Data)
 }
 
-//GetRuntimeMapEntryHandlerImpl implementation of the GetRuntimeMapEntryHandler interface using client-native client
+// GetRuntimeMapEntryHandlerImpl implementation of the GetRuntimeMapEntryHandler interface using client-native client
 type GetRuntimeMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -140,7 +163,7 @@ func (h *GetRuntimeMapEntryHandlerImpl) Handle(params maps.GetRuntimeMapEntryPar
 	return maps.NewGetRuntimeMapEntryOK().WithPayload(m)
 }
 
-//ReplaceRuntimeMapEntryHandlerImpl implementation of the ReplaceRuntimeMapEntryHandler interface using client-native client
+// ReplaceRuntimeMapEntryHandlerImpl implementation of the ReplaceRuntimeMapEntryHandler interface using client-native client
 type ReplaceRuntimeMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -151,15 +174,27 @@ func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMap
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
-
 	e, err := h.Client.Runtime.GetMapEntry(params.Map, params.ID)
 	if err != nil {
 		return maps.NewReplaceRuntimeMapEntryNotFound()
 	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Map)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+	}
 	return maps.NewGetRuntimeMapEntryOK().WithPayload(e)
 }
 
-//DeleteRuntimeMapEntryHandlerImpl implementation of the DeleteRuntimeMapEntryHandler interface using client-native client
+// DeleteRuntimeMapEntryHandlerImpl implementation of the DeleteRuntimeMapEntryHandler interface using client-native client
 type DeleteRuntimeMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -169,6 +204,19 @@ func (h *DeleteRuntimeMapEntryHandlerImpl) Handle(params maps.DeleteRuntimeMapEn
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Map)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
 	}
 	return maps.NewDeleteRuntimeMapEntryNoContent()
 }

@@ -31,10 +31,18 @@ import (
 )
 
 // NewClearRuntimeMapParams creates a new ClearRuntimeMapParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewClearRuntimeMapParams() ClearRuntimeMapParams {
 
-	return ClearRuntimeMapParams{}
+	var (
+		// initialize parameters with default values
+
+		forceSyncDefault = bool(false)
+	)
+
+	return ClearRuntimeMapParams{
+		ForceSync: &forceSyncDefault,
+	}
 }
 
 // ClearRuntimeMapParams contains all the bound params for the clear runtime map operation
@@ -50,6 +58,11 @@ type ClearRuntimeMapParams struct {
 	  In: query
 	*/
 	ForceDelete *bool
+	/*If true, immediately syncs changes to disk
+	  In: query
+	  Default: false
+	*/
+	ForceSync *bool
 	/*Map file name
 	  Required: true
 	  In: path
@@ -70,6 +83,11 @@ func (o *ClearRuntimeMapParams) BindRequest(r *http.Request, route *middleware.M
 
 	qForceDelete, qhkForceDelete, _ := qs.GetOK("forceDelete")
 	if err := o.bindForceDelete(qForceDelete, qhkForceDelete, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qForceSync, qhkForceSync, _ := qs.GetOK("force_sync")
+	if err := o.bindForceSync(qForceSync, qhkForceSync, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -102,6 +120,29 @@ func (o *ClearRuntimeMapParams) bindForceDelete(rawData []string, hasKey bool, f
 		return errors.InvalidType("forceDelete", "query", "bool", raw)
 	}
 	o.ForceDelete = &value
+
+	return nil
+}
+
+// bindForceSync binds and validates parameter ForceSync from query.
+func (o *ClearRuntimeMapParams) bindForceSync(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewClearRuntimeMapParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_sync", "query", "bool", raw)
+	}
+	o.ForceSync = &value
 
 	return nil
 }

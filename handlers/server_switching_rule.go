@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateServerSwitchingRuleHandlerImpl implementation of the CreateServerSwitchingRuleHandler interface using client-native client
+// CreateServerSwitchingRuleHandlerImpl implementation of the CreateServerSwitchingRuleHandler interface using client-native client
 type CreateServerSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteServerSwitchingRuleHandlerImpl implementation of the DeleteServerSwitchingRuleHandler interface using client-native client
+// DeleteServerSwitchingRuleHandlerImpl implementation of the DeleteServerSwitchingRuleHandler interface using client-native client
 type DeleteServerSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetServerSwitchingRuleHandlerImpl implementation of the GetServerSwitchingRuleHandler interface using client-native client
+// GetServerSwitchingRuleHandlerImpl implementation of the GetServerSwitchingRuleHandler interface using client-native client
 type GetServerSwitchingRuleHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetServerSwitchingRulesHandlerImpl implementation of the GetServerSwitchingRulesHandler interface using client-native client
+// GetServerSwitchingRulesHandlerImpl implementation of the GetServerSwitchingRulesHandler interface using client-native client
 type GetServerSwitchingRulesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceServerSwitchingRuleHandlerImpl implementation of the ReplaceServerSwitchingRuleHandler interface using client-native client
+// ReplaceServerSwitchingRuleHandlerImpl implementation of the ReplaceServerSwitchingRuleHandler interface using client-native client
 type ReplaceServerSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.CreateServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -94,7 +95,7 @@ func (h *CreateServerSwitchingRuleHandlerImpl) Handle(params server_switching_ru
 	return server_switching_rule.NewCreateServerSwitchingRuleAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.DeleteServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -136,7 +137,7 @@ func (h *DeleteServerSwitchingRuleHandlerImpl) Handle(params server_switching_ru
 	return server_switching_rule.NewDeleteServerSwitchingRuleAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.GetServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -151,7 +152,7 @@ func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.
 	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(&server_switching_rule.GetServerSwitchingRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule.GetServerSwitchingRulesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -160,13 +161,16 @@ func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule
 
 	v, rules, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: models.ServerSwitchingRules{}}).WithConfigurationVersion(v)
+		}
 		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.ReplaceServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

@@ -28,14 +28,23 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // NewReplaceRuntimeMapEntryParams creates a new ReplaceRuntimeMapEntryParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewReplaceRuntimeMapEntryParams() ReplaceRuntimeMapEntryParams {
 
-	return ReplaceRuntimeMapEntryParams{}
+	var (
+		// initialize parameters with default values
+
+		forceSyncDefault = bool(false)
+	)
+
+	return ReplaceRuntimeMapEntryParams{
+		ForceSync: &forceSyncDefault,
+	}
 }
 
 // ReplaceRuntimeMapEntryParams contains all the bound params for the replace runtime map entry operation
@@ -52,12 +61,17 @@ type ReplaceRuntimeMapEntryParams struct {
 	  In: body
 	*/
 	Data ReplaceRuntimeMapEntryBody
+	/*If true, immediately syncs changes to disk
+	  In: query
+	  Default: false
+	*/
+	ForceSync *bool
 	/*Map id
 	  Required: true
 	  In: path
 	*/
 	ID string
-	/*Map file name
+	/*Mapfile attribute storage_name
 	  Required: true
 	  In: query
 	*/
@@ -97,6 +111,11 @@ func (o *ReplaceRuntimeMapEntryParams) BindRequest(r *http.Request, route *middl
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
+	qForceSync, qhkForceSync, _ := qs.GetOK("force_sync")
+	if err := o.bindForceSync(qForceSync, qhkForceSync, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rID, rhkID, _ := route.Params.GetOK("id")
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
@@ -110,6 +129,29 @@ func (o *ReplaceRuntimeMapEntryParams) BindRequest(r *http.Request, route *middl
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindForceSync binds and validates parameter ForceSync from query.
+func (o *ReplaceRuntimeMapEntryParams) bindForceSync(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewReplaceRuntimeMapEntryParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_sync", "query", "bool", raw)
+	}
+	o.ForceSync = &value
+
 	return nil
 }
 

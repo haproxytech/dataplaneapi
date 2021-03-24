@@ -38,13 +38,16 @@ func NewPostHAProxyConfigurationParams() PostHAProxyConfigurationParams {
 	var (
 		// initialize parameters with default values
 
-		forceReloadDefault = bool(false)
-		skipReloadDefault  = bool(false)
-		skipVersionDefault = bool(false)
+		forceReloadDefault  = bool(false)
+		onlyValidateDefault = bool(false)
+		skipReloadDefault   = bool(false)
+		skipVersionDefault  = bool(false)
 	)
 
 	return PostHAProxyConfigurationParams{
 		ForceReload: &forceReloadDefault,
+
+		OnlyValidate: &onlyValidateDefault,
 
 		SkipReload: &skipReloadDefault,
 
@@ -75,6 +78,11 @@ type PostHAProxyConfigurationParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*If set, only validates configuration, without applying it
+	  In: query
+	  Default: false
+	*/
+	OnlyValidate *bool
 	/*If set, no reload will be initiated and runtime actions from X-Runtime-Actions will be applied
 	  In: query
 	  Default: false
@@ -124,6 +132,11 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 	}
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qOnlyValidate, qhkOnlyValidate, _ := qs.GetOK("only_validate")
+	if err := o.bindOnlyValidate(qOnlyValidate, qhkOnlyValidate, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -185,6 +198,29 @@ func (o *PostHAProxyConfigurationParams) bindForceReload(rawData []string, hasKe
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindOnlyValidate binds and validates parameter OnlyValidate from query.
+func (o *PostHAProxyConfigurationParams) bindOnlyValidate(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewPostHAProxyConfigurationParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("only_validate", "query", "bool", raw)
+	}
+	o.OnlyValidate = &value
 
 	return nil
 }

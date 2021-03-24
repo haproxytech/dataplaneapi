@@ -34,6 +34,7 @@ type ClearRuntimeMapURL struct {
 	Name string
 
 	ForceDelete *bool
+	ForceSync   *bool
 
 	_basePath string
 	// avoid unkeyed usage
@@ -82,6 +83,14 @@ func (o *ClearRuntimeMapURL) Build() (*url.URL, error) {
 	}
 	if forceDeleteQ != "" {
 		qs.Set("forceDelete", forceDeleteQ)
+	}
+
+	var forceSyncQ string
+	if o.ForceSync != nil {
+		forceSyncQ = swag.FormatBool(*o.ForceSync)
+	}
+	if forceSyncQ != "" {
+		qs.Set("force_sync", forceSyncQ)
 	}
 
 	_result.RawQuery = qs.Encode()

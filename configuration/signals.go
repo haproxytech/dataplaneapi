@@ -16,13 +16,13 @@
 package configuration
 
 import (
-	log "github.com/sirupsen/logrus"
-
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type ChanNotify struct {

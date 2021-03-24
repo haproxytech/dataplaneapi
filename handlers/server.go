@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateServerHandlerImpl implementation of the CreateServerHandler interface using client-native client
+// CreateServerHandlerImpl implementation of the CreateServerHandler interface using client-native client
 type CreateServerHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteServerHandlerImpl implementation of the DeleteServerHandler interface using client-native client
+// DeleteServerHandlerImpl implementation of the DeleteServerHandler interface using client-native client
 type DeleteServerHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetServerHandlerImpl implementation of the GetServerHandler interface using client-native client
+// GetServerHandlerImpl implementation of the GetServerHandler interface using client-native client
 type GetServerHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetServersHandlerImpl implementation of the GetServersHandler interface using client-native client
+// GetServersHandlerImpl implementation of the GetServersHandler interface using client-native client
 type GetServersHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceServerHandlerImpl implementation of the ReplaceServerHandler interface using client-native client
+// ReplaceServerHandlerImpl implementation of the ReplaceServerHandler interface using client-native client
 type ReplaceServerHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -93,7 +94,7 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 	return server.NewCreateServerAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -135,7 +136,7 @@ func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, princ
 	return server.NewDeleteServerAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -150,7 +151,7 @@ func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal i
 	return server.NewGetServerOK().WithPayload(&server.GetServerOKBody{Version: v, Data: srv}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -159,13 +160,16 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 
 	v, srvs, err := h.Client.Configuration.GetServers(params.Backend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: models.Servers{}}).WithConfigurationVersion(v)
+		}
 		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: srvs}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

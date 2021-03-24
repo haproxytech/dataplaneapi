@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateLogTargetHandlerImpl implementation of the CreateLogTargetHandler interface using client-native client
+// CreateLogTargetHandlerImpl implementation of the CreateLogTargetHandler interface using client-native client
 type CreateLogTargetHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteLogTargetHandlerImpl implementation of the DeleteLogTargetHandler interface using client-native client
+// DeleteLogTargetHandlerImpl implementation of the DeleteLogTargetHandler interface using client-native client
 type DeleteLogTargetHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetLogTargetHandlerImpl implementation of the GetLogTargetHandler interface using client-native client
+// GetLogTargetHandlerImpl implementation of the GetLogTargetHandler interface using client-native client
 type GetLogTargetHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetLogTargetsHandlerImpl implementation of the GetLogTargetsHandler interface using client-native client
+// GetLogTargetsHandlerImpl implementation of the GetLogTargetsHandler interface using client-native client
 type GetLogTargetsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceLogTargetHandlerImpl implementation of the ReplaceLogTargetHandler interface using client-native client
+// ReplaceLogTargetHandlerImpl implementation of the ReplaceLogTargetHandler interface using client-native client
 type ReplaceLogTargetHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -94,7 +95,7 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 	return log_target.NewCreateLogTargetAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -136,7 +137,7 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 	return log_target.NewDeleteLogTargetAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -151,7 +152,7 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 	return log_target.NewGetLogTargetOK().WithPayload(&log_target.GetLogTargetOKBody{Version: v, Data: logTarget}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -160,13 +161,16 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 
 	v, logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, params.ParentName, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return log_target.NewGetLogTargetsOK().WithPayload(&log_target.GetLogTargetsOKBody{Version: v, Data: models.LogTargets{}}).WithConfigurationVersion(v)
+		}
 		return log_target.NewGetLogTargetsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return log_target.NewGetLogTargetsOK().WithPayload(&log_target.GetLogTargetsOKBody{Version: v, Data: logTargets}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

@@ -24,24 +24,24 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
 	"golang.org/x/sys/unix"
 
-	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/information"
-	"github.com/haproxytech/models/v2"
 )
 
-//GetHaproxyProcessInfoHandlerImpl implementation of the GetHaproxyProcessInfoHandler interface using client-native client
+// GetHaproxyProcessInfoHandlerImpl implementation of the GetHaproxyProcessInfoHandler interface using client-native client
 type GetHaproxyProcessInfoHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
 	info, err := h.Client.Runtime.GetInfo()
 	if err != nil || len(info) == 0 {
@@ -57,14 +57,14 @@ func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyP
 	return information.NewGetHaproxyProcessInfoOK().WithPayload(info)
 }
 
-//GetInfoHandlerImpl implementation of the GetInfoHandler interface
+// GetInfoHandlerImpl implementation of the GetInfoHandler interface
 type GetInfoHandlerImpl struct {
 	SystemInfo bool
 	BuildTime  string
 	Version    string
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetInfoHandlerImpl) Handle(params information.GetInfoParams, principal interface{}) middleware.Responder {
 	api := &models.InfoAPI{
 		Version: h.Version,

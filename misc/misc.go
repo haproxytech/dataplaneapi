@@ -19,14 +19,16 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
-	"github.com/haproxytech/dataplaneapi/haproxy"
-
 	"github.com/haproxytech/client-native/v2/configuration"
 	client_errors "github.com/haproxytech/client-native/v2/errors"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
+	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/rate"
 )
 
 const (
@@ -38,6 +40,10 @@ const (
 	ErrHTTPInternalServerError = int64(500)
 	// ErrHTTPBadRequest HTTP status code 400
 	ErrHTTPBadRequest = int64(400)
+	// ErrHTTPRateLimit HTTP status code 429
+	ErrHTTPRateLimit = int64(429)
+	// ErrHTTPOk HTTP status code 200
+	ErrHTTPOk = int64(200)
 )
 
 // HandleError translates error codes from client native into models.Error with appropriate http status code
@@ -61,11 +67,26 @@ func HandleError(err error) *models.Error {
 		httpCode := ErrHTTPBadRequest
 		msg := t.Error()
 		return &models.Error{Code: &httpCode, Message: &msg}
+	case *rate.TransactionLimitReachedErr:
+		httpCode := ErrHTTPRateLimit
+		msg := t.Error()
+		return &models.Error{Code: &httpCode, Message: &msg}
 	default:
 		msg := t.Error()
 		code := ErrHTTPInternalServerError
 		return &models.Error{Code: &code, Message: &msg}
 	}
+}
+
+// HandleContainerGetError translates error codes from client native into models.Error with appropriate http status code. Intended for get requests on container endpoints.
+func HandleContainerGetError(err error) *models.Error {
+	if t, ok := err.(*configuration.ConfError); ok {
+		if t.Code() == configuration.ErrParentDoesNotExist {
+			code := ErrHTTPOk
+			return &models.Error{Code: &code}
+		}
+	}
+	return HandleError(err)
 }
 
 // DiscoverChildPaths return children models.Endpoints given path
@@ -84,7 +105,8 @@ func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, er
 			description := g["description"].(string)
 
 			if strings.HasPrefix(key, path) && key != path {
-				if len(strings.Split(key[len(path)+1:], "/")) == 1 {
+				resource := key[len(path):]
+				if strings.HasPrefix(resource, "/") && len(strings.Split(resource[1:], "/")) == 1 {
 					e := models.Endpoint{
 						URL:         key,
 						Title:       title,
@@ -163,4 +185,40 @@ func StringP(s string) *string {
 func Int64P(i int) *int64 {
 	i64 := int64(i)
 	return &i64
+}
+
+// extractEnvVar extracts and returns env variable from HAProxy variable
+// provided in "${SOME_VAR}" format
+func ExtractEnvVar(pass string) string {
+	return strings.TrimLeft(strings.TrimRight(pass, "\"}"), "\"${")
+}
+
+func HasOSArg(short, long, env string) bool {
+	if short == "" && long == "" && env == "" {
+		return false
+	}
+	target1 := "--" + long
+	hasShort := short != ""
+	target2 := "-" + short
+
+	if env != "" {
+		if os.Getenv(env) != "" {
+			return true
+		}
+	}
+	for _, arg := range os.Args {
+		if hasShort && arg == target2 {
+			return true
+		}
+		if arg == target1 {
+			return true
+		}
+		if strings.HasPrefix(arg, target1) {
+			p := strings.Split(arg, "=")
+			if len(p) > 1 {
+				return true
+			}
+		}
+	}
+	return false
 }

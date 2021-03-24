@@ -18,17 +18,18 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
-	"github.com/haproxytech/models/v2"
 )
 
-//GetStatsHandlerImpl implementation of the GetStatsHandler interface using client-native client
+// GetStatsHandlerImpl implementation of the GetStatsHandler interface using client-native client
 type GetStatsHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal interface{}) middleware.Responder {
 	if params.Name != nil {
 		if params.Type == nil {

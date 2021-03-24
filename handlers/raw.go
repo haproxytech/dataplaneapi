@@ -21,14 +21,14 @@ import (
 	"strings"
 
 	"github.com/go-openapi/runtime/middleware"
-
 	client_native "github.com/haproxytech/client-native/v2"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
 )
 
-//GetRawConfigurationHandlerImpl implementation of the GetHAProxyConfigurationHandler interface
+// GetRawConfigurationHandlerImpl implementation of the GetHAProxyConfigurationHandler interface
 type GetRawConfigurationHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
@@ -39,7 +39,7 @@ type PostRawConfigurationHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -59,7 +59,7 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: &data}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 	v := int64(0)
 	if params.Version != nil {
@@ -77,10 +77,18 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 	if params.ForceReload != nil {
 		forceReload = *params.ForceReload
 	}
-	err := h.Client.Configuration.PostRawConfiguration(&params.Data, v, skipVersion)
+	onlyValidate := false
+	if params.OnlyValidate != nil {
+		onlyValidate = *params.OnlyValidate
+	}
+	err := h.Client.Configuration.PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+	}
+	if onlyValidate {
+		// return here without reloading, since config is only validated.
+		return configuration.NewPostHAProxyConfigurationAccepted().WithPayload(params.Data)
 	}
 	if skipReload {
 		if params.XRuntimeActions != nil {

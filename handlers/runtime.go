@@ -19,13 +19,12 @@ import (
 	"reflect"
 	"strconv"
 
-	log "github.com/sirupsen/logrus"
-
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
+	log "github.com/sirupsen/logrus"
 )
 
-//RuntimeSupportedFields is a map of fields supported through the runtime API for
+// RuntimeSupportedFields is a map of fields supported through the runtime API for
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
 	"frontend": []string{"Maxconn"},

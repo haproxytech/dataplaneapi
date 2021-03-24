@@ -25,13 +25,16 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // ReplaceRuntimeMapEntryURL generates an URL for the replace runtime map entry operation
 type ReplaceRuntimeMapEntryURL struct {
 	ID string
 
-	Map string
+	ForceSync *bool
+	Map       string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -73,6 +76,14 @@ func (o *ReplaceRuntimeMapEntryURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var forceSyncQ string
+	if o.ForceSync != nil {
+		forceSyncQ = swag.FormatBool(*o.ForceSync)
+	}
+	if forceSyncQ != "" {
+		qs.Set("force_sync", forceSyncQ)
+	}
 
 	mapVarQ := o.Map
 	if mapVarQ != "" {

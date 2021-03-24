@@ -21,19 +21,19 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/google/renameio"
-	"github.com/haproxytech/models/v2"
-
+	"github.com/haproxytech/client-native/v2/models"
 	log "github.com/sirupsen/logrus"
 )
 
 type IReloadAgent interface {
-	Init(delay int, reloadCmd string, restartCmd string, configFile string, retention int) error
+	Init(delay int, reloadCmd string, restartCmd string, configFile string, backupDir string, retention int) error
 	Reload() string
 	Restart() error
 	ForceReload() error
@@ -62,15 +62,21 @@ type ReloadAgent struct {
 }
 
 // Init a new reload agent
-func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, configFile string, retention int) error {
+func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, configFile string, backupDir string, retention int) error {
 	ra.reloadCmd = reloadCmd
 	ra.restartCmd = restartCmd
 	ra.configFile = configFile
+	delay *= 1000 // delay is defined in seconds - internally in miliseconds
+	d := os.Getenv("CI_DATAPLANE_RELOAD_DELAY_OVERRIDE")
+	if d != "" {
+		delay, _ = strconv.Atoi(d) // in case of err in conversion 0 is returned
+	}
 	if delay == 0 {
-		delay = 5
+		delay = 5000
 	}
 	ra.delay = delay
-	ra.lkgConfigFile = configFile + ".lkg"
+
+	ra.setLkgPath(configFile, backupDir)
 
 	// create last known good file, assume it is valid when starting
 	if err := copyFile(ra.configFile, ra.lkgConfigFile); err != nil {
@@ -81,11 +87,19 @@ func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, conf
 	return nil
 }
 
+func (ra *ReloadAgent) setLkgPath(configFile, path string) {
+	if path != "" {
+		ra.lkgConfigFile = fmt.Sprintf("%s/%s.lkg", path, filepath.Base(configFile))
+		return
+	}
+	ra.lkgConfigFile = configFile + ".lkg"
+}
+
 func (ra *ReloadAgent) handleReloads() {
 	//nolint:gosimple
 	for {
 		select {
-		case <-time.After(time.Duration(ra.delay) * time.Second):
+		case <-time.After(time.Duration(ra.delay) * time.Millisecond):
 			if ra.cache.next != "" {
 				ra.cache.mu.Lock()
 				ra.cache.current = ra.cache.next
@@ -208,7 +222,7 @@ func (rc *reloadCache) failReload(response string) {
 
 	r := &models.Reload{
 		ID:              rc.current,
-		Status:          "failed",
+		Status:          models.ReloadStatusFailed,
 		Response:        response,
 		ReloadTimestamp: time.Now().Unix(),
 	}
@@ -224,7 +238,7 @@ func (rc *reloadCache) succeedReload(response string) {
 
 	r := &models.Reload{
 		ID:              rc.current,
-		Status:          "succeeded",
+		Status:          models.ReloadStatusSucceeded,
 		Response:        response,
 		ReloadTimestamp: time.Now().Unix(),
 	}
@@ -259,7 +273,7 @@ func (ra *ReloadAgent) GetReloads() models.Reloads {
 	if ra.cache.current != "" {
 		r := &models.Reload{
 			ID:     ra.cache.current,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 		v = append(v, r)
 	}
@@ -267,7 +281,7 @@ func (ra *ReloadAgent) GetReloads() models.Reloads {
 	if ra.cache.next != "" {
 		r := &models.Reload{
 			ID:     ra.cache.next,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 		v = append(v, r)
 	}
@@ -281,13 +295,13 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 	if ra.cache.current == id {
 		return &models.Reload{
 			ID:     ra.cache.current,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 	}
 	if ra.cache.next == id {
 		return &models.Reload{
 			ID:     ra.cache.current,
-			Status: "in_progress",
+			Status: models.ReloadStatusInProgress,
 		}
 	}
 
@@ -313,14 +327,14 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 		if gDate.Before(sDate) {
 			return &models.Reload{
 				ID:     id,
-				Status: "succeeded",
+				Status: models.ReloadStatusSucceeded,
 			}
 		}
 
 		if sIndex > gIndex {
 			return &models.Reload{
 				ID:     id,
-				Status: "succeeded",
+				Status: models.ReloadStatusSucceeded,
 			}
 		}
 	}
@@ -345,7 +359,6 @@ func getTimeIndexFromID(id string) (time.Time, int64, error) {
 		return time.Now(), 0, err
 	}
 	date, err := time.Parse("2006-01-02", strings.Join(data[:len(data)-1], "-"))
-
 	if err != nil {
 		return date, 0, err
 	}

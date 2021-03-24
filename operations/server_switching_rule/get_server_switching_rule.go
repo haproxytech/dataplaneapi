@@ -28,7 +28,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 )
 
 // GetServerSwitchingRuleHandlerFunc turns a function with the right signature into a get server switching rule handler

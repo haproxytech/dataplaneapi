@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateSiteHandlerImpl implementation of the CreateSiteHandler interface using client-native client
+// CreateSiteHandlerImpl implementation of the CreateSiteHandler interface using client-native client
 type CreateSiteHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteSiteHandlerImpl implementation of the DeleteSiteHandler interface using client-native client
+// DeleteSiteHandlerImpl implementation of the DeleteSiteHandler interface using client-native client
 type DeleteSiteHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetSiteHandlerImpl implementation of the GetSiteHandler interface using client-native client
+// GetSiteHandlerImpl implementation of the GetSiteHandler interface using client-native client
 type GetSiteHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetSitesHandlerImpl implementation of the GetSitesHandler interface using client-native client
+// GetSitesHandlerImpl implementation of the GetSitesHandler interface using client-native client
 type GetSitesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceSiteHandlerImpl implementation of the ReplaceSiteHandler interface using client-native client
+// ReplaceSiteHandlerImpl implementation of the ReplaceSiteHandler interface using client-native client
 type ReplaceSiteHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateSiteHandlerImpl) Handle(params sites.CreateSiteParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -93,7 +94,7 @@ func (h *CreateSiteHandlerImpl) Handle(params sites.CreateSiteParams, principal 
 	return sites.NewCreateSiteAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteSiteHandlerImpl) Handle(params sites.DeleteSiteParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -134,7 +135,7 @@ func (h *DeleteSiteHandlerImpl) Handle(params sites.DeleteSiteParams, principal 
 	return sites.NewDeleteSiteAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -149,7 +150,7 @@ func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interf
 	return sites.NewGetSiteOK().WithPayload(&sites.GetSiteOKBody{Version: v, Data: site}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -158,13 +159,16 @@ func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal inte
 
 	v, s, err := h.Client.Configuration.GetSites(t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: models.Sites{}}).WithConfigurationVersion(v)
+		}
 		return sites.NewGetSitesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: s}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceSiteHandlerImpl) Handle(params sites.ReplaceSiteParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

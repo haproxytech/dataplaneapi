@@ -19,23 +19,24 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
-	"github.com/haproxytech/models/v2"
 )
 
-//GetReloadHandlerImpl implementation of the GetReloadHandler interface using client-native client
+// GetReloadHandlerImpl implementation of the GetReloadHandler interface using client-native client
 type GetReloadHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetReloadsHandlerImpl implementation of the GetReloadsHandler interface using client-native client
+// GetReloadsHandlerImpl implementation of the GetReloadsHandler interface using client-native client
 type GetReloadsHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (rh *GetReloadHandlerImpl) Handle(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
 	r := rh.ReloadAgent.GetReload(params.ID)
 	if r == nil {
@@ -50,7 +51,7 @@ func (rh *GetReloadHandlerImpl) Handle(params reloads.GetReloadParams, principal
 	return reloads.NewGetReloadOK().WithPayload(r)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (rh *GetReloadsHandlerImpl) Handle(params reloads.GetReloadsParams, principal interface{}) middleware.Responder {
 	rs := rh.ReloadAgent.GetReloads()
 	return reloads.NewGetReloadsOK().WithPayload(rs)

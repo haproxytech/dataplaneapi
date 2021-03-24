@@ -1,43 +1,59 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateResolverHandlerImpl implementation of the CreateResolverHandler interface using client-native client
+// CreateResolverHandlerImpl implementation of the CreateResolverHandler interface using client-native client
 type CreateResolverHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteResolverHandlerImpl implementation of the DeleteResolverHandler interface using client-native client
+// DeleteResolverHandlerImpl implementation of the DeleteResolverHandler interface using client-native client
 type DeleteResolverHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetResolverHandlerImpl implementation of the GetResolverHandler interface using client-native client
+// GetResolverHandlerImpl implementation of the GetResolverHandler interface using client-native client
 type GetResolverHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetResolversHandlerImpl implementation of the GetResolversHandler interface using client-native client
+// GetResolversHandlerImpl implementation of the GetResolversHandler interface using client-native client
 type GetResolversHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceResolverHandlerImpl implementation of the ReplaceResolverHandler interface using client-native client
+// ReplaceResolverHandlerImpl implementation of the ReplaceResolverHandler interface using client-native client
 type ReplaceResolverHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateResolverHandlerImpl) Handle(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -79,7 +95,7 @@ func (h *CreateResolverHandlerImpl) Handle(params resolver.CreateResolverParams,
 	return resolver.NewCreateResolverAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteResolverHandlerImpl) Handle(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -120,7 +136,7 @@ func (h *DeleteResolverHandlerImpl) Handle(params resolver.DeleteResolverParams,
 	return resolver.NewDeleteResolverAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -135,7 +151,7 @@ func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, princ
 	return resolver.NewGetResolverOK().WithPayload(&resolver.GetResolverOKBody{Version: v, Data: r}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -150,7 +166,7 @@ func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, pri
 	return resolver.NewGetResolversOK().WithPayload(&resolver.GetResolversOKBody{Version: v, Data: rs}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceResolverHandlerImpl) Handle(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

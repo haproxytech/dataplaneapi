@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateTCPResponseRuleHandlerImpl implementation of the CreateTCPResponseRuleHandler interface using client-native client
+// CreateTCPResponseRuleHandlerImpl implementation of the CreateTCPResponseRuleHandler interface using client-native client
 type CreateTCPResponseRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteTCPResponseRuleHandlerImpl implementation of the DeleteTCPResponseRuleHandler interface using client-native client
+// DeleteTCPResponseRuleHandlerImpl implementation of the DeleteTCPResponseRuleHandler interface using client-native client
 type DeleteTCPResponseRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetTCPResponseRuleHandlerImpl implementation of the GetTCPResponseRuleHandler interface using client-native client
+// GetTCPResponseRuleHandlerImpl implementation of the GetTCPResponseRuleHandler interface using client-native client
 type GetTCPResponseRuleHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetTCPResponseRulesHandlerImpl implementation of the GetTCPResponseRulesHandler interface using client-native client
+// GetTCPResponseRulesHandlerImpl implementation of the GetTCPResponseRulesHandler interface using client-native client
 type GetTCPResponseRulesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceTCPResponseRuleHandlerImpl implementation of the ReplaceTCPResponseRuleHandler interface using client-native client
+// ReplaceTCPResponseRuleHandlerImpl implementation of the ReplaceTCPResponseRuleHandler interface using client-native client
 type ReplaceTCPResponseRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -94,7 +95,7 @@ func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Creat
 	return tcp_response_rule.NewCreateTCPResponseRuleAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.DeleteTCPResponseRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -135,7 +136,7 @@ func (h *DeleteTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Delet
 	return tcp_response_rule.NewDeleteTCPResponseRuleAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -150,7 +151,7 @@ func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPRe
 	return tcp_response_rule.NewGetTCPResponseRuleOK().WithPayload(&tcp_response_rule.GetTCPResponseRuleOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPResponseRulesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -159,13 +160,16 @@ func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPR
 
 	v, rules, err := h.Client.Configuration.GetTCPResponseRules(params.Backend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return tcp_response_rule.NewGetTCPResponseRulesOK().WithPayload(&tcp_response_rule.GetTCPResponseRulesOKBody{Version: v, Data: models.TCPResponseRules{}}).WithConfigurationVersion(v)
+		}
 		return tcp_response_rule.NewGetTCPResponseRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return tcp_response_rule.NewGetTCPResponseRulesOK().WithPayload(&tcp_response_rule.GetTCPResponseRulesOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

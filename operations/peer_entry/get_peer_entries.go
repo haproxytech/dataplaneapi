@@ -29,7 +29,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 )
 
 // GetPeerEntriesHandlerFunc turns a function with the right signature into a get peer entries handler

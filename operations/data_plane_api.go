@@ -57,12 +57,16 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
+	"github.com/haproxytech/dataplaneapi/operations/service_discovery"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
+	"github.com/haproxytech/dataplaneapi/operations/spoe"
+	"github.com/haproxytech/dataplaneapi/operations/spoe_transactions"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
 	"github.com/haproxytech/dataplaneapi/operations/stick_table"
+	"github.com/haproxytech/dataplaneapi/operations/storage"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
@@ -89,6 +93,7 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MultipartformConsumer: runtime.DiscardConsumer,
 		TxtConsumer:           runtime.TextConsumer(),
 
+		BinProducer:  runtime.ByteStreamProducer(),
 		JSONProducer: runtime.JSONProducer(),
 
 		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
@@ -96,6 +101,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsClearRuntimeMapHandler: maps.ClearRuntimeMapHandlerFunc(func(params maps.ClearRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ClearRuntimeMap has not yet been implemented")
+		}),
+		SpoeTransactionsCommitSpoeTransactionHandler: spoe_transactions.CommitSpoeTransactionHandlerFunc(func(params spoe_transactions.CommitSpoeTransactionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe_transactions.CommitSpoeTransaction has not yet been implemented")
 		}),
 		TransactionsCommitTransactionHandler: transactions.CommitTransactionHandlerFunc(func(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.CommitTransaction has not yet been implemented")
@@ -111,6 +119,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindCreateBindHandler: bind.CreateBindHandlerFunc(func(params bind.CreateBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.CreateBind has not yet been implemented")
+		}),
+		ServiceDiscoveryCreateConsulHandler: service_discovery.CreateConsulHandlerFunc(func(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.CreateConsul has not yet been implemented")
 		}),
 		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.CreateFilter has not yet been implemented")
@@ -139,8 +150,8 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.CreateResolver has not yet been implemented")
 		}),
-		MapsCreateRuntimeMapHandler: maps.CreateRuntimeMapHandlerFunc(func(params maps.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation maps.CreateRuntimeMap has not yet been implemented")
+		StorageCreateRuntimeMapHandler: storage.CreateRuntimeMapHandlerFunc(func(params storage.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateRuntimeMap has not yet been implemented")
 		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.CreateServer has not yet been implemented")
@@ -151,8 +162,26 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SitesCreateSiteHandler: sites.CreateSiteHandlerFunc(func(params sites.CreateSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation sites.CreateSite has not yet been implemented")
 		}),
+		SpoeCreateSpoeHandler: spoe.CreateSpoeHandlerFunc(func(params spoe.CreateSpoeParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.CreateSpoe has not yet been implemented")
+		}),
+		SpoeCreateSpoeAgentHandler: spoe.CreateSpoeAgentHandlerFunc(func(params spoe.CreateSpoeAgentParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.CreateSpoeAgent has not yet been implemented")
+		}),
+		SpoeCreateSpoeGroupHandler: spoe.CreateSpoeGroupHandlerFunc(func(params spoe.CreateSpoeGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.CreateSpoeGroup has not yet been implemented")
+		}),
+		SpoeCreateSpoeMessageHandler: spoe.CreateSpoeMessageHandlerFunc(func(params spoe.CreateSpoeMessageParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.CreateSpoeMessage has not yet been implemented")
+		}),
+		SpoeCreateSpoeScopeHandler: spoe.CreateSpoeScopeHandlerFunc(func(params spoe.CreateSpoeScopeParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.CreateSpoeScope has not yet been implemented")
+		}),
 		StickRuleCreateStickRuleHandler: stick_rule.CreateStickRuleHandlerFunc(func(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.CreateStickRule has not yet been implemented")
+		}),
+		StorageCreateStorageSSLCertificateHandler: storage.CreateStorageSSLCertificateHandlerFunc(func(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateStorageSSLCertificate has not yet been implemented")
 		}),
 		TCPRequestRuleCreateTCPRequestRuleHandler: tcp_request_rule.CreateTCPRequestRuleHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRule has not yet been implemented")
@@ -171,6 +200,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindDeleteBindHandler: bind.DeleteBindHandlerFunc(func(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.DeleteBind has not yet been implemented")
+		}),
+		ServiceDiscoveryDeleteConsulHandler: service_discovery.DeleteConsulHandlerFunc(func(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.DeleteConsul has not yet been implemented")
 		}),
 		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.DeleteFilter has not yet been implemented")
@@ -211,8 +243,32 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SitesDeleteSiteHandler: sites.DeleteSiteHandlerFunc(func(params sites.DeleteSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation sites.DeleteSite has not yet been implemented")
 		}),
+		SpoeDeleteSpoeAgentHandler: spoe.DeleteSpoeAgentHandlerFunc(func(params spoe.DeleteSpoeAgentParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.DeleteSpoeAgent has not yet been implemented")
+		}),
+		SpoeDeleteSpoeFileHandler: spoe.DeleteSpoeFileHandlerFunc(func(params spoe.DeleteSpoeFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.DeleteSpoeFile has not yet been implemented")
+		}),
+		SpoeDeleteSpoeGroupHandler: spoe.DeleteSpoeGroupHandlerFunc(func(params spoe.DeleteSpoeGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.DeleteSpoeGroup has not yet been implemented")
+		}),
+		SpoeDeleteSpoeMessageHandler: spoe.DeleteSpoeMessageHandlerFunc(func(params spoe.DeleteSpoeMessageParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.DeleteSpoeMessage has not yet been implemented")
+		}),
+		SpoeDeleteSpoeScopeHandler: spoe.DeleteSpoeScopeHandlerFunc(func(params spoe.DeleteSpoeScopeParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.DeleteSpoeScope has not yet been implemented")
+		}),
+		SpoeTransactionsDeleteSpoeTransactionHandler: spoe_transactions.DeleteSpoeTransactionHandlerFunc(func(params spoe_transactions.DeleteSpoeTransactionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe_transactions.DeleteSpoeTransaction has not yet been implemented")
+		}),
 		StickRuleDeleteStickRuleHandler: stick_rule.DeleteStickRuleHandlerFunc(func(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.DeleteStickRule has not yet been implemented")
+		}),
+		StorageDeleteStorageMapHandler: storage.DeleteStorageMapHandlerFunc(func(params storage.DeleteStorageMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.DeleteStorageMap has not yet been implemented")
+		}),
+		StorageDeleteStorageSSLCertificateHandler: storage.DeleteStorageSSLCertificateHandlerFunc(func(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.DeleteStorageSSLCertificate has not yet been implemented")
 		}),
 		TCPRequestRuleDeleteTCPRequestRuleHandler: tcp_request_rule.DeleteTCPRequestRuleHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRule has not yet been implemented")
@@ -234,6 +290,15 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsGetAllRuntimeMapFilesHandler: maps.GetAllRuntimeMapFilesHandlerFunc(func(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetAllRuntimeMapFiles has not yet been implemented")
+		}),
+		SpoeGetAllSpoeFilesHandler: spoe.GetAllSpoeFilesHandlerFunc(func(params spoe.GetAllSpoeFilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetAllSpoeFiles has not yet been implemented")
+		}),
+		StorageGetAllStorageMapFilesHandler: storage.GetAllStorageMapFilesHandlerFunc(func(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetAllStorageMapFiles has not yet been implemented")
+		}),
+		StorageGetAllStorageSSLCertificatesHandler: storage.GetAllStorageSSLCertificatesHandlerFunc(func(params storage.GetAllStorageSSLCertificatesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetAllStorageSSLCertificates has not yet been implemented")
 		}),
 		BackendGetBackendHandler: backend.GetBackendHandlerFunc(func(params backend.GetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.GetBackend has not yet been implemented")
@@ -258,6 +323,15 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetConfigurationEndpoints has not yet been implemented")
+		}),
+		ConfigurationGetConfigurationVersionHandler: configuration.GetConfigurationVersionHandlerFunc(func(params configuration.GetConfigurationVersionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation configuration.GetConfigurationVersion has not yet been implemented")
+		}),
+		ServiceDiscoveryGetConsulHandler: service_discovery.GetConsulHandlerFunc(func(params service_discovery.GetConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetConsul has not yet been implemented")
+		}),
+		ServiceDiscoveryGetConsulsHandler: service_discovery.GetConsulsHandlerFunc(func(params service_discovery.GetConsulsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetConsuls has not yet been implemented")
 		}),
 		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.GetDefaults has not yet been implemented")
@@ -315,6 +389,15 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsGetOneRuntimeMapHandler: maps.GetOneRuntimeMapHandlerFunc(func(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetOneRuntimeMap has not yet been implemented")
+		}),
+		SpoeGetOneSpoeFileHandler: spoe.GetOneSpoeFileHandlerFunc(func(params spoe.GetOneSpoeFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetOneSpoeFile has not yet been implemented")
+		}),
+		StorageGetOneStorageMapHandler: storage.GetOneStorageMapHandlerFunc(func(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetOneStorageMap has not yet been implemented")
+		}),
+		StorageGetOneStorageSSLCertificateHandler: storage.GetOneStorageSSLCertificateHandlerFunc(func(params storage.GetOneStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetOneStorageSSLCertificate has not yet been implemented")
 		}),
 		SpecificationOpenapiv3GetOpenapiv3SpecificationHandler: specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation specification_openapiv3.GetOpenapiv3Specification has not yet been implemented")
@@ -379,6 +462,42 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SpecificationGetSpecificationHandler: specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation specification.GetSpecification has not yet been implemented")
 		}),
+		SpoeGetSpoeAgentHandler: spoe.GetSpoeAgentHandlerFunc(func(params spoe.GetSpoeAgentParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeAgent has not yet been implemented")
+		}),
+		SpoeGetSpoeAgentsHandler: spoe.GetSpoeAgentsHandlerFunc(func(params spoe.GetSpoeAgentsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeAgents has not yet been implemented")
+		}),
+		SpoeGetSpoeConfigurationVersionHandler: spoe.GetSpoeConfigurationVersionHandlerFunc(func(params spoe.GetSpoeConfigurationVersionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeConfigurationVersion has not yet been implemented")
+		}),
+		DiscoveryGetSpoeEndpointsHandler: discovery.GetSpoeEndpointsHandlerFunc(func(params discovery.GetSpoeEndpointsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation discovery.GetSpoeEndpoints has not yet been implemented")
+		}),
+		SpoeGetSpoeGroupHandler: spoe.GetSpoeGroupHandlerFunc(func(params spoe.GetSpoeGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeGroup has not yet been implemented")
+		}),
+		SpoeGetSpoeGroupsHandler: spoe.GetSpoeGroupsHandlerFunc(func(params spoe.GetSpoeGroupsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeGroups has not yet been implemented")
+		}),
+		SpoeGetSpoeMessageHandler: spoe.GetSpoeMessageHandlerFunc(func(params spoe.GetSpoeMessageParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeMessage has not yet been implemented")
+		}),
+		SpoeGetSpoeMessagesHandler: spoe.GetSpoeMessagesHandlerFunc(func(params spoe.GetSpoeMessagesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeMessages has not yet been implemented")
+		}),
+		SpoeGetSpoeScopeHandler: spoe.GetSpoeScopeHandlerFunc(func(params spoe.GetSpoeScopeParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeScope has not yet been implemented")
+		}),
+		SpoeGetSpoeScopesHandler: spoe.GetSpoeScopesHandlerFunc(func(params spoe.GetSpoeScopesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.GetSpoeScopes has not yet been implemented")
+		}),
+		SpoeTransactionsGetSpoeTransactionHandler: spoe_transactions.GetSpoeTransactionHandlerFunc(func(params spoe_transactions.GetSpoeTransactionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe_transactions.GetSpoeTransaction has not yet been implemented")
+		}),
+		SpoeTransactionsGetSpoeTransactionsHandler: spoe_transactions.GetSpoeTransactionsHandlerFunc(func(params spoe_transactions.GetSpoeTransactionsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe_transactions.GetSpoeTransactions has not yet been implemented")
+		}),
 		StatsGetStatsHandler: stats.GetStatsHandlerFunc(func(params stats.GetStatsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stats.GetStats has not yet been implemented")
 		}),
@@ -399,6 +518,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StickTableGetStickTablesHandler: stick_table.GetStickTablesHandlerFunc(func(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_table.GetStickTables has not yet been implemented")
+		}),
+		DiscoveryGetStorageEndpointsHandler: discovery.GetStorageEndpointsHandlerFunc(func(params discovery.GetStorageEndpointsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation discovery.GetStorageEndpoints has not yet been implemented")
 		}),
 		TCPRequestRuleGetTCPRequestRuleHandler: tcp_request_rule.GetTCPRequestRuleHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRule has not yet been implemented")
@@ -438,6 +560,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.ReplaceBind has not yet been implemented")
+		}),
+		ServiceDiscoveryReplaceConsulHandler: service_discovery.ReplaceConsulHandlerFunc(func(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.ReplaceConsul has not yet been implemented")
 		}),
 		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.ReplaceDefaults has not yet been implemented")
@@ -484,8 +609,23 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		SitesReplaceSiteHandler: sites.ReplaceSiteHandlerFunc(func(params sites.ReplaceSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation sites.ReplaceSite has not yet been implemented")
 		}),
+		SpoeReplaceSpoeAgentHandler: spoe.ReplaceSpoeAgentHandlerFunc(func(params spoe.ReplaceSpoeAgentParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.ReplaceSpoeAgent has not yet been implemented")
+		}),
+		SpoeReplaceSpoeGroupHandler: spoe.ReplaceSpoeGroupHandlerFunc(func(params spoe.ReplaceSpoeGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.ReplaceSpoeGroup has not yet been implemented")
+		}),
+		SpoeReplaceSpoeMessageHandler: spoe.ReplaceSpoeMessageHandlerFunc(func(params spoe.ReplaceSpoeMessageParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe.ReplaceSpoeMessage has not yet been implemented")
+		}),
 		StickRuleReplaceStickRuleHandler: stick_rule.ReplaceStickRuleHandlerFunc(func(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.ReplaceStickRule has not yet been implemented")
+		}),
+		StorageReplaceStorageMapFileHandler: storage.ReplaceStorageMapFileHandlerFunc(func(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReplaceStorageMapFile has not yet been implemented")
+		}),
+		StorageReplaceStorageSSLCertificateHandler: storage.ReplaceStorageSSLCertificateHandlerFunc(func(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReplaceStorageSSLCertificate has not yet been implemented")
 		}),
 		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRule has not yet been implemented")
@@ -495,6 +635,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsShowRuntimeMapHandler: maps.ShowRuntimeMapHandlerFunc(func(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ShowRuntimeMap has not yet been implemented")
+		}),
+		SpoeTransactionsStartSpoeTransactionHandler: spoe_transactions.StartSpoeTransactionHandlerFunc(func(params spoe_transactions.StartSpoeTransactionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation spoe_transactions.StartSpoeTransaction has not yet been implemented")
 		}),
 		TransactionsStartTransactionHandler: transactions.StartTransactionHandlerFunc(func(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.StartTransaction has not yet been implemented")
@@ -543,6 +686,9 @@ type DataPlaneAPI struct {
 	//   - text/plain
 	TxtConsumer runtime.Consumer
 
+	// BinProducer registers a producer for the following mime types:
+	//   - application/octet-stream
+	BinProducer runtime.Producer
 	// JSONProducer registers a producer for the following mime types:
 	//   - application/json
 	JSONProducer runtime.Producer
@@ -558,6 +704,8 @@ type DataPlaneAPI struct {
 	MapsAddMapEntryHandler maps.AddMapEntryHandler
 	// MapsClearRuntimeMapHandler sets the operation handler for the clear runtime map operation
 	MapsClearRuntimeMapHandler maps.ClearRuntimeMapHandler
+	// SpoeTransactionsCommitSpoeTransactionHandler sets the operation handler for the commit spoe transaction operation
+	SpoeTransactionsCommitSpoeTransactionHandler spoe_transactions.CommitSpoeTransactionHandler
 	// TransactionsCommitTransactionHandler sets the operation handler for the commit transaction operation
 	TransactionsCommitTransactionHandler transactions.CommitTransactionHandler
 	// ACLCreateACLHandler sets the operation handler for the create Acl operation
@@ -568,6 +716,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleCreateBackendSwitchingRuleHandler backend_switching_rule.CreateBackendSwitchingRuleHandler
 	// BindCreateBindHandler sets the operation handler for the create bind operation
 	BindCreateBindHandler bind.CreateBindHandler
+	// ServiceDiscoveryCreateConsulHandler sets the operation handler for the create consul operation
+	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
 	// FilterCreateFilterHandler sets the operation handler for the create filter operation
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
@@ -586,16 +736,28 @@ type DataPlaneAPI struct {
 	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
 	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
-	// MapsCreateRuntimeMapHandler sets the operation handler for the create runtime map operation
-	MapsCreateRuntimeMapHandler maps.CreateRuntimeMapHandler
+	// StorageCreateRuntimeMapHandler sets the operation handler for the create runtime map operation
+	StorageCreateRuntimeMapHandler storage.CreateRuntimeMapHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
 	ServerSwitchingRuleCreateServerSwitchingRuleHandler server_switching_rule.CreateServerSwitchingRuleHandler
 	// SitesCreateSiteHandler sets the operation handler for the create site operation
 	SitesCreateSiteHandler sites.CreateSiteHandler
+	// SpoeCreateSpoeHandler sets the operation handler for the create spoe operation
+	SpoeCreateSpoeHandler spoe.CreateSpoeHandler
+	// SpoeCreateSpoeAgentHandler sets the operation handler for the create spoe agent operation
+	SpoeCreateSpoeAgentHandler spoe.CreateSpoeAgentHandler
+	// SpoeCreateSpoeGroupHandler sets the operation handler for the create spoe group operation
+	SpoeCreateSpoeGroupHandler spoe.CreateSpoeGroupHandler
+	// SpoeCreateSpoeMessageHandler sets the operation handler for the create spoe message operation
+	SpoeCreateSpoeMessageHandler spoe.CreateSpoeMessageHandler
+	// SpoeCreateSpoeScopeHandler sets the operation handler for the create spoe scope operation
+	SpoeCreateSpoeScopeHandler spoe.CreateSpoeScopeHandler
 	// StickRuleCreateStickRuleHandler sets the operation handler for the create stick rule operation
 	StickRuleCreateStickRuleHandler stick_rule.CreateStickRuleHandler
+	// StorageCreateStorageSSLCertificateHandler sets the operation handler for the create storage s s l certificate operation
+	StorageCreateStorageSSLCertificateHandler storage.CreateStorageSSLCertificateHandler
 	// TCPRequestRuleCreateTCPRequestRuleHandler sets the operation handler for the create TCP request rule operation
 	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
 	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
@@ -608,6 +770,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleDeleteBackendSwitchingRuleHandler backend_switching_rule.DeleteBackendSwitchingRuleHandler
 	// BindDeleteBindHandler sets the operation handler for the delete bind operation
 	BindDeleteBindHandler bind.DeleteBindHandler
+	// ServiceDiscoveryDeleteConsulHandler sets the operation handler for the delete consul operation
+	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
 	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
 	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
@@ -634,8 +798,24 @@ type DataPlaneAPI struct {
 	ServerSwitchingRuleDeleteServerSwitchingRuleHandler server_switching_rule.DeleteServerSwitchingRuleHandler
 	// SitesDeleteSiteHandler sets the operation handler for the delete site operation
 	SitesDeleteSiteHandler sites.DeleteSiteHandler
+	// SpoeDeleteSpoeAgentHandler sets the operation handler for the delete spoe agent operation
+	SpoeDeleteSpoeAgentHandler spoe.DeleteSpoeAgentHandler
+	// SpoeDeleteSpoeFileHandler sets the operation handler for the delete spoe file operation
+	SpoeDeleteSpoeFileHandler spoe.DeleteSpoeFileHandler
+	// SpoeDeleteSpoeGroupHandler sets the operation handler for the delete spoe group operation
+	SpoeDeleteSpoeGroupHandler spoe.DeleteSpoeGroupHandler
+	// SpoeDeleteSpoeMessageHandler sets the operation handler for the delete spoe message operation
+	SpoeDeleteSpoeMessageHandler spoe.DeleteSpoeMessageHandler
+	// SpoeDeleteSpoeScopeHandler sets the operation handler for the delete spoe scope operation
+	SpoeDeleteSpoeScopeHandler spoe.DeleteSpoeScopeHandler
+	// SpoeTransactionsDeleteSpoeTransactionHandler sets the operation handler for the delete spoe transaction operation
+	SpoeTransactionsDeleteSpoeTransactionHandler spoe_transactions.DeleteSpoeTransactionHandler
 	// StickRuleDeleteStickRuleHandler sets the operation handler for the delete stick rule operation
 	StickRuleDeleteStickRuleHandler stick_rule.DeleteStickRuleHandler
+	// StorageDeleteStorageMapHandler sets the operation handler for the delete storage map operation
+	StorageDeleteStorageMapHandler storage.DeleteStorageMapHandler
+	// StorageDeleteStorageSSLCertificateHandler sets the operation handler for the delete storage s s l certificate operation
+	StorageDeleteStorageSSLCertificateHandler storage.DeleteStorageSSLCertificateHandler
 	// TCPRequestRuleDeleteTCPRequestRuleHandler sets the operation handler for the delete TCP request rule operation
 	TCPRequestRuleDeleteTCPRequestRuleHandler tcp_request_rule.DeleteTCPRequestRuleHandler
 	// TCPResponseRuleDeleteTCPResponseRuleHandler sets the operation handler for the delete TCP response rule operation
@@ -650,6 +830,12 @@ type DataPlaneAPI struct {
 	ACLGetAclsHandler acl.GetAclsHandler
 	// MapsGetAllRuntimeMapFilesHandler sets the operation handler for the get all runtime map files operation
 	MapsGetAllRuntimeMapFilesHandler maps.GetAllRuntimeMapFilesHandler
+	// SpoeGetAllSpoeFilesHandler sets the operation handler for the get all spoe files operation
+	SpoeGetAllSpoeFilesHandler spoe.GetAllSpoeFilesHandler
+	// StorageGetAllStorageMapFilesHandler sets the operation handler for the get all storage map files operation
+	StorageGetAllStorageMapFilesHandler storage.GetAllStorageMapFilesHandler
+	// StorageGetAllStorageSSLCertificatesHandler sets the operation handler for the get all storage s s l certificates operation
+	StorageGetAllStorageSSLCertificatesHandler storage.GetAllStorageSSLCertificatesHandler
 	// BackendGetBackendHandler sets the operation handler for the get backend operation
 	BackendGetBackendHandler backend.GetBackendHandler
 	// BackendSwitchingRuleGetBackendSwitchingRuleHandler sets the operation handler for the get backend switching rule operation
@@ -666,6 +852,12 @@ type DataPlaneAPI struct {
 	DiscoveryGetClusterHandler discovery.GetClusterHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
+	// ConfigurationGetConfigurationVersionHandler sets the operation handler for the get configuration version operation
+	ConfigurationGetConfigurationVersionHandler configuration.GetConfigurationVersionHandler
+	// ServiceDiscoveryGetConsulHandler sets the operation handler for the get consul operation
+	ServiceDiscoveryGetConsulHandler service_discovery.GetConsulHandler
+	// ServiceDiscoveryGetConsulsHandler sets the operation handler for the get consuls operation
+	ServiceDiscoveryGetConsulsHandler service_discovery.GetConsulsHandler
 	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
 	DefaultsGetDefaultsHandler defaults.GetDefaultsHandler
 	// FilterGetFilterHandler sets the operation handler for the get filter operation
@@ -704,6 +896,12 @@ type DataPlaneAPI struct {
 	NameserverGetNameserversHandler nameserver.GetNameserversHandler
 	// MapsGetOneRuntimeMapHandler sets the operation handler for the get one runtime map operation
 	MapsGetOneRuntimeMapHandler maps.GetOneRuntimeMapHandler
+	// SpoeGetOneSpoeFileHandler sets the operation handler for the get one spoe file operation
+	SpoeGetOneSpoeFileHandler spoe.GetOneSpoeFileHandler
+	// StorageGetOneStorageMapHandler sets the operation handler for the get one storage map operation
+	StorageGetOneStorageMapHandler storage.GetOneStorageMapHandler
+	// StorageGetOneStorageSSLCertificateHandler sets the operation handler for the get one storage s s l certificate operation
+	StorageGetOneStorageSSLCertificateHandler storage.GetOneStorageSSLCertificateHandler
 	// SpecificationOpenapiv3GetOpenapiv3SpecificationHandler sets the operation handler for the get openapiv3 specification operation
 	SpecificationOpenapiv3GetOpenapiv3SpecificationHandler specification_openapiv3.GetOpenapiv3SpecificationHandler
 	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
@@ -746,6 +944,30 @@ type DataPlaneAPI struct {
 	SitesGetSitesHandler sites.GetSitesHandler
 	// SpecificationGetSpecificationHandler sets the operation handler for the get specification operation
 	SpecificationGetSpecificationHandler specification.GetSpecificationHandler
+	// SpoeGetSpoeAgentHandler sets the operation handler for the get spoe agent operation
+	SpoeGetSpoeAgentHandler spoe.GetSpoeAgentHandler
+	// SpoeGetSpoeAgentsHandler sets the operation handler for the get spoe agents operation
+	SpoeGetSpoeAgentsHandler spoe.GetSpoeAgentsHandler
+	// SpoeGetSpoeConfigurationVersionHandler sets the operation handler for the get spoe configuration version operation
+	SpoeGetSpoeConfigurationVersionHandler spoe.GetSpoeConfigurationVersionHandler
+	// DiscoveryGetSpoeEndpointsHandler sets the operation handler for the get spoe endpoints operation
+	DiscoveryGetSpoeEndpointsHandler discovery.GetSpoeEndpointsHandler
+	// SpoeGetSpoeGroupHandler sets the operation handler for the get spoe group operation
+	SpoeGetSpoeGroupHandler spoe.GetSpoeGroupHandler
+	// SpoeGetSpoeGroupsHandler sets the operation handler for the get spoe groups operation
+	SpoeGetSpoeGroupsHandler spoe.GetSpoeGroupsHandler
+	// SpoeGetSpoeMessageHandler sets the operation handler for the get spoe message operation
+	SpoeGetSpoeMessageHandler spoe.GetSpoeMessageHandler
+	// SpoeGetSpoeMessagesHandler sets the operation handler for the get spoe messages operation
+	SpoeGetSpoeMessagesHandler spoe.GetSpoeMessagesHandler
+	// SpoeGetSpoeScopeHandler sets the operation handler for the get spoe scope operation
+	SpoeGetSpoeScopeHandler spoe.GetSpoeScopeHandler
+	// SpoeGetSpoeScopesHandler sets the operation handler for the get spoe scopes operation
+	SpoeGetSpoeScopesHandler spoe.GetSpoeScopesHandler
+	// SpoeTransactionsGetSpoeTransactionHandler sets the operation handler for the get spoe transaction operation
+	SpoeTransactionsGetSpoeTransactionHandler spoe_transactions.GetSpoeTransactionHandler
+	// SpoeTransactionsGetSpoeTransactionsHandler sets the operation handler for the get spoe transactions operation
+	SpoeTransactionsGetSpoeTransactionsHandler spoe_transactions.GetSpoeTransactionsHandler
 	// StatsGetStatsHandler sets the operation handler for the get stats operation
 	StatsGetStatsHandler stats.GetStatsHandler
 	// DiscoveryGetStatsEndpointsHandler sets the operation handler for the get stats endpoints operation
@@ -760,6 +982,8 @@ type DataPlaneAPI struct {
 	StickTableGetStickTableEntriesHandler stick_table.GetStickTableEntriesHandler
 	// StickTableGetStickTablesHandler sets the operation handler for the get stick tables operation
 	StickTableGetStickTablesHandler stick_table.GetStickTablesHandler
+	// DiscoveryGetStorageEndpointsHandler sets the operation handler for the get storage endpoints operation
+	DiscoveryGetStorageEndpointsHandler discovery.GetStorageEndpointsHandler
 	// TCPRequestRuleGetTCPRequestRuleHandler sets the operation handler for the get TCP request rule operation
 	TCPRequestRuleGetTCPRequestRuleHandler tcp_request_rule.GetTCPRequestRuleHandler
 	// TCPRequestRuleGetTCPRequestRulesHandler sets the operation handler for the get TCP request rules operation
@@ -786,6 +1010,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleReplaceBackendSwitchingRuleHandler backend_switching_rule.ReplaceBackendSwitchingRuleHandler
 	// BindReplaceBindHandler sets the operation handler for the replace bind operation
 	BindReplaceBindHandler bind.ReplaceBindHandler
+	// ServiceDiscoveryReplaceConsulHandler sets the operation handler for the replace consul operation
+	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
 	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
 	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
@@ -816,14 +1042,26 @@ type DataPlaneAPI struct {
 	ServerSwitchingRuleReplaceServerSwitchingRuleHandler server_switching_rule.ReplaceServerSwitchingRuleHandler
 	// SitesReplaceSiteHandler sets the operation handler for the replace site operation
 	SitesReplaceSiteHandler sites.ReplaceSiteHandler
+	// SpoeReplaceSpoeAgentHandler sets the operation handler for the replace spoe agent operation
+	SpoeReplaceSpoeAgentHandler spoe.ReplaceSpoeAgentHandler
+	// SpoeReplaceSpoeGroupHandler sets the operation handler for the replace spoe group operation
+	SpoeReplaceSpoeGroupHandler spoe.ReplaceSpoeGroupHandler
+	// SpoeReplaceSpoeMessageHandler sets the operation handler for the replace spoe message operation
+	SpoeReplaceSpoeMessageHandler spoe.ReplaceSpoeMessageHandler
 	// StickRuleReplaceStickRuleHandler sets the operation handler for the replace stick rule operation
 	StickRuleReplaceStickRuleHandler stick_rule.ReplaceStickRuleHandler
+	// StorageReplaceStorageMapFileHandler sets the operation handler for the replace storage map file operation
+	StorageReplaceStorageMapFileHandler storage.ReplaceStorageMapFileHandler
+	// StorageReplaceStorageSSLCertificateHandler sets the operation handler for the replace storage s s l certificate operation
+	StorageReplaceStorageSSLCertificateHandler storage.ReplaceStorageSSLCertificateHandler
 	// TCPRequestRuleReplaceTCPRequestRuleHandler sets the operation handler for the replace TCP request rule operation
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
 	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
 	// MapsShowRuntimeMapHandler sets the operation handler for the show runtime map operation
 	MapsShowRuntimeMapHandler maps.ShowRuntimeMapHandler
+	// SpoeTransactionsStartSpoeTransactionHandler sets the operation handler for the start spoe transaction operation
+	SpoeTransactionsStartSpoeTransactionHandler spoe_transactions.StartSpoeTransactionHandler
 	// TransactionsStartTransactionHandler sets the operation handler for the start transaction operation
 	TransactionsStartTransactionHandler transactions.StartTransactionHandler
 	// ServeError is called when an error is received, there is a default handler
@@ -894,6 +1132,9 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "TxtConsumer")
 	}
 
+	if o.BinProducer == nil {
+		unregistered = append(unregistered, "BinProducer")
+	}
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
 	}
@@ -907,6 +1148,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsClearRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ClearRuntimeMapHandler")
+	}
+	if o.SpoeTransactionsCommitSpoeTransactionHandler == nil {
+		unregistered = append(unregistered, "spoe_transactions.CommitSpoeTransactionHandler")
 	}
 	if o.TransactionsCommitTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.CommitTransactionHandler")
@@ -922,6 +1166,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindCreateBindHandler == nil {
 		unregistered = append(unregistered, "bind.CreateBindHandler")
+	}
+	if o.ServiceDiscoveryCreateConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.CreateConsulHandler")
 	}
 	if o.FilterCreateFilterHandler == nil {
 		unregistered = append(unregistered, "filter.CreateFilterHandler")
@@ -950,8 +1197,8 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
 	}
-	if o.MapsCreateRuntimeMapHandler == nil {
-		unregistered = append(unregistered, "maps.CreateRuntimeMapHandler")
+	if o.StorageCreateRuntimeMapHandler == nil {
+		unregistered = append(unregistered, "storage.CreateRuntimeMapHandler")
 	}
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
@@ -962,8 +1209,26 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.SitesCreateSiteHandler == nil {
 		unregistered = append(unregistered, "sites.CreateSiteHandler")
 	}
+	if o.SpoeCreateSpoeHandler == nil {
+		unregistered = append(unregistered, "spoe.CreateSpoeHandler")
+	}
+	if o.SpoeCreateSpoeAgentHandler == nil {
+		unregistered = append(unregistered, "spoe.CreateSpoeAgentHandler")
+	}
+	if o.SpoeCreateSpoeGroupHandler == nil {
+		unregistered = append(unregistered, "spoe.CreateSpoeGroupHandler")
+	}
+	if o.SpoeCreateSpoeMessageHandler == nil {
+		unregistered = append(unregistered, "spoe.CreateSpoeMessageHandler")
+	}
+	if o.SpoeCreateSpoeScopeHandler == nil {
+		unregistered = append(unregistered, "spoe.CreateSpoeScopeHandler")
+	}
 	if o.StickRuleCreateStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.CreateStickRuleHandler")
+	}
+	if o.StorageCreateStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.CreateStorageSSLCertificateHandler")
 	}
 	if o.TCPRequestRuleCreateTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleHandler")
@@ -982,6 +1247,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindDeleteBindHandler == nil {
 		unregistered = append(unregistered, "bind.DeleteBindHandler")
+	}
+	if o.ServiceDiscoveryDeleteConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.DeleteConsulHandler")
 	}
 	if o.FilterDeleteFilterHandler == nil {
 		unregistered = append(unregistered, "filter.DeleteFilterHandler")
@@ -1022,8 +1290,32 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.SitesDeleteSiteHandler == nil {
 		unregistered = append(unregistered, "sites.DeleteSiteHandler")
 	}
+	if o.SpoeDeleteSpoeAgentHandler == nil {
+		unregistered = append(unregistered, "spoe.DeleteSpoeAgentHandler")
+	}
+	if o.SpoeDeleteSpoeFileHandler == nil {
+		unregistered = append(unregistered, "spoe.DeleteSpoeFileHandler")
+	}
+	if o.SpoeDeleteSpoeGroupHandler == nil {
+		unregistered = append(unregistered, "spoe.DeleteSpoeGroupHandler")
+	}
+	if o.SpoeDeleteSpoeMessageHandler == nil {
+		unregistered = append(unregistered, "spoe.DeleteSpoeMessageHandler")
+	}
+	if o.SpoeDeleteSpoeScopeHandler == nil {
+		unregistered = append(unregistered, "spoe.DeleteSpoeScopeHandler")
+	}
+	if o.SpoeTransactionsDeleteSpoeTransactionHandler == nil {
+		unregistered = append(unregistered, "spoe_transactions.DeleteSpoeTransactionHandler")
+	}
 	if o.StickRuleDeleteStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.DeleteStickRuleHandler")
+	}
+	if o.StorageDeleteStorageMapHandler == nil {
+		unregistered = append(unregistered, "storage.DeleteStorageMapHandler")
+	}
+	if o.StorageDeleteStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.DeleteStorageSSLCertificateHandler")
 	}
 	if o.TCPRequestRuleDeleteTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleHandler")
@@ -1045,6 +1337,15 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsGetAllRuntimeMapFilesHandler == nil {
 		unregistered = append(unregistered, "maps.GetAllRuntimeMapFilesHandler")
+	}
+	if o.SpoeGetAllSpoeFilesHandler == nil {
+		unregistered = append(unregistered, "spoe.GetAllSpoeFilesHandler")
+	}
+	if o.StorageGetAllStorageMapFilesHandler == nil {
+		unregistered = append(unregistered, "storage.GetAllStorageMapFilesHandler")
+	}
+	if o.StorageGetAllStorageSSLCertificatesHandler == nil {
+		unregistered = append(unregistered, "storage.GetAllStorageSSLCertificatesHandler")
 	}
 	if o.BackendGetBackendHandler == nil {
 		unregistered = append(unregistered, "backend.GetBackendHandler")
@@ -1069,6 +1370,15 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
+	}
+	if o.ConfigurationGetConfigurationVersionHandler == nil {
+		unregistered = append(unregistered, "configuration.GetConfigurationVersionHandler")
+	}
+	if o.ServiceDiscoveryGetConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetConsulHandler")
+	}
+	if o.ServiceDiscoveryGetConsulsHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetConsulsHandler")
 	}
 	if o.DefaultsGetDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
@@ -1126,6 +1436,15 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsGetOneRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.GetOneRuntimeMapHandler")
+	}
+	if o.SpoeGetOneSpoeFileHandler == nil {
+		unregistered = append(unregistered, "spoe.GetOneSpoeFileHandler")
+	}
+	if o.StorageGetOneStorageMapHandler == nil {
+		unregistered = append(unregistered, "storage.GetOneStorageMapHandler")
+	}
+	if o.StorageGetOneStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.GetOneStorageSSLCertificateHandler")
 	}
 	if o.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler == nil {
 		unregistered = append(unregistered, "specification_openapiv3.GetOpenapiv3SpecificationHandler")
@@ -1190,6 +1509,42 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.SpecificationGetSpecificationHandler == nil {
 		unregistered = append(unregistered, "specification.GetSpecificationHandler")
 	}
+	if o.SpoeGetSpoeAgentHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeAgentHandler")
+	}
+	if o.SpoeGetSpoeAgentsHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeAgentsHandler")
+	}
+	if o.SpoeGetSpoeConfigurationVersionHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeConfigurationVersionHandler")
+	}
+	if o.DiscoveryGetSpoeEndpointsHandler == nil {
+		unregistered = append(unregistered, "discovery.GetSpoeEndpointsHandler")
+	}
+	if o.SpoeGetSpoeGroupHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeGroupHandler")
+	}
+	if o.SpoeGetSpoeGroupsHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeGroupsHandler")
+	}
+	if o.SpoeGetSpoeMessageHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeMessageHandler")
+	}
+	if o.SpoeGetSpoeMessagesHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeMessagesHandler")
+	}
+	if o.SpoeGetSpoeScopeHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeScopeHandler")
+	}
+	if o.SpoeGetSpoeScopesHandler == nil {
+		unregistered = append(unregistered, "spoe.GetSpoeScopesHandler")
+	}
+	if o.SpoeTransactionsGetSpoeTransactionHandler == nil {
+		unregistered = append(unregistered, "spoe_transactions.GetSpoeTransactionHandler")
+	}
+	if o.SpoeTransactionsGetSpoeTransactionsHandler == nil {
+		unregistered = append(unregistered, "spoe_transactions.GetSpoeTransactionsHandler")
+	}
 	if o.StatsGetStatsHandler == nil {
 		unregistered = append(unregistered, "stats.GetStatsHandler")
 	}
@@ -1210,6 +1565,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StickTableGetStickTablesHandler == nil {
 		unregistered = append(unregistered, "stick_table.GetStickTablesHandler")
+	}
+	if o.DiscoveryGetStorageEndpointsHandler == nil {
+		unregistered = append(unregistered, "discovery.GetStorageEndpointsHandler")
 	}
 	if o.TCPRequestRuleGetTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleHandler")
@@ -1249,6 +1607,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindReplaceBindHandler == nil {
 		unregistered = append(unregistered, "bind.ReplaceBindHandler")
+	}
+	if o.ServiceDiscoveryReplaceConsulHandler == nil {
+		unregistered = append(unregistered, "service_discovery.ReplaceConsulHandler")
 	}
 	if o.DefaultsReplaceDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
@@ -1295,8 +1656,23 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.SitesReplaceSiteHandler == nil {
 		unregistered = append(unregistered, "sites.ReplaceSiteHandler")
 	}
+	if o.SpoeReplaceSpoeAgentHandler == nil {
+		unregistered = append(unregistered, "spoe.ReplaceSpoeAgentHandler")
+	}
+	if o.SpoeReplaceSpoeGroupHandler == nil {
+		unregistered = append(unregistered, "spoe.ReplaceSpoeGroupHandler")
+	}
+	if o.SpoeReplaceSpoeMessageHandler == nil {
+		unregistered = append(unregistered, "spoe.ReplaceSpoeMessageHandler")
+	}
 	if o.StickRuleReplaceStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.ReplaceStickRuleHandler")
+	}
+	if o.StorageReplaceStorageMapFileHandler == nil {
+		unregistered = append(unregistered, "storage.ReplaceStorageMapFileHandler")
+	}
+	if o.StorageReplaceStorageSSLCertificateHandler == nil {
+		unregistered = append(unregistered, "storage.ReplaceStorageSSLCertificateHandler")
 	}
 	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
@@ -1306,6 +1682,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsShowRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ShowRuntimeMapHandler")
+	}
+	if o.SpoeTransactionsStartSpoeTransactionHandler == nil {
+		unregistered = append(unregistered, "spoe_transactions.StartSpoeTransactionHandler")
 	}
 	if o.TransactionsStartTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.StartTransactionHandler")
@@ -1368,6 +1747,8 @@ func (o *DataPlaneAPI) ProducersFor(mediaTypes []string) map[string]runtime.Prod
 	result := make(map[string]runtime.Producer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
+		case "application/octet-stream":
+			result["application/octet-stream"] = o.BinProducer
 		case "application/json":
 			result["application/json"] = o.JSONProducer
 		}
@@ -1421,6 +1802,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/spoe_transactions/{id}"] = spoe_transactions.NewCommitSpoeTransaction(o.context, o.SpoeTransactionsCommitSpoeTransactionHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/transactions/{id}"] = transactions.NewCommitTransaction(o.context, o.TransactionsCommitTransactionHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1438,6 +1823,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/binds"] = bind.NewCreateBind(o.context, o.BindCreateBindHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/service_discovery/consul"] = service_discovery.NewCreateConsul(o.context, o.ServiceDiscoveryCreateConsulHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -1477,7 +1866,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/runtime/maps"] = maps.NewCreateRuntimeMap(o.context, o.MapsCreateRuntimeMapHandler)
+	o.handlers["POST"]["/services/haproxy/storage/maps"] = storage.NewCreateRuntimeMap(o.context, o.StorageCreateRuntimeMapHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -1493,7 +1882,31 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/spoe/spoe_files"] = spoe.NewCreateSpoe(o.context, o.SpoeCreateSpoeHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/spoe/spoe_agents"] = spoe.NewCreateSpoeAgent(o.context, o.SpoeCreateSpoeAgentHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/spoe/spoe_groups"] = spoe.NewCreateSpoeGroup(o.context, o.SpoeCreateSpoeGroupHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/spoe/spoe_messages"] = spoe.NewCreateSpoeMessage(o.context, o.SpoeCreateSpoeMessageHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/spoe/spoe_scopes"] = spoe.NewCreateSpoeScope(o.context, o.SpoeCreateSpoeScopeHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewCreateStickRule(o.context, o.StickRuleCreateStickRuleHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/storage/ssl_certificates"] = storage.NewCreateStorageSSLCertificate(o.context, o.StorageCreateStorageSSLCertificateHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -1518,6 +1931,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/binds/{name}"] = bind.NewDeleteBind(o.context, o.BindDeleteBindHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/service_discovery/consul/{id}"] = service_discovery.NewDeleteConsul(o.context, o.ServiceDiscoveryDeleteConsulHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -1573,7 +1990,39 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/spoe/spoe_agents/{name}"] = spoe.NewDeleteSpoeAgent(o.context, o.SpoeDeleteSpoeAgentHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/spoe/spoe_files/{name}"] = spoe.NewDeleteSpoeFile(o.context, o.SpoeDeleteSpoeFileHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/spoe/spoe_groups/{name}"] = spoe.NewDeleteSpoeGroup(o.context, o.SpoeDeleteSpoeGroupHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/spoe/spoe_messages/{name}"] = spoe.NewDeleteSpoeMessage(o.context, o.SpoeDeleteSpoeMessageHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/spoe/spoe_scopes/{name}"] = spoe.NewDeleteSpoeScope(o.context, o.SpoeDeleteSpoeScopeHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/spoe_transactions/{id}"] = spoe_transactions.NewDeleteSpoeTransaction(o.context, o.SpoeTransactionsDeleteSpoeTransactionHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewDeleteStickRule(o.context, o.StickRuleDeleteStickRuleHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/storage/maps/{name}"] = storage.NewDeleteStorageMap(o.context, o.StorageDeleteStorageMapHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewDeleteStorageSSLCertificate(o.context, o.StorageDeleteStorageSSLCertificateHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -1602,6 +2051,18 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps"] = maps.NewGetAllRuntimeMapFiles(o.context, o.MapsGetAllRuntimeMapFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_files"] = spoe.NewGetAllSpoeFiles(o.context, o.SpoeGetAllSpoeFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/maps"] = storage.NewGetAllStorageMapFiles(o.context, o.StorageGetAllStorageMapFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/ssl_certificates"] = storage.NewGetAllStorageSSLCertificates(o.context, o.StorageGetAllStorageSSLCertificatesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1634,6 +2095,18 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration"] = discovery.NewGetConfigurationEndpoints(o.context, o.DiscoveryGetConfigurationEndpointsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/version"] = configuration.NewGetConfigurationVersion(o.context, o.ConfigurationGetConfigurationVersionHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/consul/{id}"] = service_discovery.NewGetConsul(o.context, o.ServiceDiscoveryGetConsulHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/consul"] = service_discovery.NewGetConsuls(o.context, o.ServiceDiscoveryGetConsulsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1710,6 +2183,18 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps/{name}"] = maps.NewGetOneRuntimeMap(o.context, o.MapsGetOneRuntimeMapHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_files/{name}"] = spoe.NewGetOneSpoeFile(o.context, o.SpoeGetOneSpoeFileHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/maps/{name}"] = storage.NewGetOneStorageMap(o.context, o.StorageGetOneStorageMapHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewGetOneStorageSSLCertificate(o.context, o.StorageGetOneStorageSSLCertificateHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1797,6 +2282,54 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_agents/{name}"] = spoe.NewGetSpoeAgent(o.context, o.SpoeGetSpoeAgentHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_agents"] = spoe.NewGetSpoeAgents(o.context, o.SpoeGetSpoeAgentsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/version"] = spoe.NewGetSpoeConfigurationVersion(o.context, o.SpoeGetSpoeConfigurationVersionHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe"] = discovery.NewGetSpoeEndpoints(o.context, o.DiscoveryGetSpoeEndpointsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_groups/{name}"] = spoe.NewGetSpoeGroup(o.context, o.SpoeGetSpoeGroupHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_groups"] = spoe.NewGetSpoeGroups(o.context, o.SpoeGetSpoeGroupsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_messages/{name}"] = spoe.NewGetSpoeMessage(o.context, o.SpoeGetSpoeMessageHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_messages"] = spoe.NewGetSpoeMessages(o.context, o.SpoeGetSpoeMessagesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_scopes/{name}"] = spoe.NewGetSpoeScope(o.context, o.SpoeGetSpoeScopeHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe/spoe_scopes"] = spoe.NewGetSpoeScopes(o.context, o.SpoeGetSpoeScopesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe_transactions/{id}"] = spoe_transactions.NewGetSpoeTransaction(o.context, o.SpoeTransactionsGetSpoeTransactionHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/spoe_transactions"] = spoe_transactions.NewGetSpoeTransactions(o.context, o.SpoeTransactionsGetSpoeTransactionsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/stats/native"] = stats.NewGetStats(o.context, o.StatsGetStatsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -1822,6 +2355,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/stick_tables"] = stick_table.NewGetStickTables(o.context, o.StickTableGetStickTablesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage"] = discovery.NewGetStorageEndpoints(o.context, o.DiscoveryGetStorageEndpointsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -1874,6 +2411,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/binds/{name}"] = bind.NewReplaceBind(o.context, o.BindReplaceBindHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/service_discovery/consul/{id}"] = service_discovery.NewReplaceConsul(o.context, o.ServiceDiscoveryReplaceConsulHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -1937,7 +2478,27 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/spoe/spoe_agents/{name}"] = spoe.NewReplaceSpoeAgent(o.context, o.SpoeReplaceSpoeAgentHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/spoe/spoe_groups/{name}"] = spoe.NewReplaceSpoeGroup(o.context, o.SpoeReplaceSpoeGroupHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/spoe/spoe_messages/{name}"] = spoe.NewReplaceSpoeMessage(o.context, o.SpoeReplaceSpoeMessageHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/storage/maps/{name}"] = storage.NewReplaceStorageMapFile(o.context, o.StorageReplaceStorageMapFileHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewReplaceStorageSSLCertificate(o.context, o.StorageReplaceStorageSSLCertificateHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -1950,6 +2511,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/maps_entries"] = maps.NewShowRuntimeMap(o.context, o.MapsShowRuntimeMapHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/spoe_transactions"] = spoe_transactions.NewStartSpoeTransaction(o.context, o.SpoeTransactionsStartSpoeTransactionHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

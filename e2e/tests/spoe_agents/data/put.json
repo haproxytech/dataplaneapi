@@ -1,0 +1,29 @@
+{
+    "async": "enabled",
+    "dontlog-normal": "enabled",
+    "engine-name": "engine2",
+    "groups": "mygroup",
+    "hello_timeout": 3000,
+    "idle_timeout": 14000,
+    "log": [
+      {
+        "global": true,
+        "index": 1
+      }
+    ],
+    "max-frame-size": 15,
+    "max-waiting-frames": 18,
+    "maxconnrate": 6000,
+    "maxerrrate": 4,
+    "messages": "msg2",
+    "name": "iprep-agent",
+    "option_set-on-error": "seterr2",
+    "option_set-process-time": "setproc2",
+    "option_set-total-time": "settotalname2",
+    "option_var-prefix": "pref2",
+    "pipelining": "enabled",
+    "processing_timeout": 600,
+    "register-var-names": "regvarname2",
+    "send-frag-payload": "disabled",
+    "use-backend": "backend2"
+  }

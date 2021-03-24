@@ -1,0 +1,6 @@
+{
+  "http_connection_mode": "http-keep-alive",
+  "maxconn": 2000,
+  "mode": "http",
+  "name": "test_frontend"
+}

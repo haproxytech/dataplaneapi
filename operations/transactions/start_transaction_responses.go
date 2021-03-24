@@ -26,7 +26,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/models/v2"
+	"github.com/haproxytech/client-native/v2/models"
 )
 
 // StartTransactionCreatedCode is the HTTP code returned for type StartTransactionCreated
@@ -65,6 +65,50 @@ func (o *StartTransactionCreated) SetPayload(payload *models.Transaction) {
 func (o *StartTransactionCreated) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(201)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// StartTransactionTooManyRequestsCode is the HTTP code returned for type StartTransactionTooManyRequests
+const StartTransactionTooManyRequestsCode int = 429
+
+/*StartTransactionTooManyRequests Too many open transactions
+
+swagger:response startTransactionTooManyRequests
+*/
+type StartTransactionTooManyRequests struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *StartTransactionTooManyRequestsBody `json:"body,omitempty"`
+}
+
+// NewStartTransactionTooManyRequests creates StartTransactionTooManyRequests with default headers values
+func NewStartTransactionTooManyRequests() *StartTransactionTooManyRequests {
+
+	return &StartTransactionTooManyRequests{}
+}
+
+// WithPayload adds the payload to the start transaction too many requests response
+func (o *StartTransactionTooManyRequests) WithPayload(payload *StartTransactionTooManyRequestsBody) *StartTransactionTooManyRequests {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the start transaction too many requests response
+func (o *StartTransactionTooManyRequests) SetPayload(payload *StartTransactionTooManyRequestsBody) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *StartTransactionTooManyRequests) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(429)
 	if o.Payload != nil {
 		payload := o.Payload
 		if err := producer.Produce(rw, payload); err != nil {

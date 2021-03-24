@@ -18,41 +18,42 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
-	"github.com/haproxytech/models/v2"
 )
 
-//CreateBackendSwitchingRuleHandlerImpl implementation of the CreateBackendSwitchingRuleHandler interface using client-native client
+// CreateBackendSwitchingRuleHandlerImpl implementation of the CreateBackendSwitchingRuleHandler interface using client-native client
 type CreateBackendSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//DeleteBackendSwitchingRuleHandlerImpl implementation of the DeleteBackendSwitchingRuleHandler interface using client-native client
+// DeleteBackendSwitchingRuleHandlerImpl implementation of the DeleteBackendSwitchingRuleHandler interface using client-native client
 type DeleteBackendSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//GetBackendSwitchingRuleHandlerImpl implementation of the GetBackendSwitchingRuleHandler interface using client-native client
+// GetBackendSwitchingRuleHandlerImpl implementation of the GetBackendSwitchingRuleHandler interface using client-native client
 type GetBackendSwitchingRuleHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//GetBackendSwitchingRulesHandlerImpl implementation of the GetBackendSwitchingRulesHandler interface using client-native client
+// GetBackendSwitchingRulesHandlerImpl implementation of the GetBackendSwitchingRulesHandler interface using client-native client
 type GetBackendSwitchingRulesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-//ReplaceBackendSwitchingRuleHandlerImpl implementation of the ReplaceBackendSwitchingRuleHandler interface using client-native client
+// ReplaceBackendSwitchingRuleHandlerImpl implementation of the ReplaceBackendSwitchingRuleHandler interface using client-native client
 type ReplaceBackendSwitchingRuleHandlerImpl struct {
 	Client      *client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.CreateBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -92,7 +93,7 @@ func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 	return backend_switching_rule.NewCreateBackendSwitchingRuleAccepted().WithPayload(params.Data)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.DeleteBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
@@ -134,7 +135,7 @@ func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 	return backend_switching_rule.NewDeleteBackendSwitchingRuleAccepted()
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.GetBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -149,7 +150,7 @@ func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rul
 	return backend_switching_rule.NewGetBackendSwitchingRuleOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRuleOKBody{Version: v, Data: bckRule}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_rule.GetBackendSwitchingRulesParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
@@ -158,13 +159,16 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 
 	v, bckRules, err := h.Client.Configuration.GetBackendSwitchingRules(params.Frontend, t)
 	if err != nil {
-		e := misc.HandleError(err)
+		e := misc.HandleContainerGetError(err)
+		if *e.Code == misc.ErrHTTPOk {
+			return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: models.BackendSwitchingRules{}}).WithConfigurationVersion(v)
+		}
 		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
 	}
 	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: bckRules}).WithConfigurationVersion(v)
 }
 
-//Handle executing the request and returning a response
+// Handle executing the request and returning a response
 func (h *ReplaceBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rule.ReplaceBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)

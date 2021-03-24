@@ -1,14 +1,83 @@
----
-reviewdog:
+stages:
+  - lint
+  - build
+  - e2e
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_BASE_IMAGE: $CI_REGISTRY_GO/haproxy-alpine
+
+golangci-lint:
+  stage: lint
+  artifacts:
+    paths:
+      - build
   image:
-    name: golangci/golangci-lint:v1.21.0
+    name: $CI_REGISTRY_GO/golangci/golangci-lint:v1.21.0
+    entrypoint: [ "" ]
+  tags:
+    - go
+  script:
+    - golangci-lint cache clean && go clean -modcache -cache -i
+    - golangci-lint run -v --color always --timeout 120s
+lint-commit-msg:
+  stage: lint
+  image:
+    name: $CI_REGISTRY_GO/check-commit:latest
     entrypoint: [""]
   tags:
-    - docker
+    - go
+  script:
+    - /check
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - build
+  image:
+    name: $CI_REGISTRY_GO/golang:1.15
+    entrypoint: [ "" ]
+  tags:
+    - go
   script:
     - go env
     - go mod verify
-    - golangci-lint run -v --color always --timeout 120s
-    #- go get -u github.com/reviewdog/reviewdog/cmd/reviewdog
-    #- reviewdog -reporter=gitlab-mr-discussion
-    - go build .
+    - make build
+
+.e2e:
+  stage: e2e
+  image:
+    name: $CI_REGISTRY_GO/docker:stable
+    entrypoint: [ "" ]
+  services:
+    - name: $CI_REGISTRY_GO/docker:18.09.7-dind
+      alias: docker
+  variables:
+    LOCAL_IP_ADDRESS: docker
+  tags:
+    - go
+  before_script:
+    - apk add git bash curl jq bats
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY_GO
+  script:
+    - bash -x ./e2e/run.bash
+
+HAProxy_2_1:
+  extends: .e2e
+  parallel:
+    matrix:
+      - TESTPART: [ "1/2", "2/2" ]
+        HAPROXY_VERSION: "2.1"
+HAProxy_2_2:
+  extends: .e2e
+  parallel:
+    matrix:
+      - TESTPART: [ "1/2", "2/2" ]
+        HAPROXY_VERSION: "2.2"
+HAProxy_2_3:
+  extends: .e2e
+  parallel:
+    matrix:
+      - TESTPART: [ "1/2", "2/2" ]
+        HAPROXY_VERSION: "2.3"
+
