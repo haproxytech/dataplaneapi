@@ -18,6 +18,7 @@ package misc
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -45,6 +46,24 @@ const (
 	// ErrHTTPOk HTTP status code 200
 	ErrHTTPOk = int64(200)
 )
+
+func OutdatedTransactionError(id string) *models.Error {
+	var code int64 = 406
+	msg := fmt.Sprintf("transaction %s is outdated and cannot be committed", id)
+	return &models.Error{
+		Code:    &code,
+		Message: &msg,
+	}
+}
+
+func FailedTransactionError(id string) *models.Error {
+	var code int64 = 406
+	msg := fmt.Sprintf("transaction %s is failed and cannot be committed", id)
+	return &models.Error{
+		Code:    &code,
+		Message: &msg,
+	}
+}
 
 // HandleError translates error codes from client native into models.Error with appropriate http status code
 func HandleError(err error) *models.Error {

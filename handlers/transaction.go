@@ -112,6 +112,18 @@ func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransac
 
 	var err error
 
+	var transaction *models.Transaction
+	if transaction, err = th.Client.Configuration.GetTransaction(params.ID); err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	switch transaction.Status {
+	case models.TransactionStatusOutdated:
+		return transactions.NewCommitTransactionNotAcceptable().WithPayload(misc.OutdatedTransactionError(transaction.ID))
+	case models.TransactionStatusFailed:
+		return transactions.NewCommitTransactionNotAcceptable().WithPayload(misc.FailedTransactionError(transaction.ID))
+	}
+
 	var t *models.Transaction
 	t, err = th.Client.Configuration.CommitTransaction(params.ID)
 	if err != nil {
