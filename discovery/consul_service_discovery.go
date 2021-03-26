@@ -18,7 +18,6 @@ package discovery
 import (
 	"errors"
 	"fmt"
-	"sync"
 	"time"
 
 	"github.com/haproxytech/client-native/v2/configuration"
@@ -27,36 +26,32 @@ import (
 )
 
 type consulServiceDiscovery struct {
-	consulServices map[string]*consulInstance
+	consulServices Store
 	client         *configuration.Client
 	reloadAgent    haproxy.IReloadAgent
-	mu             sync.RWMutex
 }
 
 // NewConsulDiscoveryService creates a new ServiceDiscovery that connects to consul
 func NewConsulDiscoveryService(params ServiceDiscoveriesParams) ServiceDiscovery {
 	return &consulServiceDiscovery{
-		consulServices: make(map[string]*consulInstance),
+		consulServices: NewInstanceStore(),
 		client:         params.Client,
 		reloadAgent:    params.ReloadAgent,
 	}
 }
 
-func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParams) error {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	_, ok := c.consulServices[id]
-	if ok {
-		return fmt.Errorf("instance already exists for: %s", id)
-	}
+func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParams) (err error) {
 	cParams, ok := params.(*models.Consul)
 	if !ok {
 		return errors.New("expected models.Consuls")
 	}
-	timeout, err := time.ParseDuration(fmt.Sprintf("%ds", *cParams.RetryTimeout))
+
+	var timeout time.Duration
+	timeout, err = time.ParseDuration(fmt.Sprintf("%ds", *cParams.RetryTimeout))
 	if err != nil {
 		return err
 	}
+
 	instance := &consulInstance{
 		params:  cParams,
 		timeout: timeout,
@@ -69,7 +64,11 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		}),
 		prevIndexes: make(map[string]uint64),
 	}
-	c.consulServices[id] = instance
+
+	if err = c.consulServices.Create(id, instance); err != nil {
+		return
+	}
+
 	instance.prevEnabled = *cParams.Enabled
 
 	if *cParams.Enabled {
@@ -78,53 +77,39 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 	return nil
 }
 
-func (c *consulServiceDiscovery) GetNode(id string) (ServiceDiscoveryParams, error) {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
-	ci, ok := c.consulServices[id]
-	if !ok {
-		return nil, errors.New("instance not found")
+func (c *consulServiceDiscovery) GetNode(id string) (p ServiceDiscoveryParams, err error) {
+	var i interface{}
+	if i, err = c.consulServices.Read(id); err != nil {
+		return
 	}
-	return ci.params, nil
+	p = i.(*consulInstance).params
+	return
 }
 
 func (c *consulServiceDiscovery) GetNodes() (ServiceDiscoveryParams, error) {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
 	var consuls models.Consuls
-	for _, ci := range c.consulServices {
-		consuls = append(consuls, ci.params)
+	for _, ci := range c.consulServices.List() {
+		consuls = append(consuls, ci.(*consulInstance).params)
 	}
 	return consuls, nil
 }
 
 func (c *consulServiceDiscovery) RemoveNode(id string) error {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	_, ok := c.consulServices[id]
-	if !ok {
-		return errors.New("instance not found")
-	}
-	delete(c.consulServices, id)
-	return nil
+	return c.consulServices.Delete(id)
 }
 
-func (c *consulServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryParams) error {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
-	ci, ok := c.consulServices[id]
-	if !ok {
-		return errors.New("instance not found")
-	}
+func (c *consulServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryParams) (err error) {
 	cParams, ok := params.(*models.Consul)
 	if !ok {
 		return errors.New("expected models.Consuls")
 	}
-	ci.params = cParams
-	err := ci.updateTimeout(int(*cParams.RetryTimeout))
-	if err != nil {
-		ci.stop()
-		return errors.New("invalid retry_timeout")
-	}
-	return ci.handelStateChange()
+	return c.consulServices.Update(id, func(item interface{}) error {
+		ci := item.(*consulInstance)
+		ci.params = cParams
+		if err = ci.updateTimeout(int(*cParams.RetryTimeout)); err != nil {
+			ci.stop()
+			return errors.New("invalid retry_timeout")
+		}
+		return ci.handelStateChange()
+	})
 }

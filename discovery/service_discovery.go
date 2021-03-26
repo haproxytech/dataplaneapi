@@ -17,7 +17,6 @@ package discovery
 
 import (
 	"errors"
-	"sync"
 
 	"github.com/haproxytech/client-native/v2/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -55,86 +54,68 @@ type ServiceDiscoveriesParams struct {
 // NewServiceDiscoveries creates a new ServiceDiscoveries instance
 func NewServiceDiscoveries(params ServiceDiscoveriesParams) ServiceDiscoveries {
 	sd := &serviceDiscoveryImpl{
-		services: make(map[string]ServiceDiscovery),
+		services: NewInstanceStore(),
 	}
 	//nolint
 	sd.AddService("consul", NewConsulDiscoveryService(params))
+	_ = sd.AddService("aws", NewAWSDiscoveryService(params))
 	return sd
 }
 
 type serviceDiscoveryImpl struct {
-	services map[string]ServiceDiscovery
-	mu       sync.RWMutex
+	services Store
 }
 
 func (s *serviceDiscoveryImpl) AddNode(serviceName string, id string, params ServiceDiscoveryParams) error {
-	s.mu.RLock()
-	sd, ok := s.services[serviceName]
-	s.mu.RUnlock()
-	if !ok {
+	sd, err := s.services.Read(serviceName)
+	if err != nil {
 		return errors.New("service not found")
 	}
-	return sd.AddNode(id, params)
+	return sd.(ServiceDiscovery).AddNode(id, params)
 }
 
 func (s *serviceDiscoveryImpl) AddService(serviceName string, serviceImpl ServiceDiscovery) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	_, ok := s.services[serviceName]
-	if ok {
+	if err := s.services.Create(serviceName, serviceImpl); err != nil {
 		return errors.New("service already exists")
 	}
-	s.services[serviceName] = serviceImpl
 	return nil
 }
 
 func (s *serviceDiscoveryImpl) GetNode(serviceName string, id string) (ServiceDiscoveryParams, error) {
-	s.mu.RLock()
-	sd, ok := s.services[serviceName]
-	s.mu.RUnlock()
-	if !ok {
+	sd, err := s.services.Read(serviceName)
+	if err != nil {
 		return nil, errors.New("service not found")
 	}
-	return sd.GetNode(id)
+	return sd.(ServiceDiscovery).GetNode(id)
 }
 
 func (s *serviceDiscoveryImpl) GetNodes(serviceName string) (ServiceDiscoveryParams, error) {
-	s.mu.RLock()
-	sd, ok := s.services[serviceName]
-	s.mu.RUnlock()
-	if !ok {
+	sd, err := s.services.Read(serviceName)
+	if err != nil {
 		return nil, errors.New("service not found")
 	}
-	return sd.GetNodes()
+	return sd.(ServiceDiscovery).GetNodes()
 }
 
 func (s *serviceDiscoveryImpl) RemoveNode(serviceName string, id string) error {
-	s.mu.RLock()
-	sd, ok := s.services[serviceName]
-	s.mu.RUnlock()
-	if !ok {
+	sd, err := s.services.Read(serviceName)
+	if err != nil {
 		return errors.New("service not found")
 	}
-	return sd.RemoveNode(id)
+	return sd.(ServiceDiscovery).RemoveNode(id)
 }
 
 func (s *serviceDiscoveryImpl) RemoveService(serviceName string) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	_, ok := s.services[serviceName]
-	if !ok {
+	if err := s.services.Delete(serviceName); err != nil {
 		return errors.New("service not found")
 	}
-	delete(s.services, serviceName)
 	return nil
 }
 
 func (s *serviceDiscoveryImpl) UpdateNode(serviceName string, id string, params ServiceDiscoveryParams) error {
-	s.mu.RLock()
-	sd, ok := s.services[serviceName]
-	s.mu.RUnlock()
-	if !ok {
+	sd, err := s.services.Read(serviceName)
+	if err != nil {
 		return errors.New("service not found")
 	}
-	return sd.UpdateNode(id, params)
+	return sd.(ServiceDiscovery).UpdateNode(id, params)
 }
