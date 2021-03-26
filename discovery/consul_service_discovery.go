@@ -90,6 +90,7 @@ func (c *consulServiceDiscovery) GetNode(id string) (ServiceDiscoveryParams, err
 
 func (c *consulServiceDiscovery) GetNodes() (ServiceDiscoveryParams, error) {
 	c.mu.RLock()
+	defer c.mu.RUnlock()
 	var consuls models.Consuls
 	for _, ci := range c.consulServices {
 		consuls = append(consuls, ci.params)
