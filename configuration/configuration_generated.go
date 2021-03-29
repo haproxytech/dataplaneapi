@@ -130,7 +130,8 @@ type configTypeAdvertised struct {
 }
 
 type configTypeServiceDiscovery struct {
-	Consuls *[]*models.Consul `yaml:"consuls,omitempty" hcl:"consuls,omitempty"`
+	Consuls    *[]*models.Consul    `yaml:"consuls,omitempty" hcl:"consuls,omitempty"`
+	AWSRegions *[]*models.AwsRegion `yaml:"awsRegions,omitempty" hcl:"awsRegions,omitempty"`
 }
 
 type configTypeSyslog struct {
@@ -321,6 +322,9 @@ func copyToConfiguration(cfg *Configuration) {
 	if cfgStorage.ServiceDiscovery != nil && cfgStorage.ServiceDiscovery.Consuls != nil && !misc.HasOSArg("", "", "") {
 		cfg.ServiceDiscovery.Consuls = *cfgStorage.ServiceDiscovery.Consuls
 	}
+	if cfgStorage.ServiceDiscovery != nil && cfgStorage.ServiceDiscovery.AWSRegions != nil && !misc.HasOSArg("", "", "") {
+		cfg.ServiceDiscovery.AWSRegions = *cfgStorage.ServiceDiscovery.AWSRegions
+	}
 	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogAddr != nil && !misc.HasOSArg("", "syslog-address", "") {
 		cfg.Syslog.SyslogAddr = *cfgStorage.Log.Syslog.SyslogAddr
 	}
@@ -486,5 +490,10 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.ServiceDiscovery = &configTypeServiceDiscovery{}
 	}
 	cfgStorage.ServiceDiscovery.Consuls = &cfg.ServiceDiscovery.Consuls
+
+	if cfgStorage.ServiceDiscovery == nil {
+		cfgStorage.ServiceDiscovery = &configTypeServiceDiscovery{}
+	}
+	cfgStorage.ServiceDiscovery.AWSRegions = &cfg.ServiceDiscovery.AWSRegions
 
 }

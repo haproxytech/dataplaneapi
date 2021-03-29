@@ -137,8 +137,10 @@ type NotifyConfiguration struct {
 }
 
 type ServiceDiscovery struct {
-	mu      sync.Mutex
-	Consuls []*models.Consul `yaml:"consuls" group:"service_discovery" save:"true"`
+	consulMu   sync.Mutex
+	Consuls    []*models.Consul `yaml:"consuls" group:"service_discovery" save:"true"`
+	awsMu      sync.Mutex
+	AWSRegions []*models.AwsRegion `yaml:"awsRegions" group:"service_discovery" save:"true"`
 }
 
 type Configuration struct {
@@ -266,7 +268,11 @@ func (c *Configuration) Save() error {
 	copyConfigurationToStorage(c)
 	if len(c.ServiceDiscovery.Consuls) == 0 {
 		cfg := c.storage.Get()
-		cfg.ServiceDiscovery = nil
+		cfg.ServiceDiscovery.Consuls = nil
+	}
+	if len(c.ServiceDiscovery.AWSRegions) == 0 {
+		cfg := c.storage.Get()
+		cfg.ServiceDiscovery.Consuls = nil
 	}
 	return c.storage.Save()
 }
@@ -285,8 +291,16 @@ func (c *Configuration) GetClusterCertDir() string {
 }
 
 func (c *Configuration) SaveConsuls(consuls []*models.Consul) error {
-	c.ServiceDiscovery.mu.Lock()
+	c.ServiceDiscovery.consulMu.Lock()
 	c.ServiceDiscovery.Consuls = consuls
-	c.ServiceDiscovery.mu.Unlock()
+	c.ServiceDiscovery.consulMu.Unlock()
+	return c.Save()
+}
+
+func (c *Configuration) SaveAWS(aws []*models.AwsRegion) error {
+	c.ServiceDiscovery.awsMu.Lock()
+	defer c.ServiceDiscovery.awsMu.Unlock()
+
+	c.ServiceDiscovery.AWSRegions = aws
 	return c.Save()
 }
