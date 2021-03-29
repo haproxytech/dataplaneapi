@@ -182,7 +182,7 @@ func copyConfigurationToStorage(cfg *Configuration) {
 					if cfgStorage.{{$group.Name | Capitalize}} == nil {
 						cfgStorage.{{$group.Name | Capitalize}} = &configType{{$group.Name | Capitalize}}{}
 					}
-					cfgStorage.{{$group.Name | Capitalize}}.Consuls = &cfg.{{ .AttName }}.{{ .Name }}
+					cfgStorage.{{$group.Name | Capitalize}}.{{ .Name }} = &cfg.{{ .AttName }}.{{ .Name }}
 				{{- end}}
 			{{- end}}
 		{{- end}}
