@@ -23,7 +23,7 @@ import (
 	"syscall"
 )
 
-func decodeBootstrapKey(key string) (map[string]string, error) {
+func DecodeBootstrapKey(key string) (map[string]string, error) {
 	raw, err := base64.StdEncoding.DecodeString(key)
 	if err != nil {
 		return nil, fmt.Errorf("%s - %w", key, err)

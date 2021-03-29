@@ -26,6 +26,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 	log "github.com/sirupsen/logrus"
 
+	"github.com/haproxytech/client-native/v2/storage"
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/operations"
@@ -139,6 +140,19 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			server.EnabledListeners = []string{"https"}
 			if server.TLSPort == 0 {
 				server.TLSPort = server.Port
+			}
+			// override storage dir location
+			storageDir := cfg.Cluster.StorageDir.Load()
+			if storageDir != "" {
+				cfg.HAProxy.MapsDir = path.Join(storageDir, string(storage.MapsType))
+				cfg.HAProxy.SSLCertsDir = path.Join(storageDir, string(storage.SSLType))
+				cfg.HAProxy.SpoeDir = path.Join(storageDir, string(storage.SpoeType))
+				cfg.HAProxy.SpoeTransactionDir = path.Join(storageDir, string(storage.SpoeTransactionsType))
+				cfg.HAProxy.BackupsDir = path.Join(storageDir, string(storage.BackupsType))
+				cfg.HAProxy.TransactionDir = path.Join(storageDir, string(storage.TransactionsType))
+				// dataplane internal
+				cfg.HAProxy.ClusterTLSCertDir = path.Join(storageDir, "certs-cluster")
+				cfg.Cluster.CertificateDir.Store(path.Join(storageDir, "certs-cluster"))
 			}
 		} else if cfg.Cluster.ActiveBootstrapKey.Load() != "" {
 			cfg.Notify.BootstrapKeyChanged.NotifyWithRetry()

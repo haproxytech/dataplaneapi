@@ -80,4 +80,3 @@ HAProxy_2_3:
     matrix:
       - TESTPART: [ "1/2", "2/2" ]
         HAPROXY_VERSION: "2.3"
-

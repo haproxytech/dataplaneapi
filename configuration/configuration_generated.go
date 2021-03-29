@@ -117,6 +117,7 @@ type configTypeCluster struct {
 	APIBasePath        *string `yaml:"api_base_path,omitempty" hcl:"api_base_path,omitempty"`
 	APINodesPath       *string `yaml:"api_nodes_path,omitempty" hcl:"api_nodes_path,omitempty"`
 	APIRegisterPath    *string `yaml:"api_register_path,omitempty" hcl:"api_register_path,omitempty"`
+	StorageDir         *string `yaml:"storage-dir,omitempty" hcl:"storage-dir,omitempty"`
 	CertificateDir     *string `yaml:"cert-path,omitempty" hcl:"cert-path,omitempty"`
 	CertificateFetched *bool   `yaml:"cert-fetched,omitempty" hcl:"cert-fetched,omitempty"`
 	Name               *string `yaml:"name,omitempty" hcl:"name,omitempty"`
@@ -296,6 +297,9 @@ func copyToConfiguration(cfg *Configuration) {
 	if cfgStorage.Cluster != nil && cfgStorage.Cluster.APIRegisterPath != nil && !misc.HasOSArg("", "", "") {
 		cfg.Cluster.APIRegisterPath.Store(*cfgStorage.Cluster.APIRegisterPath)
 	}
+	if cfgStorage.Cluster != nil && cfgStorage.Cluster.StorageDir != nil && !misc.HasOSArg("", "", "") {
+		cfg.Cluster.StorageDir.Store(*cfgStorage.Cluster.StorageDir)
+	}
 	if cfgStorage.Cluster != nil && cfgStorage.Cluster.CertificateDir != nil && !misc.HasOSArg("", "", "") {
 		cfg.Cluster.CertificateDir.Store(*cfgStorage.Cluster.CertificateDir)
 	}
@@ -436,6 +440,14 @@ func copyConfigurationToStorage(cfg *Configuration) {
 			cfgStorage.Cluster = &configTypeCluster{}
 		}
 		cfgStorage.Cluster.APIRegisterPath = &valueClusterAPIRegisterPath
+	}
+
+	valueClusterStorageDir := cfg.Cluster.StorageDir.Load()
+	if valueClusterStorageDir != "" {
+		if cfgStorage.Cluster == nil {
+			cfgStorage.Cluster = &configTypeCluster{}
+		}
+		cfgStorage.Cluster.StorageDir = &valueClusterStorageDir
 	}
 
 	valueClusterCertificateDir := cfg.Cluster.CertificateDir.Load()

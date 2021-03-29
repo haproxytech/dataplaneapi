@@ -94,7 +94,7 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 		log.Info("refreshing certificate")
 
 		key := c.cfg.Cluster.BootstrapKey.Load()
-		data, err := decodeBootstrapKey(key)
+		data, err := DecodeBootstrapKey(key)
 		if err != nil {
 			log.Warning(err)
 			continue
@@ -201,7 +201,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			}
 			continue
 		}
-		data, err := decodeBootstrapKey(key)
+		data, err := DecodeBootstrapKey(key)
 		if err != nil {
 			log.Warning(err)
 		}

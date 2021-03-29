@@ -22,6 +22,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
+	"github.com/haproxytech/client-native/v2/misc"
 	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/configuration"
@@ -68,9 +69,49 @@ func (h *CreateClusterHandlerImpl) err500(err error, transaction *models.Transac
 	})
 }
 
+func (h *CreateClusterHandlerImpl) err406(err error, transaction *models.Transaction) middleware.Responder {
+	// 406 Not Acceptable
+	if transaction != nil {
+		_ = h.Client.Configuration.DeleteTransaction(transaction.ID)
+	}
+	msg := err.Error()
+	code := int64(406)
+	return cluster.NewPostClusterDefault(406).WithPayload(&models.Error{
+		Code:    &code,
+		Message: &msg,
+	})
+}
+
+func (h *CreateClusterHandlerImpl) err409(err error, transaction *models.Transaction) middleware.Responder {
+	// 409 Conflict
+	if transaction != nil {
+		_ = h.Client.Configuration.DeleteTransaction(transaction.ID)
+	}
+	msg := err.Error()
+	code := int64(409)
+	return cluster.NewPostClusterDefault(409).WithPayload(&models.Error{
+		Code:    &code,
+		Message: &msg,
+	})
+}
+
 func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, principal interface{}) middleware.Responder {
 	key := h.Config.Cluster.BootstrapKey.Load()
 	if params.Data.BootstrapKey != "" && key != params.Data.BootstrapKey {
+		// before we switch to cluster mode, check if folder for storage is compatible with dataplane
+		key, err := configuration.DecodeBootstrapKey(params.Data.BootstrapKey)
+		if err != nil {
+			return h.err406(err, nil)
+		}
+		storageDir := key["storage-dir"]
+		if storageDir != "" {
+			_, errStorage := misc.CheckOrCreateWritableDirectory(storageDir)
+			if errStorage != nil {
+				return h.err409(errStorage, nil)
+			}
+			h.Config.Cluster.StorageDir.Store(storageDir)
+		}
+
 		h.Config.Mode.Store("cluster")
 		h.Config.Cluster.BootstrapKey.Store(params.Data.BootstrapKey)
 		h.Config.Cluster.Clear()
