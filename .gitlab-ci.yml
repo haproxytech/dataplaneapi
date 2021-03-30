@@ -35,7 +35,7 @@ build:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:1.15
+    name: $CI_REGISTRY_GO/golang:1.16
     entrypoint: [ "" ]
   tags:
     - go
@@ -50,7 +50,7 @@ build:
     name: $CI_REGISTRY_GO/docker:stable
     entrypoint: [ "" ]
   services:
-    - name: $CI_REGISTRY_GO/docker:18.09.7-dind
+    - name: $CI_REGISTRY_GO/docker:20.10.5-dind
       alias: docker
   variables:
     LOCAL_IP_ADDRESS: docker
