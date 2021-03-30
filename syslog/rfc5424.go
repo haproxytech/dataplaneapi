@@ -59,7 +59,7 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 
 	msg := strings.Join(messages, " ")
 
-	r.syslog.Channel(sev).Log(msg)
+	r.syslog.Channel(sev).Msgid(r.msgID).Log(msg)
 
 	return
 }
