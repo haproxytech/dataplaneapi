@@ -291,6 +291,82 @@ func (o *CommitTransactionNotFound) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
+// CommitTransactionNotAcceptableCode is the HTTP code returned for type CommitTransactionNotAcceptable
+const CommitTransactionNotAcceptableCode int = 406
+
+/*CommitTransactionNotAcceptable The specified resource cannot be handled
+
+swagger:response commitTransactionNotAcceptable
+*/
+type CommitTransactionNotAcceptable struct {
+	/*Configuration file version
+
+	  Default: 0
+	*/
+	ConfigurationVersion int64 `json:"Configuration-Version"`
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
+}
+
+// NewCommitTransactionNotAcceptable creates CommitTransactionNotAcceptable with default headers values
+func NewCommitTransactionNotAcceptable() *CommitTransactionNotAcceptable {
+
+	var (
+		// initialize headers with default values
+
+		configurationVersionDefault = int64(0)
+	)
+
+	return &CommitTransactionNotAcceptable{
+
+		ConfigurationVersion: configurationVersionDefault,
+	}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the commit transaction not acceptable response
+func (o *CommitTransactionNotAcceptable) WithConfigurationVersion(configurationVersion int64) *CommitTransactionNotAcceptable {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the commit transaction not acceptable response
+func (o *CommitTransactionNotAcceptable) SetConfigurationVersion(configurationVersion int64) {
+	o.ConfigurationVersion = configurationVersion
+}
+
+// WithPayload adds the payload to the commit transaction not acceptable response
+func (o *CommitTransactionNotAcceptable) WithPayload(payload *models.Error) *CommitTransactionNotAcceptable {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the commit transaction not acceptable response
+func (o *CommitTransactionNotAcceptable) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *CommitTransactionNotAcceptable) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
+
+	rw.WriteHeader(406)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 /*CommitTransactionDefault General Error
 
 swagger:response commitTransactionDefault

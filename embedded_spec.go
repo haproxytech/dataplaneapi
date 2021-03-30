@@ -9250,6 +9250,9 @@ func init() {
           "404": {
             "$ref": "#/responses/NotFound"
           },
+          "406": {
+            "$ref": "#/responses/NotAcceptable"
+          },
           "default": {
             "$ref": "#/responses/DefaultError"
           }
@@ -17061,6 +17064,7 @@ func init() {
           "type": "string",
           "enum": [
             "failed",
+            "outdated",
             "in_progress",
             "success"
           ]
@@ -17144,6 +17148,19 @@ func init() {
         }
       }
     },
+    "NotAcceptable": {
+      "description": "The specified resource cannot be handled",
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "default": 0,
+          "description": "Configuration file version"
+        }
+      }
+    },
     "NotFound": {
       "description": "The specified resource was not found",
       "schema": {
@@ -17170,61 +17187,44 @@ func init() {
   ],
   "tags": [
     {
-      "description": "API autodiscover endpoints",
-      "name": "Discovery"
-    },
-    {
-      "name": "Information"
-    },
-    {
-      "name": "Specification"
-    },
-    {
-      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
-      "name": "Transactions"
-    },
-    {
-      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
-      "name": "Reloads"
-    },
-    {
-      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends\nconnected to it via default_backend or use-backend directives.\n",
-      "name": "Sites"
-    },
-    {
-      "description": "Stats container",
-      "name": "Stats"
-    },
-    {
-      "description": "Managing global configuration (advanced mode)",
-      "name": "Global"
-    },
-    {
-      "description": "Managing defaults configuration (advanced mode)",
-      "name": "Defaults"
-    },
-    {
-      "description": "Managing frontend configuration (advanced mode)",
-      "name": "Frontend"
+      "name": "ACL"
     },
     {
       "description": "Managing backend configurations (advanced mode)",
       "name": "Backend"
     },
     {
+      "name": "BackendSwitchingRule"
+    },
+    {
       "description": "Managing frontend bind configurations (advanced mode)",
       "name": "Bind"
     },
     {
-      "description": "Managing backend server configurations (advanced mode)",
-      "name": "Server"
+      "name": "Cluster"
     },
     {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
     },
     {
-      "name": "TCPRequestRule"
+      "description": "Managing defaults configuration (advanced mode)",
+      "name": "Defaults"
+    },
+    {
+      "description": "API autodiscover endpoints",
+      "name": "Discovery"
+    },
+    {
+      "name": "Filter"
+    },
+    {
+      "description": "Managing frontend configuration (advanced mode)",
+      "name": "Frontend"
+    },
+    {
+      "description": "Managing global configuration (advanced mode)",
+      "name": "Global"
     },
     {
       "name": "HTTPRequestRule"
@@ -17233,31 +17233,13 @@ func init() {
       "name": "HTTPResponseRule"
     },
     {
-      "name": "BackendSwitchingRule"
-    },
-    {
-      "name": "ServerSwitchingRule"
-    },
-    {
-      "name": "TCPResponseRule"
-    },
-    {
-      "name": "Filter"
-    },
-    {
-      "name": "StickRule"
-    },
-    {
-      "name": "StickTable"
+      "name": "Information"
     },
     {
       "name": "LogTarget"
     },
     {
-      "name": "ACL"
-    },
-    {
-      "name": "Resolver"
+      "name": "Maps"
     },
     {
       "name": "Nameserver"
@@ -17269,22 +17251,60 @@ func init() {
       "name": "PeerEntry"
     },
     {
-      "name": "Cluster"
+      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
+      "name": "Reloads"
     },
     {
-      "name": "Maps"
+      "name": "Resolver"
     },
     {
-      "name": "SpecificationOpenapiv3"
+      "description": "Managing backend server configurations (advanced mode)",
+      "name": "Server"
+    },
+    {
+      "name": "ServerSwitchingRule"
     },
     {
       "name": "ServiceDiscovery"
+    },
+    {
+      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends\nconnected to it via default_backend or use-backend directives.\n",
+      "name": "Sites"
+    },
+    {
+      "name": "Specification"
+    },
+    {
+      "name": "SpecificationOpenapiv3"
     },
     {
       "name": "Spoe"
     },
     {
       "name": "SpoeTransactions"
+    },
+    {
+      "description": "Stats container",
+      "name": "Stats"
+    },
+    {
+      "name": "StickRule"
+    },
+    {
+      "name": "StickTable"
+    },
+    {
+      "name": "Storage"
+    },
+    {
+      "name": "TCPRequestRule"
+    },
+    {
+      "name": "TCPResponseRule"
+    },
+    {
+      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
+      "name": "Transactions"
     }
   ],
   "externalDocs": {
@@ -31184,6 +31204,19 @@ func init() {
               }
             }
           },
+          "406": {
+            "description": "The specified resource cannot be handled",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
           "default": {
             "description": "General Error",
             "schema": {
@@ -39348,6 +39381,7 @@ func init() {
           "type": "string",
           "enum": [
             "failed",
+            "outdated",
             "in_progress",
             "success"
           ]
@@ -39431,6 +39465,19 @@ func init() {
         }
       }
     },
+    "NotAcceptable": {
+      "description": "The specified resource cannot be handled",
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "headers": {
+        "Configuration-Version": {
+          "type": "integer",
+          "default": 0,
+          "description": "Configuration file version"
+        }
+      }
+    },
     "NotFound": {
       "description": "The specified resource was not found",
       "schema": {
@@ -39457,61 +39504,44 @@ func init() {
   ],
   "tags": [
     {
-      "description": "API autodiscover endpoints",
-      "name": "Discovery"
-    },
-    {
-      "name": "Information"
-    },
-    {
-      "name": "Specification"
-    },
-    {
-      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
-      "name": "Transactions"
-    },
-    {
-      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
-      "name": "Reloads"
-    },
-    {
-      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends\nconnected to it via default_backend or use-backend directives.\n",
-      "name": "Sites"
-    },
-    {
-      "description": "Stats container",
-      "name": "Stats"
-    },
-    {
-      "description": "Managing global configuration (advanced mode)",
-      "name": "Global"
-    },
-    {
-      "description": "Managing defaults configuration (advanced mode)",
-      "name": "Defaults"
-    },
-    {
-      "description": "Managing frontend configuration (advanced mode)",
-      "name": "Frontend"
+      "name": "ACL"
     },
     {
       "description": "Managing backend configurations (advanced mode)",
       "name": "Backend"
     },
     {
+      "name": "BackendSwitchingRule"
+    },
+    {
       "description": "Managing frontend bind configurations (advanced mode)",
       "name": "Bind"
     },
     {
-      "description": "Managing backend server configurations (advanced mode)",
-      "name": "Server"
+      "name": "Cluster"
     },
     {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
     },
     {
-      "name": "TCPRequestRule"
+      "description": "Managing defaults configuration (advanced mode)",
+      "name": "Defaults"
+    },
+    {
+      "description": "API autodiscover endpoints",
+      "name": "Discovery"
+    },
+    {
+      "name": "Filter"
+    },
+    {
+      "description": "Managing frontend configuration (advanced mode)",
+      "name": "Frontend"
+    },
+    {
+      "description": "Managing global configuration (advanced mode)",
+      "name": "Global"
     },
     {
       "name": "HTTPRequestRule"
@@ -39520,31 +39550,13 @@ func init() {
       "name": "HTTPResponseRule"
     },
     {
-      "name": "BackendSwitchingRule"
-    },
-    {
-      "name": "ServerSwitchingRule"
-    },
-    {
-      "name": "TCPResponseRule"
-    },
-    {
-      "name": "Filter"
-    },
-    {
-      "name": "StickRule"
-    },
-    {
-      "name": "StickTable"
+      "name": "Information"
     },
     {
       "name": "LogTarget"
     },
     {
-      "name": "ACL"
-    },
-    {
-      "name": "Resolver"
+      "name": "Maps"
     },
     {
       "name": "Nameserver"
@@ -39556,22 +39568,60 @@ func init() {
       "name": "PeerEntry"
     },
     {
-      "name": "Cluster"
+      "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
+      "name": "Reloads"
     },
     {
-      "name": "Maps"
+      "name": "Resolver"
     },
     {
-      "name": "SpecificationOpenapiv3"
+      "description": "Managing backend server configurations (advanced mode)",
+      "name": "Server"
+    },
+    {
+      "name": "ServerSwitchingRule"
     },
     {
       "name": "ServiceDiscovery"
+    },
+    {
+      "description": "Managing sites (simple configuration mode). Sites are considered as one frontend with multiple backends\nconnected to it via default_backend or use-backend directives.\n",
+      "name": "Sites"
+    },
+    {
+      "name": "Specification"
+    },
+    {
+      "name": "SpecificationOpenapiv3"
     },
     {
       "name": "Spoe"
     },
     {
       "name": "SpoeTransactions"
+    },
+    {
+      "description": "Stats container",
+      "name": "Stats"
+    },
+    {
+      "name": "StickRule"
+    },
+    {
+      "name": "StickTable"
+    },
+    {
+      "name": "Storage"
+    },
+    {
+      "name": "TCPRequestRule"
+    },
+    {
+      "name": "TCPResponseRule"
+    },
+    {
+      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
+      "name": "Transactions"
     }
   ],
   "externalDocs": {
