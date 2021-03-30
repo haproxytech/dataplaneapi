@@ -17,6 +17,7 @@ package handlers
 
 import (
 	"fmt"
+	"path"
 	"strconv"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -24,6 +25,7 @@ import (
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/client-native/v2/misc"
 	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/client-native/v2/storage"
 
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -108,6 +110,18 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 			_, errStorage := misc.CheckOrCreateWritableDirectory(storageDir)
 			if errStorage != nil {
 				return h.err409(errStorage, nil)
+			}
+			dirs := []storage.FileType{
+				storage.BackupsType, storage.MapsType, storage.SSLType,
+				storage.SpoeTransactionsType, storage.SpoeType,
+				storage.TransactionsType,
+				storage.FileType("certs-cluster"),
+			}
+			for _, dir := range dirs {
+				_, errStorage := misc.CheckOrCreateWritableDirectory(path.Join(storageDir, string(dir)))
+				if errStorage != nil {
+					return h.err409(errStorage, nil)
+				}
 			}
 			h.Config.Cluster.StorageDir.Store(storageDir)
 		}
