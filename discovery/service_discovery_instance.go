@@ -89,6 +89,7 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 			continue
 		}
 		if !service.Changed() {
+			s.services[service.GetName()].deleted = false
 			continue
 		}
 		r, err := s.initService(service)
@@ -182,6 +183,7 @@ func (s *ServiceDiscoveryInstance) removeDeleted() bool {
 	reload := false
 	for service := range s.services {
 		if s.services[service].deleted {
+			s.services[service].confService.SetTransactionID(s.transactionID)
 			err := s.services[service].confService.Delete()
 			if err == nil {
 				reload = true
