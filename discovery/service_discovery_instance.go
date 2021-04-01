@@ -106,7 +106,8 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 		}
 		reload = reload || r
 	}
-	reload = reload || s.removeDeleted()
+	r := s.removeDeleted()
+	reload = reload || r
 	if reload {
 		if err := s.commitTransaction(); err != nil {
 			return err
