@@ -61,7 +61,7 @@ type ReplaceConsulHandlerImpl struct {
 func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
 	id := uuid.New().String()
 	params.Data.ID = &id
-	if err := validateData(params.Data, c.UseValidation); err != nil {
+	if err := validateConsulData(params.Data, c.UseValidation); err != nil {
 		e := misc.HandleError(err)
 		return service_discovery.NewCreateConsulDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -130,7 +130,7 @@ func (c *GetConsulsHandlerImpl) Handle(params service_discovery.GetConsulsParams
 
 // Handle executing the request and returning a response
 func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
-	if err := validateData(params.Data, c.UseValidation); err != nil {
+	if err := validateConsulData(params.Data, c.UseValidation); err != nil {
 		e := misc.HandleError(err)
 		return service_discovery.NewReplaceConsulDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -164,7 +164,7 @@ func getConsuls(discovery sc.ServiceDiscoveries) (models.Consuls, error) {
 	return consuls, nil
 }
 
-func validateData(data *models.Consul, useValidation bool) error {
+func validateConsulData(data *models.Consul, useValidation bool) error {
 	if useValidation {
 		validationErr := data.Validate(strfmt.Default)
 		if validationErr != nil {
