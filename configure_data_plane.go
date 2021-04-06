@@ -529,6 +529,14 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 	}
 
+	// create stored AWS instances
+	for _, data := range cfg.ServiceDiscovery.AWSRegions {
+		err := discovery.AddNode("aws", *data.ID, data)
+		if err != nil {
+			log.Warning("Error creating AWS instance: " + err.Error())
+		}
+	}
+
 	api.ConfigurationGetConfigurationVersionHandler = &handlers.ConfigurationGetConfigurationVersionHandlerImpl{Client: client}
 
 	// map file storage handlers
