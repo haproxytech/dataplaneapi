@@ -21,7 +21,7 @@ clean:
 .PHONY: build
 build:
 	mkdir -p ${DATAPLANEAPI_PATH}/build
-	GOOS=$(GOOS) CGO_ENABLED=$(CGO_ENABLED) go build -ldflags "-X main.GitRepo=${GIT_REPO} -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
+	GOOS=$(GOOS) CGO_ENABLED=$(CGO_ENABLED) go build -trimpath -ldflags "-X main.GitRepo=${GIT_REPO} -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
 
 .PHONY: e2e
 e2e: build
