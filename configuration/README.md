@@ -4,7 +4,8 @@
 
 you can select between two formats, yaml & hcl
 
-examples can be seen [hcl](example-dataplaneapi.hcl) and [yaml](example-dataplaneapi.yaml)
+examples can be seen [hcl](examples/example-dataplaneapi.hcl) and [yaml](examples/example-dataplaneapi.yaml)
+full examples of configuration also can be seen at [hcl](examples/example-full.hcl) and [yaml](examples/example-full.yaml)
 
 ## Converting between formats
 

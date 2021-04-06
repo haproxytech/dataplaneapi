@@ -62,6 +62,23 @@ var groupParents = map[string]string{
 	"syslog":      "log",
 }
 
+var itemDefaults = map[string]string{
+	"port":              "80",
+	"listen-limit":      "null",
+	"tls-host":          "null",
+	"tls-port":          "null",
+	"tls-certificate":   "null",
+	"tls-key":           "null",
+	"tls-ca":            "null",
+	"tls-listen-limit":  "null",
+	"tls-keep-alive":    "null",
+	"tls-read-timeout":  "null",
+	"tls-write-timeout": "null",
+	"userlist-file":     "null",
+	"backups-dir":       "/tmp/backups",
+	"scheme":            "http",
+}
+
 type Attribute struct {
 	Name       string
 	AttName    string
@@ -77,6 +94,7 @@ type Attribute struct {
 	Save       bool
 	Deprecated bool
 	IsHCLKey   bool
+	Example    string
 }
 
 type ParseGroup struct {
@@ -88,6 +106,7 @@ type ParseGroup struct {
 	Parent        string
 	Elements      []string
 	Attributes    []Attribute
+	HasACLKey     bool
 	IsList        bool
 }
 
@@ -133,6 +152,9 @@ func readServerData(filePath string, pd *ParseData, structName string, attName s
 			for i, g := range pd.Groups {
 				if g.Name == res.Group {
 					found = true
+					if res.IsHCLKey {
+						g.HasACLKey = true
+					}
 					g.Attributes = append(g.Attributes, res)
 					if g.MaxSize < len(res.Name) {
 						g.MaxSize = len(res.Name)
@@ -154,6 +176,7 @@ func readServerData(filePath string, pd *ParseData, structName string, attName s
 					MaxTypeSize:   len(res.Type),
 					Attributes:    []Attribute{res},
 					IsList:        isList,
+					HasACLKey:     res.IsHCLKey,
 				})
 			}
 		}
@@ -183,6 +206,55 @@ func capitalizeChunk(str string) string {
 	result := []rune(str)
 	result[0] = unicode.ToUpper(result[0])
 	return string(result)
+}
+
+func stripAtomic(str string) string {
+	if len(str) == 0 {
+		return ""
+	}
+	if strings.HasPrefix(str, "Atomic") {
+		return strings.ToLower(strings.TrimPrefix(str, "Atomic"))
+	}
+	return str
+}
+
+func isListItem(att Attribute) string {
+	if att.IsHCLKey {
+		return "- "
+	}
+	return "  "
+}
+
+func getExample(att Attribute) string {
+	if att.Example != "" {
+		return att.Example
+	}
+	if att.Default != "" {
+		return fmt.Sprintf(`"%s"`, att.Default)
+	}
+	if att.Type == "bool" {
+		return "false"
+	}
+	if v, ok := itemDefaults[att.FileName]; ok {
+		return v
+	}
+	return "null"
+}
+
+func getQuotedExample(att Attribute) string {
+	if att.Example != "" {
+		return fmt.Sprintf(`"%s"`, att.Example)
+	}
+	if att.Default != "" {
+		return fmt.Sprintf(`"%s"`, att.Default)
+	}
+	if att.Type == "bool" {
+		return `"false"`
+	}
+	if v, ok := itemDefaults[att.FileName]; ok {
+		return fmt.Sprintf(`"%s"`, v)
+	}
+	return `"null"`
 }
 
 func main() {
@@ -230,7 +302,11 @@ func main() {
 
 	// prepare template function
 	funcMap := template.FuncMap{
-		"Capitalize": capitalize,
+		"Capitalize":    capitalize,
+		"StripAtomic":   stripAtomic,
+		"Example":       getExample,
+		"QuotedExample": getQuotedExample,
+		"IsListItem":    isListItem,
 	}
 	// create configuration_generated
 	templatePath := path.Join(dir, "generate", "configuration.tmpl")
@@ -268,6 +344,40 @@ func main() {
 		log.Panic(err)
 	}
 	fmtFile(filePath)
+	// create configuration example yaml
+	templatePath = path.Join(dir, "generate", "configuration-example-yaml.tmpl")
+	tmpl, err = template.New("configuration-example-yaml.tmpl").Funcs(funcMap).ParseFiles(templatePath)
+	if err != nil {
+		log.Panic(err)
+	}
+	tmpl = tmpl.Funcs(funcMap)
+	filePath = path.Join(dir, "configuration/examples/example-full.yaml")
+	f, err = os.Create(filePath)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer f.Close()
+	err = tmpl.Execute(f, pd)
+	if err != nil {
+		log.Panic(err)
+	}
+	// create configuration example hcl
+	templatePath = path.Join(dir, "generate", "configuration-example-hcl.tmpl")
+	tmpl, err = template.New("configuration-example-hcl.tmpl").Funcs(funcMap).ParseFiles(templatePath)
+	if err != nil {
+		log.Panic(err)
+	}
+	tmpl = tmpl.Funcs(funcMap)
+	filePath = path.Join(dir, "configuration/examples/example-full.hcl")
+	f, err = os.Create(filePath)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer f.Close()
+	err = tmpl.Execute(f, pd)
+	if err != nil {
+		log.Panic(err)
+	}
 }
 
 func splitBy(c rune) bool {
@@ -285,6 +395,7 @@ func processLine(line string) (Attribute, error) {
 	var save bool
 	var deprecated bool
 	var isHCLKey bool
+	var example string
 	for _, part := range parts[2:] {
 		if strings.Contains(part, "long:") {
 			p := strings.Split(part, `"`)
@@ -301,6 +412,10 @@ func processLine(line string) (Attribute, error) {
 		if strings.Contains(part, "default:") {
 			p := strings.Split(part, `"`)
 			defaultName = p[1]
+		}
+		if strings.Contains(part, "example:") {
+			p := strings.Split(part, `"`)
+			example = p[1]
 		}
 		if strings.Contains(part, "group:") {
 			p := strings.Split(part, `"`)
@@ -344,6 +459,7 @@ func processLine(line string) (Attribute, error) {
 		Save:       save,
 		Deprecated: deprecated,
 		IsHCLKey:   isHCLKey,
+		Example:    example,
 	}, nil
 }
 

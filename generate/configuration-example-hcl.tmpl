@@ -1,0 +1,54 @@
+config_version = 2
+{{- range $i, $MainGroup := .Groups}}
+  {{- if ne .Name ""}}
+    {{- if eq .Parent ""}}
+{{- if ne $i 1}}
+}
+{{- end}}
+
+{{ .Name }} {
+
+		{{- range .Attributes}}
+    {{- if not .Deprecated}}
+    {{- if eq .Type "[]string" }}
+{{ . | IsListItem }}{{ .FileName }} =  [{{ . | QuotedExample }}]
+{{- else }}
+{{ . | IsListItem }}{{ .FileName }} =  {{ . | QuotedExample }}
+		{{- end}}
+		{{- end}}
+		{{- end}}
+
+    {{- $indexinsideLoopFirst := 0}}
+		{{- range $SubGroup := $.Groups}}
+			{{- if eq $MainGroup.Name .Parent }}
+  {{- if ne $indexinsideLoopFirst 0}}
+  }
+  {{- end}}
+
+  {{ .Name }} {{- if not .HasACLKey }} { {{- end -}}
+    {{- range $index,$a := .Attributes -}}
+    {{- if not .Deprecated -}}
+    {{- if $SubGroup.HasACLKey }}{{- if eq $index 0 }} {{ . | QuotedExample }} { {{- else }}
+    {{ .FileName }} =  {{ . | QuotedExample }}
+    {{- end -}}{{- end -}}
+    {{- if not $SubGroup.HasACLKey }}
+    {{ .FileName }} =  {{ . | QuotedExample }}
+    {{- end -}}
+    {{- $indexinsideLoopFirst := 1 }}
+		{{- end}}
+		{{- end}}
+  }
+
+			{{- end}}
+		{{- end}}
+    {{- end}}
+
+  {{- else}}
+    {{- range .Attributes}}
+    {{- if not .Deprecated}}
+{{ .SpecName }} =  {{ . | QuotedExample }}
+    {{- end}}
+    {{- end}}
+  {{- end}}
+{{- end}}
+}

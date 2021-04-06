@@ -62,18 +62,18 @@ type HAProxyConfiguration struct {
 	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20" group:"transaction"`
 	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check" group:"reload"`
 	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher watcher for the configuration file" group:"dataplaneapi"`
-	PIDFile              string `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi"`
+	PIDFile              string `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi" example:"/tmp/dataplane.pid"`
 }
 
 type User struct {
-	Name     string `long:"name" description:"User name" group:"user" hcl:"name,key"`
-	Insecure bool   `long:"insecure" description:"insecure password" group:"user"`
-	Password string `long:"password" description:"password" group:"user"`
+	Name     string `long:"name" description:"User name" group:"user" hcl:"name,key" example:"admin"`
+	Insecure bool   `long:"insecure" description:"insecure password" group:"user" example:"true"`
+	Password string `long:"password" description:"password" group:"user" example:"adminpwd"`
 }
 
 type APIConfiguration struct {
-	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised"`
-	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised"`
+	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised" example:"10.2.3.4"`
+	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised" example:"80"`
 }
 
 type LoggingOptions struct {
@@ -144,7 +144,7 @@ type ServiceDiscovery struct {
 }
 
 type Configuration struct {
-	Name                   AtomicString         `yaml:"name"`
+	Name                   AtomicString         `yaml:"name" example:"famous_condor"`
 	storage                Storage              `yaml:"-"`
 	HAProxy                HAProxyConfiguration `yaml:"-"`
 	Logging                LoggingOptions       `yaml:"-"`

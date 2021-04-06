@@ -1,0 +1,38 @@
+config_version: 2
+{{- range $MainGroup := .Groups}}
+  {{- if ne .Name ""}}
+    {{- if eq .Parent ""}}
+{{ .Name }}:
+
+		{{- range .Attributes}}
+    {{- if not .Deprecated}}
+    {{- if eq .Type "[]string" }}
+{{ . | IsListItem }}{{ .FileName }}: # {{.Type | StripAtomic }}
+  - {{ . | Example }}
+{{- else }}
+{{ . | IsListItem }}{{ .FileName }}: {{ . | Example }} # {{.Type | StripAtomic }}
+		{{- end}}
+		{{- end}}
+		{{- end}}
+
+		{{- range $SubGroup := $.Groups}}
+			{{- if eq $MainGroup.Name .Parent }}
+  {{ .Name }}:
+    {{- range .Attributes}}
+    {{- if not .Deprecated}}
+  {{ . | IsListItem }}{{ .FileName }}: {{ . | Example }} # {{.Type | StripAtomic }} 2
+		{{- end}}
+		{{- end}}
+
+			{{- end}}
+		{{- end}}
+
+    {{- end}}
+  {{- else}}
+    {{- range .Attributes}}
+    {{- if not .Deprecated}}
+{{ .SpecName }}: {{ . | Example }} # {{.Type | StripAtomic }}
+    {{- end}}
+    {{- end}}
+  {{- end}}
+{{- end}}

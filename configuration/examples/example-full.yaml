@@ -1,0 +1,95 @@
+config_version: 2
+name: famous_condor # string
+mode: "single" # string
+status: null # string
+dataplaneapi:
+  scheme: # []string
+  - http
+  cleanup-timeout: "10s" # time.Duration
+  graceful-timeout: "15s" # time.Duration
+  max-header-size: "1MiB" # flagext.ByteSize
+  socket-path: "/var/run/data-plane.sock" # flags.Filename
+  host: "localhost" # string
+  port: 80 # int
+  listen-limit: null # int
+  keep-alive: "3m" # time.Duration
+  read-timeout: "30s" # time.Duration
+  write-timeout: "60s" # time.Duration
+  show-system-info: false # bool
+  disable-inotify: false # bool
+  pid-file: /tmp/dataplane.pid # string
+  tls:
+    tls-host: null # string 2
+    tls-port: null # int 2
+    tls-certificate: null # flags.Filename 2
+    tls-key: null # flags.Filename 2
+    tls-ca: null # flags.Filename 2
+    tls-listen-limit: null # int 2
+    tls-keep-alive: null # time.Duration 2
+    tls-read-timeout: null # time.Duration 2
+    tls-write-timeout: null # time.Duration 2
+  user:
+  - name: admin # string 2
+    insecure: true # bool 2
+    password: adminpwd # string 2
+  userlist:
+    userlist: "controller" # string 2
+    userlist-file: null # string 2
+  transaction:
+    transaction-dir: "/tmp/haproxy" # string 2
+    backups-number: "0" # int 2
+    backups-dir: /tmp/backups # string 2
+    max-open-transactions: "20" # int64 2
+  resources:
+    maps-dir: "/etc/haproxy/maps" # string 2
+    ssl-certs-dir: "/etc/haproxy/ssl" # string 2
+    update-map-files: false # bool 2
+    update-map-files-period: "10" # int64 2
+    spoe-dir: "/etc/haproxy/spoe" # string 2
+    spoe-transaction-dir: "/tmp/spoe-haproxy" # string 2
+  advertised:
+    api-address: 10.2.3.4 # string 2
+    api-port: 80 # int64 2
+haproxy:
+  config-file: "/etc/haproxy/haproxy.cfg" # string
+  haproxy-bin: "haproxy" # string
+  master-runtime: null # string
+  fid: null # string
+  master-worker-mode: false # bool
+  reload:
+    reload-delay: "5" # int 2
+    reload-cmd: null # string 2
+    restart-cmd: null # string 2
+    reload-retention: "1" # int 2
+    validate-cmd: null # string 2
+cluster:
+  cluster-tls-dir: null # string
+  id: null # string
+  bootstrap_key: null # string
+  active_bootstrap_key: null # string
+  token: null # string
+  url: null # string
+  port: 80 # string
+  api_base_path: null # string
+  api_nodes_path: null # string
+  api_register_path: null # string
+  storage-dir: null # string
+  cert-path: null # string
+  cert-fetched: null # bool
+  name: null # string
+  description: null # string
+service_discovery:
+  consuls: null # []*models.Consul
+  awsRegions: null # []*models.AwsRegion
+log:
+  log-to: "stdout" # string
+  log-file: "/var/log/dataplaneapi/dataplaneapi.log" # string
+  log-level: "warning" # string
+  log-format: "text" # string
+  apache-common-log-format: "%h" # string
+  syslog:
+    syslog-address: null # string 2
+    syslog-protocol: "tcp" # string 2
+    syslog-tag: "dataplaneapi" # string 2
+    syslog-level: "debug" # string 2
+    syslog-facility: "local0" # string 2
