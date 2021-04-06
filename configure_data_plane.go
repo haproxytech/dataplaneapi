@@ -515,6 +515,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.ServiceDiscoveryGetConsulsHandler = &handlers.GetConsulsHandlerImpl{Discovery: discovery}
 	api.ServiceDiscoveryReplaceConsulHandler = &handlers.ReplaceConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
 
+	api.ServiceDiscoveryCreateAWSRegionHandler = &handlers.CreateAWSHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveAWS}
+
 	// create stored consul instances
 	for _, data := range cfg.ServiceDiscovery.Consuls {
 		err := discovery.AddNode("consul", *data.ID, data)
