@@ -128,3 +128,32 @@ func (g GetAWSRegionsHandlerImpl) Handle(params service_discovery.GetAWSRegionsP
 	return service_discovery.NewGetAWSRegionsOK().WithPayload(&service_discovery.GetAWSRegionsOKBody{Data: regions})
 }
 
+type ReplaceAWSRegionHandlerImpl struct {
+	Discovery       sc.ServiceDiscoveries
+	UseValidation   bool
+	PersistCallback func([]*models.AwsRegion) error
+}
+
+func (r ReplaceAWSRegionHandlerImpl) Handle(params service_discovery.ReplaceAWSRegionParams, i interface{}) middleware.Responder {
+	handleError := func(err error) *service_discovery.ReplaceAWSRegionDefault {
+		e := misc.HandleError(err)
+		return service_discovery.NewReplaceAWSRegionDefault(int(*e.Code)).WithPayload(e)
+	}
+	var err error
+	if err = validateAWSData(params.Data, r.UseValidation); err != nil {
+		return handleError(err)
+	}
+	if err = r.Discovery.UpdateNode("aws", *params.Data.ID, params.Data); err != nil {
+		return handleError(err)
+	}
+	var regions models.AwsRegions
+	regions, err = getAWSRegions(r.Discovery)
+	if err != nil {
+		return handleError(err)
+	}
+	if err = r.PersistCallback(regions); err != nil {
+		return handleError(err)
+	}
+	return service_discovery.NewReplaceAWSRegionOK().WithPayload(params.Data)
+}
+
