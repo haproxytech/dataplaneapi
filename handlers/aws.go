@@ -157,3 +157,26 @@ func (r ReplaceAWSRegionHandlerImpl) Handle(params service_discovery.ReplaceAWSR
 	return service_discovery.NewReplaceAWSRegionOK().WithPayload(params.Data)
 }
 
+type DeleteAWSRegionHandlerImpl struct {
+	Discovery       sc.ServiceDiscoveries
+	PersistCallback func([]*models.AwsRegion) error
+}
+
+func (d DeleteAWSRegionHandlerImpl) Handle(params service_discovery.DeleteAWSRegionParams, i interface{}) middleware.Responder {
+	handleError := func(err error) *service_discovery.DeleteAWSRegionDefault {
+		e := misc.HandleError(err)
+		return service_discovery.NewDeleteAWSRegionDefault(int(*e.Code)).WithPayload(e)
+	}
+	var err error
+	if err = d.Discovery.RemoveNode("aws", params.ID); err != nil {
+		return handleError(err)
+	}
+	var regions models.AwsRegions
+	if regions, err = getAWSRegions(d.Discovery); err != nil {
+		return handleError(err)
+	}
+	if err = d.PersistCallback(regions); err != nil {
+		return handleError(err)
+	}
+	return service_discovery.NewDeleteAWSRegionNoContent()
+}
