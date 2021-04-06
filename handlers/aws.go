@@ -114,3 +114,17 @@ func (g GetAWSRegionHandlerImpl) Handle(params service_discovery.GetAWSRegionPar
 	}
 	return service_discovery.NewGetAWSRegionOK().WithPayload(&service_discovery.GetAWSRegionOKBody{Data: region})
 }
+
+type GetAWSRegionsHandlerImpl struct {
+	Discovery sc.ServiceDiscoveries
+}
+
+func (g GetAWSRegionsHandlerImpl) Handle(params service_discovery.GetAWSRegionsParams, i interface{}) middleware.Responder {
+	regions, err := getAWSRegions(g.Discovery)
+	if err != nil {
+		e := misc.HandleError(err)
+		return service_discovery.NewGetAWSRegionsDefault(int(*e.Code)).WithPayload(e)
+	}
+	return service_discovery.NewGetAWSRegionsOK().WithPayload(&service_discovery.GetAWSRegionsOKBody{Data: regions})
+}
+
