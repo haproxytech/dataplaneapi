@@ -192,6 +192,178 @@ func init() {
         }
       }
     },
+    "/service_discovery/aws": {
+      "get": {
+        "description": "Return all configured AWS regions.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an array of all configured AWS regions",
+        "operationId": "getAWSRegions",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/awsRegions"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Add a new AWS region.\nCredentials are not required in case Dataplane API is running in an EC2 instance with proper IAM role attached.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Add a new AWS region",
+        "operationId": "createAWSRegion",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Resource created",
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/service_discovery/aws/{id}": {
+      "get": {
+        "description": "Return one AWS Region configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an AWS region",
+        "operationId": "getAWSRegion",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "AWS region id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/awsRegion"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replace an AWS region configuration by its id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Replace an AWS region",
+        "operationId": "replaceAWSRegion",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "AWS Region ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource updated",
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete an AWS region configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Delete an AWS region",
+        "operationId": "deleteAWSRegion",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "AWS region ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resource deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/service_discovery/consul": {
       "get": {
         "description": "Returns all configured Consul servers.",
@@ -9423,6 +9595,135 @@ func init() {
         "$ref": "#/definitions/acl"
       }
     },
+    "awsFilters": {
+      "type": "object",
+      "required": [
+        "key",
+        "value"
+      ],
+      "properties": {
+        "key": {
+          "description": "Key to use as filter, using the format specified at https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html#options",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value of the filter to use",
+          "type": "string"
+        }
+      }
+    },
+    "awsRegion": {
+      "description": "AWS region configuration",
+      "type": "object",
+      "title": "AWS region",
+      "required": [
+        "name",
+        "region",
+        "enabled",
+        "retry_timeout",
+        "ipv4_address"
+      ],
+      "properties": {
+        "access_key_id": {
+          "description": "AWS Access Key ID.",
+          "type": "string"
+        },
+        "allowlist": {
+          "description": "Specify the AWS filters used to filter the EC2 instances to add",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/awsFilters"
+          }
+        },
+        "denylist": {
+          "description": "Specify the AWS filters used to filter the EC2 instances to ignore",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/awsFilters"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Auto generated ID.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "ipv4_address": {
+          "description": "Select which IPv4 address the Service Discovery has to use for the backend server entry",
+          "type": "string",
+          "enum": [
+            "private",
+            "public"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "retry_timeout": {
+          "description": "Duration in seconds in-between data pulling requests to the AWS region",
+          "type": "integer",
+          "minimum": 1
+        },
+        "secret_access_key": {
+          "description": "AWS Secret Access Key.",
+          "type": "string"
+        },
+        "server_slots_base": {
+          "type": "integer",
+          "default": 10
+        },
+        "server_slots_growth_increment": {
+          "type": "integer"
+        },
+        "server_slots_growth_type": {
+          "type": "string",
+          "default": "exponential",
+          "enum": [
+            "linear",
+            "exponential"
+          ]
+        }
+      },
+      "example": {
+        "access_key_id": "****************L7GT",
+        "allowlist": [
+          {
+            "key": "tag-key",
+            "value": "Instance:Having:This:Tag"
+          }
+        ],
+        "denylist": [
+          {
+            "key": "tag:Environment",
+            "value": "development"
+          }
+        ],
+        "enabled": true,
+        "id": 0,
+        "ipv4_address": "private",
+        "name": "frontend-service",
+        "region": "us-east-1",
+        "secret_access_key": "****************soLl"
+      }
+    },
+    "awsRegions": {
+      "description": "AWS regions array",
+      "type": "array",
+      "title": "AWS",
+      "items": {
+        "$ref": "#/definitions/awsRegion"
+      }
+    },
     "backend": {
       "description": "HAProxy backend configuration",
       "type": "object",
@@ -17518,6 +17819,288 @@ func init() {
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/info"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_discovery/aws": {
+      "get": {
+        "description": "Return all configured AWS regions.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an array of all configured AWS regions",
+        "operationId": "getAWSRegions",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/awsRegions"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Add a new AWS region.\nCredentials are not required in case Dataplane API is running in an EC2 instance with proper IAM role attached.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Add a new AWS region",
+        "operationId": "createAWSRegion",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Resource created",
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_discovery/aws/{id}": {
+      "get": {
+        "description": "Return one AWS Region configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an AWS region",
+        "operationId": "getAWSRegion",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "AWS region id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/awsRegion"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replace an AWS region configuration by its id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Replace an AWS region",
+        "operationId": "replaceAWSRegion",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "AWS Region ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource updated",
+            "schema": {
+              "$ref": "#/definitions/awsRegion"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete an AWS region configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Delete an AWS region",
+        "operationId": "deleteAWSRegion",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "AWS region ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resource deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -31917,6 +32500,135 @@ func init() {
       "title": "ACL Lines Array",
       "items": {
         "$ref": "#/definitions/acl"
+      }
+    },
+    "awsFilters": {
+      "type": "object",
+      "required": [
+        "key",
+        "value"
+      ],
+      "properties": {
+        "key": {
+          "description": "Key to use as filter, using the format specified at https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html#options",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value of the filter to use",
+          "type": "string"
+        }
+      }
+    },
+    "awsRegion": {
+      "description": "AWS region configuration",
+      "type": "object",
+      "title": "AWS region",
+      "required": [
+        "name",
+        "region",
+        "enabled",
+        "retry_timeout",
+        "ipv4_address"
+      ],
+      "properties": {
+        "access_key_id": {
+          "description": "AWS Access Key ID.",
+          "type": "string"
+        },
+        "allowlist": {
+          "description": "Specify the AWS filters used to filter the EC2 instances to add",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/awsFilters"
+          }
+        },
+        "denylist": {
+          "description": "Specify the AWS filters used to filter the EC2 instances to ignore",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/awsFilters"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Auto generated ID.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "ipv4_address": {
+          "description": "Select which IPv4 address the Service Discovery has to use for the backend server entry",
+          "type": "string",
+          "enum": [
+            "private",
+            "public"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "retry_timeout": {
+          "description": "Duration in seconds in-between data pulling requests to the AWS region",
+          "type": "integer",
+          "minimum": 1
+        },
+        "secret_access_key": {
+          "description": "AWS Secret Access Key.",
+          "type": "string"
+        },
+        "server_slots_base": {
+          "type": "integer",
+          "default": 10
+        },
+        "server_slots_growth_increment": {
+          "type": "integer"
+        },
+        "server_slots_growth_type": {
+          "type": "string",
+          "default": "exponential",
+          "enum": [
+            "linear",
+            "exponential"
+          ]
+        }
+      },
+      "example": {
+        "access_key_id": "****************L7GT",
+        "allowlist": [
+          {
+            "key": "tag-key",
+            "value": "Instance:Having:This:Tag"
+          }
+        ],
+        "denylist": [
+          {
+            "key": "tag:Environment",
+            "value": "development"
+          }
+        ],
+        "enabled": true,
+        "id": 0,
+        "ipv4_address": "private",
+        "name": "frontend-service",
+        "region": "us-east-1",
+        "secret_access_key": "****************soLl"
+      }
+    },
+    "awsRegions": {
+      "description": "AWS regions array",
+      "type": "array",
+      "title": "AWS",
+      "items": {
+        "$ref": "#/definitions/awsRegion"
       }
     },
     "backend": {

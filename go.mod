@@ -5,9 +5,10 @@ go 1.14
 require (
 	github.com/GehirnInc/crypt v0.0.0-20200316065508-bb7000b8a962
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
-	github.com/aws/aws-sdk-go-v2 v1.3.0
+	github.com/aws/aws-sdk-go-v2 v1.3.1
 	github.com/aws/aws-sdk-go-v2/config v1.1.3
 	github.com/aws/aws-sdk-go-v2/credentials v1.1.3
+	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.2.1
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.2.0
 	github.com/docker/go-units v0.4.0
 	github.com/dustinkirkland/golang-petname v0.0.0-20191129215211-8e5a1ed0cff0
@@ -24,7 +25,7 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v0.1.1-0.20200217212219-353f81969824
 	github.com/google/uuid v1.1.1
-	github.com/haproxytech/client-native/v2 v2.2.1-0.20210329101319-09e6c87ac781
+	github.com/haproxytech/client-native/v2 v2.2.1-0.20210407102617-bc85bacbf574
 	github.com/haproxytech/config-parser/v3 v3.0.1-0.20210212144342-183eb1988d86
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0

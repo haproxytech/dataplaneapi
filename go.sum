@@ -21,12 +21,16 @@ github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496 h1:zV3ejI06
 github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496/go.mod h1:oGkLhpf+kjZl6xBf758TQhh5XrAeiJv/7FRz/2spLIg=
 github.com/aws/aws-sdk-go-v2 v1.3.0 h1:2B/SbB1oOJe8RSl/TIgE11BDE4sX7Z+JupLxTdA2Rjs=
 github.com/aws/aws-sdk-go-v2 v1.3.0/go.mod h1:hTQc/9pYq5bfFACIUY9tc/2SYWd9Vnmw+testmuQeRY=
+github.com/aws/aws-sdk-go-v2 v1.3.1 h1:KKstwh6zsuUhQH3GvSor7M3am/+imPqydFOZHzlkTKc=
+github.com/aws/aws-sdk-go-v2 v1.3.1/go.mod h1:5SmWRTjN6uTRFNCc7rR69xHsdcUJnthmaRHGDsYhpTE=
 github.com/aws/aws-sdk-go-v2/config v1.1.3 h1:pYDr4DTr0w4GfweXhX2ns1ZGyH46nLP/ZeQQodl1s68=
 github.com/aws/aws-sdk-go-v2/config v1.1.3/go.mod h1:yf3tNRNqZKlylefSdp5R3v+sm1el90fhUTcSa/t69Ro=
 github.com/aws/aws-sdk-go-v2/credentials v1.1.3 h1:Q0S5OPP4l9kWrmPNK500pdQhg81x4E3UpvugYG5Wilc=
 github.com/aws/aws-sdk-go-v2/credentials v1.1.3/go.mod h1:afuzRuLhPEe08fePFh4gI9jnHuXd8AJDCYZNo3rKRKE=
 github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.0.4 h1:V7DbyJMo5kq31ZiyQMmjihjexftM1oJ6luRs09M5/Uc=
 github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.0.4/go.mod h1:BDw1ukadBHn//M/n7LqpEgimGS0QtiJePnygMsbuYMs=
+github.com/aws/aws-sdk-go-v2/service/autoscaling v1.2.1 h1:imL02JGNApN3z+9u/meTDeZF37QfpqRmrDnGghGNFvY=
+github.com/aws/aws-sdk-go-v2/service/autoscaling v1.2.1/go.mod h1:bOqVTdQoE8zqisF2vwsiZxZLxLDCOjOvfFohzXsJ/vE=
 github.com/aws/aws-sdk-go-v2/service/ec2 v1.2.0 h1:9NdeHYuvWL/Phh2HsQmv8U6zAtXyfOSt+uLBPE0VUd4=
 github.com/aws/aws-sdk-go-v2/service/ec2 v1.2.0/go.mod h1:ZINomqzd+JbTXCcUphZLGVRyPw8kidb32cONJr5+zI0=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.0.4 h1:DRIpujxvhdv3+xLXCoaKk1VB4vk/Sh8sIOBewLJJpes=
@@ -37,6 +41,8 @@ github.com/aws/aws-sdk-go-v2/service/sts v1.2.0 h1:fGo3atNqTj3SOu1VKb52BUzRcYOhr
 github.com/aws/aws-sdk-go-v2/service/sts v1.2.0/go.mod h1:iGyHChDhzbddWEbC/+g/mT3z+A2JTJthcw+8QubXSgk=
 github.com/aws/smithy-go v1.2.0 h1:0PoGBWXkXDIyVdPaZW9gMhaGzj3UOAgTdiVoHuuZAFA=
 github.com/aws/smithy-go v1.2.0/go.mod h1:SObp3lf9smib00L/v3U2eAKG8FyQ7iLrJnQiAmR5n+E=
+github.com/aws/smithy-go v1.3.0 h1:awbB2OJBZ/Txj+c4q+qhDQs3Ob0sRhBuIIkOD4Aq8yc=
+github.com/aws/smithy-go v1.3.0/go.mod h1:SObp3lf9smib00L/v3U2eAKG8FyQ7iLrJnQiAmR5n+E=
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -168,8 +174,8 @@ github.com/google/renameio v0.1.1-0.20200217212219-353f81969824/go.mod h1:t/HQoY
 github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v2 v2.2.1-0.20210329101319-09e6c87ac781 h1:3oiO1l9io4Jw6I4hVTPk7KZJjeqAKpqhS/cUFD4VT8A=
-github.com/haproxytech/client-native/v2 v2.2.1-0.20210329101319-09e6c87ac781/go.mod h1:2D+tluXw/L0DsJgaKTm9vl12ZnYCkm4TnRDuf89BKhM=
+github.com/haproxytech/client-native/v2 v2.2.1-0.20210407102617-bc85bacbf574 h1:iyBeq85Fj65vKnh1WXZBQ5Dc2+X/XVan6Y2bexuhJP0=
+github.com/haproxytech/client-native/v2 v2.2.1-0.20210407102617-bc85bacbf574/go.mod h1:2D+tluXw/L0DsJgaKTm9vl12ZnYCkm4TnRDuf89BKhM=
 github.com/haproxytech/config-parser/v3 v3.0.1-0.20210212144342-183eb1988d86 h1:hV6Lb4xNRifFIncVf9UBbVVRifDwZ25UxwQQTtqjtU4=
 github.com/haproxytech/config-parser/v3 v3.0.1-0.20210212144342-183eb1988d86/go.mod h1:68k+xwy1wGoufI/VKOOilrx/65M85eeQP6Atg+a29Ds=
 github.com/hashicorp/consul/api v1.6.0 h1:SZB2hQW8AcTOpfDmiVblQbijxzsRuiyy0JpHfabvHio=

@@ -108,6 +108,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TransactionsCommitTransactionHandler: transactions.CommitTransactionHandlerFunc(func(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.CommitTransaction has not yet been implemented")
 		}),
+		ServiceDiscoveryCreateAWSRegionHandler: service_discovery.CreateAWSRegionHandlerFunc(func(params service_discovery.CreateAWSRegionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.CreateAWSRegion has not yet been implemented")
+		}),
 		ACLCreateACLHandler: acl.CreateACLHandlerFunc(func(params acl.CreateACLParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.CreateACL has not yet been implemented")
 		}),
@@ -188,6 +191,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPResponseRuleCreateTCPResponseRuleHandler: tcp_response_rule.CreateTCPResponseRuleHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.CreateTCPResponseRule has not yet been implemented")
+		}),
+		ServiceDiscoveryDeleteAWSRegionHandler: service_discovery.DeleteAWSRegionHandlerFunc(func(params service_discovery.DeleteAWSRegionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.DeleteAWSRegion has not yet been implemented")
 		}),
 		ACLDeleteACLHandler: acl.DeleteACLHandlerFunc(func(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.DeleteACL has not yet been implemented")
@@ -281,6 +287,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DiscoveryGetAPIEndpointsHandler: discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetAPIEndpoints has not yet been implemented")
+		}),
+		ServiceDiscoveryGetAWSRegionHandler: service_discovery.GetAWSRegionHandlerFunc(func(params service_discovery.GetAWSRegionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetAWSRegion has not yet been implemented")
+		}),
+		ServiceDiscoveryGetAWSRegionsHandler: service_discovery.GetAWSRegionsHandlerFunc(func(params service_discovery.GetAWSRegionsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetAWSRegions has not yet been implemented")
 		}),
 		ACLGetACLHandler: acl.GetACLHandlerFunc(func(params acl.GetACLParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.GetACL has not yet been implemented")
@@ -549,6 +561,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ConfigurationPostHAProxyConfigurationHandler: configuration.PostHAProxyConfigurationHandlerFunc(func(params configuration.PostHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation configuration.PostHAProxyConfiguration has not yet been implemented")
 		}),
+		ServiceDiscoveryReplaceAWSRegionHandler: service_discovery.ReplaceAWSRegionHandlerFunc(func(params service_discovery.ReplaceAWSRegionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.ReplaceAWSRegion has not yet been implemented")
+		}),
 		ACLReplaceACLHandler: acl.ReplaceACLHandlerFunc(func(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.ReplaceACL has not yet been implemented")
 		}),
@@ -708,6 +723,8 @@ type DataPlaneAPI struct {
 	SpoeTransactionsCommitSpoeTransactionHandler spoe_transactions.CommitSpoeTransactionHandler
 	// TransactionsCommitTransactionHandler sets the operation handler for the commit transaction operation
 	TransactionsCommitTransactionHandler transactions.CommitTransactionHandler
+	// ServiceDiscoveryCreateAWSRegionHandler sets the operation handler for the create a w s region operation
+	ServiceDiscoveryCreateAWSRegionHandler service_discovery.CreateAWSRegionHandler
 	// ACLCreateACLHandler sets the operation handler for the create Acl operation
 	ACLCreateACLHandler acl.CreateACLHandler
 	// BackendCreateBackendHandler sets the operation handler for the create backend operation
@@ -762,6 +779,8 @@ type DataPlaneAPI struct {
 	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
 	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
 	TCPResponseRuleCreateTCPResponseRuleHandler tcp_response_rule.CreateTCPResponseRuleHandler
+	// ServiceDiscoveryDeleteAWSRegionHandler sets the operation handler for the delete a w s region operation
+	ServiceDiscoveryDeleteAWSRegionHandler service_discovery.DeleteAWSRegionHandler
 	// ACLDeleteACLHandler sets the operation handler for the delete Acl operation
 	ACLDeleteACLHandler acl.DeleteACLHandler
 	// BackendDeleteBackendHandler sets the operation handler for the delete backend operation
@@ -824,6 +843,10 @@ type DataPlaneAPI struct {
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
 	DiscoveryGetAPIEndpointsHandler discovery.GetAPIEndpointsHandler
+	// ServiceDiscoveryGetAWSRegionHandler sets the operation handler for the get a w s region operation
+	ServiceDiscoveryGetAWSRegionHandler service_discovery.GetAWSRegionHandler
+	// ServiceDiscoveryGetAWSRegionsHandler sets the operation handler for the get a w s regions operation
+	ServiceDiscoveryGetAWSRegionsHandler service_discovery.GetAWSRegionsHandler
 	// ACLGetACLHandler sets the operation handler for the get Acl operation
 	ACLGetACLHandler acl.GetACLHandler
 	// ACLGetAclsHandler sets the operation handler for the get acls operation
@@ -1002,6 +1025,8 @@ type DataPlaneAPI struct {
 	ClusterPostClusterHandler cluster.PostClusterHandler
 	// ConfigurationPostHAProxyConfigurationHandler sets the operation handler for the post h a proxy configuration operation
 	ConfigurationPostHAProxyConfigurationHandler configuration.PostHAProxyConfigurationHandler
+	// ServiceDiscoveryReplaceAWSRegionHandler sets the operation handler for the replace a w s region operation
+	ServiceDiscoveryReplaceAWSRegionHandler service_discovery.ReplaceAWSRegionHandler
 	// ACLReplaceACLHandler sets the operation handler for the replace Acl operation
 	ACLReplaceACLHandler acl.ReplaceACLHandler
 	// BackendReplaceBackendHandler sets the operation handler for the replace backend operation
@@ -1155,6 +1180,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TransactionsCommitTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.CommitTransactionHandler")
 	}
+	if o.ServiceDiscoveryCreateAWSRegionHandler == nil {
+		unregistered = append(unregistered, "service_discovery.CreateAWSRegionHandler")
+	}
 	if o.ACLCreateACLHandler == nil {
 		unregistered = append(unregistered, "acl.CreateACLHandler")
 	}
@@ -1235,6 +1263,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPResponseRuleCreateTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleHandler")
+	}
+	if o.ServiceDiscoveryDeleteAWSRegionHandler == nil {
+		unregistered = append(unregistered, "service_discovery.DeleteAWSRegionHandler")
 	}
 	if o.ACLDeleteACLHandler == nil {
 		unregistered = append(unregistered, "acl.DeleteACLHandler")
@@ -1328,6 +1359,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DiscoveryGetAPIEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetAPIEndpointsHandler")
+	}
+	if o.ServiceDiscoveryGetAWSRegionHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetAWSRegionHandler")
+	}
+	if o.ServiceDiscoveryGetAWSRegionsHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetAWSRegionsHandler")
 	}
 	if o.ACLGetACLHandler == nil {
 		unregistered = append(unregistered, "acl.GetACLHandler")
@@ -1596,6 +1633,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ConfigurationPostHAProxyConfigurationHandler == nil {
 		unregistered = append(unregistered, "configuration.PostHAProxyConfigurationHandler")
 	}
+	if o.ServiceDiscoveryReplaceAWSRegionHandler == nil {
+		unregistered = append(unregistered, "service_discovery.ReplaceAWSRegionHandler")
+	}
 	if o.ACLReplaceACLHandler == nil {
 		unregistered = append(unregistered, "acl.ReplaceACLHandler")
 	}
@@ -1810,6 +1850,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/service_discovery/aws"] = service_discovery.NewCreateAWSRegion(o.context, o.ServiceDiscoveryCreateAWSRegionHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/acls"] = acl.NewCreateACL(o.context, o.ACLCreateACLHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1915,6 +1959,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/service_discovery/aws/{id}"] = service_discovery.NewDeleteAWSRegion(o.context, o.ServiceDiscoveryDeleteAWSRegionHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2039,6 +2087,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"][""] = discovery.NewGetAPIEndpoints(o.context, o.DiscoveryGetAPIEndpointsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/aws/{id}"] = service_discovery.NewGetAWSRegion(o.context, o.ServiceDiscoveryGetAWSRegionHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/aws"] = service_discovery.NewGetAWSRegions(o.context, o.ServiceDiscoveryGetAWSRegionsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2395,6 +2451,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/raw"] = configuration.NewPostHAProxyConfiguration(o.context, o.ConfigurationPostHAProxyConfigurationHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/service_discovery/aws/{id}"] = service_discovery.NewReplaceAWSRegion(o.context, o.ServiceDiscoveryReplaceAWSRegionHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
