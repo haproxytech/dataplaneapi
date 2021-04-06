@@ -93,3 +93,24 @@ func validateAWSData(data *models.AwsRegion, useValidation bool) error {
 	}
 	return nil
 }
+
+type GetAWSRegionHandlerImpl struct {
+	Discovery sc.ServiceDiscoveries
+}
+
+func (g GetAWSRegionHandlerImpl) Handle(params service_discovery.GetAWSRegionParams, i interface{}) middleware.Responder {
+	handleError := func(err error) *service_discovery.GetAWSRegionDefault {
+		e := misc.HandleError(err)
+		return service_discovery.NewGetAWSRegionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	nodes, err := g.Discovery.GetNode("aws", params.ID)
+	if err != nil {
+		return handleError(err)
+	}
+	region, ok := nodes.(*models.AwsRegion)
+	if !ok {
+		return handleError(err)
+	}
+	return service_discovery.NewGetAWSRegionOK().WithPayload(&service_discovery.GetAWSRegionOKBody{Data: region})
+}
