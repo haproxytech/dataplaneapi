@@ -153,9 +153,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.CreateResolver has not yet been implemented")
 		}),
-		StorageCreateRuntimeMapHandler: storage.CreateRuntimeMapHandlerFunc(func(params storage.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation storage.CreateRuntimeMap has not yet been implemented")
-		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.CreateServer has not yet been implemented")
 		}),
@@ -182,6 +179,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StickRuleCreateStickRuleHandler: stick_rule.CreateStickRuleHandlerFunc(func(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.CreateStickRule has not yet been implemented")
+		}),
+		StorageCreateStorageMapFileHandler: storage.CreateStorageMapFileHandlerFunc(func(params storage.CreateStorageMapFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateStorageMapFile has not yet been implemented")
 		}),
 		StorageCreateStorageSSLCertificateHandler: storage.CreateStorageSSLCertificateHandlerFunc(func(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.CreateStorageSSLCertificate has not yet been implemented")
@@ -753,8 +753,6 @@ type DataPlaneAPI struct {
 	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
 	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
-	// StorageCreateRuntimeMapHandler sets the operation handler for the create runtime map operation
-	StorageCreateRuntimeMapHandler storage.CreateRuntimeMapHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
@@ -773,6 +771,8 @@ type DataPlaneAPI struct {
 	SpoeCreateSpoeScopeHandler spoe.CreateSpoeScopeHandler
 	// StickRuleCreateStickRuleHandler sets the operation handler for the create stick rule operation
 	StickRuleCreateStickRuleHandler stick_rule.CreateStickRuleHandler
+	// StorageCreateStorageMapFileHandler sets the operation handler for the create storage map file operation
+	StorageCreateStorageMapFileHandler storage.CreateStorageMapFileHandler
 	// StorageCreateStorageSSLCertificateHandler sets the operation handler for the create storage s s l certificate operation
 	StorageCreateStorageSSLCertificateHandler storage.CreateStorageSSLCertificateHandler
 	// TCPRequestRuleCreateTCPRequestRuleHandler sets the operation handler for the create TCP request rule operation
@@ -1225,9 +1225,6 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
 	}
-	if o.StorageCreateRuntimeMapHandler == nil {
-		unregistered = append(unregistered, "storage.CreateRuntimeMapHandler")
-	}
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
 	}
@@ -1254,6 +1251,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StickRuleCreateStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.CreateStickRuleHandler")
+	}
+	if o.StorageCreateStorageMapFileHandler == nil {
+		unregistered = append(unregistered, "storage.CreateStorageMapFileHandler")
 	}
 	if o.StorageCreateStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.CreateStorageSSLCertificateHandler")
@@ -1910,10 +1910,6 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/storage/maps"] = storage.NewCreateRuntimeMap(o.context, o.StorageCreateRuntimeMapHandler)
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
 	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -1947,6 +1943,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewCreateStickRule(o.context, o.StickRuleCreateStickRuleHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/storage/maps"] = storage.NewCreateStorageMapFile(o.context, o.StorageCreateStorageMapFileHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

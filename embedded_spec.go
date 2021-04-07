@@ -8927,15 +8927,15 @@ func init() {
         }
       },
       "post": {
-        "description": "Creates a managed runtime map file with its entries.",
+        "description": "Creates a managed storage map file with its entries.",
         "consumes": [
           "multipart/form-data"
         ],
         "tags": [
           "Storage"
         ],
-        "summary": "Creates a managed runtime map file with its entries",
-        "operationId": "createRuntimeMap",
+        "summary": "Creates a managed storage map file with its entries",
+        "operationId": "createStorageMapFile",
         "parameters": [
           {
             "type": "file",
@@ -30996,15 +30996,15 @@ func init() {
         }
       },
       "post": {
-        "description": "Creates a managed runtime map file with its entries.",
+        "description": "Creates a managed storage map file with its entries.",
         "consumes": [
           "multipart/form-data"
         ],
         "tags": [
           "Storage"
         ],
-        "summary": "Creates a managed runtime map file with its entries",
-        "operationId": "createRuntimeMap",
+        "summary": "Creates a managed storage map file with its entries",
+        "operationId": "createStorageMapFile",
         "parameters": [
           {
             "type": "file",

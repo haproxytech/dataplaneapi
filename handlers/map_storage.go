@@ -32,21 +32,21 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/storage"
 )
 
-// StorageCreateRuntimeMapHandlerImpl implementation of the StorageCreateRuntimeMapHandler interface using client-native client
-type StorageCreateRuntimeMapHandlerImpl struct {
+// StorageCreateStorageMapFileHandlerImpl implementation of the StorageCreateStorageMapFileHandler interface using client-native client
+type StorageCreateStorageMapFileHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-func (h *StorageCreateRuntimeMapHandlerImpl) Handle(params storage.CreateRuntimeMapParams, principal interface{}) middleware.Responder {
+func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateStorageMapFileParams, principal interface{}) middleware.Responder {
 	file, ok := params.FileUpload.(*runtime.File)
 	if !ok {
-		return storage.NewCreateRuntimeMapBadRequest()
+		return storage.NewCreateStorageMapFileBadRequest()
 	}
 
 	filename, err := h.Client.MapStorage.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
-		return storage.NewCreateRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		return storage.NewCreateStorageMapFileDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 
 	me := &models.Map{
@@ -56,7 +56,7 @@ func (h *StorageCreateRuntimeMapHandlerImpl) Handle(params storage.CreateRuntime
 	}
 	// no reload or force reload since this is just a file upload,
 	// haproxy configuration has not been changed
-	return storage.NewCreateRuntimeMapCreated().WithPayload(me)
+	return storage.NewCreateStorageMapFileCreated().WithPayload(me)
 }
 
 // GetMapStorageHandlerImpl implementation of the StorageGetAllStorageMapFilesHandler interface

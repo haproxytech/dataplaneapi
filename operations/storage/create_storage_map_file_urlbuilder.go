@@ -26,15 +26,15 @@ import (
 	golangswaggerpaths "path"
 )
 
-// CreateRuntimeMapURL generates an URL for the create runtime map operation
-type CreateRuntimeMapURL struct {
+// CreateStorageMapFileURL generates an URL for the create storage map file operation
+type CreateStorageMapFileURL struct {
 	_basePath string
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *CreateRuntimeMapURL) WithBasePath(bp string) *CreateRuntimeMapURL {
+func (o *CreateStorageMapFileURL) WithBasePath(bp string) *CreateStorageMapFileURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -42,12 +42,12 @@ func (o *CreateRuntimeMapURL) WithBasePath(bp string) *CreateRuntimeMapURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *CreateRuntimeMapURL) SetBasePath(bp string) {
+func (o *CreateStorageMapFileURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *CreateRuntimeMapURL) Build() (*url.URL, error) {
+func (o *CreateStorageMapFileURL) Build() (*url.URL, error) {
 	var _result url.URL
 
 	var _path = "/services/haproxy/storage/maps"
@@ -62,7 +62,7 @@ func (o *CreateRuntimeMapURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *CreateRuntimeMapURL) Must(u *url.URL, err error) *url.URL {
+func (o *CreateStorageMapFileURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -73,17 +73,17 @@ func (o *CreateRuntimeMapURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *CreateRuntimeMapURL) String() string {
+func (o *CreateStorageMapFileURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *CreateRuntimeMapURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *CreateStorageMapFileURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on CreateRuntimeMapURL")
+		return nil, errors.New("scheme is required for a full url on CreateStorageMapFileURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on CreateRuntimeMapURL")
+		return nil, errors.New("host is required for a full url on CreateStorageMapFileURL")
 	}
 
 	base, err := o.Build()
@@ -97,6 +97,6 @@ func (o *CreateRuntimeMapURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *CreateRuntimeMapURL) StringFull(scheme, host string) string {
+func (o *CreateStorageMapFileURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }

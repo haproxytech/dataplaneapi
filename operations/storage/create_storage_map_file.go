@@ -26,42 +26,42 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-// CreateRuntimeMapHandlerFunc turns a function with the right signature into a create runtime map handler
-type CreateRuntimeMapHandlerFunc func(CreateRuntimeMapParams, interface{}) middleware.Responder
+// CreateStorageMapFileHandlerFunc turns a function with the right signature into a create storage map file handler
+type CreateStorageMapFileHandlerFunc func(CreateStorageMapFileParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn CreateRuntimeMapHandlerFunc) Handle(params CreateRuntimeMapParams, principal interface{}) middleware.Responder {
+func (fn CreateStorageMapFileHandlerFunc) Handle(params CreateStorageMapFileParams, principal interface{}) middleware.Responder {
 	return fn(params, principal)
 }
 
-// CreateRuntimeMapHandler interface for that can handle valid create runtime map params
-type CreateRuntimeMapHandler interface {
-	Handle(CreateRuntimeMapParams, interface{}) middleware.Responder
+// CreateStorageMapFileHandler interface for that can handle valid create storage map file params
+type CreateStorageMapFileHandler interface {
+	Handle(CreateStorageMapFileParams, interface{}) middleware.Responder
 }
 
-// NewCreateRuntimeMap creates a new http.Handler for the create runtime map operation
-func NewCreateRuntimeMap(ctx *middleware.Context, handler CreateRuntimeMapHandler) *CreateRuntimeMap {
-	return &CreateRuntimeMap{Context: ctx, Handler: handler}
+// NewCreateStorageMapFile creates a new http.Handler for the create storage map file operation
+func NewCreateStorageMapFile(ctx *middleware.Context, handler CreateStorageMapFileHandler) *CreateStorageMapFile {
+	return &CreateStorageMapFile{Context: ctx, Handler: handler}
 }
 
-/*CreateRuntimeMap swagger:route POST /services/haproxy/storage/maps Storage createRuntimeMap
+/*CreateStorageMapFile swagger:route POST /services/haproxy/storage/maps Storage createStorageMapFile
 
-Creates a managed runtime map file with its entries
+Creates a managed storage map file with its entries
 
-Creates a managed runtime map file with its entries.
+Creates a managed storage map file with its entries.
 
 */
-type CreateRuntimeMap struct {
+type CreateStorageMapFile struct {
 	Context *middleware.Context
-	Handler CreateRuntimeMapHandler
+	Handler CreateStorageMapFileHandler
 }
 
-func (o *CreateRuntimeMap) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *CreateStorageMapFile) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		r = rCtx
 	}
-	var Params = NewCreateRuntimeMapParams()
+	var Params = NewCreateStorageMapFileParams()
 
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {

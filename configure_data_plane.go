@@ -541,7 +541,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// map file storage handlers
 
-	api.StorageCreateRuntimeMapHandler = &handlers.StorageCreateRuntimeMapHandlerImpl{Client: client}
+	api.StorageCreateStorageMapFileHandler = &handlers.StorageCreateStorageMapFileHandlerImpl{Client: client}
 	api.StorageGetAllStorageMapFilesHandler = &handlers.GetAllStorageMapFilesHandlerImpl{Client: client}
 	api.StorageGetOneStorageMapHandler = &handlers.GetOneStorageMapHandlerImpl{Client: client}
 	api.StorageDeleteStorageMapHandler = &handlers.StorageDeleteStorageMapHandlerImpl{Client: client}

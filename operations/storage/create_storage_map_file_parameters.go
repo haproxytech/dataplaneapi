@@ -30,18 +30,18 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-// NewCreateRuntimeMapParams creates a new CreateRuntimeMapParams object
+// NewCreateStorageMapFileParams creates a new CreateStorageMapFileParams object
 // no default values defined in spec.
-func NewCreateRuntimeMapParams() CreateRuntimeMapParams {
+func NewCreateStorageMapFileParams() CreateStorageMapFileParams {
 
-	return CreateRuntimeMapParams{}
+	return CreateStorageMapFileParams{}
 }
 
-// CreateRuntimeMapParams contains all the bound params for the create runtime map operation
+// CreateStorageMapFileParams contains all the bound params for the create storage map file operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters createRuntimeMap
-type CreateRuntimeMapParams struct {
+// swagger:parameters createStorageMapFile
+type CreateStorageMapFileParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -55,8 +55,8 @@ type CreateRuntimeMapParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewCreateRuntimeMapParams() beforehand.
-func (o *CreateRuntimeMapParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewCreateStorageMapFileParams() beforehand.
+func (o *CreateStorageMapFileParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -89,6 +89,6 @@ func (o *CreateRuntimeMapParams) BindRequest(r *http.Request, route *middleware.
 // bindFileUpload binds file parameter FileUpload.
 //
 // The only supported validations on files are MinLength and MaxLength
-func (o *CreateRuntimeMapParams) bindFileUpload(file multipart.File, header *multipart.FileHeader) error {
+func (o *CreateStorageMapFileParams) bindFileUpload(file multipart.File, header *multipart.FileHeader) error {
 	return nil
 }
