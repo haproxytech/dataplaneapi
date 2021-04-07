@@ -134,6 +134,10 @@ For more docs how to use the Data Plane API check our [documentation](https://ww
 
 Alternatively, dataplaneapi serves its own interactive documentation relevant for the current build on the `/v2/docs` uri. Just point your browser to the host/port dataplane was started with (i.e. `http://localhost:5555/v2/docs`)
 
+## Service Discovery
+
+Check the documentation in the [README](./discovery/README.md).
+
 ## Contributing
 
 If you wish to contribute to this project please check [Contributing Guide](CONTRIBUTING.md)
