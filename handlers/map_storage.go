@@ -91,12 +91,13 @@ func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMa
 		return storage.NewGetAllStorageMapFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 
-	// update (overwrite) info for on-disk files with runtime info
 	for _, m := range runtimeMaps {
-		// files outside of MapsDir are not managed, so shouldn't be returned
-		if strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
-			tempMaps[m.File] = m
+		// map file is in runtime, but not in storage: must be removed
+		if _, ok := tempMaps[m.File]; !ok {
+			continue
 		}
+		// update (overwrite) info for on-disk files with runtime info
+		tempMaps[m.File] = m
 	}
 
 	// convert to a list to return
