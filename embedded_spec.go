@@ -9029,6 +9029,13 @@ func init() {
             }
           },
           {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
             "$ref": "#/parameters/force_reload"
           }
         ],
@@ -31146,6 +31153,13 @@ func init() {
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
           },
           {
             "type": "boolean",

@@ -181,7 +181,20 @@ func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceS
 		return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	if *params.ForceReload {
+	skipReload := false
+	if params.SkipReload != nil {
+		skipReload = *params.SkipReload
+	}
+	forceReload := false
+	if params.ForceReload != nil {
+		forceReload = *params.ForceReload
+	}
+
+	if skipReload {
+		return storage.NewReplaceStorageMapFileNoContent()
+	}
+
+	if forceReload {
 		err := h.ReloadAgent.ForceReload()
 		if err != nil {
 			e := misc.HandleError(err)
