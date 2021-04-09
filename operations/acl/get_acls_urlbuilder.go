@@ -28,6 +28,7 @@ import (
 
 // GetAclsURL generates an URL for the get acls operation
 type GetAclsURL struct {
+	ACLName       *string
 	ParentName    string
 	ParentType    string
 	TransactionID *string
@@ -65,6 +66,14 @@ func (o *GetAclsURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var aCLNameQ string
+	if o.ACLName != nil {
+		aCLNameQ = *o.ACLName
+	}
+	if aCLNameQ != "" {
+		qs.Set("acl_name", aCLNameQ)
+	}
 
 	parentNameQ := o.ParentName
 	if parentNameQ != "" {

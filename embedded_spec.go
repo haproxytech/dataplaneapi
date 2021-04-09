@@ -636,6 +636,12 @@ func init() {
             "required": true
           },
           {
+            "type": "string",
+            "description": "ACL name",
+            "name": "acl_name",
+            "in": "query"
+          },
+          {
             "$ref": "#/parameters/transaction_id"
           }
         ],
@@ -18536,6 +18542,12 @@ func init() {
             "name": "parent_type",
             "in": "query",
             "required": true
+          },
+          {
+            "type": "string",
+            "description": "ACL name",
+            "name": "acl_name",
+            "in": "query"
           },
           {
             "type": "string",

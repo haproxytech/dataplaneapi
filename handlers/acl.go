@@ -158,8 +158,12 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
+	var aclName []string
+	if params.ACLName != nil {
+		aclName = []string{*params.ACLName}
+	}
 
-	v, rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t)
+	v, rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t, aclName...)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {

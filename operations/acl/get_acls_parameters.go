@@ -46,6 +46,10 @@ type GetAclsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*ACL name
+	  In: query
+	*/
+	ACLName *string
 	/*Parent name
 	  Required: true
 	  In: query
@@ -73,6 +77,11 @@ func (o *GetAclsParams) BindRequest(r *http.Request, route *middleware.MatchedRo
 
 	qs := runtime.Values(r.URL.Query())
 
+	qACLName, qhkACLName, _ := qs.GetOK("acl_name")
+	if err := o.bindACLName(qACLName, qhkACLName, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qParentName, qhkParentName, _ := qs.GetOK("parent_name")
 	if err := o.bindParentName(qParentName, qhkParentName, route.Formats); err != nil {
 		res = append(res, err)
@@ -91,6 +100,24 @@ func (o *GetAclsParams) BindRequest(r *http.Request, route *middleware.MatchedRo
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindACLName binds and validates parameter ACLName from query.
+func (o *GetAclsParams) bindACLName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.ACLName = &raw
+
 	return nil
 }
 
