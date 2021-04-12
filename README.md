@@ -94,7 +94,7 @@ Syslog options:
       --syslog-address=                               Syslog address (with port declaration in case of TCP type) where logs should be forwarded: accepting socket path in case of unix or unixgram
       --syslog-protocol=[tcp|tcp4|tcp6|unix|unixgram] Syslog server protocol (default: tcp)
       --syslog-tag=                                   String to tag the syslog messages (default: dataplaneapi)
-      --syslog-priority=                              Define the syslog messages priority (default: debug)
+      --syslog-level=                                 Define the required syslog messages level, allowed values: debug|info|notice|warning|error|critical|alert|emergency  (default: debug)
       --syslog-facility=                              Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7
                                                       (default: local0)
 
