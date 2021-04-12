@@ -98,17 +98,10 @@ func configureFlags(api *operations.DataPlaneAPI) {
 		Options:          &cfg.Syslog,
 	}
 
-	apiOptionsGroup := swag.CommandLineOptionsGroup{
-		ShortDescription: "API options",
-		LongDescription:  "Options for API usage for consumers and various integrations",
-		Options:          &cfg.APIOptions,
-	}
-
 	api.CommandLineOptionsGroups = make([]swag.CommandLineOptionsGroup, 0, 1)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, haproxyOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, loggingOptionsGroup)
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, syslogOptionsGroup)
-	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, apiOptionsGroup)
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
