@@ -99,7 +99,7 @@ cluster {
 
 service_discovery {
   consuls =  "null"
-  awsRegions =  "null"
+  aws-regions =  "null"
 }
 
 log {

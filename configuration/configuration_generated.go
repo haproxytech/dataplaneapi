@@ -131,7 +131,7 @@ type configTypeAdvertised struct {
 
 type configTypeServiceDiscovery struct {
 	Consuls    *[]*models.Consul    `yaml:"consuls,omitempty" hcl:"consuls,omitempty"`
-	AWSRegions *[]*models.AwsRegion `yaml:"awsRegions,omitempty" hcl:"awsRegions,omitempty"`
+	AWSRegions *[]*models.AwsRegion `yaml:"aws-regions,omitempty" hcl:"aws-regions,omitempty"`
 }
 
 type configTypeSyslog struct {

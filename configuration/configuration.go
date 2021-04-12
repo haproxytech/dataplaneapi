@@ -140,7 +140,7 @@ type ServiceDiscovery struct {
 	consulMu   sync.Mutex
 	Consuls    []*models.Consul `yaml:"consuls" group:"service_discovery" save:"true"`
 	awsMu      sync.Mutex
-	AWSRegions []*models.AwsRegion `yaml:"awsRegions" group:"service_discovery" save:"true"`
+	AWSRegions []*models.AwsRegion `yaml:"aws-regions" group:"service_discovery" save:"true"`
 }
 
 type Configuration struct {

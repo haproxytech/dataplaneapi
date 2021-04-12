@@ -80,7 +80,7 @@ cluster:
   description: null # string
 service_discovery:
   consuls: null # []*models.Consul
-  awsRegions: null # []*models.AwsRegion
+  aws-regions: null # []*models.AwsRegion
 log:
   log-to: "stdout" # string
   log-file: "/var/log/dataplaneapi/dataplaneapi.log" # string
