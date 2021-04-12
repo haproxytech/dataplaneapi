@@ -98,10 +98,6 @@ Syslog options:
       --syslog-facility=                              Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7
                                                       (default: local0)
 
-API options:
-      --api-address=                                  Advertised API address
-      --api-port=                                     Advertised API port
-
 Show version:
   -v, --version                                       Version and build information
 
