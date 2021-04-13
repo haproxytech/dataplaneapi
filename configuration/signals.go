@@ -91,7 +91,7 @@ func (c *Configuration) initSignalHandler() {
 	}()
 
 	osSignals2 := make(chan os.Signal, 1)
-	signal.Notify(osSignals2, syscall.SIGUSR1)
+	signal.Notify(osSignals2, syscall.SIGHUP)
 
 	go func() {
 		<-osSignals2
