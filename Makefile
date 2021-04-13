@@ -1,5 +1,5 @@
-DATAPLANEAPI_PATH=${PWD}
-GIT_REPO=$(shell git config --get remote.origin.url)
+DATAPLANEAPI_PATH?=${PWD}
+GIT_REPO?=$(shell git config --get remote.origin.url)
 GIT_HEAD_COMMIT=$(shell git rev-parse --short HEAD)
 GIT_LAST_TAG=$(shell git describe --abbrev=0 --tags)
 GIT_TAG_COMMIT=$(shell git rev-parse --short ${GIT_LAST_TAG})
