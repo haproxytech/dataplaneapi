@@ -18,7 +18,7 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 
 @test "acls: Return one ACL" {

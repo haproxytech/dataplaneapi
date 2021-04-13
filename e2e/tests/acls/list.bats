@@ -17,7 +17,7 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 @test "acls: Return ACL list" {
     run dpa_curl GET "/services/haproxy/configuration/acls?parent_name=fe_acl&parent_type=frontend"

@@ -17,7 +17,7 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 @test "runtime_maps_entries: Deletes all the map entries from the map by its id" {
     run dpa_curl DELETE "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map"

@@ -17,7 +17,7 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 @test "runtime_maps_entries: Replace the value corresponding to each id in a map" {
     run dpa_curl PUT "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map&force_sync=true" /data/put.json

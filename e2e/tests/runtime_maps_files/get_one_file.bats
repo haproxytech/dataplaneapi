@@ -17,7 +17,7 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 
 @test "runtime_maps_files: Return one runtime map file" {

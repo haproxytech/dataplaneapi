@@ -18,7 +18,7 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 @test "acls: Replace one ACL" {
     run dpa_curl PUT "/services/haproxy/configuration/acls/2?parent_name=fe_acl&parent_type=frontend&version=$(version)" "/data/put.json"

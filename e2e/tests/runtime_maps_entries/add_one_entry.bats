@@ -17,7 +17,7 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 @test "runtime_maps_entries: Adds an entry into the map file" {
     run dpa_curl POST "/services/haproxy/runtime/maps_entries?map=mapfile1.map" /data/post.json

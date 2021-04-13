@@ -17,7 +17,7 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
-load './haproxy_config_setup'
+load '../../libs/haproxy_config_setup'
 
 @test "runtime_maps_entries: Return one map runtime entries" {
     run dpa_curl GET "/services/haproxy/runtime/maps_entries?map=mapfile1.map"
