@@ -125,11 +125,20 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 			}
 			h.Config.Cluster.StorageDir.Store(storageDir)
 		}
-
+		// enforcing API advertising options
+		if a := params.AdvertisedAddress; a != nil {
+			h.Config.APIOptions.APIAddress = *a
+		}
+		if p := params.AdvertisedPort; p != nil {
+			h.Config.APIOptions.APIPort = *p
+		}
 		h.Config.Mode.Store("cluster")
 		h.Config.Cluster.BootstrapKey.Store(params.Data.BootstrapKey)
 		h.Config.Cluster.Clear()
-		h.Config.Notify.BootstrapKeyChanged.Notify()
+		// ensuring configuration file saving occurs before notifying the monitor about the bootstrap key change
+		defer func() {
+			h.Config.Notify.BootstrapKeyChanged.Notify()
+		}()
 	}
 	if params.Data.Mode == "single" && h.Config.Mode.Load() != params.Data.Mode {
 		// by default we are cleaning configuration
