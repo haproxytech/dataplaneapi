@@ -13,6 +13,13 @@ dataplaneapi {
     ssl-certs-dir = "/etc/haproxy/ssl"
     spoe-dir      = "/etc/haproxy/spoe"
   }
+
+}
+
+log {
+  log-to = "file"
+  log-file = "/var/log/dataplaneapi.log"
+  log-level = "debug"
 }
 
 haproxy {

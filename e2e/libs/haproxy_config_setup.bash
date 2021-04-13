@@ -69,6 +69,10 @@ setup() {
       # 5 seconds wait
       if [[ restart_retry_count -eq 50 ]]; then
           echo -e "\nerror restarting: no response from dataplane on /info"
+          echo -e "\nhaproxy stderr:"
+          docker logs -n 42 ${DOCKER_CONTAINER_NAME}
+          echo -e "\ndataplane log output:"
+          docker exec ${DOCKER_CONTAINER_NAME} sh -c "tail -n 42 /var/log/dataplaneapi.log"
           exit 1
       fi
 
@@ -100,6 +104,10 @@ teardown() {
       # 5 seconds wait
       if [[ restart_retry_count -eq 50 ]]; then
           echo -e "\nerror restarting: no response from dataplane on /info"
+          echo -e "\nhaproxy stderr:"
+          docker logs -n 42 ${DOCKER_CONTAINER_NAME}
+          echo -e "\ndataplane log output:"
+          docker exec ${DOCKER_CONTAINER_NAME} sh -c "tail -n 42 /var/log/dataplaneapi.log"
           exit 1
       fi
 
