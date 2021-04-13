@@ -72,8 +72,8 @@ type User struct {
 }
 
 type APIConfiguration struct {
-	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised" example:"10.2.3.4"`
-	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised" example:"80"`
+	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised" hcl:"address" example:"10.2.3.4" save:"true"`
+	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised" hcl:"port" example:"80" save:"true"`
 }
 
 type LoggingOptions struct {

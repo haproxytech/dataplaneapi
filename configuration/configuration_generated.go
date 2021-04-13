@@ -486,6 +486,16 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.Cluster.Description = &valueClusterDescription
 	}
 
+	if cfgStorage.Dataplaneapi.Advertised == nil {
+		cfgStorage.Dataplaneapi.Advertised = &configTypeAdvertised{}
+	}
+	cfgStorage.Dataplaneapi.Advertised.APIAddress = &cfg.APIOptions.APIAddress
+
+	if cfgStorage.Dataplaneapi.Advertised == nil {
+		cfgStorage.Dataplaneapi.Advertised = &configTypeAdvertised{}
+	}
+	cfgStorage.Dataplaneapi.Advertised.APIPort = &cfg.APIOptions.APIPort
+
 	if cfgStorage.ServiceDiscovery == nil {
 		cfgStorage.ServiceDiscovery = &configTypeServiceDiscovery{}
 	}
