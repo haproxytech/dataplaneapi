@@ -37,6 +37,14 @@ setup() {
   fi
   assert_success
 
+  # replace the default dataplaneapi config file
+  if [ -f "${BATS_TEST_DIRNAME}/dataplaneapi.hcl" ]; then
+      run docker cp "${BATS_TEST_DIRNAME}/dataplaneapi.hcl" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.hcl"
+  else
+      run docker cp "${E2E_DIR}/fixtures/dataplaneapi.hcl" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.hcl"
+  fi
+  assert_success
+
   if [ -d "${BATS_TEST_DIRNAME}/data/container" ]; then
       run docker cp "${BATS_TEST_DIRNAME}/data/container/." "${DOCKER_CONTAINER_NAME}:/"
       assert_success
@@ -51,7 +59,7 @@ setup() {
   if [ -x "${BATS_TEST_DIRNAME}/custom_dataplane_launch.sh" ]; then
       run "${BATS_TEST_DIRNAME}/custom_dataplane_launch.sh"
   else
-      run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.hcl"
+      run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.hcl"
   fi
   assert_success
 
@@ -60,7 +68,8 @@ setup() {
   until dpa_curl GET "/info"; do
       # 5 seconds wait
       if [[ restart_retry_count -eq 50 ]]; then
-          break
+          echo -e "\nerror restarting: no response from dataplane on /info"
+          exit 1
       fi
 
       sleep 0.1
@@ -73,13 +82,16 @@ teardown() {
   run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   assert_success
 
+  run docker cp "${E2E_DIR}/fixtures/dataplaneapi.hcl" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.hcl"
+  assert_success
+
   run dpa_docker_exec 'kill -SIGUSR2 1'
   assert_success
 
   run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.hcl"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.hcl"
   assert_success
 
   local restart_retry_count=0
@@ -87,7 +99,8 @@ teardown() {
   until dpa_curl GET "/info"; do
       # 5 seconds wait
       if [[ restart_retry_count -eq 50 ]]; then
-          break
+          echo -e "\nerror restarting: no response from dataplane on /info"
+          exit 1
       fi
 
       sleep 0.1
