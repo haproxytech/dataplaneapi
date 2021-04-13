@@ -54,8 +54,17 @@ setup() {
       run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.hcl"
   fi
   assert_success
+
+  local restart_retry_count=0
+
   until dpa_curl GET "/info"; do
+      # 5 seconds wait
+      if [[ restart_retry_count -eq 50 ]]; then
+          break
+      fi
+
       sleep 0.1
+      restart_retry_count=$((restart_retry_count+1))
   done
 }
 
@@ -72,7 +81,16 @@ teardown() {
 
   run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.hcl"
   assert_success
+
+  local restart_retry_count=0
+
   until dpa_curl GET "/info"; do
+      # 5 seconds wait
+      if [[ restart_retry_count -eq 50 ]]; then
+          break
+      fi
+
       sleep 0.1
+      restart_retry_count=$((restart_retry_count+1))
   done
 }
