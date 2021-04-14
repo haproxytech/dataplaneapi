@@ -50,6 +50,16 @@ type PostClusterParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*Force the advertised address when joining a cluster
+	  In: query
+	*/
+	AdvertisedAddress *string
+	/*Force the advertised port when joining a cluster
+	  Maximum: 65535
+	  Minimum: 1
+	  In: query
+	*/
+	AdvertisedPort *int64
 	/*In case of moving to single mode do we keep or clean configuration
 	  In: query
 	*/
@@ -75,6 +85,16 @@ func (o *PostClusterParams) BindRequest(r *http.Request, route *middleware.Match
 	o.HTTPRequest = r
 
 	qs := runtime.Values(r.URL.Query())
+
+	qAdvertisedAddress, qhkAdvertisedAddress, _ := qs.GetOK("advertised_address")
+	if err := o.bindAdvertisedAddress(qAdvertisedAddress, qhkAdvertisedAddress, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qAdvertisedPort, qhkAdvertisedPort, _ := qs.GetOK("advertised_port")
+	if err := o.bindAdvertisedPort(qAdvertisedPort, qhkAdvertisedPort, route.Formats); err != nil {
+		res = append(res, err)
+	}
 
 	qConfiguration, qhkConfiguration, _ := qs.GetOK("configuration")
 	if err := o.bindConfiguration(qConfiguration, qhkConfiguration, route.Formats); err != nil {
@@ -111,6 +131,64 @@ func (o *PostClusterParams) BindRequest(r *http.Request, route *middleware.Match
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindAdvertisedAddress binds and validates parameter AdvertisedAddress from query.
+func (o *PostClusterParams) bindAdvertisedAddress(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.AdvertisedAddress = &raw
+
+	return nil
+}
+
+// bindAdvertisedPort binds and validates parameter AdvertisedPort from query.
+func (o *PostClusterParams) bindAdvertisedPort(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("advertised_port", "query", "int64", raw)
+	}
+	o.AdvertisedPort = &value
+
+	if err := o.validateAdvertisedPort(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateAdvertisedPort carries on validations for parameter AdvertisedPort
+func (o *PostClusterParams) validateAdvertisedPort(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("advertised_port", "query", int64(*o.AdvertisedPort), 1, false); err != nil {
+		return err
+	}
+
+	if err := validate.MaximumInt("advertised_port", "query", int64(*o.AdvertisedPort), 65535, false); err != nil {
+		return err
+	}
+
 	return nil
 }
 

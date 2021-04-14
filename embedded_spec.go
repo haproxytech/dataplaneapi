@@ -128,6 +128,20 @@ func init() {
             "in": "query"
           },
           {
+            "type": "string",
+            "description": "Force the advertised address when joining a cluster",
+            "name": "advertised_address",
+            "in": "query"
+          },
+          {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Force the advertised port when joining a cluster",
+            "name": "advertised_port",
+            "in": "query"
+          },
+          {
             "$ref": "#/parameters/version"
           }
         ],
@@ -10882,7 +10896,22 @@ func init() {
             "disabled"
           ]
         },
+        "ca_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
           "type": "string",
           "enum": [
             "enabled",
@@ -10945,9 +10974,23 @@ func init() {
             }
           }
         },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "downinter": {
           "type": "integer",
           "x-nullable": true
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "error_limit": {
           "type": "integer",
@@ -17739,6 +17782,20 @@ func init() {
             "type": "string",
             "description": "In case of moving to single mode do we keep or clean configuration",
             "name": "configuration",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Force the advertised address when joining a cluster",
+            "name": "advertised_address",
+            "in": "query"
+          },
+          {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Force the advertised port when joining a cluster",
+            "name": "advertised_port",
             "in": "query"
           },
           {
@@ -33795,7 +33852,22 @@ func init() {
             "disabled"
           ]
         },
+        "ca_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
           "type": "string",
           "enum": [
             "enabled",
@@ -33858,9 +33930,23 @@ func init() {
             }
           }
         },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "downinter": {
           "type": "integer",
           "x-nullable": true
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "error_limit": {
           "type": "integer",
