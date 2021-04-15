@@ -46,7 +46,7 @@ load '../../libs/haproxy_config_setup'
 
     dpa_curl_status_body_safe '$output'
     echo -e "$output"
-    assert_equal $SC 204
+    assert_equal $SC 202
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/4.pem'
 

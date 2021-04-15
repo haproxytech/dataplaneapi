@@ -29,6 +29,52 @@ import (
 	"github.com/haproxytech/client-native/v2/models"
 )
 
+// DeleteStorageSSLCertificateAcceptedCode is the HTTP code returned for type DeleteStorageSSLCertificateAccepted
+const DeleteStorageSSLCertificateAcceptedCode int = 202
+
+/*DeleteStorageSSLCertificateAccepted SSL certificate deleted and reload requested
+
+swagger:response deleteStorageSSLCertificateAccepted
+*/
+type DeleteStorageSSLCertificateAccepted struct {
+	/*ID of the requested reload
+
+	 */
+	ReloadID string `json:"Reload-ID"`
+}
+
+// NewDeleteStorageSSLCertificateAccepted creates DeleteStorageSSLCertificateAccepted with default headers values
+func NewDeleteStorageSSLCertificateAccepted() *DeleteStorageSSLCertificateAccepted {
+
+	return &DeleteStorageSSLCertificateAccepted{}
+}
+
+// WithReloadID adds the reloadId to the delete storage s s l certificate accepted response
+func (o *DeleteStorageSSLCertificateAccepted) WithReloadID(reloadID string) *DeleteStorageSSLCertificateAccepted {
+	o.ReloadID = reloadID
+	return o
+}
+
+// SetReloadID sets the reloadId to the delete storage s s l certificate accepted response
+func (o *DeleteStorageSSLCertificateAccepted) SetReloadID(reloadID string) {
+	o.ReloadID = reloadID
+}
+
+// WriteResponse to the client
+func (o *DeleteStorageSSLCertificateAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Reload-ID
+
+	reloadID := o.ReloadID
+	if reloadID != "" {
+		rw.Header().Set("Reload-ID", reloadID)
+	}
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(202)
+}
+
 // DeleteStorageSSLCertificateNoContentCode is the HTTP code returned for type DeleteStorageSSLCertificateNoContent
 const DeleteStorageSSLCertificateNoContentCode int = 204
 

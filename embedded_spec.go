@@ -9049,11 +9049,7 @@ func init() {
             }
           },
           {
-            "type": "boolean",
-            "default": false,
-            "description": "If set, no reload will be initiated after update",
-            "name": "skip_reload",
-            "in": "query"
+            "$ref": "#/parameters/skip_reload"
           },
           {
             "$ref": "#/parameters/force_reload"
@@ -9238,14 +9234,29 @@ func init() {
             }
           },
           {
+            "$ref": "#/parameters/skip_reload"
+          },
+          {
             "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
-          "202": {
+          "200": {
             "description": "SSL certificate replaced",
             "schema": {
               "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "202": {
+            "description": "SSL certificate replaced and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -9273,9 +9284,24 @@ func init() {
             "name": "name",
             "in": "path",
             "required": true
+          },
+          {
+            "$ref": "#/parameters/skip_reload"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
           }
         ],
         "responses": {
+          "202": {
+            "description": "SSL certificate deleted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "SSL certificate deleted"
           },
@@ -17448,6 +17474,13 @@ func init() {
       "default": false,
       "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
       "name": "force_reload",
+      "in": "query"
+    },
+    "skip_reload": {
+      "type": "boolean",
+      "default": false,
+      "description": "If set, no reload will be initiated after update",
+      "name": "skip_reload",
       "in": "query"
     },
     "transaction_id": {
@@ -31543,16 +31576,35 @@ func init() {
           {
             "type": "boolean",
             "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
             "in": "query"
           }
         ],
         "responses": {
-          "202": {
+          "200": {
             "description": "SSL certificate replaced",
             "schema": {
               "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "202": {
+            "description": "SSL certificate replaced and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
             }
           },
           "400": {
@@ -31610,9 +31662,32 @@ func init() {
             "name": "name",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
           }
         ],
         "responses": {
+          "202": {
+            "description": "SSL certificate deleted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "204": {
             "description": "SSL certificate deleted"
           },
@@ -40232,6 +40307,13 @@ func init() {
       "default": false,
       "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
       "name": "force_reload",
+      "in": "query"
+    },
+    "skip_reload": {
+      "type": "boolean",
+      "default": false,
+      "description": "If set, no reload will be initiated after update",
+      "name": "skip_reload",
       "in": "query"
     },
     "transaction_id": {

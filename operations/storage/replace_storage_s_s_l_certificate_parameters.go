@@ -39,10 +39,14 @@ func NewReplaceStorageSSLCertificateParams() ReplaceStorageSSLCertificateParams 
 		// initialize parameters with default values
 
 		forceReloadDefault = bool(false)
+
+		skipReloadDefault = bool(false)
 	)
 
 	return ReplaceStorageSSLCertificateParams{
 		ForceReload: &forceReloadDefault,
+
+		SkipReload: &skipReloadDefault,
 	}
 }
 
@@ -70,6 +74,11 @@ type ReplaceStorageSSLCertificateParams struct {
 	  In: path
 	*/
 	Name string
+	/*If set, no reload will be initiated after update
+	  In: query
+	  Default: false
+	*/
+	SkipReload *bool
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -106,6 +115,11 @@ func (o *ReplaceStorageSSLCertificateParams) BindRequest(r *http.Request, route 
 
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qSkipReload, qhkSkipReload, _ := qs.GetOK("skip_reload")
+	if err := o.bindSkipReload(qSkipReload, qhkSkipReload, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -149,6 +163,29 @@ func (o *ReplaceStorageSSLCertificateParams) bindName(rawData []string, hasKey b
 	// Parameter is provided by construction from the route
 
 	o.Name = raw
+
+	return nil
+}
+
+// bindSkipReload binds and validates parameter SkipReload from query.
+func (o *ReplaceStorageSSLCertificateParams) bindSkipReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewReplaceStorageSSLCertificateParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("skip_reload", "query", "bool", raw)
+	}
+	o.SkipReload = &value
 
 	return nil
 }

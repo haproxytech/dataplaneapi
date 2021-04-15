@@ -79,7 +79,8 @@ func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.Ge
 
 // StorageDeleteStorageSSLCertificateHandlerImpl implementation of the StorageDeleteStorageSSLCertificateHandler interface
 type StorageDeleteStorageSSLCertificateHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client      *client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
@@ -112,7 +113,31 @@ func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.De
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
-	return storage.NewDeleteStorageSSLCertificateNoContent()
+
+	skipReload := false
+	if params.SkipReload != nil {
+		skipReload = *params.SkipReload
+	}
+	forceReload := false
+	if params.ForceReload != nil {
+		forceReload = *params.ForceReload
+	}
+
+	if skipReload {
+		return storage.NewDeleteStorageSSLCertificateNoContent()
+	}
+
+	if forceReload {
+		err := h.ReloadAgent.ForceReload()
+		if err != nil {
+			e := misc.HandleError(err)
+			return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+		}
+		return storage.NewDeleteStorageSSLCertificateNoContent()
+	}
+
+	rID := h.ReloadAgent.Reload()
+	return storage.NewDeleteStorageSSLCertificateAccepted().WithReloadID(rID)
 }
 
 // StorageReplaceStorageSSLCertificateHandlerImpl implementation of the StorageReplaceStorageSSLCertificateHandler interface
@@ -132,14 +157,31 @@ func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.R
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
 	}
-	if *params.ForceReload {
+
+	skipReload := false
+	if params.SkipReload != nil {
+		skipReload = *params.SkipReload
+	}
+	forceReload := false
+	if params.ForceReload != nil {
+		forceReload = *params.ForceReload
+	}
+
+	if skipReload {
+		return storage.NewReplaceStorageSSLCertificateOK().WithPayload(retf)
+	}
+
+	if forceReload {
 		err := h.ReloadAgent.ForceReload()
 		if err != nil {
 			e := misc.HandleError(err)
 			return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
 		}
+		return storage.NewReplaceStorageSSLCertificateOK().WithPayload(retf)
 	}
-	return storage.NewReplaceStorageSSLCertificateAccepted().WithPayload(retf)
+
+	rID := h.ReloadAgent.Reload()
+	return storage.NewReplaceStorageSSLCertificateAccepted().WithReloadID(rID).WithPayload(retf)
 }
 
 // StorageCreateStorageSSLCertificateHandlerImpl implementation of the StorageCreateStorageSSLCertificateHandler interface
@@ -163,7 +205,13 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
 	}
-	if *params.ForceReload {
+
+	forceReload := false
+	if params.ForceReload != nil {
+		forceReload = *params.ForceReload
+	}
+
+	if forceReload {
 		err := h.ReloadAgent.ForceReload()
 		if err != nil {
 			e := misc.HandleError(err)

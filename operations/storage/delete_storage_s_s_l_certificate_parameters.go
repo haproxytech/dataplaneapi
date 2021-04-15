@@ -24,15 +24,29 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewDeleteStorageSSLCertificateParams creates a new DeleteStorageSSLCertificateParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewDeleteStorageSSLCertificateParams() DeleteStorageSSLCertificateParams {
 
-	return DeleteStorageSSLCertificateParams{}
+	var (
+		// initialize parameters with default values
+
+		forceReloadDefault = bool(false)
+
+		skipReloadDefault = bool(false)
+	)
+
+	return DeleteStorageSSLCertificateParams{
+		ForceReload: &forceReloadDefault,
+
+		SkipReload: &skipReloadDefault,
+	}
 }
 
 // DeleteStorageSSLCertificateParams contains all the bound params for the delete storage s s l certificate operation
@@ -44,11 +58,21 @@ type DeleteStorageSSLCertificateParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
+	  In: query
+	  Default: false
+	*/
+	ForceReload *bool
 	/*SSL certificate name
 	  Required: true
 	  In: path
 	*/
 	Name string
+	/*If set, no reload will be initiated after update
+	  In: query
+	  Default: false
+	*/
+	SkipReload *bool
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -60,14 +84,49 @@ func (o *DeleteStorageSSLCertificateParams) BindRequest(r *http.Request, route *
 
 	o.HTTPRequest = r
 
+	qs := runtime.Values(r.URL.Query())
+
+	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
+	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qSkipReload, qhkSkipReload, _ := qs.GetOK("skip_reload")
+	if err := o.bindSkipReload(qSkipReload, qhkSkipReload, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindForceReload binds and validates parameter ForceReload from query.
+func (o *DeleteStorageSSLCertificateParams) bindForceReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewDeleteStorageSSLCertificateParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("force_reload", "query", "bool", raw)
+	}
+	o.ForceReload = &value
+
 	return nil
 }
 
@@ -82,6 +141,29 @@ func (o *DeleteStorageSSLCertificateParams) bindName(rawData []string, hasKey bo
 	// Parameter is provided by construction from the route
 
 	o.Name = raw
+
+	return nil
+}
+
+// bindSkipReload binds and validates parameter SkipReload from query.
+func (o *DeleteStorageSSLCertificateParams) bindSkipReload(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewDeleteStorageSSLCertificateParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("skip_reload", "query", "bool", raw)
+	}
+	o.SkipReload = &value
 
 	return nil
 }

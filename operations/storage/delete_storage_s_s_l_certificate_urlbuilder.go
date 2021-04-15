@@ -25,11 +25,16 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // DeleteStorageSSLCertificateURL generates an URL for the delete storage s s l certificate operation
 type DeleteStorageSSLCertificateURL struct {
 	Name string
+
+	ForceReload *bool
+	SkipReload  *bool
 
 	_basePath string
 	// avoid unkeyed usage
@@ -69,6 +74,26 @@ func (o *DeleteStorageSSLCertificateURL) Build() (*url.URL, error) {
 		_basePath = "/v2"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var forceReloadQ string
+	if o.ForceReload != nil {
+		forceReloadQ = swag.FormatBool(*o.ForceReload)
+	}
+	if forceReloadQ != "" {
+		qs.Set("force_reload", forceReloadQ)
+	}
+
+	var skipReloadQ string
+	if o.SkipReload != nil {
+		skipReloadQ = swag.FormatBool(*o.SkipReload)
+	}
+	if skipReloadQ != "" {
+		qs.Set("skip_reload", skipReloadQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

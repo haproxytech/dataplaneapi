@@ -543,7 +543,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// SSL certs file storage handlers
 	api.StorageGetAllStorageSSLCertificatesHandler = &handlers.StorageGetAllStorageSSLCertificatesHandlerImpl{Client: client}
 	api.StorageGetOneStorageSSLCertificateHandler = &handlers.StorageGetOneStorageSSLCertificateHandlerImpl{Client: client}
-	api.StorageDeleteStorageSSLCertificateHandler = &handlers.StorageDeleteStorageSSLCertificateHandlerImpl{Client: client}
+	api.StorageDeleteStorageSSLCertificateHandler = &handlers.StorageDeleteStorageSSLCertificateHandlerImpl{Client: client, ReloadAgent: ra}
 	api.StorageReplaceStorageSSLCertificateHandler = &handlers.StorageReplaceStorageSSLCertificateHandlerImpl{Client: client, ReloadAgent: ra}
 	api.StorageCreateStorageSSLCertificateHandler = &handlers.StorageCreateStorageSSLCertificateHandlerImpl{Client: client, ReloadAgent: ra}
 
