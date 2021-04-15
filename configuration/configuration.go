@@ -212,21 +212,23 @@ func (c *Configuration) Load() error {
 		c.storage = &StorageDummy{}
 		_ = c.storage.Load("")
 	} else {
-		c.storage = &StorageHCL{}
-		err = c.storage.Load(c.HAProxy.DataplaneConfig)
-		_, isPathError := err.(*os.PathError)
-		if isPathError {
-			return err
-		}
-		if err != nil {
+		ext := strings.ToLower(filepath.Ext(c.HAProxy.DataplaneConfig))
+
+		switch ext {
+		case ".yml", ".yaml":
 			c.storage = &StorageYML{}
-			errYaml := c.storage.Load(c.HAProxy.DataplaneConfig)
-			if errYaml != nil {
-				if strings.HasSuffix(c.HAProxy.DataplaneConfig, "ml") {
-					return errYaml
-				}
-				return err
+		case ".hcl":
+			c.storage = &StorageHCL{}
+		default:
+			if err = (&StorageYML{}).Load(c.HAProxy.DataplaneConfig); err == nil {
+				c.storage = &StorageYML{}
+
+				break
 			}
+			c.storage = &StorageHCL{}
+		}
+		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
+			return err
 		}
 	}
 	copyToConfiguration(c)
