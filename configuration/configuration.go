@@ -48,7 +48,7 @@ type HAProxyConfiguration struct {
 	BackupsDir           string `long:"backups-dir" description:"Path to directory in which to place backup files" group:"transaction"`
 	MasterRuntime        string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket" group:"haproxy"`
 	ShowSystemInfo       bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint" group:"dataplaneapi"`
-	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"dataplaneapi.yaml" yaml:"-"`
+	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"/etc/haproxy/dataplaneapi.hcl" yaml:"-"`
 	UserListFile         string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file" group:"userlist"`
 	NodeIDFile           string `long:"fid" description:"Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster" group:"haproxy"`
 	MapsDir              string `short:"p" long:"maps-dir" description:"Path to directory of map files managed by dataplane" default:"/etc/haproxy/maps" group:"resources"`
