@@ -66,7 +66,17 @@ load '../../libs/version'
     #assert dpa_diff_var_file '$BODY' "1.pem"
 }
 
-@test "storage_ssl_certificates: Replace a ssl certificate file contents with no reload" {
+@test "storage_ssl_certificates: Replace a ssl certificate file contents" {
+    run dpa_curl_text_plain PUT "/services/haproxy/storage/ssl_certificates/1.pem" "@${BATS_TEST_DIRNAME}/2.pem"
+    assert_success
+
+    dpa_curl_status_body '$output'
+    assert_equal $SC 202
+
+    assert dpa_diff_docker_file '/etc/haproxy/ssl/1.pem' "2.pem"
+}
+
+@test "storage_ssl_certificates: Replace a ssl certificate file contents with skip reload" {
 
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
 
@@ -92,9 +102,43 @@ load '../../libs/version'
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 }
 
-@test "storage_ssl_certificates: Add a ssl certificate file and reload HAProxy" {
+@test "storage_ssl_certificates: Delete a ssl certificate file with force reload" {
+     #reupload cert file
+    run dpa_curl_file_upload POST "/services/haproxy/storage/ssl_certificates" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem"
+    assert_success
+
+    dpa_curl_status_body '$output'
+    assert_equal $SC 201
+
+    run dpa_curl DELETE "/services/haproxy/storage/ssl_certificates/1.pem?force_reload=true"
+    assert_success
+
+    dpa_curl_status_body_safe '$output'
+    assert_equal $SC 204
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+}
+
+@test "storage_ssl_certificates: Delete a ssl certificate file with skip reload" {
+    #reupload cert file
+    run dpa_curl_file_upload POST "/services/haproxy/storage/ssl_certificates" "@${BATS_TEST_DIRNAME}/1.pem;filename=1.pem"
+    assert_success
+
+    dpa_curl_status_body '$output'
+    assert_equal $SC 201
+
+    run dpa_curl DELETE "/services/haproxy/storage/ssl_certificates/1.pem?skip_reload=true"
+    assert_success
+
+    dpa_curl_status_body_safe '$output'
+    assert_equal $SC 204
+
+    refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+}
+
+@test "storage_ssl_certificates: Add a ssl certificate file with force reload" {
+
+    refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem?force_reload=true'
 
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
 
@@ -117,7 +161,7 @@ load '../../libs/version'
     assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
 }
 
-@test "storage_ssl_certificates: Replace a ssl certificate file contents and reload HAPRoxy" {
+@test "storage_ssl_certificates: Replace a ssl certificate file contents with force reload" {
 
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
 
