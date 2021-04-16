@@ -53,6 +53,8 @@ Application Options:
       --tls-keep-alive=                               sets the TCP keep-alive timeouts on accepted connections. It prunes dead TCP connections ( e.g. closing laptop mid-download)
       --tls-read-timeout=                             maximum duration before timing out read of the request
       --tls-write-timeout=                            maximum duration before timing out write of the response
+      --uid                                           user id value to set on start
+      --gid                                           group id value to set on start
 
 HAProxy options:
   -c, --config-file=                                  Path to the haproxy configuration file (default: /etc/haproxy/haproxy.cfg)
