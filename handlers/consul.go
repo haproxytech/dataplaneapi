@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+
 package handlers
 
 import (
 	"errors"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/google/uuid"
 	"github.com/haproxytech/client-native/v2/models"
 
 	sc "github.com/haproxytech/dataplaneapi/discovery"
@@ -59,9 +58,8 @@ type ReplaceConsulHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
-	id := uuid.New().String()
-	params.Data.ID = &id
-	if err := validateConsulData(params.Data, c.UseValidation); err != nil {
+	params.Data.ID = sc.NewServiceDiscoveryUUID()
+	if err := sc.ValidateConsulData(params.Data, c.UseValidation); err != nil {
 		e := misc.HandleError(err)
 		return service_discovery.NewCreateConsulDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -131,7 +129,7 @@ func (c *GetConsulsHandlerImpl) Handle(params service_discovery.GetConsulsParams
 
 // Handle executing the request and returning a response
 func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
-	if err := validateConsulData(params.Data, c.UseValidation); err != nil {
+	if err := sc.ValidateConsulData(params.Data, c.UseValidation); err != nil {
 		e := misc.HandleError(err)
 		return service_discovery.NewReplaceConsulDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -174,26 +172,4 @@ func getConsuls(discovery sc.ServiceDiscoveries) (models.Consuls, error) {
 		return nil, errors.New("expected models.Consuls")
 	}
 	return consuls, nil
-}
-
-func validateConsulData(data *models.Consul, useValidation bool) error {
-	if useValidation {
-		validationErr := data.Validate(strfmt.Default)
-		if validationErr != nil {
-			return validationErr
-		}
-	}
-	if data.ID == nil || *data.ID == "" {
-		return errors.New("missing ID")
-	}
-	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < 10 {
-		data.ServerSlotsBase = misc.Int64P(10)
-	}
-	if data.ServerSlotsGrowthType == nil {
-		data.ServerSlotsGrowthType = misc.StringP("linear")
-	}
-	if *data.ServerSlotsGrowthType == "linear" && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < 10) {
-		data.ServerSlotsGrowthIncrement = 10
-	}
-	return nil
 }

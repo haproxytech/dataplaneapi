@@ -19,8 +19,6 @@ import (
 	"errors"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/google/uuid"
 	"github.com/haproxytech/client-native/v2/models"
 	"github.com/haproxytech/dataplaneapi/misc"
 
@@ -42,9 +40,8 @@ func (c CreateAWSHandlerImpl) Handle(params service_discovery.CreateAWSRegionPar
 		return service_discovery.NewCreateAWSRegionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	id := uuid.New().String()
-	params.Data.ID = &id
-	if err = validateAWSData(params.Data, c.UseValidation); err != nil {
+	params.Data.ID = sc.NewServiceDiscoveryUUID()
+	if err = sc.ValidateAWSData(params.Data, c.UseValidation); err != nil {
 		return handleError(err)
 	}
 	if err = c.Discovery.AddNode("aws", *params.Data.ID, params.Data); err != nil {
@@ -70,28 +67,6 @@ func getAWSRegions(discovery sc.ServiceDiscoveries) (models.AwsRegions, error) {
 		return nil, errors.New("expected *models.AwsRegion")
 	}
 	return instances, nil
-}
-
-func validateAWSData(data *models.AwsRegion, useValidation bool) error {
-	if useValidation {
-		validationErr := data.Validate(strfmt.Default)
-		if validationErr != nil {
-			return validationErr
-		}
-	}
-	if data.ID == nil || *data.ID == "" {
-		return errors.New("missing ID")
-	}
-	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < 10 {
-		data.ServerSlotsBase = misc.Int64P(10)
-	}
-	if data.ServerSlotsGrowthType == nil {
-		data.ServerSlotsGrowthType = misc.StringP("linear")
-	}
-	if *data.ServerSlotsGrowthType == "linear" && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < 10) {
-		data.ServerSlotsGrowthIncrement = 10
-	}
-	return nil
 }
 
 type GetAWSRegionHandlerImpl struct {
@@ -140,7 +115,7 @@ func (r ReplaceAWSRegionHandlerImpl) Handle(params service_discovery.ReplaceAWSR
 		return service_discovery.NewReplaceAWSRegionDefault(int(*e.Code)).WithPayload(e)
 	}
 	var err error
-	if err = validateAWSData(params.Data, r.UseValidation); err != nil {
+	if err = sc.ValidateAWSData(params.Data, r.UseValidation); err != nil {
 		return handleError(err)
 	}
 	if err = r.Discovery.UpdateNode("aws", *params.Data.ID, params.Data); err != nil {
