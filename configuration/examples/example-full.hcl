@@ -18,6 +18,8 @@ dataplaneapi {
   show-system-info =  "false"
   disable-inotify =  "false"
   pid-file =  "/tmp/dataplane.pid"
+  uid =  "1000"
+  gid =  "1000"
 
   tls {
     tls-host =  "null"
