@@ -88,8 +88,8 @@ func newAWSRegionInstance(params *models.AwsRegion, client *configuration.Client
 		update:  make(chan struct{}),
 		state:   make(map[string]map[string]time.Time),
 		discoveryConfig: NewServiceDiscoveryInstance(client, reloadAgent, discoveryInstanceParams{
-			Whitelist:       []string{},
-			Blacklist:       []string{},
+			Allowlist:       []string{},
+			Denylist:        []string{},
 			ServerSlotsBase: int(*params.ServerSlotsBase),
 			SlotsGrowthType: *params.ServerSlotsGrowthType,
 			SlotsIncrement:  int(params.ServerSlotsGrowthIncrement),
@@ -131,8 +131,8 @@ func (a *awsInstance) start() {
 			select {
 			case <-a.update:
 				err := a.discoveryConfig.UpdateParams(discoveryInstanceParams{
-					Whitelist:       []string{},
-					Blacklist:       []string{},
+					Allowlist:       []string{},
+					Denylist:        []string{},
 					ServerSlotsBase: int(*a.params.ServerSlotsBase),
 					SlotsGrowthType: *a.params.ServerSlotsGrowthType,
 					SlotsIncrement:  int(a.params.ServerSlotsGrowthIncrement),

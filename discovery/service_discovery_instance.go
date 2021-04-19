@@ -34,8 +34,8 @@ type confService struct {
 }
 
 type discoveryInstanceParams struct {
-	Whitelist       []string
-	Blacklist       []string
+	Allowlist       []string
+	Denylist        []string
 	ServerSlotsBase int
 	SlotsGrowthType string
 	SlotsIncrement  int
@@ -139,15 +139,15 @@ func (s *ServiceDiscoveryInstance) markForDeletion() {
 }
 
 func (s *ServiceDiscoveryInstance) serviceNotTracked(service string) bool {
-	if len(s.params.Whitelist) > 0 {
-		for _, se := range s.params.Whitelist {
+	if len(s.params.Allowlist) > 0 {
+		for _, se := range s.params.Allowlist {
 			if se == service {
 				return false
 			}
 		}
 		return true
 	}
-	for _, se := range s.params.Blacklist {
+	for _, se := range s.params.Denylist {
 		if se == service {
 			return true
 		}

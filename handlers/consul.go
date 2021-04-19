@@ -65,6 +65,7 @@ func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulPa
 		e := misc.HandleError(err)
 		return service_discovery.NewCreateConsulDefault(int(*e.Code)).WithPayload(e)
 	}
+	setFilters(params.Data)
 	err := c.Discovery.AddNode("consul", *params.Data.ID, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -134,6 +135,7 @@ func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsul
 		e := misc.HandleError(err)
 		return service_discovery.NewReplaceConsulDefault(int(*e.Code)).WithPayload(e)
 	}
+	setFilters(params.Data)
 	err := c.Discovery.UpdateNode("consul", *params.Data.ID, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -150,6 +152,16 @@ func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsul
 		return service_discovery.NewDeleteConsulDefault(int(*e.Code)).WithPayload(e)
 	}
 	return service_discovery.NewReplaceConsulOK().WithPayload(params.Data)
+}
+
+func setFilters(data *models.Consul) {
+	if len(data.ServiceAllowlist) == 0 && len(data.ServiceWhitelist) > 0 {
+		data.ServiceAllowlist = data.ServiceWhitelist
+	}
+
+	if len(data.ServiceDenylist) == 0 && len(data.ServiceBlacklist) > 0 {
+		data.ServiceDenylist = data.ServiceBlacklist
+	}
 }
 
 func getConsuls(discovery sc.ServiceDiscoveries) (models.Consuls, error) {

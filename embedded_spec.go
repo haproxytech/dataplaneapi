@@ -10773,6 +10773,7 @@ func init() {
           ]
         },
         "service-blacklist": {
+          "description": "deprecated, use service_denylist",
           "type": "array",
           "items": {
             "type": "string",
@@ -10780,6 +10781,21 @@ func init() {
           }
         },
         "service-whitelist": {
+          "description": "deprecated, use service_allowlist",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "service_allowlist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "service_denylist": {
           "type": "array",
           "items": {
             "type": "string",
@@ -33785,6 +33801,7 @@ func init() {
           ]
         },
         "service-blacklist": {
+          "description": "deprecated, use service_denylist",
           "type": "array",
           "items": {
             "type": "string",
@@ -33792,6 +33809,21 @@ func init() {
           }
         },
         "service-whitelist": {
+          "description": "deprecated, use service_allowlist",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "service_allowlist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "service_denylist": {
           "type": "array",
           "items": {
             "type": "string",
