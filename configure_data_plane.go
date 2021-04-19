@@ -516,19 +516,35 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// create stored consul instances
 	for _, data := range cfg.ServiceDiscovery.Consuls {
-		err := discovery.AddNode("consul", *data.ID, data)
-		if err != nil {
+		var err error
+
+		if data.ID == nil || len(*data.ID) == 0 {
+			data.ID = service_discovery.NewServiceDiscoveryUUID()
+		}
+		if err = service_discovery.ValidateConsulData(data, true); err != nil {
+			log.Fatalf("Error validating Consul instance: " + err.Error())
+		}
+		if err = discovery.AddNode("consul", *data.ID, data); err != nil {
 			log.Warning("Error creating consul instance: " + err.Error())
 		}
 	}
+	_ = cfg.SaveConsuls(cfg.ServiceDiscovery.Consuls)
 
 	// create stored AWS instances
 	for _, data := range cfg.ServiceDiscovery.AWSRegions {
-		err := discovery.AddNode("aws", *data.ID, data)
-		if err != nil {
+		var err error
+
+		if data.ID == nil || len(*data.ID) == 0 {
+			data.ID = service_discovery.NewServiceDiscoveryUUID()
+		}
+		if err = service_discovery.ValidateAWSData(data, true); err != nil {
+			log.Fatalf("Error validating AWS instance: " + err.Error())
+		}
+		if err = discovery.AddNode("aws", *data.ID, data); err != nil {
 			log.Warning("Error creating AWS instance: " + err.Error())
 		}
 	}
+	_ = cfg.SaveAWS(cfg.ServiceDiscovery.AWSRegions)
 
 	api.ConfigurationGetConfigurationVersionHandler = &handlers.ConfigurationGetConfigurationVersionHandlerImpl{Client: client}
 
