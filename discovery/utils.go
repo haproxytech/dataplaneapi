@@ -34,6 +34,9 @@ func ValidateAWSData(data *models.AwsRegion, useValidation bool) error {
 	if data.ID == nil || *data.ID == "" {
 		return errors.New("missing ID")
 	}
+	if _, err := uuid.Parse(*data.ID); err != nil {
+		return err
+	}
 	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < 10 {
 		data.ServerSlotsBase = misc.Int64P(10)
 	}
@@ -55,6 +58,9 @@ func ValidateConsulData(data *models.Consul, useValidation bool) error {
 	}
 	if data.ID == nil || *data.ID == "" {
 		return errors.New("missing ID")
+	}
+	if _, err := uuid.Parse(*data.ID); err != nil {
+		return err
 	}
 	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < 10 {
 		data.ServerSlotsBase = misc.Int64P(10)
