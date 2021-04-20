@@ -148,7 +148,17 @@ func (a *awsInstance) start() {
 					a.stop()
 				}
 				if err = a.updateServices(api); err != nil {
-					a.stop()
+					switch t := err.(type) {
+					case *configuration.ConfError:
+						switch t.Code() {
+						case configuration.ErrObjectAlreadyExists:
+							continue
+						default:
+							a.stop()
+						}
+					default:
+						a.stop()
+					}
 				}
 			case <-a.ctx.Done():
 				return

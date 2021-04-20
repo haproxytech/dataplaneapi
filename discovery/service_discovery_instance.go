@@ -89,7 +89,9 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 			continue
 		}
 		if !service.Changed() {
-			s.services[service.GetName()].deleted = false
+			if se, ok := s.services[service.GetName()]; ok {
+				se.deleted = false
+			}
 			continue
 		}
 		r, err := s.initService(service)
