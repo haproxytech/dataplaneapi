@@ -9,9 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out code into the Go module directory
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Downloading required packages
-      run: sudo apt-get install bats
+      run: sudo apt-get install bats    
+    - name: Set up Go 1.16
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.16
     - run: make e2e
       env:
         HAPROXY_VERSION: ${{ matrix.haproxy_version }}
