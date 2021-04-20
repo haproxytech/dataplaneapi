@@ -15,6 +15,7 @@ import (
 	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -125,6 +126,7 @@ func (a *awsInstance) updateTimeout(timeoutSeconds int64) error {
 
 func (a *awsInstance) start() {
 	go func() {
+		log.Debugf("[Service Discovery](AWS) - Discovery job starting")
 		a.ctx, a.cancel = context.WithCancel(context.Background())
 
 		for {
@@ -145,12 +147,15 @@ func (a *awsInstance) start() {
 				var err error
 
 				if api, err = a.setAPIClient(); err != nil {
+					log.Debugf("[Service Discovery](AWS) - Error while setting up API: %v", err)
 					a.stop()
 				}
 				if err = a.updateServices(api); err != nil {
+					log.Debugf("[Service Discovery](AWS) - Error while updating service: %v", err)
 					a.stop()
 				}
 			case <-a.ctx.Done():
+				log.Debugf("[Service Discovery](AWS) - Discovery job stopping")
 				return
 			}
 		}
@@ -267,6 +272,7 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 			}
 			return false
 		}()
+		log.Debugf("[Service Discovery](AWS) - Adding %s to services", s.name)
 		services = append(services, s)
 
 		a.state[s.name] = func(instances map[string]types.Instance) (hash map[string]time.Time) {
@@ -279,6 +285,7 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 		}(s.instances)
 	}
 
+	log.Debugf("[Service Discovery](AWS) - Updating services")
 	return a.discoveryConfig.UpdateServices(services)
 }
 
