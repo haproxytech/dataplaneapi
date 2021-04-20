@@ -24,6 +24,10 @@ import (
 	"github.com/haproxytech/dataplaneapi/misc"
 )
 
+const (
+	minimumServerSlotsBase = 10
+)
+
 func ValidateAWSData(data *models.AwsRegion, useValidation bool) error {
 	if useValidation {
 		validationErr := data.Validate(strfmt.Default)
@@ -37,14 +41,14 @@ func ValidateAWSData(data *models.AwsRegion, useValidation bool) error {
 	if _, err := uuid.Parse(*data.ID); err != nil {
 		return err
 	}
-	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < 10 {
+	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < minimumServerSlotsBase {
 		data.ServerSlotsBase = misc.Int64P(10)
 	}
 	if data.ServerSlotsGrowthType == nil {
-		data.ServerSlotsGrowthType = misc.StringP("linear")
+		data.ServerSlotsGrowthType = misc.StringP(models.AwsRegionServerSlotsGrowthTypeLinear)
 	}
-	if *data.ServerSlotsGrowthType == "linear" && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < 10) {
-		data.ServerSlotsGrowthIncrement = 10
+	if *data.ServerSlotsGrowthType == models.AwsRegionServerSlotsGrowthTypeLinear && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < minimumServerSlotsBase) {
+		data.ServerSlotsGrowthIncrement = minimumServerSlotsBase
 	}
 	return nil
 }
@@ -62,14 +66,14 @@ func ValidateConsulData(data *models.Consul, useValidation bool) error {
 	if _, err := uuid.Parse(*data.ID); err != nil {
 		return err
 	}
-	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < 10 {
-		data.ServerSlotsBase = misc.Int64P(10)
+	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < minimumServerSlotsBase {
+		data.ServerSlotsBase = misc.Int64P(minimumServerSlotsBase)
 	}
 	if data.ServerSlotsGrowthType == nil {
-		data.ServerSlotsGrowthType = misc.StringP("linear")
+		data.ServerSlotsGrowthType = misc.StringP(models.ConsulServerSlotsGrowthTypeLinear)
 	}
-	if *data.ServerSlotsGrowthType == "linear" && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < 10) {
-		data.ServerSlotsGrowthIncrement = 10
+	if *data.ServerSlotsGrowthType == models.ConsulServerSlotsGrowthTypeLinear && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < minimumServerSlotsBase) {
+		data.ServerSlotsGrowthIncrement = minimumServerSlotsBase
 	}
 	return nil
 }
