@@ -94,7 +94,9 @@ func (c *Configuration) initSignalHandler() {
 	signal.Notify(osSignals2, syscall.SIGHUP)
 
 	go func() {
-		<-osSignals2
-		c.Notify.Reload.Notify()
+		for {
+			<-osSignals2
+			c.Notify.Reload.Notify()
+		}
 	}()
 }
