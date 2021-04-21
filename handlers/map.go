@@ -35,7 +35,7 @@ type GetMapsHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
-	mapList := &[]*models.Map{}
+	mapList := []*models.Map{}
 
 	runtimeMaps, err := h.Client.Runtime.ShowMaps()
 	if err != nil {
@@ -48,10 +48,10 @@ func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, pri
 			if strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
 				m.StorageName = filepath.Base(m.File)
 			}
-			*mapList = append(*mapList, m)
+			mapList = append(mapList, m)
 		}
 	}
-	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(*mapList)
+	return maps.NewGetAllRuntimeMapFilesOK().WithPayload(mapList)
 }
 
 // GetMapHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface using client-native client
