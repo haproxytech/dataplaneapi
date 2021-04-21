@@ -19,6 +19,9 @@ golangci-lint:
   script:
     - golangci-lint cache clean && go clean -modcache -cache -i
     - golangci-lint run -v --color always --timeout 120s
+  only:
+    - merge_requests
+    - branches
 lint-commit-msg:
   stage: lint
   image:
@@ -28,6 +31,8 @@ lint-commit-msg:
     - go
   script:
     - /check
+  only:
+    - merge_requests
 
 build:
   stage: build
@@ -43,6 +48,9 @@ build:
     - go env
     - go mod verify
     - make build
+  only:
+    - merge_requests
+    - branches
 
 .e2e:
   stage: e2e
@@ -61,6 +69,9 @@ build:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY_GO
   script:
     - bash -x ./e2e/run.bash
+  only:
+    - merge_requests
+    - branches
 
 HAProxy_2_1:
   extends: .e2e
