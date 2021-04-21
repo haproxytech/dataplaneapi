@@ -28,8 +28,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/haproxytech/client-native/v2/configuration"
 	"github.com/haproxytech/client-native/v2/models"
-
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -46,6 +46,7 @@ type awsInstance struct {
 	cancel          context.CancelFunc
 	state           map[string]map[string]time.Time
 	discoveryConfig *ServiceDiscoveryInstance
+	log             log.FieldLogger
 }
 
 type awsService struct {
@@ -100,6 +101,7 @@ func newAWSRegionInstance(params *models.AwsRegion, client *configuration.Client
 	ai := &awsInstance{
 		params:  params,
 		timeout: timeout,
+		log:     log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *params.ID}),
 		update:  make(chan struct{}),
 		state:   make(map[string]map[string]time.Time),
 		discoveryConfig: NewServiceDiscoveryInstance(client, reloadAgent, discoveryInstanceParams{
@@ -140,11 +142,13 @@ func (a *awsInstance) updateTimeout(timeoutSeconds int64) error {
 
 func (a *awsInstance) start() {
 	go func() {
+		a.log.Debug("discovery job starting")
 		a.ctx, a.cancel = context.WithCancel(context.Background())
 
 		for {
 			select {
 			case <-a.update:
+				a.log.Debug("discovery job update triggered")
 				err := a.discoveryConfig.UpdateParams(discoveryInstanceParams{
 					Allowlist:       []string{},
 					Denylist:        []string{},
@@ -156,10 +160,13 @@ func (a *awsInstance) start() {
 					a.stop()
 				}
 			case <-time.After(a.timeout):
+				a.log.Debug("discovery job reconciliation started")
+
 				var api *ec2.Client
 				var err error
 
 				if api, err = a.setAPIClient(); err != nil {
+					a.log.Errorf("error while setting up the API client: %w", err)
 					a.stop()
 				}
 				if err = a.updateServices(api); err != nil {
@@ -170,12 +177,16 @@ func (a *awsInstance) start() {
 							continue
 						default:
 							a.stop()
+							a.log.Errorf("error while updating service: %w", err)
 						}
 					default:
 						a.stop()
 					}
 				}
+
+				a.log.Debug("discovery job reconciliation completed")
 			case <-a.ctx.Done():
+				a.log.Debug("discovery job stopping")
 				return
 			}
 		}
