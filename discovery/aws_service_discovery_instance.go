@@ -277,6 +277,9 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 		// iterating over the instances being part of the Service and check the last launch time:
 		// if something differs, a change occurred.
 		s.changed = func() bool {
+			if _, ok := a.state[s.name]; !ok {
+				return true
+			}
 			if len(a.state[s.name]) != len(s.instances) {
 				return true
 			}
