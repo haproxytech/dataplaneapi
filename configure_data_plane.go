@@ -18,6 +18,7 @@
 package dataplaneapi
 
 import (
+	"context"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
@@ -176,10 +177,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	users := dataplaneapi_config.GetUsersStore()
 
+	ctx := ContextHandler.Context()
+
 	// Handle reload signals
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
-	go handleSignals(sigs, client, haproxyOptions, users)
+	go handleSignals(ctx, sigs, client, haproxyOptions, users)
 
 	if !haproxyOptions.DisableInotify {
 		if err := startWatcher(client, haproxyOptions, users); err != nil {
@@ -938,7 +941,7 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 	return nil
 }
 
-func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
+func handleSignals(ctx context.Context, sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	//nolint:gosimple
 	for {
 		select {
@@ -949,6 +952,8 @@ func handleSignals(sigs chan os.Signal, client *client_native.HAProxyClient, hap
 			} else if sig == syscall.SIGUSR2 {
 				reloadConfigurationFile(client, haproxyOptions, users)
 			}
+		case <-ctx.Done():
+			return
 		}
 	}
 }

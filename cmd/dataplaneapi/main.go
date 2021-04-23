@@ -190,26 +190,30 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		return security.BasicAuthRealm("", authentication)
 	}
 
+	dataplaneapi.ContextHandler.Init()
 	go func() {
-		for range cfg.Notify.Reload.Subscribe("main") {
-			log.Info("HAProxy Data Plane API reloading")
-			reload.Store(true)
-			cfg.UnSubscribeAll()
-			err := server.Shutdown()
-			if err != nil {
-				log.Fatalln(err)
-			}
+		<-cfg.Notify.Reload.Subscribe("main")
+		log.Info("HAProxy Data Plane API reloading")
+		reload.Store(true)
+		cfg.UnSubscribeAll()
+		dataplaneapi.ContextHandler.Cancel()
+		err := server.Shutdown()
+		if err != nil {
+			log.Fatalln(err)
 		}
 	}()
 
 	go func() {
-		for range cfg.Notify.Shutdown.Subscribe("main") {
+		select {
+		case <-cfg.Notify.Shutdown.Subscribe("main"):
 			log.Info("HAProxy Data Plane API shutting down")
 			err := server.Shutdown()
 			if err != nil {
 				log.Fatalln(err)
 			}
 			os.Exit(0)
+		case <-dataplaneapi.ContextHandler.Context().Done():
+			return
 		}
 	}()
 
