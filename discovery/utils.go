@@ -45,7 +45,7 @@ func ValidateAWSData(data *models.AwsRegion, useValidation bool) error {
 		data.ServerSlotsBase = misc.Int64P(10)
 	}
 	if data.ServerSlotsGrowthType == nil {
-		data.ServerSlotsGrowthType = misc.StringP(models.AwsRegionServerSlotsGrowthTypeLinear)
+		data.ServerSlotsGrowthType = misc.StringP(models.AwsRegionServerSlotsGrowthTypeExponential)
 	}
 	if *data.ServerSlotsGrowthType == models.AwsRegionServerSlotsGrowthTypeLinear && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < minimumServerSlotsBase) {
 		data.ServerSlotsGrowthIncrement = minimumServerSlotsBase
