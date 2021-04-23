@@ -278,6 +278,10 @@ func (c *Configuration) Save() error {
 		cfg := c.storage.Get()
 		cfg.ServiceDiscovery.AWSRegions = nil
 	}
+	if cfg.ServiceDiscovery.Consuls == nil && cfg.ServiceDiscovery.AWSRegions == nil {
+		cfg := c.storage.Get()
+		cfg.ServiceDiscovery = nil
+	}
 	return c.storage.Save()
 }
 
