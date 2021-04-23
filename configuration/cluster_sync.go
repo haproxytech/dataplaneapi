@@ -34,12 +34,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/GehirnInc/crypt"
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/config-parser/v3/types"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/misc"
 )
 
 const DataplaneAPIType = "community"
@@ -255,19 +257,33 @@ func (c *ClusterSync) monitorBootstrapKey() {
 func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath string, csr, key string) error {
 	url = fmt.Sprintf("%s:%s%s/%s", url, port, basePath, registerPath)
 	apiCfg := c.cfg.APIOptions
-	users := GetUsersStore().GetUsers()
-	if len(users) == 0 {
-		return fmt.Errorf("no users configured in %v userlist in conf", c.cfg.HAProxy.Userlist)
+	userStore := GetUsersStore()
+
+	// create a new user for connecting to cluster
+	name, err := misc.RandomString(8)
+	if err != nil {
+		return err
 	}
-	var user *types.User
-	for index, u := range users {
-		if u.IsInsecure {
-			user = &users[index]
-			break
-		}
+	pwd, err := misc.RandomString(24)
+	if err != nil {
+		return err
 	}
-	if user == nil {
-		user = &types.User{}
+
+	cryptAlg := crypt.New(crypt.SHA512)
+	hash, err := cryptAlg.Generate([]byte(pwd), nil)
+	if err != nil {
+		return err
+	}
+	name = fmt.Sprintf("dpapi-c-%s", name)
+	log.Infof("Creating user %s for cluster connection", name)
+	user := types.User{
+		Name:       name,
+		IsInsecure: false,
+		Password:   hash,
+	}
+	err = userStore.AddUser(user)
+	if err != nil {
+		return err
 	}
 
 	apiAddress := apiCfg.APIAddress

@@ -16,6 +16,8 @@
 package misc
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -240,4 +242,13 @@ func HasOSArg(short, long, env string) bool {
 		}
 	}
 	return false
+}
+
+func RandomString(size int) (string, error) {
+	b := make([]byte, size)
+	_, err := rand.Read(b)
+	result := strings.ReplaceAll(base64.URLEncoding.EncodeToString(b), `=`, ``)
+	result = strings.ReplaceAll(result, `-`, ``)
+	result = strings.ReplaceAll(result, `_`, ``)
+	return result[:size], err
 }

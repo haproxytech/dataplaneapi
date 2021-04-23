@@ -94,6 +94,21 @@ func (u *Users) Init() error {
 	return u.getUsersFromUsersListSection(configuration.HAProxy.ConfigFile, configuration.HAProxy.Userlist)
 }
 
+func (u *Users) AddUser(user types.User) error {
+	storage := Get().GetStorageData()
+	u.users = append(u.users, user)
+	if storage.Dataplaneapi == nil {
+		storage.Dataplaneapi = &configTypeDataplaneapi{}
+	}
+	// no need to check if storage.Dataplaneapi.User is nil (slice)
+	storage.Dataplaneapi.User = append(storage.Dataplaneapi.User, configTypeUser{
+		Name:     user.Name,
+		Insecure: &user.IsInsecure,
+		Password: &user.Password,
+	})
+	return Get().Save()
+}
+
 func (u *Users) getUsersFromUsersListSection(filename, userlistSection string) error {
 	p := &parser.Parser{}
 	// if file doesn't exists
