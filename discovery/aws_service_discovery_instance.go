@@ -168,6 +168,8 @@ func (a *awsInstance) start() {
 						switch t.Code() {
 						case configuration.ErrObjectAlreadyExists:
 							continue
+						case configuration.ErrVersionMismatch:
+							continue
 						default:
 							a.stop()
 						}
