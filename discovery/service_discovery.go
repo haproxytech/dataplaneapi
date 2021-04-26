@@ -16,6 +16,7 @@
 package discovery
 
 import (
+	"context"
 	"errors"
 
 	"github.com/haproxytech/client-native/v2/configuration"
@@ -49,6 +50,7 @@ type ServiceDiscoveries interface {
 type ServiceDiscoveriesParams struct {
 	Client      *configuration.Client
 	ReloadAgent haproxy.IReloadAgent
+	Context     context.Context
 }
 
 // NewServiceDiscoveries creates a new ServiceDiscoveries instance

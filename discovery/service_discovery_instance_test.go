@@ -86,7 +86,7 @@ func TestAWS(t *testing.T) {
 	assert.Nil(t, ra.Init(1, "true", "true", cfgFile, "", 1))
 
 	var instance *awsInstance
-	instance, err = newAWSRegionInstance(&models.AwsRegion{
+	instance, err = newAWSRegionInstance(context.Background(), &models.AwsRegion{
 		AccessKeyID: AWSAccessKeyID,
 		Allowlist: []*models.AwsFilters{
 			{

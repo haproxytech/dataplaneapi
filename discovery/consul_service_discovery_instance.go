@@ -16,6 +16,7 @@
 package discovery
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -54,7 +55,8 @@ type consulInstance struct {
 	prevIndexes     map[string]uint64
 	timeout         time.Duration
 	prevEnabled     bool
-	cancel          chan struct{}
+	ctx             context.Context
+	cancel          context.CancelFunc
 	update          chan struct{}
 }
 
@@ -62,7 +64,6 @@ func (c *consulInstance) start() error {
 	if err := c.setAPIClient(); err != nil {
 		return err
 	}
-	c.cancel = make(chan struct{}, 1)
 	c.update = make(chan struct{}, 1)
 	go c.watch()
 	return nil
@@ -99,7 +100,8 @@ func (c *consulInstance) watch() {
 			if err != nil {
 				c.stop()
 			}
-		case <-c.cancel:
+		case <-c.ctx.Done():
+			c.stop()
 			return
 		case <-time.After(c.timeout):
 			if err := c.updateServices(); err != nil {
@@ -110,11 +112,9 @@ func (c *consulInstance) watch() {
 }
 
 func (c *consulInstance) stop() {
-	c.cancel <- struct{}{}
 	c.api = nil
 	c.prevEnabled = false
 	close(c.update)
-	close(c.cancel)
 }
 
 func (c *consulInstance) updateServices() error {

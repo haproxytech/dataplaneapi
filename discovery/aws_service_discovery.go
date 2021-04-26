@@ -16,6 +16,7 @@
 package discovery
 
 import (
+	"context"
 	"errors"
 
 	"github.com/haproxytech/client-native/v2/configuration"
@@ -27,6 +28,7 @@ type awsServiceDiscovery struct {
 	services    Store
 	client      *configuration.Client
 	reloadAgent haproxy.IReloadAgent
+	context     context.Context
 }
 
 // NewAWSDiscoveryService creates a new ServiceDiscovery that connects to AWS
@@ -35,6 +37,7 @@ func NewAWSDiscoveryService(params ServiceDiscoveriesParams) ServiceDiscovery {
 		services:    NewInstanceStore(),
 		client:      params.Client,
 		reloadAgent: params.ReloadAgent,
+		context:     params.Context,
 	}
 }
 
@@ -45,7 +48,7 @@ func (a awsServiceDiscovery) AddNode(id string, params ServiceDiscoveryParams) (
 	}
 
 	var instance *awsInstance
-	instance, err = newAWSRegionInstance(aParams, a.client, a.reloadAgent)
+	instance, err = newAWSRegionInstance(a.context, aParams, a.client, a.reloadAgent)
 	if err != nil {
 		return
 	}

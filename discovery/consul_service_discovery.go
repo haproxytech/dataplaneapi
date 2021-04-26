@@ -16,6 +16,7 @@
 package discovery
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -29,6 +30,7 @@ type consulServiceDiscovery struct {
 	consulServices Store
 	client         *configuration.Client
 	reloadAgent    haproxy.IReloadAgent
+	context        context.Context
 }
 
 // NewConsulDiscoveryService creates a new ServiceDiscovery that connects to consul
@@ -37,6 +39,7 @@ func NewConsulDiscoveryService(params ServiceDiscoveriesParams) ServiceDiscovery
 		consulServices: NewInstanceStore(),
 		client:         params.Client,
 		reloadAgent:    params.ReloadAgent,
+		context:        params.Context,
 	}
 }
 
@@ -64,6 +67,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		}),
 		prevIndexes: make(map[string]uint64),
 	}
+	instance.ctx, instance.cancel = context.WithCancel(c.context)
 
 	if err = c.consulServices.Create(id, instance); err != nil {
 		return

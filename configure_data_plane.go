@@ -504,6 +504,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	discovery := service_discovery.NewServiceDiscoveries(service_discovery.ServiceDiscoveriesParams{
 		Client:      client.Configuration,
 		ReloadAgent: ra,
+		Context:     ctx,
 	})
 	api.ServiceDiscoveryCreateConsulHandler = &handlers.CreateConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
 	api.ServiceDiscoveryDeleteConsulHandler = &handlers.DeleteConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}

@@ -92,7 +92,7 @@ func (a awsService) GetServers() (servers []configuration.ServiceServer) {
 	return
 }
 
-func newAWSRegionInstance(params *models.AwsRegion, client *configuration.Client, reloadAgent haproxy.IReloadAgent) (*awsInstance, error) {
+func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client *configuration.Client, reloadAgent haproxy.IReloadAgent) (*awsInstance, error) {
 	timeout, err := time.ParseDuration(fmt.Sprintf("%ds", *params.RetryTimeout))
 	if err != nil {
 		return nil, err
@@ -112,6 +112,7 @@ func newAWSRegionInstance(params *models.AwsRegion, client *configuration.Client
 			SlotsIncrement:  int(params.ServerSlotsGrowthIncrement),
 		}),
 	}
+	ai.ctx, ai.cancel = context.WithCancel(ctx)
 	if err = ai.updateTimeout(*params.RetryTimeout); err != nil {
 		return nil, err
 	}
@@ -143,7 +144,6 @@ func (a *awsInstance) updateTimeout(timeoutSeconds int64) error {
 func (a *awsInstance) start() {
 	go func() {
 		a.log.Debug("discovery job starting")
-		a.ctx, a.cancel = context.WithCancel(context.Background())
 
 		for {
 			select {
@@ -187,6 +187,7 @@ func (a *awsInstance) start() {
 				a.log.Debug("discovery job reconciliation completed")
 			case <-a.ctx.Done():
 				a.log.Debug("discovery job stopping")
+				close(a.update)
 				return
 			}
 		}
