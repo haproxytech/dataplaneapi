@@ -114,6 +114,6 @@ func (c *consulServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryPa
 			ci.stop()
 			return errors.New("invalid retry_timeout")
 		}
-		return ci.handelStateChange()
+		return ci.handleStateChange()
 	})
 }

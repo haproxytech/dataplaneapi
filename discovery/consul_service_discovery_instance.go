@@ -179,7 +179,7 @@ func (c *consulInstance) updateTimeout(timeoutSeconds int) error {
 	return nil
 }
 
-func (c *consulInstance) handelStateChange() error {
+func (c *consulInstance) handleStateChange() error {
 	if c.stateChangedToEnabled() {
 		if err := c.start(); err != nil {
 			c.prevEnabled = false
