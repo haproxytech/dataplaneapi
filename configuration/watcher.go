@@ -16,6 +16,7 @@
 package configuration
 
 import (
+	"context"
 	"crypto/md5"
 	"fmt"
 	"io/ioutil"
@@ -30,6 +31,7 @@ type ConfigWatcherParams struct {
 	FilePath string
 	Callback func()
 	Version  string
+	Ctx      context.Context
 }
 
 type ConfigWatcherUpdate struct {
@@ -41,6 +43,7 @@ type ConfigWatcher struct {
 	configFile string
 	update     chan string
 	callback   func()
+	done       <-chan struct{}
 	wa         *fsnotify.Watcher
 }
 
@@ -54,11 +57,17 @@ func NewConfigWatcher(params ConfigWatcherParams) (*ConfigWatcher, error) {
 		log.WithError(err).Info(fmt.Sprintf("Failed to watch config file: %s", params.FilePath))
 		return nil, err
 	}
+
+	ctx := params.Ctx
+	if ctx == nil {
+		ctx = context.Background()
+	}
 	cw := &ConfigWatcher{
 		wa:         watcher,
 		configFile: params.FilePath,
 		update:     make(chan string),
 		callback:   params.Callback,
+		done:       ctx.Done(),
 	}
 	return cw, nil
 }
@@ -68,6 +77,7 @@ func (w *ConfigWatcher) Update(hash string) {
 }
 
 func (w *ConfigWatcher) Listen() {
+	defer w.wa.Close()
 	for {
 		select {
 		case event, ok := <-w.wa.Events:
@@ -87,6 +97,8 @@ func (w *ConfigWatcher) Listen() {
 			if !ok {
 				return
 			}
+		case <-w.done:
+			return
 		}
 	}
 }

@@ -185,7 +185,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	go handleSignals(ctx, sigs, client, haproxyOptions, users)
 
 	if !haproxyOptions.DisableInotify {
-		if err := startWatcher(client, haproxyOptions, users); err != nil {
+		if err := startWatcher(ctx, client, haproxyOptions, users); err != nil {
 			haproxyOptions.DisableInotify = true
 			client = configureNativeClient(haproxyOptions, mWorker)
 		}
@@ -971,7 +971,7 @@ func reloadConfigurationFile(client *client_native.HAProxyClient, haproxyOptions
 	client.Configuration = confClient
 }
 
-func startWatcher(client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
+func startWatcher(ctx context.Context, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
 	cb := func() {
 		reloadConfigurationFile(client, haproxyOptions, users)
 		if err := client.Configuration.IncrementVersion(); err != nil {
@@ -982,6 +982,7 @@ func startWatcher(client *client_native.HAProxyClient, haproxyOptions dataplanea
 	watcher, err := dataplaneapi_config.NewConfigWatcher(dataplaneapi_config.ConfigWatcherParams{
 		FilePath: haproxyOptions.ConfigFile,
 		Callback: cb,
+		Ctx:      ctx,
 	})
 	if err != nil {
 		return err
