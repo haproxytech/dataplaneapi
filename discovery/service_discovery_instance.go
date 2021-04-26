@@ -16,8 +16,16 @@
 package discovery
 
 import (
+	"sync"
+
 	"github.com/haproxytech/client-native/v2/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
+)
+
+var (
+	// Using a simple mutex to avoid race conditions when multiple Service Discovery instances are trying to commit
+	// changes at the same time: need to be refactored.
+	mutex = &sync.Mutex{}
 )
 
 // ServiceInstance specifies the needed information required from the service to provide for the ServiceDiscoveryInstance.
@@ -78,6 +86,9 @@ func (s *ServiceDiscoveryInstance) UpdateParams(params discoveryInstanceParams) 
 
 // UpdateServices updates each service and persists the changes inside a single transaction.
 func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) error {
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	err := s.startTransaction()
 	if err != nil {
 		return err
