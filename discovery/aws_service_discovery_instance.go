@@ -102,7 +102,6 @@ func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client 
 		timeout: timeout,
 		ctx:     ctx,
 		log:     log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *params.ID}),
-		update:  make(chan struct{}),
 		state:   make(map[string]map[string]time.Time),
 		discoveryConfig: NewServiceDiscoveryInstance(client, reloadAgent, discoveryInstanceParams{
 			Allowlist:       []string{},
@@ -141,6 +140,8 @@ func (a *awsInstance) updateTimeout(timeoutSeconds int64) error {
 }
 
 func (a *awsInstance) start() {
+	a.update = make(chan struct{})
+
 	go func() {
 		a.log.Debug("discovery job starting")
 

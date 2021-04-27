@@ -92,7 +92,9 @@ func (a awsServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryParams
 		ai := item.(*awsInstance)
 
 		if err = ai.updateTimeout(*newParams.RetryTimeout); err != nil {
-			ai.stop()
+			if *ai.params.Enabled {
+				ai.stop()
+			}
 			return errors.New("invalid retry_timeout")
 		}
 
@@ -100,12 +102,15 @@ func (a awsServiceDiscovery) UpdateNode(id string, params ServiceDiscoveryParams
 		case *newParams.Enabled == *ai.params.Enabled:
 			break
 		case *newParams.Enabled && !*ai.params.Enabled:
-			defer ai.start()
+			ai.start()
 		default:
-			defer ai.stop()
+			ai.stop()
 		}
-
 		ai.params = newParams
+
+		if *ai.params.Enabled {
+			ai.update <- struct{}{}
+		}
 
 		return
 	})
