@@ -24,6 +24,7 @@ import (
 	"github.com/haproxytech/client-native/v2/configuration"
 	"github.com/haproxytech/client-native/v2/models"
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	log "github.com/sirupsen/logrus"
 )
 
 type consulServiceDiscovery struct {
@@ -66,6 +67,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 			SlotsIncrement:  int(cParams.ServerSlotsGrowthIncrement),
 		}),
 		prevIndexes: make(map[string]uint64),
+		log:         log.WithFields(log.Fields{"ServiceDiscovery": "Consul", "ID": *cParams.ID}),
 	}
 	instance.ctx, instance.cancel = context.WithCancel(c.context)
 
