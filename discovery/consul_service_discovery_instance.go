@@ -57,7 +57,6 @@ type consulInstance struct {
 	timeout         time.Duration
 	prevEnabled     bool
 	ctx             context.Context
-	cancel          context.CancelFunc
 	update          chan struct{}
 	log             log.FieldLogger
 }
@@ -111,7 +110,6 @@ func (c *consulInstance) watch() {
 			}
 		case <-c.ctx.Done():
 			c.stop()
-			return
 		case <-time.After(c.timeout):
 			c.log.Debug("discovery job reconciliation started")
 			if err := c.updateServices(); err != nil {

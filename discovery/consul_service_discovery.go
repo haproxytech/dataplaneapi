@@ -58,6 +58,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 
 	instance := &consulInstance{
 		params:  cParams,
+		ctx:     c.context,
 		timeout: timeout,
 		discoveryConfig: NewServiceDiscoveryInstance(c.client, c.reloadAgent, discoveryInstanceParams{
 			Allowlist:       cParams.ServiceWhitelist,
@@ -69,7 +70,6 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		prevIndexes: make(map[string]uint64),
 		log:         log.WithFields(log.Fields{"ServiceDiscovery": "Consul", "ID": *cParams.ID}),
 	}
-	instance.ctx, instance.cancel = context.WithCancel(c.context)
 
 	if err = c.consulServices.Create(id, instance); err != nil {
 		return

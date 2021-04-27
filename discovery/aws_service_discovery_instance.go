@@ -43,7 +43,6 @@ type awsInstance struct {
 	timeout         time.Duration
 	ctx             context.Context
 	update          chan struct{}
-	cancel          context.CancelFunc
 	state           map[string]map[string]time.Time
 	discoveryConfig *ServiceDiscoveryInstance
 	log             log.FieldLogger
@@ -101,6 +100,7 @@ func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client 
 	ai := &awsInstance{
 		params:  params,
 		timeout: timeout,
+		ctx:     ctx,
 		log:     log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *params.ID}),
 		update:  make(chan struct{}),
 		state:   make(map[string]map[string]time.Time),
@@ -112,7 +112,6 @@ func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client 
 			SlotsIncrement:  int(params.ServerSlotsGrowthIncrement),
 		}),
 	}
-	ai.ctx, ai.cancel = context.WithCancel(ctx)
 	if err = ai.updateTimeout(*params.RetryTimeout); err != nil {
 		return nil, err
 	}
@@ -189,9 +188,7 @@ func (a *awsInstance) start() {
 
 				a.log.Debug("discovery job reconciliation completed")
 			case <-a.ctx.Done():
-				a.log.Debug("discovery job stopping")
-				close(a.update)
-				return
+				a.stop()
 			}
 		}
 	}()
@@ -326,7 +323,8 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 }
 
 func (a *awsInstance) stop() {
-	a.cancel()
+	a.log.Debug("discovery job stopping")
+	close(a.update)
 }
 
 func (a *awsService) instancePortFromEC2(instance types.Instance) (port int, err error) {
