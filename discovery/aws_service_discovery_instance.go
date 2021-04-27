@@ -147,7 +147,10 @@ func (a *awsInstance) start() {
 
 		for {
 			select {
-			case <-a.update:
+			case _, ok := <-a.update:
+				if !ok {
+					return
+				}
 				a.log.Debug("discovery job update triggered")
 				err := a.discoveryConfig.UpdateParams(discoveryInstanceParams{
 					Allowlist:       []string{},

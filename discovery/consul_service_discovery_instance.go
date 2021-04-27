@@ -88,7 +88,10 @@ func (c *consulInstance) setAPIClient() error {
 func (c *consulInstance) watch() {
 	for {
 		select {
-		case <-c.update:
+		case _, ok := <-c.update:
+			if !ok {
+				return
+			}
 			c.log.Debug("discovery job update triggered")
 			if err := c.setAPIClient(); err != nil {
 				c.log.Errorf("error while setting up the API client: %w", err)
