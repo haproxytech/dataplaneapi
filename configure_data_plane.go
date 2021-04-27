@@ -206,9 +206,10 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		Retention:  haproxyOptions.ReloadRetention,
 		Ctx:        ctx,
 	}
-	ra, err := haproxy.NewReloadAgent(raParams)
-	if err != nil {
-		log.Fatalf("Cannot initialize reload agent: %v", err)
+
+	ra, e := haproxy.NewReloadAgent(raParams)
+	if e != nil {
+		log.Fatalf("Cannot initialize reload agent: %v", e)
 	}
 
 	// setup discovery handlers
