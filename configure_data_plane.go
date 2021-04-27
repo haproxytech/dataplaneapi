@@ -173,21 +173,22 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	api.ServerShutdown = serverShutdown
 
-	client := configureNativeClient(haproxyOptions, mWorker)
+	ctx := ContextHandler.Context()
+	clientCtx, cancel := context.WithCancel(ctx)
+
+	client := configureNativeClient(clientCtx, haproxyOptions, mWorker)
 
 	users := dataplaneapi_config.GetUsersStore()
-
-	ctx := ContextHandler.Context()
 
 	// Handle reload signals
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
-	go handleSignals(ctx, sigs, client, haproxyOptions, users)
+	go handleSignals(ctx, cancel, sigs, client, haproxyOptions, users)
 
 	if !haproxyOptions.DisableInotify {
 		if err := startWatcher(ctx, client, haproxyOptions, users); err != nil {
 			haproxyOptions.DisableInotify = true
-			client = configureNativeClient(haproxyOptions, mWorker)
+			client = configureNativeClient(clientCtx, haproxyOptions, mWorker)
 		}
 	}
 
@@ -784,7 +785,7 @@ func serverShutdown() {
 	}
 }
 
-func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) *client_native.HAProxyClient {
+func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) *client_native.HAProxyClient {
 
 	// Initialize HAProxy native client
 	confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
@@ -792,7 +793,7 @@ func configureNativeClient(haproxyOptions dataplaneapi_config.HAProxyConfigurati
 		log.Fatalf("Error initializing configuration client: %v", err)
 	}
 
-	runtimeClient := configureRuntimeClient(confClient, haproxyOptions)
+	runtimeClient := configureRuntimeClient(cyx, confClient, haproxyOptions)
 	client := &client_native.HAProxyClient{}
 	if err = client.Init(confClient, runtimeClient); err != nil {
 		log.Fatalf("Error setting up native client: %v", err)
@@ -880,7 +881,7 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 	return confClient, nil
 }
 
-func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dataplaneapi_config.HAProxyConfiguration) *runtime_api.Client {
+func configureRuntimeClient(ctx context.Context, confClient *configuration.Client, haproxyOptions dataplaneapi_config.HAProxyConfiguration) *runtime_api.Client {
 	runtimeParams := runtime_api.ClientParams{
 		MapsDir: haproxyOptions.MapsDir,
 	}
@@ -897,13 +898,13 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 			// if nbproc is set, set nbproc sockets
 			if globalConf.Nbproc > 0 {
 				nbproc := int(globalConf.Nbproc)
-				if err = runtimeClient.InitWithMasterSocket(masterSocket, nbproc); err == nil {
+				if err = runtimeClient.InitWithMasterSocketAndContext(ctx, masterSocket, nbproc); err == nil {
 					return runtimeClient
 				}
 				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
 			} else {
 				// if nbproc is not set, use master socket with 1 process
-				if err = runtimeClient.InitWithMasterSocket(masterSocket, 1); err == nil {
+				if err = runtimeClient.InitWithMasterSocketAndContext(ctx, masterSocket, 1); err == nil {
 					return runtimeClient
 				}
 				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
@@ -916,7 +917,7 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 			for _, r := range runtimeAPIs {
 				if misc.IsUnixSocketAddr(*r.Address) {
 					socketList[1] = *r.Address
-					if err = runtimeClient.InitWithSockets(socketList); err == nil {
+					if err = runtimeClient.InitWithSocketsAndContext(ctx, socketList); err == nil {
 						return runtimeClient
 					}
 					log.Warningf("Error setting up runtime client with socket: %s : %s", *r.Address, err.Error())
@@ -943,7 +944,7 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 			if len(sockets) < int(globalConf.Nbproc) {
 				log.Warning("Runtime API not configured properly, there are more processes then configured sockets")
 			}
-			if err = runtimeClient.InitWithSockets(sockets); err == nil {
+			if err = runtimeClient.InitWithSocketsAndContext(ctx, sockets); err == nil {
 				return runtimeClient
 			}
 			log.Warningf("Error setting up runtime client with sockets: %v : %s", sockets, err.Error())
@@ -960,13 +961,16 @@ func configureRuntimeClient(confClient *configuration.Client, haproxyOptions dat
 	return nil
 }
 
-func handleSignals(ctx context.Context, sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
+func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	//nolint:gosimple
 	for {
 		select {
 		case sig := <-sigs:
 			if sig == syscall.SIGUSR1 {
-				client.Runtime = configureRuntimeClient(client.Configuration, haproxyOptions)
+				var clientCtx context.Context
+				cancel()
+				clientCtx, cancel = context.WithCancel(ctx)
+				client.Runtime = configureRuntimeClient(clientCtx, client.Configuration, haproxyOptions)
 				log.Info("Reloaded Data Plane API")
 			} else if sig == syscall.SIGUSR2 {
 				reloadConfigurationFile(client, haproxyOptions, users)
