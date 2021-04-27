@@ -33,7 +33,6 @@ import (
 )
 
 type IReloadAgent interface {
-	Init(delay int, reloadCmd string, restartCmd string, configFile string, backupDir string, retention int) error
 	Reload() string
 	Restart() error
 	ForceReload() error
@@ -52,6 +51,15 @@ type reloadCache struct {
 	channel       chan string
 }
 
+type ReloadAgentParams struct {
+	Delay      int
+	ReloadCmd  string
+	RestartCmd string
+	ConfigFile string
+	BackupDir  string
+	Retention  int
+}
+
 // ReloadAgent handles all reloads, scheduled or forced
 type ReloadAgent struct {
 	delay         int
@@ -62,30 +70,33 @@ type ReloadAgent struct {
 	cache         reloadCache
 }
 
-// Init a new reload agent
-func (ra *ReloadAgent) Init(delay int, reloadCmd string, restartCmd string, configFile string, backupDir string, retention int) error {
-	ra.reloadCmd = reloadCmd
-	ra.restartCmd = restartCmd
-	ra.configFile = configFile
-	delay *= 1000 // delay is defined in seconds - internally in miliseconds
+func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
+	ra := &ReloadAgent{}
+
+	ra.reloadCmd = params.ReloadCmd
+	ra.restartCmd = params.RestartCmd
+	ra.configFile = params.ConfigFile
+
+	params.Delay *= 1000 // delay is defined in seconds - internally in miliseconds
 	d := os.Getenv("CI_DATAPLANE_RELOAD_DELAY_OVERRIDE")
 	if d != "" {
-		delay, _ = strconv.Atoi(d) // in case of err in conversion 0 is returned
+		params.Delay, _ = strconv.Atoi(d) // in case of err in conversion 0 is returned
 	}
-	if delay == 0 {
-		delay = 5000
+	if params.Delay == 0 {
+		params.Delay = 5000
 	}
-	ra.delay = delay
+	ra.delay = params.Delay
 
-	ra.setLkgPath(configFile, backupDir)
+	ra.setLkgPath(params.ConfigFile, params.BackupDir)
 
 	// create last known good file, assume it is valid when starting
 	if err := copyFile(ra.configFile, ra.lkgConfigFile); err != nil {
-		return err
+		return nil, err
 	}
-	ra.cache.Init(retention)
+	ra.cache.Init(params.Retention)
 	go ra.handleReloads()
-	return nil
+
+	return ra, nil
 }
 
 func (ra *ReloadAgent) setLkgPath(configFile, path string) {

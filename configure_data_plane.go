@@ -197,8 +197,16 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	}
 
 	// Initialize reload agent
-	ra := &haproxy.ReloadAgent{}
-	if err := ra.Init(haproxyOptions.ReloadDelay, haproxyOptions.ReloadCmd, haproxyOptions.RestartCmd, haproxyOptions.ConfigFile, haproxyOptions.BackupsDir, haproxyOptions.ReloadRetention); err != nil {
+	raParams := haproxy.ReloadAgentParams{
+		Delay:      haproxyOptions.ReloadDelay,
+		ReloadCmd:  haproxyOptions.ReloadCmd,
+		RestartCmd: haproxyOptions.RestartCmd,
+		ConfigFile: haproxyOptions.ConfigFile,
+		BackupDir:  haproxyOptions.BackupsDir,
+		Retention:  haproxyOptions.ReloadRetention,
+	}
+	ra, err := haproxy.NewReloadAgent(raParams)
+	if err != nil {
 		log.Fatalf("Cannot initialize reload agent: %v", err)
 	}
 
