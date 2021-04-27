@@ -186,73 +186,78 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 }
 
 func (c *ClusterSync) monitorBootstrapKey() {
-	for range c.cfg.Notify.BootstrapKeyChanged.Subscribe("monitorBootstrapKey") {
-		key := c.cfg.Cluster.BootstrapKey.Load()
-		c.cfg.Cluster.CertificateFetched.Store(false)
-		if key == "" {
-			// do we need to delete cert here maybe?
-			c.cfg.Cluster.ActiveBootstrapKey.Store("")
-			err := c.cfg.Save()
+	for {
+		select {
+		case <-c.cfg.Notify.BootstrapKeyChanged.Subscribe("monitorBootstrapKey"):
+			key := c.cfg.Cluster.BootstrapKey.Load()
+			c.cfg.Cluster.CertificateFetched.Store(false)
+			if key == "" {
+				// do we need to delete cert here maybe?
+				c.cfg.Cluster.ActiveBootstrapKey.Store("")
+				err := c.cfg.Save()
+				if err != nil {
+					log.Panic(err)
+				}
+				break
+			}
+			if key == c.cfg.Cluster.ActiveBootstrapKey.Load() {
+				fetched := c.cfg.Cluster.CertificateFetched.Load()
+				if !fetched {
+					c.certFetch <- struct{}{}
+				}
+				break
+			}
+			data, err := DecodeBootstrapKey(key)
+			if err != nil {
+				log.Warning(err)
+			}
+			url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
+			c.cfg.Cluster.URL.Store(url)
+			c.cfg.Cluster.Port.Store(data["port"])
+			c.cfg.Cluster.APIBasePath.Store(data["api-base-path"])
+			registerPath, ok := data["register-path"]
+			if !ok {
+				c.cfg.Cluster.APIRegisterPath.Store(data["path"])
+				c.cfg.Cluster.APINodesPath.Store(data["path"])
+			} else {
+				c.cfg.Cluster.APIRegisterPath.Store(registerPath)
+				c.cfg.Cluster.APINodesPath.Store(data["nodes-path"])
+			}
+			c.cfg.Cluster.Name.Store(data["name"])
+			c.cfg.Cluster.Description.Store(data["description"])
+			c.cfg.Mode.Store("cluster")
+			err = c.cfg.Save()
 			if err != nil {
 				log.Panic(err)
 			}
-			continue
-		}
-		if key == c.cfg.Cluster.ActiveBootstrapKey.Load() {
-			fetched := c.cfg.Cluster.CertificateFetched.Load()
-			if !fetched {
-				c.certFetch <- struct{}{}
+			csr, key, err := generateCSR()
+			if err != nil {
+				log.Warning(err)
+				break
 			}
-			continue
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
+			if err != nil {
+				log.Warning(err)
+				break
+			}
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+			if err != nil {
+				log.Warning(err)
+				break
+			}
+			err = c.cfg.Save()
+			if err != nil {
+				log.Panic(err)
+			}
+			err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), csr, key)
+			if err != nil {
+				log.Warning(err)
+				break
+			}
+			c.certFetch <- struct{}{}
+		case <-c.Context.Done():
+			return
 		}
-		data, err := DecodeBootstrapKey(key)
-		if err != nil {
-			log.Warning(err)
-		}
-		url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
-		c.cfg.Cluster.URL.Store(url)
-		c.cfg.Cluster.Port.Store(data["port"])
-		c.cfg.Cluster.APIBasePath.Store(data["api-base-path"])
-		registerPath, ok := data["register-path"]
-		if !ok {
-			c.cfg.Cluster.APIRegisterPath.Store(data["path"])
-			c.cfg.Cluster.APINodesPath.Store(data["path"])
-		} else {
-			c.cfg.Cluster.APIRegisterPath.Store(registerPath)
-			c.cfg.Cluster.APINodesPath.Store(data["nodes-path"])
-		}
-		c.cfg.Cluster.Name.Store(data["name"])
-		c.cfg.Cluster.Description.Store(data["description"])
-		c.cfg.Mode.Store("cluster")
-		err = c.cfg.Save()
-		if err != nil {
-			log.Panic(err)
-		}
-		csr, key, err := generateCSR()
-		if err != nil {
-			log.Warning(err)
-			continue
-		}
-		err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
-		if err != nil {
-			log.Warning(err)
-			continue
-		}
-		err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
-		if err != nil {
-			log.Warning(err)
-			continue
-		}
-		err = c.cfg.Save()
-		if err != nil {
-			log.Panic(err)
-		}
-		err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), csr, key)
-		if err != nil {
-			log.Warning(err)
-			continue
-		}
-		c.certFetch <- struct{}{}
 	}
 }
 
