@@ -204,6 +204,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		ConfigFile: haproxyOptions.ConfigFile,
 		BackupDir:  haproxyOptions.BackupsDir,
 		Retention:  haproxyOptions.ReloadRetention,
+		Ctx:        ctx,
 	}
 	ra, err := haproxy.NewReloadAgent(raParams)
 	if err != nil {

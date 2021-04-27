@@ -17,6 +17,7 @@ package haproxy
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -58,6 +59,7 @@ type ReloadAgentParams struct {
 	ConfigFile string
 	BackupDir  string
 	Retention  int
+	Ctx        context.Context
 }
 
 // ReloadAgent handles all reloads, scheduled or forced
@@ -67,6 +69,7 @@ type ReloadAgent struct {
 	restartCmd    string
 	configFile    string
 	lkgConfigFile string
+	done          <-chan struct{}
 	cache         reloadCache
 }
 
@@ -76,6 +79,11 @@ func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 	ra.reloadCmd = params.ReloadCmd
 	ra.restartCmd = params.RestartCmd
 	ra.configFile = params.ConfigFile
+
+	if params.Ctx == nil {
+		params.Ctx = context.Background()
+	}
+	ra.done = params.Ctx.Done()
 
 	params.Delay *= 1000 // delay is defined in seconds - internally in miliseconds
 	d := os.Getenv("CI_DATAPLANE_RELOAD_DELAY_OVERRIDE")
@@ -131,8 +139,17 @@ func (ra *ReloadAgent) handleReload(id string) {
 }
 
 func (ra *ReloadAgent) handleReloads() {
-	for id := range ra.cache.channel {
-		ra.handleReload(id)
+	defer close(ra.cache.channel)
+	for {
+		select {
+		case id, ok := <-ra.cache.channel:
+			if !ok {
+				return
+			}
+			ra.handleReload(id)
+		case <-ra.done:
+			return
+		}
 	}
 }
 
