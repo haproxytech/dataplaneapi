@@ -35,6 +35,7 @@ import (
 	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/dataplaneapi/operations/acl"
+	"github.com/haproxytech/dataplaneapi/operations/acl_runtime"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
@@ -96,6 +97,24 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BinProducer:  runtime.ByteStreamProducer(),
 		JSONProducer: runtime.JSONProducer(),
 
+		ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler: acl_runtime.DeleteServicesHaproxyRuntimeACLFileEntriesIDHandlerFunc(func(params acl_runtime.DeleteServicesHaproxyRuntimeACLFileEntriesIDParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl_runtime.DeleteServicesHaproxyRuntimeACLFileEntriesID has not yet been implemented")
+		}),
+		ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesHandler: acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesHandlerFunc(func(params acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl_runtime.GetServicesHaproxyRuntimeACLFileEntries has not yet been implemented")
+		}),
+		ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler: acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesIDHandlerFunc(func(params acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesIDParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesID has not yet been implemented")
+		}),
+		ACLRuntimeGetServicesHaproxyRuntimeAclsHandler: acl_runtime.GetServicesHaproxyRuntimeAclsHandlerFunc(func(params acl_runtime.GetServicesHaproxyRuntimeAclsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl_runtime.GetServicesHaproxyRuntimeAcls has not yet been implemented")
+		}),
+		ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler: acl_runtime.GetServicesHaproxyRuntimeAclsIDHandlerFunc(func(params acl_runtime.GetServicesHaproxyRuntimeAclsIDParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl_runtime.GetServicesHaproxyRuntimeAclsID has not yet been implemented")
+		}),
+		ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler: acl_runtime.PostServicesHaproxyRuntimeACLFileEntriesHandlerFunc(func(params acl_runtime.PostServicesHaproxyRuntimeACLFileEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl_runtime.PostServicesHaproxyRuntimeACLFileEntries has not yet been implemented")
+		}),
 		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.AddMapEntry has not yet been implemented")
 		}),
@@ -715,6 +734,18 @@ type DataPlaneAPI struct {
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
 
+	// ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler sets the operation handler for the delete services haproxy runtime ACL file entries ID operation
+	ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler acl_runtime.DeleteServicesHaproxyRuntimeACLFileEntriesIDHandler
+	// ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesHandler sets the operation handler for the get services haproxy runtime ACL file entries operation
+	ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesHandler acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesHandler
+	// ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler sets the operation handler for the get services haproxy runtime ACL file entries ID operation
+	ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesIDHandler
+	// ACLRuntimeGetServicesHaproxyRuntimeAclsHandler sets the operation handler for the get services haproxy runtime acls operation
+	ACLRuntimeGetServicesHaproxyRuntimeAclsHandler acl_runtime.GetServicesHaproxyRuntimeAclsHandler
+	// ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler sets the operation handler for the get services haproxy runtime acls ID operation
+	ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler acl_runtime.GetServicesHaproxyRuntimeAclsIDHandler
+	// ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler sets the operation handler for the post services haproxy runtime ACL file entries operation
+	ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler acl_runtime.PostServicesHaproxyRuntimeACLFileEntriesHandler
 	// MapsAddMapEntryHandler sets the operation handler for the add map entry operation
 	MapsAddMapEntryHandler maps.AddMapEntryHandler
 	// MapsClearRuntimeMapHandler sets the operation handler for the clear runtime map operation
@@ -1168,6 +1199,24 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "BasicAuthAuth")
 	}
 
+	if o.ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler == nil {
+		unregistered = append(unregistered, "acl_runtime.DeleteServicesHaproxyRuntimeACLFileEntriesIDHandler")
+	}
+	if o.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesHandler == nil {
+		unregistered = append(unregistered, "acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesHandler")
+	}
+	if o.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler == nil {
+		unregistered = append(unregistered, "acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesIDHandler")
+	}
+	if o.ACLRuntimeGetServicesHaproxyRuntimeAclsHandler == nil {
+		unregistered = append(unregistered, "acl_runtime.GetServicesHaproxyRuntimeAclsHandler")
+	}
+	if o.ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler == nil {
+		unregistered = append(unregistered, "acl_runtime.GetServicesHaproxyRuntimeAclsIDHandler")
+	}
+	if o.ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler == nil {
+		unregistered = append(unregistered, "acl_runtime.PostServicesHaproxyRuntimeACLFileEntriesHandler")
+	}
 	if o.MapsAddMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.AddMapEntryHandler")
 	}
@@ -1831,6 +1880,30 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/acl_file_entries/{id}"] = acl_runtime.NewDeleteServicesHaproxyRuntimeACLFileEntriesID(o.context, o.ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/acl_file_entries"] = acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntries(o.context, o.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/acl_file_entries/{id}"] = acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntriesID(o.context, o.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/acls"] = acl_runtime.NewGetServicesHaproxyRuntimeAcls(o.context, o.ACLRuntimeGetServicesHaproxyRuntimeAclsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/acls/{id}"] = acl_runtime.NewGetServicesHaproxyRuntimeAclsID(o.context, o.ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/acl_file_entries"] = acl_runtime.NewPostServicesHaproxyRuntimeACLFileEntries(o.context, o.ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

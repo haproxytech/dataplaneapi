@@ -6458,6 +6458,231 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/acl_file_entries": {
+      "get": {
+        "description": "Returns an ACL runtime setting using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an ACL entries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_files_entries"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds an entry into the ACL file using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Add entry to an ACL file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl_file_entry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL entry created",
+            "schema": {
+              "$ref": "#/definitions/acl_file_entry"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/acl_file_entries/{id}": {
+      "get": {
+        "description": "Returns the ACL entry by its ID using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an ACL entry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "File entry ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_file_entry"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes the entry from the ACL by its value using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Delete an ACL entry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "File entry ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/acls": {
+      "get": {
+        "description": "Returns all ACL files using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an array of all ACL files",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_files"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/acls/{id}": {
+      "get": {
+        "description": "Returns an ACL file by id using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an ACL file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL file entry ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_file"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/info": {
       "get": {
         "description": "Return HAProxy process information",
@@ -15421,6 +15646,13 @@ func init() {
           ]
         },
         "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
           "type": "string",
           "enum": [
             "enabled",
@@ -27390,6 +27622,381 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/acl_file_entries": {
+      "get": {
+        "description": "Returns an ACL runtime setting using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an ACL entries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_files_entries"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds an entry into the ACL file using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Add entry to an ACL file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl_file_entry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL entry created",
+            "schema": {
+              "$ref": "#/definitions/acl_file_entry"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/acl_file_entries/{id}": {
+      "get": {
+        "description": "Returns the ACL entry by its ID using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an ACL entry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "File entry ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_file_entry"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes the entry from the ACL by its value using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Delete an ACL entry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "File entry ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/acls": {
+      "get": {
+        "description": "Returns all ACL files using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an array of all ACL files",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_files"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/acls/{id}": {
+      "get": {
+        "description": "Returns an ACL file by id using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Return an ACL file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL file entry ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/acl_file"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/info": {
       "get": {
         "description": "Return HAProxy process information",
@@ -38375,6 +38982,13 @@ func init() {
           ]
         },
         "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
           "type": "string",
           "enum": [
             "enabled",

@@ -469,6 +469,14 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StickTableGetStickTableHandler = &handlers.GetStickTableHandlerImpl{Client: client}
 	api.StickTableGetStickTableEntriesHandler = &handlers.GetStickTableEntriesHandlerImpl{Client: client}
 
+	// setup ACL runtime handlers
+	api.ACLRuntimeGetServicesHaproxyRuntimeAclsHandler = &handlers.GetACLSHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler = &handlers.GetACLHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesHandler = &handlers.GetACLFileEntriesHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler = &handlers.PostACLFileEntryHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler = &handlers.GetACLFileEntryRuntimeImpl{Client: client}
+	api.ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler = &handlers.DeleteACLFileEntryHandlerRuntimeImpl{Client: client}
+
 	// setup map handlers
 	api.MapsGetAllRuntimeMapFilesHandler = &handlers.GetMapsHandlerImpl{Client: client}
 	api.MapsGetOneRuntimeMapHandler = &handlers.GetMapHandlerImpl{Client: client}
