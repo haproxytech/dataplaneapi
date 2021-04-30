@@ -17,6 +17,7 @@ package adapters
 
 import (
 	"fmt"
+	"io"
 	"math/rand"
 	"net/http"
 	"runtime"
@@ -28,6 +29,10 @@ import (
 	apachelog "github.com/lestrrat-go/apache-logformat"
 	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"
+)
+
+var (
+	apacheLogWritter *io.PipeWriter
 )
 
 // Adapter is just a wrapper over http handler function
@@ -176,7 +181,11 @@ func UniqueIDMiddleware(entry *logrus.Entry) Adapter {
 
 func ApacheLogMiddleware(entry *logrus.Entry, format *apachelog.ApacheLog) Adapter {
 	return func(h http.Handler) http.Handler {
-		return format.Wrap(h, entry.Logger.Writer())
+		if apacheLogWritter != nil {
+			apacheLogWritter.Close()
+		}
+		apacheLogWritter = entry.Logger.Writer()
+		return format.Wrap(h, apacheLogWritter)
 	}
 }
 
