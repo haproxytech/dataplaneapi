@@ -146,6 +146,32 @@ func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal
 	return maps.NewAddMapEntryCreated().WithPayload(params.Data)
 }
 
+type MapsAddPayloadRuntimeMapHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+func (h *MapsAddPayloadRuntimeMapHandlerImpl) Handle(params maps.AddPayloadRuntimeMapParams, principal interface{}) middleware.Responder {
+	err := h.Client.Runtime.AddMapPayloadVersioned(params.Name, params.Data)
+	if err != nil {
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewAddPayloadRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+	if *params.ForceSync {
+		m, err := h.Client.Runtime.GetMap(params.Name)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewAddPayloadRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+		ms := config.NewMapSync()
+		_, err = ms.Sync(m, h.Client)
+		if err != nil {
+			status := misc.GetHTTPStatusFromErr(err)
+			return maps.NewAddPayloadRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+		}
+	}
+	return maps.NewAddPayloadRuntimeMapCreated().WithPayload(params.Data)
+}
+
 // GetRuntimeMapEntryHandlerImpl implementation of the GetRuntimeMapEntryHandler interface using client-native client
 type GetRuntimeMapEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient

@@ -6772,6 +6772,52 @@ func init() {
           }
         }
       },
+      "put": {
+        "description": "Adds a new map payload.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Add a new map payload",
+        "operationId": "addPayloadRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "force_sync",
+            "in": "query"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map payload added",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
       "delete": {
         "description": "Remove all map entries from the map file.",
         "tags": [
@@ -27862,6 +27908,72 @@ func init() {
             "headers": {
               "Configuration-Version": {
                 "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Adds a new map payload.",
+        "tags": [
+          "Maps"
+        ],
+        "summary": "Add a new map payload",
+        "operationId": "addPayloadRuntimeMap",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Map file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, immediately syncs changes to disk",
+            "name": "force_sync",
+            "in": "query"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Map payload added",
+            "schema": {
+              "$ref": "#/definitions/map_entries"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "default": 0,
                 "description": "Configuration file version"
               }
             }

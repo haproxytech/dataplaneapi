@@ -118,6 +118,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.AddMapEntry has not yet been implemented")
 		}),
+		MapsAddPayloadRuntimeMapHandler: maps.AddPayloadRuntimeMapHandlerFunc(func(params maps.AddPayloadRuntimeMapParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation maps.AddPayloadRuntimeMap has not yet been implemented")
+		}),
 		MapsClearRuntimeMapHandler: maps.ClearRuntimeMapHandlerFunc(func(params maps.ClearRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ClearRuntimeMap has not yet been implemented")
 		}),
@@ -748,6 +751,8 @@ type DataPlaneAPI struct {
 	ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler acl_runtime.PostServicesHaproxyRuntimeACLFileEntriesHandler
 	// MapsAddMapEntryHandler sets the operation handler for the add map entry operation
 	MapsAddMapEntryHandler maps.AddMapEntryHandler
+	// MapsAddPayloadRuntimeMapHandler sets the operation handler for the add payload runtime map operation
+	MapsAddPayloadRuntimeMapHandler maps.AddPayloadRuntimeMapHandler
 	// MapsClearRuntimeMapHandler sets the operation handler for the clear runtime map operation
 	MapsClearRuntimeMapHandler maps.ClearRuntimeMapHandler
 	// SpoeTransactionsCommitSpoeTransactionHandler sets the operation handler for the commit spoe transaction operation
@@ -1219,6 +1224,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsAddMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.AddMapEntryHandler")
+	}
+	if o.MapsAddPayloadRuntimeMapHandler == nil {
+		unregistered = append(unregistered, "maps.AddPayloadRuntimeMapHandler")
 	}
 	if o.MapsClearRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ClearRuntimeMapHandler")
@@ -1908,6 +1916,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/runtime/maps_entries"] = maps.NewAddMapEntry(o.context, o.MapsAddMapEntryHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/runtime/maps/{name}"] = maps.NewAddPayloadRuntimeMap(o.context, o.MapsAddPayloadRuntimeMapHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}

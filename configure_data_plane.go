@@ -494,6 +494,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.MapsClearRuntimeMapHandler = &handlers.ClearMapHandlerImpl{Client: client}
 	api.MapsShowRuntimeMapHandler = &handlers.ShowMapHandlerImpl{Client: client}
 	api.MapsAddMapEntryHandler = &handlers.AddMapEntryHandlerImpl{Client: client}
+	api.MapsAddPayloadRuntimeMapHandler = &handlers.MapsAddPayloadRuntimeMapHandlerImpl{Client: client}
 	api.MapsGetRuntimeMapEntryHandler = &handlers.GetRuntimeMapEntryHandlerImpl{Client: client}
 	api.MapsReplaceRuntimeMapEntryHandler = &handlers.ReplaceRuntimeMapEntryHandlerImpl{Client: client}
 	api.MapsDeleteRuntimeMapEntryHandler = &handlers.DeleteRuntimeMapEntryHandlerImpl{Client: client}
