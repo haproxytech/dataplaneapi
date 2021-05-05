@@ -32,6 +32,7 @@ import (
 	"os"
 	"path"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 
@@ -213,7 +214,10 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			}
 			url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
 			c.cfg.Cluster.URL.Store(url)
-			c.cfg.Cluster.Port.Store(data["port"])
+			c.cfg.Cluster.Port.Store(func() int {
+				i, _ := strconv.Atoi(data["port"])
+				return i
+			}())
 			c.cfg.Cluster.APIBasePath.Store(data["api-base-path"])
 			registerPath, ok := data["register-path"]
 			if !ok {
@@ -480,7 +484,7 @@ func (c *ClusterSync) fetchCert() {
 				apiBasePath := c.cfg.Cluster.APIBasePath.Load()
 				apiNodesPath := c.cfg.Cluster.APINodesPath.Load()
 				id := c.cfg.Cluster.ID.Load()
-				url = fmt.Sprintf("%s:%s/%s", url, port, strings.TrimLeft(path.Join(apiBasePath, apiNodesPath, id), "/"))
+				url = fmt.Sprintf("%s:%d/%s/%s/%s", url, port, apiBasePath, apiNodesPath, id)
 				req, err := http.NewRequest("GET", url, nil)
 				if err != nil {
 					c.activateFetchCert(err)

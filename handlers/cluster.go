@@ -18,7 +18,6 @@ package handlers
 import (
 	"fmt"
 	"path"
-	"strconv"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/google/renameio"
@@ -253,11 +252,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 // Handle executing the request and returning a response
 func (h *GetClusterHandlerImpl) Handle(params discovery.GetClusterParams, principal interface{}) middleware.Responder {
 	portStr := h.Config.Cluster.Port.Load()
-	p, err := strconv.Atoi(portStr)
-	if err != nil {
-		p = 0
-	}
-	port := int64(p)
+	port := int64(portStr)
 	var clusterSettings *models.ClusterSettingsCluster
 	if h.Config.Mode.Load() == "cluster" {
 		clusterSettings = &models.ClusterSettingsCluster{

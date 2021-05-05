@@ -10,31 +10,31 @@ dataplaneapi {
   max-header-size =  "1MiB"
   socket-path =  "/var/run/data-plane.sock"
   host =  "localhost"
-  port =  "80"
-  listen-limit =  "null"
+  port =  80
+  listen-limit =  1024
   keep-alive =  "3m"
   read-timeout =  "30s"
   write-timeout =  "60s"
-  show-system-info =  "false"
-  disable-inotify =  "false"
+  show-system-info =  false
+  disable-inotify =  false
   pid-file =  "/tmp/dataplane.pid"
-  uid =  "1000"
-  gid =  "1000"
+  uid =  1000
+  gid =  1000
 
   tls {
     tls-host =  "null"
-    tls-port =  "null"
+    tls-port =  6443
     tls-certificate =  "null"
     tls-key =  "null"
     tls-ca =  "null"
-    tls-listen-limit =  "null"
-    tls-keep-alive =  "null"
-    tls-read-timeout =  "null"
-    tls-write-timeout =  "null"
+    tls-listen-limit =  10
+    tls-keep-alive =  "1m"
+    tls-read-timeout =  "10s"
+    tls-write-timeout =  "10s"
   }
 
   user "admin" {
-    insecure =  "true"
+    insecure =  true
     password =  "adminpwd"
   }
 
@@ -45,23 +45,23 @@ dataplaneapi {
 
   transaction {
     transaction-dir =  "/tmp/haproxy"
-    backups-number =  "0"
+    backups-number =  0
     backups-dir =  "/tmp/backups"
-    max-open-transactions =  "20"
+    max-open-transactions =  20
   }
 
   resources {
     maps-dir =  "/etc/haproxy/maps"
     ssl-certs-dir =  "/etc/haproxy/ssl"
-    update-map-files =  "false"
-    update-map-files-period =  "10"
+    update-map-files =  false
+    update-map-files-period =  10
     spoe-dir =  "/etc/haproxy/spoe"
     spoe-transaction-dir =  "/tmp/spoe-haproxy"
   }
 
   advertised {
     api-address =  "10.2.3.4"
-    api-port =  "80"
+    api-port =  80
   }
 }
 
@@ -70,13 +70,13 @@ haproxy {
   haproxy-bin =  "haproxy"
   master-runtime =  "null"
   fid =  "null"
-  master-worker-mode =  "false"
+  master-worker-mode =  false
 
   reload {
-    reload-delay =  "5"
+    reload-delay =  5
     reload-cmd =  "null"
     restart-cmd =  "null"
-    reload-retention =  "1"
+    reload-retention =  1
     validate-cmd =  "null"
   }
 }
@@ -88,20 +88,20 @@ cluster {
   active_bootstrap_key =  "null"
   token =  "null"
   url =  "null"
-  port =  "80"
+  port =  80
   api_base_path =  "null"
   api_nodes_path =  "null"
   api_register_path =  "null"
   storage-dir =  "null"
   cert-path =  "null"
-  cert-fetched =  "null"
+  cert-fetched =  false
   name =  "null"
   description =  "null"
 }
 
 service_discovery {
-  consuls =  "null"
-  aws-regions =  "null"
+  consuls =  []
+  aws-regions =  []
 }
 
 log {

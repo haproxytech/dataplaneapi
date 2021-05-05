@@ -11,7 +11,7 @@ dataplaneapi:
   socket-path: "/var/run/data-plane.sock" # flags.Filename
   host: "localhost" # string
   port: 80 # int
-  listen-limit: null # int
+  listen-limit: 1024 # int
   keep-alive: "3m" # time.Duration
   read-timeout: "30s" # time.Duration
   write-timeout: "60s" # time.Duration
@@ -22,14 +22,14 @@ dataplaneapi:
   gid: 1000 # int
   tls:
     tls-host: null # string 2
-    tls-port: null # int 2
+    tls-port: 6443 # int 2
     tls-certificate: null # flags.Filename 2
     tls-key: null # flags.Filename 2
     tls-ca: null # flags.Filename 2
-    tls-listen-limit: null # int 2
-    tls-keep-alive: null # time.Duration 2
-    tls-read-timeout: null # time.Duration 2
-    tls-write-timeout: null # time.Duration 2
+    tls-listen-limit: 10 # int 2
+    tls-keep-alive: 1m # time.Duration 2
+    tls-read-timeout: 10s # time.Duration 2
+    tls-write-timeout: 10s # time.Duration 2
   user:
   - name: admin # string 2
     insecure: true # bool 2
@@ -39,14 +39,14 @@ dataplaneapi:
     userlist-file: null # string 2
   transaction:
     transaction-dir: "/tmp/haproxy" # string 2
-    backups-number: "0" # int 2
+    backups-number: 0 # int 2
     backups-dir: /tmp/backups # string 2
-    max-open-transactions: "20" # int64 2
+    max-open-transactions: 20 # int64 2
   resources:
     maps-dir: "/etc/haproxy/maps" # string 2
     ssl-certs-dir: "/etc/haproxy/ssl" # string 2
     update-map-files: false # bool 2
-    update-map-files-period: "10" # int64 2
+    update-map-files-period: 10 # int64 2
     spoe-dir: "/etc/haproxy/spoe" # string 2
     spoe-transaction-dir: "/tmp/spoe-haproxy" # string 2
   advertised:
@@ -59,10 +59,10 @@ haproxy:
   fid: null # string
   master-worker-mode: false # bool
   reload:
-    reload-delay: "5" # int 2
+    reload-delay: 5 # int 2
     reload-cmd: null # string 2
     restart-cmd: null # string 2
-    reload-retention: "1" # int 2
+    reload-retention: 1 # int 2
     validate-cmd: null # string 2
 cluster:
   cluster-tls-dir: null # string
@@ -71,18 +71,18 @@ cluster:
   active_bootstrap_key: null # string
   token: null # string
   url: null # string
-  port: 80 # string
+  port: 80 # int
   api_base_path: null # string
   api_nodes_path: null # string
   api_register_path: null # string
   storage-dir: null # string
   cert-path: null # string
-  cert-fetched: null # bool
+  cert-fetched: false # bool
   name: null # string
   description: null # string
 service_discovery:
-  consuls: null # []*models.Consul
-  aws-regions: null # []*models.AwsRegion
+  consuls: [] # []*models.Consul
+  aws-regions: [] # []*models.AwsRegion
 log:
   log-to: "stdout" # string
   log-file: "/var/log/dataplaneapi/dataplaneapi.log" # string

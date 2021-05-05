@@ -17,11 +17,7 @@
 package configuration
 
 import (
-	"time"
-
-	"github.com/go-openapi/runtime/flagext"
 	"github.com/jessevdk/go-flags"
-
 	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -33,8 +29,14 @@ import (
 		{{- range .Attributes}}
 			{{- if eq .Type "AtomicString"}}
 				{{ .Name }} *string `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+			{{- else if eq .Type "AtomicInt"}}
+				{{ .Name }} *int    `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
 			{{- else if eq .Type "AtomicBool"}}
-				{{ .Name }} *bool `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{ .Name }} *bool   `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+			{{- else if eq .Type "time.Duration" }}
+				{{ .Name }} *string   `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+			{{- else if eq .Type "flagext.ByteSize" }}
+				{{ .Name }} *string   `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
 			{{- else }}
 				{{- if .IsHCLKey}}
 						{{ .Name }} {{ .Type }}  `yaml:"{{ .FileName }}" hcl:"{{ .FileName }},key"`
@@ -67,6 +69,8 @@ type StorageDataplaneAPIConfiguration struct {
     {{- range .Attributes}}
 	  {{- if eq .Type "AtomicString"}}
         {{ .Name }} *string  `yaml:"{{ .SpecName }},omitempty" hcl:"{{ .SpecName }},omitempty"`
+	  {{- else if eq .Type "AtomicInt"}}
+        {{ .Name }} *int   `yaml:"{{ .SpecName }},omitempty" hcl:"{{ .SpecName }},omitempty"`
 	  {{- else if eq .Type "AtomicBool"}}
         {{ .Name }} *bool  `yaml:"{{ .SpecName }},omitempty" hcl:"{{ .SpecName }},omitempty"`
 	  {{- else if eq .Type "int"}}
@@ -113,6 +117,8 @@ func copyToConfiguration(cfg *Configuration) {
 				{{- if eq $group.Parent "" }}
 					if cfgStorage.{{ $group.Name | Capitalize }} != nil && cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
 						{{- if eq .Type "AtomicString"}}
+							cfg.{{ .AttName }}.{{ .Name }}.Store(*cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
+						{{- else if eq .Type "AtomicInt"}}
 							cfg.{{ .AttName }}.{{ .Name }}.Store(*cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
 						{{- else if eq .Type "AtomicBool"}}
 							cfg.{{ .AttName }}.{{ .Name }}.Store(*cfgStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
@@ -178,6 +184,20 @@ func copyConfigurationToStorage(cfg *Configuration) {
 						if cfgStorage.Cluster != nil {
 							cfgStorage.{{ .AttName }}.{{ .Name }}= &value{{$group.Name | Capitalize}}{{ .Name }}
 						}
+				{{- else if eq .Type "AtomicInt" }}
+					{{- if not .Deprecated }}
+						value{{$group.Name | Capitalize}}{{ .Name }} := cfg.{{ .AttName }}.{{ .Name }}.Load()
+						if value{{$group.Name | Capitalize}}{{ .Name }} > 0 {
+							if cfgStorage.Cluster == nil {
+								cfgStorage.{{ .AttName }} = &configType{{ .AttName }}{}
+							}
+							cfgStorage.{{ .AttName }}.{{ .Name }}= &value{{$group.Name | Capitalize}}{{ .Name }}
+						}
+					{{- else }}
+						if cfgStorage.Cluster != nil {
+							cfgStorage.{{ .AttName }}.{{ .Name }}= nil
+						}
+					{{- end }}
 				{{- else}}
 					{{- if $group.Parent }}
 					if cfgStorage.{{ $group.Parent | Capitalize }} == nil {

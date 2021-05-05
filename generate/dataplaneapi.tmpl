@@ -17,6 +17,11 @@
 package dataplaneapi
 
 import (
+	"time"
+
+	"github.com/docker/go-units"
+	"github.com/go-openapi/runtime/flagext"
+
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/misc"
 )
@@ -29,10 +34,27 @@ func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) {
 {{- if eq .StructName "Server" }}
 	{{- if eq $group.Parent "" }}
 		if configStorage.{{ $group.Name | Capitalize }} != nil && configStorage.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
+		{{- if eq .Type "time.Duration" }}
+			if d, err := time.ParseDuration(*configStorage.{{ $group.Name | Capitalize }}.{{ .Name }}); err != nil {
+				server.{{ .Name }} = d
+			}
+		{{- else if eq .Type "flagext.ByteSize" }}
+			s, err := units.FromHumanSize(*configStorage.{{ $group.Name | Capitalize }}.{{ .Name }})
+			if err == nil {
+				server.{{ .Name }} = flagext.ByteSize(s)
+			}
+		{{- else }}
 			server.{{ .Name }} = *configStorage.{{ $group.Name | Capitalize }}.{{ .Name }}
+		{{- end }}
 	{{- else }}
 		if configStorage.{{ $group.Parent | Capitalize }} != nil && configStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }} != nil && configStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }}.{{ .Name }} != nil && !misc.HasOSArg("{{ .Short }}", "{{ .Long }}", "{{ .ENV }}") {
+		{{- if eq .Type "time.Duration" }}
+			if d, err := time.ParseDuration(*configStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }}.{{ .Name }}); err != nil {
+				server.{{ .Name }} = d
+			}
+		{{- else }}
 			server.{{ .Name }} = *configStorage.{{ $group.Parent | Capitalize }}.{{ $group.Name | Capitalize }}.{{ .Name }}
+		{{- end }}
 	{{- end}}
 	}
 {{- end}}

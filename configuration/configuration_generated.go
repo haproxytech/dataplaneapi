@@ -17,28 +17,24 @@
 package configuration
 
 import (
-	"time"
-
-	"github.com/go-openapi/runtime/flagext"
-	"github.com/jessevdk/go-flags"
-
 	"github.com/haproxytech/client-native/v2/models"
+	"github.com/jessevdk/go-flags"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 )
 
 type configTypeDataplaneapi struct {
 	EnabledListeners *[]string              `yaml:"scheme,omitempty" hcl:"scheme,omitempty"`
-	CleanupTimeout   *time.Duration         `yaml:"cleanup-timeout,omitempty" hcl:"cleanup-timeout,omitempty"`
-	GracefulTimeout  *time.Duration         `yaml:"graceful-timeout,omitempty" hcl:"graceful-timeout,omitempty"`
-	MaxHeaderSize    *flagext.ByteSize      `yaml:"max-header-size,omitempty" hcl:"max-header-size,omitempty"`
+	CleanupTimeout   *string                `yaml:"cleanup-timeout,omitempty" hcl:"cleanup-timeout,omitempty"`
+	GracefulTimeout  *string                `yaml:"graceful-timeout,omitempty" hcl:"graceful-timeout,omitempty"`
+	MaxHeaderSize    *string                `yaml:"max-header-size,omitempty" hcl:"max-header-size,omitempty"`
 	SocketPath       *flags.Filename        `yaml:"socket-path,omitempty" hcl:"socket-path,omitempty"`
 	Host             *string                `yaml:"host,omitempty" hcl:"host,omitempty"`
 	Port             *int                   `yaml:"port,omitempty" hcl:"port,omitempty"`
 	ListenLimit      *int                   `yaml:"listen-limit,omitempty" hcl:"listen-limit,omitempty"`
-	KeepAlive        *time.Duration         `yaml:"keep-alive,omitempty" hcl:"keep-alive,omitempty"`
-	ReadTimeout      *time.Duration         `yaml:"read-timeout,omitempty" hcl:"read-timeout,omitempty"`
-	WriteTimeout     *time.Duration         `yaml:"write-timeout,omitempty" hcl:"write-timeout,omitempty"`
+	KeepAlive        *string                `yaml:"keep-alive,omitempty" hcl:"keep-alive,omitempty"`
+	ReadTimeout      *string                `yaml:"read-timeout,omitempty" hcl:"read-timeout,omitempty"`
+	WriteTimeout     *string                `yaml:"write-timeout,omitempty" hcl:"write-timeout,omitempty"`
 	ShowSystemInfo   *bool                  `yaml:"show-system-info,omitempty" hcl:"show-system-info,omitempty"`
 	DisableInotify   *bool                  `yaml:"disable-inotify,omitempty" hcl:"disable-inotify,omitempty"`
 	PIDFile          *string                `yaml:"pid-file,omitempty" hcl:"pid-file,omitempty"`
@@ -59,9 +55,9 @@ type configTypeTls struct {
 	TLSCertificateKey *flags.Filename `yaml:"tls-key,omitempty" hcl:"tls-key,omitempty"`
 	TLSCACertificate  *flags.Filename `yaml:"tls-ca,omitempty" hcl:"tls-ca,omitempty"`
 	TLSListenLimit    *int            `yaml:"tls-listen-limit,omitempty" hcl:"tls-listen-limit,omitempty"`
-	TLSKeepAlive      *time.Duration  `yaml:"tls-keep-alive,omitempty" hcl:"tls-keep-alive,omitempty"`
-	TLSReadTimeout    *time.Duration  `yaml:"tls-read-timeout,omitempty" hcl:"tls-read-timeout,omitempty"`
-	TLSWriteTimeout   *time.Duration  `yaml:"tls-write-timeout,omitempty" hcl:"tls-write-timeout,omitempty"`
+	TLSKeepAlive      *string         `yaml:"tls-keep-alive,omitempty" hcl:"tls-keep-alive,omitempty"`
+	TLSReadTimeout    *string         `yaml:"tls-read-timeout,omitempty" hcl:"tls-read-timeout,omitempty"`
+	TLSWriteTimeout   *string         `yaml:"tls-write-timeout,omitempty" hcl:"tls-write-timeout,omitempty"`
 }
 
 type configTypeUser struct {
@@ -115,7 +111,7 @@ type configTypeCluster struct {
 	ActiveBootstrapKey *string `yaml:"active_bootstrap_key,omitempty" hcl:"active_bootstrap_key,omitempty"`
 	Token              *string `yaml:"token,omitempty" hcl:"token,omitempty"`
 	URL                *string `yaml:"url,omitempty" hcl:"url,omitempty"`
-	Port               *string `yaml:"port,omitempty" hcl:"port,omitempty"`
+	Port               *int    `yaml:"port,omitempty" hcl:"port,omitempty"`
 	APIBasePath        *string `yaml:"api_base_path,omitempty" hcl:"api_base_path,omitempty"`
 	APINodesPath       *string `yaml:"api_nodes_path,omitempty" hcl:"api_nodes_path,omitempty"`
 	APIRegisterPath    *string `yaml:"api_register_path,omitempty" hcl:"api_register_path,omitempty"`
@@ -423,7 +419,7 @@ func copyConfigurationToStorage(cfg *Configuration) {
 	}
 
 	valueClusterPort := cfg.Cluster.Port.Load()
-	if valueClusterPort != "" {
+	if valueClusterPort > 0 {
 		if cfgStorage.Cluster == nil {
 			cfgStorage.Cluster = &configTypeCluster{}
 		}

@@ -101,13 +101,13 @@ type ClusterConfiguration struct {
 	ActiveBootstrapKey AtomicString `yaml:"active_bootstrap_key,omitempty" group:"cluster" save:"true"`
 	Token              AtomicString `yaml:"token,omitempty" group:"cluster" save:"true"`
 	URL                AtomicString `yaml:"url,omitempty" group:"cluster" save:"true"`
-	Port               AtomicString `yaml:"port,omitempty" group:"cluster" save:"true"`
+	Port               AtomicInt    `yaml:"port,omitempty" group:"cluster" save:"true"`
 	APIBasePath        AtomicString `yaml:"api_base_path,omitempty" group:"cluster" save:"true"`
 	APINodesPath       AtomicString `yaml:"api_nodes_path,omitempty" group:"cluster" save:"true"`
 	APIRegisterPath    AtomicString `yaml:"api_register_path,omitempty" group:"cluster" save:"true"`
 	StorageDir         AtomicString `yaml:"storage-dir,omitempty" group:"cluster" save:"true"`
 	CertificateDir     AtomicString `yaml:"cert-path,omitempty" group:"cluster" save:"true"`
-	CertificateFetched AtomicBool   `yaml:"cert-fetched,omitempty" group:"cluster" save:"true"`
+	CertificateFetched AtomicBool   `yaml:"cert-fetched,omitempty" group:"cluster" save:"true" example:"false"`
 	Name               AtomicString `yaml:"name,omitempty" group:"cluster" save:"true"`
 	Description        AtomicString `yaml:"description,omitempty" group:"cluster" save:"true"`
 }
@@ -116,7 +116,7 @@ func (c *ClusterConfiguration) Clear() {
 	c.ID.Store("")
 	c.ActiveBootstrapKey.Store("")
 	c.Token.Store("")
-	c.Port.Store("")
+	c.Port.Store(0)
 	c.APIBasePath.Store("")
 	c.APINodesPath.Store("")
 	c.APIRegisterPath.Store("")

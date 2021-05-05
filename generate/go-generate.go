@@ -23,6 +23,7 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"text/template"
 	"unicode"
@@ -62,18 +63,18 @@ var groupParents = map[string]string{
 	"syslog":      "log",
 }
 
-var itemDefaults = map[string]string{
-	"port":              "80",
-	"listen-limit":      "null",
+var itemDefaults = map[string]interface{}{
+	"port":              80,
+	"listen-limit":      1024,
 	"tls-host":          "null",
-	"tls-port":          "null",
+	"tls-port":          6443,
 	"tls-certificate":   "null",
 	"tls-key":           "null",
 	"tls-ca":            "null",
-	"tls-listen-limit":  "null",
-	"tls-keep-alive":    "null",
-	"tls-read-timeout":  "null",
-	"tls-write-timeout": "null",
+	"tls-listen-limit":  10,
+	"tls-keep-alive":    "1m",
+	"tls-read-timeout":  "10s",
+	"tls-write-timeout": "10s",
 	"userlist-file":     "null",
 	"backups-dir":       "/tmp/backups",
 	"scheme":            "http",
@@ -227,32 +228,68 @@ func isListItem(att Attribute) string {
 
 func getExample(att Attribute) string {
 	if att.Example != "" {
+		if att.Type == "int" {
+			i, _ := strconv.ParseInt(att.Example, 10, 64)
+			return fmt.Sprintf("%d", i)
+		}
 		return att.Example
 	}
 	if att.Default != "" {
-		return fmt.Sprintf(`"%s"`, att.Default)
+		switch att.Type {
+		case "int", "int64":
+			return att.Default
+		default:
+			return fmt.Sprintf(`"%s"`, att.Default)
+		}
 	}
 	if att.Type == "bool" {
-		return "false"
+		return `false`
+	}
+	if strings.HasPrefix(att.Type, "[]*models.") {
+		return `[]`
 	}
 	if v, ok := itemDefaults[att.FileName]; ok {
-		return v
+		switch t := v.(type) {
+		case int:
+			return fmt.Sprintf("%d", v.(int))
+		default:
+			return t.(string)
+		}
 	}
 	return "null"
 }
 
 func getQuotedExample(att Attribute) string {
+	if att.Type == "int" || att.Type == "int64" {
+		switch {
+		case len(att.Example) > 0:
+			return att.Example
+		case len(att.Default) > 0:
+			return att.Default
+		}
+	}
+	if att.Type == "bool" || att.Type == "AtomicBool" {
+		if len(att.Example) == 0 {
+			return `false`
+		}
+		return att.Example
+	}
+	if strings.HasPrefix(att.Type, "[]*models.") {
+		return `[]`
+	}
 	if att.Example != "" {
 		return fmt.Sprintf(`"%s"`, att.Example)
 	}
 	if att.Default != "" {
 		return fmt.Sprintf(`"%s"`, att.Default)
 	}
-	if att.Type == "bool" {
-		return `"false"`
-	}
 	if v, ok := itemDefaults[att.FileName]; ok {
-		return fmt.Sprintf(`"%s"`, v)
+		switch v.(type) {
+		case int:
+			return fmt.Sprintf("%d", v)
+		default:
+			return fmt.Sprintf(`"%s"`, v)
+		}
 	}
 	return `"null"`
 }
