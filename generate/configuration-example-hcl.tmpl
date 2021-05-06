@@ -11,9 +11,9 @@ config_version = 2
 		{{- range .Attributes}}
     {{- if not .Deprecated}}
     {{- if eq .Type "[]string" }}
-{{ . | IsListItem }}{{ .FileName }} =  [{{ . | QuotedExample }}]
+{{ . | IsListItem }}{{ .FileName }} = [{{ . | QuotedExample }}]
 {{- else }}
-{{ . | IsListItem }}{{ .FileName }} =  {{ . | QuotedExample }}
+{{ . | IsListItem }}{{ .FileName }} = {{ . | QuotedExample }}
 		{{- end}}
 		{{- end}}
 		{{- end}}
@@ -29,10 +29,10 @@ config_version = 2
     {{- range $index,$a := .Attributes -}}
     {{- if not .Deprecated -}}
     {{- if $SubGroup.HasACLKey }}{{- if eq $index 0 }} {{ . | QuotedExample }} { {{- else }}
-    {{ .FileName }} =  {{ . | QuotedExample }}
+    {{ .FileName }} = {{ . | QuotedExample }}
     {{- end -}}{{- end -}}
     {{- if not $SubGroup.HasACLKey }}
-    {{ .FileName }} =  {{ . | QuotedExample }}
+    {{ .FileName }} = {{ . | QuotedExample }}
     {{- end -}}
     {{- $indexinsideLoopFirst := 1 }}
 		{{- end}}
@@ -46,7 +46,7 @@ config_version = 2
   {{- else}}
     {{- range .Attributes}}
     {{- if not .Deprecated}}
-{{ .SpecName }} =  {{ . | QuotedExample }}
+{{ .SpecName }} = {{ . | QuotedExample }}
     {{- end}}
     {{- end}}
   {{- end}}
