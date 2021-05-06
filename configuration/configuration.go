@@ -105,9 +105,9 @@ type ClusterConfiguration struct {
 	APIBasePath        AtomicString `yaml:"api_base_path,omitempty" group:"cluster" save:"true"`
 	APINodesPath       AtomicString `yaml:"api_nodes_path,omitempty" group:"cluster" save:"true"`
 	APIRegisterPath    AtomicString `yaml:"api_register_path,omitempty" group:"cluster" save:"true"`
-	StorageDir         AtomicString `yaml:"storage-dir,omitempty" group:"cluster" save:"true"`
-	CertificateDir     AtomicString `yaml:"cert-path,omitempty" group:"cluster" save:"true"`
-	CertificateFetched AtomicBool   `yaml:"cert-fetched,omitempty" group:"cluster" save:"true" example:"false"`
+	StorageDir         AtomicString `yaml:"storage_dir,omitempty" group:"cluster" save:"true"`
+	CertificateDir     AtomicString `yaml:"cert_path,omitempty" group:"cluster" save:"true"`
+	CertificateFetched AtomicBool   `yaml:"cert_fetched,omitempty" group:"cluster" save:"true" example:"false"`
 	Name               AtomicString `yaml:"name,omitempty" group:"cluster" save:"true"`
 	Description        AtomicString `yaml:"description,omitempty" group:"cluster" save:"true"`
 }

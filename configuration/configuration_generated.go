@@ -25,19 +25,19 @@ import (
 
 type configTypeDataplaneapi struct {
 	EnabledListeners *[]string              `yaml:"scheme,omitempty" hcl:"scheme,omitempty"`
-	CleanupTimeout   *string                `yaml:"cleanup-timeout,omitempty" hcl:"cleanup-timeout,omitempty"`
-	GracefulTimeout  *string                `yaml:"graceful-timeout,omitempty" hcl:"graceful-timeout,omitempty"`
-	MaxHeaderSize    *string                `yaml:"max-header-size,omitempty" hcl:"max-header-size,omitempty"`
-	SocketPath       *flags.Filename        `yaml:"socket-path,omitempty" hcl:"socket-path,omitempty"`
+	CleanupTimeout   *string                `yaml:"cleanup_timeout,omitempty" hcl:"cleanup_timeout,omitempty"`
+	GracefulTimeout  *string                `yaml:"graceful_timeout,omitempty" hcl:"graceful_timeout,omitempty"`
+	MaxHeaderSize    *string                `yaml:"max_header_size,omitempty" hcl:"max_header_size,omitempty"`
+	SocketPath       *flags.Filename        `yaml:"socket_path,omitempty" hcl:"socket_path,omitempty"`
 	Host             *string                `yaml:"host,omitempty" hcl:"host,omitempty"`
 	Port             *int                   `yaml:"port,omitempty" hcl:"port,omitempty"`
-	ListenLimit      *int                   `yaml:"listen-limit,omitempty" hcl:"listen-limit,omitempty"`
-	KeepAlive        *string                `yaml:"keep-alive,omitempty" hcl:"keep-alive,omitempty"`
-	ReadTimeout      *string                `yaml:"read-timeout,omitempty" hcl:"read-timeout,omitempty"`
-	WriteTimeout     *string                `yaml:"write-timeout,omitempty" hcl:"write-timeout,omitempty"`
-	ShowSystemInfo   *bool                  `yaml:"show-system-info,omitempty" hcl:"show-system-info,omitempty"`
-	DisableInotify   *bool                  `yaml:"disable-inotify,omitempty" hcl:"disable-inotify,omitempty"`
-	PIDFile          *string                `yaml:"pid-file,omitempty" hcl:"pid-file,omitempty"`
+	ListenLimit      *int                   `yaml:"listen_limit,omitempty" hcl:"listen_limit,omitempty"`
+	KeepAlive        *string                `yaml:"keep_alive,omitempty" hcl:"keep_alive,omitempty"`
+	ReadTimeout      *string                `yaml:"read_timeout,omitempty" hcl:"read_timeout,omitempty"`
+	WriteTimeout     *string                `yaml:"write_timeout,omitempty" hcl:"write_timeout,omitempty"`
+	ShowSystemInfo   *bool                  `yaml:"show_system_info,omitempty" hcl:"show_system_info,omitempty"`
+	DisableInotify   *bool                  `yaml:"disable_inotify,omitempty" hcl:"disable_inotify,omitempty"`
+	PIDFile          *string                `yaml:"pid_file,omitempty" hcl:"pid_file,omitempty"`
 	UID              *int                   `yaml:"uid,omitempty" hcl:"uid,omitempty"`
 	GID              *int                   `yaml:"gid,omitempty" hcl:"gid,omitempty"`
 	Tls              *configTypeTls         `yaml:"tls,omitempty" hcl:"tls,omitempty"`
@@ -49,15 +49,15 @@ type configTypeDataplaneapi struct {
 }
 
 type configTypeTls struct {
-	TLSHost           *string         `yaml:"tls-host,omitempty" hcl:"tls-host,omitempty"`
-	TLSPort           *int            `yaml:"tls-port,omitempty" hcl:"tls-port,omitempty"`
-	TLSCertificate    *flags.Filename `yaml:"tls-certificate,omitempty" hcl:"tls-certificate,omitempty"`
-	TLSCertificateKey *flags.Filename `yaml:"tls-key,omitempty" hcl:"tls-key,omitempty"`
-	TLSCACertificate  *flags.Filename `yaml:"tls-ca,omitempty" hcl:"tls-ca,omitempty"`
-	TLSListenLimit    *int            `yaml:"tls-listen-limit,omitempty" hcl:"tls-listen-limit,omitempty"`
-	TLSKeepAlive      *string         `yaml:"tls-keep-alive,omitempty" hcl:"tls-keep-alive,omitempty"`
-	TLSReadTimeout    *string         `yaml:"tls-read-timeout,omitempty" hcl:"tls-read-timeout,omitempty"`
-	TLSWriteTimeout   *string         `yaml:"tls-write-timeout,omitempty" hcl:"tls-write-timeout,omitempty"`
+	TLSHost           *string         `yaml:"tls_host,omitempty" hcl:"tls_host,omitempty"`
+	TLSPort           *int            `yaml:"tls_port,omitempty" hcl:"tls_port,omitempty"`
+	TLSCertificate    *flags.Filename `yaml:"tls_certificate,omitempty" hcl:"tls_certificate,omitempty"`
+	TLSCertificateKey *flags.Filename `yaml:"tls_key,omitempty" hcl:"tls_key,omitempty"`
+	TLSCACertificate  *flags.Filename `yaml:"tls_ca,omitempty" hcl:"tls_ca,omitempty"`
+	TLSListenLimit    *int            `yaml:"tls_listen_limit,omitempty" hcl:"tls_listen_limit,omitempty"`
+	TLSKeepAlive      *string         `yaml:"tls_keep_alive,omitempty" hcl:"tls_keep_alive,omitempty"`
+	TLSReadTimeout    *string         `yaml:"tls_read_timeout,omitempty" hcl:"tls_read_timeout,omitempty"`
+	TLSWriteTimeout   *string         `yaml:"tls_write_timeout,omitempty" hcl:"tls_write_timeout,omitempty"`
 }
 
 type configTypeUser struct {
@@ -67,45 +67,45 @@ type configTypeUser struct {
 }
 
 type configTypeHaproxy struct {
-	ConfigFile       *string           `yaml:"config-file,omitempty" hcl:"config-file,omitempty"`
-	HAProxy          *string           `yaml:"haproxy-bin,omitempty" hcl:"haproxy-bin,omitempty"`
-	MasterRuntime    *string           `yaml:"master-runtime,omitempty" hcl:"master-runtime,omitempty"`
+	ConfigFile       *string           `yaml:"config_file,omitempty" hcl:"config_file,omitempty"`
+	HAProxy          *string           `yaml:"haproxy_bin,omitempty" hcl:"haproxy_bin,omitempty"`
+	MasterRuntime    *string           `yaml:"master_runtime,omitempty" hcl:"master_runtime,omitempty"`
 	NodeIDFile       *string           `yaml:"fid,omitempty" hcl:"fid,omitempty"`
-	MasterWorkerMode *bool             `yaml:"master-worker-mode,omitempty" hcl:"master-worker-mode,omitempty"`
+	MasterWorkerMode *bool             `yaml:"master_worker_mode,omitempty" hcl:"master_worker_mode,omitempty"`
 	Reload           *configTypeReload `yaml:"reload,omitempty" hcl:"reload,omitempty"`
 }
 
 type configTypeUserlist struct {
 	Userlist     *string `yaml:"userlist,omitempty" hcl:"userlist,omitempty"`
-	UserListFile *string `yaml:"userlist-file,omitempty" hcl:"userlist-file,omitempty"`
+	UserListFile *string `yaml:"userlist_file,omitempty" hcl:"userlist_file,omitempty"`
 }
 
 type configTypeReload struct {
-	ReloadDelay     *int    `yaml:"reload-delay,omitempty" hcl:"reload-delay,omitempty"`
-	ReloadCmd       *string `yaml:"reload-cmd,omitempty" hcl:"reload-cmd,omitempty"`
-	RestartCmd      *string `yaml:"restart-cmd,omitempty" hcl:"restart-cmd,omitempty"`
-	ReloadRetention *int    `yaml:"reload-retention,omitempty" hcl:"reload-retention,omitempty"`
-	ValidateCmd     *string `yaml:"validate-cmd,omitempty" hcl:"validate-cmd,omitempty"`
+	ReloadDelay     *int    `yaml:"reload_delay,omitempty" hcl:"reload_delay,omitempty"`
+	ReloadCmd       *string `yaml:"reload_cmd,omitempty" hcl:"reload_cmd,omitempty"`
+	RestartCmd      *string `yaml:"restart_cmd,omitempty" hcl:"restart_cmd,omitempty"`
+	ReloadRetention *int    `yaml:"reload_retention,omitempty" hcl:"reload_retention,omitempty"`
+	ValidateCmd     *string `yaml:"validate_cmd,omitempty" hcl:"validate_cmd,omitempty"`
 }
 
 type configTypeTransaction struct {
-	TransactionDir      *string `yaml:"transaction-dir,omitempty" hcl:"transaction-dir,omitempty"`
-	BackupsNumber       *int    `yaml:"backups-number,omitempty" hcl:"backups-number,omitempty"`
-	BackupsDir          *string `yaml:"backups-dir,omitempty" hcl:"backups-dir,omitempty"`
-	MaxOpenTransactions *int64  `yaml:"max-open-transactions,omitempty" hcl:"max-open-transactions,omitempty"`
+	TransactionDir      *string `yaml:"transaction_dir,omitempty" hcl:"transaction_dir,omitempty"`
+	BackupsNumber       *int    `yaml:"backups_number,omitempty" hcl:"backups_number,omitempty"`
+	BackupsDir          *string `yaml:"backups_dir,omitempty" hcl:"backups_dir,omitempty"`
+	MaxOpenTransactions *int64  `yaml:"max_open_transactions,omitempty" hcl:"max_open_transactions,omitempty"`
 }
 
 type configTypeResources struct {
-	MapsDir              *string `yaml:"maps-dir,omitempty" hcl:"maps-dir,omitempty"`
-	SSLCertsDir          *string `yaml:"ssl-certs-dir,omitempty" hcl:"ssl-certs-dir,omitempty"`
-	UpdateMapFiles       *bool   `yaml:"update-map-files,omitempty" hcl:"update-map-files,omitempty"`
-	UpdateMapFilesPeriod *int64  `yaml:"update-map-files-period,omitempty" hcl:"update-map-files-period,omitempty"`
-	SpoeDir              *string `yaml:"spoe-dir,omitempty" hcl:"spoe-dir,omitempty"`
-	SpoeTransactionDir   *string `yaml:"spoe-transaction-dir,omitempty" hcl:"spoe-transaction-dir,omitempty"`
+	MapsDir              *string `yaml:"maps_dir,omitempty" hcl:"maps_dir,omitempty"`
+	SSLCertsDir          *string `yaml:"ssl_certs_dir,omitempty" hcl:"ssl_certs_dir,omitempty"`
+	UpdateMapFiles       *bool   `yaml:"update_map_files,omitempty" hcl:"update_map_files,omitempty"`
+	UpdateMapFilesPeriod *int64  `yaml:"update_map_files_period,omitempty" hcl:"update_map_files_period,omitempty"`
+	SpoeDir              *string `yaml:"spoe_dir,omitempty" hcl:"spoe_dir,omitempty"`
+	SpoeTransactionDir   *string `yaml:"spoe_transaction_dir,omitempty" hcl:"spoe_transaction_dir,omitempty"`
 }
 
 type configTypeCluster struct {
-	ClusterTLSCertDir  *string `yaml:"cluster-tls-dir,omitempty" hcl:"cluster-tls-dir,omitempty"`
+	ClusterTLSCertDir  *string `yaml:"cluster_tls_dir,omitempty" hcl:"cluster_tls_dir,omitempty"`
 	ID                 *string `yaml:"id,omitempty" hcl:"id,omitempty"`
 	BootstrapKey       *string `yaml:"bootstrap_key,omitempty" hcl:"bootstrap_key,omitempty"`
 	ActiveBootstrapKey *string `yaml:"active_bootstrap_key,omitempty" hcl:"active_bootstrap_key,omitempty"`
@@ -115,37 +115,37 @@ type configTypeCluster struct {
 	APIBasePath        *string `yaml:"api_base_path,omitempty" hcl:"api_base_path,omitempty"`
 	APINodesPath       *string `yaml:"api_nodes_path,omitempty" hcl:"api_nodes_path,omitempty"`
 	APIRegisterPath    *string `yaml:"api_register_path,omitempty" hcl:"api_register_path,omitempty"`
-	StorageDir         *string `yaml:"storage-dir,omitempty" hcl:"storage-dir,omitempty"`
-	CertificateDir     *string `yaml:"cert-path,omitempty" hcl:"cert-path,omitempty"`
-	CertificateFetched *bool   `yaml:"cert-fetched,omitempty" hcl:"cert-fetched,omitempty"`
+	StorageDir         *string `yaml:"storage_dir,omitempty" hcl:"storage_dir,omitempty"`
+	CertificateDir     *string `yaml:"cert_path,omitempty" hcl:"cert_path,omitempty"`
+	CertificateFetched *bool   `yaml:"cert_fetched,omitempty" hcl:"cert_fetched,omitempty"`
 	Name               *string `yaml:"name,omitempty" hcl:"name,omitempty"`
 	Description        *string `yaml:"description,omitempty" hcl:"description,omitempty"`
 }
 
 type configTypeAdvertised struct {
-	APIAddress *string `yaml:"api-address,omitempty" hcl:"api-address,omitempty"`
-	APIPort    *int64  `yaml:"api-port,omitempty" hcl:"api-port,omitempty"`
+	APIAddress *string `yaml:"api_address,omitempty" hcl:"api_address,omitempty"`
+	APIPort    *int64  `yaml:"api_port,omitempty" hcl:"api_port,omitempty"`
 }
 
 type configTypeServiceDiscovery struct {
 	Consuls    *[]*models.Consul    `yaml:"consuls,omitempty" hcl:"consuls,omitempty"`
-	AWSRegions *[]*models.AwsRegion `yaml:"aws-regions,omitempty" hcl:"aws-regions,omitempty"`
+	AWSRegions *[]*models.AwsRegion `yaml:"aws_regions,omitempty" hcl:"aws_regions,omitempty"`
 }
 
 type configTypeSyslog struct {
-	SyslogAddr     *string `yaml:"syslog-address,omitempty" hcl:"syslog-address,omitempty"`
-	SyslogProto    *string `yaml:"syslog-protocol,omitempty" hcl:"syslog-protocol,omitempty"`
-	SyslogTag      *string `yaml:"syslog-tag,omitempty" hcl:"syslog-tag,omitempty"`
-	SyslogLevel    *string `yaml:"syslog-level,omitempty" hcl:"syslog-level,omitempty"`
-	SyslogFacility *string `yaml:"syslog-facility,omitempty" hcl:"syslog-facility,omitempty"`
+	SyslogAddr     *string `yaml:"syslog_address,omitempty" hcl:"syslog_address,omitempty"`
+	SyslogProto    *string `yaml:"syslog_protocol,omitempty" hcl:"syslog_protocol,omitempty"`
+	SyslogTag      *string `yaml:"syslog_tag,omitempty" hcl:"syslog_tag,omitempty"`
+	SyslogLevel    *string `yaml:"syslog_level,omitempty" hcl:"syslog_level,omitempty"`
+	SyslogFacility *string `yaml:"syslog_facility,omitempty" hcl:"syslog_facility,omitempty"`
 }
 
 type configTypeLog struct {
-	LogTo     *string           `yaml:"log-to,omitempty" hcl:"log-to,omitempty"`
-	LogFile   *string           `yaml:"log-file,omitempty" hcl:"log-file,omitempty"`
-	LogLevel  *string           `yaml:"log-level,omitempty" hcl:"log-level,omitempty"`
-	LogFormat *string           `yaml:"log-format,omitempty" hcl:"log-format,omitempty"`
-	ACLFormat *string           `yaml:"apache-common-log-format,omitempty" hcl:"apache-common-log-format,omitempty"`
+	LogTo     *string           `yaml:"log_to,omitempty" hcl:"log_to,omitempty"`
+	LogFile   *string           `yaml:"log_file,omitempty" hcl:"log_file,omitempty"`
+	LogLevel  *string           `yaml:"log_level,omitempty" hcl:"log_level,omitempty"`
+	LogFormat *string           `yaml:"log_format,omitempty" hcl:"log_format,omitempty"`
+	ACLFormat *string           `yaml:"apache_common_log_format,omitempty" hcl:"apache_common_log_format,omitempty"`
 	Syslog    *configTypeSyslog `yaml:"syslog,omitempty" hcl:"syslog,omitempty"`
 }
 

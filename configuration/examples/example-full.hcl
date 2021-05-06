@@ -5,32 +5,32 @@ status = "null"
 
 dataplaneapi {
   scheme = ["http"]
-  cleanup-timeout = "10s"
-  graceful-timeout = "15s"
-  max-header-size = "1MiB"
-  socket-path = "/var/run/data-plane.sock"
+  cleanup_timeout = "10s"
+  graceful_timeout = "15s"
+  max_header_size = "1MiB"
+  socket_path = "/var/run/data-plane.sock"
   host = "localhost"
   port = 80
-  listen-limit = 1024
-  keep-alive = "3m"
-  read-timeout = "30s"
-  write-timeout = "60s"
-  show-system-info = false
-  disable-inotify = false
-  pid-file = "/tmp/dataplane.pid"
+  listen_limit = 1024
+  keep_alive = "3m"
+  read_timeout = "30s"
+  write_timeout = "60s"
+  show_system_info = false
+  disable_inotify = false
+  pid_file = "/tmp/dataplane.pid"
   uid = 1000
   gid = 1000
 
   tls {
-    tls-host = "null"
-    tls-port = 6443
-    tls-certificate = "null"
-    tls-key = "null"
-    tls-ca = "null"
-    tls-listen-limit = 10
-    tls-keep-alive = "1m"
-    tls-read-timeout = "10s"
-    tls-write-timeout = "10s"
+    tls_host = "null"
+    tls_port = 6443
+    tls_certificate = "null"
+    tls_key = "null"
+    tls_ca = "null"
+    tls_listen_limit = 10
+    tls_keep_alive = "1m"
+    tls_read_timeout = "10s"
+    tls_write_timeout = "10s"
   }
 
   user "admin" {
@@ -40,49 +40,49 @@ dataplaneapi {
 
   userlist {
     userlist = "controller"
-    userlist-file = "null"
+    userlist_file = "null"
   }
 
   transaction {
-    transaction-dir = "/tmp/haproxy"
-    backups-number = 0
-    backups-dir = "/tmp/backups"
-    max-open-transactions = 20
+    transaction_dir = "/tmp/haproxy"
+    backups_number = 0
+    backups_dir = "/tmp/backups"
+    max_open_transactions = 20
   }
 
   resources {
-    maps-dir = "/etc/haproxy/maps"
-    ssl-certs-dir = "/etc/haproxy/ssl"
-    update-map-files = false
-    update-map-files-period = 10
-    spoe-dir = "/etc/haproxy/spoe"
-    spoe-transaction-dir = "/tmp/spoe-haproxy"
+    maps_dir = "/etc/haproxy/maps"
+    ssl_certs_dir = "/etc/haproxy/ssl"
+    update_map_files = false
+    update_map_files_period = 10
+    spoe_dir = "/etc/haproxy/spoe"
+    spoe_transaction_dir = "/tmp/spoe-haproxy"
   }
 
   advertised {
-    api-address = "10.2.3.4"
-    api-port = 80
+    api_address = "10.2.3.4"
+    api_port = 80
   }
 }
 
 haproxy {
-  config-file = "/etc/haproxy/haproxy.cfg"
-  haproxy-bin = "haproxy"
-  master-runtime = "null"
+  config_file = "/etc/haproxy/haproxy.cfg"
+  haproxy_bin = "haproxy"
+  master_runtime = "null"
   fid = "null"
-  master-worker-mode = false
+  master_worker_mode = false
 
   reload {
-    reload-delay = 5
-    reload-cmd = "null"
-    restart-cmd = "null"
-    reload-retention = 1
-    validate-cmd = "null"
+    reload_delay = 5
+    reload_cmd = "null"
+    restart_cmd = "null"
+    reload_retention = 1
+    validate_cmd = "null"
   }
 }
 
 cluster {
-  cluster-tls-dir = "null"
+  cluster_tls_dir = "null"
   id = "null"
   bootstrap_key = "null"
   active_bootstrap_key = "null"
@@ -92,30 +92,30 @@ cluster {
   api_base_path = "null"
   api_nodes_path = "null"
   api_register_path = "null"
-  storage-dir = "null"
-  cert-path = "null"
-  cert-fetched = false
+  storage_dir = "null"
+  cert_path = "null"
+  cert_fetched = false
   name = "null"
   description = "null"
 }
 
 service_discovery {
   consuls = []
-  aws-regions = []
+  aws_regions = []
 }
 
 log {
-  log-to = "stdout"
-  log-file = "/var/log/dataplaneapi/dataplaneapi.log"
-  log-level = "warning"
-  log-format = "text"
-  apache-common-log-format = "%h"
+  log_to = "stdout"
+  log_file = "/var/log/dataplaneapi/dataplaneapi.log"
+  log_level = "warning"
+  log_format = "text"
+  apache_common_log_format = "%h"
 
   syslog {
-    syslog-address = "null"
-    syslog-protocol = "tcp"
-    syslog-tag = "dataplaneapi"
-    syslog-level = "debug"
-    syslog-facility = "local0"
+    syslog_address = "null"
+    syslog_protocol = "tcp"
+    syslog_tag = "dataplaneapi"
+    syslog_level = "debug"
+    syslog_facility = "local0"
   }
 }
