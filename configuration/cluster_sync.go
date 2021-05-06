@@ -124,7 +124,7 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 }
 
 func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath string, csr, key string) error {
-	url = fmt.Sprintf("%s:%s%s/%s/%s", url, port, basePath, nodesPath, c.cfg.Cluster.ID.Load())
+	url = fmt.Sprintf("%s:%s/%s", url, port, strings.TrimLeft(path.Join(basePath, nodesPath, c.cfg.Cluster.ID.Load()), "/"))
 	apiAddress := c.cfg.APIOptions.APIAddress
 	if apiAddress == "" {
 		apiAddress = c.cfg.RuntimeData.Host
@@ -262,7 +262,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 }
 
 func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath string, csr, key string) error {
-	url = fmt.Sprintf("%s:%s%s/%s", url, port, basePath, registerPath)
+	url = fmt.Sprintf("%s:%s/%s", url, port, strings.TrimLeft(path.Join(basePath, registerPath), "/"))
 	apiCfg := c.cfg.APIOptions
 	userStore := GetUsersStore()
 
@@ -480,7 +480,7 @@ func (c *ClusterSync) fetchCert() {
 				apiBasePath := c.cfg.Cluster.APIBasePath.Load()
 				apiNodesPath := c.cfg.Cluster.APINodesPath.Load()
 				id := c.cfg.Cluster.ID.Load()
-				url = fmt.Sprintf("%s:%s/%s/%s/%s", url, port, apiBasePath, apiNodesPath, id)
+				url = fmt.Sprintf("%s:%s/%s", url, port, strings.TrimLeft(path.Join(apiBasePath, apiNodesPath, id), "/"))
 				req, err := http.NewRequest("GET", url, nil)
 				if err != nil {
 					c.activateFetchCert(err)
