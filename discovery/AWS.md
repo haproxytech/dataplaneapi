@@ -23,7 +23,7 @@ Selection of specific instances can be achieved using the `allowlist` functional
 
 ```hcl
 service_discovery {
-  aws-regions = [
+  aws_regions = [
     {
       Description                = "Allowlist example"
       Allowlist = [
@@ -49,7 +49,7 @@ As `allowlist`, the `denylist` option allows to filter out specific instances ma
 
 ```hcl
 service_discovery {
-  aws-regions = [
+  aws_regions = [
     {
       Description                = "Denylist example"
       Allowlist = [
@@ -83,7 +83,7 @@ Data Plane API needs the plain AWS credentials to interact with it.
 
 ```hcl
 service_discovery {
-  aws-regions = [
+  aws_regions = [
     {
       Description                = "Credentials example"
       SecretAccessKey            = "************************************soLl"
@@ -144,7 +144,7 @@ Unit is expressed in __seconds__.
 
 ```hcl
 service_discovery {
-  aws-regions = [
+  aws_regions = [
     {
       AccessKeyID     = "****************L7GT"
       Enabled         = true
@@ -194,7 +194,7 @@ The `backend` name pattern is built with the following format:
 
 ```hcl
 service_discovery {
-  aws-regions = [
+  aws_regions = [
     {
       AccessKeyID     = "****************L7GT"
       Enabled         = false
