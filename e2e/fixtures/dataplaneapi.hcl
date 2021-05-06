@@ -5,29 +5,29 @@ dataplaneapi {
   port = 8080
 
   userlist {
-    userlist-file = "/etc/haproxy/userlist.cfg"
+    userlist_file = "/etc/haproxy/userlist.cfg"
   }
 
   resources {
-    maps-dir      = "/etc/haproxy/maps"
-    ssl-certs-dir = "/etc/haproxy/ssl"
-    spoe-dir      = "/etc/haproxy/spoe"
+    maps_dir      = "/etc/haproxy/maps"
+    ssl_certs_dir = "/etc/haproxy/ssl"
+    spoe_dir      = "/etc/haproxy/spoe"
   }
 
 }
 
 log {
-  log-to = "file"
-  log-file = "/var/log/dataplaneapi.log"
-  log-level = "debug"
+  log_to = "file"
+  log_file = "/var/log/dataplaneapi.log"
+  log_level = "debug"
 }
 
 haproxy {
-  config-file = "/etc/haproxy/haproxy.cfg"
-  haproxy-bin = "/usr/local/sbin/haproxy"
+  config_file = "/etc/haproxy/haproxy.cfg"
+  haproxy_bin = "/usr/local/sbin/haproxy"
 
   reload {
-    reload-cmd  = "kill -SIGUSR2 1"
-    restart-cmd = "kill -SIGUSR2 1"
+    reload_cmd  = "kill -SIGUSR2 1"
+    restart_cmd = "kill -SIGUSR2 1"
   }
 }

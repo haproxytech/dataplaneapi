@@ -6,23 +6,23 @@ dataplaneapi {
   uid = 1500
 
   userlist {
-    userlist-file = "/etc/haproxy/userlist.cfg"
+    userlist_file = "/etc/haproxy/userlist.cfg"
   }
 
   resources {
-    maps-dir                  = "/home/testuiduser/maps"
-    ssl-certs-dir             = "/home/testuiduser/ssl"
-    spoe-dir                  = "/home/testuiduser/spoe"
-    spoe-transaction-dir      = "/home/testuiduser/spoe-td"
+    maps_dir                  = "/home/testuiduser/maps"
+    ssl_certs_dir             = "/home/testuiduser/ssl"
+    spoe_dir                  = "/home/testuiduser/spoe"
+    spoe_transaction_dir      = "/home/testuiduser/spoe-td"
   }
 }
 
 haproxy {
-  config-file = "/home/testuiduser/haproxy.cfg"
-  haproxy-bin = "/usr/local/sbin/haproxy"
+  config_file = "/home/testuiduser/haproxy.cfg"
+  haproxy_bin = "/usr/local/sbin/haproxy"
 
   reload {
-    reload-cmd  = "kill -SIGUSR2 1"
-    restart-cmd = "kill -SIGUSR2 1"
+    reload_cmd  = "kill -SIGUSR2 1"
+    restart_cmd = "kill -SIGUSR2 1"
   }
 }
