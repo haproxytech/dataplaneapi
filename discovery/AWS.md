@@ -45,6 +45,22 @@ service_discovery {
 }
 ```
 
+```yaml
+  aws_regions:
+  - description: "Allowlist example"
+    allowlist:
+      - key: tag-key
+        value: "Must:Have:This:Tag:Key"
+    enabled: false
+    id: 96b14c57-b011-42e5-8d01-b58feba07319
+    name: john.doe
+    region: "us-east-1"
+    retrytimeout: 10
+    serverslotsbase: 10
+    serverslotsgrowthincrement: 10
+    serverslotsgrowthtype: exponential
+```
+
 As `allowlist`, the `denylist` option allows to filter out specific instances matching the desired filters.
 
 ```hcl
@@ -77,6 +93,25 @@ service_discovery {
 }
 ```
 
+```yaml
+  aws_regions:
+  - description: "Denylist example"
+    allowlist:
+      - key: tag-key
+        value: "Must:Have:This:Tag:Key"
+    denylist:
+      - key: "tag:Environment
+        value: Development"
+    enabled: false
+    id: 96b14c57-b011-42e5-8d01-b58feba07319
+    name: john.doe
+    region: "us-east-1"
+    retrytimeout: 10
+    serverslotsbase: 10
+    serverslotsgrowthincrement: 10
+    serverslotsgrowthtype: exponential
+```
+
 ## Authorization
 
 Data Plane API needs the plain AWS credentials to interact with it.
@@ -99,6 +134,21 @@ service_discovery {
     },
   ]
 }
+```
+
+```yaml
+  aws_regions:
+  - description: "Credentials example"
+    secretaccesskey: "************************************soLl"
+    accesskeyid: "****************L7GT"
+    enabled: false
+    id: 96b14c57-b011-42e5-8d01-b58feba07319
+    name: john.doe
+    region: "us-east-1"
+    retrytimeout: 10
+    serverslotsbase: 10
+    serverslotsgrowthincrement: 10
+    serverslotsgrowthtype: exponential
 ```
 
 > In case of Data Plane API running in an EC2 with a IAM Role attached (as [`AmazonEC2ReadOnlyAccess`](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess$serviceLevelSummary)), there's no need for additional credentials.
@@ -158,6 +208,16 @@ service_discovery {
 }
 ```
 
+```yaml
+  aws_regions:
+  - enabled: true
+    name: john.doe
+    region: "us-east-1"
+    secretaccesskey: "************************************soLl"
+    ipv4address: private
+    retrytimeout: 60
+```
+
 The resulting output will be the following, YMMV.
 
 ```
@@ -206,6 +266,17 @@ service_discovery {
     },
   ]
 }
+```
+
+```yaml
+  aws_regions:
+  - accesskeyid: "****************L7GT"
+    enabled: false
+    name: my-service-discovery
+    region: "us-east-1"
+    secretaccesskey: "****************soLl"
+    ipv4address: private
+    retrytimeout: 60
 ```
 
 As a result of this action, Data Plane API will not update the discovered `backend` sections and their `server` entries: no data will be lost.
