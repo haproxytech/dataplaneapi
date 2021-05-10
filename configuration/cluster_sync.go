@@ -202,8 +202,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				break
 			}
 			if key == c.cfg.Cluster.ActiveBootstrapKey.Load() {
-				fetched := c.cfg.Cluster.CertificateFetched.Load()
-				if !fetched {
+				if !c.cfg.Cluster.CertificateFetched.Load() {
 					c.certFetch <- struct{}{}
 				}
 				break
@@ -258,7 +257,9 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				log.Warning(err)
 				break
 			}
-			c.certFetch <- struct{}{}
+			if !c.cfg.Cluster.CertificateFetched.Load() {
+				c.certFetch <- struct{}{}
+			}
 		case <-c.Context.Done():
 			return
 		}
@@ -461,7 +462,9 @@ func (c *ClusterSync) activateFetchCert(err error) {
 	go func(err error) {
 		log.Warning(err)
 		time.Sleep(1 * time.Minute)
-		c.certFetch <- struct{}{}
+		if !c.cfg.Cluster.CertificateFetched.Load() {
+			c.certFetch <- struct{}{}
+		}
 	}(err)
 }
 
@@ -528,7 +531,9 @@ func (c *ClusterSync) fetchCert() {
 			}
 			if !certFetched {
 				time.AfterFunc(time.Minute, func() {
-					c.certFetch <- struct{}{}
+					if !c.cfg.Cluster.CertificateFetched.Load() {
+						c.certFetch <- struct{}{}
+					}
 				})
 			}
 		}
