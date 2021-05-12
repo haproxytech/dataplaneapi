@@ -157,7 +157,7 @@ service_discovery {
 
 Upon a Service discovery, Data Plane API will create the corresponding `backend` section using the following options:
 
-- `ServerSlotsBase`: the minumum amount of `server` entries per `backend`
+- `ServerSlotsBase`: the minimum amount of `server` entries per `backend`
 - `ServerSlotsGrowthIncrement`: the additional slots allocating for `server` in case of additional entries
 - `ServerSlotsGrowthType`: the function type to implement in case of `server` slots growth
 
@@ -167,7 +167,7 @@ Using the HCL `IPV4Address` option (or the JSON `ipv4_address` one) you can spec
 
 Available values can be `private` (for the private one, reachable inside the AWS VPC) or `public`.
 
-> If the instances doesn't have a public IPv4 address, and the service discovery configuration claims the `public` type, In case of `public` type, the EC2 will be ignored. 
+> If the instances doesn't have a public IPv4 address, and the service discovery configuration claims the `public` type, In case of `public` type, the EC2 will be ignored.
 
 ## Retry timeout
 

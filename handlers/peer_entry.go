@@ -42,7 +42,7 @@ type GetPeerEntryHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
 
-// GetPeerEntriesHandlerImpl implementation of the GetPeerEntrysHandler interface using client-native client
+// GetPeerEntriesHandlerImpl implementation of the GetPeerEntriesHandler interface using client-native client
 type GetPeerEntriesHandlerImpl struct {
 	Client *client_native.HAProxyClient
 }
