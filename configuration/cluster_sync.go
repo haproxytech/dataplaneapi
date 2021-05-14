@@ -311,7 +311,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		// ID:          "",
 		Address:     apiAddress,
 		APIBasePath: c.cfg.RuntimeData.APIBasePath,
-		APIPassword: user.Password,
+		APIPassword: pwd,
 		APIUser:     user.Name,
 		Certificate: csr,
 		Description: "",
