@@ -15,13 +15,14 @@ builds:
       - CGO_ENABLED=0
     goos:
       - linux
-      - darwin
       - freebsd
     goarch:
       - 386
       - amd64
       - arm
       - arm64
+      - ppc64le
+      - s390x
 archives:
   -
     id: my-archive
