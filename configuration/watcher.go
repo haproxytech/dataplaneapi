@@ -34,14 +34,8 @@ type ConfigWatcherParams struct {
 	Ctx      context.Context
 }
 
-type ConfigWatcherUpdate struct {
-	Version string
-	Content string
-}
-
 type ConfigWatcher struct {
 	configFile string
-	update     chan string
 	callback   func()
 	done       <-chan struct{}
 	wa         *fsnotify.Watcher
@@ -65,15 +59,10 @@ func NewConfigWatcher(params ConfigWatcherParams) (*ConfigWatcher, error) {
 	cw := &ConfigWatcher{
 		wa:         watcher,
 		configFile: params.FilePath,
-		update:     make(chan string),
 		callback:   params.Callback,
 		done:       ctx.Done(),
 	}
 	return cw, nil
-}
-
-func (w *ConfigWatcher) Update(hash string) {
-	w.update <- hash
 }
 
 func (w *ConfigWatcher) Listen() {
