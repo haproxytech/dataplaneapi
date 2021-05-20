@@ -69,7 +69,7 @@ func (h *GetInfoHandlerImpl) Handle(params information.GetInfoParams, principal 
 	api := &models.InfoAPI{
 		Version: h.Version,
 	}
-	date, err := time.Parse("2006-01-02T15:04:05", h.BuildTime)
+	date, err := time.Parse("2006-01-02T15:04:05Z", h.BuildTime)
 	if err == nil {
 		api.BuildDate = strfmt.DateTime(date)
 	} else {
