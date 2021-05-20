@@ -28,6 +28,7 @@ import (
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/haproxytech/client-native/v2/models"
 	apache_log "github.com/lestrrat-go/apache-logformat"
+	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -230,7 +231,7 @@ func (c *Configuration) Load() error {
 			c.storage = &StorageHCL{}
 		}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
-			return err
+			log.Warnf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
 		}
 	}
 	copyToConfiguration(c)

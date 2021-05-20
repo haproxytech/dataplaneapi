@@ -46,6 +46,9 @@ func (s *StorageYML) Load(filename string) error {
 }
 
 func (s *StorageYML) Get() *StorageDataplaneAPIConfiguration {
+	if s.cfg == nil {
+		s.cfg = &StorageDataplaneAPIConfiguration{}
+	}
 	return s.cfg
 }
 

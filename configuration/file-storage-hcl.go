@@ -46,6 +46,9 @@ func (s *StorageHCL) Load(filename string) error {
 }
 
 func (s *StorageHCL) Get() *StorageDataplaneAPIConfiguration {
+	if s.cfg == nil {
+		s.cfg = &StorageDataplaneAPIConfiguration{}
+	}
 	return s.cfg
 }
 
