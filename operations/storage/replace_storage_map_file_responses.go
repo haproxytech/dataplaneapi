@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response replaceStorageMapFileBadRequest
 type ReplaceStorageMapFileBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type ReplaceStorageMapFileBadRequest struct {
 // NewReplaceStorageMapFileBadRequest creates ReplaceStorageMapFileBadRequest with default headers values
 func NewReplaceStorageMapFileBadRequest() *ReplaceStorageMapFileBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceStorageMapFileBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceStorageMapFileBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace storage map file bad request response
-func (o *ReplaceStorageMapFileBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceStorageMapFileBadRequest {
+func (o *ReplaceStorageMapFileBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceStorageMapFileBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace storage map file bad request response
-func (o *ReplaceStorageMapFileBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceStorageMapFileBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *ReplaceStorageMapFileBadRequest) WriteResponse(rw http.ResponseWriter, 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -185,9 +174,8 @@ swagger:response replaceStorageMapFileNotFound
 type ReplaceStorageMapFileNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -198,26 +186,17 @@ type ReplaceStorageMapFileNotFound struct {
 // NewReplaceStorageMapFileNotFound creates ReplaceStorageMapFileNotFound with default headers values
 func NewReplaceStorageMapFileNotFound() *ReplaceStorageMapFileNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceStorageMapFileNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceStorageMapFileNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace storage map file not found response
-func (o *ReplaceStorageMapFileNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceStorageMapFileNotFound {
+func (o *ReplaceStorageMapFileNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceStorageMapFileNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace storage map file not found response
-func (o *ReplaceStorageMapFileNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceStorageMapFileNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -237,7 +216,7 @@ func (o *ReplaceStorageMapFileNotFound) WriteResponse(rw http.ResponseWriter, pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -259,9 +238,8 @@ type ReplaceStorageMapFileDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -275,16 +253,8 @@ func NewReplaceStorageMapFileDefault(code int) *ReplaceStorageMapFileDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceStorageMapFileDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -300,13 +270,13 @@ func (o *ReplaceStorageMapFileDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace storage map file default response
-func (o *ReplaceStorageMapFileDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceStorageMapFileDefault {
+func (o *ReplaceStorageMapFileDefault) WithConfigurationVersion(configurationVersion string) *ReplaceStorageMapFileDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace storage map file default response
-func (o *ReplaceStorageMapFileDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceStorageMapFileDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -326,7 +296,7 @@ func (o *ReplaceStorageMapFileDefault) WriteResponse(rw http.ResponseWriter, pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

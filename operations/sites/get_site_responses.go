@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetSiteOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetSiteOK() *GetSiteOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get site o k response
-func (o *GetSiteOK) WithConfigurationVersion(configurationVersion int64) *GetSiteOK {
+func (o *GetSiteOK) WithConfigurationVersion(configurationVersion string) *GetSiteOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get site o k response
-func (o *GetSiteOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSiteOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetSiteOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getSiteNotFound
 type GetSiteNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetSiteNotFound struct {
 // NewGetSiteNotFound creates GetSiteNotFound with default headers values
 func NewGetSiteNotFound() *GetSiteNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetSiteNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetSiteNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get site not found response
-func (o *GetSiteNotFound) WithConfigurationVersion(configurationVersion int64) *GetSiteNotFound {
+func (o *GetSiteNotFound) WithConfigurationVersion(configurationVersion string) *GetSiteNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get site not found response
-func (o *GetSiteNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSiteNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetSiteNotFound) WriteResponse(rw http.ResponseWriter, producer runtime
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetSiteDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetSiteDefault(code int) *GetSiteDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetSiteDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetSiteDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get site default response
-func (o *GetSiteDefault) WithConfigurationVersion(configurationVersion int64) *GetSiteDefault {
+func (o *GetSiteDefault) WithConfigurationVersion(configurationVersion string) *GetSiteDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get site default response
-func (o *GetSiteDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSiteDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetSiteDefault) WriteResponse(rw http.ResponseWriter, producer runtime.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

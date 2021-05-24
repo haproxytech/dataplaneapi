@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response getReloadNotFound
 type GetReloadNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type GetReloadNotFound struct {
 // NewGetReloadNotFound creates GetReloadNotFound with default headers values
 func NewGetReloadNotFound() *GetReloadNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetReloadNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetReloadNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get reload not found response
-func (o *GetReloadNotFound) WithConfigurationVersion(configurationVersion int64) *GetReloadNotFound {
+func (o *GetReloadNotFound) WithConfigurationVersion(configurationVersion string) *GetReloadNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get reload not found response
-func (o *GetReloadNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetReloadNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *GetReloadNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ type GetReloadDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -173,16 +161,8 @@ func NewGetReloadDefault(code int) *GetReloadDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetReloadDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -198,13 +178,13 @@ func (o *GetReloadDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get reload default response
-func (o *GetReloadDefault) WithConfigurationVersion(configurationVersion int64) *GetReloadDefault {
+func (o *GetReloadDefault) WithConfigurationVersion(configurationVersion string) *GetReloadDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get reload default response
-func (o *GetReloadDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetReloadDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -224,7 +204,7 @@ func (o *GetReloadDefault) WriteResponse(rw http.ResponseWriter, producer runtim
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

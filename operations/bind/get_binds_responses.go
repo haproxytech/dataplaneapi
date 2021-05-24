@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetBindsOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetBindsOK() *GetBindsOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get binds o k response
-func (o *GetBindsOK) WithConfigurationVersion(configurationVersion int64) *GetBindsOK {
+func (o *GetBindsOK) WithConfigurationVersion(configurationVersion string) *GetBindsOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get binds o k response
-func (o *GetBindsOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBindsOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetBindsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -103,9 +102,8 @@ type GetBindsDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -119,16 +117,8 @@ func NewGetBindsDefault(code int) *GetBindsDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetBindsDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -144,13 +134,13 @@ func (o *GetBindsDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get binds default response
-func (o *GetBindsDefault) WithConfigurationVersion(configurationVersion int64) *GetBindsDefault {
+func (o *GetBindsDefault) WithConfigurationVersion(configurationVersion string) *GetBindsDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get binds default response
-func (o *GetBindsDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBindsDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -170,7 +160,7 @@ func (o *GetBindsDefault) WriteResponse(rw http.ResponseWriter, producer runtime
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

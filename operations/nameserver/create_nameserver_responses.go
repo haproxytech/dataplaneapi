@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createNameserverBadRequest
 type CreateNameserverBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateNameserverBadRequest struct {
 // NewCreateNameserverBadRequest creates CreateNameserverBadRequest with default headers values
 func NewCreateNameserverBadRequest() *CreateNameserverBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateNameserverBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateNameserverBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create nameserver bad request response
-func (o *CreateNameserverBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateNameserverBadRequest {
+func (o *CreateNameserverBadRequest) WithConfigurationVersion(configurationVersion string) *CreateNameserverBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create nameserver bad request response
-func (o *CreateNameserverBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateNameserverBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateNameserverBadRequest) WriteResponse(rw http.ResponseWriter, produ
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createNameserverConflict
 type CreateNameserverConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateNameserverConflict struct {
 // NewCreateNameserverConflict creates CreateNameserverConflict with default headers values
 func NewCreateNameserverConflict() *CreateNameserverConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateNameserverConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateNameserverConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create nameserver conflict response
-func (o *CreateNameserverConflict) WithConfigurationVersion(configurationVersion int64) *CreateNameserverConflict {
+func (o *CreateNameserverConflict) WithConfigurationVersion(configurationVersion string) *CreateNameserverConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create nameserver conflict response
-func (o *CreateNameserverConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateNameserverConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateNameserverConflict) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateNameserverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateNameserverDefault(code int) *CreateNameserverDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateNameserverDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateNameserverDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create nameserver default response
-func (o *CreateNameserverDefault) WithConfigurationVersion(configurationVersion int64) *CreateNameserverDefault {
+func (o *CreateNameserverDefault) WithConfigurationVersion(configurationVersion string) *CreateNameserverDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create nameserver default response
-func (o *CreateNameserverDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateNameserverDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateNameserverDefault) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createBindBadRequest
 type CreateBindBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateBindBadRequest struct {
 // NewCreateBindBadRequest creates CreateBindBadRequest with default headers values
 func NewCreateBindBadRequest() *CreateBindBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateBindBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateBindBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create bind bad request response
-func (o *CreateBindBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateBindBadRequest {
+func (o *CreateBindBadRequest) WithConfigurationVersion(configurationVersion string) *CreateBindBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create bind bad request response
-func (o *CreateBindBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateBindBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateBindBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createBindConflict
 type CreateBindConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateBindConflict struct {
 // NewCreateBindConflict creates CreateBindConflict with default headers values
 func NewCreateBindConflict() *CreateBindConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateBindConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateBindConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create bind conflict response
-func (o *CreateBindConflict) WithConfigurationVersion(configurationVersion int64) *CreateBindConflict {
+func (o *CreateBindConflict) WithConfigurationVersion(configurationVersion string) *CreateBindConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create bind conflict response
-func (o *CreateBindConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateBindConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateBindConflict) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateBindDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateBindDefault(code int) *CreateBindDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateBindDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateBindDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create bind default response
-func (o *CreateBindDefault) WithConfigurationVersion(configurationVersion int64) *CreateBindDefault {
+func (o *CreateBindDefault) WithConfigurationVersion(configurationVersion string) *CreateBindDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create bind default response
-func (o *CreateBindDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateBindDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateBindDefault) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

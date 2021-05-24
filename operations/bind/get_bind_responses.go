@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetBindOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetBindOK() *GetBindOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get bind o k response
-func (o *GetBindOK) WithConfigurationVersion(configurationVersion int64) *GetBindOK {
+func (o *GetBindOK) WithConfigurationVersion(configurationVersion string) *GetBindOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get bind o k response
-func (o *GetBindOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBindOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetBindOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getBindNotFound
 type GetBindNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetBindNotFound struct {
 // NewGetBindNotFound creates GetBindNotFound with default headers values
 func NewGetBindNotFound() *GetBindNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetBindNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetBindNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get bind not found response
-func (o *GetBindNotFound) WithConfigurationVersion(configurationVersion int64) *GetBindNotFound {
+func (o *GetBindNotFound) WithConfigurationVersion(configurationVersion string) *GetBindNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get bind not found response
-func (o *GetBindNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBindNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetBindNotFound) WriteResponse(rw http.ResponseWriter, producer runtime
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetBindDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetBindDefault(code int) *GetBindDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetBindDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetBindDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get bind default response
-func (o *GetBindDefault) WithConfigurationVersion(configurationVersion int64) *GetBindDefault {
+func (o *GetBindDefault) WithConfigurationVersion(configurationVersion string) *GetBindDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get bind default response
-func (o *GetBindDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBindDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetBindDefault) WriteResponse(rw http.ResponseWriter, producer runtime.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

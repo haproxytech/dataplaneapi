@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -81,9 +80,8 @@ swagger:response getConfigurationVersionNotFound
 type GetConfigurationVersionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -94,26 +92,17 @@ type GetConfigurationVersionNotFound struct {
 // NewGetConfigurationVersionNotFound creates GetConfigurationVersionNotFound with default headers values
 func NewGetConfigurationVersionNotFound() *GetConfigurationVersionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetConfigurationVersionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetConfigurationVersionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get configuration version not found response
-func (o *GetConfigurationVersionNotFound) WithConfigurationVersion(configurationVersion int64) *GetConfigurationVersionNotFound {
+func (o *GetConfigurationVersionNotFound) WithConfigurationVersion(configurationVersion string) *GetConfigurationVersionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get configuration version not found response
-func (o *GetConfigurationVersionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetConfigurationVersionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -133,7 +122,7 @@ func (o *GetConfigurationVersionNotFound) WriteResponse(rw http.ResponseWriter, 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -155,9 +144,8 @@ type GetConfigurationVersionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -171,16 +159,8 @@ func NewGetConfigurationVersionDefault(code int) *GetConfigurationVersionDefault
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetConfigurationVersionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -196,13 +176,13 @@ func (o *GetConfigurationVersionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get configuration version default response
-func (o *GetConfigurationVersionDefault) WithConfigurationVersion(configurationVersion int64) *GetConfigurationVersionDefault {
+func (o *GetConfigurationVersionDefault) WithConfigurationVersion(configurationVersion string) *GetConfigurationVersionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get configuration version default response
-func (o *GetConfigurationVersionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetConfigurationVersionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -222,7 +202,7 @@ func (o *GetConfigurationVersionDefault) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetBackendOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetBackendOK() *GetBackendOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get backend o k response
-func (o *GetBackendOK) WithConfigurationVersion(configurationVersion int64) *GetBackendOK {
+func (o *GetBackendOK) WithConfigurationVersion(configurationVersion string) *GetBackendOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get backend o k response
-func (o *GetBackendOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBackendOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetBackendOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getBackendNotFound
 type GetBackendNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetBackendNotFound struct {
 // NewGetBackendNotFound creates GetBackendNotFound with default headers values
 func NewGetBackendNotFound() *GetBackendNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetBackendNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetBackendNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get backend not found response
-func (o *GetBackendNotFound) WithConfigurationVersion(configurationVersion int64) *GetBackendNotFound {
+func (o *GetBackendNotFound) WithConfigurationVersion(configurationVersion string) *GetBackendNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get backend not found response
-func (o *GetBackendNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBackendNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetBackendNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetBackendDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetBackendDefault(code int) *GetBackendDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetBackendDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetBackendDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get backend default response
-func (o *GetBackendDefault) WithConfigurationVersion(configurationVersion int64) *GetBackendDefault {
+func (o *GetBackendDefault) WithConfigurationVersion(configurationVersion string) *GetBackendDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get backend default response
-func (o *GetBackendDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBackendDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetBackendDefault) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

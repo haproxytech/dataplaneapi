@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deletePeerEntryNotFound
 type DeletePeerEntryNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeletePeerEntryNotFound struct {
 // NewDeletePeerEntryNotFound creates DeletePeerEntryNotFound with default headers values
 func NewDeletePeerEntryNotFound() *DeletePeerEntryNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeletePeerEntryNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeletePeerEntryNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete peer entry not found response
-func (o *DeletePeerEntryNotFound) WithConfigurationVersion(configurationVersion int64) *DeletePeerEntryNotFound {
+func (o *DeletePeerEntryNotFound) WithConfigurationVersion(configurationVersion string) *DeletePeerEntryNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete peer entry not found response
-func (o *DeletePeerEntryNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeletePeerEntryNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeletePeerEntryNotFound) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeletePeerEntryDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeletePeerEntryDefault(code int) *DeletePeerEntryDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeletePeerEntryDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeletePeerEntryDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete peer entry default response
-func (o *DeletePeerEntryDefault) WithConfigurationVersion(configurationVersion int64) *DeletePeerEntryDefault {
+func (o *DeletePeerEntryDefault) WithConfigurationVersion(configurationVersion string) *DeletePeerEntryDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete peer entry default response
-func (o *DeletePeerEntryDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeletePeerEntryDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeletePeerEntryDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

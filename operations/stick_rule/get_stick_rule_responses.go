@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetStickRuleOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetStickRuleOK() *GetStickRuleOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get stick rule o k response
-func (o *GetStickRuleOK) WithConfigurationVersion(configurationVersion int64) *GetStickRuleOK {
+func (o *GetStickRuleOK) WithConfigurationVersion(configurationVersion string) *GetStickRuleOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get stick rule o k response
-func (o *GetStickRuleOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetStickRuleOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetStickRuleOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getStickRuleNotFound
 type GetStickRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetStickRuleNotFound struct {
 // NewGetStickRuleNotFound creates GetStickRuleNotFound with default headers values
 func NewGetStickRuleNotFound() *GetStickRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetStickRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetStickRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get stick rule not found response
-func (o *GetStickRuleNotFound) WithConfigurationVersion(configurationVersion int64) *GetStickRuleNotFound {
+func (o *GetStickRuleNotFound) WithConfigurationVersion(configurationVersion string) *GetStickRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get stick rule not found response
-func (o *GetStickRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetStickRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetStickRuleNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetStickRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetStickRuleDefault(code int) *GetStickRuleDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetStickRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetStickRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get stick rule default response
-func (o *GetStickRuleDefault) WithConfigurationVersion(configurationVersion int64) *GetStickRuleDefault {
+func (o *GetStickRuleDefault) WithConfigurationVersion(configurationVersion string) *GetStickRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get stick rule default response
-func (o *GetStickRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetStickRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetStickRuleDefault) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

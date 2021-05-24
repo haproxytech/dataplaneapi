@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -63,9 +62,8 @@ swagger:response deleteAWSRegionNotFound
 type DeleteAWSRegionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -76,26 +74,17 @@ type DeleteAWSRegionNotFound struct {
 // NewDeleteAWSRegionNotFound creates DeleteAWSRegionNotFound with default headers values
 func NewDeleteAWSRegionNotFound() *DeleteAWSRegionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteAWSRegionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteAWSRegionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete a w s region not found response
-func (o *DeleteAWSRegionNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteAWSRegionNotFound {
+func (o *DeleteAWSRegionNotFound) WithConfigurationVersion(configurationVersion string) *DeleteAWSRegionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete a w s region not found response
-func (o *DeleteAWSRegionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteAWSRegionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -115,7 +104,7 @@ func (o *DeleteAWSRegionNotFound) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -137,9 +126,8 @@ type DeleteAWSRegionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -153,16 +141,8 @@ func NewDeleteAWSRegionDefault(code int) *DeleteAWSRegionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteAWSRegionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -178,13 +158,13 @@ func (o *DeleteAWSRegionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete a w s region default response
-func (o *DeleteAWSRegionDefault) WithConfigurationVersion(configurationVersion int64) *DeleteAWSRegionDefault {
+func (o *DeleteAWSRegionDefault) WithConfigurationVersion(configurationVersion string) *DeleteAWSRegionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete a w s region default response
-func (o *DeleteAWSRegionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteAWSRegionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -204,7 +184,7 @@ func (o *DeleteAWSRegionDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

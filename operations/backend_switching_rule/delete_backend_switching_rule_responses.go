@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteBackendSwitchingRuleNotFound
 type DeleteBackendSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteBackendSwitchingRuleNotFound struct {
 // NewDeleteBackendSwitchingRuleNotFound creates DeleteBackendSwitchingRuleNotFound with default headers values
 func NewDeleteBackendSwitchingRuleNotFound() *DeleteBackendSwitchingRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteBackendSwitchingRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteBackendSwitchingRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete backend switching rule not found response
-func (o *DeleteBackendSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteBackendSwitchingRuleNotFound {
+func (o *DeleteBackendSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion string) *DeleteBackendSwitchingRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete backend switching rule not found response
-func (o *DeleteBackendSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteBackendSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteBackendSwitchingRuleNotFound) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteBackendSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteBackendSwitchingRuleDefault(code int) *DeleteBackendSwitchingRuleD
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteBackendSwitchingRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteBackendSwitchingRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete backend switching rule default response
-func (o *DeleteBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *DeleteBackendSwitchingRuleDefault {
+func (o *DeleteBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion string) *DeleteBackendSwitchingRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete backend switching rule default response
-func (o *DeleteBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteBackendSwitchingRuleDefault) WriteResponse(rw http.ResponseWriter
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

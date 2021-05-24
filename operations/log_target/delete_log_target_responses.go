@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteLogTargetNotFound
 type DeleteLogTargetNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteLogTargetNotFound struct {
 // NewDeleteLogTargetNotFound creates DeleteLogTargetNotFound with default headers values
 func NewDeleteLogTargetNotFound() *DeleteLogTargetNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteLogTargetNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteLogTargetNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete log target not found response
-func (o *DeleteLogTargetNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteLogTargetNotFound {
+func (o *DeleteLogTargetNotFound) WithConfigurationVersion(configurationVersion string) *DeleteLogTargetNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete log target not found response
-func (o *DeleteLogTargetNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteLogTargetNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteLogTargetNotFound) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteLogTargetDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteLogTargetDefault(code int) *DeleteLogTargetDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteLogTargetDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteLogTargetDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete log target default response
-func (o *DeleteLogTargetDefault) WithConfigurationVersion(configurationVersion int64) *DeleteLogTargetDefault {
+func (o *DeleteLogTargetDefault) WithConfigurationVersion(configurationVersion string) *DeleteLogTargetDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete log target default response
-func (o *DeleteLogTargetDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteLogTargetDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteLogTargetDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

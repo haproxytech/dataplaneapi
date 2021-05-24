@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response getServicesHaproxyRuntimeAclFileEntriesIdBadRequest
 type GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest struct {
 // NewGetServicesHaproxyRuntimeACLFileEntriesIDBadRequest creates GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest with default headers values
 func NewGetServicesHaproxyRuntimeACLFileEntriesIDBadRequest() *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get services haproxy runtime Acl file entries Id bad request response
-func (o *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WithConfigurationVersion(configurationVersion int64) *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest {
+func (o *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WithConfigurationVersion(configurationVersion string) *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get services haproxy runtime Acl file entries Id bad request response
-func (o *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WriteResponse(rw h
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response getServicesHaproxyRuntimeAclFileEntriesIdNotFound
 type GetServicesHaproxyRuntimeACLFileEntriesIDNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type GetServicesHaproxyRuntimeACLFileEntriesIDNotFound struct {
 // NewGetServicesHaproxyRuntimeACLFileEntriesIDNotFound creates GetServicesHaproxyRuntimeACLFileEntriesIDNotFound with default headers values
 func NewGetServicesHaproxyRuntimeACLFileEntriesIDNotFound() *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetServicesHaproxyRuntimeACLFileEntriesIDNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetServicesHaproxyRuntimeACLFileEntriesIDNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get services haproxy runtime Acl file entries Id not found response
-func (o *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound) WithConfigurationVersion(configurationVersion int64) *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound {
+func (o *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound) WithConfigurationVersion(configurationVersion string) *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get services haproxy runtime Acl file entries Id not found response
-func (o *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound) WriteResponse(rw htt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type GetServicesHaproxyRuntimeACLFileEntriesIDDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewGetServicesHaproxyRuntimeACLFileEntriesIDDefault(code int) *GetServicesH
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetServicesHaproxyRuntimeACLFileEntriesIDDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesIDDefault) SetStatusCode(code in
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get services haproxy runtime ACL file entries ID default response
-func (o *GetServicesHaproxyRuntimeACLFileEntriesIDDefault) WithConfigurationVersion(configurationVersion int64) *GetServicesHaproxyRuntimeACLFileEntriesIDDefault {
+func (o *GetServicesHaproxyRuntimeACLFileEntriesIDDefault) WithConfigurationVersion(configurationVersion string) *GetServicesHaproxyRuntimeACLFileEntriesIDDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get services haproxy runtime ACL file entries ID default response
-func (o *GetServicesHaproxyRuntimeACLFileEntriesIDDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetServicesHaproxyRuntimeACLFileEntriesIDDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesIDDefault) WriteResponse(rw http
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

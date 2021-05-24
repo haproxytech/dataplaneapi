@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -63,9 +62,8 @@ swagger:response deleteTransactionNotFound
 type DeleteTransactionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -76,26 +74,17 @@ type DeleteTransactionNotFound struct {
 // NewDeleteTransactionNotFound creates DeleteTransactionNotFound with default headers values
 func NewDeleteTransactionNotFound() *DeleteTransactionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteTransactionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteTransactionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete transaction not found response
-func (o *DeleteTransactionNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteTransactionNotFound {
+func (o *DeleteTransactionNotFound) WithConfigurationVersion(configurationVersion string) *DeleteTransactionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete transaction not found response
-func (o *DeleteTransactionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteTransactionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -115,7 +104,7 @@ func (o *DeleteTransactionNotFound) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -137,9 +126,8 @@ type DeleteTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -153,16 +141,8 @@ func NewDeleteTransactionDefault(code int) *DeleteTransactionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteTransactionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -178,13 +158,13 @@ func (o *DeleteTransactionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete transaction default response
-func (o *DeleteTransactionDefault) WithConfigurationVersion(configurationVersion int64) *DeleteTransactionDefault {
+func (o *DeleteTransactionDefault) WithConfigurationVersion(configurationVersion string) *DeleteTransactionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete transaction default response
-func (o *DeleteTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteTransactionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -204,7 +184,7 @@ func (o *DeleteTransactionDefault) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

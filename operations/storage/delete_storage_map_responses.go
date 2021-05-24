@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -63,9 +62,8 @@ swagger:response deleteStorageMapNotFound
 type DeleteStorageMapNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -76,26 +74,17 @@ type DeleteStorageMapNotFound struct {
 // NewDeleteStorageMapNotFound creates DeleteStorageMapNotFound with default headers values
 func NewDeleteStorageMapNotFound() *DeleteStorageMapNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteStorageMapNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteStorageMapNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete storage map not found response
-func (o *DeleteStorageMapNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteStorageMapNotFound {
+func (o *DeleteStorageMapNotFound) WithConfigurationVersion(configurationVersion string) *DeleteStorageMapNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete storage map not found response
-func (o *DeleteStorageMapNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteStorageMapNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -115,7 +104,7 @@ func (o *DeleteStorageMapNotFound) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -137,9 +126,8 @@ type DeleteStorageMapDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -153,16 +141,8 @@ func NewDeleteStorageMapDefault(code int) *DeleteStorageMapDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteStorageMapDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -178,13 +158,13 @@ func (o *DeleteStorageMapDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete storage map default response
-func (o *DeleteStorageMapDefault) WithConfigurationVersion(configurationVersion int64) *DeleteStorageMapDefault {
+func (o *DeleteStorageMapDefault) WithConfigurationVersion(configurationVersion string) *DeleteStorageMapDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete storage map default response
-func (o *DeleteStorageMapDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteStorageMapDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -204,7 +184,7 @@ func (o *DeleteStorageMapDefault) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetFiltersOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetFiltersOK() *GetFiltersOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get filters o k response
-func (o *GetFiltersOK) WithConfigurationVersion(configurationVersion int64) *GetFiltersOK {
+func (o *GetFiltersOK) WithConfigurationVersion(configurationVersion string) *GetFiltersOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get filters o k response
-func (o *GetFiltersOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFiltersOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetFiltersOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -103,9 +102,8 @@ type GetFiltersDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -119,16 +117,8 @@ func NewGetFiltersDefault(code int) *GetFiltersDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetFiltersDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -144,13 +134,13 @@ func (o *GetFiltersDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get filters default response
-func (o *GetFiltersDefault) WithConfigurationVersion(configurationVersion int64) *GetFiltersDefault {
+func (o *GetFiltersDefault) WithConfigurationVersion(configurationVersion string) *GetFiltersDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get filters default response
-func (o *GetFiltersDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFiltersDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -170,7 +160,7 @@ func (o *GetFiltersDefault) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

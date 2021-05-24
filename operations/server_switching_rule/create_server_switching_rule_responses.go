@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createServerSwitchingRuleBadRequest
 type CreateServerSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateServerSwitchingRuleBadRequest struct {
 // NewCreateServerSwitchingRuleBadRequest creates CreateServerSwitchingRuleBadRequest with default headers values
 func NewCreateServerSwitchingRuleBadRequest() *CreateServerSwitchingRuleBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateServerSwitchingRuleBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateServerSwitchingRuleBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create server switching rule bad request response
-func (o *CreateServerSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateServerSwitchingRuleBadRequest {
+func (o *CreateServerSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion string) *CreateServerSwitchingRuleBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create server switching rule bad request response
-func (o *CreateServerSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateServerSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateServerSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWrit
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createServerSwitchingRuleConflict
 type CreateServerSwitchingRuleConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateServerSwitchingRuleConflict struct {
 // NewCreateServerSwitchingRuleConflict creates CreateServerSwitchingRuleConflict with default headers values
 func NewCreateServerSwitchingRuleConflict() *CreateServerSwitchingRuleConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateServerSwitchingRuleConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateServerSwitchingRuleConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create server switching rule conflict response
-func (o *CreateServerSwitchingRuleConflict) WithConfigurationVersion(configurationVersion int64) *CreateServerSwitchingRuleConflict {
+func (o *CreateServerSwitchingRuleConflict) WithConfigurationVersion(configurationVersion string) *CreateServerSwitchingRuleConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create server switching rule conflict response
-func (o *CreateServerSwitchingRuleConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateServerSwitchingRuleConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateServerSwitchingRuleConflict) WriteResponse(rw http.ResponseWriter
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateServerSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateServerSwitchingRuleDefault(code int) *CreateServerSwitchingRuleDef
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateServerSwitchingRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateServerSwitchingRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create server switching rule default response
-func (o *CreateServerSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *CreateServerSwitchingRuleDefault {
+func (o *CreateServerSwitchingRuleDefault) WithConfigurationVersion(configurationVersion string) *CreateServerSwitchingRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create server switching rule default response
-func (o *CreateServerSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateServerSwitchingRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateServerSwitchingRuleDefault) WriteResponse(rw http.ResponseWriter,
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

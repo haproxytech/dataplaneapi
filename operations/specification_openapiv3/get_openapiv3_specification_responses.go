@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -79,9 +78,8 @@ type GetOpenapiv3SpecificationDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -95,16 +93,8 @@ func NewGetOpenapiv3SpecificationDefault(code int) *GetOpenapiv3SpecificationDef
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetOpenapiv3SpecificationDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -120,13 +110,13 @@ func (o *GetOpenapiv3SpecificationDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get openapiv3 specification default response
-func (o *GetOpenapiv3SpecificationDefault) WithConfigurationVersion(configurationVersion int64) *GetOpenapiv3SpecificationDefault {
+func (o *GetOpenapiv3SpecificationDefault) WithConfigurationVersion(configurationVersion string) *GetOpenapiv3SpecificationDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get openapiv3 specification default response
-func (o *GetOpenapiv3SpecificationDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOpenapiv3SpecificationDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -146,7 +136,7 @@ func (o *GetOpenapiv3SpecificationDefault) WriteResponse(rw http.ResponseWriter,
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

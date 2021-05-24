@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetLogTargetOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetLogTargetOK() *GetLogTargetOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get log target o k response
-func (o *GetLogTargetOK) WithConfigurationVersion(configurationVersion int64) *GetLogTargetOK {
+func (o *GetLogTargetOK) WithConfigurationVersion(configurationVersion string) *GetLogTargetOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get log target o k response
-func (o *GetLogTargetOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetLogTargetOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetLogTargetOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getLogTargetNotFound
 type GetLogTargetNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetLogTargetNotFound struct {
 // NewGetLogTargetNotFound creates GetLogTargetNotFound with default headers values
 func NewGetLogTargetNotFound() *GetLogTargetNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetLogTargetNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetLogTargetNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get log target not found response
-func (o *GetLogTargetNotFound) WithConfigurationVersion(configurationVersion int64) *GetLogTargetNotFound {
+func (o *GetLogTargetNotFound) WithConfigurationVersion(configurationVersion string) *GetLogTargetNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get log target not found response
-func (o *GetLogTargetNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetLogTargetNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetLogTargetNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetLogTargetDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetLogTargetDefault(code int) *GetLogTargetDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetLogTargetDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetLogTargetDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get log target default response
-func (o *GetLogTargetDefault) WithConfigurationVersion(configurationVersion int64) *GetLogTargetDefault {
+func (o *GetLogTargetDefault) WithConfigurationVersion(configurationVersion string) *GetLogTargetDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get log target default response
-func (o *GetLogTargetDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetLogTargetDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetLogTargetDefault) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

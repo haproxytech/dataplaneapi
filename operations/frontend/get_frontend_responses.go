@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetFrontendOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetFrontendOK() *GetFrontendOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get frontend o k response
-func (o *GetFrontendOK) WithConfigurationVersion(configurationVersion int64) *GetFrontendOK {
+func (o *GetFrontendOK) WithConfigurationVersion(configurationVersion string) *GetFrontendOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get frontend o k response
-func (o *GetFrontendOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFrontendOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetFrontendOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getFrontendNotFound
 type GetFrontendNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetFrontendNotFound struct {
 // NewGetFrontendNotFound creates GetFrontendNotFound with default headers values
 func NewGetFrontendNotFound() *GetFrontendNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetFrontendNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetFrontendNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get frontend not found response
-func (o *GetFrontendNotFound) WithConfigurationVersion(configurationVersion int64) *GetFrontendNotFound {
+func (o *GetFrontendNotFound) WithConfigurationVersion(configurationVersion string) *GetFrontendNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get frontend not found response
-func (o *GetFrontendNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFrontendNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetFrontendNotFound) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetFrontendDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetFrontendDefault(code int) *GetFrontendDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetFrontendDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetFrontendDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get frontend default response
-func (o *GetFrontendDefault) WithConfigurationVersion(configurationVersion int64) *GetFrontendDefault {
+func (o *GetFrontendDefault) WithConfigurationVersion(configurationVersion string) *GetFrontendDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get frontend default response
-func (o *GetFrontendDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFrontendDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetFrontendDefault) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

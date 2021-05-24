@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response getTransactionNotFound
 type GetTransactionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type GetTransactionNotFound struct {
 // NewGetTransactionNotFound creates GetTransactionNotFound with default headers values
 func NewGetTransactionNotFound() *GetTransactionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetTransactionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetTransactionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get transaction not found response
-func (o *GetTransactionNotFound) WithConfigurationVersion(configurationVersion int64) *GetTransactionNotFound {
+func (o *GetTransactionNotFound) WithConfigurationVersion(configurationVersion string) *GetTransactionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get transaction not found response
-func (o *GetTransactionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetTransactionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *GetTransactionNotFound) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ type GetTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -173,16 +161,8 @@ func NewGetTransactionDefault(code int) *GetTransactionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetTransactionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -198,13 +178,13 @@ func (o *GetTransactionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get transaction default response
-func (o *GetTransactionDefault) WithConfigurationVersion(configurationVersion int64) *GetTransactionDefault {
+func (o *GetTransactionDefault) WithConfigurationVersion(configurationVersion string) *GetTransactionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get transaction default response
-func (o *GetTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetTransactionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -224,7 +204,7 @@ func (o *GetTransactionDefault) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

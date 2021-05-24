@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteServerSwitchingRuleNotFound
 type DeleteServerSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteServerSwitchingRuleNotFound struct {
 // NewDeleteServerSwitchingRuleNotFound creates DeleteServerSwitchingRuleNotFound with default headers values
 func NewDeleteServerSwitchingRuleNotFound() *DeleteServerSwitchingRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteServerSwitchingRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteServerSwitchingRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete server switching rule not found response
-func (o *DeleteServerSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteServerSwitchingRuleNotFound {
+func (o *DeleteServerSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion string) *DeleteServerSwitchingRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete server switching rule not found response
-func (o *DeleteServerSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteServerSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteServerSwitchingRuleNotFound) WriteResponse(rw http.ResponseWriter
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteServerSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteServerSwitchingRuleDefault(code int) *DeleteServerSwitchingRuleDef
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteServerSwitchingRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteServerSwitchingRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete server switching rule default response
-func (o *DeleteServerSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *DeleteServerSwitchingRuleDefault {
+func (o *DeleteServerSwitchingRuleDefault) WithConfigurationVersion(configurationVersion string) *DeleteServerSwitchingRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete server switching rule default response
-func (o *DeleteServerSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteServerSwitchingRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteServerSwitchingRuleDefault) WriteResponse(rw http.ResponseWriter,
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

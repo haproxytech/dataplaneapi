@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response createConsulBadRequest
 type CreateConsulBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type CreateConsulBadRequest struct {
 // NewCreateConsulBadRequest creates CreateConsulBadRequest with default headers values
 func NewCreateConsulBadRequest() *CreateConsulBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateConsulBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateConsulBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create consul bad request response
-func (o *CreateConsulBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateConsulBadRequest {
+func (o *CreateConsulBadRequest) WithConfigurationVersion(configurationVersion string) *CreateConsulBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create consul bad request response
-func (o *CreateConsulBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateConsulBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *CreateConsulBadRequest) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response createConsulConflict
 type CreateConsulConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type CreateConsulConflict struct {
 // NewCreateConsulConflict creates CreateConsulConflict with default headers values
 func NewCreateConsulConflict() *CreateConsulConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateConsulConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateConsulConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create consul conflict response
-func (o *CreateConsulConflict) WithConfigurationVersion(configurationVersion int64) *CreateConsulConflict {
+func (o *CreateConsulConflict) WithConfigurationVersion(configurationVersion string) *CreateConsulConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create consul conflict response
-func (o *CreateConsulConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateConsulConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *CreateConsulConflict) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type CreateConsulDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewCreateConsulDefault(code int) *CreateConsulDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateConsulDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *CreateConsulDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create consul default response
-func (o *CreateConsulDefault) WithConfigurationVersion(configurationVersion int64) *CreateConsulDefault {
+func (o *CreateConsulDefault) WithConfigurationVersion(configurationVersion string) *CreateConsulDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create consul default response
-func (o *CreateConsulDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateConsulDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *CreateConsulDefault) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

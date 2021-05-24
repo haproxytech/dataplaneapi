@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -84,9 +83,8 @@ type GetHaproxyEndpointsDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -100,16 +98,8 @@ func NewGetHaproxyEndpointsDefault(code int) *GetHaproxyEndpointsDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetHaproxyEndpointsDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -125,13 +115,13 @@ func (o *GetHaproxyEndpointsDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get haproxy endpoints default response
-func (o *GetHaproxyEndpointsDefault) WithConfigurationVersion(configurationVersion int64) *GetHaproxyEndpointsDefault {
+func (o *GetHaproxyEndpointsDefault) WithConfigurationVersion(configurationVersion string) *GetHaproxyEndpointsDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get haproxy endpoints default response
-func (o *GetHaproxyEndpointsDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetHaproxyEndpointsDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -151,7 +141,7 @@ func (o *GetHaproxyEndpointsDefault) WriteResponse(rw http.ResponseWriter, produ
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

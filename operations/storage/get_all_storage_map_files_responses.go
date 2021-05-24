@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -86,9 +85,8 @@ swagger:response getAllStorageMapFilesNotFound
 type GetAllStorageMapFilesNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -99,26 +97,17 @@ type GetAllStorageMapFilesNotFound struct {
 // NewGetAllStorageMapFilesNotFound creates GetAllStorageMapFilesNotFound with default headers values
 func NewGetAllStorageMapFilesNotFound() *GetAllStorageMapFilesNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetAllStorageMapFilesNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetAllStorageMapFilesNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get all storage map files not found response
-func (o *GetAllStorageMapFilesNotFound) WithConfigurationVersion(configurationVersion int64) *GetAllStorageMapFilesNotFound {
+func (o *GetAllStorageMapFilesNotFound) WithConfigurationVersion(configurationVersion string) *GetAllStorageMapFilesNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get all storage map files not found response
-func (o *GetAllStorageMapFilesNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetAllStorageMapFilesNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -138,7 +127,7 @@ func (o *GetAllStorageMapFilesNotFound) WriteResponse(rw http.ResponseWriter, pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -160,9 +149,8 @@ type GetAllStorageMapFilesDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -176,16 +164,8 @@ func NewGetAllStorageMapFilesDefault(code int) *GetAllStorageMapFilesDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetAllStorageMapFilesDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -201,13 +181,13 @@ func (o *GetAllStorageMapFilesDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get all storage map files default response
-func (o *GetAllStorageMapFilesDefault) WithConfigurationVersion(configurationVersion int64) *GetAllStorageMapFilesDefault {
+func (o *GetAllStorageMapFilesDefault) WithConfigurationVersion(configurationVersion string) *GetAllStorageMapFilesDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get all storage map files default response
-func (o *GetAllStorageMapFilesDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetAllStorageMapFilesDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -227,7 +207,7 @@ func (o *GetAllStorageMapFilesDefault) WriteResponse(rw http.ResponseWriter, pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

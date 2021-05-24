@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceHttpResponseRuleBadRequest
 type ReplaceHTTPResponseRuleBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceHTTPResponseRuleBadRequest struct {
 // NewReplaceHTTPResponseRuleBadRequest creates ReplaceHTTPResponseRuleBadRequest with default headers values
 func NewReplaceHTTPResponseRuleBadRequest() *ReplaceHTTPResponseRuleBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceHTTPResponseRuleBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceHTTPResponseRuleBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Http response rule bad request response
-func (o *ReplaceHTTPResponseRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceHTTPResponseRuleBadRequest {
+func (o *ReplaceHTTPResponseRuleBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceHTTPResponseRuleBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace Http response rule bad request response
-func (o *ReplaceHTTPResponseRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceHTTPResponseRuleBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceHTTPResponseRuleBadRequest) WriteResponse(rw http.ResponseWriter
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceHttpResponseRuleNotFound
 type ReplaceHTTPResponseRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceHTTPResponseRuleNotFound struct {
 // NewReplaceHTTPResponseRuleNotFound creates ReplaceHTTPResponseRuleNotFound with default headers values
 func NewReplaceHTTPResponseRuleNotFound() *ReplaceHTTPResponseRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceHTTPResponseRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceHTTPResponseRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Http response rule not found response
-func (o *ReplaceHTTPResponseRuleNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceHTTPResponseRuleNotFound {
+func (o *ReplaceHTTPResponseRuleNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceHTTPResponseRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace Http response rule not found response
-func (o *ReplaceHTTPResponseRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceHTTPResponseRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceHTTPResponseRuleNotFound) WriteResponse(rw http.ResponseWriter, 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceHTTPResponseRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceHTTPResponseRuleDefault(code int) *ReplaceHTTPResponseRuleDefault
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceHTTPResponseRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceHTTPResponseRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace HTTP response rule default response
-func (o *ReplaceHTTPResponseRuleDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceHTTPResponseRuleDefault {
+func (o *ReplaceHTTPResponseRuleDefault) WithConfigurationVersion(configurationVersion string) *ReplaceHTTPResponseRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace HTTP response rule default response
-func (o *ReplaceHTTPResponseRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceHTTPResponseRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceHTTPResponseRuleDefault) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

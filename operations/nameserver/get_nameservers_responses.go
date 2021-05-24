@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetNameserversOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetNameserversOK() *GetNameserversOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get nameservers o k response
-func (o *GetNameserversOK) WithConfigurationVersion(configurationVersion int64) *GetNameserversOK {
+func (o *GetNameserversOK) WithConfigurationVersion(configurationVersion string) *GetNameserversOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get nameservers o k response
-func (o *GetNameserversOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetNameserversOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetNameserversOK) WriteResponse(rw http.ResponseWriter, producer runtim
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -103,9 +102,8 @@ type GetNameserversDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -119,16 +117,8 @@ func NewGetNameserversDefault(code int) *GetNameserversDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetNameserversDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -144,13 +134,13 @@ func (o *GetNameserversDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get nameservers default response
-func (o *GetNameserversDefault) WithConfigurationVersion(configurationVersion int64) *GetNameserversDefault {
+func (o *GetNameserversDefault) WithConfigurationVersion(configurationVersion string) *GetNameserversDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get nameservers default response
-func (o *GetNameserversDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetNameserversDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -170,7 +160,7 @@ func (o *GetNameserversDefault) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

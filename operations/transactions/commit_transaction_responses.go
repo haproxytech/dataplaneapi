@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response commitTransactionBadRequest
 type CommitTransactionBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CommitTransactionBadRequest struct {
 // NewCommitTransactionBadRequest creates CommitTransactionBadRequest with default headers values
 func NewCommitTransactionBadRequest() *CommitTransactionBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CommitTransactionBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CommitTransactionBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit transaction bad request response
-func (o *CommitTransactionBadRequest) WithConfigurationVersion(configurationVersion int64) *CommitTransactionBadRequest {
+func (o *CommitTransactionBadRequest) WithConfigurationVersion(configurationVersion string) *CommitTransactionBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the commit transaction bad request response
-func (o *CommitTransactionBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CommitTransactionBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CommitTransactionBadRequest) WriteResponse(rw http.ResponseWriter, prod
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response commitTransactionNotFound
 type CommitTransactionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CommitTransactionNotFound struct {
 // NewCommitTransactionNotFound creates CommitTransactionNotFound with default headers values
 func NewCommitTransactionNotFound() *CommitTransactionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CommitTransactionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CommitTransactionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit transaction not found response
-func (o *CommitTransactionNotFound) WithConfigurationVersion(configurationVersion int64) *CommitTransactionNotFound {
+func (o *CommitTransactionNotFound) WithConfigurationVersion(configurationVersion string) *CommitTransactionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the commit transaction not found response
-func (o *CommitTransactionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *CommitTransactionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CommitTransactionNotFound) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -301,9 +280,8 @@ swagger:response commitTransactionNotAcceptable
 type CommitTransactionNotAcceptable struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -314,26 +292,17 @@ type CommitTransactionNotAcceptable struct {
 // NewCommitTransactionNotAcceptable creates CommitTransactionNotAcceptable with default headers values
 func NewCommitTransactionNotAcceptable() *CommitTransactionNotAcceptable {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CommitTransactionNotAcceptable{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CommitTransactionNotAcceptable{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit transaction not acceptable response
-func (o *CommitTransactionNotAcceptable) WithConfigurationVersion(configurationVersion int64) *CommitTransactionNotAcceptable {
+func (o *CommitTransactionNotAcceptable) WithConfigurationVersion(configurationVersion string) *CommitTransactionNotAcceptable {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the commit transaction not acceptable response
-func (o *CommitTransactionNotAcceptable) SetConfigurationVersion(configurationVersion int64) {
+func (o *CommitTransactionNotAcceptable) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -353,7 +322,7 @@ func (o *CommitTransactionNotAcceptable) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -375,9 +344,8 @@ type CommitTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -391,16 +359,8 @@ func NewCommitTransactionDefault(code int) *CommitTransactionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CommitTransactionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -416,13 +376,13 @@ func (o *CommitTransactionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit transaction default response
-func (o *CommitTransactionDefault) WithConfigurationVersion(configurationVersion int64) *CommitTransactionDefault {
+func (o *CommitTransactionDefault) WithConfigurationVersion(configurationVersion string) *CommitTransactionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the commit transaction default response
-func (o *CommitTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CommitTransactionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -442,7 +402,7 @@ func (o *CommitTransactionDefault) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

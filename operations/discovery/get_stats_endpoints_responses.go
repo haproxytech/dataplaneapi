@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -84,9 +83,8 @@ type GetStatsEndpointsDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -100,16 +98,8 @@ func NewGetStatsEndpointsDefault(code int) *GetStatsEndpointsDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetStatsEndpointsDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -125,13 +115,13 @@ func (o *GetStatsEndpointsDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get stats endpoints default response
-func (o *GetStatsEndpointsDefault) WithConfigurationVersion(configurationVersion int64) *GetStatsEndpointsDefault {
+func (o *GetStatsEndpointsDefault) WithConfigurationVersion(configurationVersion string) *GetStatsEndpointsDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get stats endpoints default response
-func (o *GetStatsEndpointsDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetStatsEndpointsDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -151,7 +141,7 @@ func (o *GetStatsEndpointsDefault) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

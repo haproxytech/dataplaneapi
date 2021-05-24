@@ -145,9 +145,9 @@ func (h *GetNameserverHandlerImpl) Handle(params nameserver.GetNameserverParams,
 	v, b, err := h.Client.Configuration.GetNameserver(params.Name, params.Resolver, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return nameserver.NewGetNameserverDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return nameserver.NewGetNameserverDefault(int(*e.Code)).WithPayload(e)
 	}
-	return nameserver.NewGetNameserverOK().WithPayload(&nameserver.GetNameserverOKBody{Version: v, Data: b}).WithConfigurationVersion(v)
+	return nameserver.NewGetNameserverOK().WithPayload(&nameserver.GetNameserverOKBody{Version: v, Data: b})
 }
 
 // Handle executing the request and returning a response
@@ -160,9 +160,9 @@ func (h *GetNameserversHandlerImpl) Handle(params nameserver.GetNameserversParam
 	v, bs, err := h.Client.Configuration.GetNameservers(params.Resolver, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return nameserver.NewGetNameserversDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return nameserver.NewGetNameserversDefault(int(*e.Code)).WithPayload(e)
 	}
-	return nameserver.NewGetNameserversOK().WithPayload(&nameserver.GetNameserversOKBody{Version: v, Data: bs}).WithConfigurationVersion(v)
+	return nameserver.NewGetNameserversOK().WithPayload(&nameserver.GetNameserversOKBody{Version: v, Data: bs})
 }
 
 // Handle executing the request and returning a response

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetACLOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetACLOK() *GetACLOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get Acl o k response
-func (o *GetACLOK) WithConfigurationVersion(configurationVersion int64) *GetACLOK {
+func (o *GetACLOK) WithConfigurationVersion(configurationVersion string) *GetACLOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get Acl o k response
-func (o *GetACLOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetACLOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetACLOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getAclNotFound
 type GetACLNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetACLNotFound struct {
 // NewGetACLNotFound creates GetACLNotFound with default headers values
 func NewGetACLNotFound() *GetACLNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetACLNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetACLNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get Acl not found response
-func (o *GetACLNotFound) WithConfigurationVersion(configurationVersion int64) *GetACLNotFound {
+func (o *GetACLNotFound) WithConfigurationVersion(configurationVersion string) *GetACLNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get Acl not found response
-func (o *GetACLNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetACLNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetACLNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetACLDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetACLDefault(code int) *GetACLDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetACLDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetACLDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get Acl default response
-func (o *GetACLDefault) WithConfigurationVersion(configurationVersion int64) *GetACLDefault {
+func (o *GetACLDefault) WithConfigurationVersion(configurationVersion string) *GetACLDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get Acl default response
-func (o *GetACLDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetACLDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetACLDefault) WriteResponse(rw http.ResponseWriter, producer runtime.P
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

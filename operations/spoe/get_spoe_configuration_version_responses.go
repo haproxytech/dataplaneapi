@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -81,9 +80,8 @@ swagger:response getSpoeConfigurationVersionNotFound
 type GetSpoeConfigurationVersionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -94,26 +92,17 @@ type GetSpoeConfigurationVersionNotFound struct {
 // NewGetSpoeConfigurationVersionNotFound creates GetSpoeConfigurationVersionNotFound with default headers values
 func NewGetSpoeConfigurationVersionNotFound() *GetSpoeConfigurationVersionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetSpoeConfigurationVersionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetSpoeConfigurationVersionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get spoe configuration version not found response
-func (o *GetSpoeConfigurationVersionNotFound) WithConfigurationVersion(configurationVersion int64) *GetSpoeConfigurationVersionNotFound {
+func (o *GetSpoeConfigurationVersionNotFound) WithConfigurationVersion(configurationVersion string) *GetSpoeConfigurationVersionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get spoe configuration version not found response
-func (o *GetSpoeConfigurationVersionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSpoeConfigurationVersionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -133,7 +122,7 @@ func (o *GetSpoeConfigurationVersionNotFound) WriteResponse(rw http.ResponseWrit
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -155,9 +144,8 @@ type GetSpoeConfigurationVersionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -171,16 +159,8 @@ func NewGetSpoeConfigurationVersionDefault(code int) *GetSpoeConfigurationVersio
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetSpoeConfigurationVersionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -196,13 +176,13 @@ func (o *GetSpoeConfigurationVersionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get spoe configuration version default response
-func (o *GetSpoeConfigurationVersionDefault) WithConfigurationVersion(configurationVersion int64) *GetSpoeConfigurationVersionDefault {
+func (o *GetSpoeConfigurationVersionDefault) WithConfigurationVersion(configurationVersion string) *GetSpoeConfigurationVersionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get spoe configuration version default response
-func (o *GetSpoeConfigurationVersionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSpoeConfigurationVersionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -222,7 +202,7 @@ func (o *GetSpoeConfigurationVersionDefault) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

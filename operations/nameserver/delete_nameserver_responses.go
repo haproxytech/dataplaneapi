@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteNameserverNotFound
 type DeleteNameserverNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteNameserverNotFound struct {
 // NewDeleteNameserverNotFound creates DeleteNameserverNotFound with default headers values
 func NewDeleteNameserverNotFound() *DeleteNameserverNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteNameserverNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteNameserverNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete nameserver not found response
-func (o *DeleteNameserverNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteNameserverNotFound {
+func (o *DeleteNameserverNotFound) WithConfigurationVersion(configurationVersion string) *DeleteNameserverNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete nameserver not found response
-func (o *DeleteNameserverNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteNameserverNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteNameserverNotFound) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteNameserverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteNameserverDefault(code int) *DeleteNameserverDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteNameserverDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteNameserverDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete nameserver default response
-func (o *DeleteNameserverDefault) WithConfigurationVersion(configurationVersion int64) *DeleteNameserverDefault {
+func (o *DeleteNameserverDefault) WithConfigurationVersion(configurationVersion string) *DeleteNameserverDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete nameserver default response
-func (o *DeleteNameserverDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteNameserverDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteNameserverDefault) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

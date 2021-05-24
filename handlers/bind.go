@@ -145,9 +145,9 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 	v, b, err := h.Client.Configuration.GetBind(params.Name, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
 	}
-	return bind.NewGetBindOK().WithPayload(&bind.GetBindOKBody{Version: v, Data: b}).WithConfigurationVersion(v)
+	return bind.NewGetBindOK().WithPayload(&bind.GetBindOKBody{Version: v, Data: b})
 }
 
 // Handle executing the request and returning a response
@@ -161,11 +161,11 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: models.Binds{}}).WithConfigurationVersion(v)
+			return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: models.Binds{}})
 		}
-		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: bs}).WithConfigurationVersion(v)
+	return bind.NewGetBindsOK().WithPayload(&bind.GetBindsOKBody{Version: v, Data: bs})
 }
 
 // Handle executing the request and returning a response

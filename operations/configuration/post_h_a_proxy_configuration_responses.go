@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -145,9 +144,8 @@ swagger:response postHAProxyConfigurationBadRequest
 type PostHAProxyConfigurationBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -158,26 +156,17 @@ type PostHAProxyConfigurationBadRequest struct {
 // NewPostHAProxyConfigurationBadRequest creates PostHAProxyConfigurationBadRequest with default headers values
 func NewPostHAProxyConfigurationBadRequest() *PostHAProxyConfigurationBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &PostHAProxyConfigurationBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &PostHAProxyConfigurationBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post h a proxy configuration bad request response
-func (o *PostHAProxyConfigurationBadRequest) WithConfigurationVersion(configurationVersion int64) *PostHAProxyConfigurationBadRequest {
+func (o *PostHAProxyConfigurationBadRequest) WithConfigurationVersion(configurationVersion string) *PostHAProxyConfigurationBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the post h a proxy configuration bad request response
-func (o *PostHAProxyConfigurationBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *PostHAProxyConfigurationBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -197,7 +186,7 @@ func (o *PostHAProxyConfigurationBadRequest) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -219,9 +208,8 @@ type PostHAProxyConfigurationDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -235,16 +223,8 @@ func NewPostHAProxyConfigurationDefault(code int) *PostHAProxyConfigurationDefau
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &PostHAProxyConfigurationDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -260,13 +240,13 @@ func (o *PostHAProxyConfigurationDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post h a proxy configuration default response
-func (o *PostHAProxyConfigurationDefault) WithConfigurationVersion(configurationVersion int64) *PostHAProxyConfigurationDefault {
+func (o *PostHAProxyConfigurationDefault) WithConfigurationVersion(configurationVersion string) *PostHAProxyConfigurationDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the post h a proxy configuration default response
-func (o *PostHAProxyConfigurationDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *PostHAProxyConfigurationDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -286,7 +266,7 @@ func (o *PostHAProxyConfigurationDefault) WriteResponse(rw http.ResponseWriter, 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

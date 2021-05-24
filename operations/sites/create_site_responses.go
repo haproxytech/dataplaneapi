@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createSiteBadRequest
 type CreateSiteBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateSiteBadRequest struct {
 // NewCreateSiteBadRequest creates CreateSiteBadRequest with default headers values
 func NewCreateSiteBadRequest() *CreateSiteBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateSiteBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateSiteBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create site bad request response
-func (o *CreateSiteBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateSiteBadRequest {
+func (o *CreateSiteBadRequest) WithConfigurationVersion(configurationVersion string) *CreateSiteBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create site bad request response
-func (o *CreateSiteBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSiteBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateSiteBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createSiteConflict
 type CreateSiteConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateSiteConflict struct {
 // NewCreateSiteConflict creates CreateSiteConflict with default headers values
 func NewCreateSiteConflict() *CreateSiteConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateSiteConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateSiteConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create site conflict response
-func (o *CreateSiteConflict) WithConfigurationVersion(configurationVersion int64) *CreateSiteConflict {
+func (o *CreateSiteConflict) WithConfigurationVersion(configurationVersion string) *CreateSiteConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create site conflict response
-func (o *CreateSiteConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSiteConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateSiteConflict) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateSiteDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateSiteDefault(code int) *CreateSiteDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateSiteDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateSiteDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create site default response
-func (o *CreateSiteDefault) WithConfigurationVersion(configurationVersion int64) *CreateSiteDefault {
+func (o *CreateSiteDefault) WithConfigurationVersion(configurationVersion string) *CreateSiteDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create site default response
-func (o *CreateSiteDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSiteDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateSiteDefault) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -146,10 +146,10 @@ func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{
 	v, rule, err := h.Client.Configuration.GetACL(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return acl.NewGetACLOK().WithPayload(&acl.GetACLOKBody{Version: v, Data: rule}).WithConfigurationVersion(v)
+	return acl.NewGetACLOK().WithPayload(&acl.GetACLOKBody{Version: v, Data: rule})
 }
 
 // Handle executing the request and returning a response
@@ -167,11 +167,11 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: models.Acls{}}).WithConfigurationVersion(v)
+			return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: models.Acls{}})
 		}
-		return acl.NewGetAclsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return acl.NewGetAclsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: rules}).WithConfigurationVersion(v)
+	return acl.NewGetAclsOK().WithPayload(&acl.GetAclsOKBody{Version: v, Data: rules})
 }
 
 // Handle executing the request and returning a response

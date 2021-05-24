@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteFilterNotFound
 type DeleteFilterNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteFilterNotFound struct {
 // NewDeleteFilterNotFound creates DeleteFilterNotFound with default headers values
 func NewDeleteFilterNotFound() *DeleteFilterNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteFilterNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteFilterNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete filter not found response
-func (o *DeleteFilterNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteFilterNotFound {
+func (o *DeleteFilterNotFound) WithConfigurationVersion(configurationVersion string) *DeleteFilterNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete filter not found response
-func (o *DeleteFilterNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteFilterNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteFilterNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteFilterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteFilterDefault(code int) *DeleteFilterDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteFilterDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteFilterDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete filter default response
-func (o *DeleteFilterDefault) WithConfigurationVersion(configurationVersion int64) *DeleteFilterDefault {
+func (o *DeleteFilterDefault) WithConfigurationVersion(configurationVersion string) *DeleteFilterDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete filter default response
-func (o *DeleteFilterDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteFilterDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteFilterDefault) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

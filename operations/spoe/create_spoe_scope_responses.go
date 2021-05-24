@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -81,9 +80,8 @@ swagger:response createSpoeScopeBadRequest
 type CreateSpoeScopeBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -94,26 +92,17 @@ type CreateSpoeScopeBadRequest struct {
 // NewCreateSpoeScopeBadRequest creates CreateSpoeScopeBadRequest with default headers values
 func NewCreateSpoeScopeBadRequest() *CreateSpoeScopeBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateSpoeScopeBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateSpoeScopeBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create spoe scope bad request response
-func (o *CreateSpoeScopeBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateSpoeScopeBadRequest {
+func (o *CreateSpoeScopeBadRequest) WithConfigurationVersion(configurationVersion string) *CreateSpoeScopeBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create spoe scope bad request response
-func (o *CreateSpoeScopeBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSpoeScopeBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -133,7 +122,7 @@ func (o *CreateSpoeScopeBadRequest) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ swagger:response createSpoeScopeConflict
 type CreateSpoeScopeConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -170,26 +158,17 @@ type CreateSpoeScopeConflict struct {
 // NewCreateSpoeScopeConflict creates CreateSpoeScopeConflict with default headers values
 func NewCreateSpoeScopeConflict() *CreateSpoeScopeConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateSpoeScopeConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateSpoeScopeConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create spoe scope conflict response
-func (o *CreateSpoeScopeConflict) WithConfigurationVersion(configurationVersion int64) *CreateSpoeScopeConflict {
+func (o *CreateSpoeScopeConflict) WithConfigurationVersion(configurationVersion string) *CreateSpoeScopeConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create spoe scope conflict response
-func (o *CreateSpoeScopeConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSpoeScopeConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -209,7 +188,7 @@ func (o *CreateSpoeScopeConflict) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -231,9 +210,8 @@ type CreateSpoeScopeDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -247,16 +225,8 @@ func NewCreateSpoeScopeDefault(code int) *CreateSpoeScopeDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateSpoeScopeDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -272,13 +242,13 @@ func (o *CreateSpoeScopeDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create spoe scope default response
-func (o *CreateSpoeScopeDefault) WithConfigurationVersion(configurationVersion int64) *CreateSpoeScopeDefault {
+func (o *CreateSpoeScopeDefault) WithConfigurationVersion(configurationVersion string) *CreateSpoeScopeDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create spoe scope default response
-func (o *CreateSpoeScopeDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSpoeScopeDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -298,7 +268,7 @@ func (o *CreateSpoeScopeDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

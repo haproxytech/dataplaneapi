@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetSpoeMessagesOK struct {
 	/*Spoe configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetSpoeMessagesOK() *GetSpoeMessagesOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get spoe messages o k response
-func (o *GetSpoeMessagesOK) WithConfigurationVersion(configurationVersion int64) *GetSpoeMessagesOK {
+func (o *GetSpoeMessagesOK) WithConfigurationVersion(configurationVersion string) *GetSpoeMessagesOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get spoe messages o k response
-func (o *GetSpoeMessagesOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSpoeMessagesOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetSpoeMessagesOK) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -103,9 +102,8 @@ type GetSpoeMessagesDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -119,16 +117,8 @@ func NewGetSpoeMessagesDefault(code int) *GetSpoeMessagesDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetSpoeMessagesDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -144,13 +134,13 @@ func (o *GetSpoeMessagesDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get spoe messages default response
-func (o *GetSpoeMessagesDefault) WithConfigurationVersion(configurationVersion int64) *GetSpoeMessagesDefault {
+func (o *GetSpoeMessagesDefault) WithConfigurationVersion(configurationVersion string) *GetSpoeMessagesDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get spoe messages default response
-func (o *GetSpoeMessagesDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSpoeMessagesDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -170,7 +160,7 @@ func (o *GetSpoeMessagesDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

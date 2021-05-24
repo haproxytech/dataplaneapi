@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -63,9 +62,8 @@ swagger:response deleteSpoeTransactionNotFound
 type DeleteSpoeTransactionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -76,26 +74,17 @@ type DeleteSpoeTransactionNotFound struct {
 // NewDeleteSpoeTransactionNotFound creates DeleteSpoeTransactionNotFound with default headers values
 func NewDeleteSpoeTransactionNotFound() *DeleteSpoeTransactionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteSpoeTransactionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteSpoeTransactionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete spoe transaction not found response
-func (o *DeleteSpoeTransactionNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteSpoeTransactionNotFound {
+func (o *DeleteSpoeTransactionNotFound) WithConfigurationVersion(configurationVersion string) *DeleteSpoeTransactionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete spoe transaction not found response
-func (o *DeleteSpoeTransactionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteSpoeTransactionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -115,7 +104,7 @@ func (o *DeleteSpoeTransactionNotFound) WriteResponse(rw http.ResponseWriter, pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -137,9 +126,8 @@ type DeleteSpoeTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -153,16 +141,8 @@ func NewDeleteSpoeTransactionDefault(code int) *DeleteSpoeTransactionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteSpoeTransactionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -178,13 +158,13 @@ func (o *DeleteSpoeTransactionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete spoe transaction default response
-func (o *DeleteSpoeTransactionDefault) WithConfigurationVersion(configurationVersion int64) *DeleteSpoeTransactionDefault {
+func (o *DeleteSpoeTransactionDefault) WithConfigurationVersion(configurationVersion string) *DeleteSpoeTransactionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete spoe transaction default response
-func (o *DeleteSpoeTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteSpoeTransactionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -204,7 +184,7 @@ func (o *DeleteSpoeTransactionDefault) WriteResponse(rw http.ResponseWriter, pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

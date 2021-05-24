@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetFilterOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetFilterOK() *GetFilterOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get filter o k response
-func (o *GetFilterOK) WithConfigurationVersion(configurationVersion int64) *GetFilterOK {
+func (o *GetFilterOK) WithConfigurationVersion(configurationVersion string) *GetFilterOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get filter o k response
-func (o *GetFilterOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFilterOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetFilterOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getFilterNotFound
 type GetFilterNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetFilterNotFound struct {
 // NewGetFilterNotFound creates GetFilterNotFound with default headers values
 func NewGetFilterNotFound() *GetFilterNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetFilterNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetFilterNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get filter not found response
-func (o *GetFilterNotFound) WithConfigurationVersion(configurationVersion int64) *GetFilterNotFound {
+func (o *GetFilterNotFound) WithConfigurationVersion(configurationVersion string) *GetFilterNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get filter not found response
-func (o *GetFilterNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFilterNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetFilterNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetFilterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetFilterDefault(code int) *GetFilterDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetFilterDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetFilterDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get filter default response
-func (o *GetFilterDefault) WithConfigurationVersion(configurationVersion int64) *GetFilterDefault {
+func (o *GetFilterDefault) WithConfigurationVersion(configurationVersion string) *GetFilterDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get filter default response
-func (o *GetFilterDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetFilterDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetFilterDefault) WriteResponse(rw http.ResponseWriter, producer runtim
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

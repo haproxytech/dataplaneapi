@@ -678,7 +678,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -817,7 +817,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1015,7 +1015,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1132,7 +1132,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1301,7 +1301,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1404,7 +1404,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1566,7 +1566,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1683,7 +1683,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1849,7 +1849,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -1963,7 +1963,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -2102,7 +2102,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -2293,7 +2293,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -2396,7 +2396,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -2548,7 +2548,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -2662,7 +2662,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -2801,7 +2801,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -3010,7 +3010,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -3149,7 +3149,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -3358,7 +3358,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -3497,7 +3497,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -3695,7 +3695,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -3812,7 +3812,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -3988,7 +3988,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4105,7 +4105,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4274,7 +4274,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4377,7 +4377,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4475,7 +4475,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4601,7 +4601,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4704,7 +4704,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4866,7 +4866,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -4983,7 +4983,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -5159,7 +5159,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -5276,7 +5276,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -5452,7 +5452,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -5569,7 +5569,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -5756,7 +5756,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -5895,7 +5895,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -6093,7 +6093,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -6210,7 +6210,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -7324,7 +7324,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -7427,7 +7427,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -7620,7 +7620,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -7739,7 +7739,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -7957,7 +7957,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -8045,7 +8045,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -8164,7 +8164,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -8334,7 +8334,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -8453,7 +8453,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -8616,7 +8616,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -8721,7 +8721,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -12592,7 +12592,6 @@ func init() {
         },
         "pattern": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -13976,11 +13975,10 @@ func init() {
         },
         "uri": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^ ]*$"
         },
         "version": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+          "type": "string"
         }
       },
       "x-display-name": "HTTP Check"
@@ -17754,8 +17752,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -17767,8 +17764,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -17780,8 +17776,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -17793,8 +17788,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -17806,8 +17800,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -17998,8 +17991,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18032,8 +18024,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18101,8 +18092,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18114,8 +18104,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18145,8 +18134,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18179,8 +18167,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18218,8 +18205,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18257,8 +18243,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18270,8 +18255,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18283,8 +18267,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18328,8 +18311,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18341,8 +18323,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18387,8 +18368,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18400,8 +18380,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18413,8 +18392,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18448,8 +18426,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18461,8 +18438,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18500,8 +18476,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18539,8 +18514,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18552,8 +18526,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18565,8 +18538,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18610,8 +18582,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18623,8 +18594,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18669,8 +18639,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18682,8 +18651,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18695,8 +18663,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18730,8 +18697,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18743,8 +18709,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18777,8 +18742,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18811,8 +18775,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18845,8 +18808,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18914,7 +18876,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -18926,8 +18888,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19016,8 +18977,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19029,8 +18989,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19042,8 +19001,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19109,7 +19067,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19121,8 +19079,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19134,8 +19091,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19231,8 +19187,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19244,8 +19199,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19257,8 +19211,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19340,8 +19293,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19353,8 +19305,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19405,7 +19356,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19417,8 +19368,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19496,8 +19446,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19509,8 +19458,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19522,8 +19470,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19578,7 +19525,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19590,8 +19537,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19603,8 +19549,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19689,8 +19634,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19702,8 +19646,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19715,8 +19658,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19787,8 +19729,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19800,8 +19741,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19845,7 +19785,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19857,8 +19797,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19929,8 +19868,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19942,8 +19880,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -19955,8 +19892,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20004,7 +19940,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20016,8 +19952,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20029,8 +19964,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20108,8 +20042,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20121,8 +20054,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20134,8 +20066,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20199,8 +20130,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20212,8 +20142,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20264,7 +20193,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20276,8 +20205,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20355,8 +20283,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20368,8 +20295,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20381,8 +20307,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20437,7 +20362,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20449,8 +20374,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20462,8 +20386,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20548,8 +20471,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20561,8 +20483,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20574,8 +20495,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20646,8 +20566,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20659,8 +20578,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20701,7 +20619,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20713,8 +20631,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20785,8 +20702,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20798,8 +20714,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20861,7 +20776,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20873,8 +20788,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20963,8 +20877,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20976,8 +20889,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -20989,8 +20901,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21056,7 +20967,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21068,8 +20979,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21081,8 +20991,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21178,8 +21087,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21191,8 +21099,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21204,8 +21111,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21287,8 +21193,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21300,8 +21205,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21345,7 +21249,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21357,8 +21261,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21429,8 +21332,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21442,8 +21344,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21455,8 +21356,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21504,7 +21404,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21516,8 +21416,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21529,8 +21428,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21608,8 +21506,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21621,8 +21518,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21634,8 +21530,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21699,8 +21594,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21712,8 +21606,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21754,7 +21647,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21766,8 +21659,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21838,8 +21730,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21851,8 +21742,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21914,7 +21804,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -21926,8 +21816,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22016,8 +21905,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22029,8 +21917,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22042,8 +21929,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22109,7 +21995,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22121,8 +22007,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22134,8 +22019,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22231,8 +22115,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22244,8 +22127,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22257,8 +22139,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22340,8 +22221,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22353,8 +22233,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22416,7 +22295,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22428,8 +22307,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22518,8 +22396,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22531,8 +22408,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22544,8 +22420,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22611,7 +22486,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22623,8 +22498,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22636,8 +22510,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22733,8 +22606,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22746,8 +22618,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22759,8 +22630,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22842,8 +22712,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22855,8 +22724,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22918,7 +22786,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -22930,8 +22798,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23020,8 +22887,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23033,8 +22899,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23046,8 +22911,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23113,7 +22977,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23125,8 +22989,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23138,8 +23001,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23235,8 +23097,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23248,8 +23109,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23261,8 +23121,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23344,8 +23203,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23357,8 +23215,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23409,7 +23266,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23421,8 +23278,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23500,8 +23356,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23513,8 +23368,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23526,8 +23380,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23582,7 +23435,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23594,8 +23447,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23607,8 +23459,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23693,8 +23544,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23706,8 +23556,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23719,8 +23568,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23791,8 +23639,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23804,8 +23651,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23856,7 +23702,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23868,8 +23714,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23947,8 +23792,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23960,8 +23804,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -23973,8 +23816,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24029,7 +23871,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24041,8 +23883,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24054,8 +23895,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24140,8 +23980,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24153,8 +23992,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24166,8 +24004,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24238,8 +24075,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24251,8 +24087,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24296,7 +24131,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24308,8 +24143,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24380,8 +24214,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24393,8 +24226,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24406,8 +24238,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24455,7 +24286,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24467,8 +24298,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24480,8 +24310,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24545,8 +24374,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24558,8 +24386,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24613,7 +24440,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24625,8 +24452,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24723,8 +24549,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24736,8 +24561,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24781,7 +24605,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24793,8 +24617,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24865,8 +24688,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24878,8 +24700,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24891,8 +24712,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24940,7 +24760,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24952,8 +24772,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -24965,8 +24784,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25044,8 +24862,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25057,8 +24874,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25070,8 +24886,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25135,8 +24950,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25148,8 +24962,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25200,7 +25013,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25212,8 +25025,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25291,8 +25103,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25304,8 +25115,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25317,8 +25127,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25373,7 +25182,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25385,8 +25194,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25398,8 +25206,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25484,8 +25291,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25497,8 +25303,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25510,8 +25315,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25582,8 +25386,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25595,8 +25398,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25647,7 +25449,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25659,8 +25461,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25738,8 +25539,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25751,8 +25551,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25764,8 +25563,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25820,7 +25618,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25832,8 +25630,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25845,8 +25642,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25931,8 +25727,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25944,8 +25739,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -25957,8 +25751,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26029,8 +25822,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26042,8 +25834,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26094,7 +25885,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26106,8 +25897,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26185,8 +25975,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26198,8 +25987,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26211,8 +25999,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26267,7 +26054,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26279,8 +26066,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26292,8 +26078,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26378,8 +26163,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26391,8 +26175,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26404,8 +26187,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26476,8 +26258,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26489,8 +26270,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26552,7 +26332,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26564,8 +26344,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26654,8 +26433,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26667,8 +26445,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26680,8 +26457,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26747,7 +26523,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26759,8 +26535,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26772,8 +26547,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26869,8 +26643,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26882,8 +26655,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26895,8 +26667,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26978,8 +26749,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -26991,8 +26761,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27043,7 +26812,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27055,8 +26824,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27134,8 +26902,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27147,8 +26914,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27160,8 +26926,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27216,7 +26981,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27228,8 +26993,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27241,8 +27005,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27327,8 +27090,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27340,8 +27102,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27353,8 +27114,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27425,8 +27185,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27438,8 +27197,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27478,8 +27236,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27491,8 +27248,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27525,8 +27281,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27566,8 +27321,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27579,8 +27333,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27613,8 +27366,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27655,8 +27407,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27668,8 +27419,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27681,8 +27431,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27729,8 +27478,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27742,8 +27490,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27755,8 +27502,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27804,8 +27550,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27817,8 +27562,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27830,8 +27574,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27874,8 +27617,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27887,8 +27629,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27900,8 +27641,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27933,8 +27673,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27975,8 +27714,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27988,8 +27726,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28022,8 +27759,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28062,8 +27798,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28075,8 +27810,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28115,8 +27849,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28128,8 +27861,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28176,8 +27908,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28189,8 +27920,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28229,8 +27959,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28242,8 +27971,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28295,8 +28023,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28308,8 +28035,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28321,8 +28047,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28368,8 +28093,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28381,8 +28105,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28450,8 +28173,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28463,8 +28185,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28476,8 +28197,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28525,8 +28245,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28538,8 +28257,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28578,8 +28296,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28625,8 +28342,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28638,8 +28354,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28691,8 +28406,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28704,8 +28418,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28717,8 +28430,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28788,8 +28500,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28827,8 +28538,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28874,8 +28584,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28887,8 +28596,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28932,7 +28640,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -28944,8 +28652,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29016,8 +28723,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29029,8 +28735,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29042,8 +28747,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29091,7 +28795,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29103,8 +28807,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29116,8 +28819,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29195,8 +28897,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29208,8 +28909,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29221,8 +28921,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29286,8 +28985,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29299,8 +28997,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29333,8 +29030,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29392,7 +29088,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -29404,8 +29100,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29471,8 +29166,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29484,8 +29178,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29497,8 +29190,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29563,7 +29255,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -29575,8 +29267,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29588,8 +29279,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29662,8 +29352,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29675,8 +29364,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29688,8 +29376,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29751,8 +29438,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29764,8 +29450,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29795,8 +29480,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29808,8 +29492,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29849,8 +29532,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29862,8 +29544,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29875,8 +29556,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29917,7 +29597,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -29929,8 +29609,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29942,8 +29621,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29977,8 +29655,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -29990,8 +29667,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30049,7 +29725,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -30061,8 +29737,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30128,8 +29803,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30141,8 +29815,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30154,8 +29827,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30220,7 +29892,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -30232,8 +29904,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30245,8 +29916,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30319,8 +29989,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30332,8 +30001,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30345,8 +30013,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30408,8 +30075,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30421,8 +30087,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30480,7 +30145,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -30492,8 +30157,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30559,8 +30223,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30572,8 +30235,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30585,8 +30247,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30651,7 +30312,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -30663,8 +30324,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30676,8 +30336,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30750,8 +30409,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30763,8 +30421,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30776,8 +30433,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30839,8 +30495,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30852,8 +30507,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30904,7 +30558,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -30916,8 +30570,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30976,8 +30629,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -30989,8 +30641,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31002,8 +30653,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31061,7 +30711,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Spoe configuration file version"
               }
             }
@@ -31073,8 +30723,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31086,8 +30735,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31142,8 +30790,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31155,8 +30802,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31202,8 +30848,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31215,8 +30860,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31268,8 +30912,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31334,8 +30977,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31381,8 +31023,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31394,8 +31035,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31458,8 +31098,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31471,8 +31110,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31484,8 +31122,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31526,8 +31163,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31539,8 +31175,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31573,8 +31208,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31641,8 +31275,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31675,8 +31308,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31706,8 +31338,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31719,8 +31350,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31760,8 +31390,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31773,8 +31402,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31786,8 +31414,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31829,8 +31456,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31842,8 +31468,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31914,8 +31539,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31927,8 +31551,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31940,8 +31563,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31975,8 +31597,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31988,8 +31609,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32019,8 +31639,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32032,8 +31651,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32080,8 +31698,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32093,8 +31710,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32106,8 +31722,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32146,8 +31761,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32159,8 +31773,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32237,8 +31850,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32250,8 +31862,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32263,8 +31874,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32321,8 +31931,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32334,8 +31943,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32380,8 +31988,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32439,8 +32046,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32479,8 +32085,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32492,8 +32097,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32549,8 +32153,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32562,8 +32165,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32575,8 +32177,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32588,8 +32189,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32623,8 +32223,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32636,8 +32235,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32670,8 +32268,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -32704,8 +32301,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -35940,7 +35536,6 @@ func init() {
         },
         "pattern": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -37312,11 +36907,10 @@ func init() {
         },
         "uri": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^ ]*$"
         },
         "version": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+          "type": "string"
         }
       },
       "x-display-name": "HTTP Check"
@@ -40985,8 +40579,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -40998,8 +40591,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -41011,8 +40603,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -41024,8 +40615,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }
@@ -41037,8 +40627,7 @@ func init() {
       },
       "headers": {
         "Configuration-Version": {
-          "type": "integer",
-          "default": 0,
+          "type": "string",
           "description": "Configuration file version"
         }
       }

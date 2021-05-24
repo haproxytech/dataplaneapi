@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response getOneRuntimeMapNotFound
 type GetOneRuntimeMapNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type GetOneRuntimeMapNotFound struct {
 // NewGetOneRuntimeMapNotFound creates GetOneRuntimeMapNotFound with default headers values
 func NewGetOneRuntimeMapNotFound() *GetOneRuntimeMapNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetOneRuntimeMapNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetOneRuntimeMapNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one runtime map not found response
-func (o *GetOneRuntimeMapNotFound) WithConfigurationVersion(configurationVersion int64) *GetOneRuntimeMapNotFound {
+func (o *GetOneRuntimeMapNotFound) WithConfigurationVersion(configurationVersion string) *GetOneRuntimeMapNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one runtime map not found response
-func (o *GetOneRuntimeMapNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneRuntimeMapNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *GetOneRuntimeMapNotFound) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ type GetOneRuntimeMapDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -173,16 +161,8 @@ func NewGetOneRuntimeMapDefault(code int) *GetOneRuntimeMapDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetOneRuntimeMapDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -198,13 +178,13 @@ func (o *GetOneRuntimeMapDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one runtime map default response
-func (o *GetOneRuntimeMapDefault) WithConfigurationVersion(configurationVersion int64) *GetOneRuntimeMapDefault {
+func (o *GetOneRuntimeMapDefault) WithConfigurationVersion(configurationVersion string) *GetOneRuntimeMapDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one runtime map default response
-func (o *GetOneRuntimeMapDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneRuntimeMapDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -224,7 +204,7 @@ func (o *GetOneRuntimeMapDefault) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

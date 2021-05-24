@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createResolverBadRequest
 type CreateResolverBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateResolverBadRequest struct {
 // NewCreateResolverBadRequest creates CreateResolverBadRequest with default headers values
 func NewCreateResolverBadRequest() *CreateResolverBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateResolverBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateResolverBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create resolver bad request response
-func (o *CreateResolverBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateResolverBadRequest {
+func (o *CreateResolverBadRequest) WithConfigurationVersion(configurationVersion string) *CreateResolverBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create resolver bad request response
-func (o *CreateResolverBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateResolverBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateResolverBadRequest) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createResolverConflict
 type CreateResolverConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateResolverConflict struct {
 // NewCreateResolverConflict creates CreateResolverConflict with default headers values
 func NewCreateResolverConflict() *CreateResolverConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateResolverConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateResolverConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create resolver conflict response
-func (o *CreateResolverConflict) WithConfigurationVersion(configurationVersion int64) *CreateResolverConflict {
+func (o *CreateResolverConflict) WithConfigurationVersion(configurationVersion string) *CreateResolverConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create resolver conflict response
-func (o *CreateResolverConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateResolverConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateResolverConflict) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateResolverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateResolverDefault(code int) *CreateResolverDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateResolverDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateResolverDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create resolver default response
-func (o *CreateResolverDefault) WithConfigurationVersion(configurationVersion int64) *CreateResolverDefault {
+func (o *CreateResolverDefault) WithConfigurationVersion(configurationVersion string) *CreateResolverDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create resolver default response
-func (o *CreateResolverDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateResolverDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateResolverDefault) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

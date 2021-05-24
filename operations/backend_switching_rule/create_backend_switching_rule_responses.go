@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createBackendSwitchingRuleBadRequest
 type CreateBackendSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateBackendSwitchingRuleBadRequest struct {
 // NewCreateBackendSwitchingRuleBadRequest creates CreateBackendSwitchingRuleBadRequest with default headers values
 func NewCreateBackendSwitchingRuleBadRequest() *CreateBackendSwitchingRuleBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateBackendSwitchingRuleBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateBackendSwitchingRuleBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create backend switching rule bad request response
-func (o *CreateBackendSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateBackendSwitchingRuleBadRequest {
+func (o *CreateBackendSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion string) *CreateBackendSwitchingRuleBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create backend switching rule bad request response
-func (o *CreateBackendSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateBackendSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateBackendSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWri
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createBackendSwitchingRuleConflict
 type CreateBackendSwitchingRuleConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateBackendSwitchingRuleConflict struct {
 // NewCreateBackendSwitchingRuleConflict creates CreateBackendSwitchingRuleConflict with default headers values
 func NewCreateBackendSwitchingRuleConflict() *CreateBackendSwitchingRuleConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateBackendSwitchingRuleConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateBackendSwitchingRuleConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create backend switching rule conflict response
-func (o *CreateBackendSwitchingRuleConflict) WithConfigurationVersion(configurationVersion int64) *CreateBackendSwitchingRuleConflict {
+func (o *CreateBackendSwitchingRuleConflict) WithConfigurationVersion(configurationVersion string) *CreateBackendSwitchingRuleConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create backend switching rule conflict response
-func (o *CreateBackendSwitchingRuleConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateBackendSwitchingRuleConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateBackendSwitchingRuleConflict) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateBackendSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateBackendSwitchingRuleDefault(code int) *CreateBackendSwitchingRuleD
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateBackendSwitchingRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateBackendSwitchingRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create backend switching rule default response
-func (o *CreateBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *CreateBackendSwitchingRuleDefault {
+func (o *CreateBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion string) *CreateBackendSwitchingRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create backend switching rule default response
-func (o *CreateBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateBackendSwitchingRuleDefault) WriteResponse(rw http.ResponseWriter
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

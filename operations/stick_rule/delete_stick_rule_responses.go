@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteStickRuleNotFound
 type DeleteStickRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteStickRuleNotFound struct {
 // NewDeleteStickRuleNotFound creates DeleteStickRuleNotFound with default headers values
 func NewDeleteStickRuleNotFound() *DeleteStickRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteStickRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteStickRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete stick rule not found response
-func (o *DeleteStickRuleNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteStickRuleNotFound {
+func (o *DeleteStickRuleNotFound) WithConfigurationVersion(configurationVersion string) *DeleteStickRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete stick rule not found response
-func (o *DeleteStickRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteStickRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteStickRuleNotFound) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteStickRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteStickRuleDefault(code int) *DeleteStickRuleDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteStickRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteStickRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete stick rule default response
-func (o *DeleteStickRuleDefault) WithConfigurationVersion(configurationVersion int64) *DeleteStickRuleDefault {
+func (o *DeleteStickRuleDefault) WithConfigurationVersion(configurationVersion string) *DeleteStickRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete stick rule default response
-func (o *DeleteStickRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteStickRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteStickRuleDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

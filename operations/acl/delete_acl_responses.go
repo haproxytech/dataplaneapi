@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteAclNotFound
 type DeleteACLNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteACLNotFound struct {
 // NewDeleteACLNotFound creates DeleteACLNotFound with default headers values
 func NewDeleteACLNotFound() *DeleteACLNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteACLNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteACLNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete Acl not found response
-func (o *DeleteACLNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteACLNotFound {
+func (o *DeleteACLNotFound) WithConfigurationVersion(configurationVersion string) *DeleteACLNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete Acl not found response
-func (o *DeleteACLNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteACLNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteACLNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteACLDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteACLDefault(code int) *DeleteACLDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteACLDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteACLDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete Acl default response
-func (o *DeleteACLDefault) WithConfigurationVersion(configurationVersion int64) *DeleteACLDefault {
+func (o *DeleteACLDefault) WithConfigurationVersion(configurationVersion string) *DeleteACLDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete Acl default response
-func (o *DeleteACLDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteACLDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteACLDefault) WriteResponse(rw http.ResponseWriter, producer runtim
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

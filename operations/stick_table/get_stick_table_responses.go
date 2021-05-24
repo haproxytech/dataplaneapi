@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response getStickTableNotFound
 type GetStickTableNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type GetStickTableNotFound struct {
 // NewGetStickTableNotFound creates GetStickTableNotFound with default headers values
 func NewGetStickTableNotFound() *GetStickTableNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetStickTableNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetStickTableNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get stick table not found response
-func (o *GetStickTableNotFound) WithConfigurationVersion(configurationVersion int64) *GetStickTableNotFound {
+func (o *GetStickTableNotFound) WithConfigurationVersion(configurationVersion string) *GetStickTableNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get stick table not found response
-func (o *GetStickTableNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetStickTableNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *GetStickTableNotFound) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ type GetStickTableDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -173,16 +161,8 @@ func NewGetStickTableDefault(code int) *GetStickTableDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetStickTableDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -198,13 +178,13 @@ func (o *GetStickTableDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get stick table default response
-func (o *GetStickTableDefault) WithConfigurationVersion(configurationVersion int64) *GetStickTableDefault {
+func (o *GetStickTableDefault) WithConfigurationVersion(configurationVersion string) *GetStickTableDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get stick table default response
-func (o *GetStickTableDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetStickTableDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -224,7 +204,7 @@ func (o *GetStickTableDefault) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

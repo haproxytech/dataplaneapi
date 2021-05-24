@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response getServicesHaproxyRuntimeAclsIdNotFound
 type GetServicesHaproxyRuntimeAclsIDNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type GetServicesHaproxyRuntimeAclsIDNotFound struct {
 // NewGetServicesHaproxyRuntimeAclsIDNotFound creates GetServicesHaproxyRuntimeAclsIDNotFound with default headers values
 func NewGetServicesHaproxyRuntimeAclsIDNotFound() *GetServicesHaproxyRuntimeAclsIDNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetServicesHaproxyRuntimeAclsIDNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetServicesHaproxyRuntimeAclsIDNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get services haproxy runtime acls Id not found response
-func (o *GetServicesHaproxyRuntimeAclsIDNotFound) WithConfigurationVersion(configurationVersion int64) *GetServicesHaproxyRuntimeAclsIDNotFound {
+func (o *GetServicesHaproxyRuntimeAclsIDNotFound) WithConfigurationVersion(configurationVersion string) *GetServicesHaproxyRuntimeAclsIDNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get services haproxy runtime acls Id not found response
-func (o *GetServicesHaproxyRuntimeAclsIDNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetServicesHaproxyRuntimeAclsIDNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *GetServicesHaproxyRuntimeAclsIDNotFound) WriteResponse(rw http.Response
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ type GetServicesHaproxyRuntimeAclsIDDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -173,16 +161,8 @@ func NewGetServicesHaproxyRuntimeAclsIDDefault(code int) *GetServicesHaproxyRunt
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetServicesHaproxyRuntimeAclsIDDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -198,13 +178,13 @@ func (o *GetServicesHaproxyRuntimeAclsIDDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get services haproxy runtime acls ID default response
-func (o *GetServicesHaproxyRuntimeAclsIDDefault) WithConfigurationVersion(configurationVersion int64) *GetServicesHaproxyRuntimeAclsIDDefault {
+func (o *GetServicesHaproxyRuntimeAclsIDDefault) WithConfigurationVersion(configurationVersion string) *GetServicesHaproxyRuntimeAclsIDDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get services haproxy runtime acls ID default response
-func (o *GetServicesHaproxyRuntimeAclsIDDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetServicesHaproxyRuntimeAclsIDDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -224,7 +204,7 @@ func (o *GetServicesHaproxyRuntimeAclsIDDefault) WriteResponse(rw http.ResponseW
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -695,6 +695,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		adapters.UniqueIDMiddleware(applicationEntry),
 		adapters.LoggingMiddleware(applicationEntry),
 		adapters.ApacheLogMiddleware(accessEntry, al),
+		adapters.ConfigVersionMiddleware(client),
 	)
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares), adpts...)

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetHAProxyConfigurationOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetHAProxyConfigurationOK() *GetHAProxyConfigurationOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get h a proxy configuration o k response
-func (o *GetHAProxyConfigurationOK) WithConfigurationVersion(configurationVersion int64) *GetHAProxyConfigurationOK {
+func (o *GetHAProxyConfigurationOK) WithConfigurationVersion(configurationVersion string) *GetHAProxyConfigurationOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get h a proxy configuration o k response
-func (o *GetHAProxyConfigurationOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetHAProxyConfigurationOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetHAProxyConfigurationOK) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -103,9 +102,8 @@ type GetHAProxyConfigurationDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -119,16 +117,8 @@ func NewGetHAProxyConfigurationDefault(code int) *GetHAProxyConfigurationDefault
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetHAProxyConfigurationDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -144,13 +134,13 @@ func (o *GetHAProxyConfigurationDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get h a proxy configuration default response
-func (o *GetHAProxyConfigurationDefault) WithConfigurationVersion(configurationVersion int64) *GetHAProxyConfigurationDefault {
+func (o *GetHAProxyConfigurationDefault) WithConfigurationVersion(configurationVersion string) *GetHAProxyConfigurationDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get h a proxy configuration default response
-func (o *GetHAProxyConfigurationDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetHAProxyConfigurationDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -170,7 +160,7 @@ func (o *GetHAProxyConfigurationDefault) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

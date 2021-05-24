@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceServerBadRequest
 type ReplaceServerBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceServerBadRequest struct {
 // NewReplaceServerBadRequest creates ReplaceServerBadRequest with default headers values
 func NewReplaceServerBadRequest() *ReplaceServerBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceServerBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceServerBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server bad request response
-func (o *ReplaceServerBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceServerBadRequest {
+func (o *ReplaceServerBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceServerBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace server bad request response
-func (o *ReplaceServerBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceServerBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceServerBadRequest) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceServerNotFound
 type ReplaceServerNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceServerNotFound struct {
 // NewReplaceServerNotFound creates ReplaceServerNotFound with default headers values
 func NewReplaceServerNotFound() *ReplaceServerNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceServerNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceServerNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server not found response
-func (o *ReplaceServerNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceServerNotFound {
+func (o *ReplaceServerNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceServerNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace server not found response
-func (o *ReplaceServerNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceServerNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceServerNotFound) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceServerDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceServerDefault(code int) *ReplaceServerDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceServerDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceServerDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server default response
-func (o *ReplaceServerDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceServerDefault {
+func (o *ReplaceServerDefault) WithConfigurationVersion(configurationVersion string) *ReplaceServerDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace server default response
-func (o *ReplaceServerDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceServerDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceServerDefault) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

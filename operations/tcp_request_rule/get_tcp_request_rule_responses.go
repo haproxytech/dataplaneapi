@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetTCPRequestRuleOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetTCPRequestRuleOK() *GetTCPRequestRuleOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get Tcp request rule o k response
-func (o *GetTCPRequestRuleOK) WithConfigurationVersion(configurationVersion int64) *GetTCPRequestRuleOK {
+func (o *GetTCPRequestRuleOK) WithConfigurationVersion(configurationVersion string) *GetTCPRequestRuleOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get Tcp request rule o k response
-func (o *GetTCPRequestRuleOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetTCPRequestRuleOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetTCPRequestRuleOK) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getTcpRequestRuleNotFound
 type GetTCPRequestRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetTCPRequestRuleNotFound struct {
 // NewGetTCPRequestRuleNotFound creates GetTCPRequestRuleNotFound with default headers values
 func NewGetTCPRequestRuleNotFound() *GetTCPRequestRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetTCPRequestRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetTCPRequestRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get Tcp request rule not found response
-func (o *GetTCPRequestRuleNotFound) WithConfigurationVersion(configurationVersion int64) *GetTCPRequestRuleNotFound {
+func (o *GetTCPRequestRuleNotFound) WithConfigurationVersion(configurationVersion string) *GetTCPRequestRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get Tcp request rule not found response
-func (o *GetTCPRequestRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetTCPRequestRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetTCPRequestRuleNotFound) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetTCPRequestRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetTCPRequestRuleDefault(code int) *GetTCPRequestRuleDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetTCPRequestRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetTCPRequestRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get TCP request rule default response
-func (o *GetTCPRequestRuleDefault) WithConfigurationVersion(configurationVersion int64) *GetTCPRequestRuleDefault {
+func (o *GetTCPRequestRuleDefault) WithConfigurationVersion(configurationVersion string) *GetTCPRequestRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get TCP request rule default response
-func (o *GetTCPRequestRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetTCPRequestRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetTCPRequestRuleDefault) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

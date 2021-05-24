@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response replaceConsulBadRequest
 type ReplaceConsulBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type ReplaceConsulBadRequest struct {
 // NewReplaceConsulBadRequest creates ReplaceConsulBadRequest with default headers values
 func NewReplaceConsulBadRequest() *ReplaceConsulBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceConsulBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceConsulBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace consul bad request response
-func (o *ReplaceConsulBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceConsulBadRequest {
+func (o *ReplaceConsulBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceConsulBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace consul bad request response
-func (o *ReplaceConsulBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceConsulBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *ReplaceConsulBadRequest) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response replaceConsulNotFound
 type ReplaceConsulNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type ReplaceConsulNotFound struct {
 // NewReplaceConsulNotFound creates ReplaceConsulNotFound with default headers values
 func NewReplaceConsulNotFound() *ReplaceConsulNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceConsulNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceConsulNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace consul not found response
-func (o *ReplaceConsulNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceConsulNotFound {
+func (o *ReplaceConsulNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceConsulNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace consul not found response
-func (o *ReplaceConsulNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceConsulNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *ReplaceConsulNotFound) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type ReplaceConsulDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewReplaceConsulDefault(code int) *ReplaceConsulDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceConsulDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *ReplaceConsulDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace consul default response
-func (o *ReplaceConsulDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceConsulDefault {
+func (o *ReplaceConsulDefault) WithConfigurationVersion(configurationVersion string) *ReplaceConsulDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace consul default response
-func (o *ReplaceConsulDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceConsulDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *ReplaceConsulDefault) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

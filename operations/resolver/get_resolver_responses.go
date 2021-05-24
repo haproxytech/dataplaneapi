@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetResolverOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetResolverOK() *GetResolverOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get resolver o k response
-func (o *GetResolverOK) WithConfigurationVersion(configurationVersion int64) *GetResolverOK {
+func (o *GetResolverOK) WithConfigurationVersion(configurationVersion string) *GetResolverOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get resolver o k response
-func (o *GetResolverOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetResolverOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetResolverOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getResolverNotFound
 type GetResolverNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetResolverNotFound struct {
 // NewGetResolverNotFound creates GetResolverNotFound with default headers values
 func NewGetResolverNotFound() *GetResolverNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetResolverNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetResolverNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get resolver not found response
-func (o *GetResolverNotFound) WithConfigurationVersion(configurationVersion int64) *GetResolverNotFound {
+func (o *GetResolverNotFound) WithConfigurationVersion(configurationVersion string) *GetResolverNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get resolver not found response
-func (o *GetResolverNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetResolverNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetResolverNotFound) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetResolverDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetResolverDefault(code int) *GetResolverDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetResolverDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetResolverDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get resolver default response
-func (o *GetResolverDefault) WithConfigurationVersion(configurationVersion int64) *GetResolverDefault {
+func (o *GetResolverDefault) WithConfigurationVersion(configurationVersion string) *GetResolverDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get resolver default response
-func (o *GetResolverDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetResolverDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetResolverDefault) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetOneSpoeFileOK struct {
 	/*Spoe configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetOneSpoeFileOK() *GetOneSpoeFileOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one spoe file o k response
-func (o *GetOneSpoeFileOK) WithConfigurationVersion(configurationVersion int64) *GetOneSpoeFileOK {
+func (o *GetOneSpoeFileOK) WithConfigurationVersion(configurationVersion string) *GetOneSpoeFileOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one spoe file o k response
-func (o *GetOneSpoeFileOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneSpoeFileOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetOneSpoeFileOK) WriteResponse(rw http.ResponseWriter, producer runtim
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getOneSpoeFileNotFound
 type GetOneSpoeFileNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetOneSpoeFileNotFound struct {
 // NewGetOneSpoeFileNotFound creates GetOneSpoeFileNotFound with default headers values
 func NewGetOneSpoeFileNotFound() *GetOneSpoeFileNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetOneSpoeFileNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetOneSpoeFileNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one spoe file not found response
-func (o *GetOneSpoeFileNotFound) WithConfigurationVersion(configurationVersion int64) *GetOneSpoeFileNotFound {
+func (o *GetOneSpoeFileNotFound) WithConfigurationVersion(configurationVersion string) *GetOneSpoeFileNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one spoe file not found response
-func (o *GetOneSpoeFileNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneSpoeFileNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetOneSpoeFileNotFound) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetOneSpoeFileDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetOneSpoeFileDefault(code int) *GetOneSpoeFileDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetOneSpoeFileDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetOneSpoeFileDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one spoe file default response
-func (o *GetOneSpoeFileDefault) WithConfigurationVersion(configurationVersion int64) *GetOneSpoeFileDefault {
+func (o *GetOneSpoeFileDefault) WithConfigurationVersion(configurationVersion string) *GetOneSpoeFileDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one spoe file default response
-func (o *GetOneSpoeFileDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneSpoeFileDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetOneSpoeFileDefault) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceBindBadRequest
 type ReplaceBindBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceBindBadRequest struct {
 // NewReplaceBindBadRequest creates ReplaceBindBadRequest with default headers values
 func NewReplaceBindBadRequest() *ReplaceBindBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceBindBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceBindBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace bind bad request response
-func (o *ReplaceBindBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceBindBadRequest {
+func (o *ReplaceBindBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceBindBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace bind bad request response
-func (o *ReplaceBindBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceBindBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceBindBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceBindNotFound
 type ReplaceBindNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceBindNotFound struct {
 // NewReplaceBindNotFound creates ReplaceBindNotFound with default headers values
 func NewReplaceBindNotFound() *ReplaceBindNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceBindNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceBindNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace bind not found response
-func (o *ReplaceBindNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceBindNotFound {
+func (o *ReplaceBindNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceBindNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace bind not found response
-func (o *ReplaceBindNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceBindNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceBindNotFound) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceBindDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceBindDefault(code int) *ReplaceBindDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceBindDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceBindDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace bind default response
-func (o *ReplaceBindDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceBindDefault {
+func (o *ReplaceBindDefault) WithConfigurationVersion(configurationVersion string) *ReplaceBindDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace bind default response
-func (o *ReplaceBindDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceBindDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceBindDefault) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

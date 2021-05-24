@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceBackendSwitchingRuleBadRequest
 type ReplaceBackendSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceBackendSwitchingRuleBadRequest struct {
 // NewReplaceBackendSwitchingRuleBadRequest creates ReplaceBackendSwitchingRuleBadRequest with default headers values
 func NewReplaceBackendSwitchingRuleBadRequest() *ReplaceBackendSwitchingRuleBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceBackendSwitchingRuleBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceBackendSwitchingRuleBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace backend switching rule bad request response
-func (o *ReplaceBackendSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceBackendSwitchingRuleBadRequest {
+func (o *ReplaceBackendSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceBackendSwitchingRuleBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace backend switching rule bad request response
-func (o *ReplaceBackendSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceBackendSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceBackendSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceBackendSwitchingRuleNotFound
 type ReplaceBackendSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceBackendSwitchingRuleNotFound struct {
 // NewReplaceBackendSwitchingRuleNotFound creates ReplaceBackendSwitchingRuleNotFound with default headers values
 func NewReplaceBackendSwitchingRuleNotFound() *ReplaceBackendSwitchingRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceBackendSwitchingRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceBackendSwitchingRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace backend switching rule not found response
-func (o *ReplaceBackendSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceBackendSwitchingRuleNotFound {
+func (o *ReplaceBackendSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceBackendSwitchingRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace backend switching rule not found response
-func (o *ReplaceBackendSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceBackendSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceBackendSwitchingRuleNotFound) WriteResponse(rw http.ResponseWrit
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceBackendSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceBackendSwitchingRuleDefault(code int) *ReplaceBackendSwitchingRul
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceBackendSwitchingRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceBackendSwitchingRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace backend switching rule default response
-func (o *ReplaceBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceBackendSwitchingRuleDefault {
+func (o *ReplaceBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion string) *ReplaceBackendSwitchingRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace backend switching rule default response
-func (o *ReplaceBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceBackendSwitchingRuleDefault) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

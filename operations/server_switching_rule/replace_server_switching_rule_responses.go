@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceServerSwitchingRuleBadRequest
 type ReplaceServerSwitchingRuleBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceServerSwitchingRuleBadRequest struct {
 // NewReplaceServerSwitchingRuleBadRequest creates ReplaceServerSwitchingRuleBadRequest with default headers values
 func NewReplaceServerSwitchingRuleBadRequest() *ReplaceServerSwitchingRuleBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceServerSwitchingRuleBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceServerSwitchingRuleBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server switching rule bad request response
-func (o *ReplaceServerSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceServerSwitchingRuleBadRequest {
+func (o *ReplaceServerSwitchingRuleBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceServerSwitchingRuleBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace server switching rule bad request response
-func (o *ReplaceServerSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceServerSwitchingRuleBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceServerSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWri
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceServerSwitchingRuleNotFound
 type ReplaceServerSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceServerSwitchingRuleNotFound struct {
 // NewReplaceServerSwitchingRuleNotFound creates ReplaceServerSwitchingRuleNotFound with default headers values
 func NewReplaceServerSwitchingRuleNotFound() *ReplaceServerSwitchingRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceServerSwitchingRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceServerSwitchingRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server switching rule not found response
-func (o *ReplaceServerSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceServerSwitchingRuleNotFound {
+func (o *ReplaceServerSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceServerSwitchingRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace server switching rule not found response
-func (o *ReplaceServerSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceServerSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceServerSwitchingRuleNotFound) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceServerSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceServerSwitchingRuleDefault(code int) *ReplaceServerSwitchingRuleD
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceServerSwitchingRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceServerSwitchingRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace server switching rule default response
-func (o *ReplaceServerSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceServerSwitchingRuleDefault {
+func (o *ReplaceServerSwitchingRuleDefault) WithConfigurationVersion(configurationVersion string) *ReplaceServerSwitchingRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace server switching rule default response
-func (o *ReplaceServerSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceServerSwitchingRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceServerSwitchingRuleDefault) WriteResponse(rw http.ResponseWriter
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

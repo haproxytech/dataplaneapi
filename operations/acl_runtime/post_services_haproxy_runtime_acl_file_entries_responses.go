@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response postServicesHaproxyRuntimeAclFileEntriesBadRequest
 type PostServicesHaproxyRuntimeACLFileEntriesBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type PostServicesHaproxyRuntimeACLFileEntriesBadRequest struct {
 // NewPostServicesHaproxyRuntimeACLFileEntriesBadRequest creates PostServicesHaproxyRuntimeACLFileEntriesBadRequest with default headers values
 func NewPostServicesHaproxyRuntimeACLFileEntriesBadRequest() *PostServicesHaproxyRuntimeACLFileEntriesBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &PostServicesHaproxyRuntimeACLFileEntriesBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &PostServicesHaproxyRuntimeACLFileEntriesBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post services haproxy runtime Acl file entries bad request response
-func (o *PostServicesHaproxyRuntimeACLFileEntriesBadRequest) WithConfigurationVersion(configurationVersion int64) *PostServicesHaproxyRuntimeACLFileEntriesBadRequest {
+func (o *PostServicesHaproxyRuntimeACLFileEntriesBadRequest) WithConfigurationVersion(configurationVersion string) *PostServicesHaproxyRuntimeACLFileEntriesBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the post services haproxy runtime Acl file entries bad request response
-func (o *PostServicesHaproxyRuntimeACLFileEntriesBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *PostServicesHaproxyRuntimeACLFileEntriesBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesBadRequest) WriteResponse(rw ht
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response postServicesHaproxyRuntimeAclFileEntriesConflict
 type PostServicesHaproxyRuntimeACLFileEntriesConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type PostServicesHaproxyRuntimeACLFileEntriesConflict struct {
 // NewPostServicesHaproxyRuntimeACLFileEntriesConflict creates PostServicesHaproxyRuntimeACLFileEntriesConflict with default headers values
 func NewPostServicesHaproxyRuntimeACLFileEntriesConflict() *PostServicesHaproxyRuntimeACLFileEntriesConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &PostServicesHaproxyRuntimeACLFileEntriesConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &PostServicesHaproxyRuntimeACLFileEntriesConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post services haproxy runtime Acl file entries conflict response
-func (o *PostServicesHaproxyRuntimeACLFileEntriesConflict) WithConfigurationVersion(configurationVersion int64) *PostServicesHaproxyRuntimeACLFileEntriesConflict {
+func (o *PostServicesHaproxyRuntimeACLFileEntriesConflict) WithConfigurationVersion(configurationVersion string) *PostServicesHaproxyRuntimeACLFileEntriesConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the post services haproxy runtime Acl file entries conflict response
-func (o *PostServicesHaproxyRuntimeACLFileEntriesConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *PostServicesHaproxyRuntimeACLFileEntriesConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesConflict) WriteResponse(rw http
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type PostServicesHaproxyRuntimeACLFileEntriesDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewPostServicesHaproxyRuntimeACLFileEntriesDefault(code int) *PostServicesH
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &PostServicesHaproxyRuntimeACLFileEntriesDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesDefault) SetStatusCode(code int
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post services haproxy runtime ACL file entries default response
-func (o *PostServicesHaproxyRuntimeACLFileEntriesDefault) WithConfigurationVersion(configurationVersion int64) *PostServicesHaproxyRuntimeACLFileEntriesDefault {
+func (o *PostServicesHaproxyRuntimeACLFileEntriesDefault) WithConfigurationVersion(configurationVersion string) *PostServicesHaproxyRuntimeACLFileEntriesDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the post services haproxy runtime ACL file entries default response
-func (o *PostServicesHaproxyRuntimeACLFileEntriesDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *PostServicesHaproxyRuntimeACLFileEntriesDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesDefault) WriteResponse(rw http.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

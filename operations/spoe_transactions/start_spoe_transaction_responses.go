@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -125,9 +124,8 @@ type StartSpoeTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -141,16 +139,8 @@ func NewStartSpoeTransactionDefault(code int) *StartSpoeTransactionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &StartSpoeTransactionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -166,13 +156,13 @@ func (o *StartSpoeTransactionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the start spoe transaction default response
-func (o *StartSpoeTransactionDefault) WithConfigurationVersion(configurationVersion int64) *StartSpoeTransactionDefault {
+func (o *StartSpoeTransactionDefault) WithConfigurationVersion(configurationVersion string) *StartSpoeTransactionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the start spoe transaction default response
-func (o *StartSpoeTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *StartSpoeTransactionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -192,7 +182,7 @@ func (o *StartSpoeTransactionDefault) WriteResponse(rw http.ResponseWriter, prod
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

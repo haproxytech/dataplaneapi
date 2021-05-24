@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createFilterBadRequest
 type CreateFilterBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateFilterBadRequest struct {
 // NewCreateFilterBadRequest creates CreateFilterBadRequest with default headers values
 func NewCreateFilterBadRequest() *CreateFilterBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateFilterBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateFilterBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create filter bad request response
-func (o *CreateFilterBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateFilterBadRequest {
+func (o *CreateFilterBadRequest) WithConfigurationVersion(configurationVersion string) *CreateFilterBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create filter bad request response
-func (o *CreateFilterBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateFilterBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateFilterBadRequest) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createFilterConflict
 type CreateFilterConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateFilterConflict struct {
 // NewCreateFilterConflict creates CreateFilterConflict with default headers values
 func NewCreateFilterConflict() *CreateFilterConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateFilterConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateFilterConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create filter conflict response
-func (o *CreateFilterConflict) WithConfigurationVersion(configurationVersion int64) *CreateFilterConflict {
+func (o *CreateFilterConflict) WithConfigurationVersion(configurationVersion string) *CreateFilterConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create filter conflict response
-func (o *CreateFilterConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateFilterConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateFilterConflict) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateFilterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateFilterDefault(code int) *CreateFilterDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateFilterDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateFilterDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create filter default response
-func (o *CreateFilterDefault) WithConfigurationVersion(configurationVersion int64) *CreateFilterDefault {
+func (o *CreateFilterDefault) WithConfigurationVersion(configurationVersion string) *CreateFilterDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create filter default response
-func (o *CreateFilterDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateFilterDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateFilterDefault) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

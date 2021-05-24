@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response replaceRuntimeMapEntryBadRequest
 type ReplaceRuntimeMapEntryBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type ReplaceRuntimeMapEntryBadRequest struct {
 // NewReplaceRuntimeMapEntryBadRequest creates ReplaceRuntimeMapEntryBadRequest with default headers values
 func NewReplaceRuntimeMapEntryBadRequest() *ReplaceRuntimeMapEntryBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceRuntimeMapEntryBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceRuntimeMapEntryBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace runtime map entry bad request response
-func (o *ReplaceRuntimeMapEntryBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceRuntimeMapEntryBadRequest {
+func (o *ReplaceRuntimeMapEntryBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceRuntimeMapEntryBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace runtime map entry bad request response
-func (o *ReplaceRuntimeMapEntryBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceRuntimeMapEntryBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *ReplaceRuntimeMapEntryBadRequest) WriteResponse(rw http.ResponseWriter,
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response replaceRuntimeMapEntryNotFound
 type ReplaceRuntimeMapEntryNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type ReplaceRuntimeMapEntryNotFound struct {
 // NewReplaceRuntimeMapEntryNotFound creates ReplaceRuntimeMapEntryNotFound with default headers values
 func NewReplaceRuntimeMapEntryNotFound() *ReplaceRuntimeMapEntryNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceRuntimeMapEntryNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceRuntimeMapEntryNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace runtime map entry not found response
-func (o *ReplaceRuntimeMapEntryNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceRuntimeMapEntryNotFound {
+func (o *ReplaceRuntimeMapEntryNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceRuntimeMapEntryNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace runtime map entry not found response
-func (o *ReplaceRuntimeMapEntryNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceRuntimeMapEntryNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *ReplaceRuntimeMapEntryNotFound) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type ReplaceRuntimeMapEntryDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewReplaceRuntimeMapEntryDefault(code int) *ReplaceRuntimeMapEntryDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceRuntimeMapEntryDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *ReplaceRuntimeMapEntryDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace runtime map entry default response
-func (o *ReplaceRuntimeMapEntryDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceRuntimeMapEntryDefault {
+func (o *ReplaceRuntimeMapEntryDefault) WithConfigurationVersion(configurationVersion string) *ReplaceRuntimeMapEntryDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace runtime map entry default response
-func (o *ReplaceRuntimeMapEntryDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceRuntimeMapEntryDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *ReplaceRuntimeMapEntryDefault) WriteResponse(rw http.ResponseWriter, pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

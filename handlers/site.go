@@ -145,9 +145,9 @@ func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interf
 	v, site, err := h.Client.Configuration.GetSite(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return sites.NewGetSiteDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return sites.NewGetSiteDefault(int(*e.Code)).WithPayload(e)
 	}
-	return sites.NewGetSiteOK().WithPayload(&sites.GetSiteOKBody{Version: v, Data: site}).WithConfigurationVersion(v)
+	return sites.NewGetSiteOK().WithPayload(&sites.GetSiteOKBody{Version: v, Data: site})
 }
 
 // Handle executing the request and returning a response
@@ -161,11 +161,11 @@ func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal inte
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: models.Sites{}}).WithConfigurationVersion(v)
+			return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: models.Sites{}})
 		}
-		return sites.NewGetSitesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return sites.NewGetSitesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: s}).WithConfigurationVersion(v)
+	return sites.NewGetSitesOK().WithPayload(&sites.GetSitesOKBody{Version: v, Data: s})
 }
 
 // Handle executing the request and returning a response

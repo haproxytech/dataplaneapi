@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response postClusterBadRequest
 type PostClusterBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type PostClusterBadRequest struct {
 // NewPostClusterBadRequest creates PostClusterBadRequest with default headers values
 func NewPostClusterBadRequest() *PostClusterBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &PostClusterBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &PostClusterBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post cluster bad request response
-func (o *PostClusterBadRequest) WithConfigurationVersion(configurationVersion int64) *PostClusterBadRequest {
+func (o *PostClusterBadRequest) WithConfigurationVersion(configurationVersion string) *PostClusterBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the post cluster bad request response
-func (o *PostClusterBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *PostClusterBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *PostClusterBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ type PostClusterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -173,16 +161,8 @@ func NewPostClusterDefault(code int) *PostClusterDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &PostClusterDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -198,13 +178,13 @@ func (o *PostClusterDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the post cluster default response
-func (o *PostClusterDefault) WithConfigurationVersion(configurationVersion int64) *PostClusterDefault {
+func (o *PostClusterDefault) WithConfigurationVersion(configurationVersion string) *PostClusterDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the post cluster default response
-func (o *PostClusterDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *PostClusterDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -224,7 +204,7 @@ func (o *PostClusterDefault) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

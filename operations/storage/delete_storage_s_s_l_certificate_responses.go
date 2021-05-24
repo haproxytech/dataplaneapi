@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteStorageSSLCertificateNotFound
 type DeleteStorageSSLCertificateNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteStorageSSLCertificateNotFound struct {
 // NewDeleteStorageSSLCertificateNotFound creates DeleteStorageSSLCertificateNotFound with default headers values
 func NewDeleteStorageSSLCertificateNotFound() *DeleteStorageSSLCertificateNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteStorageSSLCertificateNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteStorageSSLCertificateNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete storage s s l certificate not found response
-func (o *DeleteStorageSSLCertificateNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteStorageSSLCertificateNotFound {
+func (o *DeleteStorageSSLCertificateNotFound) WithConfigurationVersion(configurationVersion string) *DeleteStorageSSLCertificateNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete storage s s l certificate not found response
-func (o *DeleteStorageSSLCertificateNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteStorageSSLCertificateNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteStorageSSLCertificateNotFound) WriteResponse(rw http.ResponseWrit
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteStorageSSLCertificateDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteStorageSSLCertificateDefault(code int) *DeleteStorageSSLCertificat
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteStorageSSLCertificateDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteStorageSSLCertificateDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete storage s s l certificate default response
-func (o *DeleteStorageSSLCertificateDefault) WithConfigurationVersion(configurationVersion int64) *DeleteStorageSSLCertificateDefault {
+func (o *DeleteStorageSSLCertificateDefault) WithConfigurationVersion(configurationVersion string) *DeleteStorageSSLCertificateDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete storage s s l certificate default response
-func (o *DeleteStorageSSLCertificateDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteStorageSSLCertificateDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteStorageSSLCertificateDefault) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

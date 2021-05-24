@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteTcpResponseRuleNotFound
 type DeleteTCPResponseRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteTCPResponseRuleNotFound struct {
 // NewDeleteTCPResponseRuleNotFound creates DeleteTCPResponseRuleNotFound with default headers values
 func NewDeleteTCPResponseRuleNotFound() *DeleteTCPResponseRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteTCPResponseRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteTCPResponseRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete Tcp response rule not found response
-func (o *DeleteTCPResponseRuleNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteTCPResponseRuleNotFound {
+func (o *DeleteTCPResponseRuleNotFound) WithConfigurationVersion(configurationVersion string) *DeleteTCPResponseRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete Tcp response rule not found response
-func (o *DeleteTCPResponseRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteTCPResponseRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteTCPResponseRuleNotFound) WriteResponse(rw http.ResponseWriter, pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteTCPResponseRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteTCPResponseRuleDefault(code int) *DeleteTCPResponseRuleDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteTCPResponseRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteTCPResponseRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete TCP response rule default response
-func (o *DeleteTCPResponseRuleDefault) WithConfigurationVersion(configurationVersion int64) *DeleteTCPResponseRuleDefault {
+func (o *DeleteTCPResponseRuleDefault) WithConfigurationVersion(configurationVersion string) *DeleteTCPResponseRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete TCP response rule default response
-func (o *DeleteTCPResponseRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteTCPResponseRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteTCPResponseRuleDefault) WriteResponse(rw http.ResponseWriter, pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

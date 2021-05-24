@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response commitSpoeTransactionBadRequest
 type CommitSpoeTransactionBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CommitSpoeTransactionBadRequest struct {
 // NewCommitSpoeTransactionBadRequest creates CommitSpoeTransactionBadRequest with default headers values
 func NewCommitSpoeTransactionBadRequest() *CommitSpoeTransactionBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CommitSpoeTransactionBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CommitSpoeTransactionBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit spoe transaction bad request response
-func (o *CommitSpoeTransactionBadRequest) WithConfigurationVersion(configurationVersion int64) *CommitSpoeTransactionBadRequest {
+func (o *CommitSpoeTransactionBadRequest) WithConfigurationVersion(configurationVersion string) *CommitSpoeTransactionBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the commit spoe transaction bad request response
-func (o *CommitSpoeTransactionBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CommitSpoeTransactionBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CommitSpoeTransactionBadRequest) WriteResponse(rw http.ResponseWriter, 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response commitSpoeTransactionNotFound
 type CommitSpoeTransactionNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CommitSpoeTransactionNotFound struct {
 // NewCommitSpoeTransactionNotFound creates CommitSpoeTransactionNotFound with default headers values
 func NewCommitSpoeTransactionNotFound() *CommitSpoeTransactionNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CommitSpoeTransactionNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CommitSpoeTransactionNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit spoe transaction not found response
-func (o *CommitSpoeTransactionNotFound) WithConfigurationVersion(configurationVersion int64) *CommitSpoeTransactionNotFound {
+func (o *CommitSpoeTransactionNotFound) WithConfigurationVersion(configurationVersion string) *CommitSpoeTransactionNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the commit spoe transaction not found response
-func (o *CommitSpoeTransactionNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *CommitSpoeTransactionNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CommitSpoeTransactionNotFound) WriteResponse(rw http.ResponseWriter, pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CommitSpoeTransactionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCommitSpoeTransactionDefault(code int) *CommitSpoeTransactionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CommitSpoeTransactionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CommitSpoeTransactionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the commit spoe transaction default response
-func (o *CommitSpoeTransactionDefault) WithConfigurationVersion(configurationVersion int64) *CommitSpoeTransactionDefault {
+func (o *CommitSpoeTransactionDefault) WithConfigurationVersion(configurationVersion string) *CommitSpoeTransactionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the commit spoe transaction default response
-func (o *CommitSpoeTransactionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CommitSpoeTransactionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CommitSpoeTransactionDefault) WriteResponse(rw http.ResponseWriter, pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

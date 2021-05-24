@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response createAWSRegionBadRequest
 type CreateAWSRegionBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type CreateAWSRegionBadRequest struct {
 // NewCreateAWSRegionBadRequest creates CreateAWSRegionBadRequest with default headers values
 func NewCreateAWSRegionBadRequest() *CreateAWSRegionBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateAWSRegionBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateAWSRegionBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create a w s region bad request response
-func (o *CreateAWSRegionBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateAWSRegionBadRequest {
+func (o *CreateAWSRegionBadRequest) WithConfigurationVersion(configurationVersion string) *CreateAWSRegionBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create a w s region bad request response
-func (o *CreateAWSRegionBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateAWSRegionBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *CreateAWSRegionBadRequest) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response createAWSRegionConflict
 type CreateAWSRegionConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type CreateAWSRegionConflict struct {
 // NewCreateAWSRegionConflict creates CreateAWSRegionConflict with default headers values
 func NewCreateAWSRegionConflict() *CreateAWSRegionConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateAWSRegionConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateAWSRegionConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create a w s region conflict response
-func (o *CreateAWSRegionConflict) WithConfigurationVersion(configurationVersion int64) *CreateAWSRegionConflict {
+func (o *CreateAWSRegionConflict) WithConfigurationVersion(configurationVersion string) *CreateAWSRegionConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create a w s region conflict response
-func (o *CreateAWSRegionConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateAWSRegionConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *CreateAWSRegionConflict) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type CreateAWSRegionDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewCreateAWSRegionDefault(code int) *CreateAWSRegionDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateAWSRegionDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *CreateAWSRegionDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create a w s region default response
-func (o *CreateAWSRegionDefault) WithConfigurationVersion(configurationVersion int64) *CreateAWSRegionDefault {
+func (o *CreateAWSRegionDefault) WithConfigurationVersion(configurationVersion string) *CreateAWSRegionDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create a w s region default response
-func (o *CreateAWSRegionDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateAWSRegionDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *CreateAWSRegionDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

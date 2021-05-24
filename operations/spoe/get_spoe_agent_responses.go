@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetSpoeAgentOK struct {
 	/*Spoe configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetSpoeAgentOK() *GetSpoeAgentOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get spoe agent o k response
-func (o *GetSpoeAgentOK) WithConfigurationVersion(configurationVersion int64) *GetSpoeAgentOK {
+func (o *GetSpoeAgentOK) WithConfigurationVersion(configurationVersion string) *GetSpoeAgentOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get spoe agent o k response
-func (o *GetSpoeAgentOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSpoeAgentOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetSpoeAgentOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getSpoeAgentNotFound
 type GetSpoeAgentNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetSpoeAgentNotFound struct {
 // NewGetSpoeAgentNotFound creates GetSpoeAgentNotFound with default headers values
 func NewGetSpoeAgentNotFound() *GetSpoeAgentNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetSpoeAgentNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetSpoeAgentNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get spoe agent not found response
-func (o *GetSpoeAgentNotFound) WithConfigurationVersion(configurationVersion int64) *GetSpoeAgentNotFound {
+func (o *GetSpoeAgentNotFound) WithConfigurationVersion(configurationVersion string) *GetSpoeAgentNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get spoe agent not found response
-func (o *GetSpoeAgentNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSpoeAgentNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetSpoeAgentNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetSpoeAgentDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetSpoeAgentDefault(code int) *GetSpoeAgentDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetSpoeAgentDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetSpoeAgentDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get spoe agent default response
-func (o *GetSpoeAgentDefault) WithConfigurationVersion(configurationVersion int64) *GetSpoeAgentDefault {
+func (o *GetSpoeAgentDefault) WithConfigurationVersion(configurationVersion string) *GetSpoeAgentDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get spoe agent default response
-func (o *GetSpoeAgentDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetSpoeAgentDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetSpoeAgentDefault) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

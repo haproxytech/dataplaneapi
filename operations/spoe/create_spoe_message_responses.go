@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response createSpoeMessageBadRequest
 type CreateSpoeMessageBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type CreateSpoeMessageBadRequest struct {
 // NewCreateSpoeMessageBadRequest creates CreateSpoeMessageBadRequest with default headers values
 func NewCreateSpoeMessageBadRequest() *CreateSpoeMessageBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateSpoeMessageBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateSpoeMessageBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create spoe message bad request response
-func (o *CreateSpoeMessageBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateSpoeMessageBadRequest {
+func (o *CreateSpoeMessageBadRequest) WithConfigurationVersion(configurationVersion string) *CreateSpoeMessageBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create spoe message bad request response
-func (o *CreateSpoeMessageBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSpoeMessageBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *CreateSpoeMessageBadRequest) WriteResponse(rw http.ResponseWriter, prod
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response createSpoeMessageConflict
 type CreateSpoeMessageConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type CreateSpoeMessageConflict struct {
 // NewCreateSpoeMessageConflict creates CreateSpoeMessageConflict with default headers values
 func NewCreateSpoeMessageConflict() *CreateSpoeMessageConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateSpoeMessageConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateSpoeMessageConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create spoe message conflict response
-func (o *CreateSpoeMessageConflict) WithConfigurationVersion(configurationVersion int64) *CreateSpoeMessageConflict {
+func (o *CreateSpoeMessageConflict) WithConfigurationVersion(configurationVersion string) *CreateSpoeMessageConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create spoe message conflict response
-func (o *CreateSpoeMessageConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSpoeMessageConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *CreateSpoeMessageConflict) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type CreateSpoeMessageDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewCreateSpoeMessageDefault(code int) *CreateSpoeMessageDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateSpoeMessageDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *CreateSpoeMessageDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create spoe message default response
-func (o *CreateSpoeMessageDefault) WithConfigurationVersion(configurationVersion int64) *CreateSpoeMessageDefault {
+func (o *CreateSpoeMessageDefault) WithConfigurationVersion(configurationVersion string) *CreateSpoeMessageDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create spoe message default response
-func (o *CreateSpoeMessageDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateSpoeMessageDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *CreateSpoeMessageDefault) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

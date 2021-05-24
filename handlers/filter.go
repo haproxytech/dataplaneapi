@@ -145,9 +145,9 @@ func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal i
 	v, f, err := h.Client.Configuration.GetFilter(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return filter.NewGetFilterDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return filter.NewGetFilterDefault(int(*e.Code)).WithPayload(e)
 	}
-	return filter.NewGetFilterOK().WithPayload(&filter.GetFilterOKBody{Version: v, Data: f}).WithConfigurationVersion(v)
+	return filter.NewGetFilterOK().WithPayload(&filter.GetFilterOKBody{Version: v, Data: f})
 }
 
 // Handle executing the request and returning a response
@@ -161,11 +161,11 @@ func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: models.Filters{}}).WithConfigurationVersion(v)
+			return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: models.Filters{}})
 		}
-		return filter.NewGetFiltersDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return filter.NewGetFiltersDefault(int(*e.Code)).WithPayload(e)
 	}
-	return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: fs}).WithConfigurationVersion(v)
+	return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: fs})
 }
 
 // Handle executing the request and returning a response

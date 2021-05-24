@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -63,9 +62,8 @@ swagger:response deleteServicesHaproxyRuntimeAclFileEntriesIdBadRequest
 type DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -76,26 +74,17 @@ type DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest struct {
 // NewDeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest creates DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest with default headers values
 func NewDeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest() *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete services haproxy runtime Acl file entries Id bad request response
-func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WithConfigurationVersion(configurationVersion int64) *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest {
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WithConfigurationVersion(configurationVersion string) *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete services haproxy runtime Acl file entries Id bad request response
-func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -115,7 +104,7 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WriteResponse(r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -139,9 +128,8 @@ swagger:response deleteServicesHaproxyRuntimeAclFileEntriesIdNotFound
 type DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -152,26 +140,17 @@ type DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound struct {
 // NewDeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound creates DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound with default headers values
 func NewDeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound() *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete services haproxy runtime Acl file entries Id not found response
-func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound {
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound) WithConfigurationVersion(configurationVersion string) *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete services haproxy runtime Acl file entries Id not found response
-func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -191,7 +170,7 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound) WriteResponse(rw 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -213,9 +192,8 @@ type DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -229,16 +207,8 @@ func NewDeleteServicesHaproxyRuntimeACLFileEntriesIDDefault(code int) *DeleteSer
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -254,13 +224,13 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault) SetStatusCode(code
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete services haproxy runtime ACL file entries ID default response
-func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault) WithConfigurationVersion(configurationVersion int64) *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault {
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault) WithConfigurationVersion(configurationVersion string) *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete services haproxy runtime ACL file entries ID default response
-func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -280,7 +250,7 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault) WriteResponse(rw h
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

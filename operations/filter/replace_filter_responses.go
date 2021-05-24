@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceFilterBadRequest
 type ReplaceFilterBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceFilterBadRequest struct {
 // NewReplaceFilterBadRequest creates ReplaceFilterBadRequest with default headers values
 func NewReplaceFilterBadRequest() *ReplaceFilterBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceFilterBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceFilterBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace filter bad request response
-func (o *ReplaceFilterBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceFilterBadRequest {
+func (o *ReplaceFilterBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceFilterBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace filter bad request response
-func (o *ReplaceFilterBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceFilterBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceFilterBadRequest) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceFilterNotFound
 type ReplaceFilterNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceFilterNotFound struct {
 // NewReplaceFilterNotFound creates ReplaceFilterNotFound with default headers values
 func NewReplaceFilterNotFound() *ReplaceFilterNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceFilterNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceFilterNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace filter not found response
-func (o *ReplaceFilterNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceFilterNotFound {
+func (o *ReplaceFilterNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceFilterNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace filter not found response
-func (o *ReplaceFilterNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceFilterNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceFilterNotFound) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceFilterDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceFilterDefault(code int) *ReplaceFilterDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceFilterDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceFilterDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace filter default response
-func (o *ReplaceFilterDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceFilterDefault {
+func (o *ReplaceFilterDefault) WithConfigurationVersion(configurationVersion string) *ReplaceFilterDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace filter default response
-func (o *ReplaceFilterDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceFilterDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceFilterDefault) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

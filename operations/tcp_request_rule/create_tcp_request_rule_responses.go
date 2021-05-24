@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response createTcpRequestRuleBadRequest
 type CreateTCPRequestRuleBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type CreateTCPRequestRuleBadRequest struct {
 // NewCreateTCPRequestRuleBadRequest creates CreateTCPRequestRuleBadRequest with default headers values
 func NewCreateTCPRequestRuleBadRequest() *CreateTCPRequestRuleBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateTCPRequestRuleBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateTCPRequestRuleBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Tcp request rule bad request response
-func (o *CreateTCPRequestRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *CreateTCPRequestRuleBadRequest {
+func (o *CreateTCPRequestRuleBadRequest) WithConfigurationVersion(configurationVersion string) *CreateTCPRequestRuleBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create Tcp request rule bad request response
-func (o *CreateTCPRequestRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateTCPRequestRuleBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *CreateTCPRequestRuleBadRequest) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response createTcpRequestRuleConflict
 type CreateTCPRequestRuleConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type CreateTCPRequestRuleConflict struct {
 // NewCreateTCPRequestRuleConflict creates CreateTCPRequestRuleConflict with default headers values
 func NewCreateTCPRequestRuleConflict() *CreateTCPRequestRuleConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &CreateTCPRequestRuleConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &CreateTCPRequestRuleConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create Tcp request rule conflict response
-func (o *CreateTCPRequestRuleConflict) WithConfigurationVersion(configurationVersion int64) *CreateTCPRequestRuleConflict {
+func (o *CreateTCPRequestRuleConflict) WithConfigurationVersion(configurationVersion string) *CreateTCPRequestRuleConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create Tcp request rule conflict response
-func (o *CreateTCPRequestRuleConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateTCPRequestRuleConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *CreateTCPRequestRuleConflict) WriteResponse(rw http.ResponseWriter, pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type CreateTCPRequestRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewCreateTCPRequestRuleDefault(code int) *CreateTCPRequestRuleDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &CreateTCPRequestRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *CreateTCPRequestRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the create TCP request rule default response
-func (o *CreateTCPRequestRuleDefault) WithConfigurationVersion(configurationVersion int64) *CreateTCPRequestRuleDefault {
+func (o *CreateTCPRequestRuleDefault) WithConfigurationVersion(configurationVersion string) *CreateTCPRequestRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the create TCP request rule default response
-func (o *CreateTCPRequestRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *CreateTCPRequestRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *CreateTCPRequestRuleDefault) WriteResponse(rw http.ResponseWriter, prod
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -86,9 +85,8 @@ swagger:response showRuntimeMapNotFound
 type ShowRuntimeMapNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -99,26 +97,17 @@ type ShowRuntimeMapNotFound struct {
 // NewShowRuntimeMapNotFound creates ShowRuntimeMapNotFound with default headers values
 func NewShowRuntimeMapNotFound() *ShowRuntimeMapNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ShowRuntimeMapNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ShowRuntimeMapNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the show runtime map not found response
-func (o *ShowRuntimeMapNotFound) WithConfigurationVersion(configurationVersion int64) *ShowRuntimeMapNotFound {
+func (o *ShowRuntimeMapNotFound) WithConfigurationVersion(configurationVersion string) *ShowRuntimeMapNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the show runtime map not found response
-func (o *ShowRuntimeMapNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ShowRuntimeMapNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -138,7 +127,7 @@ func (o *ShowRuntimeMapNotFound) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -160,9 +149,8 @@ type ShowRuntimeMapDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -176,16 +164,8 @@ func NewShowRuntimeMapDefault(code int) *ShowRuntimeMapDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ShowRuntimeMapDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -201,13 +181,13 @@ func (o *ShowRuntimeMapDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the show runtime map default response
-func (o *ShowRuntimeMapDefault) WithConfigurationVersion(configurationVersion int64) *ShowRuntimeMapDefault {
+func (o *ShowRuntimeMapDefault) WithConfigurationVersion(configurationVersion string) *ShowRuntimeMapDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the show runtime map default response
-func (o *ShowRuntimeMapDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ShowRuntimeMapDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -227,7 +207,7 @@ func (o *ShowRuntimeMapDefault) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

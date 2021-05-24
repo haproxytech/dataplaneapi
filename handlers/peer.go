@@ -146,9 +146,9 @@ func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal 
 	v, p, err := h.Client.Configuration.GetPeerSection(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
 	}
-	return peer.NewGetPeerSectionOK().WithPayload(&peer.GetPeerSectionOKBody{Version: v, Data: p}).WithConfigurationVersion(v)
+	return peer.NewGetPeerSectionOK().WithPayload(&peer.GetPeerSectionOKBody{Version: v, Data: p})
 }
 
 // Handle executing the request and returning a response
@@ -161,7 +161,7 @@ func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principa
 	v, ps, err := h.Client.Configuration.GetPeerSections(t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return peer.NewGetPeerSectionsOK().WithPayload(&peer.GetPeerSectionsOKBody{Version: v, Data: ps}).WithConfigurationVersion(v)
+	return peer.NewGetPeerSectionsOK().WithPayload(&peer.GetPeerSectionsOKBody{Version: v, Data: ps})
 }

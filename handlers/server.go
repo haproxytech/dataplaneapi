@@ -146,9 +146,9 @@ func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal i
 	v, srv, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetServerDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return server.NewGetServerDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server.NewGetServerOK().WithPayload(&server.GetServerOKBody{Version: v, Data: srv}).WithConfigurationVersion(v)
+	return server.NewGetServerOK().WithPayload(&server.GetServerOKBody{Version: v, Data: srv})
 }
 
 // Handle executing the request and returning a response
@@ -162,11 +162,11 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: models.Servers{}}).WithConfigurationVersion(v)
+			return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: models.Servers{}})
 		}
-		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: srvs}).WithConfigurationVersion(v)
+	return server.NewGetServersOK().WithPayload(&server.GetServersOKBody{Version: v, Data: srvs})
 }
 
 // Handle executing the request and returning a response

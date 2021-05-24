@@ -25,7 +25,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -82,9 +81,8 @@ swagger:response getOneStorageMapNotFound
 type GetOneStorageMapNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -95,26 +93,17 @@ type GetOneStorageMapNotFound struct {
 // NewGetOneStorageMapNotFound creates GetOneStorageMapNotFound with default headers values
 func NewGetOneStorageMapNotFound() *GetOneStorageMapNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetOneStorageMapNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetOneStorageMapNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one storage map not found response
-func (o *GetOneStorageMapNotFound) WithConfigurationVersion(configurationVersion int64) *GetOneStorageMapNotFound {
+func (o *GetOneStorageMapNotFound) WithConfigurationVersion(configurationVersion string) *GetOneStorageMapNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one storage map not found response
-func (o *GetOneStorageMapNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneStorageMapNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -134,7 +123,7 @@ func (o *GetOneStorageMapNotFound) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -156,9 +145,8 @@ type GetOneStorageMapDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,16 +160,8 @@ func NewGetOneStorageMapDefault(code int) *GetOneStorageMapDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetOneStorageMapDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -197,13 +177,13 @@ func (o *GetOneStorageMapDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one storage map default response
-func (o *GetOneStorageMapDefault) WithConfigurationVersion(configurationVersion int64) *GetOneStorageMapDefault {
+func (o *GetOneStorageMapDefault) WithConfigurationVersion(configurationVersion string) *GetOneStorageMapDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one storage map default response
-func (o *GetOneStorageMapDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneStorageMapDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -223,7 +203,7 @@ func (o *GetOneStorageMapDefault) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

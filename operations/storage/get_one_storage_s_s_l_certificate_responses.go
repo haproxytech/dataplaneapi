@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response getOneStorageSSLCertificateNotFound
 type GetOneStorageSSLCertificateNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type GetOneStorageSSLCertificateNotFound struct {
 // NewGetOneStorageSSLCertificateNotFound creates GetOneStorageSSLCertificateNotFound with default headers values
 func NewGetOneStorageSSLCertificateNotFound() *GetOneStorageSSLCertificateNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetOneStorageSSLCertificateNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetOneStorageSSLCertificateNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one storage s s l certificate not found response
-func (o *GetOneStorageSSLCertificateNotFound) WithConfigurationVersion(configurationVersion int64) *GetOneStorageSSLCertificateNotFound {
+func (o *GetOneStorageSSLCertificateNotFound) WithConfigurationVersion(configurationVersion string) *GetOneStorageSSLCertificateNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one storage s s l certificate not found response
-func (o *GetOneStorageSSLCertificateNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneStorageSSLCertificateNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *GetOneStorageSSLCertificateNotFound) WriteResponse(rw http.ResponseWrit
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -157,9 +146,8 @@ type GetOneStorageSSLCertificateDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -173,16 +161,8 @@ func NewGetOneStorageSSLCertificateDefault(code int) *GetOneStorageSSLCertificat
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetOneStorageSSLCertificateDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -198,13 +178,13 @@ func (o *GetOneStorageSSLCertificateDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get one storage s s l certificate default response
-func (o *GetOneStorageSSLCertificateDefault) WithConfigurationVersion(configurationVersion int64) *GetOneStorageSSLCertificateDefault {
+func (o *GetOneStorageSSLCertificateDefault) WithConfigurationVersion(configurationVersion string) *GetOneStorageSSLCertificateDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get one storage s s l certificate default response
-func (o *GetOneStorageSSLCertificateDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetOneStorageSSLCertificateDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -224,7 +204,7 @@ func (o *GetOneStorageSSLCertificateDefault) WriteResponse(rw http.ResponseWrite
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

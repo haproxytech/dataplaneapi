@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceAclBadRequest
 type ReplaceACLBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceACLBadRequest struct {
 // NewReplaceACLBadRequest creates ReplaceACLBadRequest with default headers values
 func NewReplaceACLBadRequest() *ReplaceACLBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceACLBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceACLBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Acl bad request response
-func (o *ReplaceACLBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceACLBadRequest {
+func (o *ReplaceACLBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceACLBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace Acl bad request response
-func (o *ReplaceACLBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceACLBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceACLBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceAclNotFound
 type ReplaceACLNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceACLNotFound struct {
 // NewReplaceACLNotFound creates ReplaceACLNotFound with default headers values
 func NewReplaceACLNotFound() *ReplaceACLNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceACLNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceACLNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Acl not found response
-func (o *ReplaceACLNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceACLNotFound {
+func (o *ReplaceACLNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceACLNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace Acl not found response
-func (o *ReplaceACLNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceACLNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceACLNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceACLDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceACLDefault(code int) *ReplaceACLDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceACLDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceACLDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace Acl default response
-func (o *ReplaceACLDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceACLDefault {
+func (o *ReplaceACLDefault) WithConfigurationVersion(configurationVersion string) *ReplaceACLDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace Acl default response
-func (o *ReplaceACLDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceACLDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceACLDefault) WriteResponse(rw http.ResponseWriter, producer runti
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -63,9 +62,8 @@ swagger:response deleteRuntimeMapEntryNotFound
 type DeleteRuntimeMapEntryNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -76,26 +74,17 @@ type DeleteRuntimeMapEntryNotFound struct {
 // NewDeleteRuntimeMapEntryNotFound creates DeleteRuntimeMapEntryNotFound with default headers values
 func NewDeleteRuntimeMapEntryNotFound() *DeleteRuntimeMapEntryNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteRuntimeMapEntryNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteRuntimeMapEntryNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete runtime map entry not found response
-func (o *DeleteRuntimeMapEntryNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteRuntimeMapEntryNotFound {
+func (o *DeleteRuntimeMapEntryNotFound) WithConfigurationVersion(configurationVersion string) *DeleteRuntimeMapEntryNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete runtime map entry not found response
-func (o *DeleteRuntimeMapEntryNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteRuntimeMapEntryNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -115,7 +104,7 @@ func (o *DeleteRuntimeMapEntryNotFound) WriteResponse(rw http.ResponseWriter, pr
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -137,9 +126,8 @@ type DeleteRuntimeMapEntryDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -153,16 +141,8 @@ func NewDeleteRuntimeMapEntryDefault(code int) *DeleteRuntimeMapEntryDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteRuntimeMapEntryDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -178,13 +158,13 @@ func (o *DeleteRuntimeMapEntryDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete runtime map entry default response
-func (o *DeleteRuntimeMapEntryDefault) WithConfigurationVersion(configurationVersion int64) *DeleteRuntimeMapEntryDefault {
+func (o *DeleteRuntimeMapEntryDefault) WithConfigurationVersion(configurationVersion string) *DeleteRuntimeMapEntryDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete runtime map entry default response
-func (o *DeleteRuntimeMapEntryDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteRuntimeMapEntryDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -204,7 +184,7 @@ func (o *DeleteRuntimeMapEntryDefault) WriteResponse(rw http.ResponseWriter, pro
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

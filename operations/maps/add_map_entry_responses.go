@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -83,9 +82,8 @@ swagger:response addMapEntryBadRequest
 type AddMapEntryBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -96,26 +94,17 @@ type AddMapEntryBadRequest struct {
 // NewAddMapEntryBadRequest creates AddMapEntryBadRequest with default headers values
 func NewAddMapEntryBadRequest() *AddMapEntryBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &AddMapEntryBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &AddMapEntryBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the add map entry bad request response
-func (o *AddMapEntryBadRequest) WithConfigurationVersion(configurationVersion int64) *AddMapEntryBadRequest {
+func (o *AddMapEntryBadRequest) WithConfigurationVersion(configurationVersion string) *AddMapEntryBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the add map entry bad request response
-func (o *AddMapEntryBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *AddMapEntryBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -135,7 +124,7 @@ func (o *AddMapEntryBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -159,9 +148,8 @@ swagger:response addMapEntryConflict
 type AddMapEntryConflict struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -172,26 +160,17 @@ type AddMapEntryConflict struct {
 // NewAddMapEntryConflict creates AddMapEntryConflict with default headers values
 func NewAddMapEntryConflict() *AddMapEntryConflict {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &AddMapEntryConflict{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &AddMapEntryConflict{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the add map entry conflict response
-func (o *AddMapEntryConflict) WithConfigurationVersion(configurationVersion int64) *AddMapEntryConflict {
+func (o *AddMapEntryConflict) WithConfigurationVersion(configurationVersion string) *AddMapEntryConflict {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the add map entry conflict response
-func (o *AddMapEntryConflict) SetConfigurationVersion(configurationVersion int64) {
+func (o *AddMapEntryConflict) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -211,7 +190,7 @@ func (o *AddMapEntryConflict) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -233,9 +212,8 @@ type AddMapEntryDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -249,16 +227,8 @@ func NewAddMapEntryDefault(code int) *AddMapEntryDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &AddMapEntryDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -274,13 +244,13 @@ func (o *AddMapEntryDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the add map entry default response
-func (o *AddMapEntryDefault) WithConfigurationVersion(configurationVersion int64) *AddMapEntryDefault {
+func (o *AddMapEntryDefault) WithConfigurationVersion(configurationVersion string) *AddMapEntryDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the add map entry default response
-func (o *AddMapEntryDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *AddMapEntryDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -300,7 +270,7 @@ func (o *AddMapEntryDefault) WriteResponse(rw http.ResponseWriter, producer runt
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

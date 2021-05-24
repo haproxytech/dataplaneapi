@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceStickRuleBadRequest
 type ReplaceStickRuleBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceStickRuleBadRequest struct {
 // NewReplaceStickRuleBadRequest creates ReplaceStickRuleBadRequest with default headers values
 func NewReplaceStickRuleBadRequest() *ReplaceStickRuleBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceStickRuleBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceStickRuleBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace stick rule bad request response
-func (o *ReplaceStickRuleBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceStickRuleBadRequest {
+func (o *ReplaceStickRuleBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceStickRuleBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace stick rule bad request response
-func (o *ReplaceStickRuleBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceStickRuleBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceStickRuleBadRequest) WriteResponse(rw http.ResponseWriter, produ
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -225,9 +214,8 @@ swagger:response replaceStickRuleNotFound
 type ReplaceStickRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -238,26 +226,17 @@ type ReplaceStickRuleNotFound struct {
 // NewReplaceStickRuleNotFound creates ReplaceStickRuleNotFound with default headers values
 func NewReplaceStickRuleNotFound() *ReplaceStickRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceStickRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceStickRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace stick rule not found response
-func (o *ReplaceStickRuleNotFound) WithConfigurationVersion(configurationVersion int64) *ReplaceStickRuleNotFound {
+func (o *ReplaceStickRuleNotFound) WithConfigurationVersion(configurationVersion string) *ReplaceStickRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace stick rule not found response
-func (o *ReplaceStickRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceStickRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -277,7 +256,7 @@ func (o *ReplaceStickRuleNotFound) WriteResponse(rw http.ResponseWriter, produce
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -299,9 +278,8 @@ type ReplaceStickRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -315,16 +293,8 @@ func NewReplaceStickRuleDefault(code int) *ReplaceStickRuleDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceStickRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -340,13 +310,13 @@ func (o *ReplaceStickRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace stick rule default response
-func (o *ReplaceStickRuleDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceStickRuleDefault {
+func (o *ReplaceStickRuleDefault) WithConfigurationVersion(configurationVersion string) *ReplaceStickRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace stick rule default response
-func (o *ReplaceStickRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceStickRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -366,7 +336,7 @@ func (o *ReplaceStickRuleDefault) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

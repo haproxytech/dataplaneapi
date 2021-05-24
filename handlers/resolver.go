@@ -146,9 +146,9 @@ func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, princ
 	v, r, err := h.Client.Configuration.GetResolver(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return resolver.NewGetResolverDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return resolver.NewGetResolverDefault(int(*e.Code)).WithPayload(e)
 	}
-	return resolver.NewGetResolverOK().WithPayload(&resolver.GetResolverOKBody{Version: v, Data: r}).WithConfigurationVersion(v)
+	return resolver.NewGetResolverOK().WithPayload(&resolver.GetResolverOKBody{Version: v, Data: r})
 }
 
 // Handle executing the request and returning a response
@@ -161,9 +161,9 @@ func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, pri
 	v, rs, err := h.Client.Configuration.GetResolvers(t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return resolver.NewGetResolversDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return resolver.NewGetResolversDefault(int(*e.Code)).WithPayload(e)
 	}
-	return resolver.NewGetResolversOK().WithPayload(&resolver.GetResolversOKBody{Version: v, Data: rs}).WithConfigurationVersion(v)
+	return resolver.NewGetResolversOK().WithPayload(&resolver.GetResolversOKBody{Version: v, Data: rs})
 }
 
 // Handle executing the request and returning a response

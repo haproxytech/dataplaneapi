@@ -145,9 +145,9 @@ func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rul
 	v, bckRule, err := h.Client.Configuration.GetBackendSwitchingRule(params.Index, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return backend_switching_rule.NewGetBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return backend_switching_rule.NewGetBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend_switching_rule.NewGetBackendSwitchingRuleOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRuleOKBody{Version: v, Data: bckRule}).WithConfigurationVersion(v)
+	return backend_switching_rule.NewGetBackendSwitchingRuleOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRuleOKBody{Version: v, Data: bckRule})
 }
 
 // Handle executing the request and returning a response
@@ -161,11 +161,11 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: models.BackendSwitchingRules{}}).WithConfigurationVersion(v)
+			return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: models.BackendSwitchingRules{}})
 		}
-		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: bckRules}).WithConfigurationVersion(v)
+	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: bckRules})
 }
 
 // Handle executing the request and returning a response

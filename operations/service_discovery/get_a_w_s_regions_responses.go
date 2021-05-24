@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -81,9 +80,8 @@ type GetAWSRegionsDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -97,16 +95,8 @@ func NewGetAWSRegionsDefault(code int) *GetAWSRegionsDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetAWSRegionsDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -122,13 +112,13 @@ func (o *GetAWSRegionsDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get a w s regions default response
-func (o *GetAWSRegionsDefault) WithConfigurationVersion(configurationVersion int64) *GetAWSRegionsDefault {
+func (o *GetAWSRegionsDefault) WithConfigurationVersion(configurationVersion string) *GetAWSRegionsDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get a w s regions default response
-func (o *GetAWSRegionsDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetAWSRegionsDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -148,7 +138,7 @@ func (o *GetAWSRegionsDefault) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

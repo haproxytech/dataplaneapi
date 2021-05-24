@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -149,9 +148,8 @@ swagger:response replaceGlobalBadRequest
 type ReplaceGlobalBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -162,26 +160,17 @@ type ReplaceGlobalBadRequest struct {
 // NewReplaceGlobalBadRequest creates ReplaceGlobalBadRequest with default headers values
 func NewReplaceGlobalBadRequest() *ReplaceGlobalBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &ReplaceGlobalBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &ReplaceGlobalBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace global bad request response
-func (o *ReplaceGlobalBadRequest) WithConfigurationVersion(configurationVersion int64) *ReplaceGlobalBadRequest {
+func (o *ReplaceGlobalBadRequest) WithConfigurationVersion(configurationVersion string) *ReplaceGlobalBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace global bad request response
-func (o *ReplaceGlobalBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceGlobalBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -201,7 +190,7 @@ func (o *ReplaceGlobalBadRequest) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -223,9 +212,8 @@ type ReplaceGlobalDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -239,16 +227,8 @@ func NewReplaceGlobalDefault(code int) *ReplaceGlobalDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &ReplaceGlobalDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -264,13 +244,13 @@ func (o *ReplaceGlobalDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the replace global default response
-func (o *ReplaceGlobalDefault) WithConfigurationVersion(configurationVersion int64) *ReplaceGlobalDefault {
+func (o *ReplaceGlobalDefault) WithConfigurationVersion(configurationVersion string) *ReplaceGlobalDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the replace global default response
-func (o *ReplaceGlobalDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *ReplaceGlobalDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -290,7 +270,7 @@ func (o *ReplaceGlobalDefault) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

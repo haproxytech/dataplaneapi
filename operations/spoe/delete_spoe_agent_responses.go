@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -63,9 +62,8 @@ swagger:response deleteSpoeAgentNotFound
 type DeleteSpoeAgentNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -76,26 +74,17 @@ type DeleteSpoeAgentNotFound struct {
 // NewDeleteSpoeAgentNotFound creates DeleteSpoeAgentNotFound with default headers values
 func NewDeleteSpoeAgentNotFound() *DeleteSpoeAgentNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteSpoeAgentNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteSpoeAgentNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete spoe agent not found response
-func (o *DeleteSpoeAgentNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteSpoeAgentNotFound {
+func (o *DeleteSpoeAgentNotFound) WithConfigurationVersion(configurationVersion string) *DeleteSpoeAgentNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete spoe agent not found response
-func (o *DeleteSpoeAgentNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteSpoeAgentNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -115,7 +104,7 @@ func (o *DeleteSpoeAgentNotFound) WriteResponse(rw http.ResponseWriter, producer
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -137,9 +126,8 @@ type DeleteSpoeAgentDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -153,16 +141,8 @@ func NewDeleteSpoeAgentDefault(code int) *DeleteSpoeAgentDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteSpoeAgentDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -178,13 +158,13 @@ func (o *DeleteSpoeAgentDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete spoe agent default response
-func (o *DeleteSpoeAgentDefault) WithConfigurationVersion(configurationVersion int64) *DeleteSpoeAgentDefault {
+func (o *DeleteSpoeAgentDefault) WithConfigurationVersion(configurationVersion string) *DeleteSpoeAgentDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete spoe agent default response
-func (o *DeleteSpoeAgentDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteSpoeAgentDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -204,7 +184,7 @@ func (o *DeleteSpoeAgentDefault) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

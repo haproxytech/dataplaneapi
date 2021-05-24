@@ -21,10 +21,12 @@ import (
 	"math/rand"
 	"net/http"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/docker/go-units"
+	clientnative "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/client-native/v2/models"
 	apachelog "github.com/lestrrat-go/apache-logformat"
 	"github.com/oklog/ulid/v2"
@@ -33,7 +35,12 @@ import (
 
 var (
 	apacheLogWritter *io.PipeWriter
+	configVersion    string
 )
+
+func ConfigVersion() string {
+	return configVersion
+}
 
 // Adapter is just a wrapper over http handler function
 type Adapter func(http.Handler) http.Handler
@@ -222,4 +229,26 @@ func logAfter(entry *logrus.Entry, res *statusResponseWriter, start time.Time) {
 		"length": units.HumanSize(float64(res.Length())),
 		"took":   time.Since(start),
 	}).Info("completed handling request")
+}
+
+func ConfigVersionMiddleware(client *clientnative.HAProxyClient) Adapter {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			qs := r.URL.Query()
+			tID := qs.Get("transaction_id")
+			tr, _ := client.Configuration.Transaction.GetTransaction(tID)
+			var v int64
+			var err error
+			if tr != nil && tr.Status == models.TransactionStatusInProgress {
+				v, err = client.Configuration.GetConfigurationVersion(tr.ID)
+			} else {
+				v, err = client.Configuration.GetConfigurationVersion("")
+			}
+			if err == nil {
+				configVersion = strconv.FormatInt(v, 10)
+				w.Header().Add("Configuration-Version", configVersion)
+			}
+			h.ServeHTTP(w, r)
+		})
+	}
 }

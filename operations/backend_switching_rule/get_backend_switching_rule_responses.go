@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetBackendSwitchingRuleOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetBackendSwitchingRuleOK() *GetBackendSwitchingRuleOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get backend switching rule o k response
-func (o *GetBackendSwitchingRuleOK) WithConfigurationVersion(configurationVersion int64) *GetBackendSwitchingRuleOK {
+func (o *GetBackendSwitchingRuleOK) WithConfigurationVersion(configurationVersion string) *GetBackendSwitchingRuleOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get backend switching rule o k response
-func (o *GetBackendSwitchingRuleOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBackendSwitchingRuleOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetBackendSwitchingRuleOK) WriteResponse(rw http.ResponseWriter, produc
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getBackendSwitchingRuleNotFound
 type GetBackendSwitchingRuleNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetBackendSwitchingRuleNotFound struct {
 // NewGetBackendSwitchingRuleNotFound creates GetBackendSwitchingRuleNotFound with default headers values
 func NewGetBackendSwitchingRuleNotFound() *GetBackendSwitchingRuleNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetBackendSwitchingRuleNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetBackendSwitchingRuleNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get backend switching rule not found response
-func (o *GetBackendSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion int64) *GetBackendSwitchingRuleNotFound {
+func (o *GetBackendSwitchingRuleNotFound) WithConfigurationVersion(configurationVersion string) *GetBackendSwitchingRuleNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get backend switching rule not found response
-func (o *GetBackendSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBackendSwitchingRuleNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetBackendSwitchingRuleNotFound) WriteResponse(rw http.ResponseWriter, 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetBackendSwitchingRuleDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetBackendSwitchingRuleDefault(code int) *GetBackendSwitchingRuleDefault
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetBackendSwitchingRuleDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetBackendSwitchingRuleDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get backend switching rule default response
-func (o *GetBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion int64) *GetBackendSwitchingRuleDefault {
+func (o *GetBackendSwitchingRuleDefault) WithConfigurationVersion(configurationVersion string) *GetBackendSwitchingRuleDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get backend switching rule default response
-func (o *GetBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetBackendSwitchingRuleDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetBackendSwitchingRuleDefault) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

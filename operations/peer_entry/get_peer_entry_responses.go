@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -40,7 +39,7 @@ type GetPeerEntryOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -55,13 +54,13 @@ func NewGetPeerEntryOK() *GetPeerEntryOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get peer entry o k response
-func (o *GetPeerEntryOK) WithConfigurationVersion(configurationVersion int64) *GetPeerEntryOK {
+func (o *GetPeerEntryOK) WithConfigurationVersion(configurationVersion string) *GetPeerEntryOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get peer entry o k response
-func (o *GetPeerEntryOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetPeerEntryOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -81,7 +80,7 @@ func (o *GetPeerEntryOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -105,9 +104,8 @@ swagger:response getPeerEntryNotFound
 type GetPeerEntryNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -118,26 +116,17 @@ type GetPeerEntryNotFound struct {
 // NewGetPeerEntryNotFound creates GetPeerEntryNotFound with default headers values
 func NewGetPeerEntryNotFound() *GetPeerEntryNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &GetPeerEntryNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &GetPeerEntryNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get peer entry not found response
-func (o *GetPeerEntryNotFound) WithConfigurationVersion(configurationVersion int64) *GetPeerEntryNotFound {
+func (o *GetPeerEntryNotFound) WithConfigurationVersion(configurationVersion string) *GetPeerEntryNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get peer entry not found response
-func (o *GetPeerEntryNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetPeerEntryNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -157,7 +146,7 @@ func (o *GetPeerEntryNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -179,9 +168,8 @@ type GetPeerEntryDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -195,16 +183,8 @@ func NewGetPeerEntryDefault(code int) *GetPeerEntryDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &GetPeerEntryDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -220,13 +200,13 @@ func (o *GetPeerEntryDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get peer entry default response
-func (o *GetPeerEntryDefault) WithConfigurationVersion(configurationVersion int64) *GetPeerEntryDefault {
+func (o *GetPeerEntryDefault) WithConfigurationVersion(configurationVersion string) *GetPeerEntryDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get peer entry default response
-func (o *GetPeerEntryDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetPeerEntryDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -246,7 +226,7 @@ func (o *GetPeerEntryDefault) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

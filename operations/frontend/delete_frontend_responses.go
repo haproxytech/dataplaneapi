@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -109,9 +108,8 @@ swagger:response deleteFrontendNotFound
 type DeleteFrontendNotFound struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -122,26 +120,17 @@ type DeleteFrontendNotFound struct {
 // NewDeleteFrontendNotFound creates DeleteFrontendNotFound with default headers values
 func NewDeleteFrontendNotFound() *DeleteFrontendNotFound {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &DeleteFrontendNotFound{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &DeleteFrontendNotFound{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete frontend not found response
-func (o *DeleteFrontendNotFound) WithConfigurationVersion(configurationVersion int64) *DeleteFrontendNotFound {
+func (o *DeleteFrontendNotFound) WithConfigurationVersion(configurationVersion string) *DeleteFrontendNotFound {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete frontend not found response
-func (o *DeleteFrontendNotFound) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteFrontendNotFound) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -161,7 +150,7 @@ func (o *DeleteFrontendNotFound) WriteResponse(rw http.ResponseWriter, producer 
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -183,9 +172,8 @@ type DeleteFrontendDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -199,16 +187,8 @@ func NewDeleteFrontendDefault(code int) *DeleteFrontendDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &DeleteFrontendDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -224,13 +204,13 @@ func (o *DeleteFrontendDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the delete frontend default response
-func (o *DeleteFrontendDefault) WithConfigurationVersion(configurationVersion int64) *DeleteFrontendDefault {
+func (o *DeleteFrontendDefault) WithConfigurationVersion(configurationVersion string) *DeleteFrontendDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the delete frontend default response
-func (o *DeleteFrontendDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *DeleteFrontendDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -250,7 +230,7 @@ func (o *DeleteFrontendDefault) WriteResponse(rw http.ResponseWriter, producer r
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

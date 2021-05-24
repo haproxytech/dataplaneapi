@@ -146,9 +146,9 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 	v, bck, err := h.Client.Configuration.GetBackend(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return backend.NewGetBackendDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return backend.NewGetBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend.NewGetBackendOK().WithPayload(&backend.GetBackendOKBody{Version: v, Data: bck}).WithConfigurationVersion(v)
+	return backend.NewGetBackendOK().WithPayload(&backend.GetBackendOKBody{Version: v, Data: bck})
 }
 
 // Handle executing the request and returning a response
@@ -161,9 +161,9 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 	v, bcks, err := h.Client.Configuration.GetBackends(t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return backend.NewGetBackendsDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
+		return backend.NewGetBackendsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend.NewGetBackendsOK().WithPayload(&backend.GetBackendsOKBody{Version: v, Data: bcks}).WithConfigurationVersion(v)
+	return backend.NewGetBackendsOK().WithPayload(&backend.GetBackendsOKBody{Version: v, Data: bcks})
 }
 
 // Handle executing the request and returning a response
