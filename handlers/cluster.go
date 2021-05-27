@@ -123,6 +123,8 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 				}
 			}
 			h.Config.Cluster.StorageDir.Store(storageDir)
+			h.Config.HAProxy.ClusterTLSCertDir = path.Join(storageDir, "certs-cluster")
+			h.Config.Cluster.CertificateDir.Store(path.Join(storageDir, "certs-cluster"))
 		}
 		// enforcing API advertising options
 		if a := params.AdvertisedAddress; a != nil {
