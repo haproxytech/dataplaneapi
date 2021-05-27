@@ -287,6 +287,10 @@ func (c *Configuration) Save() error {
 		cfg := c.storage.Get()
 		cfg.ServiceDiscovery = nil
 	}
+	if cfg.Mode.Load() != "cluster" {
+		storage := cfg.storage.Get()
+		storage.Cluster = nil
+	}
 	return c.storage.Save()
 }
 
