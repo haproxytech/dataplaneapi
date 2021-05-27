@@ -379,95 +379,73 @@ func copyConfigurationToStorage(cfg *Configuration) {
 	cfgStorage.Status = &valueStatus
 
 	valueClusterID := cfg.Cluster.ID.Load()
-	if valueClusterID != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.ID = &valueClusterID
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.ID = &valueClusterID
 
 	valueClusterBootstrapKey := cfg.Cluster.BootstrapKey.Load()
-	if valueClusterBootstrapKey != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.BootstrapKey = &valueClusterBootstrapKey
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.BootstrapKey = &valueClusterBootstrapKey
 
 	valueClusterActiveBootstrapKey := cfg.Cluster.ActiveBootstrapKey.Load()
-	if valueClusterActiveBootstrapKey != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.ActiveBootstrapKey = &valueClusterActiveBootstrapKey
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.ActiveBootstrapKey = &valueClusterActiveBootstrapKey
 
 	valueClusterToken := cfg.Cluster.Token.Load()
-	if valueClusterToken != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.Token = &valueClusterToken
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.Token = &valueClusterToken
 
 	valueClusterURL := cfg.Cluster.URL.Load()
-	if valueClusterURL != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.URL = &valueClusterURL
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.URL = &valueClusterURL
 
 	valueClusterPort := cfg.Cluster.Port.Load()
-	if valueClusterPort > 0 {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.Port = &valueClusterPort
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.Port = &valueClusterPort
 
 	valueClusterAPIBasePath := cfg.Cluster.APIBasePath.Load()
-	if valueClusterAPIBasePath != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.APIBasePath = &valueClusterAPIBasePath
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.APIBasePath = &valueClusterAPIBasePath
 
 	valueClusterAPINodesPath := cfg.Cluster.APINodesPath.Load()
-	if valueClusterAPINodesPath != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.APINodesPath = &valueClusterAPINodesPath
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.APINodesPath = &valueClusterAPINodesPath
 
 	valueClusterAPIRegisterPath := cfg.Cluster.APIRegisterPath.Load()
-	if valueClusterAPIRegisterPath != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.APIRegisterPath = &valueClusterAPIRegisterPath
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.APIRegisterPath = &valueClusterAPIRegisterPath
 
 	valueClusterStorageDir := cfg.Cluster.StorageDir.Load()
-	if valueClusterStorageDir != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.StorageDir = &valueClusterStorageDir
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.StorageDir = &valueClusterStorageDir
 
 	valueClusterCertificateDir := cfg.Cluster.CertificateDir.Load()
-	if valueClusterCertificateDir != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.CertificateDir = &valueClusterCertificateDir
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.CertificateDir = &valueClusterCertificateDir
 
 	valueClusterCertificateFetched := cfg.Cluster.CertificateFetched.Load()
-	if valueClusterCertificateFetched && cfgStorage.Cluster == nil {
+	if cfgStorage.Cluster == nil {
 		cfgStorage.Cluster = &configTypeCluster{}
 	}
 	if cfgStorage.Cluster != nil {
@@ -475,20 +453,16 @@ func copyConfigurationToStorage(cfg *Configuration) {
 	}
 
 	valueClusterName := cfg.Cluster.Name.Load()
-	if valueClusterName != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.Name = &valueClusterName
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.Name = &valueClusterName
 
 	valueClusterDescription := cfg.Cluster.Description.Load()
-	if valueClusterDescription != "" {
-		if cfgStorage.Cluster == nil {
-			cfgStorage.Cluster = &configTypeCluster{}
-		}
-		cfgStorage.Cluster.Description = &valueClusterDescription
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
 	}
+	cfgStorage.Cluster.Description = &valueClusterDescription
 
 	if cfgStorage.Dataplaneapi == nil {
 		cfgStorage.Dataplaneapi = &configTypeDataplaneapi{}

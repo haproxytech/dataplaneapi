@@ -165,12 +165,10 @@ func copyConfigurationToStorage(cfg *Configuration) {
 				{{- if eq .Type "AtomicString" }}
 					{{- if not .Deprecated }}
 						value{{$group.Name | Capitalize}}{{ .Name }} := cfg.{{ .AttName }}.{{ .Name }}.Load()
-						if value{{$group.Name | Capitalize}}{{ .Name }} != "" {
 							if cfgStorage.Cluster == nil {
 								cfgStorage.{{ .AttName }} = &configType{{ .AttName }}{}
 							}
 							cfgStorage.{{ .AttName }}.{{ .Name }}= &value{{$group.Name | Capitalize}}{{ .Name }}
-						}
 					{{- else }}
 						if cfgStorage.Cluster != nil {
 							cfgStorage.{{ .AttName }}.{{ .Name }}= nil
@@ -178,7 +176,7 @@ func copyConfigurationToStorage(cfg *Configuration) {
 					{{- end }}
 				{{- else if eq .Type "AtomicBool" }}
 					value{{$group.Name | Capitalize}}{{ .Name }} := cfg.{{ .AttName }}.{{ .Name }}.Load()
-						if value{{$group.Name | Capitalize}}{{ .Name }} && cfgStorage.Cluster == nil {
+						if cfgStorage.Cluster == nil {
 							cfgStorage.{{ .AttName }} = &configType{{ .AttName }}{}
 						}
 						if cfgStorage.Cluster != nil {
@@ -187,12 +185,10 @@ func copyConfigurationToStorage(cfg *Configuration) {
 				{{- else if eq .Type "AtomicInt" }}
 					{{- if not .Deprecated }}
 						value{{$group.Name | Capitalize}}{{ .Name }} := cfg.{{ .AttName }}.{{ .Name }}.Load()
-						if value{{$group.Name | Capitalize}}{{ .Name }} > 0 {
 							if cfgStorage.Cluster == nil {
 								cfgStorage.{{ .AttName }} = &configType{{ .AttName }}{}
 							}
 							cfgStorage.{{ .AttName }}.{{ .Name }}= &value{{$group.Name | Capitalize}}{{ .Name }}
-						}
 					{{- else }}
 						if cfgStorage.Cluster != nil {
 							cfgStorage.{{ .AttName }}.{{ .Name }}= nil
