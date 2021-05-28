@@ -8,7 +8,6 @@ GIT_MODIFIED2=$(shell git diff --quiet || echo .dirty)
 GIT_MODIFIED=${GIT_MODIFIED1}${GIT_MODIFIED2}
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
-GOOS?=linux
 
 all: update clean build
 
@@ -21,7 +20,7 @@ clean:
 .PHONY: build
 build:
 	mkdir -p ${DATAPLANEAPI_PATH}/build
-	GOOS=$(GOOS) CGO_ENABLED=$(CGO_ENABLED) go build -trimpath -ldflags "-X \"main.GitRepo=${GIT_REPO}\" -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
+	CGO_ENABLED=$(CGO_ENABLED) go build -trimpath -ldflags "-X \"main.GitRepo=${GIT_REPO}\" -X main.GitTag=${GIT_LAST_TAG} -X main.GitCommit=${GIT_HEAD_COMMIT} -X main.GitDirty=${GIT_MODIFIED} -X main.BuildTime=${BUILD_DATE}" -o ${DATAPLANEAPI_PATH}/build/dataplaneapi ${DATAPLANEAPI_PATH}/cmd/dataplaneapi/
 
 .PHONY: e2e
 e2e: build
