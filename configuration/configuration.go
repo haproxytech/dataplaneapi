@@ -231,7 +231,11 @@ func (c *Configuration) Load() error {
 			c.storage = &StorageHCL{}
 		}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
-			log.Warnf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
+			if os.IsNotExist(err) {
+				log.Warnf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
+			} else {
+				return fmt.Errorf("configuration file %s not valid: %w", c.HAProxy.DataplaneConfig, err)
+			}
 		}
 	}
 	copyToConfiguration(c)
