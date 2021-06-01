@@ -487,7 +487,7 @@ func (c *ClusterSync) fetchCert() {
 				apiBasePath := c.cfg.Cluster.APIBasePath.Load()
 				apiNodesPath := c.cfg.Cluster.APINodesPath.Load()
 				id := c.cfg.Cluster.ID.Load()
-				url = fmt.Sprintf("%s:%d/%s/%s/%s", url, port, apiBasePath, apiNodesPath, id)
+				url = fmt.Sprintf("%s:%d/%s", url, port, strings.TrimLeft(path.Join(apiBasePath, apiNodesPath, id), "/"))
 				req, err := http.NewRequest("GET", url, nil)
 				if err != nil {
 					c.activateFetchCert(err)
