@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v2/models"
 )
@@ -86,9 +85,8 @@ swagger:response addPayloadRuntimeMapBadRequest
 type AddPayloadRuntimeMapBadRequest struct {
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -99,26 +97,17 @@ type AddPayloadRuntimeMapBadRequest struct {
 // NewAddPayloadRuntimeMapBadRequest creates AddPayloadRuntimeMapBadRequest with default headers values
 func NewAddPayloadRuntimeMapBadRequest() *AddPayloadRuntimeMapBadRequest {
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
-	return &AddPayloadRuntimeMapBadRequest{
-
-		ConfigurationVersion: configurationVersionDefault,
-	}
+	return &AddPayloadRuntimeMapBadRequest{}
 }
 
 // WithConfigurationVersion adds the configurationVersion to the add payload runtime map bad request response
-func (o *AddPayloadRuntimeMapBadRequest) WithConfigurationVersion(configurationVersion int64) *AddPayloadRuntimeMapBadRequest {
+func (o *AddPayloadRuntimeMapBadRequest) WithConfigurationVersion(configurationVersion string) *AddPayloadRuntimeMapBadRequest {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the add payload runtime map bad request response
-func (o *AddPayloadRuntimeMapBadRequest) SetConfigurationVersion(configurationVersion int64) {
+func (o *AddPayloadRuntimeMapBadRequest) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -138,7 +127,7 @@ func (o *AddPayloadRuntimeMapBadRequest) WriteResponse(rw http.ResponseWriter, p
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
@@ -160,9 +149,8 @@ type AddPayloadRuntimeMapDefault struct {
 	_statusCode int
 	/*Configuration file version
 
-	  Default: 0
-	*/
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -176,16 +164,8 @@ func NewAddPayloadRuntimeMapDefault(code int) *AddPayloadRuntimeMapDefault {
 		code = 500
 	}
 
-	var (
-		// initialize headers with default values
-
-		configurationVersionDefault = int64(0)
-	)
-
 	return &AddPayloadRuntimeMapDefault{
 		_statusCode: code,
-
-		ConfigurationVersion: configurationVersionDefault,
 	}
 }
 
@@ -201,13 +181,13 @@ func (o *AddPayloadRuntimeMapDefault) SetStatusCode(code int) {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the add payload runtime map default response
-func (o *AddPayloadRuntimeMapDefault) WithConfigurationVersion(configurationVersion int64) *AddPayloadRuntimeMapDefault {
+func (o *AddPayloadRuntimeMapDefault) WithConfigurationVersion(configurationVersion string) *AddPayloadRuntimeMapDefault {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the add payload runtime map default response
-func (o *AddPayloadRuntimeMapDefault) SetConfigurationVersion(configurationVersion int64) {
+func (o *AddPayloadRuntimeMapDefault) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
@@ -227,7 +207,7 @@ func (o *AddPayloadRuntimeMapDefault) WriteResponse(rw http.ResponseWriter, prod
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

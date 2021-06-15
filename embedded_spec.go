@@ -51,7 +51,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.0"
+    "version": "2.4"
   },
   "basePath": "/v2",
   "paths": {
@@ -9024,7 +9024,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Transaction succesfully commited",
+            "description": "Transaction successfully committed",
             "schema": {
               "$ref": "#/definitions/spoe_transaction"
             }
@@ -9723,7 +9723,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Transaction succesfully commited",
+            "description": "Transaction successfully committed",
             "schema": {
               "$ref": "#/definitions/transaction"
             }
@@ -11764,6 +11764,10 @@ func init() {
           "type": "boolean",
           "x-display-name": "CLF Log"
         },
+        "client_fin_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -11950,6 +11954,10 @@ func init() {
           "$ref": "#/definitions/redispatch"
         },
         "retries": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "server_fin_timeout": {
           "type": "integer",
           "x-nullable": true
         },
@@ -12234,7 +12242,7 @@ func init() {
           "enum": [
             "enabled"
           ],
-          "x-display-name": "Continous Statistics"
+          "x-display-name": "Continuous Statistics"
         },
         "default_backend": {
           "type": "string",
@@ -12462,6 +12470,11 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "hard_stop_after": {
+          "type": "integer",
+          "x-display-name": "Hard Stop After",
+          "x-nullable": true
+        },
         "log_send_hostname": {
           "type": "object",
           "required": [
@@ -12555,6 +12568,11 @@ func init() {
           },
           "x-display-name": "Runtime APIs",
           "x-go-name": "RuntimeAPIs"
+        },
+        "server_state_base": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State Base"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",
@@ -18008,7 +18026,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.0"
+    "version": "2.4"
   },
   "basePath": "/v2",
   "paths": {
@@ -27959,8 +27977,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -27972,8 +27989,7 @@ func init() {
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
-                "default": 0,
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -31186,7 +31202,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Transaction succesfully commited",
+            "description": "Transaction successfully committed",
             "schema": {
               "$ref": "#/definitions/spoe_transaction"
             }
@@ -32241,7 +32257,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Transaction succesfully commited",
+            "description": "Transaction successfully committed",
             "schema": {
               "$ref": "#/definitions/transaction"
             }
@@ -34829,6 +34845,10 @@ func init() {
           "type": "boolean",
           "x-display-name": "CLF Log"
         },
+        "client_fin_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -35015,6 +35035,10 @@ func init() {
           "$ref": "#/definitions/redispatch"
         },
         "retries": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "server_fin_timeout": {
           "type": "integer",
           "x-nullable": true
         },
@@ -35299,7 +35323,7 @@ func init() {
           "enum": [
             "enabled"
           ],
-          "x-display-name": "Continous Statistics"
+          "x-display-name": "Continuous Statistics"
         },
         "default_backend": {
           "type": "string",
@@ -35512,6 +35536,11 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "hard_stop_after": {
+          "type": "integer",
+          "x-display-name": "Hard Stop After",
+          "x-nullable": true
+        },
         "log_send_hostname": {
           "type": "object",
           "required": [
@@ -35565,6 +35594,11 @@ func init() {
           },
           "x-display-name": "Runtime APIs",
           "x-go-name": "RuntimeAPIs"
+        },
+        "server_state_base": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State Base"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",

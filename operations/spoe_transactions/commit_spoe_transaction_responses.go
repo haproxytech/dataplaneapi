@@ -31,7 +31,7 @@ import (
 // CommitSpoeTransactionOKCode is the HTTP code returned for type CommitSpoeTransactionOK
 const CommitSpoeTransactionOKCode int = 200
 
-/*CommitSpoeTransactionOK Transaction succesfully commited
+/*CommitSpoeTransactionOK Transaction successfully committed
 
 swagger:response commitSpoeTransactionOK
 */
