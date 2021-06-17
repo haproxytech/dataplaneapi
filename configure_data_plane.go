@@ -22,11 +22,9 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/signal"
-	"path/filepath"
 	"runtime/debug"
 	"strconv"
 	"strings"
@@ -47,7 +45,6 @@ import (
 	"github.com/haproxytech/client-native/v2/storage"
 	parser "github.com/haproxytech/config-parser/v4"
 	"github.com/haproxytech/config-parser/v4/types"
-	"github.com/haproxytech/dataplaneapi/syslog"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
 
@@ -76,6 +73,8 @@ var (
 	BuildTime string
 	mWorker   = false
 	logFile   *os.File
+	AppLogger *log.Logger
+	AccLogger *log.Logger
 )
 
 func configureFlags(api *operations.DataPlaneAPI) {
@@ -662,25 +661,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 	}()
 
+	applicationEntry := log.NewEntry(AppLogger)
+	accessEntry := log.NewEntry(AccLogger)
 	al, err := cfg.ApacheLogFormat()
 	if err != nil {
 		println("Cannot setup custom Apache Log Format", err.Error())
 	}
-
-	appLogger := log.StandardLogger()
-	configureLogging(appLogger, cfg.Logging, func(opts dataplaneapi_config.SyslogOptions) dataplaneapi_config.SyslogOptions {
-		opts.SyslogMsgID = "app"
-		return opts
-	}(cfg.Syslog))
-
-	accLogger := log.StandardLogger()
-	configureLogging(accLogger, cfg.Logging, func(opts dataplaneapi_config.SyslogOptions) dataplaneapi_config.SyslogOptions {
-		opts.SyslogMsgID = "accesslog"
-		return opts
-	}(cfg.Syslog))
-
-	applicationEntry := log.NewEntry(appLogger)
-	accessEntry := log.NewEntry(accLogger)
 
 	// middlewares
 	var adpts []adapters.Adapter
@@ -736,53 +722,6 @@ func setupGlobalMiddleware(handler http.Handler, adapters ...adapters.Adapter) h
 	}
 
 	return handler
-}
-
-func configureLogging(logger *log.Logger, loggingOptions dataplaneapi_config.LoggingOptions, syslogOptions dataplaneapi_config.SyslogOptions) {
-	switch loggingOptions.LogFormat {
-	case "text":
-		logger.SetFormatter(&log.TextFormatter{
-			FullTimestamp: true,
-			DisableColors: true,
-		})
-	case "JSON":
-		logger.SetFormatter(&log.JSONFormatter{})
-	}
-
-	switch loggingOptions.LogTo {
-	case "stdout":
-		logger.SetOutput(os.Stdout)
-	case "file":
-		dir := filepath.Dir(loggingOptions.LogFile)
-		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
-			logger.Warning("Error opening log file, no logging implemented: " + err.Error())
-		}
-		//nolint:govet
-		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
-		if err != nil {
-			log.Warning("Error opening log file, no logging implemented: " + err.Error())
-		}
-		log.SetOutput(logFile)
-	case "syslog":
-		logger.SetOutput(ioutil.Discard)
-		hook, err := syslog.NewRFC5424Hook(syslogOptions)
-		if err != nil {
-			logger.Warningf("Error configuring Syslog logging: %s", err.Error())
-			break
-		}
-		logger.AddHook(hook)
-	}
-
-	switch loggingOptions.LogLevel {
-	case "debug":
-		logger.SetLevel(log.DebugLevel)
-	case "info":
-		logger.SetLevel(log.InfoLevel)
-	case "warning":
-		logger.SetLevel(log.WarnLevel)
-	case "error":
-		logger.SetLevel(log.ErrorLevel)
-	}
 }
 
 func serverShutdown() {

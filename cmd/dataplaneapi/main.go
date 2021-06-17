@@ -17,8 +17,10 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 	"syscall"
 
 	loads "github.com/go-openapi/loads"
@@ -31,6 +33,7 @@ import (
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/operations"
+	"github.com/haproxytech/dataplaneapi/syslog"
 )
 
 // GitRepo ...
@@ -140,10 +143,6 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		log.Fatalln(err)
 	}
 
-	log.Infof("HAProxy Data Plane API %s %s%s", GitTag, GitCommit, GitDirty)
-	log.Infof("Build from: %s", GitRepo)
-	log.Infof("Build date: %s", BuildTime)
-
 	configuration.HandlePIDFile(cfg.HAProxy)
 
 	if cfg.Mode.Load() == "cluster" {
@@ -172,6 +171,12 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			cfg.Notify.BootstrapKeyChanged.NotifyWithRetry()
 		}
 	}
+
+	setupLogging(cfg)
+
+	log.Infof("HAProxy Data Plane API %s %s%s", GitTag, GitCommit, GitDirty)
+	log.Infof("Build from: %s", GitRepo)
+	log.Infof("Build date: %s", BuildTime)
 
 	err = cfg.Save()
 	if err != nil {
@@ -225,4 +230,68 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	defer server.Shutdown() // nolint:errcheck
 
 	return reload
+}
+
+func setupLogging(cfg *configuration.Configuration) {
+	appLogger := log.StandardLogger()
+	configureLogger(appLogger, cfg.Logging, func(opts configuration.SyslogOptions) configuration.SyslogOptions {
+		opts.SyslogMsgID = "app"
+		return opts
+	}(cfg.Syslog))
+
+	accLogger := log.StandardLogger()
+	configureLogger(accLogger, cfg.Logging, func(opts configuration.SyslogOptions) configuration.SyslogOptions {
+		opts.SyslogMsgID = "accesslog"
+		return opts
+	}(cfg.Syslog))
+
+	dataplaneapi.AppLogger = appLogger
+	dataplaneapi.AccLogger = accLogger
+}
+
+func configureLogger(logger *log.Logger, loggingOptions configuration.LoggingOptions, syslogOptions configuration.SyslogOptions) {
+	switch loggingOptions.LogFormat {
+	case "text":
+		logger.SetFormatter(&log.TextFormatter{
+			FullTimestamp: true,
+			DisableColors: true,
+		})
+	case "JSON":
+		logger.SetFormatter(&log.JSONFormatter{})
+	}
+
+	switch loggingOptions.LogTo {
+	case "stdout":
+		logger.SetOutput(os.Stdout)
+	case "file":
+		dir := filepath.Dir(loggingOptions.LogFile)
+		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+			log.Warning("Error opening log file, no logging implemented: " + err.Error())
+		}
+		//nolint:govet
+		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+		if err != nil {
+			log.Warning("Error opening log file, no logging implemented: " + err.Error())
+		}
+		log.SetOutput(logFile)
+	case "syslog":
+		logger.SetOutput(ioutil.Discard)
+		hook, err := syslog.NewRFC5424Hook(syslogOptions)
+		if err != nil {
+			log.Warningf("Error configuring Syslog logging: %s", err.Error())
+			break
+		}
+		logger.AddHook(hook)
+	}
+
+	switch loggingOptions.LogLevel {
+	case "debug":
+		logger.SetLevel(log.DebugLevel)
+	case "info":
+		logger.SetLevel(log.InfoLevel)
+	case "warning":
+		logger.SetLevel(log.WarnLevel)
+	case "error":
+		logger.SetLevel(log.ErrorLevel)
+	}
 }
