@@ -673,7 +673,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		return opts
 	}(cfg.Syslog))
 
-	accLogger := log.New()
+	accLogger := log.StandardLogger()
 	configureLogging(accLogger, cfg.Logging, func(opts dataplaneapi_config.SyslogOptions) dataplaneapi_config.SyslogOptions {
 		opts.SyslogMsgID = "accesslog"
 		return opts
