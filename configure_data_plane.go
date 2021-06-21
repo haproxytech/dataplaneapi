@@ -487,6 +487,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler = &handlers.PostACLFileEntryHandlerRuntimeImpl{Client: client}
 	api.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler = &handlers.GetACLFileEntryRuntimeImpl{Client: client}
 	api.ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler = &handlers.DeleteACLFileEntryHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimeAddPayloadRuntimeACLHandler = &handlers.ACLRuntimeAddPayloadRuntimeACLHandlerImpl{Client: client}
 
 	// setup map handlers
 	api.MapsGetAllRuntimeMapFilesHandler = &handlers.GetMapsHandlerImpl{Client: client}

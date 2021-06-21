@@ -118,6 +118,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.AddMapEntry has not yet been implemented")
 		}),
+		ACLRuntimeAddPayloadRuntimeACLHandler: acl_runtime.AddPayloadRuntimeACLHandlerFunc(func(params acl_runtime.AddPayloadRuntimeACLParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl_runtime.AddPayloadRuntimeACL has not yet been implemented")
+		}),
 		MapsAddPayloadRuntimeMapHandler: maps.AddPayloadRuntimeMapHandlerFunc(func(params maps.AddPayloadRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.AddPayloadRuntimeMap has not yet been implemented")
 		}),
@@ -751,6 +754,8 @@ type DataPlaneAPI struct {
 	ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler acl_runtime.PostServicesHaproxyRuntimeACLFileEntriesHandler
 	// MapsAddMapEntryHandler sets the operation handler for the add map entry operation
 	MapsAddMapEntryHandler maps.AddMapEntryHandler
+	// ACLRuntimeAddPayloadRuntimeACLHandler sets the operation handler for the add payload runtime ACL operation
+	ACLRuntimeAddPayloadRuntimeACLHandler acl_runtime.AddPayloadRuntimeACLHandler
 	// MapsAddPayloadRuntimeMapHandler sets the operation handler for the add payload runtime map operation
 	MapsAddPayloadRuntimeMapHandler maps.AddPayloadRuntimeMapHandler
 	// MapsClearRuntimeMapHandler sets the operation handler for the clear runtime map operation
@@ -1224,6 +1229,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsAddMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.AddMapEntryHandler")
+	}
+	if o.ACLRuntimeAddPayloadRuntimeACLHandler == nil {
+		unregistered = append(unregistered, "acl_runtime.AddPayloadRuntimeACLHandler")
 	}
 	if o.MapsAddPayloadRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.AddPayloadRuntimeMapHandler")
@@ -1916,6 +1924,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/runtime/maps_entries"] = maps.NewAddMapEntry(o.context, o.MapsAddMapEntryHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/runtime/acl_file_entries"] = acl_runtime.NewAddPayloadRuntimeACL(o.context, o.ACLRuntimeAddPayloadRuntimeACLHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

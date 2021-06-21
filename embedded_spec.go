@@ -6495,6 +6495,45 @@ func init() {
           }
         }
       },
+      "put": {
+        "description": "Adds a new ACL payload.",
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Add a new ACL payload",
+        "operationId": "addPayloadRuntimeACL",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl_files_entries"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL payload added",
+            "schema": {
+              "$ref": "#/definitions/acl_files_entries"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
       "post": {
         "description": "Adds an entry into the ACL file using the runtime socket.",
         "produces": [
@@ -27478,6 +27517,63 @@ func init() {
           },
           "404": {
             "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Adds a new ACL payload.",
+        "tags": [
+          "ACL Runtime"
+        ],
+        "summary": "Add a new ACL payload",
+        "operationId": "addPayloadRuntimeACL",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ACL ID",
+            "name": "acl_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/acl_files_entries"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ACL payload added",
+            "schema": {
+              "$ref": "#/definitions/acl_files_entries"
+            }
+          },
+          "400": {
+            "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/error"
             },

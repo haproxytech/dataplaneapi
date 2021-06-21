@@ -98,3 +98,16 @@ func (d DeleteACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.DeleteSe
 
 	return acl_runtime.NewDeleteServicesHaproxyRuntimeACLFileEntriesIDNoContent()
 }
+
+type ACLRuntimeAddPayloadRuntimeACLHandlerImpl struct {
+	Client *client_native.HAProxyClient
+}
+
+func (a ACLRuntimeAddPayloadRuntimeACLHandlerImpl) Handle(params acl_runtime.AddPayloadRuntimeACLParams, i interface{}) middleware.Responder {
+	err := a.Client.Runtime.AddACLAtomic(params.ACLID, params.Data)
+	if err != nil {
+		status := misc.GetHTTPStatusFromErr(err)
+		return acl_runtime.NewAddPayloadRuntimeACLDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+	return acl_runtime.NewAddPayloadRuntimeACLCreated().WithPayload(params.Data)
+}
