@@ -58,6 +58,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
+	"github.com/haproxytech/dataplaneapi/operations/server_template"
 	"github.com/haproxytech/dataplaneapi/operations/service_discovery"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
@@ -184,6 +185,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServerSwitchingRuleCreateServerSwitchingRuleHandler: server_switching_rule.CreateServerSwitchingRuleHandlerFunc(func(params server_switching_rule.CreateServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server_switching_rule.CreateServerSwitchingRule has not yet been implemented")
 		}),
+		ServerTemplateCreateServerTemplateHandler: server_template.CreateServerTemplateHandlerFunc(func(params server_template.CreateServerTemplateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server_template.CreateServerTemplate has not yet been implemented")
+		}),
 		SitesCreateSiteHandler: sites.CreateSiteHandlerFunc(func(params sites.CreateSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation sites.CreateSite has not yet been implemented")
 		}),
@@ -270,6 +274,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServerSwitchingRuleDeleteServerSwitchingRuleHandler: server_switching_rule.DeleteServerSwitchingRuleHandlerFunc(func(params server_switching_rule.DeleteServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server_switching_rule.DeleteServerSwitchingRule has not yet been implemented")
+		}),
+		ServerTemplateDeleteServerTemplateHandler: server_template.DeleteServerTemplateHandlerFunc(func(params server_template.DeleteServerTemplateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server_template.DeleteServerTemplate has not yet been implemented")
 		}),
 		SitesDeleteSiteHandler: sites.DeleteSiteHandlerFunc(func(params sites.DeleteSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation sites.DeleteSite has not yet been implemented")
@@ -484,6 +491,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServerSwitchingRuleGetServerSwitchingRulesHandler: server_switching_rule.GetServerSwitchingRulesHandlerFunc(func(params server_switching_rule.GetServerSwitchingRulesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server_switching_rule.GetServerSwitchingRules has not yet been implemented")
 		}),
+		ServerTemplateGetServerTemplateHandler: server_template.GetServerTemplateHandlerFunc(func(params server_template.GetServerTemplateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server_template.GetServerTemplate has not yet been implemented")
+		}),
+		ServerTemplateGetServerTemplatesHandler: server_template.GetServerTemplatesHandlerFunc(func(params server_template.GetServerTemplatesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server_template.GetServerTemplates has not yet been implemented")
+		}),
 		ServerGetServersHandler: server.GetServersHandlerFunc(func(params server.GetServersParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetServers has not yet been implemented")
 		}),
@@ -646,6 +659,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServerSwitchingRuleReplaceServerSwitchingRuleHandler: server_switching_rule.ReplaceServerSwitchingRuleHandlerFunc(func(params server_switching_rule.ReplaceServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server_switching_rule.ReplaceServerSwitchingRule has not yet been implemented")
 		}),
+		ServerTemplateReplaceServerTemplateHandler: server_template.ReplaceServerTemplateHandlerFunc(func(params server_template.ReplaceServerTemplateParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server_template.ReplaceServerTemplate has not yet been implemented")
+		}),
 		SitesReplaceSiteHandler: sites.ReplaceSiteHandlerFunc(func(params sites.ReplaceSiteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation sites.ReplaceSite has not yet been implemented")
 		}),
@@ -798,6 +814,8 @@ type DataPlaneAPI struct {
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
 	ServerSwitchingRuleCreateServerSwitchingRuleHandler server_switching_rule.CreateServerSwitchingRuleHandler
+	// ServerTemplateCreateServerTemplateHandler sets the operation handler for the create server template operation
+	ServerTemplateCreateServerTemplateHandler server_template.CreateServerTemplateHandler
 	// SitesCreateSiteHandler sets the operation handler for the create site operation
 	SitesCreateSiteHandler sites.CreateSiteHandler
 	// SpoeCreateSpoeHandler sets the operation handler for the create spoe operation
@@ -856,6 +874,8 @@ type DataPlaneAPI struct {
 	ServerDeleteServerHandler server.DeleteServerHandler
 	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
 	ServerSwitchingRuleDeleteServerSwitchingRuleHandler server_switching_rule.DeleteServerSwitchingRuleHandler
+	// ServerTemplateDeleteServerTemplateHandler sets the operation handler for the delete server template operation
+	ServerTemplateDeleteServerTemplateHandler server_template.DeleteServerTemplateHandler
 	// SitesDeleteSiteHandler sets the operation handler for the delete site operation
 	SitesDeleteSiteHandler sites.DeleteSiteHandler
 	// SpoeDeleteSpoeAgentHandler sets the operation handler for the delete spoe agent operation
@@ -998,6 +1018,10 @@ type DataPlaneAPI struct {
 	ServerSwitchingRuleGetServerSwitchingRuleHandler server_switching_rule.GetServerSwitchingRuleHandler
 	// ServerSwitchingRuleGetServerSwitchingRulesHandler sets the operation handler for the get server switching rules operation
 	ServerSwitchingRuleGetServerSwitchingRulesHandler server_switching_rule.GetServerSwitchingRulesHandler
+	// ServerTemplateGetServerTemplateHandler sets the operation handler for the get server template operation
+	ServerTemplateGetServerTemplateHandler server_template.GetServerTemplateHandler
+	// ServerTemplateGetServerTemplatesHandler sets the operation handler for the get server templates operation
+	ServerTemplateGetServerTemplatesHandler server_template.GetServerTemplatesHandler
 	// ServerGetServersHandler sets the operation handler for the get servers operation
 	ServerGetServersHandler server.GetServersHandler
 	// DiscoveryGetServicesEndpointsHandler sets the operation handler for the get services endpoints operation
@@ -1106,6 +1130,8 @@ type DataPlaneAPI struct {
 	ServerReplaceServerHandler server.ReplaceServerHandler
 	// ServerSwitchingRuleReplaceServerSwitchingRuleHandler sets the operation handler for the replace server switching rule operation
 	ServerSwitchingRuleReplaceServerSwitchingRuleHandler server_switching_rule.ReplaceServerSwitchingRuleHandler
+	// ServerTemplateReplaceServerTemplateHandler sets the operation handler for the replace server template operation
+	ServerTemplateReplaceServerTemplateHandler server_template.ReplaceServerTemplateHandler
 	// SitesReplaceSiteHandler sets the operation handler for the replace site operation
 	SitesReplaceSiteHandler sites.ReplaceSiteHandler
 	// SpoeReplaceSpoeAgentHandler sets the operation handler for the replace spoe agent operation
@@ -1296,6 +1322,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServerSwitchingRuleCreateServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.CreateServerSwitchingRuleHandler")
 	}
+	if o.ServerTemplateCreateServerTemplateHandler == nil {
+		unregistered = append(unregistered, "server_template.CreateServerTemplateHandler")
+	}
 	if o.SitesCreateSiteHandler == nil {
 		unregistered = append(unregistered, "sites.CreateSiteHandler")
 	}
@@ -1382,6 +1411,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.DeleteServerSwitchingRuleHandler")
+	}
+	if o.ServerTemplateDeleteServerTemplateHandler == nil {
+		unregistered = append(unregistered, "server_template.DeleteServerTemplateHandler")
 	}
 	if o.SitesDeleteSiteHandler == nil {
 		unregistered = append(unregistered, "sites.DeleteSiteHandler")
@@ -1596,6 +1628,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServerSwitchingRuleGetServerSwitchingRulesHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.GetServerSwitchingRulesHandler")
 	}
+	if o.ServerTemplateGetServerTemplateHandler == nil {
+		unregistered = append(unregistered, "server_template.GetServerTemplateHandler")
+	}
+	if o.ServerTemplateGetServerTemplatesHandler == nil {
+		unregistered = append(unregistered, "server_template.GetServerTemplatesHandler")
+	}
 	if o.ServerGetServersHandler == nil {
 		unregistered = append(unregistered, "server.GetServersHandler")
 	}
@@ -1757,6 +1795,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.ReplaceServerSwitchingRuleHandler")
+	}
+	if o.ServerTemplateReplaceServerTemplateHandler == nil {
+		unregistered = append(unregistered, "server_template.ReplaceServerTemplateHandler")
 	}
 	if o.SitesReplaceSiteHandler == nil {
 		unregistered = append(unregistered, "sites.ReplaceSiteHandler")
@@ -2015,6 +2056,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/server_templates"] = server_template.NewCreateServerTemplate(o.context, o.ServerTemplateCreateServerTemplateHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/sites"] = sites.NewCreateSite(o.context, o.SitesCreateSiteHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2128,6 +2173,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewDeleteServerSwitchingRule(o.context, o.ServerSwitchingRuleDeleteServerSwitchingRuleHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/server_templates/{prefix}"] = server_template.NewDeleteServerTemplate(o.context, o.ServerTemplateDeleteServerTemplateHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2415,6 +2464,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/server_templates/{prefix}"] = server_template.NewGetServerTemplate(o.context, o.ServerTemplateGetServerTemplateHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/server_templates"] = server_template.NewGetServerTemplates(o.context, o.ServerTemplateGetServerTemplatesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/servers"] = server.NewGetServers(o.context, o.ServerGetServersHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -2628,6 +2685,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewReplaceServerSwitchingRule(o.context, o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/server_templates/{prefix}"] = server_template.NewReplaceServerTemplate(o.context, o.ServerTemplateReplaceServerTemplateHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

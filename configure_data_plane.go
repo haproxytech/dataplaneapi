@@ -344,6 +344,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.ServerGetServersHandler = &handlers.GetServersHandlerImpl{Client: client}
 	api.ServerReplaceServerHandler = &handlers.ReplaceServerHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup server template handlers
+	api.ServerTemplateCreateServerTemplateHandler = &handlers.CreateServerTemplateHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerTemplateDeleteServerTemplateHandler = &handlers.DeleteServerTemplateHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerTemplateGetServerTemplateHandler = &handlers.GetServerTemplateHandlerImpl{Client: client}
+	api.ServerTemplateGetServerTemplatesHandler = &handlers.GetServerTemplatesHandlerImpl{Client: client}
+	api.ServerTemplateReplaceServerTemplateHandler = &handlers.ReplaceServerTemplateHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup bind handlers
 	api.BindCreateBindHandler = &handlers.CreateBindHandlerImpl{Client: client, ReloadAgent: ra}
 	api.BindDeleteBindHandler = &handlers.DeleteBindHandlerImpl{Client: client, ReloadAgent: ra}

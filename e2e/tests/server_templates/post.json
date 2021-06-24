@@ -1,0 +1,6 @@
+{
+  "prefix": "srv",
+  "num_or_range": "1-3",
+  "fqdn": "google.com",
+  "port": 8080
+}

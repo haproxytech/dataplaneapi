@@ -2,6 +2,8 @@ module github.com/haproxytech/dataplaneapi
 
 go 1.16
 
+replace github.com/haproxytech/client-native/v2 => ../client-native
+
 require (
 	github.com/GehirnInc/crypt v0.0.0-20200316065508-bb7000b8a962
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect

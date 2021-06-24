@@ -5125,6 +5125,299 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/server_templates": {
+      "get": {
+        "description": "Returns an array of all server templates that are configured in specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Return an array of server templates",
+        "operationId": "getServerTemplates",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/server_templates"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new server template in the specified backend in the configuration file.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Add a new server template",
+        "operationId": "createServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Server template created",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/server_templates/{prefix}": {
+      "get": {
+        "description": "Returns one server template configuration by it's prefix in the specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Return one server template",
+        "operationId": "getServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server template prefix",
+            "name": "prefix",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/server_template"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a server template configuration by it's prefix in the specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Replace a server template",
+        "operationId": "replaceServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server template prefix",
+            "name": "prefix",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server template replaced",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a server template configuration by it's prefix in the specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Delete a server template",
+        "operationId": "deleteServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server template prefix",
+            "name": "prefix",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Server template deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/servers": {
       "get": {
         "description": "Returns an array of all servers that are configured in specified backend.",
@@ -16325,6 +16618,588 @@ func init() {
         "$ref": "#/definitions/server_switching_rule"
       }
     },
+    "server_template": {
+      "description": "Set a template to initialize servers with shared parameters.",
+      "type": "object",
+      "title": "Server template",
+      "required": [
+        "prefix",
+        "num_or_range",
+        "fqdn"
+      ],
+      "properties": {
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check_alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Protocols"
+        },
+        "check_proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Name"
+        },
+        "check_via_socks4": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ciphers": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ciphersuites": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "crl_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "error_limit": {
+          "type": "integer",
+          "x-display-name": "Error count"
+        },
+        "fall": {
+          "type": "integer",
+          "x-display-name": "Nr. of consecutive failed checks",
+          "x-nullable": true
+        },
+        "fastinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "force_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "fqdn": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "init-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "log_proto": {
+          "type": "string",
+          "enum": [
+            "legacy",
+            "octet-count"
+          ]
+        },
+        "maintenance": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "max_reuse": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Concurrent Connections",
+          "x-nullable": true
+        },
+        "maxqueue": {
+          "type": "integer",
+          "x-display-name": "Max Number of Connections",
+          "x-nullable": true
+        },
+        "minconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "no_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_verifyhost": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "npn": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "num_or_range": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "observe": {
+          "type": "string",
+          "enum": [
+            "layer4",
+            "layer7"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
+        "pool_low_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_purge_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "prefix": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
+        },
+        "redir": {
+          "type": "string",
+          "x-display-name": "Prefix"
+        },
+        "resolve-net": {
+          "type": "string",
+          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve-prefer": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve_opts": {
+          "type": "string",
+          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
+        },
+        "resolvers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getResolvers",
+            "property": "name"
+          }
+        },
+        "rise": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl_cn": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "socks4": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "check-via-socks4": {
+              "required": true
+            }
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ssl_cafile": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          },
+          "x-display-name": "SSL CA File"
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_reuse": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "stick": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tcp_ut": {
+          "type": "integer"
+        },
+        "tfo": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "track": {
+          "type": "string"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verifyhost": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            },
+            "verify": {
+              "value": "required"
+            }
+          }
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "fqdn": "google.com",
+        "num_or_range": "1-3",
+        "port": 80,
+        "prefix": "srv"
+      }
+    },
+    "server_templates": {
+      "description": "HAProxy backend server templates array",
+      "type": "array",
+      "title": "Server templates",
+      "items": {
+        "$ref": "#/definitions/server_template"
+      }
+    },
     "servers": {
       "description": "HAProxy backend servers array",
       "type": "array",
@@ -18002,6 +18877,9 @@ func init() {
     },
     {
       "name": "ServerSwitchingRule"
+    },
+    {
+      "name": "ServerTemplate"
     },
     {
       "name": "ServiceDiscovery"
@@ -22853,14 +23731,13 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query"
+            "in": "query",
+            "required": true
           },
           {
             "enum": [
               "frontend",
-              "backend",
-              "defaults",
-              "global"
+              "backend"
             ],
             "type": "string",
             "description": "Parent type",
@@ -22926,14 +23803,13 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query"
+            "in": "query",
+            "required": true
           },
           {
             "enum": [
               "frontend",
-              "backend",
-              "defaults",
-              "global"
+              "backend"
             ],
             "type": "string",
             "description": "Parent type",
@@ -23049,14 +23925,13 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query"
+            "in": "query",
+            "required": true
           },
           {
             "enum": [
               "frontend",
-              "backend",
-              "defaults",
-              "global"
+              "backend"
             ],
             "type": "string",
             "description": "Parent type",
@@ -23138,14 +24013,13 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query"
+            "in": "query",
+            "required": true
           },
           {
             "enum": [
               "frontend",
-              "backend",
-              "defaults",
-              "global"
+              "backend"
             ],
             "type": "string",
             "description": "Parent type",
@@ -23259,14 +24133,13 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query"
+            "in": "query",
+            "required": true
           },
           {
             "enum": [
               "frontend",
-              "backend",
-              "defaults",
-              "global"
+              "backend"
             ],
             "type": "string",
             "description": "Parent type",
@@ -23347,8 +24220,25 @@ func init() {
         "parameters": [
           {
             "type": "string",
+<<<<<<< HEAD
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults",
+              "global"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+=======
             "description": "Parent resolver name",
             "name": "resolver",
+>>>>>>> MAJOR: add server-template command
             "in": "query",
             "required": true
           },
@@ -23408,8 +24298,25 @@ func init() {
         "parameters": [
           {
             "type": "string",
+<<<<<<< HEAD
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults",
+              "global"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+=======
             "description": "Parent resolver name",
             "name": "resolver",
+>>>>>>> MAJOR: add server-template command
             "in": "query",
             "required": true
           },
@@ -23512,12 +24419,26 @@ func init() {
         "parameters": [
           {
             "type": "string",
+<<<<<<< HEAD
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults",
+              "global"
+            ],
+=======
             "description": "Nameserver name",
             "name": "name",
             "in": "path",
             "required": true
           },
           {
+>>>>>>> MAJOR: add server-template command
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
@@ -23589,12 +24510,26 @@ func init() {
         "parameters": [
           {
             "type": "string",
+<<<<<<< HEAD
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults",
+              "global"
+            ],
+=======
             "description": "Nameserver name",
             "name": "name",
             "in": "path",
             "required": true
           },
           {
+>>>>>>> MAJOR: add server-template command
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
@@ -23698,12 +24633,17 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Nameserver name",
-            "name": "name",
-            "in": "path",
-            "required": true
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
           },
           {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults",
+              "global"
+            ],
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
@@ -25491,6 +26431,442 @@ func init() {
           },
           "204": {
             "description": "Server Switching Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/server_templates": {
+      "get": {
+        "description": "Returns an array of all server templates that are configured in specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Return an array of server templates",
+        "operationId": "getServerTemplates",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/server_templates"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new server template in the specified backend in the configuration file.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Add a new server template",
+        "operationId": "createServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Server template created",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/server_templates/{prefix}": {
+      "get": {
+        "description": "Returns one server template configuration by it's prefix in the specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Return one server template",
+        "operationId": "getServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server template prefix",
+            "name": "prefix",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/server_template"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "integer",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a server template configuration by it's prefix in the specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Replace a server template",
+        "operationId": "replaceServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server template prefix",
+            "name": "prefix",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server template replaced",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/server_template"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a server template configuration by it's prefix in the specified backend.",
+        "tags": [
+          "ServerTemplate"
+        ],
+        "summary": "Delete a server template",
+        "operationId": "deleteServerTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server template prefix",
+            "name": "prefix",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Server template deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -39401,6 +40777,588 @@ func init() {
         "$ref": "#/definitions/server_switching_rule"
       }
     },
+    "server_template": {
+      "description": "Set a template to initialize servers with shared parameters.",
+      "type": "object",
+      "title": "Server template",
+      "required": [
+        "prefix",
+        "num_or_range",
+        "fqdn"
+      ],
+      "properties": {
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check_alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Protocols"
+        },
+        "check_proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Name"
+        },
+        "check_via_socks4": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ciphers": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ciphersuites": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "cookie": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "crl_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "error_limit": {
+          "type": "integer",
+          "x-display-name": "Error count"
+        },
+        "fall": {
+          "type": "integer",
+          "x-display-name": "Nr. of consecutive failed checks",
+          "x-nullable": true
+        },
+        "fastinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "force_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "fqdn": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "init-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "log_proto": {
+          "type": "string",
+          "enum": [
+            "legacy",
+            "octet-count"
+          ]
+        },
+        "maintenance": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "max_reuse": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Concurrent Connections",
+          "x-nullable": true
+        },
+        "maxqueue": {
+          "type": "integer",
+          "x-display-name": "Max Number of Connections",
+          "x-nullable": true
+        },
+        "minconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "no_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_verifyhost": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "npn": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "num_or_range": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "observe": {
+          "type": "string",
+          "enum": [
+            "layer4",
+            "layer7"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
+        "pool_low_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_purge_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "prefix": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
+        },
+        "redir": {
+          "type": "string",
+          "x-display-name": "Prefix"
+        },
+        "resolve-net": {
+          "type": "string",
+          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve-prefer": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-dependency": {
+            "resolvers": {
+              "required": true
+            }
+          }
+        },
+        "resolve_opts": {
+          "type": "string",
+          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
+        },
+        "resolvers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dynamic-enum": {
+            "operation": "getResolvers",
+            "property": "name"
+          }
+        },
+        "rise": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl_cn": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "socks4": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "check-via-socks4": {
+              "required": true
+            }
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ssl_cafile": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          },
+          "x-display-name": "SSL CA File"
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_reuse": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "stick": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tcp_ut": {
+          "type": "integer"
+        },
+        "tfo": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "track": {
+          "type": "string"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verifyhost": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            },
+            "verify": {
+              "value": "required"
+            }
+          }
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "fqdn": "google.com",
+        "num_or_range": "1-3",
+        "port": 80,
+        "prefix": "srv"
+      }
+    },
+    "server_templates": {
+      "description": "HAProxy backend server templates array",
+      "type": "array",
+      "title": "Server templates",
+      "items": {
+        "$ref": "#/definitions/server_template"
+      }
+    },
     "servers": {
       "description": "HAProxy backend servers array",
       "type": "array",
@@ -40973,6 +42931,9 @@ func init() {
     },
     {
       "name": "ServerSwitchingRule"
+    },
+    {
+      "name": "ServerTemplate"
     },
     {
       "name": "ServiceDiscovery"
