@@ -24,7 +24,7 @@ import (
 	"strings"
 
 	"github.com/fsnotify/fsnotify"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
 type ConfigWatcherParams struct {
@@ -44,11 +44,11 @@ type ConfigWatcher struct {
 func NewConfigWatcher(params ConfigWatcherParams) (*ConfigWatcher, error) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
-		log.WithError(err).Info("Failed to initialize watcher")
+		log.Infof("Failed to initialize watcher: %s", err.Error())
 		return nil, err
 	}
 	if err := watcher.Add(filepath.Dir(params.FilePath)); err != nil {
-		log.WithError(err).Info(fmt.Sprintf("Failed to watch config file: %s", params.FilePath))
+		log.Infof("Failed to watch config file: %s: %s", params.FilePath, err.Error())
 		return nil, err
 	}
 
@@ -82,7 +82,7 @@ func (w *ConfigWatcher) Listen() {
 				}
 			}
 		case err, ok := <-w.wa.Errors:
-			log.WithError(err).Info("Closing config file watcher watcher")
+			log.Infof("Closing config file watcher watcher: %s", err.Error())
 			if !ok {
 				return
 			}

@@ -24,7 +24,6 @@ import (
 	"github.com/haproxytech/client-native/v2/configuration"
 	"github.com/haproxytech/client-native/v2/models"
 	"github.com/haproxytech/dataplaneapi/haproxy"
-	log "github.com/sirupsen/logrus"
 )
 
 type consulServiceDiscovery struct {
@@ -56,7 +55,7 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		return err
 	}
 
-	log := log.WithFields(log.Fields{"ServiceDiscovery": "Consul", "ID": *cParams.ID})
+	logFields := map[string]interface{}{"ServiceDiscovery": "Consul", "ID": *cParams.ID}
 
 	instance := &consulInstance{
 		params:  cParams,
@@ -65,13 +64,13 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		discoveryConfig: NewServiceDiscoveryInstance(c.client, c.reloadAgent, discoveryInstanceParams{
 			Allowlist:       cParams.ServiceWhitelist,
 			Denylist:        cParams.ServiceBlacklist,
-			Log:             log,
+			LogFields:       logFields,
 			ServerSlotsBase: int(*cParams.ServerSlotsBase),
 			SlotsGrowthType: *cParams.ServerSlotsGrowthType,
 			SlotsIncrement:  int(cParams.ServerSlotsGrowthIncrement),
 		}),
 		prevIndexes: make(map[string]uint64),
-		log:         log,
+		logFields:   logFields,
 	}
 
 	if err = c.consulServices.Create(id, instance); err != nil {

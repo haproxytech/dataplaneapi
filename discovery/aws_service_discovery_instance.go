@@ -29,7 +29,7 @@ import (
 	"github.com/haproxytech/client-native/v2/configuration"
 	"github.com/haproxytech/client-native/v2/models"
 	"github.com/haproxytech/dataplaneapi/haproxy"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
 const (
@@ -45,7 +45,7 @@ type awsInstance struct {
 	update          chan struct{}
 	state           map[string]map[string]time.Time
 	discoveryConfig *ServiceDiscoveryInstance
-	log             log.FieldLogger
+	logFields       map[string]interface{}
 }
 
 type awsService struct {
@@ -97,18 +97,18 @@ func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client 
 		return nil, err
 	}
 
-	log := log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *params.ID})
+	logFields := map[string]interface{}{"ServiceDiscovery": "AWS", "ID": *params.ID}
 
 	ai := &awsInstance{
-		params:  params,
-		timeout: timeout,
-		ctx:     ctx,
-		log:     log,
-		state:   make(map[string]map[string]time.Time),
+		params:    params,
+		timeout:   timeout,
+		ctx:       ctx,
+		logFields: logFields,
+		state:     make(map[string]map[string]time.Time),
 		discoveryConfig: NewServiceDiscoveryInstance(client, reloadAgent, discoveryInstanceParams{
 			Allowlist:       []string{},
 			Denylist:        []string{},
-			Log:             log,
+			LogFields:       logFields,
 			ServerSlotsBase: int(*params.ServerSlotsBase),
 			SlotsGrowthType: *params.ServerSlotsGrowthType,
 			SlotsIncrement:  int(params.ServerSlotsGrowthIncrement),
@@ -146,7 +146,7 @@ func (a *awsInstance) start() {
 	a.update = make(chan struct{})
 
 	go func() {
-		a.log.Debug("discovery job starting")
+		a.logDebug("discovery job starting")
 
 		for {
 			select {
@@ -154,11 +154,11 @@ func (a *awsInstance) start() {
 				if !ok {
 					return
 				}
-				a.log.Debug("discovery job update triggered")
+				a.logDebug("discovery job update triggered")
 				err := a.discoveryConfig.UpdateParams(discoveryInstanceParams{
 					Allowlist:       []string{},
 					Denylist:        []string{},
-					Log:             log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *a.params.ID}),
+					LogFields:       a.logFields,
 					ServerSlotsBase: int(*a.params.ServerSlotsBase),
 					SlotsGrowthType: *a.params.ServerSlotsGrowthType,
 					SlotsIncrement:  int(a.params.ServerSlotsGrowthIncrement),
@@ -167,13 +167,13 @@ func (a *awsInstance) start() {
 					a.stop()
 				}
 			case <-time.After(a.timeout):
-				a.log.Debug("discovery job reconciliation started")
+				a.logDebug("discovery job update triggered")
 
 				var api *ec2.Client
 				var err error
 
 				if api, err = a.setAPIClient(); err != nil {
-					a.log.Errorf("error while setting up the API client: %w", err)
+					a.logErrorf("error while setting up the API client: %s", err.Error())
 					a.stop()
 				}
 				if err = a.updateServices(api); err != nil {
@@ -184,14 +184,14 @@ func (a *awsInstance) start() {
 							continue
 						default:
 							a.stop()
-							a.log.Errorf("error while updating service: %w", err)
+							a.logErrorf("error while updating service: %s", err.Error())
 						}
 					default:
 						a.stop()
 					}
 				}
 
-				a.log.Debug("discovery job reconciliation completed")
+				a.logDebug("discovery job reconciliation completed")
 			case <-a.ctx.Done():
 				a.stop()
 			}
@@ -328,7 +328,7 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 }
 
 func (a *awsInstance) stop() {
-	a.log.Debug("discovery job stopping")
+	a.logDebug("discovery job stopping")
 	close(a.update)
 }
 
@@ -362,4 +362,12 @@ func (a *awsInstance) serviceNameFromEC2(instance types.Instance) (string, error
 	}
 
 	return fmt.Sprintf("%s-%s", name, port), nil
+}
+
+func (a *awsInstance) logDebug(message string) {
+	log.WithFields(a.logFields, log.DebugLevel, message)
+}
+
+func (a *awsInstance) logErrorf(format string, args ...interface{}) {
+	log.WithFieldsf(a.logFields, log.ErrorLevel, format, args...)
 }

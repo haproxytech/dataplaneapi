@@ -22,7 +22,7 @@ import (
 	"syscall"
 	"time"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
 type ChanNotify struct {
@@ -86,7 +86,7 @@ func (c *Configuration) initSignalHandler() {
 
 	go func() {
 		sig := <-osSignals
-		log.Println(sig)
+		log.Print(sig)
 		c.Notify.Shutdown.Notify()
 	}()
 

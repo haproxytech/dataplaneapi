@@ -34,7 +34,6 @@ require (
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
 	github.com/lestrrat-go/envload v0.0.0-20180220234015-a3eb8ddeffcc // indirect
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
-	github.com/oklog/ulid/v2 v2.0.2
 	github.com/rodaine/hclencoder v0.0.0-20200910194838-aaa140ee61ed
 	github.com/rs/cors v1.7.0
 	github.com/shirou/gopsutil v3.21.4+incompatible

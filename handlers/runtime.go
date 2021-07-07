@@ -21,14 +21,14 @@ import (
 
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/client-native/v2/models"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
 // RuntimeSupportedFields is a map of fields supported through the runtime API for
 // it's respectable object type
 var RuntimeSupportedFields = map[string][]string{
-	"frontend": []string{"Maxconn"},
-	"server":   []string{"Weight", "Address", "Port", "Maintenance", "AgentCheck", "AgentAddr", "AgentSend", "HealthCheckPort"},
+	"frontend": {"Maxconn"},
+	"server":   {"Weight", "Address", "Port", "Maintenance", "AgentCheck", "AgentAddr", "AgentSend", "HealthCheckPort"},
 }
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
@@ -39,7 +39,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 	// changes go through
 	defer func() {
 		if r := recover(); r != nil {
-			log.Warn("Change Through API Panic: ", r)
+			log.Warning("Change Through API Panic: ", r)
 			// we are panicking, so reload to ensure changes are through
 			reload = true
 		}

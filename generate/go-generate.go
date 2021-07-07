@@ -61,6 +61,7 @@ var groupParents = map[string]string{
 	"user":        "dataplaneapi",
 	"reload":      "haproxy",
 	"syslog":      "log",
+	"log_targets": "log",
 }
 
 var itemDefaults = map[string]interface{}{

@@ -22,11 +22,10 @@ import (
 	"strconv"
 
 	"github.com/google/renameio"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
 func HandlePIDFile(haproxyOptions HAProxyConfiguration) {
-
 	if haproxyOptions.PIDFile == "" {
 		return
 	}

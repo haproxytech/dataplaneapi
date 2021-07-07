@@ -45,8 +45,8 @@ import (
 	"github.com/haproxytech/client-native/v2/storage"
 	parser "github.com/haproxytech/config-parser/v4"
 	"github.com/haproxytech/config-parser/v4/types"
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/rs/cors"
-	log "github.com/sirupsen/logrus"
 
 	"github.com/haproxytech/dataplaneapi/adapters"
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
@@ -661,17 +661,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 	}()
 
-	applicationEntry := log.NewEntry(AppLogger)
-	accessEntry := log.NewEntry(AccLogger)
-	al, err := cfg.ApacheLogFormat()
-	if err != nil {
-		println("Cannot setup custom Apache Log Format", err.Error())
-	}
-
 	// middlewares
 	var adpts []adapters.Adapter
 	adpts = append(adpts,
-		adapters.RecoverMiddleware(applicationEntry),
 		cors.New(cors.Options{
 			AllowedOrigins: []string{"*"},
 			AllowedMethods: []string{
@@ -687,11 +679,28 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			AllowCredentials: true,
 			MaxAge:           86400,
 		}).Handler,
-		adapters.UniqueIDMiddleware(applicationEntry),
-		adapters.LoggingMiddleware(applicationEntry),
-		adapters.ApacheLogMiddleware(accessEntry, al),
 		adapters.ConfigVersionMiddleware(client),
 	)
+
+	// setup logging middlewares
+	accessLogger, err := log.AccessLogger()
+	if err != nil {
+		log.Warningf("Error getting access loggers: %s", err.Error())
+	}
+
+	if accessLogger != nil {
+		for _, logger := range accessLogger.Loggers() {
+			adpts = append(adpts, adapters.ApacheLogMiddleware(logger))
+		}
+	}
+
+	appLogger, err := log.AppLogger()
+	if err != nil {
+		log.Warningf("Error getting app loggers: %s", err.Error())
+	}
+	if appLogger != nil {
+		adpts = append(adpts, adapters.RecoverMiddleware(appLogger))
+	}
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares), adpts...)
 }

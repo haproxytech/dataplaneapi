@@ -21,6 +21,7 @@ import (
 	"github.com/haproxytech/client-native/v2/models"
 
 	"github.com/haproxytech/dataplaneapi/misc"
+	dpapilog "github.com/haproxytech/dataplaneapi/log"
 )
 {{- range $MainGroup := .Groups}}
 	{{- if ne .Name ""}}

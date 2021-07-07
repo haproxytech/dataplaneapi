@@ -30,7 +30,7 @@ import (
 
 	"github.com/google/renameio"
 	"github.com/haproxytech/client-native/v2/models"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
 type IReloadAgent interface {
@@ -176,7 +176,7 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 			return fmt.Sprintf("Reload failed: %s, failed to revert to last known good config file", output), err
 		}
 		if err := ra.restartHAProxy(); err != nil {
-			log.Warn("Restart failed, please check the reason and restart manually: ", err)
+			log.Warning("Restart failed, please check the reason and restart manually: ", err)
 			return fmt.Sprintf("Reload failed: %s, failed to restart HAProxy, please check and start manually", output), err
 		}
 		log.Debug("HAProxy restarted with last known good config.")

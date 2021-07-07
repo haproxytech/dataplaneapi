@@ -27,14 +27,10 @@ import (
 
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/haproxytech/client-native/v2/models"
-	apache_log "github.com/lestrrat-go/apache-logformat"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
-var (
-	cfg                       *Configuration
-	defaultApacheLogFormat, _ = apache_log.New(`%h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i" %{us}T`)
-)
+var cfg *Configuration
 
 type HAProxyConfiguration struct {
 	ConfigFile           string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg" group:"haproxy"`
@@ -77,23 +73,6 @@ type User struct {
 type APIConfiguration struct {
 	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised" hcl:"address" example:"10.2.3.4" save:"true"`
 	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised" hcl:"port" example:"80" save:"true"`
-}
-
-type LoggingOptions struct {
-	LogTo     string `long:"log-to" description:"Log target, can be stdout, file, or syslog" default:"stdout" choice:"stdout" choice:"file" choice:"syslog" group:"log"`
-	LogFile   string `long:"log-file" description:"Location of the log file" default:"/var/log/dataplaneapi/dataplaneapi.log" group:"log"`
-	LogLevel  string `long:"log-level" description:"Logging level" default:"warning" choice:"trace" choice:"debug" choice:"info" choice:"warning" choice:"error" group:"log"`
-	LogFormat string `long:"log-format" description:"Logging format" default:"text" choice:"text" choice:"JSON" group:"log"`
-	ACLFormat string `long:"apache-common-log-format" description:"Apache Common Log Format to format the access log entries" default:"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" %{us}T" group:"log"`
-}
-
-type SyslogOptions struct {
-	SyslogAddr     string `long:"syslog-address" description:"Syslog address (with port declaration in case of TCP type) where logs should be forwarded: accepting socket path in case of unix or unixgram" default:"" group:"syslog"`
-	SyslogProto    string `long:"syslog-protocol" description:"Syslog server protocol" default:"tcp" choice:"tcp" choice:"tcp4" choice:"tcp6" choice:"unix" choice:"unixgram" group:"syslog"`
-	SyslogTag      string `long:"syslog-tag" description:"String to tag the syslog messages" default:"dataplaneapi" group:"syslog"`
-	SyslogLevel    string `long:"syslog-level" description:"Define the required syslog messages level, allowed values: debug|info|notice|warning|error|critical|alert|emergency " default:"debug" group:"syslog"`
-	SyslogFacility string `long:"syslog-facility" description:"Define the Syslog facility number, allowed values: kern|user|mail|daemon|auth|syslog|lpr|news|uucp|cron|authpriv|ftp|local0|local1|local2|local3|local4|local5|local6|local7" default:"local0" group:"syslog"`
-	SyslogMsgID    string
 }
 
 type ClusterConfiguration struct {
@@ -146,12 +125,14 @@ type ServiceDiscovery struct {
 	AWSRegions []*models.AwsRegion `yaml:"aws-regions" group:"service_discovery" save:"true"`
 }
 
+//nolint:staticcheck
 type Configuration struct {
 	Name                   AtomicString         `yaml:"name" example:"famous_condor"`
 	storage                Storage              `yaml:"-"`
 	HAProxy                HAProxyConfiguration `yaml:"-"`
-	Logging                LoggingOptions       `yaml:"-"`
-	Syslog                 SyslogOptions        `yaml:"-"`
+	Logging                log.LoggingOptions   `yaml:"-"`
+	LogTargets             log.Targets          `yaml:"log_targets,omitempty" hcl:"log_targets" group:"log"`
+	Syslog                 log.SyslogOptions    `yaml:"-"`
 	APIOptions             APIConfiguration     `yaml:"-"`
 	Cluster                ClusterConfiguration `yaml:"-"`
 	RuntimeData            RuntimeData          `yaml:"-"`
@@ -190,14 +171,6 @@ func Get() *Configuration {
 	return cfg
 }
 
-func (c *Configuration) ApacheLogFormat() (out *apache_log.ApacheLog, err error) {
-	out, err = apache_log.New(c.Logging.ACLFormat)
-	if err != nil {
-		out = defaultApacheLogFormat
-	}
-	return
-}
-
 func (c *Configuration) GetStorageData() *StorageDataplaneAPIConfiguration {
 	return c.storage.Get()
 }
@@ -232,7 +205,7 @@ func (c *Configuration) Load() error {
 		}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
 			if os.IsNotExist(err) {
-				log.Warnf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
+				log.Warningf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
 			} else {
 				return fmt.Errorf("configuration file %s not valid: %w", c.HAProxy.DataplaneConfig, err)
 			}

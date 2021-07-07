@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-package syslog
+package log
 
 import (
 	"fmt"
@@ -21,8 +21,6 @@ import (
 
 	"github.com/nathanaelle/syslog5424/v2"
 	"github.com/sirupsen/logrus"
-
-	"github.com/haproxytech/dataplaneapi/configuration"
 )
 
 type RFC5424Hook struct {
@@ -64,7 +62,7 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 	return
 }
 
-func NewRFC5424Hook(opts configuration.SyslogOptions) (logrus.Hook, error) {
+func NewRFC5424Hook(opts Target) (logrus.Hook, error) {
 	if len(opts.SyslogAddr) == 0 {
 		return nil, fmt.Errorf("no address has been declared")
 	}

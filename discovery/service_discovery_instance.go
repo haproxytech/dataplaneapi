@@ -19,16 +19,14 @@ import (
 	"sync"
 
 	"github.com/haproxytech/client-native/v2/configuration"
-	log "github.com/sirupsen/logrus"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
-var (
-	// Using a simple mutex to avoid race conditions when multiple Service Discovery instances are trying to commit
-	// changes at the same time: need to be refactored.
-	mutex = &sync.Mutex{}
-)
+// Using a simple mutex to avoid race conditions when multiple Service Discovery instances are trying to commit
+// changes at the same time: need to be refactored.
+var mutex = &sync.Mutex{}
 
 // ServiceInstance specifies the needed information required from the service to provide for the ServiceDiscoveryInstance.
 type ServiceInstance interface {
@@ -49,7 +47,7 @@ type discoveryInstanceParams struct {
 	ServerSlotsBase int
 	SlotsGrowthType string
 	SlotsIncrement  int
-	Log             log.FieldLogger
+	LogFields       map[string]interface{}
 }
 
 // ServiceDiscoveryInstance manages and updates all services of a single service discovery.
@@ -201,14 +199,13 @@ func (s *ServiceDiscoveryInstance) cleanup() (reload bool) {
 		if s.services[service].cleanup {
 			s.services[service].confService.SetTransactionID(s.transactionID)
 			changed, err := s.services[service].confService.Update([]configuration.ServiceServer{})
-
 			if err != nil {
-				s.params.Log.Errorf("service %s marked for clean-up cannot be updated, %s", service, err.Error())
+				s.logErrorf("service %s marked for clean-up cannot be updated, %s", service, err.Error())
 				continue
 			}
 
 			if changed {
-				s.params.Log.Warningf("service %s marked for clean-up, has not any more backend servers", service)
+				s.logWarningf("service %s marked for clean-up, has not any more backend servers", service)
 			}
 
 			reload = reload || changed
@@ -220,7 +217,7 @@ func (s *ServiceDiscoveryInstance) cleanup() (reload bool) {
 
 func (s *ServiceDiscoveryInstance) deleteTransaction() {
 	if err := s.client.DeleteTransaction(s.transactionID); err != nil {
-		s.params.Log.Warningf("cannot delete transaction due to an error: %s", err.Error())
+		s.logWarningf("cannot delete transaction due to an error: %s", err.Error())
 	}
 	s.transactionID = ""
 }
@@ -229,4 +226,12 @@ func (s *ServiceDiscoveryInstance) commitTransaction() error {
 	_, err := s.client.CommitTransaction(s.transactionID)
 	s.transactionID = ""
 	return err
+}
+
+func (s *ServiceDiscoveryInstance) logWarningf(format string, args ...interface{}) {
+	log.WithFieldsf(s.params.LogFields, log.WarnLevel, format, args...)
+}
+
+func (s *ServiceDiscoveryInstance) logErrorf(format string, args ...interface{}) {
+	log.WithFieldsf(s.params.LogFields, log.ErrorLevel, format, args...)
 }

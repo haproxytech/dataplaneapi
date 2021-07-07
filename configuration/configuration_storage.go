@@ -20,6 +20,7 @@ import (
 	"github.com/haproxytech/client-native/v2/models"
 	"github.com/jessevdk/go-flags"
 
+	dpapilog "github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
 )
 
@@ -160,6 +161,7 @@ type StorageDataplaneAPIConfiguration struct {
 	Cluster                *configTypeCluster          `yaml:"cluster,omitempty" hcl:"cluster,omitempty"`
 	ServiceDiscovery       *configTypeServiceDiscovery `yaml:"service_discovery,omitempty" hcl:"service_discovery,omitempty"`
 	Log                    *configTypeLog              `yaml:"log,omitempty" hcl:"log,omitempty"`
+	LogTargets             *dpapilog.Targets           `yaml:"log_targets,omitempty" hcl:"log_targets,omitempty"`
 }
 
 func copyToConfiguration(cfg *Configuration) {
@@ -359,6 +361,9 @@ func copyToConfiguration(cfg *Configuration) {
 	if cfgStorage.Log != nil && cfgStorage.Log.ACLFormat != nil && !misc.HasOSArg("", "apache-common-log-format", "") {
 		cfg.Logging.ACLFormat = *cfgStorage.Log.ACLFormat
 	}
+	if cfgStorage.LogTargets != nil {
+		cfg.LogTargets = *cfgStorage.LogTargets
+	}
 }
 
 func copyConfigurationToStorage(cfg *Configuration) {
@@ -490,4 +495,8 @@ func copyConfigurationToStorage(cfg *Configuration) {
 	}
 	cfgStorage.ServiceDiscovery.AWSRegions = &cfg.ServiceDiscovery.AWSRegions
 
+	if cfgStorage.LogTargets == nil {
+		cfgStorage.LogTargets = &dpapilog.Targets{}
+	}
+	cfgStorage.LogTargets = &cfg.LogTargets
 }

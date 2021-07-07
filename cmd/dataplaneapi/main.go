@@ -17,23 +17,20 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
-	"path/filepath"
 	"syscall"
 
 	loads "github.com/go-openapi/loads"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/security"
 	flags "github.com/jessevdk/go-flags"
-	log "github.com/sirupsen/logrus"
 
 	"github.com/haproxytech/client-native/v2/storage"
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/operations"
-	"github.com/haproxytech/dataplaneapi/syslog"
 )
 
 // GitRepo ...
@@ -50,14 +47,6 @@ var GitDirty = ".dirty"
 
 // BuildTime ...
 var BuildTime = ""
-
-func init() {
-	log.SetFormatter(&log.TextFormatter{
-		FullTimestamp: true,
-		DisableColors: true,
-	})
-	log.SetOutput(os.Stdout)
-}
 
 var cliOptions struct {
 	Version bool `short:"v" long:"version" description:"Version and build information"`
@@ -76,7 +65,8 @@ func main() {
 func startServer(cfg *configuration.Configuration) (reload configuration.AtomicBool) {
 	swaggerSpec, err := loads.Embedded(dataplaneapi.SwaggerJSON, dataplaneapi.FlatSwaggerJSON)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	dataplaneapi.BuildTime = BuildTime
@@ -93,13 +83,15 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	for _, optsGroup := range api.CommandLineOptionsGroups {
 		_, err = parser.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)
 		if err != nil {
-			log.Fatalln(err)
+			fmt.Println(err)
+			os.Exit(1)
 		}
 	}
 
 	_, err = parser.AddGroup("Show version", "Show build and version information", &cliOptions)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	if _, err = parser.Parse(); err != nil {
@@ -107,7 +99,8 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			if fe.Type == flags.ErrHelp {
 				os.Exit(0)
 			} else {
-				log.Fatalln(err)
+				fmt.Println(err)
+				os.Exit(1)
 			}
 		}
 	}
@@ -121,18 +114,21 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	err = cfg.Load()
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	if cfg.HAProxy.UID != 0 {
 		if err = syscall.Setuid(cfg.HAProxy.UID); err != nil {
-			log.Fatalln("set uid:", err)
+			fmt.Println("set uid:", err)
+			os.Exit(1)
 		}
 	}
 
 	if cfg.HAProxy.GID != 0 {
 		if err = syscall.Setgid(cfg.HAProxy.GID); err != nil {
-			log.Fatalln("set gid:", err)
+			fmt.Println("set gid:", err)
+			os.Exit(1)
 		}
 	}
 
@@ -140,7 +136,8 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	dataplaneapi.SyncWithFileSettings(server, cfg)
 	err = cfg.LoadRuntimeVars(dataplaneapi.SwaggerJSON, server.Host, server.Port)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	configuration.HandlePIDFile(cfg.HAProxy)
@@ -172,7 +169,10 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		}
 	}
 
-	setupLogging(cfg)
+	if err = log.InitWithConfiguration(cfg.LogTargets, cfg.Logging, cfg.Syslog); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
 	log.Infof("HAProxy Data Plane API %s %s%s", GitTag, GitCommit, GitDirty)
 	log.Infof("Build from: %s", GitRepo)
@@ -180,7 +180,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	err = cfg.Save()
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Error saving configuration: %s", err.Error())
 	}
 
 	// Applies when the Authorization header is set with the Basic scheme
@@ -204,7 +204,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		dataplaneapi.ContextHandler.Cancel()
 		err := server.Shutdown()
 		if err != nil {
-			log.Fatalln(err)
+			log.Fatalf("Error reloading HAProxy Data Plane API: %s", err.Error())
 		}
 	}()
 
@@ -214,7 +214,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			log.Info("HAProxy Data Plane API shutting down")
 			err := server.Shutdown()
 			if err != nil {
-				log.Fatalln(err)
+				log.Fatalf("Error shutting down HAProxy Data Plane API: %s", err.Error())
 			}
 			os.Exit(0)
 		case <-dataplaneapi.ContextHandler.Context().Done():
@@ -224,74 +224,10 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	server.ConfigureAPI()
 	if err := server.Serve(); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Error running HAProxy Data Plane API: %s", err.Error())
 	}
 
 	defer server.Shutdown() // nolint:errcheck
 
 	return reload
-}
-
-func setupLogging(cfg *configuration.Configuration) {
-	appLogger := log.StandardLogger()
-	configureLogger(appLogger, cfg.Logging, func(opts configuration.SyslogOptions) configuration.SyslogOptions {
-		opts.SyslogMsgID = "app"
-		return opts
-	}(cfg.Syslog))
-
-	accLogger := log.StandardLogger()
-	configureLogger(accLogger, cfg.Logging, func(opts configuration.SyslogOptions) configuration.SyslogOptions {
-		opts.SyslogMsgID = "accesslog"
-		return opts
-	}(cfg.Syslog))
-
-	dataplaneapi.AppLogger = appLogger
-	dataplaneapi.AccLogger = accLogger
-}
-
-func configureLogger(logger *log.Logger, loggingOptions configuration.LoggingOptions, syslogOptions configuration.SyslogOptions) {
-	switch loggingOptions.LogFormat {
-	case "text":
-		logger.SetFormatter(&log.TextFormatter{
-			FullTimestamp: true,
-			DisableColors: true,
-		})
-	case "JSON":
-		logger.SetFormatter(&log.JSONFormatter{})
-	}
-
-	switch loggingOptions.LogTo {
-	case "stdout":
-		logger.SetOutput(os.Stdout)
-	case "file":
-		dir := filepath.Dir(loggingOptions.LogFile)
-		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
-			log.Warning("Error opening log file, no logging implemented: " + err.Error())
-		}
-		//nolint:govet
-		logFile, err := os.OpenFile(loggingOptions.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
-		if err != nil {
-			log.Warning("Error opening log file, no logging implemented: " + err.Error())
-		}
-		log.SetOutput(logFile)
-	case "syslog":
-		logger.SetOutput(ioutil.Discard)
-		hook, err := syslog.NewRFC5424Hook(syslogOptions)
-		if err != nil {
-			log.Warningf("Error configuring Syslog logging: %s", err.Error())
-			break
-		}
-		logger.AddHook(hook)
-	}
-
-	switch loggingOptions.LogLevel {
-	case "debug":
-		logger.SetLevel(log.DebugLevel)
-	case "info":
-		logger.SetLevel(log.InfoLevel)
-	case "warning":
-		logger.SetLevel(log.WarnLevel)
-	case "error":
-		logger.SetLevel(log.ErrorLevel)
-	}
 }

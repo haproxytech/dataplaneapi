@@ -22,8 +22,9 @@ import (
 
 	"github.com/haproxytech/client-native/v2/configuration"
 	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/dataplaneapi/log"
+
 	"github.com/hashicorp/consul/api"
-	log "github.com/sirupsen/logrus"
 )
 
 type consulService struct {
@@ -58,11 +59,11 @@ type consulInstance struct {
 	prevEnabled     bool
 	ctx             context.Context
 	update          chan struct{}
-	log             log.FieldLogger
+	logFields       map[string]interface{}
 }
 
 func (c *consulInstance) start() error {
-	c.log.Debug("discovery job starting")
+	c.logDebug("discovery job starting")
 	if err := c.setAPIClient(); err != nil {
 		return err
 	}
@@ -91,39 +92,39 @@ func (c *consulInstance) watch() {
 			if !ok {
 				return
 			}
-			c.log.Debug("discovery job update triggered")
+			c.logDebug("discovery job update triggered")
 			if err := c.setAPIClient(); err != nil {
-				c.log.Errorf("error while setting up the API client: %w", err)
+				c.logErrorf("error while setting up the API client: %s", err.Error())
 				c.stop()
 				continue
 			}
 			err := c.discoveryConfig.UpdateParams(discoveryInstanceParams{
 				Allowlist:       c.params.ServiceAllowlist,
 				Denylist:        c.params.ServiceDenylist,
-				Log:             log.WithFields(log.Fields{"ServiceDiscovery": "Consul", "ID": *c.params.ID}),
+				LogFields:       c.logFields,
 				ServerSlotsBase: int(*c.params.ServerSlotsBase),
 				SlotsGrowthType: *c.params.ServerSlotsGrowthType,
 				SlotsIncrement:  int(c.params.ServerSlotsGrowthIncrement),
 			})
 			if err != nil {
 				c.stop()
-				c.log.Errorf("error while updating the instance: %w", err)
+				c.logErrorf("error while updating the instance: %s", err.Error())
 			}
 		case <-c.ctx.Done():
 			c.stop()
 		case <-time.After(c.timeout):
-			c.log.Debug("discovery job reconciliation started")
+			c.logDebug("discovery job reconciliation started")
 			if err := c.updateServices(); err != nil {
-				c.log.Errorf("error while updating service: %w", err)
+				// c.log.Errorf("error while updating service: %w", err)
 				c.stop()
 			}
-			c.log.Debug("discovery job reconciliation completed")
+			c.logDebug("discovery job reconciliation completed")
 		}
 	}
 }
 
 func (c *consulInstance) stop() {
-	c.log.Debug("discovery job stopping")
+	c.logDebug("discovery job stopping")
 	c.api = nil
 	c.prevEnabled = false
 	close(c.update)
@@ -220,4 +221,12 @@ func (c *consulInstance) stateChangedToEnabled() bool {
 
 func (c *consulInstance) stateChangedToDisabled() bool {
 	return c.prevEnabled && !*c.params.Enabled
+}
+
+func (c *consulInstance) logDebug(message string) {
+	log.WithFields(c.logFields, log.DebugLevel, message)
+}
+
+func (c *consulInstance) logErrorf(format string, args ...interface{}) {
+	log.WithFieldsf(c.logFields, log.ErrorLevel, format, args...)
 }

@@ -25,7 +25,7 @@ import (
 
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/client-native/v2/models"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 )
 
 type MapSync struct {
@@ -47,7 +47,6 @@ func (ms *MapSync) Stop() {
 // SyncAll sync maps file entries with runtime maps entries for all configured files.
 // Missing runtime entries are appended to the map file
 func (ms *MapSync) SyncAll(client client_native.IHAProxyClient) {
-
 	haproxyOptions := Get().HAProxy
 
 	d := time.Duration(haproxyOptions.UpdateMapFilesPeriod)

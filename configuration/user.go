@@ -27,7 +27,7 @@ import (
 	"github.com/haproxytech/config-parser/v4/common"
 	"github.com/haproxytech/config-parser/v4/options"
 	"github.com/haproxytech/config-parser/v4/types"
-	log "github.com/sirupsen/logrus"
+	"github.com/haproxytech/dataplaneapi/log"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 )

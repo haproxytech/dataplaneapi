@@ -110,6 +110,7 @@ log {
   log_level = "warning"
   log_format = "text"
   apache_common_log_format = "%h"
+  log_targets = "null"
 
   syslog {
     syslog_address = "null"
