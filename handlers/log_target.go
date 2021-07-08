@@ -84,9 +84,8 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 				Code:    &c,
 			}
 			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
-		} else {
-			pName = *params.ParentName
 		}
+		pName = *params.ParentName
 	}
 
 	err := h.Client.Configuration.CreateLogTarget(params.ParentType, pName, params.Data, t, v)
@@ -141,9 +140,8 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 				Code:    &c,
 			}
 			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
-		} else {
-			pName = *params.ParentName
 		}
+		pName = *params.ParentName
 	}
 
 	err := h.Client.Configuration.DeleteLogTarget(params.Index, params.ParentType, pName, t, v)
@@ -183,9 +181,8 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 				Code:    &c,
 			}
 			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
-		} else {
-			pName = *params.ParentName
 		}
+		pName = *params.ParentName
 	}
 
 	v, logTarget, err := h.Client.Configuration.GetLogTarget(params.Index, params.ParentType, pName, t)
@@ -212,9 +209,8 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 				Code:    &c,
 			}
 			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
-		} else {
-			pName = *params.ParentName
 		}
+		pName = *params.ParentName
 	}
 
 	v, logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, pName, t)
@@ -258,9 +254,8 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 				Code:    &c,
 			}
 			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
-		} else {
-			pName = *params.ParentName
 		}
+		pName = *params.ParentName
 	}
 
 	err := h.Client.Configuration.EditLogTarget(params.Index, params.ParentType, pName, params.Data, t, v)
