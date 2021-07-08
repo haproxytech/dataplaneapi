@@ -33,7 +33,7 @@ import (
 type GetLogTargetURL struct {
 	Index int64
 
-	ParentName    string
+	ParentName    *string
 	ParentType    string
 	TransactionID *string
 
@@ -78,7 +78,10 @@ func (o *GetLogTargetURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	parentNameQ := o.ParentName
+	var parentNameQ string
+	if o.ParentName != nil {
+		parentNameQ = *o.ParentName
+	}
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

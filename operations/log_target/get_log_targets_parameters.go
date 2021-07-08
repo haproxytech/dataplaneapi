@@ -47,10 +47,9 @@ type GetLogTargetsParams struct {
 	HTTPRequest *http.Request `json:"-"`
 
 	/*Parent name
-	  Required: true
 	  In: query
 	*/
-	ParentName string
+	ParentName *string
 	/*Parent type
 	  Required: true
 	  In: query
@@ -96,21 +95,18 @@ func (o *GetLogTargetsParams) BindRequest(r *http.Request, route *middleware.Mat
 
 // bindParentName binds and validates parameter ParentName from query.
 func (o *GetLogTargetsParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("parent_name", "query")
-	}
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
-	// Required: true
+	// Required: false
 	// AllowEmptyValue: false
-	if err := validate.RequiredString("parent_name", "query", raw); err != nil {
-		return err
+	if raw == "" { // empty values pass all other validations
+		return nil
 	}
 
-	o.ParentName = raw
+	o.ParentName = &raw
 
 	return nil
 }
@@ -143,7 +139,7 @@ func (o *GetLogTargetsParams) bindParentType(rawData []string, hasKey bool, form
 // validateParentType carries on validations for parameter ParentType
 func (o *GetLogTargetsParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend"}); err != nil {
+	if err := validate.Enum("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend", "defaults", "global"}); err != nil {
 		return err
 	}
 

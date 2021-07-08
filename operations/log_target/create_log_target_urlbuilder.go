@@ -31,7 +31,7 @@ import (
 // CreateLogTargetURL generates an URL for the create log target operation
 type CreateLogTargetURL struct {
 	ForceReload   *bool
-	ParentName    string
+	ParentName    *string
 	ParentType    string
 	TransactionID *string
 	Version       *int64
@@ -78,7 +78,10 @@ func (o *CreateLogTargetURL) Build() (*url.URL, error) {
 		qs.Set("force_reload", forceReloadQ)
 	}
 
-	parentNameQ := o.ParentName
+	var parentNameQ string
+	if o.ParentName != nil {
+		parentNameQ = *o.ParentName
+	}
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

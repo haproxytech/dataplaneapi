@@ -74,7 +74,22 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 		return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateLogTarget(params.ParentType, params.ParentName, params.Data, t, v)
+	pName := ""
+	if params.ParentType == "frontend" || params.ParentType == "backend" {
+		if params.ParentName == nil {
+			msg := "parent_name in query is required"
+			c := misc.ErrHTTPBadRequest
+			e := &models.Error{
+				Message: &msg,
+				Code:    &c,
+			}
+			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+		} else {
+			pName = *params.ParentName
+		}
+	}
+
+	err := h.Client.Configuration.CreateLogTarget(params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +131,22 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 		return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteLogTarget(params.Index, params.ParentType, params.ParentName, t, v)
+	pName := ""
+	if params.ParentType == "frontend" || params.ParentType == "backend" {
+		if params.ParentName == nil {
+			msg := "parent_name in query is required"
+			c := misc.ErrHTTPBadRequest
+			e := &models.Error{
+				Message: &msg,
+				Code:    &c,
+			}
+			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+		} else {
+			pName = *params.ParentName
+		}
+	}
+
+	err := h.Client.Configuration.DeleteLogTarget(params.Index, params.ParentType, pName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
@@ -143,8 +173,22 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
+	pName := ""
+	if params.ParentType == "frontend" || params.ParentType == "backend" {
+		if params.ParentName == nil {
+			msg := "parent_name in query is required"
+			c := misc.ErrHTTPBadRequest
+			e := &models.Error{
+				Message: &msg,
+				Code:    &c,
+			}
+			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+		} else {
+			pName = *params.ParentName
+		}
+	}
 
-	v, logTarget, err := h.Client.Configuration.GetLogTarget(params.Index, params.ParentType, params.ParentName, t)
+	v, logTarget, err := h.Client.Configuration.GetLogTarget(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewGetLogTargetDefault(int(*e.Code)).WithPayload(e).WithConfigurationVersion(v)
@@ -158,8 +202,22 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
+	pName := ""
+	if params.ParentType == "frontend" || params.ParentType == "backend" {
+		if params.ParentName == nil {
+			msg := "parent_name in query is required"
+			c := misc.ErrHTTPBadRequest
+			e := &models.Error{
+				Message: &msg,
+				Code:    &c,
+			}
+			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+		} else {
+			pName = *params.ParentName
+		}
+	}
 
-	v, logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, params.ParentName, t)
+	v, logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,8 +248,22 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 		}
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
+	pName := ""
+	if params.ParentType == "frontend" || params.ParentType == "backend" {
+		if params.ParentName == nil {
+			msg := "parent_name in query is required"
+			c := misc.ErrHTTPBadRequest
+			e := &models.Error{
+				Message: &msg,
+				Code:    &c,
+			}
+			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+		} else {
+			pName = *params.ParentName
+		}
+	}
 
-	err := h.Client.Configuration.EditLogTarget(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration.EditLogTarget(params.Index, params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
