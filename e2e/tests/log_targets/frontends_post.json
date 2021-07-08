@@ -1,0 +1,6 @@
+{
+  "http_connection_mode": "httpclose",
+  "maxconn": 1000,
+  "mode": "tcp",
+  "name": "test_frontend"
+}
