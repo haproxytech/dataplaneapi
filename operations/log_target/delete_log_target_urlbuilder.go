@@ -34,7 +34,7 @@ type DeleteLogTargetURL struct {
 	Index int64
 
 	ForceReload   *bool
-	ParentName    string
+	ParentName    *string
 	ParentType    string
 	TransactionID *string
 	Version       *int64
@@ -88,7 +88,10 @@ func (o *DeleteLogTargetURL) Build() (*url.URL, error) {
 		qs.Set("force_reload", forceReloadQ)
 	}
 
-	parentNameQ := o.ParentName
+	var parentNameQ string
+	if o.ParentName != nil {
+		parentNameQ = *o.ParentName
+	}
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

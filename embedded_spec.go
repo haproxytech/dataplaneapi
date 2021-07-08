@@ -3321,13 +3321,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -3380,13 +3381,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -3463,13 +3465,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -3529,13 +3532,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -3610,13 +3614,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -22848,13 +22853,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -22920,13 +22926,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -23042,13 +23049,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -23130,13 +23138,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -23250,13 +23259,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
