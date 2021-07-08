@@ -1,0 +1,15 @@
+{
+  "balance": {
+    "algorithm": "roundrobin"
+  },
+  "forwardfor": {
+    "enabled": "enabled"
+  },
+  "httpchk": {
+    "method": "GET",
+    "uri": "/check",
+    "version": "HTTP/1.1"
+  },
+  "mode": "http",
+  "name": "test_backend"
+}
