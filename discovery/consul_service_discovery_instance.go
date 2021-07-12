@@ -130,7 +130,11 @@ func (c *consulInstance) stop() {
 
 func (c *consulInstance) updateServices() error {
 	services := make([]ServiceInstance, 0)
-	cServices, _, err := c.api.Catalog().Services(&api.QueryOptions{})
+	params := &api.QueryOptions{}
+	if c.params.Namespace != "" {
+		params.Namespace = c.params.Namespace
+	}
+	cServices, _, err := c.api.Catalog().Services(params)
 	if err != nil {
 		return err
 	}

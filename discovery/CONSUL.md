@@ -21,7 +21,12 @@ curl -XPOST "http://localhost:5555/v2/service_discovery/consul" -H 'content-type
 ```
 # Filtering
 
+Namespace filtering can be done by providing the `namespace` option. Only one namespace can be specified and only services from that 
+namespaces will be tracked.
+
 Using the `service_allowlist` and `service_denylist` fields a list of services to be tracked or ignored respectively can be provided. The `service_allowlist` option has precedence. In both cases, or if neither option is used, the `consul` service is ignored by dataplane.
+
+Both of these filtering options can be used simultaneously.
 
 # Backend example
 
