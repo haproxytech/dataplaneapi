@@ -26,7 +26,7 @@ require (
 	github.com/google/renameio v0.1.1-0.20200217212219-353f81969824
 	github.com/google/uuid v1.2.0
 	github.com/haproxytech/client-native/v2 v2.4.1
-	github.com/haproxytech/config-parser/v3 v3.0.1-0.20210212144342-183eb1988d86
+	github.com/haproxytech/config-parser/v4 v4.0.0-rc1.0.20210706120926-340f1b3664db
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
@@ -43,7 +43,7 @@ require (
 	github.com/tebeka/strftime v0.1.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
-	golang.org/x/sys v0.0.0-20210316164454-77fc1eacc6aa
+	golang.org/x/sys v0.0.0-20210319071255-635bc2c9138d
 	golang.org/x/text v0.3.5 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 )
