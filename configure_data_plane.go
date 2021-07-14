@@ -45,8 +45,8 @@ import (
 	runtime_api "github.com/haproxytech/client-native/v2/runtime"
 	"github.com/haproxytech/client-native/v2/spoe"
 	"github.com/haproxytech/client-native/v2/storage"
-	parser "github.com/haproxytech/config-parser/v3"
-	"github.com/haproxytech/config-parser/v3/types"
+	parser "github.com/haproxytech/config-parser/v4"
+	"github.com/haproxytech/config-parser/v4/types"
 	"github.com/haproxytech/dataplaneapi/syslog"
 	"github.com/rs/cors"
 	log "github.com/sirupsen/logrus"
@@ -789,7 +789,6 @@ func serverShutdown() {
 }
 
 func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) *client_native.HAProxyClient {
-
 	// Initialize HAProxy native client
 	confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
 	if err != nil {

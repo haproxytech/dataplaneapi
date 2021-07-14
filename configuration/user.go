@@ -23,9 +23,10 @@ import (
 
 	"github.com/GehirnInc/crypt"
 	api_errors "github.com/go-openapi/errors"
-	parser "github.com/haproxytech/config-parser/v3"
-	"github.com/haproxytech/config-parser/v3/common"
-	"github.com/haproxytech/config-parser/v3/types"
+	parser "github.com/haproxytech/config-parser/v4"
+	"github.com/haproxytech/config-parser/v4/common"
+	"github.com/haproxytech/config-parser/v4/options"
+	"github.com/haproxytech/config-parser/v4/types"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -110,14 +111,13 @@ func (u *Users) AddUser(user types.User) error {
 }
 
 func (u *Users) getUsersFromUsersListSection(filename, userlistSection string) error {
-	p := &parser.Parser{}
 	// if file doesn't exists
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
 		return fmt.Errorf("cannot read %s, file does not exist", filename)
 	}
-	// if file exists
-	if err := p.LoadData(filename); err != nil {
-		return fmt.Errorf("cannot read %s, err: %s", filename, err.Error())
+	p, errP := parser.New(options.Path(filename))
+	if errP != nil {
+		return errP
 	}
 	data, err := p.Get(parser.UserList, userlistSection, "user")
 	if err != nil {
