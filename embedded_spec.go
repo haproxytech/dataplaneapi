@@ -24220,7 +24220,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-<<<<<<< HEAD
             "description": "Parent name",
             "name": "parent_name",
             "in": "query"
@@ -24235,10 +24234,6 @@ func init() {
             "type": "string",
             "description": "Parent type",
             "name": "parent_type",
-=======
-            "description": "Parent resolver name",
-            "name": "resolver",
->>>>>>> MAJOR: add server-template command
             "in": "query",
             "required": true
           },
@@ -24298,7 +24293,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-<<<<<<< HEAD
             "description": "Parent name",
             "name": "parent_name",
             "in": "query"
@@ -24313,10 +24307,6 @@ func init() {
             "type": "string",
             "description": "Parent type",
             "name": "parent_type",
-=======
-            "description": "Parent resolver name",
-            "name": "resolver",
->>>>>>> MAJOR: add server-template command
             "in": "query",
             "required": true
           },
@@ -24419,7 +24409,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-<<<<<<< HEAD
             "description": "Parent name",
             "name": "parent_name",
             "in": "query"
@@ -24431,14 +24420,6 @@ func init() {
               "defaults",
               "global"
             ],
-=======
-            "description": "Nameserver name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
->>>>>>> MAJOR: add server-template command
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
@@ -24510,7 +24491,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-<<<<<<< HEAD
             "description": "Parent name",
             "name": "parent_name",
             "in": "query"
@@ -24522,14 +24502,6 @@ func init() {
               "defaults",
               "global"
             ],
-=======
-            "description": "Nameserver name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
->>>>>>> MAJOR: add server-template command
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
