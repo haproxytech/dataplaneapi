@@ -2,8 +2,6 @@ module github.com/haproxytech/dataplaneapi
 
 go 1.16
 
-replace github.com/haproxytech/client-native/v2 => ../client-native
-
 require (
 	github.com/GehirnInc/crypt v0.0.0-20200316065508-bb7000b8a962
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
@@ -27,7 +25,7 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v0.1.1-0.20200217212219-353f81969824
 	github.com/google/uuid v1.2.0
-	github.com/haproxytech/client-native/v2 v2.5.1-0.20210714062923-625244de1c5d
+	github.com/haproxytech/client-native/v2 v2.5.1-0.20210716092634-921eb1292e53
 	github.com/haproxytech/config-parser/v4 v4.0.0-rc1.0.20210706120926-340f1b3664db
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
