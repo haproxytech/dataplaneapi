@@ -252,7 +252,11 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			if err != nil {
 				log.Panic(err)
 			}
-			err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), csr, key)
+			registerMerhod := "POST"
+			if method, ok := data["register-method"]; ok {
+				registerMerhod = method
+			}
+			err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), registerMerhod, csr, key)
 			if err != nil {
 				log.Warning(err)
 				break
@@ -266,7 +270,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 	}
 }
 
-func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath string, csr, key string) error {
+func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath string, registerMethod string, csr, key string) error {
 	url = fmt.Sprintf("%s:%s/%s", url, port, strings.TrimLeft(path.Join(basePath, registerPath), "/"))
 	apiCfg := c.cfg.APIOptions
 	userStore := GetUsersStore()
@@ -340,9 +344,9 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(bytesRepresentation))
+	req, err := http.NewRequest(registerMethod, url, bytes.NewBuffer(bytesRepresentation))
 	if err != nil {
-		return fmt.Errorf("error creating new POST request for cluster comunication")
+		return fmt.Errorf("error creating new %s request for cluster comunication", registerMethod)
 	}
 	req.Header.Add("X-Bootstrap-Key", c.cfg.Cluster.BootstrapKey.Load())
 	req.Header.Add("Content-Type", "application/json")
