@@ -73,6 +73,11 @@ type ClusterSync struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+var expectedResponseCodes = map[string]int{
+	"POST": 201,
+	"PUT":  200,
+}
+
 func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClient) {
 	c.cfg = cfg
 	c.cli = cli
@@ -362,7 +367,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	if err != nil {
 		return err
 	}
-	if resp.StatusCode != 201 {
+	if resp.StatusCode != expectedResponseCodes[registerMethod] {
 		return fmt.Errorf("status code not proper [%d] %s", resp.StatusCode, string(body))
 	}
 	var responseData Node
