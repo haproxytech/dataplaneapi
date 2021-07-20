@@ -51,7 +51,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.0"
+    "version": "2.4"
   },
   "basePath": "/v2",
   "paths": {
@@ -12457,6 +12457,29 @@ func init() {
             "x-go-name": "LuaLoad"
           }
         },
+        "lua_prepend_path": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "path",
+                  "cpath"
+                ]
+              }
+            },
+            "x-go-name": "LuaPrependPath"
+          }
+        },
         "master-worker": {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
@@ -12597,7 +12620,6 @@ func init() {
         },
         "pattern": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -13981,11 +14003,10 @@ func init() {
         },
         "uri": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^ ]*$"
         },
         "version": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+          "type": "string"
         }
       },
       "x-display-name": "HTTP Check"
@@ -17974,7 +17995,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.0"
+    "version": "2.4"
   },
   "basePath": "/v2",
   "paths": {
@@ -32883,6 +32904,26 @@ func init() {
       },
       "x-go-name": "LuaLoad"
     },
+    "GlobalLuaPrependPathItems0": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "path",
+            "cpath"
+          ]
+        }
+      },
+      "x-go-name": "LuaPrependPath"
+    },
     "GlobalRuntimeApisItems0": {
       "type": "object",
       "required": [
@@ -35840,6 +35881,12 @@ func init() {
             "$ref": "#/definitions/GlobalLuaLoadsItems0"
           }
         },
+        "lua_prepend_path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalLuaPrependPathItems0"
+          }
+        },
         "master-worker": {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
@@ -35950,7 +35997,6 @@ func init() {
         },
         "pattern": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
               "required": true,
@@ -37322,11 +37368,10 @@ func init() {
         },
         "uri": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^ ]*$"
         },
         "version": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
+          "type": "string"
         }
       },
       "x-display-name": "HTTP Check"
