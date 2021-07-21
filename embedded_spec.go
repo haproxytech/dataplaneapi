@@ -11355,6 +11355,9 @@ func init() {
         "name": {
           "type": "string"
         },
+        "namespace": {
+          "type": "string"
+        },
         "port": {
           "type": "integer",
           "maximum": 65535,
@@ -12846,6 +12849,29 @@ func init() {
               }
             },
             "x-go-name": "LuaLoad"
+          }
+        },
+        "lua_prepend_path": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "path",
+                  "cpath"
+                ]
+              }
+            },
+            "x-go-name": "LuaPrependPath"
           }
         },
         "master-worker": {
@@ -34051,6 +34077,26 @@ func init() {
       },
       "x-go-name": "LuaLoad"
     },
+    "GlobalLuaPrependPathItems0": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "path",
+            "cpath"
+          ]
+        }
+      },
+      "x-go-name": "LuaPrependPath"
+    },
     "GlobalRuntimeApisItems0": {
       "type": "object",
       "required": [
@@ -35560,6 +35606,9 @@ func init() {
         "name": {
           "type": "string"
         },
+        "namespace": {
+          "type": "string"
+        },
         "port": {
           "type": "integer",
           "maximum": 65535,
@@ -37019,6 +37068,12 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/GlobalLuaLoadsItems0"
+          }
+        },
+        "lua_prepend_path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalLuaPrependPathItems0"
           }
         },
         "master-worker": {
