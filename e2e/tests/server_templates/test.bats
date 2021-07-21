@@ -46,7 +46,7 @@ load '../../libs/version'
 	[ "${PREFIX}" = "srv" ]
 }
 
-@test "servers: Replace a server template" {
+@test "server_templates: Replace a server template" {
 	run dpa_curl PUT "/services/haproxy/configuration/server_templates/srv?backend=test_backend&force_reload=true&version=$(version)" "../server_templates/put.json"
 	assert_success
 
@@ -54,8 +54,16 @@ load '../../libs/version'
 	assert_equal $SC 200
 }
 
-@test "servers: Delete a server template" {
+@test "server_templates: Delete a server template" {
 	run dpa_curl DELETE "/services/haproxy/configuration/server_templates/srv?backend=test_backend&force_reload=true&version=$(version)"
+	assert_success
+
+	dpa_curl_status_body '$output'
+	assert_equal $SC 204
+}
+
+@test "server_templates: teardown" {
+	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
 	assert_success
 
 	dpa_curl_status_body '$output'
