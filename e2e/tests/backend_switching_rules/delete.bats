@@ -16,43 +16,26 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "../backend_switching_rules/if.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "backend_switching_rules: Delete a Backend Switching Rule" {
-	run dpa_curl DELETE "/services/haproxy/configuration/backend_switching_rules/0?frontend=test_frontend&force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
+  #
+  # Deleting first
+  #
+  resource_delete "$_BSR_BASE_PATH/0" "frontend=test_frontend&force_reload=true"
+	assert_equal "$SC" 204
+  #
+  # Deleting second
+  #
+	resource_delete "$_BSR_BASE_PATH/0" "frontend=test_frontend&force_reload=true"
+	assert_equal "$SC" 204
+  #
+  # No more backend switching rules, not found
+  #
+	resource_delete "$_BSR_BASE_PATH/0" "frontend=test_frontend&force_reload=true"
+	assert_equal "$SC" 404
 }

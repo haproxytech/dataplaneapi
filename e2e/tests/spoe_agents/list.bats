@@ -17,7 +17,11 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
+load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version_spoe'
+
+load 'utils/_helpers'
 
 setup() {
     run_only
@@ -36,11 +40,8 @@ teardown() {
 }
 
 @test "spoe_agents: List all spoe agents" {
-    run dpa_curl GET "/services/haproxy/spoe/spoe_agents?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    assert_success
+    resource_get "$_SPOE_AGENTS_BASE_PATH" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal $(get_json_path "${BODY}" ".data | length") 2
+    assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
 }

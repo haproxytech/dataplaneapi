@@ -18,13 +18,14 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "runtime_maps_files: Return runtime map files" {
-    run dpa_curl GET "/services/haproxy/runtime/maps"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_RUNTIME_MAP_FILES_BASE_PATH"
+    assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" " .[] | select(.file | contains(\"/tmp/maps/mapfile1.map\") ).file" )" "/tmp/maps/mapfile1.map"
     assert_equal "$(get_json_path "${BODY}" " .[] | select(.file | contains(\"/tmp/maps/mapfile2.map\") ).file" )" "/tmp/maps/mapfile2.map"

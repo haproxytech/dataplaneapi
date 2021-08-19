@@ -17,9 +17,15 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
+load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version_spoe'
+
+load 'utils/_helpers'
 
 setup() {
+    SPOE_FILE="spoefile_example2.cfg"
+
     run_only
 
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example2.cfg'
@@ -36,21 +42,14 @@ teardown() {
 }
 
 @test "spoe_messages: Delete a spoe message" {
-    run dpa_curl DELETE "/services/haproxy/spoe/spoe_messages/check-ip?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg&version=1"
-    assert_success
+    resource_delete "$_SPOE_MESSAGES_BASE_PATH/check-ip" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 204
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 204
-
-    run dpa_curl GET "/services/haproxy/spoe/spoe_messages/check-ip?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_get "$_SPOE_MESSAGES_BASE_PATH/check-ip" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 404
 }
 
 @test "spoe_messages: Return an error when trying to delete non existing spoe message" {
-    run dpa_curl DELETE "/services/haproxy/spoe/spoe_messages/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg&version=1"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_get "$_SPOE_MESSAGES_BASE_PATH/not-exists" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 404
 }

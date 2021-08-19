@@ -1,0 +1,6 @@
+{
+  "acl_name": "url_static",
+  "criterion": "path_beg",
+  "index": 1,
+  "value": "-i /static /images /javascript /stylesheets"
+}

@@ -17,19 +17,18 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
-load '../../libs/version'
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "storage_maps: Refuse to delete still used ssl certificate file" {
     run docker cp "${BATS_TEST_DIRNAME}/mapfile_example.map" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/maps/"
     assert_success
 
-    run dpa_curl DELETE "/services/haproxy/storage/maps/mapfile_example.map"
-    assert_success
-
-    dpa_curl_status_body_safe '$output'
-    echo -e "$output"
-    assert_equal $SC 409
+    resource_delete "$_STORAGE_MAPS_BASE_PATH/mapfile_example.map"
+    assert_equal "$SC" 409
 
     assert dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 
@@ -41,12 +40,8 @@ load '../../libs/haproxy_config_setup'
     run docker cp "${BATS_TEST_DIRNAME}/mapfile_example2.map" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/maps/"
     assert_success
 
-    run dpa_curl DELETE "/services/haproxy/storage/maps/mapfile_example2.map"
-    assert_success
-
-    dpa_curl_status_body_safe '$output'
-    echo -e "$output"
-    assert_equal $SC 204
+    resource_delete "$_STORAGE_MAPS_BASE_PATH/mapfile_example2.map"
+    assert_equal "$SC" 204
 
     refute dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example2.map'
 

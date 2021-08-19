@@ -18,23 +18,21 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 
 @test "runtime_maps_entries: Return one map runtime setting" {
-    run dpa_curl GET "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=mapfile1.map"
+    assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" " select(.key | contains(\"key1\") ).key" )" "key1"
     assert_equal "$(get_json_path "${BODY}" " select(.value | contains(\"value1\") ).value" )" "value1"
 }
 
 @test "runtime_maps_entries: Return an error when one map runtime setting doesn't exists" {
-    run dpa_curl GET "/services/haproxy/runtime/maps_entries/not-exists?map=mapfile1.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/not-exists" "map=mapfile1.map"
+    assert_equal "$SC" 404
 }

@@ -16,58 +16,45 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/get_json_path'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	# creating frontend and related Log Target
-	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	# creating backend and related Log target
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "log_targets: Delete a Log Target from frontend" {
-	run dpa_curl DELETE "/services/haproxy/configuration/log_targets/0?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
+  #
+  # Deleting first entry
+  #
+  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	assert_equal "$SC" 204
+	#
+  # Deleting second entry
+  #
+  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	assert_equal "$SC" 204
+  #
+  # No further log target, not found!
+  #
+	resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	assert_equal "$SC" 404
 }
 
 @test "log_targets: Delete a Log Target from backend" {
-	run dpa_curl DELETE "/services/haproxy/configuration/log_targets/0?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
+  #
+  # Deleting first entry
+  #
+  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	assert_equal "$SC" 204
+	#
+  # Deleting second entry
+  #
+  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	assert_equal "$SC" 204
+  #
+  # No further log target, not found!
+  #
+	resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	assert_equal "$SC" 404
 }

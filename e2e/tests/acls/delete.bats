@@ -19,19 +19,16 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+
+load 'utils/_helpers'
 
 @test "acls: Delete one ACL by its index" {
-    run dpa_curl DELETE "/services/haproxy/configuration/acls/1?parent_name=fe_acl&parent_type=frontend&version=$(version)"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 202
+    resource_delete "$_ACL_BASE_PATH/1" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal "$SC" 202
 }
 
 @test "acls: Delete one ACL by its index and force reload" {
-    run dpa_curl DELETE "/services/haproxy/configuration/acls/0?parent_name=fe_acl&parent_type=frontend&force_reload=true&version=$(version)"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 204
+  resource_delete "$_ACL_BASE_PATH/0" "parent_name=fe_acl&parent_type=frontend&force_reload=true"
+    assert_equal "$SC" 204
 }

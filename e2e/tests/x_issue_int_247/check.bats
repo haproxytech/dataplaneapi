@@ -17,37 +17,27 @@
 
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
+load '../../libs/resource_client'
 load '../../libs/haproxy_config_setup'
+load '../../libs/version'
 
 @test "x_issue_int_247: runtime admin-state of backend app2" {
-    #run dpa_docker_exec 'started" >> /etc/haproxy/log.log'
-    #assert_success
+    resource_get "/services/haproxy/runtime/servers/app2" "backend=bug_int_247"
+    assert_equal "$SC" 200
 
-    run dpa_curl GET "/services/haproxy/runtime/servers/app2?backend=bug_int_247"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal $(get_json_path "$BODY" '.admin_state') "maint"
+    assert_equal "$(get_json_path "$BODY" '.admin_state')" "maint"
 }
 
 @test "x_issue_int_247: runtime admin-state of backend app1" {
-    run dpa_curl GET "/services/haproxy/runtime/servers/app1?backend=bug_int_247"
-    assert_success
+    resource_get "/services/haproxy/runtime/servers/app1" "backend=bug_int_247"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal $(get_json_path "$BODY" '.admin_state') "ready"
+    assert_equal "$(get_json_path "$BODY" '.admin_state')" "ready"
 }
 
 @test "x_issue_int_247: admin-state always reports admin_state of maint if disabled keyword is used" {
-    run dpa_curl PUT "/services/haproxy/runtime/servers/app2?backend=bug_int_247" enable.json
-    assert_success
+    resource_put "/services/haproxy/runtime/servers/app2" "data/enable.json" "backend=bug_int_247"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal $(get_json_path "$BODY" '.admin_state') "ready"
+    assert_equal "$(get_json_path "$BODY" '.admin_state')" "ready"
 }

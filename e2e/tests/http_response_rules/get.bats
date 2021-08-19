@@ -17,60 +17,40 @@
 
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	# creating frontend and related HTTP Response rule
-	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/http_response_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../http_response_rules/unless.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	# creating backend and related HTTP Response rule
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/http_response_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../http_response_rules/unless.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "http_response_rules: Return one HTTP Response Rule from frontend" {
-	run dpa_curl GET "/services/haproxy/configuration/http_response_rules/0?parent_type=frontend&parent_name=test_frontend"
-	assert_success
+  resource_get "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
+	assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" ".data.type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Add-Frontend"
+	assert_equal "$(get_json_path "$BODY" ".data.cond")" "unless"
+	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 192.168.0.0/16 }"
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data.type")" = "add-header" ]
+	resource_get "$_RES_RULES_BASE_PATH/1" "parent_type=frontend&parent_name=test_frontend"
+	assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" ".data.type")" "del-header"
+	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Del-Frontend"
+	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 10.1.0.0/16 }"
 }
 
 @test "http_response_rules: Return one HTTP Response Rule from backend" {
-	run dpa_curl GET "/services/haproxy/configuration/http_response_rules/0?parent_type=backend&parent_name=test_backend"
-	assert_success
+  resource_get "$_RES_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
+	assert_equal "$SC" 200
+	assert_equal "$(get_json_path "$BODY" ".data.type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Add-Backend"
+	assert_equal "$(get_json_path "$BODY" ".data.cond")" "unless"
+	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 192.168.0.0/16 }"
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data.type")" = "add-header" ]
+	resource_get "$_RES_RULES_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
+	assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" ".data.type")" "del-header"
+	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Del-Backend"
+	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 10.1.0.0/16 }"
 }

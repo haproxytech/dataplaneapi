@@ -16,52 +16,17 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/resource_client'
 load '../../libs/get_json_path'
+load '../../libs/haproxy_config_setup'
 load '../../libs/version'
 
-setup() {
-	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "../backend_switching_rules/if.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "../backend_switching_rules/list.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "backend_switching_rules: Replace a Backend Switching Rule" {
-	run dpa_curl GET "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]
-	[ "$(get_json_path "${BODY}" ".data[0].cond_test")" = "{ path -i -m beg /path }" ]
-	[ "$(get_json_path "${BODY}" ".data[1].cond_test")" = "{ req_ssl_sni -i www.example.com }" ]
+  resource_get "$_BSR_BASE_PATH" "frontend=test_frontend"
+	assert_equal "$SC" 200
+	assert_equal "$(get_json_path "$BODY" ".data | length")" 2
+	assert_equal "$(get_json_path "$BODY" ".data[0].cond_test")" "{ req_ssl_sni -i first.example.com }"
+	assert_equal "$(get_json_path "$BODY" ".data[1].cond_test")" "{ req_ssl_sni -i second.example.com }"
 }

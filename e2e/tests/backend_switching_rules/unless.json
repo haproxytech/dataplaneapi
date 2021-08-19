@@ -1,6 +1,0 @@
-{
-  "cond": "unless",
-  "cond_test": "{ req_ssl_sni -i www.example.com }",
-  "index": 0,
-  "name": "another_backend"
-}

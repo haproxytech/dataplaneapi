@@ -17,13 +17,16 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
+load '../../libs/resource_client'
 load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "storage_maps: Add a mapfile" {
 
     refute dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 
-    run dpa_curl_file_upload POST "/services/haproxy/storage/maps" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map"
+    run dpa_curl_file_upload POST "$_STORAGE_MAPS_BASE_PATH" "@${BATS_TEST_DIRNAME}/mapfile_example.map;filename=mapfile_example.map"
     assert_success
 
     dpa_curl_status_body '$output'
@@ -41,11 +44,8 @@ load '../../libs/version'
     assert dpa_docker_exec 'kill -SIGUSR2 1'
     sleep 1
 
-    run dpa_curl GET "/services/haproxy/storage/maps/"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_STORAGE_MAPS_BASE_PATH/"
+    assert_equal "$SC" 200
 
     assert_equal $(get_json_path "$BODY" '.|length') 1
 
@@ -54,7 +54,7 @@ load '../../libs/version'
 
 @test "storage_maps: Get a mapfile contents" {
 
-    run dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+    run dpa_curl_download GET "$_STORAGE_MAPS_BASE_PATH/mapfile_example.map"
     assert_success
 
     dpa_curl_status_body '$output'
@@ -66,23 +66,21 @@ load '../../libs/version'
 }
 
 @test "storage_maps: Try to get unavailable mapfile contents" {
-
     run dpa_curl GET "/services/haproxy/storage/maps/not_here.map"
     assert_success
-
     dpa_curl_status_body_safe '$output'
-    assert_equal $SC 404
+    assert_equal "$SC" 404
 }
 
 @test "storage_maps: Replace a mapfile contents" {
 
-    run dpa_curl_text_plain PUT "/services/haproxy/storage/maps/mapfile_example.map" "@${BATS_TEST_DIRNAME}/mapfile_example2.map"
+    run dpa_curl_text_plain PUT "$_STORAGE_MAPS_BASE_PATH/mapfile_example.map" "@${BATS_TEST_DIRNAME}/mapfile_example2.map"
     assert_success
 
     dpa_curl_status_body '$output'
     assert_equal $SC 202
 
-    run dpa_curl_download GET "/services/haproxy/storage/maps/mapfile_example.map"
+    run dpa_curl_download GET "$_STORAGE_MAPS_BASE_PATH/mapfile_example.map"
     assert_success
 
     dpa_curl_status_body '$output'
@@ -94,12 +92,8 @@ load '../../libs/version'
 }
 
 @test "storage_maps: Delete a mapfile" {
-
-    run dpa_curl DELETE "/services/haproxy/storage/maps/mapfile_example.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 204
+    resource_delete "$_STORAGE_MAPS_BASE_PATH/mapfile_example.map"
+    assert_equal "$SC" 204
 
     refute dpa_docker_exec 'ls /etc/haproxy/maps/mapfile_example.map'
 }

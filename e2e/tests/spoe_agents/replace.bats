@@ -17,9 +17,15 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
+load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version_spoe'
+
+load 'utils/_helpers'
 
 setup() {
+    SPOE_FILE="spoefile_example2.cfg"
+
     run_only
 
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example2.cfg'
@@ -36,17 +42,11 @@ teardown() {
 }
 
 @test "spoe_agents: Replace a spoe agent" {
-    run dpa_curl PUT "/services/haproxy/spoe/spoe_agents/iprep-agent?spoe=spoefile_example2.cfg&version=1&scope=%5Bip-reputation%5D" /data/put.json
-    assert_success
+    resource_put "$_SPOE_AGENTS_BASE_PATH/iprep-agent" "data/put.json" "spoe=spoefile_example2.cfg&scope=\[ip-reputation\]"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    run dpa_curl GET "/services/haproxy/spoe/spoe_agents/iprep-agent?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_SPOE_AGENTS_BASE_PATH/iprep-agent" "spoe=spoefile_example2.cfg&scope=\[ip-reputation\]"
+    assert_equal "$SC" 200
 
     assert_equal $(get_json_path "${BODY}" ".data | .[]") $(cat ${BATS_TEST_DIRNAME}/data/put.json)
 }

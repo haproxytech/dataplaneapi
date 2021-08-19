@@ -16,20 +16,17 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-@test "tcp_request_rules: Fail creating a TCP request rule when frontend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=frontend&parent_name=ghost&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
-	assert_success
+load 'utils/_helpers'
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+@test "tcp_request_rules: Fail creating a TCP request rule when frontend doesn't exist" {
+  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/accept.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }
 
 @test "tcp_request_rules: Fail creating a TCP request rule when backend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=backend&parent_name=ghost&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/accept.json" "parent_type=backend&parent_name=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }

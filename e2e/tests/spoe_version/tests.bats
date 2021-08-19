@@ -18,6 +18,8 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 
+load 'utils/_helpers'
+
 setup() {
 
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example.cfg'
@@ -34,7 +36,7 @@ teardown() {
 }
 
 @test "spoe_version: Get a spoe version" {
-    run dpa_curl GET "/services/haproxy/spoe/version?spoe=spoefile_example.cfg"
+    run dpa_curl GET "$_SPOE_VERSIONS_BASE_PATH?spoe=spoefile_example.cfg"
     assert_success
 
     dpa_curl_status_body '$output'
@@ -44,7 +46,7 @@ teardown() {
 }
 
 @test "spoe_version: Return error when getting version for non existing spoe transaction" {
-    run dpa_curl GET "/services/haproxy/spoe/version?spoe=spoefile_example.cfg?transaction_id=263166c2-3093-40ff-a750-4a4d114dfd99"
+    run dpa_curl GET "$_SPOE_VERSIONS_BASE_PATH?spoe=spoefile_example.cfg?transaction_id=263166c2-3093-40ff-a750-4a4d114dfd99"
     assert_success
 
     dpa_curl_status_body '$output'

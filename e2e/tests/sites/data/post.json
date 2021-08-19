@@ -1,0 +1,46 @@
+{
+  "farms": [
+    {
+      "balance": {
+        "algorithm": "roundrobin"
+      },
+      "mode": "http",
+      "name": "site_backend",
+      "servers": [
+        {
+          "address": "127.0.1.1",
+          "name": "site_server_01",
+          "port": 4567,
+          "proxy-v2-options": null,
+          "weight": 30
+        },
+        {
+          "address": "127.0.1.2",
+          "name": "site_server_02",
+          "port": 4567,
+          "proxy-v2-options": null,
+          "weight": 70
+        }
+      ],
+      "use_as": "default"
+    }
+  ],
+  "name": "site",
+  "service": {
+    "http_connection_mode": "httpclose",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "name": "site_listener_1",
+        "port": 80
+      },
+      {
+        "address": "127.0.0.1",
+        "name": "site_listener_2",
+        "port": 8080
+      }
+    ],
+    "maxconn": 2000,
+    "mode": "http"
+  }
+}

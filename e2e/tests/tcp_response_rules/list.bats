@@ -17,43 +17,17 @@
 
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/tcp_response_rules?backend=test_backend&force_reload=true&version=$(version)" "../tcp_response_rules/if.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/tcp_response_rules?backend=test_backend&force_reload=true&version=$(version)" "../tcp_response_rules/unless.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "tcp_response_rules: Return one TCP Response Rule from backend" {
-	run dpa_curl GET "/services/haproxy/configuration/tcp_response_rules?backend=test_backend"
-	assert_success
+  resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH" "backend=test_backend"
+	assert_equal "$SC" 200
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]
-	[ "$(get_json_path "${BODY}" ".data[0].cond")" = "unless" ]
-	[ "$(get_json_path "${BODY}" ".data[0].cond_test")" = "{ src 10.0.0.0/8 }" ]
-	[ "$(get_json_path "${BODY}" ".data[1].cond")" = "if" ]
-	[ "$(get_json_path "${BODY}" ".data[1].cond_test")" = "{ src 192.168.0.0/16 }" ]
+	assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+	assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"accept\") ).action")" "accept"
+	assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"reject\") ).action")" "reject"
 }

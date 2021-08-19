@@ -17,144 +17,42 @@
 
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	# creating frontend and related Log Target
-	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../log_targets/global.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	# creating backend and related Log Target
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../log_targets/global.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=global&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=global&force_reload=true&version=$(version)" "../log_targets/global.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=defaults&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=defaults&force_reload=true&version=$(version)" "../log_targets/global.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-
-	run dpa_curl DELETE "/services/haproxy/configuration/log_targets/0?parent_type=global&force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-
-	run dpa_curl DELETE "/services/haproxy/configuration/log_targets/0?parent_type=global&force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-
-	run dpa_curl DELETE "/services/haproxy/configuration/log_targets/0?parent_type=defaults&force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-
-	run dpa_curl DELETE "/services/haproxy/configuration/log_targets/0?parent_type=defaults&force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "log_targets: Return an array of all Log Targets from frontend" {
-	run dpa_curl GET "/services/haproxy/configuration/log_targets?parent_type=frontend&parent_name=test_frontend"
-	assert_success
+  resource_get "$_LOG_TRAGET_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
+	assert_equal "$SC" 200
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]
-	[ "$(get_json_path "${BODY}" ".data[0].nolog")" = true ]
-	[ "$(get_json_path "${BODY}" ".data[1].address")" = "localhost" ]
+	assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+
+	assert_equal "$(get_json_path "${BODY}" ".data[0].address")" "localhost"
+	assert_equal "$(get_json_path "${BODY}" ".data[0].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".data[0].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".data[0].level")" "warning"
+
+	assert_equal "$(get_json_path "${BODY}" ".data[1].address")" "10.0.0.1"
+	assert_equal "$(get_json_path "${BODY}" ".data[1].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".data[1].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".data[1].level")" "info"
 }
 
 @test "log_targets: Return an array of all Log Targets from backend" {
-	run dpa_curl GET "/services/haproxy/configuration/log_targets?parent_type=backend&parent_name=test_backend"
-	assert_success
+  resource_get "$_LOG_TRAGET_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+  assert_equal "$SC" 200
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data | length")" = 2 ]
-	[ "$(get_json_path "${BODY}" ".data[0].nolog")" = true ]
-	[ "$(get_json_path "${BODY}" ".data[1].address")" = "localhost" ]
-}
+  assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
 
-@test "log_targets: Return an array of all Log Targets from global" {
-	run dpa_curl GET "/services/haproxy/configuration/log_targets?parent_type=global"
-	assert_success
+	assert_equal "$(get_json_path "${BODY}" ".data[0].address")" "localhost"
+	assert_equal "$(get_json_path "${BODY}" ".data[0].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".data[0].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".data[0].level")" "warning"
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data | length")" = 3 ]
-	[ "$(get_json_path "${BODY}" ".data[0].nolog")" = true ]
-	[ "$(get_json_path "${BODY}" ".data[1].address")" = "localhost" ]
-}
-
-@test "log_targets: Return an array of all Log Targets from defaults" {
-	run dpa_curl GET "/services/haproxy/configuration/log_targets?parent_type=defaults"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".data | length")" = 3 ]
-	[ "$(get_json_path "${BODY}" ".data[0].nolog")" = true ]
-	[ "$(get_json_path "${BODY}" ".data[1].address")" = "localhost" ]
+	assert_equal "$(get_json_path "${BODY}" ".data[1].address")" "10.0.0.1"
+	assert_equal "$(get_json_path "${BODY}" ".data[1].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".data[1].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".data[1].level")" "info"
 }

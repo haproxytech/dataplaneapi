@@ -16,46 +16,18 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "tcp_request_rules: Add a new TCP Request Rule to frontend" {
-	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=frontend&parent_name=test_frontend&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
+  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/accept.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	assert_equal "$SC" 201
 }
 
 @test "tcp_request_rules: Add a new TCP Request Rule to backend" {
-	run dpa_curl POST "/services/haproxy/configuration/tcp_request_rules?parent_type=backend&parent_name=test_backend&force_reload=true&version=$(version)" "../tcp_request_rules/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
+  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/accept.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	assert_equal "$SC" 201
 }

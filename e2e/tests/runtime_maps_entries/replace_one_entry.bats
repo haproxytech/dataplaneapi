@@ -18,28 +18,24 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "runtime_maps_entries: Replace the value corresponding to each id in a map" {
-    run dpa_curl PUT "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map&force_sync=true" /data/put.json
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
+    resource_put "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "data/put.json" "map=mapfile1.map&force_sync=true"
+    assert_equal "$SC" 200
+    #
     # verify that entry is actually changed
-    run dpa_curl GET "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    #
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=mapfile1.map"
+    assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" " select(.value | contains(\"replacedvalue\") ).value" )" "replacedvalue"
 }
 
 @test "runtime_maps_entries: Return an error when trying to replace non existing map key" {
-    run dpa_curl PUT "/services/haproxy/runtime/maps_entries/not-exists?map=mapfile1.map&force_sync=true" /data/put.json
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_put "$_RUNTIME_MAP_ENTRIES_BASE_PATH/not-exists" "data/put.json" "map=mapfile1.map&force_sync=true"
+    assert_equal "$SC" 404
 }

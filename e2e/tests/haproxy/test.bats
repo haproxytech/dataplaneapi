@@ -16,11 +16,10 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/resource_client'
+load 'utils/_helpers'
 
 @test "haproxy: Return HAProxy process information" {
-	run dpa_curl GET "/services/haproxy/runtime/info"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
+  resource_get "$_HAPROXY_BASE_PATH"
+	assert_equal "$SC" 200
 }

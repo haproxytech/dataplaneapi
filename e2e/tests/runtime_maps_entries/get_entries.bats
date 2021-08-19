@@ -18,25 +18,23 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "runtime_maps_entries: Return one map runtime entries" {
-    run dpa_curl GET "/services/haproxy/runtime/maps_entries?map=mapfile1.map"
-    assert_success
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "map=mapfile1.map"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    assert_equal "$(get_json_path "$BODY" " .[] | select(.key | contains(\"key1\") ).key" )" "key1"
+    assert_equal "$(get_json_path "$BODY" " .[] | select(.value | contains(\"value1\") ).value" )" "value1"
 
-    assert_equal "$(get_json_path "${BODY}" " .[] | select(.key | contains(\"key1\") ).key" )" "key1"
-    assert_equal "$(get_json_path "${BODY}" " .[] | select(.value | contains(\"value1\") ).value" )" "value1"
-
-    assert_equal "$(get_json_path "${BODY}" " .[] | select(.key | contains(\"api.example.com\") ).key" )" "api.example.com"
-    assert_equal "$(get_json_path "${BODY}" " .[] | select(.value | contains(\"be_api\") ).value" )" "be_api"
+    assert_equal "$(get_json_path "$BODY" " .[] | select(.key | contains(\"api.example.com\") ).key" )" "api.example.com"
+    assert_equal "$(get_json_path "$BODY" " .[] | select(.value | contains(\"be_api\") ).value" )" "be_api"
 }
 
 @test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/159" {
-    run dpa_curl GET "/services/haproxy/runtime/maps_entries?map=not-exists.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "map=not-exists.map"
+    assert_equal "$SC" 404
 }

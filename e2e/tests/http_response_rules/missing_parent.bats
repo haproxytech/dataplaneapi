@@ -16,20 +16,18 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/get_json_path'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-@test "http_response_rules: Fail creating a HTTP Response rule when frontend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/http_response_rules?parent_type=frontend&parent_name=ghost&force_reload=true&version=$(version)" "../http_response_rules/unless.json"
-	assert_success
+load 'utils/_helpers'
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+@test "http_response_rules: Fail creating a HTTP Response rule when frontend doesn't exist" {
+  resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }
 
 @test "http_response_rules: Fail creating a HTTP Response rule when backend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/http_response_rules?parent_type=backend&parent_name=ghost&force_reload=true&version=$(version)" "../http_response_rules/unless.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+  resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }

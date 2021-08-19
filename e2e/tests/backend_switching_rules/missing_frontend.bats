@@ -16,12 +16,12 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-@test "backend_switching_rules: Fail creating a Backend Switching Rule rule when frontend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=ghost&force_reload=true&version=$(version)" "../backend_switching_rules/if.json"
-	assert_success
+load 'utils/_helpers'
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+@test "backend_switching_rules: Fail creating a Backend Switching Rule rule when frontend doesn't exist" {
+  resource_post "$_BSR_BASE_PATH" "data/post.json" "frontend=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }

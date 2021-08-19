@@ -17,44 +17,14 @@
 
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	run dpa_curl POST "/services/haproxy/configuration/frontends?force_reload=true&version=$(version)" "/frontends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/backend_switching_rules?frontend=test_frontend&force_reload=true&version=$(version)" "../backend_switching_rules/if.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "backend_switching_rules: Replace a Backend Switching Rule" {
-	run dpa_curl PUT "/services/haproxy/configuration/backend_switching_rules/0?frontend=test_frontend&force_reload=true&version=$(version)" "../backend_switching_rules/put.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-	[ "$(get_json_path "${BODY}" ".cond_test")" = "{ req_ssl_sni -i example.com }" ]
+  resource_put "$_BSR_BASE_PATH/0" "data/put.json" "frontend=test_frontend&force_reload=true"
+	assert_equal "$SC" 200
+	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/put.json")" ".")"
 }

@@ -17,50 +17,34 @@
 
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-@test "backends: Add a backend" {
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/post.json"
-	assert_success
+load 'utils/_helpers'
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
+@test "backends: Add a backend" {
+  resource_post "$_BACKEND_BASE_PATH" "data/post.json" "force_reload=true"
+  assert_equal "$SC" "201"
 }
 
 @test "backends: Return a backend" {
-	run dpa_curl GET "/services/haproxy/configuration/backends/test_backend"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-
-	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data.name')
-	[ "${ACTUAL}" = "test_backend" ]
+	resource_get "$_BACKEND_BASE_PATH/test_backend"
+	assert_equal "$SC" 200
+	assert_equal "test_backend" "$(get_json_path "$BODY" '.data.name')"
 }
 
 @test "backends: Replace a backend" {
-	run dpa_curl PUT "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)" "/put.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
+	resource_put "$_BACKEND_BASE_PATH/test_backend" "data/put.json" "force_reload=true"
+	assert_equal "$SC" 200
 }
 
 @test "backends: Return an array of backends" {
-	run dpa_curl GET "/services/haproxy/configuration/backends"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 200
-
-	local ACTUAL; ACTUAL=$(get_json_path "$BODY" '.data[0].name')
-	[ "${ACTUAL}" = "test_backend" ]
+	resource_get "$_BACKEND_BASE_PATH"
+	assert_equal "$SC" 200
+	assert_equal "test_backend" "$(get_json_path "$BODY" '.data[0].name')"
 }
 
 @test "backends: Delete a backend" {
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
+	resource_delete "$_BACKEND_BASE_PATH/test_backend" "force_reload=true"
+	assert_equal "$SC" 204
 }

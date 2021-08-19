@@ -19,25 +19,21 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 
+load 'utils/_helpers'
 
 @test "acls: Return one ACL" {
-    run dpa_curl GET "/services/haproxy/configuration/acls/2?parent_name=fe_acl&parent_type=frontend"
-    assert_success
+    resource_get "$_ACL_BASE_PATH/2" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal "$(get_json_path "${BODY}" " .data.acl_name")" "local_dst"
-    assert_equal "$(get_json_path "${BODY}" " .data.criterion")" "hdr(host)"
-    assert_equal "$(get_json_path "${BODY}" " .data.index")" "2"
-    assert_equal "$(get_json_path "${BODY}" " .data.value")" "-i localhost"
+    assert_equal "$(get_json_path "$BODY" " .data.acl_name")" "local_dst"
+    assert_equal "$(get_json_path "$BODY" " .data.criterion")" "hdr(host)"
+    assert_equal "$(get_json_path "$BODY" " .data.index")" "2"
+    assert_equal "$(get_json_path "$BODY" " .data.value")" "-i localhost"
 }
 
 @test "acls: Return an error when ACL doesn't exists at a given index" {
-    run dpa_curl GET "/services/haproxy/configuration/acls/100?parent_name=fe_acl&parent_type=frontend"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_get "$_ACL_BASE_PATH/100" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal "$SC" 404
 }

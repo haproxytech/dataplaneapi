@@ -18,80 +18,56 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+
+load 'utils/_helpers'
 
 @test "acl_runtime: Return ACL file entries list" {
-    run dpa_curl GET "/services/haproxy/runtime/acl_file_entries?acl_id=0"
-    assert_success
+  resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=0"
+  assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal "$(get_json_path "${BODY}" " .[0].value" )" "/static"
-    assert_equal "$(get_json_path "${BODY}" " .[1].value" )" "/images"
-    assert_equal "$(get_json_path "${BODY}" " .[2].value" )" "/javascript"
-    assert_equal "$(get_json_path "${BODY}" " .[3].value" )" "/stylesheets"
+  assert_equal "$(get_json_path "${BODY}" " .[0].value" )" "/static"
+  assert_equal "$(get_json_path "${BODY}" " .[1].value" )" "/images"
+  assert_equal "$(get_json_path "${BODY}" " .[2].value" )" "/javascript"
+  assert_equal "$(get_json_path "${BODY}" " .[3].value" )" "/stylesheets"
 }
 
-
 @test "acl_runtime: Return ACL file entries by their ID" {
-    run dpa_curl GET "/services/haproxy/runtime/acl_file_entries?acl_id=0"
-    assert_success
+  resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=0"
+  assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+  local list; list=$BODY
 
-    local LIST=$BODY
+  for index in {0..3}; do
+    local id; id="$(get_json_path "${list}" ".[${index}].id" )"
+    local value; value="$(get_json_path "${list}" ".[${index}].value" )"
 
-    for index in {0..3}; do
-    	id="$(get_json_path "${LIST}" " .[${index}].id" )"
-    	value="$(get_json_path "${LIST}" " .[${index}].value" )"
-
-    	run dpa_curl GET "/services/haproxy/runtime/acl_file_entries/${id}?acl_id=0"
-		assert_success
-
-		dpa_curl_status_body '$output'
-		assert_equal $SC 200
-
-	 	assert_equal "$(get_json_path "${BODY}" " .value" )" $value
-	done
+    resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH/$id" "acl_id=0"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ".value" )" "$value"
+  done
 }
 
 @test "acl_runtime: Add an ACL file entry" {
-    run dpa_curl POST "/services/haproxy/runtime/acl_file_entries?acl_id=0" "/data/post.json"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 201
-
-	assert_equal "$(get_json_path "${BODY}" " .value" )" "/js"
+  resource_post "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "data/post.json" "acl_id=0"
+  assert_equal "$SC" 201
+  assert_equal "$(get_json_path "${BODY}" " .value" )" "/js"
 }
 
 @test "acl_runtime: Delete an ACL file entry by its ID" {
 	# checking items and retrieving first ID
-	run dpa_curl GET "/services/haproxy/runtime/acl_file_entries?acl_id=1"
-    assert_success
+	resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=1"
+  assert_equal "$SC" 200
+	assert_equal "$(get_json_path "$BODY" ". | length" )" "5"
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-	assert_equal "$(get_json_path "${BODY}" " . | length" )" "5"
-
-	local id
-	id="$(get_json_path "${BODY}" ".[0].id")"
+	local id; id="$(get_json_path "$BODY" ".[0].id")"
 
 	# deleting the entry file by its ID
-    run dpa_curl DELETE "/services/haproxy/runtime/acl_file_entries/${id}?acl_id=1"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 204
+	resource_delete "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH/$id" "acl_id=1"
+  assert_equal "$SC" 204
 
 	# checking the file entry has been deleted counting the items
-	run dpa_curl GET "/services/haproxy/runtime/acl_file_entries?acl_id=1"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-	assert_equal "$(get_json_path "${BODY}" " . | length" )" "4"
+	resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=1"
+  assert_equal "$SC" 200
+	assert_equal "$(get_json_path "$BODY" ". | length" )" "4"
 }

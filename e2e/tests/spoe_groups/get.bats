@@ -17,9 +17,15 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
+load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version_spoe'
+
+load 'utils/_helpers'
 
 setup() {
+    SPOE_FILE="spoefile_example2.cfg"
+
     run_only
 
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example2.cfg'
@@ -36,19 +42,13 @@ teardown() {
 }
 
 @test "spoe_groups: Get one spoe group" {
-    run dpa_curl GET "/services/haproxy/spoe/spoe_groups/newgroup?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_SPOE_GROUPS_BASE_PATH/newgroup" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" ".data")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
 }
 
 @test "spoe_groups: Return an error when trying to get non existing spoe group" {
-    run dpa_curl GET "/services/haproxy/spoe/spoe_groups/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_get "$_SPOE_GROUPS_BASE_PATH/not-exists" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 404
 }

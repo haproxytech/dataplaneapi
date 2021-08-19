@@ -18,29 +18,26 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+
+load 'utils/_helpers'
 
 @test "acls: Return ACL list" {
-    run dpa_curl GET "/services/haproxy/configuration/acls?parent_name=fe_acl&parent_type=frontend"
-    assert_success
+    resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal $SC "200"
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal "$(get_json_path "${BODY}" " .data | .[2].acl_name" )" "local_dst"
-    assert_equal "$(get_json_path "${BODY}" " .data | .[2].criterion" )" "hdr(host)"
-    assert_equal "$(get_json_path "${BODY}" " .data | .[2].index" )" "2"
-    assert_equal "$(get_json_path "${BODY}" " .data | .[2].value" )" "-i localhost"
+    assert_equal "$(get_json_path "$BODY" " .data | .[2].acl_name" )" "local_dst"
+    assert_equal "$(get_json_path "$BODY" " .data | .[2].criterion" )" "hdr(host)"
+    assert_equal "$(get_json_path "$BODY" " .data | .[2].index" )" "2"
+    assert_equal "$(get_json_path "$BODY" " .data | .[2].value" )" "-i localhost"
 }
 
 @test "acls: Return ACL list by its name" {
-    run dpa_curl GET "/services/haproxy/configuration/acls?parent_name=fe_acl&parent_type=frontend&acl_name=invalid_src"
-    assert_success
+    resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend&acl_name=invalid_src"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal "$(get_json_path "${BODY}" " .data | .[1].acl_name" )" "invalid_src"
-    assert_equal "$(get_json_path "${BODY}" " .data | .[1].criterion" )" "src_port"
-    assert_equal "$(get_json_path "${BODY}" " .data | .[1].index" )" "1"
-    assert_equal "$(get_json_path "${BODY}" " .data | .[1].value" )" "0:1023"
+    assert_equal "$(get_json_path "$BODY" " .data | .[1].acl_name" )" "invalid_src"
+    assert_equal "$(get_json_path "$BODY" " .data | .[1].criterion" )" "src_port"
+    assert_equal "$(get_json_path "$BODY" " .data | .[1].index" )" "1"
+    assert_equal "$(get_json_path "$BODY" " .data | .[1].value" )" "0:1023"
 }

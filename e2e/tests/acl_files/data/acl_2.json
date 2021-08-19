@@ -1,0 +1,6 @@
+{
+  "acl_name": "url_static",
+  "criterion": "path_end",
+  "index": 2,
+  "value": "-i .jpg .gif .png .css .js"
+}

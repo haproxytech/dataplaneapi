@@ -17,9 +17,15 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
+load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version_spoe'
+
+load 'utils/_helpers'
 
 setup() {
+    SPOE_FILE="spoefile_example2.cfg"
+
     run_only
 
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example2.cfg'
@@ -36,19 +42,13 @@ teardown() {
 }
 
 @test "spoe_agents: Get one spoe agent" {
-    run dpa_curl GET "/services/haproxy/spoe/spoe_agents/iprep-agent?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    assert_success
+    resource_get "$_SPOE_AGENTS_BASE_PATH/iprep-agent" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 200
 
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
-
-    assert_equal $(get_json_path "${BODY}" ".data | .[]") $(cat ${BATS_TEST_DIRNAME}/data/post.json)
+    assert_equal $(get_json_path "$BODY" ".data | .[]") $(cat ${BATS_TEST_DIRNAME}/data/post.json)
 }
 
 @test "spoe_agents: Return an error when trying to get non existing spoe agent" {
-    run dpa_curl GET "/services/haproxy/spoe/spoe_agents/not-exists?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_get "$_SPOE_AGENTS_BASE_PATH/not-exists" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 404
 }

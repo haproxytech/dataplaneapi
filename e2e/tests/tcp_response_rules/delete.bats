@@ -16,33 +16,19 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-	run dpa_curl POST "/services/haproxy/configuration/tcp_response_rules?backend=test_backend&force_reload=true&version=$(version)" "../tcp_response_rules/if.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "tcp_response_rules: Delete a TCP Response Rule" {
-	run dpa_curl DELETE "/services/haproxy/configuration/tcp_response_rules/0?backend=test_backend&force_reload=true&version=$(version)"
-	assert_success
+  resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+	assert_equal "$SC" 204
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
+	resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+	assert_equal "$SC" 204
+
+	resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+	assert_equal "$SC" 404
 }

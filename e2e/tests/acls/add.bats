@@ -19,20 +19,18 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/version'
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+
+load 'utils/_helpers'
 
 @test "acls: Add a new ACL" {
-    run dpa_curl POST "/services/haproxy/configuration/acls?parent_name=fe_acl&parent_type=frontend&version=$(version)" "/data/post.json"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 202
-
+    resource_post "$_ACL_BASE_PATH" "data/post.json" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal "$SC" 202
+    #
     # verify that ACL is actually added
-    run dpa_curl GET "/services/haproxy/configuration/acls/2?parent_name=fe_acl&parent_type=frontend"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    #
+    resource_get "$_ACL_BASE_PATH/2" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ".data")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
 }

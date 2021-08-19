@@ -1,0 +1,6 @@
+{
+  "prefix": "srv",
+  "num_or_range": "10-14",
+  "fqdn": "yahoo.com",
+  "port": 8080
+}

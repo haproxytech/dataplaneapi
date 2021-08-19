@@ -17,9 +17,15 @@
 
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
+load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version_spoe'
+
+load 'utils/_helpers'
 
 setup() {
+    SPOE_FILE="spoefile_example2.cfg"
+
     run_only
 
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example2.cfg'
@@ -36,11 +42,8 @@ teardown() {
 }
 
 @test "spoe_messages: List all spoe messages" {
-    run dpa_curl GET "/services/haproxy/spoe/spoe_messages?scope=%5Bip-reputation%5D&spoe=spoefile_example2.cfg"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_SPOE_MESSAGES_BASE_PATH" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ".data | length")" 1
 }

@@ -18,29 +18,24 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+
+load 'utils/_helpers'
 
 @test "acl_runtime: Return ACL files list" {
-    run dpa_curl GET "/services/haproxy/runtime/acls"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_RUNTIME_ACL_BASE_PATH"
+    assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" " .[0].storage_name" )" "path_beg"
     assert_equal "$(get_json_path "${BODY}" " .[1].storage_name" )" "path_end"
 }
 
 @test "acl_runtime: Return ACL file by its ID" {
-    run dpa_curl GET "/services/haproxy/runtime/acls/0"
-    assert_success
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_RUNTIME_ACL_BASE_PATH/0"
+    assert_equal "$SC" 200
     assert_equal "$(get_json_path "${BODY}" " .storage_name" )" "path_beg"
 
-    run dpa_curl GET "/services/haproxy/runtime/acls/1"
-    assert_success
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    resource_get "$_RUNTIME_ACL_BASE_PATH/1"
+    assert_equal "$SC" 200
     assert_equal "$(get_json_path "${BODY}" " .storage_name" )" "path_end"
 }
-

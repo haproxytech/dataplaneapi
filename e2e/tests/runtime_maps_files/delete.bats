@@ -18,19 +18,17 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "runtime_maps_files: Remove all map entries from the map file" {
-    run dpa_curl DELETE "/services/haproxy/runtime/maps/mapfile1.map?force_delete=true&force_sync=true"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 204
+    resource_delete "$_RUNTIME_MAP_FILES_BASE_PATH/mapfile1.map" "force_delete=true&force_sync=true"
+    assert_equal "$SC" 204
 }
 
 @test "runtime_maps_files: Return an error when trying to delete non existing runtime map file" {
-    run dpa_curl DELETE "/services/haproxy/runtime/maps/not-exists.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_delete "$_RUNTIME_MAP_FILES_BASE_PATH/not-exists.map"
+    assert_equal "$SC" 404
 }

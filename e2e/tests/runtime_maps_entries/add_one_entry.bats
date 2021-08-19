@@ -18,26 +18,22 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "runtime_maps_entries: Adds an entry into the map file" {
-    run dpa_curl POST "/services/haproxy/runtime/maps_entries?map=mapfile1.map" /data/post.json
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 201
-
+    resource_post "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "data/post.json" "map=mapfile1.map"
+    assert_equal "$SC" 201
+    #
     # verify that entry is actually added
-    run dpa_curl GET "/services/haproxy/runtime/maps_entries/newkey?map=mapfile1.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 200
+    #
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/newkey" "map=mapfile1.map"
+    assert_equal "$SC" 200
 }
 
 @test "runtime_maps_entries: Refuse adding an existing map entry into the map file" {
-    run dpa_curl POST "/services/haproxy/runtime/maps_entries?map=mapfile1.map" /data/existing.json
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 409
+    resource_post "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "data/existing.json" "map=mapfile1.map"
+    assert_equal "$SC" 409
 }

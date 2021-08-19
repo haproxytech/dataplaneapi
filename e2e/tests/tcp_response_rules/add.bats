@@ -16,33 +16,13 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-setup() {
-	run dpa_curl POST "/services/haproxy/configuration/backends?force_reload=true&version=$(version)" "/backends_post.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
-}
-
-teardown() {
-	run dpa_curl DELETE "/services/haproxy/configuration/frontends/test_frontend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-	run dpa_curl DELETE "/services/haproxy/configuration/backends/test_backend?force_reload=true&version=$(version)"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 204
-}
+load 'utils/_helpers'
 
 @test "tcp_response_rules: Add a new TCP Response Rule to backend" {
-	run dpa_curl POST "/services/haproxy/configuration/tcp_response_rules?backend=test_backend&force_reload=true&version=$(version)" "../tcp_response_rules/if.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 201
+  resource_post "$_TCP_RES_RULES_CERTS_BASE_PATH" "data/if.json" "backend=test_backend&force_reload=true"
+	assert_equal "$SC" 201
 }

@@ -17,35 +17,32 @@
 
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
+load '../../libs/resource_client'
 load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "transactions: Outdated transactions cannot be committed" {
 	# creating 5 transactions
 	for _ in {1..5}; do
-		run dpa_curl POST "/services/haproxy/transactions?version=$(version)";
-		assert_success;
+	  resource_post "$_TRANSACTIONS_BASE_PATH" ""
+	  assert_equal "$SC" 201
 	done
 
 	# retrieving the first one
-	run dpa_curl GET "/services/haproxy/transactions?version=$(version)"
-	dpa_curl_status_body '$output'
-	local id
-	id=$(get_json_path "${BODY}" ".[0].id")
+	resource_get "$_TRANSACTIONS_BASE_PATH"
+	local id; id=$(get_json_path "${BODY}" ".[0].id")
 
 	# commit it, must succeed
-	run dpa_curl PUT "/services/haproxy/transactions/${id}?version=$(version)"
-	assert_success
-	dpa_curl_status_body '$output'
+	resource_put "$_TRANSACTIONS_BASE_PATH/$id" ""
  	assert_equal "$SC" 202
 
 	# retrieve other transactions
- 	run dpa_curl GET "/services/haproxy/transactions?version=$(version)"
-	dpa_curl_status_body '$output'
+	resource_get "$_TRANSACTIONS_BASE_PATH"
+  assert_equal "$SC" 200
 	# iterate over them, should fail with 406 status code
 	for tx in $(echo "${BODY}" | jq -r '.[].id'); do
-		run dpa_curl PUT "/services/haproxy/transactions/${tx}?version=$(version)"
-		assert_success
-		dpa_curl_status_body '$output'
+		resource_put "$_TRANSACTIONS_BASE_PATH/${tx}" ""
 		assert_equal "$SC" 406
 	done
 }

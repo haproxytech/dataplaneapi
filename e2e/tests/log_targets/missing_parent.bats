@@ -16,34 +16,26 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/get_json_path'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-@test "log_targets: Fail creating a Log Target when frontend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=frontend&parent_name=ghost&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
+load 'utils/_helpers'
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+@test "log_targets: Fail creating a Log Target when frontend doesn't exist" {
+  resource_post "$_LOG_TRAGET_BASE_PATH" "data/nolog.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }
 
 @test "log_targets: Fail creating a Log Target when backend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=backend&parent_name=ghost&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+  resource_post "$_LOG_TRAGET_BASE_PATH" "data/nolog.json" "parent_type=backend&parent_name=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }
 
 @test "log_targets: Fail creating a Log Target when parent name is not specified" {
-	run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=backend&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
+  resource_post "$_LOG_TRAGET_BASE_PATH" "data/nolog.json" "parent_type=backend&force_reload=true"
+	assert_equal "$SC" 400
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
-
-    run dpa_curl POST "/services/haproxy/configuration/log_targets?parent_type=frontend&force_reload=true&version=$(version)" "../log_targets/accept.json"
-	assert_success
-
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+  resource_post "$_LOG_TRAGET_BASE_PATH" "data/nolog.json" "parent_type=frontend&force_reload=true"
+	assert_equal "$SC" 400
 }

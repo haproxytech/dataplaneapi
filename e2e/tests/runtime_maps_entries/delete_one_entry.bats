@@ -18,34 +18,27 @@
 load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
+load '../../libs/resource_client'
+load '../../libs/version'
+
+load 'utils/_helpers'
 
 @test "runtime_maps_entries: Deletes all the map entries from the map by its id" {
-    run dpa_curl DELETE "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 204
-
+    resource_delete "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=mapfile1.map"
+    assert_equal "$SC" 204
+    #
     # verify that entry is actually deleted
-    run dpa_curl GET "/services/haproxy/runtime/maps_entries/key1?map=mapfile1.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    #
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=mapfile1.map"
+    assert_equal "$SC" 404
 }
 
 @test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/160 with non existing key" {
-    run dpa_curl DELETE "/services/haproxy/runtime/maps_entries/not-exists?map=mapfile1.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_delete "$_RUNTIME_MAP_ENTRIES_BASE_PATH/not-exists" "map=mapfile1.map"
+    assert_equal "$SC" 404
 }
 
 @test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/160 with non existing map file" {
-    run dpa_curl DELETE "/services/haproxy/runtime/maps_entries/key1?map=not-exists.map"
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 404
+    resource_delete "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=not-exists.map"
+    assert_equal "$SC" 404
 }

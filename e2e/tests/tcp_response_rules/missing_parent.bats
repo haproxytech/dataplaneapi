@@ -16,12 +16,12 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/resource_client'
 load '../../libs/version'
 
-@test "tcp_response_rules: Fail creating a TCP Response rule when backend doesn't exist" {
-	run dpa_curl POST "/services/haproxy/configuration/tcp_response_rules?backend=ghost&force_reload=true&version=$(version)" "../tcp_response_rules/if.json"
-	assert_success
+load 'utils/_helpers'
 
-	dpa_curl_status_body '$output'
-	assert_equal $SC 400
+@test "tcp_response_rules: Fail creating a TCP Response rule when backend doesn't exist" {
+  resource_post "$_TCP_RES_RULES_CERTS_BASE_PATH" "data/unless.json" "backend=ghost&force_reload=true"
+	assert_equal "$SC" 400
 }

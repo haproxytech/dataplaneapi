@@ -16,9 +16,15 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version_spoe'
+
+load 'utils/_helpers'
 
 setup() {
+    SPOE_FILE="spoefile_example.cfg"
+
     run_only
 
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example.cfg'
@@ -35,11 +41,8 @@ teardown() {
 }
 
 @test "spoe_scopes: Add a spoe scope" {
-    run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=spoefile_example.cfg&version=1" /data/add_scope.txt
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 201
+    resource_post "$_SPOE_SCOPES_BASE_PATH" "data/add_scope.txt" "spoe=spoefile_example.cfg"
+    assert_equal "$SC" 201
 }
 
 @test "spoe_scopes: Refuse adding an existing spoe scope" {
@@ -51,11 +54,8 @@ teardown() {
 }
 
 @test "spoe_scopes: Return an error when spoe file doesn't exists" {
-    run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=not_exists.cfg&version=3" /data/add_scope.txt
-    assert_success
-
-    dpa_curl_status_body '$output'
-    assert_equal $SC 500
+    resource_post "$_SPOE_SCOPES_BASE_PATH" "data/add_scope.txt" "spoe=not_exists.cfg"
+    assert_equal "$SC" 500
 }
 
 @test "spoe_scopes: Return an error when version not matched" {
