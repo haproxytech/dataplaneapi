@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 #
-# Copyright 2020 HAProxy Technologies
+# Copyright 2021 HAProxy Technologies
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
