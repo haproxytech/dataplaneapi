@@ -19,7 +19,7 @@
 # and skip running other tests.
 # This function should be used as first statement inside BATS `setup` func
 function run_only() {
-    if [ -n $TESTNUMBER ] && [ "$BATS_TEST_NUMBER" -ne $TESTNUMBER ]; then
+    if [ -n "$TESTNUMBER" ] && [ "$BATS_TEST_NUMBER" -ne $TESTNUMBER ]; then
         skip
     fi
 
