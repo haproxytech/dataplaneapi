@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# NOTE: in order to use this haproxy.cfg must be created in test folder
+# NOTE: in order to use this haproxy.cfg must be created in data test folder
 
 # setup puts configuration from test folder as the one active in dataplane
 setup() {
@@ -30,8 +30,8 @@ setup() {
   fi
 
   # replace the default haproxy config file
-  if [ -f "${BATS_TEST_DIRNAME}/haproxy.cfg" ]; then
-      run docker cp "${BATS_TEST_DIRNAME}/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+  if [ -f "${BATS_TEST_DIRNAME}/data/haproxy.cfg" ]; then
+      run docker cp "${BATS_TEST_DIRNAME}/data/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   else
       run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   fi
