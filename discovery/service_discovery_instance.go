@@ -38,7 +38,7 @@ type ServiceInstance interface {
 
 type confService struct {
 	confService *configuration.Service
-	deleted     bool
+	cleanup     bool
 }
 
 type discoveryInstanceParams struct {
@@ -94,14 +94,14 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 		return err
 	}
 	reload := false
-	s.markForDeletion()
+	s.markForCleanUp()
 	for _, service := range services {
 		if s.serviceNotTracked(service.GetName()) {
 			continue
 		}
 		if !service.Changed() {
 			if se, ok := s.services[service.GetName()]; ok {
-				se.deleted = false
+				se.cleanup = false
 			}
 			continue
 		}
@@ -119,7 +119,7 @@ func (s *ServiceDiscoveryInstance) UpdateServices(services []ServiceInstance) er
 		}
 		reload = reload || r
 	}
-	r := s.removeDeleted()
+	r := s.cleanup()
 	reload = reload || r
 	if reload {
 		if err := s.commitTransaction(); err != nil {
@@ -145,9 +145,9 @@ func (s *ServiceDiscoveryInstance) startTransaction() error {
 	return nil
 }
 
-func (s *ServiceDiscoveryInstance) markForDeletion() {
+func (s *ServiceDiscoveryInstance) markForCleanUp() {
 	for id := range s.services {
-		s.services[id].deleted = true
+		s.services[id].cleanup = true
 	}
 }
 
@@ -171,7 +171,7 @@ func (s *ServiceDiscoveryInstance) serviceNotTracked(service string) bool {
 func (s *ServiceDiscoveryInstance) initService(service ServiceInstance) (bool, error) {
 	if se, ok := s.services[service.GetName()]; ok {
 		se.confService.SetTransactionID(s.transactionID)
-		se.deleted = false
+		se.cleanup = false
 		return false, nil
 	}
 	se, err := s.client.NewService(service.GetBackendName(), configuration.ScalingParams{
@@ -188,23 +188,21 @@ func (s *ServiceDiscoveryInstance) initService(service ServiceInstance) (bool, e
 	}
 	s.services[service.GetName()] = &confService{
 		confService: se,
-		deleted:     false,
+		cleanup:     false,
 	}
 	return reload, nil
 }
 
-func (s *ServiceDiscoveryInstance) removeDeleted() bool {
-	reload := false
+func (s *ServiceDiscoveryInstance) cleanup() (reload bool) {
 	for service := range s.services {
-		if s.services[service].deleted {
+		if s.services[service].cleanup {
 			s.services[service].confService.SetTransactionID(s.transactionID)
-			err := s.services[service].confService.Delete()
-			if err == nil {
-				reload = true
-				delete(s.services, service)
-			}
+			changed, _ := s.services[service].confService.Update([]configuration.ServiceServer{})
+
+			reload = reload || changed
 		}
 	}
+
 	return reload
 }
 
