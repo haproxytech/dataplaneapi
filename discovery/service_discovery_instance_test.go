@@ -82,8 +82,18 @@ func TestAWS(t *testing.T) {
 	err = confClient.Init(confParams)
 	assert.Nil(t, err)
 
-	ra := &haproxy.ReloadAgent{}
-	assert.Nil(t, ra.Init(1, "true", "true", cfgFile, "", 1))
+	var ra haproxy.IReloadAgent
+
+	ra, err = haproxy.NewReloadAgent(haproxy.ReloadAgentParams{
+		Delay:      1,
+		ReloadCmd:  "true",
+		RestartCmd: "true",
+		ConfigFile: cfgFile,
+		BackupDir:  tmp,
+		Retention:  0,
+		Ctx:        context.Background(),
+	})
+	assert.Nil(t, err)
 
 	var instance *awsInstance
 	instance, err = newAWSRegionInstance(context.Background(), &models.AwsRegion{
