@@ -56,6 +56,8 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		return err
 	}
 
+	log := log.WithFields(log.Fields{"ServiceDiscovery": "Consul", "ID": *cParams.ID})
+
 	instance := &consulInstance{
 		params:  cParams,
 		ctx:     c.context,
@@ -63,12 +65,13 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		discoveryConfig: NewServiceDiscoveryInstance(c.client, c.reloadAgent, discoveryInstanceParams{
 			Allowlist:       cParams.ServiceWhitelist,
 			Denylist:        cParams.ServiceBlacklist,
+			Log:             log,
 			ServerSlotsBase: int(*cParams.ServerSlotsBase),
 			SlotsGrowthType: *cParams.ServerSlotsGrowthType,
 			SlotsIncrement:  int(cParams.ServerSlotsGrowthIncrement),
 		}),
 		prevIndexes: make(map[string]uint64),
-		log:         log.WithFields(log.Fields{"ServiceDiscovery": "Consul", "ID": *cParams.ID}),
+		log:         log,
 	}
 
 	if err = c.consulServices.Create(id, instance); err != nil {

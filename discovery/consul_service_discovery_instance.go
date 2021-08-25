@@ -100,6 +100,7 @@ func (c *consulInstance) watch() {
 			err := c.discoveryConfig.UpdateParams(discoveryInstanceParams{
 				Allowlist:       c.params.ServiceAllowlist,
 				Denylist:        c.params.ServiceDenylist,
+				Log:             log.WithFields(log.Fields{"ServiceDiscovery": "Consul", "ID": *c.params.ID}),
 				ServerSlotsBase: int(*c.params.ServerSlotsBase),
 				SlotsGrowthType: *c.params.ServerSlotsGrowthType,
 				SlotsIncrement:  int(c.params.ServerSlotsGrowthIncrement),
