@@ -46,7 +46,7 @@ var (
 
 const (
 	region        = "us-east-1"
-	ami 		  = "ami-0742b4e673072066f"
+	ami           = "ami-0742b4e673072066f"
 	additionalTag = "HAProxy:Integration:Test"
 	serviceName   = "my-app"
 	servicePort   = 8080
@@ -161,7 +161,7 @@ func TestAWS(t *testing.T) {
 		err = scaleAutoScalingGroup(instance.params.ID, dc, asg)
 		assert.Nil(t, err)
 
-		err = checkAutoScalingGroupCapacity(instance.params.ID, dc , asg)
+		err = checkAutoScalingGroupCapacity(instance.params.ID, dc, asg)
 		assert.Nil(t, err)
 
 		backendName := fmt.Sprintf("aws-%s-%s-%s-%d", region, *instance.params.Name, serviceName, servicePort)
@@ -176,7 +176,7 @@ func TestAWS(t *testing.T) {
 			run(t, dc)
 		})
 	}
-	for _, dc := range []int32{5, 1} {
+	for _, dc := range []int32{5, 1, 0} {
 		t.Run(fmt.Sprintf("scaling capacity in of %d servers", dc), func(t *testing.T) {
 			run(t, dc)
 		})
@@ -248,14 +248,17 @@ func checkBackendServers(asgName *string, backendName string, asg *autoscaling.C
 		instanceIDs[k] = aws.ToString(i.InstanceId)
 	}
 
-	instances, _ := ec2Client.DescribeInstances(context.Background(), &ec2.DescribeInstancesInput{
-		InstanceIds: instanceIDs,
-	})
 	set := make(map[string]string)
-	for _, r := range instances.Reservations {
-		for _, i := range r.Instances {
-			id := aws.ToString(i.PrivateIpAddress)
-			set[id] = aws.ToString(i.InstanceId)
+
+	if len(instanceIDs) > 0 {
+		instances, _ := ec2Client.DescribeInstances(context.Background(), &ec2.DescribeInstancesInput{
+			InstanceIds: instanceIDs,
+		})
+		for _, r := range instances.Reservations {
+			for _, i := range r.Instances {
+				id := aws.ToString(i.PrivateIpAddress)
+				set[id] = aws.ToString(i.InstanceId)
+			}
 		}
 	}
 
