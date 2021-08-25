@@ -1,0 +1,6 @@
+{
+    "prefix": "first",
+    "num_or_range": "1-50",
+    "fqdn": "first.com",
+    "port": 443
+  }

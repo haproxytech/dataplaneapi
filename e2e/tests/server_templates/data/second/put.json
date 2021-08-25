@@ -1,0 +1,6 @@
+{
+    "prefix": "second",
+    "num_or_range": "4-6",
+    "fqdn": "site.com",
+    "port": 8081
+  }

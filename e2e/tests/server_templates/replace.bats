@@ -24,15 +24,19 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "server_templates: Replace a server template" {
-  resource_put "$_SERVER_TEMPLATE_BASE_PATH/srv_google" "data/put.json" "backend=test_backend&force_reload=true"
+  resource_put "$_SERVER_TEMPLATE_BASE_PATH/srv_google" "data/srv_google/put.json" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 200
 
 	resource_get "$_SERVER_TEMPLATE_BASE_PATH/srv_google" "backend=test_backend"
   assert_equal "$SC" 200
+
+  assert_equal "srv_google" "$(get_json_path "$BODY" '.data.prefix')"
   assert_equal "1-100" "$(get_json_path "$BODY" '.data.num_or_range')"
+  assert_equal "google.com" "$(get_json_path "$BODY" '.data.fqdn')"
+  assert_equal "8080" "$(get_json_path "$BODY" '.data.port')"
 }
 
 @test "server_templates: Replacing a non existing server template" {
-  resource_put "$_SERVER_TEMPLATE_BASE_PATH/ghost" "data/put.json" "backend=test_backend&force_reload=true"
+  resource_put "$_SERVER_TEMPLATE_BASE_PATH/ghost" "data/srv_google/put.json" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 404
 }

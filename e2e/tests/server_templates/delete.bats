@@ -28,6 +28,11 @@ load 'utils/_helpers'
 	assert_equal "$SC" 204
 }
 
+@test "server_templates: Delete a server template" {
+  resource_delete "$_SERVER_TEMPLATE_BASE_PATH/srv_bing" "backend=test_backend&force_reload=true"
+	assert_equal "$SC" 204
+}
+
 @test "server_templates: Delete a non existing server template" {
   resource_delete "$_SERVER_TEMPLATE_BASE_PATH/ghost" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 404

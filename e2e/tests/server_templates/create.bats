@@ -24,11 +24,32 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "server_templates: Add a new server template" {
-  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/post.json" "backend=test_backend&force_reload=true"
+  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/first/post.json" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 201
+
+  resource_get "$_SERVER_TEMPLATE_BASE_PATH/first" "backend=test_backend"
+  assert_equal "$SC" 200
+
+  assert_equal "first" "$(get_json_path "$BODY" '.data.prefix')"
+  assert_equal "1-50" "$(get_json_path "$BODY" '.data.num_or_range')"
+  assert_equal "first.com" "$(get_json_path "$BODY" '.data.fqdn')"
+  assert_equal "443" "$(get_json_path "$BODY" '.data.port')"
+}
+
+@test "server_templates: Add a new server template" {
+  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/second/post.json" "backend=test_backend&force_reload=true"
+	assert_equal "$SC" 201
+
+  resource_get "$_SERVER_TEMPLATE_BASE_PATH/second" "backend=test_backend"
+  assert_equal "$SC" 200
+
+  assert_equal "second" "$(get_json_path "$BODY" '.data.prefix')"
+  assert_equal "1-3" "$(get_json_path "$BODY" '.data.num_or_range')"
+  assert_equal "second.com" "$(get_json_path "$BODY" '.data.fqdn')"
+  assert_equal "8080" "$(get_json_path "$BODY" '.data.port')"
 }
 
 @test "server_templates: Add a new server template when missing frontend" {
-  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/post.json" "backend=ghost&force_reload=true"
+  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/second/post.json" "backend=ghost&force_reload=true"
 	assert_equal "$SC" 400
 }
