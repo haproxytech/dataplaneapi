@@ -19,6 +19,8 @@ import (
 	"sync"
 
 	"github.com/haproxytech/client-native/v2/configuration"
+	log "github.com/sirupsen/logrus"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 )
 
@@ -47,6 +49,7 @@ type discoveryInstanceParams struct {
 	ServerSlotsBase int
 	SlotsGrowthType string
 	SlotsIncrement  int
+	Log             log.FieldLogger
 }
 
 // ServiceDiscoveryInstance manages and updates all services of a single service discovery.
@@ -197,7 +200,16 @@ func (s *ServiceDiscoveryInstance) cleanup() (reload bool) {
 	for service := range s.services {
 		if s.services[service].cleanup {
 			s.services[service].confService.SetTransactionID(s.transactionID)
-			changed, _ := s.services[service].confService.Update([]configuration.ServiceServer{})
+			changed, err := s.services[service].confService.Update([]configuration.ServiceServer{})
+
+			if err != nil {
+				s.params.Log.Errorf("service %s marked for clean-up cannot be updated, %s", service, err.Error())
+				continue
+			}
+
+			if changed {
+				s.params.Log.Warningf("service %s marked for clean-up, has not any more backend servers", service)
+			}
 
 			reload = reload || changed
 		}
@@ -207,8 +219,9 @@ func (s *ServiceDiscoveryInstance) cleanup() (reload bool) {
 }
 
 func (s *ServiceDiscoveryInstance) deleteTransaction() {
-	//nolint
-	s.client.DeleteTransaction(s.transactionID)
+	if err := s.client.DeleteTransaction(s.transactionID); err != nil {
+		s.params.Log.Warningf("cannot delete transaction due to an error: %s", err.Error())
+	}
 	s.transactionID = ""
 }
 

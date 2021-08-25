@@ -97,15 +97,18 @@ func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client 
 		return nil, err
 	}
 
+	log := log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *params.ID})
+
 	ai := &awsInstance{
 		params:  params,
 		timeout: timeout,
 		ctx:     ctx,
-		log:     log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *params.ID}),
+		log:     log,
 		state:   make(map[string]map[string]time.Time),
 		discoveryConfig: NewServiceDiscoveryInstance(client, reloadAgent, discoveryInstanceParams{
 			Allowlist:       []string{},
 			Denylist:        []string{},
+			Log:             log,
 			ServerSlotsBase: int(*params.ServerSlotsBase),
 			SlotsGrowthType: *params.ServerSlotsGrowthType,
 			SlotsIncrement:  int(params.ServerSlotsGrowthIncrement),
@@ -155,6 +158,7 @@ func (a *awsInstance) start() {
 				err := a.discoveryConfig.UpdateParams(discoveryInstanceParams{
 					Allowlist:       []string{},
 					Denylist:        []string{},
+					Log:             log.WithFields(log.Fields{"ServiceDiscovery": "AWS", "ID": *a.params.ID}),
 					ServerSlotsBase: int(*a.params.ServerSlotsBase),
 					SlotsGrowthType: *a.params.ServerSlotsGrowthType,
 					SlotsIncrement:  int(a.params.ServerSlotsGrowthIncrement),
