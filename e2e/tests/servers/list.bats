@@ -27,9 +27,9 @@ load 'utils/_helpers'
   resource_get "$_SERVER_BASE_PATH" "backend=test_backend"
 	assert_equal "$SC" 200
 
-	assert_equal "$(get_json_path "$BODY" ".data | length")" "3"
+	assert_equal "$(get_json_path "$BODY" ".data | length")" "4"
 
-	for name in "server_01" "server_02" "server_03"; do
+	for name in "server_01" "server_02" "server_03" "server_ipv6"; do
   	assert_equal "$(get_json_path "$BODY" ".data[] | select(.name | contains(\"$name\") ).name")" "$name"
   done
 }

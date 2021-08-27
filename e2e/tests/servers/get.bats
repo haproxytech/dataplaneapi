@@ -30,3 +30,13 @@ load 'utils/_helpers'
     assert_equal "$(get_json_path "$BODY" '.data.name')" "$name"
   done
 }
+
+
+@test "servers: Return one IPv6 server" {
+    resource_get "$_SERVER_BASE_PATH/server_ipv6" "backend=test_backend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "$BODY" '.data.address')" "fd00:6:48:c85:deb:f:62:4"
+    assert_equal "$(get_json_path "$BODY" '.data.check')" "enabled"
+    assert_equal "$(get_json_path "$BODY" '.data.name')" "server_ipv6"
+    assert_equal "$(get_json_path "$BODY" '.data.port')" "80"
+}
