@@ -24,7 +24,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "servers: Return one server" {
-  for name in "server_01" "server_02" "server_01"; do
+  for name in "server_01" "server_02" "server_03"; do
     resource_get "$_SERVER_BASE_PATH/$name" "backend=test_backend"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" '.data.name')" "$name"

@@ -29,8 +29,7 @@ load 'utils/_helpers'
 
 	assert_equal "$(get_json_path "$BODY" ".data | length")" "3"
 
-	for name in "server_01" "server_02" "server_01"; do
+	for name in "server_01" "server_02" "server_03"; do
   	assert_equal "$(get_json_path "$BODY" ".data[] | select(.name | contains(\"$name\") ).name")" "$name"
   done
 }
-
