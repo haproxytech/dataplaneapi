@@ -30,6 +30,6 @@ load 'utils/_helpers'
 	resource_get "$_SITE_BASE_PATH"
 	assert_equal "$SC" 200
 
-	assert_equal "$(get_json_path "$BODY" ".data[0].name")" "test_site"
-	assert_equal "$(get_json_path "$BODY" ".data[1].name")" "site"
+	assert_equal "$(get_json_path "$BODY" " .data[] | select(.name | contains(\"myfrontend\") ).name" )" "myfrontend"
+	assert_equal "$(get_json_path "$BODY" " .data[] | select(.name | contains(\"site\") ).name" )" "site"
 }

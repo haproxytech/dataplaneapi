@@ -24,7 +24,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "sites: Delete a site" {
-  resource_delete "$_SITE_BASE_PATH/test_site" "force_reload=true"
+  resource_delete "$_SITE_BASE_PATH/myfrontend" "force_reload=true"
 	assert_equal "$SC" 204
 
 	resource_get "$_SITE_BASE_PATH/site"
