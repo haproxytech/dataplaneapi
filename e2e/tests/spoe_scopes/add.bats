@@ -43,10 +43,9 @@ teardown() {
 @test "spoe_scopes: Add a spoe scope" {
     resource_post "$_SPOE_SCOPES_BASE_PATH" "data/add_scope.txt" "spoe=spoefile_example.cfg"
     assert_equal "$SC" 201
-}
 
-@test "spoe_scopes: Refuse adding an existing spoe scope" {
-    run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=spoefile_example.cfg&version=2" /data/add_scope.txt
+    # refuse adding an existing spoe scope
+    resource_post "$_SPOE_SCOPES_BASE_PATH" "/data/add_scope.txt" "spoe=spoefile_example.cfg"
     assert_success
 
     dpa_curl_status_body '$output'

@@ -49,10 +49,9 @@ teardown() {
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" ".data")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME"/data/post.json)" ".")"
-}
 
-@test "spoe_agents: Refuse adding an existing spoe agent" {
-    run dpa_curl POST "$_SPOE_AGENTS_BASE_PATH?spoe=spoefile_example.cfg&version=2&scope=%5Bip-reputation%5D" /data/post.json
+    # refuse adding an existing spoe agent
+    resource_post "$_SPOE_AGENTS_BASE_PATH" "/data/post.json" "spoe=spoefile_example.cfg&scope=%5Bip-reputation%5D"
     assert_success
 
     dpa_curl_status_body '$output'
