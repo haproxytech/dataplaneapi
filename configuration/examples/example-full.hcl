@@ -104,13 +104,42 @@ service_discovery {
   aws_regions = []
 }
 
+log_targets = [
+  {
+    log_to           = "stdout"
+    log_level        = "debug"
+    log_format       = "json"
+    log_types = [
+      "access",
+      "app",
+    ]
+  },
+  {
+    log_to           = "file"
+    log_file         = "/var/log/dataplanepi.log"
+    log_level        = "info"
+    log_format       = "text"
+    log_types        = ["app"]
+  },
+  {
+    log_to           = "syslog"
+    log_level        = "info"
+    syslog_address   = "127.0.0.1"
+    syslog_protocol  = "tcp"
+    syslog_tag       = "dataplaneapi"
+    syslog_level     = "debug"
+    syslog_facillity = "local0"
+    log_types        = ["access"]
+  },
+]
+
+# Deprecated: use log_targets instead
 log {
   log_to = "stdout"
   log_file = "/var/log/dataplaneapi/dataplaneapi.log"
   log_level = "warning"
   log_format = "text"
   apache_common_log_format = "%h"
-  log_targets = "null"
 
   syslog {
     syslog_address = "null"
