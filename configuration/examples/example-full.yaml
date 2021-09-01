@@ -112,7 +112,6 @@ log:
   log_level: "warning" # string
   log_format: "text" # string
   apache_common_log_format: "%h" # string
-  log_targets: null # []dpapilog.Target
   syslog:
     syslog_address: null # string 2
     syslog_protocol: "tcp" # string 2
