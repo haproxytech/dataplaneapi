@@ -260,6 +260,10 @@ func (c *Configuration) Save() error {
 		cfg := c.storage.Get()
 		cfg.ServiceDiscovery = nil
 	}
+	if len(c.LogTargets) == 0 {
+		cfg := c.storage.Get()
+		cfg.LogTargets = nil
+	}
 	if cfg.Mode.Load() != "cluster" {
 		storage := cfg.storage.Get()
 		storage.Cluster = nil
