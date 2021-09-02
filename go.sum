@@ -174,8 +174,8 @@ github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v2 v2.5.1-0.20210827143840-f2b54e7211ee h1:5KrzwSqeBebLm0GLL+0wMSu0/6515kV/mHA+1LTUFrA=
-github.com/haproxytech/client-native/v2 v2.5.1-0.20210827143840-f2b54e7211ee/go.mod h1:Uda+J1oMsbh8UIsBnRB9BTpdDCaKLoa6L+AlYr+MSxg=
+github.com/haproxytech/client-native/v2 v2.5.1-0.20210902090914-81cd6b2109c1 h1:ezMdll7SXngO+oJQOyCevYNFn2FbcufmkvuqR+BpotQ=
+github.com/haproxytech/client-native/v2 v2.5.1-0.20210902090914-81cd6b2109c1/go.mod h1:Uda+J1oMsbh8UIsBnRB9BTpdDCaKLoa6L+AlYr+MSxg=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc1.0.20210813110106-49a72c168ed5 h1:HnVlVDTouABD3qS4seBr06H+bE8vh0GfVWqhqFIONvQ=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc1.0.20210813110106-49a72c168ed5/go.mod h1:R2KvNW3R5pf+ucN4K0Wtdhib08U8L10rRAwP2lEDuWQ=
 github.com/hashicorp/consul/api v1.6.0 h1:SZB2hQW8AcTOpfDmiVblQbijxzsRuiyy0JpHfabvHio=
