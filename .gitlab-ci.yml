@@ -5,6 +5,7 @@ stages:
 variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_BASE_IMAGE: $CI_REGISTRY_GO/haproxy-alpine
+  BATS_VERSION: v1.4.1
 
 golangci-lint:
   stage: lint
@@ -65,7 +66,8 @@ build:
   tags:
     - go
   before_script:
-    - apk add git bash curl jq bats
+    - apk add git bash curl jq git
+    - git clone https://github.com/bats-core/bats-core.git && cd bats-core && git checkout $BATS_VERSION && ./install.sh /usr/local && cd ..
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY_GO
   script:
     - bash -x ./e2e/run.bash

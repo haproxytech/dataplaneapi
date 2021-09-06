@@ -23,7 +23,7 @@ load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "server_templates: Add a new server template" {
+@test "server_templates: Add a new server template 1" {
   resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/first/post.json" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 201
 
@@ -36,7 +36,7 @@ load 'utils/_helpers'
   assert_equal "443" "$(get_json_path "$BODY" '.data.port')"
 }
 
-@test "server_templates: Add a new server template" {
+@test "server_templates: Add a new server template 2" {
   resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/second/post.json" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 201
 

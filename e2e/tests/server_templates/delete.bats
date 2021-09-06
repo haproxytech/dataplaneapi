@@ -23,12 +23,12 @@ load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "server_templates: Delete a server template" {
+@test "server_templates: Delete a server template 1" {
   resource_delete "$_SERVER_TEMPLATE_BASE_PATH/srv_google" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 204
 }
 
-@test "server_templates: Delete a server template" {
+@test "server_templates: Delete a server template 2" {
   resource_delete "$_SERVER_TEMPLATE_BASE_PATH/srv_bing" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 204
 }
