@@ -7,15 +7,19 @@ jobs:
       matrix:
         haproxy_version: ["2.1", "2.2", "2.3"]
     runs-on: ubuntu-latest
+    env:
+      BATS_VERSION: v1.4.1
     steps:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
     - name: Downloading required packages
-      run: sudo apt-get install bats    
-    - name: Set up Go 1.16
+      run: sudo apt-get install
+    - name: Install bats
+      run: git clone https://github.com/bats-core/bats-core.git && cd bats-core && git checkout $BATS_VERSION && sudo ./install.sh /usr/local && cd ..
+    - name: Set up Go 1.17
       uses: actions/setup-go@v1
       with:
-        go-version: 1.16
+        go-version: 1.17
     - run: make e2e
       env:
         HAPROXY_VERSION: ${{ matrix.haproxy_version }}
