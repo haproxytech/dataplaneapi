@@ -1,0 +1,63 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  go_lint:
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+      - name: golangci-lint
+        uses: reviewdog/action-golangci-lint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+  check:
+    if: ${{ github.event_name == 'pull_request' }}
+    name: HAProxy check commit message
+    runs-on: ubuntu-latest
+    steps:
+      - name: commit-check
+        uses: docker://ghcr.io/haproxytech/commit-check:3.0.0
+        env:
+          API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  go_build:
+    name: build
+    runs-on: ubuntu-latest
+    needs: ["go_lint"]
+    steps:
+    - name: Set up Go 1.17
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.17
+      id: go
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+    - name: Get dependencies
+      run: |
+        go get -v -t -d ./...
+    - name: Build
+      run: |
+        go build -v .
+  e2e:
+    name: HAProxy
+    needs: ["go_lint","go_build"]
+    strategy:
+      matrix:
+        haproxy_version: ["2.1", "2.2", "2.3"]
+    runs-on: ubuntu-latest
+    env:
+      BATS_VERSION: v1.4.1
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+    - name: Downloading required packages
+      run: sudo apt-get install
+    - name: Install bats
+      run: git clone https://github.com/bats-core/bats-core.git && cd bats-core && git checkout $BATS_VERSION && sudo ./install.sh /usr/local && cd ..
+    - name: Set up Go 1.17
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.17
+    - run: make e2e
+      env:
+        HAPROXY_VERSION: ${{ matrix.haproxy_version }}
