@@ -49,7 +49,6 @@ type reloadCache struct {
 	index         int64
 	retention     int
 	mu            sync.RWMutex
-	channel       chan string
 }
 
 type ReloadAgentParams struct {
@@ -124,46 +123,41 @@ func (ra *ReloadAgent) handleReload(id string) {
 		ra.cache.mu.Unlock()
 	}()
 
-	response, err := ra.reloadHAProxy()
+	response, err := ra.reloadHAProxy(id)
 	if err != nil {
 		ra.cache.failReload(response)
-		log.Warning("Reload failed " + err.Error())
+		log.Warningf("Reload %s failed: %s", id, err)
 	} else {
 		ra.cache.succeedReload(response)
-
-		d := time.Duration(ra.delay) * time.Millisecond
-		log.Debugf("Delaying reload for %s", d.String())
-		time.Sleep(d)
-		log.Debugf("Handling reload completed, waiting for new requests")
+		log.Debugf("Handling reload %s completed, waiting for new requests", id)
 	}
 }
 
 func (ra *ReloadAgent) handleReloads() {
-	defer close(ra.cache.channel)
+	ticker := time.NewTicker(time.Duration(ra.delay) * time.Millisecond)
 	for {
 		select {
-		case id, ok := <-ra.cache.channel:
-			if !ok {
-				return
+		case <-ticker.C:
+			if next := ra.cache.getNext(); next != "" {
+				ra.handleReload(next)
 			}
-			ra.handleReload(id)
 		case <-ra.done:
+			ticker.Stop()
 			return
 		}
 	}
 }
 
-func (ra *ReloadAgent) reloadHAProxy() (string, error) {
+func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	// try the reload
-	log.Debug("Reload started...")
+	log.Debugf("Reload %s started", id)
 	t := time.Now()
 	output, err := execCmd(ra.reloadCmd)
-	log.Debug("Reload finished.")
-	log.Debug("Time elapsed: ", time.Since(t))
+	log.Debugf("Reload %s finished in %s", id, time.Since(t))
 	if err != nil {
 		reloadFailedError := err
 		// if failed, return to last known good file and restart and return the original file
-		log.Info("Reload failed, restarting with last known good config...")
+		log.Infof("Reload %s failed, restarting with last known good config...", id)
 		if err := copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
 			return fmt.Sprintf("Reload failed: %s, failed to backup original config file for restart.", output), err
 		}
@@ -182,7 +176,7 @@ func (ra *ReloadAgent) reloadHAProxy() (string, error) {
 		log.Debug("HAProxy restarted with last known good config.")
 		return output, reloadFailedError
 	}
-	log.Debug("Reload successful")
+	log.Debugf("Reload %s successful", id)
 	// if success, replace last known good file
 	// nolint:errcheck
 	copyFile(ra.configFile, ra.lkgConfigFile)
@@ -220,15 +214,18 @@ func execCmd(cmd string) (string, error) {
 
 // Reload schedules a reload
 func (ra *ReloadAgent) Reload() string {
-	if ra.cache.next == "" {
-		ra.cache.newReload()
+	next := ra.cache.getNext()
+	if next == "" {
+		next = ra.cache.newReload()
+		log.Debugf("Scheduling a new reload with id: %s", next)
 	}
-	return ra.cache.next
+
+	return next
 }
 
 // ForceReload calls reload directly
 func (ra *ReloadAgent) ForceReload() error {
-	r, err := ra.reloadHAProxy()
+	r, err := ra.reloadHAProxy("force")
 	if err != nil {
 		return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
 	}
@@ -244,14 +241,20 @@ func (rc *reloadCache) Init(retention int) {
 	rc.lastSuccess = nil
 	rc.index = 0
 	rc.retention = retention
-	rc.channel = make(chan string)
 }
 
-func (rc *reloadCache) newReload() {
+func (rc *reloadCache) newReload() string {
+	next := rc.generateID()
 	rc.mu.Lock()
-	defer rc.mu.Unlock()
-	rc.next = rc.generateID()
-	rc.channel <- rc.next
+	rc.next = next
+	rc.mu.Unlock()
+	return next
+}
+
+func (rc *reloadCache) getNext() string {
+	rc.mu.RLock()
+	defer rc.mu.RUnlock()
+	return rc.next
 }
 
 func (rc *reloadCache) failReload(response string) {
@@ -378,10 +381,11 @@ func (ra *ReloadAgent) Restart() error {
 }
 
 func (rc *reloadCache) generateID() string {
-	defer func() {
-		rc.index++
-	}()
-	return fmt.Sprintf("%s-%v", time.Now().Format("2006-01-02"), rc.index)
+	rc.mu.Lock()
+	defer rc.mu.Unlock()
+	id := fmt.Sprintf("%s-%v", time.Now().Format("2006-01-02"), rc.index)
+	rc.index++
+	return id
 }
 
 func getTimeIndexFromID(id string) (time.Time, int64, error) {
