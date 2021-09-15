@@ -33,6 +33,10 @@ import (
 	"github.com/haproxytech/dataplaneapi/log"
 )
 
+const (
+	logFieldReloadID = "reload_id"
+)
+
 type IReloadAgent interface {
 	Reload() string
 	Restart() error
@@ -115,6 +119,7 @@ func (ra *ReloadAgent) setLkgPath(configFile, path string) {
 }
 
 func (ra *ReloadAgent) handleReload(id string) {
+	logFields := map[string]interface{}{logFieldReloadID: id}
 	ra.cache.mu.Lock()
 	ra.cache.current = id
 
@@ -126,10 +131,10 @@ func (ra *ReloadAgent) handleReload(id string) {
 	response, err := ra.reloadHAProxy(id)
 	if err != nil {
 		ra.cache.failReload(response)
-		log.Warningf("Reload %s failed: %s", id, err)
+		log.WithFieldsf(logFields, log.WarnLevel, "Reload failed: %s", err)
 	} else {
 		ra.cache.succeedReload(response)
-		log.Debugf("Handling reload %s completed, waiting for new requests", id)
+		log.WithFields(logFields, log.DebugLevel, "Handling reload completed, waiting for new requests")
 	}
 }
 
@@ -149,15 +154,16 @@ func (ra *ReloadAgent) handleReloads() {
 }
 
 func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
+	logFields := map[string]interface{}{logFieldReloadID: id}
 	// try the reload
-	log.Debugf("Reload %s started", id)
+	log.WithFields(logFields, log.DebugLevel, "Reload started")
 	t := time.Now()
 	output, err := execCmd(ra.reloadCmd)
-	log.Debugf("Reload %s finished in %s", id, time.Since(t))
+	log.WithFieldsf(logFields, log.DebugLevel, "Reload finished in %s", time.Since(t))
 	if err != nil {
 		reloadFailedError := err
 		// if failed, return to last known good file and restart and return the original file
-		log.Infof("Reload %s failed, restarting with last known good config...", id)
+		log.WithFields(logFields, log.InfoLevel, "Reload failed, restarting with last known good config...")
 		if err := copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
 			return fmt.Sprintf("Reload failed: %s, failed to backup original config file for restart.", output), err
 		}
@@ -170,13 +176,13 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 			return fmt.Sprintf("Reload failed: %s, failed to revert to last known good config file", output), err
 		}
 		if err := ra.restartHAProxy(); err != nil {
-			log.Warning("Restart failed, please check the reason and restart manually: ", err)
+			log.WithFieldsf(logFields, log.WarnLevel, "Restart failed, please check the reason and restart manually: %s", err)
 			return fmt.Sprintf("Reload failed: %s, failed to restart HAProxy, please check and start manually", output), err
 		}
-		log.Debug("HAProxy restarted with last known good config.")
+		log.WithFields(logFields, log.DebugLevel, "HAProxy restarted with last known good config")
 		return output, reloadFailedError
 	}
-	log.Debugf("Reload %s successful", id)
+	log.WithFields(logFields, log.DebugLevel, "Reload successful")
 	// if success, replace last known good file
 	// nolint:errcheck
 	copyFile(ra.configFile, ra.lkgConfigFile)
@@ -217,7 +223,7 @@ func (ra *ReloadAgent) Reload() string {
 	next := ra.cache.getNext()
 	if next == "" {
 		next = ra.cache.newReload()
-		log.Debugf("Scheduling a new reload with id: %s", next)
+		log.WithFields(map[string]interface{}{logFieldReloadID: next}, log.DebugLevel, "Scheduling a new reload...")
 	}
 
 	return next
@@ -244,11 +250,12 @@ func (rc *reloadCache) Init(retention int) {
 }
 
 func (rc *reloadCache) newReload() string {
-	next := rc.generateID()
 	rc.mu.Lock()
-	rc.next = next
-	rc.mu.Unlock()
-	return next
+	defer rc.mu.Unlock()
+	id := fmt.Sprintf("%s-%v", time.Now().Format("2006-01-02"), rc.index)
+	rc.index++
+	rc.next = id
+	return rc.next
 }
 
 func (rc *reloadCache) getNext() string {
@@ -378,14 +385,6 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 
 func (ra *ReloadAgent) Restart() error {
 	return ra.restartHAProxy()
-}
-
-func (rc *reloadCache) generateID() string {
-	rc.mu.Lock()
-	defer rc.mu.Unlock()
-	id := fmt.Sprintf("%s-%v", time.Now().Format("2006-01-02"), rc.index)
-	rc.index++
-	return id
 }
 
 func getTimeIndexFromID(id string) (time.Time, int64, error) {
