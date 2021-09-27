@@ -25,7 +25,7 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.2.0
-	github.com/haproxytech/client-native/v2 v2.4.4
+	github.com/haproxytech/client-native/v2 v2.4.5
 	github.com/haproxytech/config-parser/v4 v4.0.0-rc1.0.20210902180329-0171d9c29239
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
@@ -44,6 +44,5 @@ require (
 	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
 	golang.org/x/sys v0.0.0-20210817190340-bfb29a6856f2
-	golang.org/x/text v0.3.5 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 )
