@@ -603,7 +603,7 @@ func createHTTPClient() *http.Client {
 				InsecureSkipVerify: true, // this is deliberate, might only have self signed certificate
 			},
 		},
-		Timeout: time.Duration(10) * time.Second,
+		Timeout: time.Duration(30) * time.Second,
 	}
 	return client
 }
