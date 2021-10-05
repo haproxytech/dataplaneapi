@@ -12193,19 +12193,38 @@ func init() {
       "description": "HAProxy frontend bind configuration",
       "type": "object",
       "title": "Bind",
-      "required": [
-        "name"
+      "allOf": [
+        {
+          "$ref": "#/definitions/bind_params"
+        }
       ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "port-range-end": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      }
+    },
+    "bind_params": {
+      "type": "object",
       "properties": {
         "accept_netscaler_cip": {
           "type": "integer"
         },
         "accept_proxy": {
           "type": "boolean"
-        },
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
         },
         "allow_0rtt": {
           "type": "boolean"
@@ -12437,18 +12456,6 @@ func init() {
         },
         "npn": {
           "type": "string"
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "port-range-end": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
         },
         "prefer_client_ciphers": {
           "type": "boolean"
@@ -14479,28 +14486,13 @@ func init() {
             "required": [
               "address"
             ],
+            "allOf": [
+              {
+                "$ref": "#/definitions/bind_params"
+              }
+            ],
             "properties": {
               "address": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "exposeFdListeners": {
-                "type": "boolean",
-                "x-display-name": "Expose FD Listeners"
-              },
-              "level": {
-                "type": "string",
-                "enum": [
-                  "user",
-                  "operator",
-                  "admin"
-                ]
-              },
-              "mode": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "process": {
                 "type": "string",
                 "pattern": "^[^\\s]+$"
               }
@@ -14556,32 +14548,255 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
-        "tune_buffers_limit": {
-          "type": "integer",
-          "x-display-name": "Buffers Limit"
-        },
-        "tune_buffers_reserve": {
-          "type": "integer",
-          "x-display-name": "Buffers Reserve"
-        },
-        "tune_bufsize": {
-          "type": "integer",
-          "x-display-name": "Buffer Size"
-        },
-        "tune_http_cookielen": {
-          "type": "integer",
-          "x-display-name": "Maximum Cookie Length"
-        },
-        "tune_http_logurilen": {
-          "type": "integer",
-          "x-display-name": "Maximum URI Length"
-        },
-        "tune_http_maxhdr": {
-          "type": "integer",
-          "x-display-name": "Maximum Number of Headers"
+        "tune_options": {
+          "type": "object",
+          "properties": {
+            "buffers_limit": {
+              "type": "integer",
+              "x-display-name": "Buffers Limit",
+              "x-nullable": true
+            },
+            "buffers_reserve": {
+              "type": "integer",
+              "minimum": 2,
+              "x-display-name": "Buffers Reserve"
+            },
+            "bufsize": {
+              "type": "integer",
+              "x-display-name": "Buffer Size"
+            },
+            "comp_maxlevel": {
+              "type": "integer",
+              "x-display-name": "Maximum Compression Level"
+            },
+            "fail_alloc": {
+              "type": "boolean",
+              "x-display-name": "Failed Allocation Chance"
+            },
+            "h2_header_table_size": {
+              "type": "integer",
+              "maximum": 65535,
+              "x-display-name": "HTTP/2 Dynamic Header Table Size"
+            },
+            "h2_initial_window_size": {
+              "type": "integer",
+              "x-display-name": "HTTP/2 Initial Window Size",
+              "x-nullable": true
+            },
+            "h2_max_concurrent_streams": {
+              "type": "integer",
+              "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
+            },
+            "h2_max_frame_size": {
+              "type": "integer",
+              "x-display-name": "HTTP/2 Maximum Frame Size"
+            },
+            "http_cookielen": {
+              "type": "integer",
+              "x-display-name": "Maximum Cookie Length"
+            },
+            "http_logurilen": {
+              "type": "integer",
+              "x-display-name": "Maximum URI Length"
+            },
+            "http_maxhdr": {
+              "type": "integer",
+              "maximum": 32767,
+              "minimum": 1,
+              "x-display-name": "Maximum Number of Headers"
+            },
+            "idle_pool_shared": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Share Idle Connections"
+            },
+            "idletimer": {
+              "type": "integer",
+              "maximum": 65535,
+              "x-display-name": "Idle Stream Duration",
+              "x-nullable": true
+            },
+            "listener_multi_queue": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Listener Multi Queue Accept"
+            },
+            "lua_forced_yield": {
+              "type": "integer",
+              "x-display-name": "Lua Forced Yield"
+            },
+            "lua_maxmem": {
+              "type": "boolean",
+              "x-display-name": "Lua Maximum Memory Usage"
+            },
+            "lua_service_timeout": {
+              "type": "integer",
+              "x-display-name": "Lua Service timeout",
+              "x-nullable": true
+            },
+            "lua_session_timeout": {
+              "type": "integer",
+              "x-display-name": "Lua Session Timeout",
+              "x-nullable": true
+            },
+            "lua_task_timeout": {
+              "type": "integer",
+              "x-display-name": "Lua Task Timeout",
+              "x-nullable": true
+            },
+            "maxaccept": {
+              "type": "integer",
+              "x-display-name": "Maximum Accept Events"
+            },
+            "maxpollevents": {
+              "type": "integer",
+              "x-display-name": "Maximum Polled Events"
+            },
+            "maxrewrite": {
+              "type": "integer",
+              "x-display-name": "Maximum Rewrite Space"
+            },
+            "pattern_cache_size": {
+              "type": "integer",
+              "x-display-name": "Pattern Lookup Cache Size",
+              "x-nullable": true
+            },
+            "pipesize": {
+              "type": "integer",
+              "x-display-name": "Pipe Buffer Size"
+            },
+            "pool_high_fd_ratio": {
+              "type": "integer",
+              "x-display-name": "Max Used High FD Ratio"
+            },
+            "pool_low_fd_ratio": {
+              "type": "integer",
+              "x-display-name": "Max Used Low FD Ratio"
+            },
+            "rcvbuf_client": {
+              "type": "integer",
+              "x-display-name": "Receive Buffer Client Size",
+              "x-nullable": true
+            },
+            "rcvbuf_server": {
+              "type": "integer",
+              "x-display-name": "Receive Buffer Server Size",
+              "x-nullable": true
+            },
+            "recv_enough": {
+              "type": "integer",
+              "x-display-name": "Recieve Enough Socket Buffer Size"
+            },
+            "runqueue_depth": {
+              "type": "integer",
+              "x-display-name": "Max Tasks in Run Queue"
+            },
+            "sched_low_latency": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Low Latency Task Scheduler"
+            },
+            "sndbuf_client": {
+              "type": "integer",
+              "x-display-name": "Send Buffer Client Size",
+              "x-nullable": true
+            },
+            "sndbuf_server": {
+              "type": "integer",
+              "x-display-name": "Send Buffer Server Size",
+              "x-nullable": true
+            },
+            "ssl_cachesize": {
+              "type": "integer",
+              "x-display-name": "SSL Cache Size",
+              "x-nullable": true
+            },
+            "ssl_capture_buffer_size": {
+              "type": "integer",
+              "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
+              "x-nullable": true
+            },
+            "ssl_ctx_cache_size": {
+              "type": "integer",
+              "x-display-name": "SSL Number of Certificates in Cache"
+            },
+            "ssl_default_dh_param": {
+              "type": "integer",
+              "x-display-name": "SSL Default DH Parameter Size"
+            },
+            "ssl_force_private_cache": {
+              "type": "boolean",
+              "x-display-name": "SSL Force Private Cache"
+            },
+            "ssl_keylog": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "SSL Log TLS Keys"
+            },
+            "ssl_lifetime": {
+              "type": "integer",
+              "x-display-name": "SSL Session Lifetime",
+              "x-nullable": true
+            },
+            "ssl_maxrecord": {
+              "type": "integer",
+              "x-display-name": "SSL Maximum Size",
+              "x-nullable": true
+            },
+            "vars_global_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Global Max Size",
+              "x-nullable": true
+            },
+            "vars_proc_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Process Max Size",
+              "x-nullable": true
+            },
+            "vars_reqres_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Request/Response Max Size",
+              "x-nullable": true
+            },
+            "vars_sess_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Session Max Size",
+              "x-nullable": true
+            },
+            "vars_txn_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Transaction Max Size",
+              "x-nullable": true
+            },
+            "zlib_memlevel": {
+              "type": "integer",
+              "maximum": 9,
+              "minimum": 1,
+              "x-display-name": "Zlib Memory Level"
+            },
+            "zlib_windowsize": {
+              "type": "integer",
+              "maximum": 15,
+              "minimum": 8,
+              "x-display-name": "Zlib Window Size"
+            }
+          }
         },
         "tune_ssl_default_dh_param": {
           "type": "integer",
+          "x-deprecated": true,
           "x-display-name": "SSL Default DH Parameter Size"
         },
         "user": {
@@ -38551,33 +38766,265 @@ func init() {
       "required": [
         "address"
       ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/bind_params"
+        }
+      ],
       "properties": {
         "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "exposeFdListeners": {
-          "type": "boolean",
-          "x-display-name": "Expose FD Listeners"
-        },
-        "level": {
-          "type": "string",
-          "enum": [
-            "user",
-            "operator",
-            "admin"
-          ]
-        },
-        "mode": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "process": {
           "type": "string",
           "pattern": "^[^\\s]+$"
         }
       },
       "x-go-name": "RuntimeAPI"
+    },
+    "GlobalTuneOptions": {
+      "type": "object",
+      "properties": {
+        "buffers_limit": {
+          "type": "integer",
+          "x-display-name": "Buffers Limit",
+          "x-nullable": true
+        },
+        "buffers_reserve": {
+          "type": "integer",
+          "minimum": 2,
+          "x-display-name": "Buffers Reserve"
+        },
+        "bufsize": {
+          "type": "integer",
+          "x-display-name": "Buffer Size"
+        },
+        "comp_maxlevel": {
+          "type": "integer",
+          "x-display-name": "Maximum Compression Level"
+        },
+        "fail_alloc": {
+          "type": "boolean",
+          "x-display-name": "Failed Allocation Chance"
+        },
+        "h2_header_table_size": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-display-name": "HTTP/2 Dynamic Header Table Size"
+        },
+        "h2_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Initial Window Size",
+          "x-nullable": true
+        },
+        "h2_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
+        },
+        "h2_max_frame_size": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Maximum Frame Size"
+        },
+        "http_cookielen": {
+          "type": "integer",
+          "x-display-name": "Maximum Cookie Length"
+        },
+        "http_logurilen": {
+          "type": "integer",
+          "x-display-name": "Maximum URI Length"
+        },
+        "http_maxhdr": {
+          "type": "integer",
+          "maximum": 32767,
+          "minimum": 1,
+          "x-display-name": "Maximum Number of Headers"
+        },
+        "idle_pool_shared": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Share Idle Connections"
+        },
+        "idletimer": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-display-name": "Idle Stream Duration",
+          "x-nullable": true
+        },
+        "listener_multi_queue": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Listener Multi Queue Accept"
+        },
+        "lua_forced_yield": {
+          "type": "integer",
+          "x-display-name": "Lua Forced Yield"
+        },
+        "lua_maxmem": {
+          "type": "boolean",
+          "x-display-name": "Lua Maximum Memory Usage"
+        },
+        "lua_service_timeout": {
+          "type": "integer",
+          "x-display-name": "Lua Service timeout",
+          "x-nullable": true
+        },
+        "lua_session_timeout": {
+          "type": "integer",
+          "x-display-name": "Lua Session Timeout",
+          "x-nullable": true
+        },
+        "lua_task_timeout": {
+          "type": "integer",
+          "x-display-name": "Lua Task Timeout",
+          "x-nullable": true
+        },
+        "maxaccept": {
+          "type": "integer",
+          "x-display-name": "Maximum Accept Events"
+        },
+        "maxpollevents": {
+          "type": "integer",
+          "x-display-name": "Maximum Polled Events"
+        },
+        "maxrewrite": {
+          "type": "integer",
+          "x-display-name": "Maximum Rewrite Space"
+        },
+        "pattern_cache_size": {
+          "type": "integer",
+          "x-display-name": "Pattern Lookup Cache Size",
+          "x-nullable": true
+        },
+        "pipesize": {
+          "type": "integer",
+          "x-display-name": "Pipe Buffer Size"
+        },
+        "pool_high_fd_ratio": {
+          "type": "integer",
+          "x-display-name": "Max Used High FD Ratio"
+        },
+        "pool_low_fd_ratio": {
+          "type": "integer",
+          "x-display-name": "Max Used Low FD Ratio"
+        },
+        "rcvbuf_client": {
+          "type": "integer",
+          "x-display-name": "Receive Buffer Client Size",
+          "x-nullable": true
+        },
+        "rcvbuf_server": {
+          "type": "integer",
+          "x-display-name": "Receive Buffer Server Size",
+          "x-nullable": true
+        },
+        "recv_enough": {
+          "type": "integer",
+          "x-display-name": "Recieve Enough Socket Buffer Size"
+        },
+        "runqueue_depth": {
+          "type": "integer",
+          "x-display-name": "Max Tasks in Run Queue"
+        },
+        "sched_low_latency": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Low Latency Task Scheduler"
+        },
+        "sndbuf_client": {
+          "type": "integer",
+          "x-display-name": "Send Buffer Client Size",
+          "x-nullable": true
+        },
+        "sndbuf_server": {
+          "type": "integer",
+          "x-display-name": "Send Buffer Server Size",
+          "x-nullable": true
+        },
+        "ssl_cachesize": {
+          "type": "integer",
+          "x-display-name": "SSL Cache Size",
+          "x-nullable": true
+        },
+        "ssl_capture_buffer_size": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
+          "x-nullable": true
+        },
+        "ssl_ctx_cache_size": {
+          "type": "integer",
+          "x-display-name": "SSL Number of Certificates in Cache"
+        },
+        "ssl_default_dh_param": {
+          "type": "integer",
+          "x-display-name": "SSL Default DH Parameter Size"
+        },
+        "ssl_force_private_cache": {
+          "type": "boolean",
+          "x-display-name": "SSL Force Private Cache"
+        },
+        "ssl_keylog": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "SSL Log TLS Keys"
+        },
+        "ssl_lifetime": {
+          "type": "integer",
+          "x-display-name": "SSL Session Lifetime",
+          "x-nullable": true
+        },
+        "ssl_maxrecord": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Size",
+          "x-nullable": true
+        },
+        "vars_global_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Global Max Size",
+          "x-nullable": true
+        },
+        "vars_proc_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Process Max Size",
+          "x-nullable": true
+        },
+        "vars_reqres_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Request/Response Max Size",
+          "x-nullable": true
+        },
+        "vars_sess_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Session Max Size",
+          "x-nullable": true
+        },
+        "vars_txn_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Transaction Max Size",
+          "x-nullable": true
+        },
+        "zlib_memlevel": {
+          "type": "integer",
+          "maximum": 9,
+          "minimum": 1,
+          "x-display-name": "Zlib Memory Level"
+        },
+        "zlib_windowsize": {
+          "type": "integer",
+          "maximum": 15,
+          "minimum": 8,
+          "x-display-name": "Zlib Window Size"
+        }
+      }
     },
     "InfoAPI": {
       "type": "object",
@@ -39576,19 +40023,38 @@ func init() {
       "description": "HAProxy frontend bind configuration",
       "type": "object",
       "title": "Bind",
-      "required": [
-        "name"
+      "allOf": [
+        {
+          "$ref": "#/definitions/bind_params"
+        }
       ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "port-range-end": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      }
+    },
+    "bind_params": {
+      "type": "object",
       "properties": {
         "accept_netscaler_cip": {
           "type": "integer"
         },
         "accept_proxy": {
           "type": "boolean"
-        },
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
         },
         "allow_0rtt": {
           "type": "boolean"
@@ -39820,18 +40286,6 @@ func init() {
         },
         "npn": {
           "type": "string"
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "port-range-end": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
         },
         "prefer_client_ciphers": {
           "type": "boolean"
@@ -41821,32 +42275,256 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
-        "tune_buffers_limit": {
-          "type": "integer",
-          "x-display-name": "Buffers Limit"
-        },
-        "tune_buffers_reserve": {
-          "type": "integer",
-          "x-display-name": "Buffers Reserve"
-        },
-        "tune_bufsize": {
-          "type": "integer",
-          "x-display-name": "Buffer Size"
-        },
-        "tune_http_cookielen": {
-          "type": "integer",
-          "x-display-name": "Maximum Cookie Length"
-        },
-        "tune_http_logurilen": {
-          "type": "integer",
-          "x-display-name": "Maximum URI Length"
-        },
-        "tune_http_maxhdr": {
-          "type": "integer",
-          "x-display-name": "Maximum Number of Headers"
+        "tune_options": {
+          "type": "object",
+          "properties": {
+            "buffers_limit": {
+              "type": "integer",
+              "x-display-name": "Buffers Limit",
+              "x-nullable": true
+            },
+            "buffers_reserve": {
+              "type": "integer",
+              "minimum": 2,
+              "x-display-name": "Buffers Reserve"
+            },
+            "bufsize": {
+              "type": "integer",
+              "x-display-name": "Buffer Size"
+            },
+            "comp_maxlevel": {
+              "type": "integer",
+              "x-display-name": "Maximum Compression Level"
+            },
+            "fail_alloc": {
+              "type": "boolean",
+              "x-display-name": "Failed Allocation Chance"
+            },
+            "h2_header_table_size": {
+              "type": "integer",
+              "maximum": 65535,
+              "x-display-name": "HTTP/2 Dynamic Header Table Size"
+            },
+            "h2_initial_window_size": {
+              "type": "integer",
+              "x-display-name": "HTTP/2 Initial Window Size",
+              "x-nullable": true
+            },
+            "h2_max_concurrent_streams": {
+              "type": "integer",
+              "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
+            },
+            "h2_max_frame_size": {
+              "type": "integer",
+              "x-display-name": "HTTP/2 Maximum Frame Size"
+            },
+            "http_cookielen": {
+              "type": "integer",
+              "x-display-name": "Maximum Cookie Length"
+            },
+            "http_logurilen": {
+              "type": "integer",
+              "x-display-name": "Maximum URI Length"
+            },
+            "http_maxhdr": {
+              "type": "integer",
+              "maximum": 32767,
+              "minimum": 1,
+              "x-display-name": "Maximum Number of Headers"
+            },
+            "idle_pool_shared": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Share Idle Connections"
+            },
+            "idletimer": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 0,
+              "x-display-name": "Idle Stream Duration",
+              "x-nullable": true
+            },
+            "listener_multi_queue": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Listener Multi Queue Accept"
+            },
+            "lua_forced_yield": {
+              "type": "integer",
+              "x-display-name": "Lua Forced Yield"
+            },
+            "lua_maxmem": {
+              "type": "boolean",
+              "x-display-name": "Lua Maximum Memory Usage"
+            },
+            "lua_service_timeout": {
+              "type": "integer",
+              "x-display-name": "Lua Service timeout",
+              "x-nullable": true
+            },
+            "lua_session_timeout": {
+              "type": "integer",
+              "x-display-name": "Lua Session Timeout",
+              "x-nullable": true
+            },
+            "lua_task_timeout": {
+              "type": "integer",
+              "x-display-name": "Lua Task Timeout",
+              "x-nullable": true
+            },
+            "maxaccept": {
+              "type": "integer",
+              "x-display-name": "Maximum Accept Events"
+            },
+            "maxpollevents": {
+              "type": "integer",
+              "x-display-name": "Maximum Polled Events"
+            },
+            "maxrewrite": {
+              "type": "integer",
+              "x-display-name": "Maximum Rewrite Space"
+            },
+            "pattern_cache_size": {
+              "type": "integer",
+              "x-display-name": "Pattern Lookup Cache Size",
+              "x-nullable": true
+            },
+            "pipesize": {
+              "type": "integer",
+              "x-display-name": "Pipe Buffer Size"
+            },
+            "pool_high_fd_ratio": {
+              "type": "integer",
+              "x-display-name": "Max Used High FD Ratio"
+            },
+            "pool_low_fd_ratio": {
+              "type": "integer",
+              "x-display-name": "Max Used Low FD Ratio"
+            },
+            "rcvbuf_client": {
+              "type": "integer",
+              "x-display-name": "Receive Buffer Client Size",
+              "x-nullable": true
+            },
+            "rcvbuf_server": {
+              "type": "integer",
+              "x-display-name": "Receive Buffer Server Size",
+              "x-nullable": true
+            },
+            "recv_enough": {
+              "type": "integer",
+              "x-display-name": "Recieve Enough Socket Buffer Size"
+            },
+            "runqueue_depth": {
+              "type": "integer",
+              "x-display-name": "Max Tasks in Run Queue"
+            },
+            "sched_low_latency": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Low Latency Task Scheduler"
+            },
+            "sndbuf_client": {
+              "type": "integer",
+              "x-display-name": "Send Buffer Client Size",
+              "x-nullable": true
+            },
+            "sndbuf_server": {
+              "type": "integer",
+              "x-display-name": "Send Buffer Server Size",
+              "x-nullable": true
+            },
+            "ssl_cachesize": {
+              "type": "integer",
+              "x-display-name": "SSL Cache Size",
+              "x-nullable": true
+            },
+            "ssl_capture_buffer_size": {
+              "type": "integer",
+              "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
+              "x-nullable": true
+            },
+            "ssl_ctx_cache_size": {
+              "type": "integer",
+              "x-display-name": "SSL Number of Certificates in Cache"
+            },
+            "ssl_default_dh_param": {
+              "type": "integer",
+              "x-display-name": "SSL Default DH Parameter Size"
+            },
+            "ssl_force_private_cache": {
+              "type": "boolean",
+              "x-display-name": "SSL Force Private Cache"
+            },
+            "ssl_keylog": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "SSL Log TLS Keys"
+            },
+            "ssl_lifetime": {
+              "type": "integer",
+              "x-display-name": "SSL Session Lifetime",
+              "x-nullable": true
+            },
+            "ssl_maxrecord": {
+              "type": "integer",
+              "x-display-name": "SSL Maximum Size",
+              "x-nullable": true
+            },
+            "vars_global_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Global Max Size",
+              "x-nullable": true
+            },
+            "vars_proc_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Process Max Size",
+              "x-nullable": true
+            },
+            "vars_reqres_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Request/Response Max Size",
+              "x-nullable": true
+            },
+            "vars_sess_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Session Max Size",
+              "x-nullable": true
+            },
+            "vars_txn_max_size": {
+              "type": "integer",
+              "x-display-name": "Variables Transaction Max Size",
+              "x-nullable": true
+            },
+            "zlib_memlevel": {
+              "type": "integer",
+              "maximum": 9,
+              "minimum": 1,
+              "x-display-name": "Zlib Memory Level"
+            },
+            "zlib_windowsize": {
+              "type": "integer",
+              "maximum": 15,
+              "minimum": 8,
+              "x-display-name": "Zlib Window Size"
+            }
+          }
         },
         "tune_ssl_default_dh_param": {
           "type": "integer",
+          "x-deprecated": true,
           "x-display-name": "SSL Default DH Parameter Size"
         },
         "user": {

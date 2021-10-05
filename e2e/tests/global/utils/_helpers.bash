@@ -1,4 +1,4 @@
-#!/usr/bin/env bats
+#!/usr/bin/env bash
 #
 # Copyright 2021 HAProxy Technologies
 #
@@ -15,19 +15,4 @@
 # limitations under the License.
 #
 
-load '../../libs/dataplaneapi'
-load '../../libs/get_json_path'
-load '../../libs/haproxy_config_setup'
-load '../../libs/resource_client'
-load '../../libs/version'
-
-load 'utils/_helpers'
-
-@test "binds: Replace a bind" {
-  resource_put "$_BIND_BASE_PATH/fixture" "data/put.json" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 200
-
-	resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.data')" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
-}
+_GLOBAL_BASE_PATH="/services/haproxy/configuration/global"

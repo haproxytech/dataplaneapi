@@ -22,8 +22,8 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.2.0
-	github.com/haproxytech/client-native/v3 v3.0.0-rc1.0.20220210130406-024cd048c05c
-	github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220210125355-b5ba54b2cfd7
+	github.com/haproxytech/client-native/v3 v3.0.0-rc1.0.20220215222246-5a5df100599a
+	github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220215134434-54d66ef01d26
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.4.0
@@ -72,6 +72,7 @@ require (
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
+	github.com/kr/pretty v0.2.1 // indirect
 	github.com/lestrrat-go/envload v0.0.0-20180220234015-a3eb8ddeffcc // indirect
 	github.com/lestrrat-go/strftime v0.0.0-20180821113735-8b31f9c59b0f // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect

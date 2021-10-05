@@ -30,13 +30,13 @@
     "http_connection_mode": "http-keep-alive",
     "listeners": [
       {
-        "address": "127.0.0.1",
         "name": "site_listener_1",
+        "address": "127.0.0.1",
         "port": 8081
       },
       {
-        "address": "127.0.0.1",
         "name": "site_listener_2",
+        "address": "127.0.0.1",
         "port": 8082
       }
     ],

@@ -23,11 +23,14 @@ load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "binds: Replace a bind" {
-  resource_put "$_BIND_BASE_PATH/fixture" "data/put.json" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 200
-
-	resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.data')" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
+@test "global: Return a global configuration" {
+  resource_get "$_GLOBAL_BASE_PATH"
+  assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" '.data.chroot')" "/var/lib/haproxy"
+  assert_equal "$(get_json_path "$BODY" '.data.user')" "haproxy"
+  assert_equal "$(get_json_path "$BODY" '.data.group')" "haproxy"
+  assert_equal "$(get_json_path "$BODY" '.data.maxconn')" "4000"
+  assert_equal "$(get_json_path "$BODY" '.data.pidfile')" "/var/run/haproxy.pid"
+  assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].address')" "/var/lib/haproxy/stats"
+  assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].level')" "admin"
 }

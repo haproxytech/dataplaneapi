@@ -23,11 +23,18 @@ load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "binds: Replace a bind" {
-  resource_put "$_BIND_BASE_PATH/fixture" "data/put.json" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 200
+@test "global: Replace a global configuration" {
+    resource_put "$_GLOBAL_BASE_PATH" "data/put.json" ""
+	assert_equal "$SC" 202
 
-	resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
+	resource_get "$_GLOBAL_BASE_PATH" ""
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.data')" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
+	assert_equal "$(get_json_path "$BODY" '.data.maxconn')" "5000"
+	assert_equal "$(get_json_path "$BODY" '.data.daemon')" "enabled"
+	assert_equal "$(get_json_path "$BODY" '.data.pidfile')" "/var/run/haproxy/haproxy.pid"
+	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].address')" "/var/run/haproxy/admin.sock"
+	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].level')" "admin"
+	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].mode')" "660"
+	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].allow_0rtt')" "true"
+	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].name')" "runtime_api_1"
 }

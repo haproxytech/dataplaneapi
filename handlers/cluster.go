@@ -192,7 +192,9 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 				return h.err500(err, transaction)
 			}
 			err = h.Client.Configuration.CreateBind("disabled", &models.Bind{
-				Name:    "tmp",
+				BindParams: models.BindParams{
+					Name: "tmp",
+				},
 				Address: fmt.Sprintf("/tmp/dataplaneapi-%s.sock", h.Config.Name.Load()),
 			}, transaction.ID, 0)
 			if err != nil {
