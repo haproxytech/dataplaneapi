@@ -83,9 +83,7 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 	c.cli = cli
 
 	go c.monitorBootstrapKey()
-	if c.cfg.Mode.Load() == "cluster" {
-		go c.monitorCertificateRefresh()
-	}
+	go c.monitorCertificateRefresh()
 
 	c.certFetch = make(chan struct{}, 2)
 	go c.fetchCert()
@@ -100,31 +98,36 @@ func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClie
 }
 
 func (c *ClusterSync) monitorCertificateRefresh() {
-	for range c.cfg.Notify.CertificateRefresh.Subscribe("monitorCertificateRefresh") {
-		log.Info("refreshing certificate")
+	for {
+		select {
+		case <-c.cfg.Notify.CertificateRefresh.Subscribe("monitorCertificateRefresh"):
+			log.Info("refreshing certificate")
 
-		key := c.cfg.Cluster.BootstrapKey.Load()
-		data, err := DecodeBootstrapKey(key)
-		if err != nil {
-			log.Warning(err)
-			continue
-		}
-		url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
+			key := c.cfg.Cluster.BootstrapKey.Load()
+			data, err := DecodeBootstrapKey(key)
+			if err != nil {
+				log.Warning(err)
+				continue
+			}
+			url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
 
-		csr, key, err := generateCSR()
-		if err != nil {
-			log.Warning(err)
-			continue
-		}
-		err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
-		if err != nil {
-			log.Warning(err)
-			continue
-		}
-		err = c.issueRefreshRequest(url, data["port"], data["api-base-path"], data["path"], csr, key)
-		if err != nil {
-			log.Warning(err)
-			continue
+			csr, key, err := generateCSR()
+			if err != nil {
+				log.Warning(err)
+				continue
+			}
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+			if err != nil {
+				log.Warning(err)
+				continue
+			}
+			err = c.issueRefreshRequest(url, data["port"], data["api-base-path"], data["path"], csr, key)
+			if err != nil {
+				log.Warning(err)
+				continue
+			}
+		case <-c.Context.Done():
+			return
 		}
 	}
 }
