@@ -264,7 +264,8 @@ func (c *Configuration) Save() error {
 		cfg := c.storage.Get()
 		cfg.LogTargets = nil
 	}
-	if cfg.Mode.Load() != "cluster" {
+	// clean storage data if we are not in cluster mode or preparing to go into that mode
+	if cfg.Mode.Load() != "cluster" && cfg.Cluster.BootstrapKey.Load() == "" {
 		storage := cfg.storage.Get()
 		storage.Cluster = nil
 	}
