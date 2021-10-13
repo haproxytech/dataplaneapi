@@ -113,6 +113,7 @@ type RuntimeData struct {
 
 type NotifyConfiguration struct {
 	BootstrapKeyChanged *ChanNotify `yaml:"-"`
+	ServerStarted       *ChanNotify `yaml:"-"`
 	CertificateRefresh  *ChanNotify `yaml:"-"`
 	Reload              *ChanNotify `yaml:"-"`
 	Shutdown            *ChanNotify `yaml:"-"`
@@ -152,6 +153,7 @@ func Get() *Configuration {
 		cfg = &Configuration{}
 		cfg.initSignalHandler()
 		cfg.Notify.BootstrapKeyChanged = NewChanNotify()
+		cfg.Notify.ServerStarted = NewChanNotify()
 		cfg.Notify.CertificateRefresh = NewChanNotify()
 		cfg.Notify.Reload = NewChanNotify()
 		cfg.Notify.Shutdown = NewChanNotify()
@@ -177,6 +179,7 @@ func (c *Configuration) GetStorageData() *StorageDataplaneAPIConfiguration {
 
 func (c *Configuration) UnSubscribeAll() {
 	c.Notify.BootstrapKeyChanged.UnSubscribeAll()
+	c.Notify.ServerStarted.UnSubscribeAll()
 	c.Notify.CertificateRefresh.UnSubscribeAll()
 	c.Notify.Reload.UnSubscribeAll()
 	c.Notify.Shutdown.UnSubscribeAll()
