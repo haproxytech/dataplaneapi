@@ -2,6 +2,7 @@
 before:
   hooks:
     - go mod download
+    - go mod tidy
     - make clean
     - mkdir build/
 builds:
@@ -41,5 +42,14 @@ checksum:
 snapshot:
   name_template: "{{ .Tag }}-next"
 release:
+  github:
+    owner: haproxytech
+    name: dataplaneapi
+  header: |
+    ## Release Notes
+    HAProxy Data Plane API {{.Tag}} {{.ShortCommit}}
+
+    Build from: git@github.com:haproxytech/dataplaneapi.git
+    Build date: {{.Date}}
   draft: true
-  name_template: "HAProxy {{toupper .ProjectName}} v{{.Version}}"
+  name_template: "HAProxy Data Plane API v{{.Version}}"
