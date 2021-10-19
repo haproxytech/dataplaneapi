@@ -44,7 +44,7 @@ type GetHaproxyProcessInfoHandlerImpl struct {
 // Handle executing the request and returning a response
 func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
 	info, err := h.Client.Runtime.GetInfo()
-	if err != nil || len(info) == 0 {
+	if err != nil {
 		code := misc.ErrHTTPInternalServerError
 		msg := err.Error()
 		e := &models.Error{
