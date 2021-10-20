@@ -934,10 +934,10 @@ func configureRuntimeClient(ctx context.Context, confClient *configuration.Clien
 					}
 				}
 			}
-			// no process specific settings found, Issue a warning and return nil
+			// no process specific settings found, Issue a warning and return empty runtime client
 			if len(sockets) == 0 {
 				log.Warning("Runtime API not configured, found multiple processes and no stats sockets bound to them.")
-				return nil
+				return runtimeClient
 				// use only found process specific sockets issue a warning if not all processes have a socket configured
 			}
 			if len(sockets) < int(globalConf.Nbproc) {
@@ -954,10 +954,10 @@ func configureRuntimeClient(ctx context.Context, confClient *configuration.Clien
 		} else {
 			log.Warning("Runtime API not configured, not using it")
 		}
-		return nil
+		return runtimeClient
 	}
 	log.Warning("Cannot read runtime API configuration, not using it")
-	return nil
+	return runtimeClient
 }
 
 func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
