@@ -2,6 +2,9 @@
 
 ## HAProxy Data Plane API
 
+[![Contributors](https://img.shields.io/github/contributors/haproxytech/dataplaneapi?color=purple)](https://github.com/haproxy/haproxy/blob/master/CONTRIBUTING)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 **Data Plane API** is a sidecar process that runs next to HAProxy and provides API endpoints for managing HAProxy. It requires HAProxy version 1.9.0 or higher.
 
 ## Building the Data Plane API
