@@ -219,6 +219,12 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			if err != nil {
 				log.Warning(err)
 			}
+			// check if storage key is ok
+			errStorageDir := CheckIfStorageDirIsOK(data["storage-dir"], c.cfg)
+			if errStorageDir != err {
+				log.Error(errStorageDir)
+				continue
+			}
 			url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
 			c.cfg.Cluster.URL.Store(url)
 			c.cfg.Cluster.Port.Store(func() int {

@@ -17,14 +17,11 @@ package handlers
 
 import (
 	"fmt"
-	"path"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v2"
-	"github.com/haproxytech/client-native/v2/misc"
 	"github.com/haproxytech/client-native/v2/models"
-	"github.com/haproxytech/client-native/v2/storage"
 
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -104,28 +101,11 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 		if err != nil {
 			return h.err406(err, nil)
 		}
-		storageDir := key["storage-dir"]
-		if storageDir != "" {
-			_, errStorage := misc.CheckOrCreateWritableDirectory(storageDir)
-			if errStorage != nil {
-				return h.err409(errStorage, nil)
-			}
-			dirs := []storage.FileType{
-				storage.BackupsType, storage.MapsType, storage.SSLType,
-				storage.SpoeTransactionsType, storage.SpoeType,
-				storage.TransactionsType,
-				storage.FileType("certs-cluster"),
-			}
-			for _, dir := range dirs {
-				_, errStorage := misc.CheckOrCreateWritableDirectory(path.Join(storageDir, string(dir)))
-				if errStorage != nil {
-					return h.err409(errStorage, nil)
-				}
-			}
-			h.Config.Cluster.StorageDir.Store(storageDir)
-			h.Config.HAProxy.ClusterTLSCertDir = path.Join(storageDir, "certs-cluster")
-			h.Config.Cluster.CertificateDir.Store(path.Join(storageDir, "certs-cluster"))
+		errStorageDir := configuration.CheckIfStorageDirIsOK(key["storage-dir"], h.Config)
+		if errStorageDir != nil {
+			return h.err409(errStorageDir, nil)
 		}
+
 		// enforcing API advertising options
 		if a := params.AdvertisedAddress; a != nil {
 			h.Config.APIOptions.APIAddress = *a

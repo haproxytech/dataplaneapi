@@ -18,9 +18,14 @@ package configuration
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
+	"path"
 	"syscall"
+
+	"github.com/haproxytech/client-native/v2/misc"
+	"github.com/haproxytech/client-native/v2/storage"
 )
 
 func DecodeBootstrapKey(key string) (map[string]string, error) {
@@ -51,4 +56,30 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+func CheckIfStorageDirIsOK(storageDir string, config *Configuration) error {
+	if storageDir == "" {
+		return errors.New("storage-dir in bootstrap key is empty")
+	}
+	_, errStorage := misc.CheckOrCreateWritableDirectory(storageDir)
+	if errStorage != nil {
+		return errStorage
+	}
+	dirs := []storage.FileType{
+		storage.BackupsType, storage.MapsType, storage.SSLType,
+		storage.SpoeTransactionsType, storage.SpoeType,
+		storage.TransactionsType,
+		storage.FileType("certs-cluster"),
+	}
+	for _, dir := range dirs {
+		_, errStorage := misc.CheckOrCreateWritableDirectory(path.Join(storageDir, string(dir)))
+		if errStorage != nil {
+			return errStorage
+		}
+	}
+	config.Cluster.StorageDir.Store(storageDir)
+	config.HAProxy.ClusterTLSCertDir = path.Join(storageDir, "certs-cluster")
+	config.Cluster.CertificateDir.Store(path.Join(storageDir, "certs-cluster"))
+	return nil
 }
