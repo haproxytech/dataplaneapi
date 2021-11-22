@@ -6,6 +6,7 @@ GIT_TAG_COMMIT=$(shell git rev-parse --short ${GIT_LAST_TAG})
 GIT_MODIFIED1=$(shell git diff "${GIT_HEAD_COMMIT}" "${GIT_TAG_COMMIT}" --quiet || echo .dev)
 GIT_MODIFIED2=$(shell git diff --quiet || echo .dirty)
 GIT_MODIFIED=${GIT_MODIFIED1}${GIT_MODIFIED2}
+SWAGGER_VERSION=${shell curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $$2}'}
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
 
@@ -25,3 +26,16 @@ build:
 .PHONY: e2e
 e2e: build
 	TESTNAME=$(TESTNAME) TESTNUMBER=$(TESTNUMBER) TESTDESCRIPTION="$(TESTDESCRIPTION)" SKIP_CLEANUP=$(SKIP_CLEANUP) PREWIPE=$(PREWIPE) HAPROXY_VERSION=$(HAPROXY_VERSION) ./e2e/run.bash
+
+.PHONY: generate
+generate:
+	cd generate/swagger;docker build \
+		--build-arg SWAGGER_VERSION=${SWAGGER_VERSION} \
+		--build-arg UID=$(shell id -u) \
+		--build-arg GID=$(shell id -g) \
+		-t dataplaneapi-swagger-gen .
+	docker run --rm -it -v "$(PWD)":/data dataplaneapi-swagger-gen
+
+.PHONY: generate-native
+generate-native:
+	generate/swagger/script.sh
