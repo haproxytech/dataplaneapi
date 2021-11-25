@@ -147,9 +147,11 @@ type Configuration struct {
 	MapSync                *MapSync             `yaml:"-"`
 }
 
+var cfgInitOnce sync.Once
+
 // Get returns pointer to configuration
 func Get() *Configuration {
-	if cfg == nil {
+	cfgInitOnce.Do(func() {
 		cfg = &Configuration{}
 		cfg.initSignalHandler()
 		cfg.Notify.BootstrapKeyChanged = NewChanNotify()
@@ -169,7 +171,7 @@ func Get() *Configuration {
 		}
 
 		cfg.Cmdline.Store(sb.String())
-	}
+	})
 	return cfg
 }
 
