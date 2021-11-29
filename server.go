@@ -340,6 +340,7 @@ func (s *Server) Serve() (err error) {
 	wg.Add(1)
 	go s.handleShutdown(wg, &servers)
 
+	serverStartedCallback()
 	wg.Wait()
 	return nil
 }
