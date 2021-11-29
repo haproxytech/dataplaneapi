@@ -16,13 +16,10 @@
 package main
 
 import (
-	"crypto/tls"
 	"fmt"
-	"net/http"
 	"os"
 	"path"
 	"syscall"
-	"time"
 
 	loads "github.com/go-openapi/loads"
 	"github.com/go-openapi/runtime"
@@ -228,28 +225,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	}()
 
 	server.ConfigureAPI()
-	schema := "http"
-	if len(server.EnabledListeners) > 0 {
-		schema = server.EnabledListeners[0]
-	}
-	path := fmt.Sprintf("%s://%s:%d%s", schema, server.Host, server.Port, cfg.RuntimeData.APIBasePath)
-	go func(path string) {
-		tr := &http.Transport{
-			// we just need to check if we have a response
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, //nolint:gosec
-		}
-		client := &http.Client{Transport: tr}
-		numTrys := 0
-		for ; numTrys < 10; numTrys++ {
-			_, err := client.Get(path)
-			if err == nil {
-				cfg.Notify.ServerStarted.Notify()
-				return
-			}
-			time.Sleep(500 * time.Millisecond)
-		}
-		log.Fatalf("check if dataplane is running failed on %s", path)
-	}(path)
+	dataplaneapi.SetServerStartedCallback(cfg.Notify.ServerStarted.Notify)
 	if err := server.Serve(); err != nil {
 		log.Fatalf("Error running HAProxy Data Plane API: %s", err.Error())
 	}

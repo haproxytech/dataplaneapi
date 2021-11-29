@@ -101,13 +101,13 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     -r $SPEC_DIR/copyright.txt
 
 echo " ---> removing doc.go"
-rm doc.go
+rm doc.go || echo "doc.go does not exists"
 echo " ---> removing embedded_spec.go"
-rm embedded_spec.go
+rm embedded_spec.go  ||  echo "embedded_spec.go does not exists"
 echo " ---> removing server.go"
-rm server.go
+rm server.go ||  echo "server.go does not exists"
 echo " ---> removing operations/*"
-rm -rf operations/*
+rm -rf operations/* ||  echo "operations/ does not exists"
 
 echo " ---> copy generated files to destination"
 cp -a $DST_DIR/dataplaneapi/. .
