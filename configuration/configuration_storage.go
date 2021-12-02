@@ -106,21 +106,23 @@ type configTypeResources struct {
 }
 
 type configTypeCluster struct {
-	ClusterTLSCertDir  *string `yaml:"cluster_tls_dir,omitempty" hcl:"cluster_tls_dir,omitempty"`
-	ID                 *string `yaml:"id,omitempty" hcl:"id,omitempty"`
-	BootstrapKey       *string `yaml:"bootstrap_key,omitempty" hcl:"bootstrap_key,omitempty"`
-	ActiveBootstrapKey *string `yaml:"active_bootstrap_key,omitempty" hcl:"active_bootstrap_key,omitempty"`
-	Token              *string `yaml:"token,omitempty" hcl:"token,omitempty"`
-	URL                *string `yaml:"url,omitempty" hcl:"url,omitempty"`
-	Port               *int    `yaml:"port,omitempty" hcl:"port,omitempty"`
-	APIBasePath        *string `yaml:"api_base_path,omitempty" hcl:"api_base_path,omitempty"`
-	APINodesPath       *string `yaml:"api_nodes_path,omitempty" hcl:"api_nodes_path,omitempty"`
-	APIRegisterPath    *string `yaml:"api_register_path,omitempty" hcl:"api_register_path,omitempty"`
-	StorageDir         *string `yaml:"storage_dir,omitempty" hcl:"storage_dir,omitempty"`
-	CertificateDir     *string `yaml:"cert_path,omitempty" hcl:"cert_path,omitempty"`
-	CertificateFetched *bool   `yaml:"cert_fetched,omitempty" hcl:"cert_fetched,omitempty"`
-	Name               *string `yaml:"name,omitempty" hcl:"name,omitempty"`
-	Description        *string `yaml:"description,omitempty" hcl:"description,omitempty"`
+	ClusterTLSCertDir  *string                    `yaml:"cluster_tls_dir,omitempty" hcl:"cluster_tls_dir,omitempty"`
+	ID                 *string                    `yaml:"id,omitempty" hcl:"id,omitempty"`
+	BootstrapKey       *string                    `yaml:"bootstrap_key,omitempty" hcl:"bootstrap_key,omitempty"`
+	ActiveBootstrapKey *string                    `yaml:"active_bootstrap_key,omitempty" hcl:"active_bootstrap_key,omitempty"`
+	Token              *string                    `yaml:"token,omitempty" hcl:"token,omitempty"`
+	URL                *string                    `yaml:"url,omitempty" hcl:"url,omitempty"`
+	Port               *int                       `yaml:"port,omitempty" hcl:"port,omitempty"`
+	APIBasePath        *string                    `yaml:"api_base_path,omitempty" hcl:"api_base_path,omitempty"`
+	APINodesPath       *string                    `yaml:"api_nodes_path,omitempty" hcl:"api_nodes_path,omitempty"`
+	APIRegisterPath    *string                    `yaml:"api_register_path,omitempty" hcl:"api_register_path,omitempty"`
+	StorageDir         *string                    `yaml:"storage_dir,omitempty" hcl:"storage_dir,omitempty"`
+	CertificateDir     *string                    `yaml:"cert_path,omitempty" hcl:"cert_path,omitempty"`
+	CertificateFetched *bool                      `yaml:"cert_fetched,omitempty" hcl:"cert_fetched,omitempty"`
+	Name               *string                    `yaml:"name,omitempty" hcl:"name,omitempty"`
+	Description        *string                    `yaml:"description,omitempty" hcl:"description,omitempty"`
+	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" hcl:"cluster_id,omitempty" group:"cluster" save:"true"`
+	ClusterID          *string                    `yaml:"cluster_id,omitempty" hcl:"cluster_id,omitempty group:"cluster" save:"true"`
 }
 
 type configTypeAdvertised struct {
@@ -319,6 +321,12 @@ func copyToConfiguration(cfg *Configuration) {
 	if cfgStorage.Cluster != nil && cfgStorage.Cluster.Description != nil && !misc.HasOSArg("", "", "") {
 		cfg.Cluster.Description.Store(*cfgStorage.Cluster.Description)
 	}
+	if cfgStorage.Cluster != nil && cfgStorage.Cluster.ClusterID != nil && !misc.HasOSArg("", "", "") {
+		cfg.Cluster.ClusterID.Store(*cfgStorage.Cluster.ClusterID)
+	}
+	if cfgStorage.Cluster != nil && cfgStorage.Cluster.ClusterLogTargets != nil && len(cfgStorage.Cluster.ClusterLogTargets) > 0 {
+		cfg.Cluster.ClusterLogTargets = cfgStorage.Cluster.ClusterLogTargets
+	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Advertised != nil && cfgStorage.Dataplaneapi.Advertised.APIAddress != nil && !misc.HasOSArg("", "api-address", "") {
 		cfg.APIOptions.APIAddress = *cfgStorage.Dataplaneapi.Advertised.APIAddress
 	}
@@ -383,11 +391,11 @@ func copyConfigurationToStorage(cfg *Configuration) {
 	valueStatus := cfg.Status.Load()
 	cfgStorage.Status = &valueStatus
 
-	valueClusterID := cfg.Cluster.ID.Load()
+	valueClusterNodeID := cfg.Cluster.ID.Load()
 	if cfgStorage.Cluster == nil {
 		cfgStorage.Cluster = &configTypeCluster{}
 	}
-	cfgStorage.Cluster.ID = &valueClusterID
+	cfgStorage.Cluster.ID = &valueClusterNodeID
 
 	valueClusterBootstrapKey := cfg.Cluster.BootstrapKey.Load()
 	if cfgStorage.Cluster == nil {
@@ -468,6 +476,17 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.Cluster = &configTypeCluster{}
 	}
 	cfgStorage.Cluster.Description = &valueClusterDescription
+
+	valueClusterID := cfg.Cluster.ClusterID.Load()
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
+	}
+	cfgStorage.Cluster.ClusterID = &valueClusterID
+
+	if cfgStorage.Cluster == nil {
+		cfgStorage.Cluster = &configTypeCluster{}
+	}
+	cfgStorage.Cluster.ClusterLogTargets = cfg.Cluster.ClusterLogTargets
 
 	if cfgStorage.Dataplaneapi == nil {
 		cfgStorage.Dataplaneapi = &configTypeDataplaneapi{}

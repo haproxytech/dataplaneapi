@@ -17,6 +17,8 @@ package handlers
 
 import (
 	"fmt"
+	"reflect"
+
 	log "github.com/sirupsen/logrus"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -27,7 +29,6 @@ import (
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/operations/cluster"
-	"github.com/haproxytech/dataplaneapi/operations/discovery"
 )
 
 // CreateClusterHandlerImpl implementation of the CreateClusterHandler interface
@@ -44,6 +45,16 @@ type GetClusterHandlerImpl struct {
 
 // ClusterInitiateCertificateRefreshHandlerImpl implementation of the ClusterInitiateCertificateRefreshHandler interface
 type ClusterInitiateCertificateRefreshHandlerImpl struct {
+	Config *configuration.Configuration
+}
+
+type DeleteClusterHandlerImpl struct {
+	Client      *client_native.HAProxyClient
+	Config      *configuration.Configuration
+	ReloadAgent haproxy.IReloadAgent
+}
+
+type EditClusterHandlerImpl struct {
 	Config *configuration.Configuration
 }
 
@@ -124,9 +135,23 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 			h.Config.Notify.BootstrapKeyChanged.Notify()
 		}()
 	}
-	if params.Data.Mode == "single" && h.Config.Mode.Load() != params.Data.Mode {
-		// by default we are cleaning configuration
-		log.Warningf("received instructions from %s to switch to standalone mode", params.HTTPRequest.RemoteAddr)
+	err := h.Config.Save()
+	if err != nil {
+		return h.err500(err, nil)
+	}
+	return cluster.NewPostClusterOK().WithPayload(getClusterSettings(h.Config))
+}
+
+// Handle executing the request and returning a response
+func (h *GetClusterHandlerImpl) Handle(params cluster.GetClusterParams, principal interface{}) middleware.Responder {
+	return cluster.NewGetClusterOK().WithPayload(getClusterSettings(h.Config))
+}
+
+func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, principal interface{}) middleware.Responder {
+	log.Warningf("received instructions from %s to switch to standalone mode", params.HTTPRequest.RemoteAddr)
+	// Only do when dataplane is in cluster mode, if not, do nothing and return 204
+	if h.Config.Mode.Load() == "cluster" {
+		// If we don't want to keep the haproxy configuration, set it to dummy config
 		if params.Configuration == nil || *params.Configuration != "keep" {
 			log.Warning("clearing configuration as requested")
 			version, errVersion := h.Client.Configuration.GetVersion("")
@@ -215,9 +240,8 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 				return h.err500(err, nil)
 			}
 		}
-
 		h.Config.Cluster.BootstrapKey.Store("")
-		h.Config.Mode.Store(params.Data.Mode)
+		h.Config.Mode.Store("single")
 		h.Config.Status.Store("active")
 		h.Config.Cluster.Clear()
 		defer func() {
@@ -229,33 +253,94 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 	if err != nil {
 		return h.err500(err, nil)
 	}
-	result := models.ClusterSettings{
-		BootstrapKey: h.Config.Cluster.BootstrapKey.Load(),
-		Mode:         h.Config.Mode.Load(),
-		Status:       h.Config.Status.Load(),
-	}
-	return cluster.NewPostClusterOK().WithPayload(&result)
+	return cluster.NewDeleteClusterNoContent()
 }
 
-// Handle executing the request and returning a response
-func (h *GetClusterHandlerImpl) Handle(params discovery.GetClusterParams, principal interface{}) middleware.Responder {
-	portStr := h.Config.Cluster.Port.Load()
+func (h *DeleteClusterHandlerImpl) err500(err error, transaction *models.Transaction) middleware.Responder {
+	if transaction != nil {
+		_ = h.Client.Configuration.DeleteTransaction(transaction.ID)
+	}
+	msg := err.Error()
+	code := int64(500)
+	return cluster.NewDeleteClusterDefault(500).WithPayload(&models.Error{
+		Code:    &code,
+		Message: &msg,
+	})
+}
+
+func (h *EditClusterHandlerImpl) Handle(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
+	// Only do when dataplane is in cluster mode, if not, do nothing and return 204
+	if h.Config.Mode.Load() == "cluster" {
+		// for now change only cluster log targets in PUT method
+		if params.Data != nil && params.Data.Cluster != nil {
+			if clusterLogTargetsChanged(h.Config.Cluster.ClusterLogTargets, params.Data.Cluster.ClusterLogTargets) {
+				h.Config.Cluster.ClusterLogTargets = params.Data.Cluster.ClusterLogTargets
+				h.Config.Cluster.ClusterID.Store(params.Data.Cluster.ClusterID)
+				err := h.Config.Save()
+				if err != nil {
+					return h.err500(err)
+				}
+				defer h.Config.Notify.Reload.Notify()
+			}
+		}
+		return cluster.NewEditClusterOK().WithPayload(getClusterSettings(h.Config))
+	}
+	return h.err406(fmt.Errorf("dataplaneapi in single mode"))
+}
+
+func (h *EditClusterHandlerImpl) err406(err error) middleware.Responder {
+	// 406 Not Acceptable
+	msg := err.Error()
+	code := int64(406)
+	return cluster.NewEditClusterDefault(406).WithPayload(&models.Error{
+		Code:    &code,
+		Message: &msg,
+	})
+}
+
+func (h *EditClusterHandlerImpl) err500(err error) middleware.Responder {
+	msg := err.Error()
+	code := int64(500)
+	return cluster.NewEditClusterDefault(500).WithPayload(&models.Error{
+		Code:    &code,
+		Message: &msg,
+	})
+}
+
+func getClusterSettings(cfg *configuration.Configuration) *models.ClusterSettings {
+	portStr := cfg.Cluster.Port.Load()
 	port := int64(portStr)
 	var clusterSettings *models.ClusterSettingsCluster
-	if h.Config.Mode.Load() == "cluster" {
+	if cfg.Mode.Load() == "cluster" {
 		clusterSettings = &models.ClusterSettingsCluster{
-			Address:     h.Config.Cluster.URL.Load(),
-			Port:        &port,
-			APIBasePath: h.Config.Cluster.APIBasePath.Load(),
-			Name:        h.Config.Cluster.Name.Load(),
-			Description: h.Config.Cluster.Description.Load(),
+			Address:           cfg.Cluster.URL.Load(),
+			Port:              &port,
+			APIBasePath:       cfg.Cluster.APIBasePath.Load(),
+			Name:              cfg.Cluster.Name.Load(),
+			Description:       cfg.Cluster.Description.Load(),
+			ClusterLogTargets: cfg.Cluster.ClusterLogTargets,
 		}
 	}
 	settings := &models.ClusterSettings{
-		BootstrapKey: h.Config.Cluster.BootstrapKey.Load(),
+		BootstrapKey: cfg.Cluster.BootstrapKey.Load(),
 		Cluster:      clusterSettings,
-		Mode:         h.Config.Mode.Load(),
-		Status:       h.Config.Status.Load(),
+		Mode:         cfg.Mode.Load(),
+		Status:       cfg.Status.Load(),
 	}
-	return discovery.NewGetClusterOK().WithPayload(settings)
+	return settings
+}
+
+func clusterLogTargetsChanged(old []*models.ClusterLogTarget, new []*models.ClusterLogTarget) bool {
+	if len(old) == len(new) {
+		eqCtr := 0
+		for _, oldT := range old {
+			for _, newT := range new {
+				if reflect.DeepEqual(oldT, newT) {
+					eqCtr++
+				}
+			}
+		}
+		return !(eqCtr == len(old))
+	}
+	return true
 }

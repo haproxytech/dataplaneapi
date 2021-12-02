@@ -76,20 +76,22 @@ type APIConfiguration struct {
 }
 
 type ClusterConfiguration struct {
-	ID                 AtomicString `yaml:"id,omitempty" group:"cluster" save:"true"`
-	BootstrapKey       AtomicString `yaml:"bootstrap_key,omitempty" group:"cluster" save:"true"`
-	ActiveBootstrapKey AtomicString `yaml:"active_bootstrap_key,omitempty" group:"cluster" save:"true"`
-	Token              AtomicString `yaml:"token,omitempty" group:"cluster" save:"true"`
-	URL                AtomicString `yaml:"url,omitempty" group:"cluster" save:"true"`
-	Port               AtomicInt    `yaml:"port,omitempty" group:"cluster" save:"true"`
-	APIBasePath        AtomicString `yaml:"api_base_path,omitempty" group:"cluster" save:"true"`
-	APINodesPath       AtomicString `yaml:"api_nodes_path,omitempty" group:"cluster" save:"true"`
-	APIRegisterPath    AtomicString `yaml:"api_register_path,omitempty" group:"cluster" save:"true"`
-	StorageDir         AtomicString `yaml:"storage_dir,omitempty" group:"cluster" save:"true"`
-	CertificateDir     AtomicString `yaml:"cert_path,omitempty" group:"cluster" save:"true"`
-	CertificateFetched AtomicBool   `yaml:"cert_fetched,omitempty" group:"cluster" save:"true" example:"false"`
-	Name               AtomicString `yaml:"name,omitempty" group:"cluster" save:"true"`
-	Description        AtomicString `yaml:"description,omitempty" group:"cluster" save:"true"`
+	ID                 AtomicString               `yaml:"id,omitempty" group:"cluster" save:"true"`
+	BootstrapKey       AtomicString               `yaml:"bootstrap_key,omitempty" group:"cluster" save:"true"`
+	ActiveBootstrapKey AtomicString               `yaml:"active_bootstrap_key,omitempty" group:"cluster" save:"true"`
+	Token              AtomicString               `yaml:"token,omitempty" group:"cluster" save:"true"`
+	URL                AtomicString               `yaml:"url,omitempty" group:"cluster" save:"true"`
+	Port               AtomicInt                  `yaml:"port,omitempty" group:"cluster" save:"true"`
+	APIBasePath        AtomicString               `yaml:"api_base_path,omitempty" group:"cluster" save:"true"`
+	APINodesPath       AtomicString               `yaml:"api_nodes_path,omitempty" group:"cluster" save:"true"`
+	APIRegisterPath    AtomicString               `yaml:"api_register_path,omitempty" group:"cluster" save:"true"`
+	StorageDir         AtomicString               `yaml:"storage_dir,omitempty" group:"cluster" save:"true"`
+	CertificateDir     AtomicString               `yaml:"cert_path,omitempty" group:"cluster" save:"true"`
+	CertificateFetched AtomicBool                 `yaml:"cert_fetched,omitempty" group:"cluster" save:"true" example:"false"`
+	Name               AtomicString               `yaml:"name,omitempty" group:"cluster" save:"true"`
+	Description        AtomicString               `yaml:"description,omitempty" group:"cluster" save:"true"`
+	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
+	ClusterID          AtomicString               `yaml:"cluster_id,omitempty" group:"cluster" save:"true"`
 }
 
 func (c *ClusterConfiguration) Clear() {
@@ -103,6 +105,8 @@ func (c *ClusterConfiguration) Clear() {
 	c.CertificateFetched.Store(false)
 	c.Name.Store("")
 	c.Description.Store("")
+	c.ClusterID.Store("")
+	c.ClusterLogTargets = nil
 }
 
 type RuntimeData struct {
@@ -268,6 +272,10 @@ func (c *Configuration) Save() error {
 	if len(c.LogTargets) == 0 {
 		cfg := c.storage.Get()
 		cfg.LogTargets = nil
+	}
+	if len(c.Cluster.ClusterLogTargets) == 0 {
+		cfg := c.storage.Get()
+		cfg.Cluster.ClusterLogTargets = nil
 	}
 	// clean storage data if we are not in cluster mode or preparing to go into that mode
 	if cfg.Mode.Load() != "cluster" && cfg.Cluster.BootstrapKey.Load() == "" {

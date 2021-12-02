@@ -510,8 +510,10 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 
 	// setup cluster handlers
-	api.DiscoveryGetClusterHandler = &handlers.GetClusterHandlerImpl{Config: cfg}
+	api.ClusterGetClusterHandler = &handlers.GetClusterHandlerImpl{Config: cfg}
 	api.ClusterPostClusterHandler = &handlers.CreateClusterHandlerImpl{Client: client, Config: cfg, ReloadAgent: ra}
+	api.ClusterDeleteClusterHandler = &handlers.DeleteClusterHandlerImpl{Client: client, Config: cfg, ReloadAgent: ra}
+	api.ClusterEditClusterHandler = &handlers.EditClusterHandlerImpl{Config: cfg}
 	api.ClusterInitiateCertificateRefreshHandler = &handlers.ClusterInitiateCertificateRefreshHandlerImpl{Config: cfg}
 
 	clusterSync := dataplaneapi_config.ClusterSync{ReloadAgent: ra, Context: ctx}
