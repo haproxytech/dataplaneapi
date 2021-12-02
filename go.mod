@@ -25,8 +25,8 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.2.0
-	github.com/haproxytech/client-native/v2 v2.5.1-0.20211015140535-42e137f15005
-	github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20211008131044-018b4e679a48
+	github.com/haproxytech/client-native/v2 v2.5.2
+	github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20211201125949-12e472fc123e
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
@@ -42,6 +42,6 @@ require (
 	github.com/tebeka/strftime v0.1.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
-	golang.org/x/sys v0.0.0-20210817190340-bfb29a6856f2
+	golang.org/x/sys v0.0.0-20211102192858-4dd72447c267
 	gopkg.in/yaml.v2 v2.3.0
 )

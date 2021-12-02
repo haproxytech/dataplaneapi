@@ -236,6 +236,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindDeleteBindHandler: bind.DeleteBindHandlerFunc(func(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.DeleteBind has not yet been implemented")
 		}),
+		ClusterDeleteClusterHandler: cluster.DeleteClusterHandlerFunc(func(params cluster.DeleteClusterParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cluster.DeleteCluster has not yet been implemented")
+		}),
 		ServiceDiscoveryDeleteConsulHandler: service_discovery.DeleteConsulHandlerFunc(func(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.DeleteConsul has not yet been implemented")
 		}),
@@ -317,6 +320,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TransactionsDeleteTransactionHandler: transactions.DeleteTransactionHandlerFunc(func(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.DeleteTransaction has not yet been implemented")
 		}),
+		ClusterEditClusterHandler: cluster.EditClusterHandlerFunc(func(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cluster.EditCluster has not yet been implemented")
+		}),
 		DiscoveryGetAPIEndpointsHandler: discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetAPIEndpoints has not yet been implemented")
 		}),
@@ -362,8 +368,8 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindGetBindsHandler: bind.GetBindsHandlerFunc(func(params bind.GetBindsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.GetBinds has not yet been implemented")
 		}),
-		DiscoveryGetClusterHandler: discovery.GetClusterHandlerFunc(func(params discovery.GetClusterParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation discovery.GetCluster has not yet been implemented")
+		ClusterGetClusterHandler: cluster.GetClusterHandlerFunc(func(params cluster.GetClusterParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cluster.GetCluster has not yet been implemented")
 		}),
 		DiscoveryGetConfigurationEndpointsHandler: discovery.GetConfigurationEndpointsHandlerFunc(func(params discovery.GetConfigurationEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetConfigurationEndpoints has not yet been implemented")
@@ -848,6 +854,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleDeleteBackendSwitchingRuleHandler backend_switching_rule.DeleteBackendSwitchingRuleHandler
 	// BindDeleteBindHandler sets the operation handler for the delete bind operation
 	BindDeleteBindHandler bind.DeleteBindHandler
+	// ClusterDeleteClusterHandler sets the operation handler for the delete cluster operation
+	ClusterDeleteClusterHandler cluster.DeleteClusterHandler
 	// ServiceDiscoveryDeleteConsulHandler sets the operation handler for the delete consul operation
 	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
 	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
@@ -902,6 +910,8 @@ type DataPlaneAPI struct {
 	TCPResponseRuleDeleteTCPResponseRuleHandler tcp_response_rule.DeleteTCPResponseRuleHandler
 	// TransactionsDeleteTransactionHandler sets the operation handler for the delete transaction operation
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
+	// ClusterEditClusterHandler sets the operation handler for the edit cluster operation
+	ClusterEditClusterHandler cluster.EditClusterHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
 	DiscoveryGetAPIEndpointsHandler discovery.GetAPIEndpointsHandler
 	// ServiceDiscoveryGetAWSRegionHandler sets the operation handler for the get a w s region operation
@@ -932,8 +942,8 @@ type DataPlaneAPI struct {
 	BindGetBindHandler bind.GetBindHandler
 	// BindGetBindsHandler sets the operation handler for the get binds operation
 	BindGetBindsHandler bind.GetBindsHandler
-	// DiscoveryGetClusterHandler sets the operation handler for the get cluster operation
-	DiscoveryGetClusterHandler discovery.GetClusterHandler
+	// ClusterGetClusterHandler sets the operation handler for the get cluster operation
+	ClusterGetClusterHandler cluster.GetClusterHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
 	DiscoveryGetConfigurationEndpointsHandler discovery.GetConfigurationEndpointsHandler
 	// ConfigurationGetConfigurationVersionHandler sets the operation handler for the get configuration version operation
@@ -1373,6 +1383,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindDeleteBindHandler == nil {
 		unregistered = append(unregistered, "bind.DeleteBindHandler")
 	}
+	if o.ClusterDeleteClusterHandler == nil {
+		unregistered = append(unregistered, "cluster.DeleteClusterHandler")
+	}
 	if o.ServiceDiscoveryDeleteConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.DeleteConsulHandler")
 	}
@@ -1454,6 +1467,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TransactionsDeleteTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.DeleteTransactionHandler")
 	}
+	if o.ClusterEditClusterHandler == nil {
+		unregistered = append(unregistered, "cluster.EditClusterHandler")
+	}
 	if o.DiscoveryGetAPIEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetAPIEndpointsHandler")
 	}
@@ -1499,8 +1515,8 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindGetBindsHandler == nil {
 		unregistered = append(unregistered, "bind.GetBindsHandler")
 	}
-	if o.DiscoveryGetClusterHandler == nil {
-		unregistered = append(unregistered, "discovery.GetClusterHandler")
+	if o.ClusterGetClusterHandler == nil {
+		unregistered = append(unregistered, "cluster.GetClusterHandler")
 	}
 	if o.DiscoveryGetConfigurationEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetConfigurationEndpointsHandler")
@@ -2124,6 +2140,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/cluster"] = cluster.NewDeleteCluster(o.context, o.ClusterDeleteClusterHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/service_discovery/consul/{id}"] = service_discovery.NewDeleteConsul(o.context, o.ServiceDiscoveryDeleteConsulHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -2229,6 +2249,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/transactions/{id}"] = transactions.NewDeleteTransaction(o.context, o.TransactionsDeleteTransactionHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/cluster"] = cluster.NewEditCluster(o.context, o.ClusterEditClusterHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2292,7 +2316,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/cluster"] = discovery.NewGetCluster(o.context, o.DiscoveryGetClusterHandler)
+	o.handlers["GET"]["/cluster"] = cluster.NewGetCluster(o.context, o.ClusterGetClusterHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

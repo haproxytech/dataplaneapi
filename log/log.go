@@ -2,10 +2,12 @@ package log
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 
+	"github.com/haproxytech/client-native/v2/models"
 	apache_log "github.com/lestrrat-go/apache-logformat"
 	"github.com/sirupsen/logrus"
 )
@@ -26,12 +28,16 @@ var (
 	config          Targets
 	oldConfig       LoggingOptions
 	oldSyslogConfig SyslogOptions
+	clusterConfig   []*models.ClusterLogTarget
+	node            string
 )
 
-func InitWithConfiguration(targets Targets, old LoggingOptions, oldSyslog SyslogOptions) error {
+func InitWithConfiguration(targets Targets, old LoggingOptions, oldSyslog SyslogOptions, clusterTargets []*models.ClusterLogTarget, nodeID string) error {
 	config = targets
 	oldConfig = old
 	oldSyslogConfig = oldSyslog
+	clusterConfig = clusterTargets
+	node = nodeID
 	return Init()
 }
 
@@ -73,6 +79,54 @@ func Init() error {
 		}
 		configureAccessLogger(target)
 		configureAppLogger(target)
+	}
+	for _, ct := range clusterConfig {
+		clusterTarget := *ct
+		var syslogAddr string
+		var syslogProto string
+		if clusterTarget.Protocol != nil && *clusterTarget.Protocol == "tcp" {
+			port := 514
+			if clusterTarget.Port != nil {
+				port = int(*clusterTarget.Port)
+			}
+			syslogAddr = fmt.Sprintf("%s:%v", *clusterTarget.Address, port)
+			syslogProto = "tcp"
+		} else if clusterTarget.Protocol != nil && *clusterTarget.Protocol == "udp" {
+			if clusterTarget.Port == nil {
+				syslogAddr = *clusterTarget.Address
+			} else {
+				syslogAddr = fmt.Sprintf("%s:%v", *clusterTarget.Address, *clusterTarget.Port)
+			}
+			syslogProto = "unixgram"
+		} else {
+			continue
+		}
+		access := Target{
+			LogTo:          "syslog",
+			LogTypes:       []string{"access"},
+			ACLFormat:      clusterTarget.LogFormat,
+			SyslogAddr:     syslogAddr,
+			SyslogProto:    syslogProto,
+			SyslogTag:      "dataplaneapi-access",
+			SyslogLevel:    "debug",
+			SyslogFacility: "user",
+			SyslogMsgID:    node,
+		}
+		configureAccessLogger(access)
+		app := Target{
+			LogTo:          "syslog",
+			LogLevel:       "info",
+			LogFormat:      "json",
+			LogTypes:       []string{"app"},
+			ACLFormat:      clusterTarget.LogFormat,
+			SyslogAddr:     syslogAddr,
+			SyslogProto:    syslogProto,
+			SyslogTag:      "dataplaneapi-app",
+			SyslogLevel:    "debug",
+			SyslogFacility: "user",
+			SyslogMsgID:    node,
+		}
+		configureAppLogger(app)
 	}
 	return nil
 }

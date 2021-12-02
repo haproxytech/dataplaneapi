@@ -86,7 +86,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Discovery"
+          "Cluster"
         ],
         "summary": "Return cluster data",
         "operationId": "getCluster",
@@ -96,6 +96,41 @@ func init() {
             "schema": {
               "$ref": "#/definitions/cluster_settings"
             }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Edit cluster settings",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Edit cluster settings",
+        "operationId": "editCluster",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cluster settings changed",
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -154,6 +189,36 @@ func init() {
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete cluster settings and move the node back to single mode",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Delete cluster settings",
+        "operationId": "deleteCluster",
+        "parameters": [
+          {
+            "enum": [
+              "keep"
+            ],
+            "type": "string",
+            "description": "In case of moving to single mode do we keep or clean configuration",
+            "name": "configuration",
+            "in": "query"
+          },
+          {
+            "$ref": "#/parameters/version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cluster settings deleted and node moved to single mode"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -11290,9 +11355,45 @@ func init() {
               "type": "string",
               "readOnly": true
             },
+            "cluster_id": {
+              "type": "string"
+            },
             "description": {
               "type": "string",
               "readOnly": true
+            },
+            "log_targets": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "address",
+                  "port",
+                  "protocol"
+                ],
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "log_format": {
+                    "type": "string"
+                  },
+                  "port": {
+                    "type": "integer",
+                    "maximum": 65535,
+                    "minimum": 1
+                  },
+                  "protocol": {
+                    "type": "string",
+                    "enum": [
+                      "tcp",
+                      "udp"
+                    ]
+                  }
+                },
+                "x-go-name": "ClusterLogTarget"
+              },
+              "x-go-name": "ClusterLogTargets"
             },
             "name": {
               "type": "string",
@@ -19018,7 +19119,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Discovery"
+          "Cluster"
         ],
         "summary": "Return cluster data",
         "operationId": "getCluster",
@@ -19027,6 +19128,63 @@ func init() {
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Edit cluster settings",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Edit cluster settings",
+        "operationId": "editCluster",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cluster settings changed",
+            "schema": {
+              "$ref": "#/definitions/cluster_settings"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "default": {
@@ -19108,6 +19266,49 @@ func init() {
                 "description": "Configuration file version"
               }
             }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete cluster settings and move the node back to single mode",
+        "tags": [
+          "Cluster"
+        ],
+        "summary": "Delete cluster settings",
+        "operationId": "deleteCluster",
+        "parameters": [
+          {
+            "enum": [
+              "keep"
+            ],
+            "type": "string",
+            "description": "In case of moving to single mode do we keep or clean configuration",
+            "name": "configuration",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cluster settings deleted and node moved to single mode"
           },
           "default": {
             "description": "General Error",
@@ -33999,9 +34200,19 @@ func init() {
           "type": "string",
           "readOnly": true
         },
+        "cluster_id": {
+          "type": "string"
+        },
         "description": {
           "type": "string",
           "readOnly": true
+        },
+        "log_targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClusterSettingsClusterLogTargetsItems0"
+          },
+          "x-go-name": "ClusterLogTargets"
         },
         "name": {
           "type": "string",
@@ -34015,6 +34226,35 @@ func init() {
           "readOnly": true
         }
       }
+    },
+    "ClusterSettingsClusterLogTargetsItems0": {
+      "type": "object",
+      "required": [
+        "address",
+        "port",
+        "protocol"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "log_format": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "udp"
+          ]
+        }
+      },
+      "x-go-name": "ClusterLogTarget"
     },
     "CookieDomainItems0": {
       "type": "object",
@@ -35541,9 +35781,19 @@ func init() {
               "type": "string",
               "readOnly": true
             },
+            "cluster_id": {
+              "type": "string"
+            },
             "description": {
               "type": "string",
               "readOnly": true
+            },
+            "log_targets": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ClusterSettingsClusterLogTargetsItems0"
+              },
+              "x-go-name": "ClusterLogTargets"
             },
             "name": {
               "type": "string",
