@@ -13,7 +13,7 @@ if [ "$REMOTE_VERSION" = "null" ]; then
    CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Path' 2>/dev/null) || ""
 fi
 # if hash is to short take all of it (example v1.0.0-dev1)
-[ "${#CN_VERSION}" -gt 0 ] && [ "${#CN_VERSION}" -lt 4 ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Version')
+[ "${#CN_VERSION}" -gt 0 ] && [ "${#CN_VERSION}" -lt 6 ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Version')
 # check if version is there, if not, use one from require
 [ -z "$CN_VERSION" ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Require | .[] | select(.Path | contains("github.com/haproxytech/client-native/v2")) | .Version' 2>/dev/null | awk -F"-" '{print $NF}')
 echo " ---> version of client native used: $CN_VERSION"
