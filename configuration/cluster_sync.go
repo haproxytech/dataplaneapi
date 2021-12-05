@@ -198,10 +198,12 @@ func (c *ClusterSync) monitorBootstrapKey() {
 	for {
 		select {
 		case <-c.cfg.Notify.BootstrapKeyChanged.Subscribe("monitorBootstrapKey"):
+			log.Warningf("detected change in configured bootstrap key")
 			key := c.cfg.Cluster.BootstrapKey.Load()
 			c.cfg.Cluster.CertificateFetched.Store(false)
 			if key == "" {
 				// do we need to delete cert here maybe?
+				log.Warningf("setting bootstrap key to empty")
 				c.cfg.Cluster.ActiveBootstrapKey.Store("")
 				err := c.cfg.Save()
 				if err != nil {
@@ -270,12 +272,14 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			if method, ok := data["register-method"]; ok {
 				registerMerhod = method
 			}
+			log.Warningf("issuing cluster join request to cluster %s at %s", data["name"], data["address"])
 			err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), registerMerhod, csr, key)
 			if err != nil {
 				log.Warning(err)
 				break
 			}
 			if !c.cfg.Cluster.CertificateFetched.Load() {
+				log.Warningf("starting certificate fetch")
 				c.certFetch <- struct{}{}
 			}
 		case <-c.Context.Done():
@@ -377,7 +381,9 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		return err
 	}
 	if resp.StatusCode != expectedResponseCodes[registerMethod] {
-		return fmt.Errorf("status code not proper [%d] %s", resp.StatusCode, string(body))
+		return fmt.Errorf("invalid status code [%d] %s", resp.StatusCode, string(body))
+	} else {
+		log.Warningf("success sending local info, joining in progress")
 	}
 	var responseData Node
 	err = json.Unmarshal(body, &responseData)
@@ -444,7 +450,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	c.cfg.Cluster.Name.Store(responseData.Name)
 	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
 	c.cfg.Cluster.ActiveBootstrapKey.Store(c.cfg.Cluster.BootstrapKey.Load())
-	log.Info("Cluster joined")
+	log.Warning("cluster joined")
 	_, err = c.checkCertificate(responseData)
 	if err != nil {
 		return err
@@ -550,6 +556,7 @@ func (c *ClusterSync) fetchCert() {
 			if !certFetched {
 				time.AfterFunc(time.Minute, func() {
 					if !c.cfg.Cluster.CertificateFetched.Load() {
+						log.Warningf("retrying certificate fetch")
 						c.certFetch <- struct{}{}
 					}
 				})
