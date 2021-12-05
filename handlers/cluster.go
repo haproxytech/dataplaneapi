@@ -17,6 +17,7 @@ package handlers
 
 import (
 	"fmt"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/google/renameio"
@@ -101,8 +102,10 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 		if err != nil {
 			return h.err406(err, nil)
 		}
+		log.Warningf("received instructions from %s to join cluster %s at %s", params.HTTPRequest.RemoteAddr, key["name"], key["address"])
 		errStorageDir := configuration.CheckIfStorageDirIsOK(key["storage-dir"], h.Config)
 		if errStorageDir != nil {
+			log.Warningf("configured storage dir incompatible with cluster configuration: %s", errStorageDir)
 			return h.err409(errStorageDir, nil)
 		}
 
@@ -123,7 +126,9 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 	}
 	if params.Data.Mode == "single" && h.Config.Mode.Load() != params.Data.Mode {
 		// by default we are cleaning configuration
+		log.Warningf("received instructions from %s to switch to standalone mode", params.HTTPRequest.RemoteAddr)
 		if params.Configuration == nil || *params.Configuration != "keep" {
+			log.Warning("clearing configuration as requested")
 			version, errVersion := h.Client.Configuration.GetVersion("")
 			if errVersion != nil || version < 1 {
 				// silently fallback to 1
@@ -216,6 +221,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 		h.Config.Status.Store("active")
 		h.Config.Cluster.Clear()
 		defer func() {
+			log.Warning("reloading to apply configuration changes")
 			h.Config.Notify.Reload.Notify()
 		}()
 	}
