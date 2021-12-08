@@ -1,6 +1,6 @@
 package log
 
-const DefaultApacheLogFormat = "%h %l %u %t \"%r %>s %b \"%{Referer}i\" \"%{User-agent}i\" %{us}T"
+const DefaultApacheLogFormat = "%h %l %u %t \"%m %U%q %H\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""
 
 type Target struct {
 	LogTo          string   `yaml:"log_to,omitempty" description:"Log target, can be stdout, file, or syslog" hcl:"log_to"`
