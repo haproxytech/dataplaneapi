@@ -10435,10 +10435,11 @@ func init() {
           }
         ],
         "enabled": true,
-        "id": 0,
+        "id": "0",
         "ipv4_address": "private",
         "name": "frontend-service",
         "region": "us-east-1",
+        "retry_timeout": 1,
         "secret_access_key": "****************soLl"
       }
     },
@@ -10512,6 +10513,17 @@ func init() {
         },
         "default_server": {
           "$ref": "#/definitions/default_server"
+        },
+        "dynamic_cookie_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "cookie": {
+              "dynamic": {
+                "value": true
+              }
+            }
+          }
         },
         "external_check": {
           "type": "string",
@@ -10908,6 +10920,15 @@ func init() {
             }
           },
           "x-display-name": "Uri Len"
+        },
+        "uri_path_only": {
+          "type": "boolean",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Path Only"
         },
         "uri_whole": {
           "type": "boolean",
@@ -12254,6 +12275,10 @@ func init() {
           ],
           "x-display-name": "Don't Log Null"
         },
+        "dynamic_cookie_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "error_files": {
           "type": "array",
           "items": {
@@ -12339,6 +12364,14 @@ func init() {
         "httplog": {
           "type": "boolean",
           "x-display-name": "HTTP Log"
+        },
+        "load_server_state_from_file": {
+          "type": "string",
+          "enum": [
+            "global",
+            "local",
+            "none"
+          ]
         },
         "log_format": {
           "type": "string"
@@ -12916,6 +12949,11 @@ func init() {
           "x-display-name": "Hard Stop After",
           "x-nullable": true
         },
+        "localpeer": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Local instance's peer name."
+        },
         "log_send_hostname": {
           "type": "object",
           "required": [
@@ -13037,6 +13075,11 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Server State Base"
+        },
+        "server_state_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State File"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",
@@ -23958,13 +24001,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -24030,13 +24074,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -24152,13 +24197,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -24240,13 +24286,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -24360,13 +24407,14 @@ func init() {
             "type": "string",
             "description": "Parent name",
             "name": "parent_name",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "defaults",
+              "global"
             ],
             "type": "string",
             "description": "Parent type",
@@ -24447,20 +24495,8 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend",
-              "defaults",
-              "global"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
+            "description": "Parent resolver name",
+            "name": "resolver",
             "in": "query",
             "required": true
           },
@@ -24520,20 +24556,8 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "frontend",
-              "backend",
-              "defaults",
-              "global"
-            ],
-            "type": "string",
-            "description": "Parent type",
-            "name": "parent_type",
+            "description": "Parent resolver name",
+            "name": "resolver",
             "in": "query",
             "required": true
           },
@@ -24636,17 +24660,12 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query"
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
           },
           {
-            "enum": [
-              "frontend",
-              "backend",
-              "defaults",
-              "global"
-            ],
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
@@ -24718,17 +24737,12 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query"
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
           },
           {
-            "enum": [
-              "frontend",
-              "backend",
-              "defaults",
-              "global"
-            ],
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
@@ -24832,17 +24846,12 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Parent name",
-            "name": "parent_name",
-            "in": "query"
+            "description": "Nameserver name",
+            "name": "name",
+            "in": "path",
+            "required": true
           },
           {
-            "enum": [
-              "frontend",
-              "backend",
-              "defaults",
-              "global"
-            ],
             "type": "string",
             "description": "Parent resolver name",
             "name": "resolver",
@@ -34861,10 +34870,11 @@ func init() {
           }
         ],
         "enabled": true,
-        "id": 0,
+        "id": "0",
         "ipv4_address": "private",
         "name": "frontend-service",
         "region": "us-east-1",
+        "retry_timeout": 1,
         "secret_access_key": "****************soLl"
       }
     },
@@ -34938,6 +34948,17 @@ func init() {
         },
         "default_server": {
           "$ref": "#/definitions/default_server"
+        },
+        "dynamic_cookie_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "cookie": {
+              "dynamic": {
+                "value": true
+              }
+            }
+          }
         },
         "external_check": {
           "type": "string",
@@ -35334,6 +35355,15 @@ func init() {
             }
           },
           "x-display-name": "Uri Len"
+        },
+        "uri_path_only": {
+          "type": "boolean",
+          "x-dependency": {
+            "algorithm": {
+              "value": "uri"
+            }
+          },
+          "x-display-name": "Uri Path Only"
         },
         "uri_whole": {
           "type": "boolean",
@@ -36647,6 +36677,10 @@ func init() {
           ],
           "x-display-name": "Don't Log Null"
         },
+        "dynamic_cookie_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "error_files": {
           "type": "array",
           "items": {
@@ -36732,6 +36766,14 @@ func init() {
         "httplog": {
           "type": "boolean",
           "x-display-name": "HTTP Log"
+        },
+        "load_server_state_from_file": {
+          "type": "string",
+          "enum": [
+            "global",
+            "local",
+            "none"
+          ]
         },
         "log_format": {
           "type": "string"
@@ -37294,6 +37336,11 @@ func init() {
           "x-display-name": "Hard Stop After",
           "x-nullable": true
         },
+        "localpeer": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Local instance's peer name."
+        },
         "log_send_hostname": {
           "type": "object",
           "required": [
@@ -37358,6 +37405,11 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Server State Base"
+        },
+        "server_state_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State File"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",
