@@ -121,8 +121,8 @@ type configTypeCluster struct {
 	CertificateFetched *bool                      `yaml:"cert_fetched,omitempty" hcl:"cert_fetched,omitempty"`
 	Name               *string                    `yaml:"name,omitempty" hcl:"name,omitempty"`
 	Description        *string                    `yaml:"description,omitempty" hcl:"description,omitempty"`
-	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" hcl:"cluster_id,omitempty" group:"cluster" save:"true"`
-	ClusterID          *string                    `yaml:"cluster_id,omitempty" hcl:"cluster_id,omitempty group:"cluster" save:"true"`
+	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" hcl:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
+	ClusterID          *string                    `yaml:"cluster_id,omitempty" hcl:"cluster_id,omitempty" group:"cluster" save:"true"`
 }
 
 type configTypeAdvertised struct {
