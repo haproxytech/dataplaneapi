@@ -17,8 +17,11 @@ package configuration
 
 import (
 	"io/ioutil"
+	"strings"
 
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/hashicorp/hcl"
+	"github.com/jinzhu/copier"
 	"github.com/rodaine/hclencoder"
 )
 
@@ -57,7 +60,48 @@ func (s *StorageHCL) Set(cfg *StorageDataplaneAPIConfiguration) {
 }
 
 func (s *StorageHCL) SaveAs(filename string) error {
-	hcl, err := hclencoder.Encode(s.cfg)
+	var err error
+	var hcl []byte
+	var localCopy StorageDataplaneAPIConfiguration
+	err = copier.Copy(&localCopy, &s.cfg)
+	if err != nil {
+		return err
+	}
+	// check if we have cluster log targets in config file
+	if s.cfg.Cluster != nil && len(s.cfg.Cluster.ClusterLogTargets) > 0 {
+		// since this can contain " character, escape it
+		for index, value := range localCopy.Cluster.ClusterLogTargets {
+			localCopy.Cluster.ClusterLogTargets[index].LogFormat = strings.Replace(value.LogFormat, `"`, `\"`, -1)
+		}
+	}
+	// check if we have cluster log targets in config file
+	if localCopy.Cluster != nil && len(localCopy.Cluster.ClusterLogTargets) > 0 {
+		// since this can contain " character, escape it
+		for index, value := range localCopy.Cluster.ClusterLogTargets {
+			localCopy.Cluster.ClusterLogTargets[index].LogFormat = strings.Replace(value.LogFormat, `"`, `\"`, -1)
+		}
+	}
+	if localCopy.LogTargets != nil && len(*localCopy.LogTargets) > 0 {
+		var logTargets []log.Target
+		for _, value := range *localCopy.LogTargets {
+			value.LogFormat = strings.Replace(value.LogFormat, `"`, `\"`, -1)
+			value.ACLFormat = strings.Replace(value.ACLFormat, `"`, `\"`, -1)
+			logTargets = append(logTargets, value)
+		}
+		localCopy.LogTargets = (*log.Targets)(&logTargets)
+	}
+	if localCopy.Log != nil {
+		if localCopy.Log.ACLFormat != nil {
+			aclF := strings.Replace(*localCopy.Log.ACLFormat, `"`, `\"`, -1)
+			localCopy.Log.ACLFormat = &aclF
+		}
+		if localCopy.Log.LogFormat != nil {
+			logF := strings.Replace(*localCopy.Log.LogFormat, `"`, `\"`, -1)
+			localCopy.Log.LogFormat = &logF
+		}
+	}
+
+	hcl, err = hclencoder.Encode(localCopy)
 	if err != nil {
 		return err
 	}
