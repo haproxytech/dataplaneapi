@@ -31,7 +31,6 @@ require (
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jessevdk/go-flags v1.4.0
-	github.com/jinzhu/copier v0.3.4
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
 	github.com/lestrrat-go/envload v0.0.0-20180220234015-a3eb8ddeffcc // indirect
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
