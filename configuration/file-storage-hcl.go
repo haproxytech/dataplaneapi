@@ -16,12 +16,13 @@
 package configuration
 
 import (
+	"bytes"
+	"encoding/gob"
 	"io/ioutil"
 	"strings"
 
 	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/hashicorp/hcl"
-	"github.com/jinzhu/copier"
 	"github.com/rodaine/hclencoder"
 )
 
@@ -63,17 +64,17 @@ func (s *StorageHCL) SaveAs(filename string) error {
 	var err error
 	var hcl []byte
 	var localCopy StorageDataplaneAPIConfiguration
-	err = copier.Copy(&localCopy, &s.cfg)
-	if err != nil {
+
+	var b bytes.Buffer
+	e := gob.NewEncoder(&b)
+	if err := e.Encode(s.cfg); err != nil {
 		return err
 	}
-	// check if we have cluster log targets in config file
-	if s.cfg.Cluster != nil && len(s.cfg.Cluster.ClusterLogTargets) > 0 {
-		// since this can contain " character, escape it
-		for index, value := range localCopy.Cluster.ClusterLogTargets {
-			localCopy.Cluster.ClusterLogTargets[index].LogFormat = strings.Replace(value.LogFormat, `"`, `\"`, -1)
-		}
+	d := gob.NewDecoder(&b)
+	if err := d.Decode(&localCopy); err != nil {
+		return err
 	}
+
 	// check if we have cluster log targets in config file
 	if localCopy.Cluster != nil && len(localCopy.Cluster.ClusterLogTargets) > 0 {
 		// since this can contain " character, escape it
@@ -84,7 +85,6 @@ func (s *StorageHCL) SaveAs(filename string) error {
 	if localCopy.LogTargets != nil && len(*localCopy.LogTargets) > 0 {
 		var logTargets []log.Target
 		for _, value := range *localCopy.LogTargets {
-			value.LogFormat = strings.Replace(value.LogFormat, `"`, `\"`, -1)
 			value.ACLFormat = strings.Replace(value.ACLFormat, `"`, `\"`, -1)
 			logTargets = append(logTargets, value)
 		}
@@ -94,10 +94,6 @@ func (s *StorageHCL) SaveAs(filename string) error {
 		if localCopy.Log.ACLFormat != nil {
 			aclF := strings.Replace(*localCopy.Log.ACLFormat, `"`, `\"`, -1)
 			localCopy.Log.ACLFormat = &aclF
-		}
-		if localCopy.Log.LogFormat != nil {
-			logF := strings.Replace(*localCopy.Log.LogFormat, `"`, `\"`, -1)
-			localCopy.Log.LogFormat = &logF
 		}
 	}
 
