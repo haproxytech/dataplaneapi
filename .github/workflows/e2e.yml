@@ -11,7 +11,7 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
     - name: Downloading required packages
-      run: sudo apt-get install bats    
+      run: sudo apt-get install bats
     - name: Set up Go 1.16
       uses: actions/setup-go@v1
       with:

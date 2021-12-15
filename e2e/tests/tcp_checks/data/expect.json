@@ -1,0 +1,6 @@
+{
+    "action": "expect",
+    "match": "string",
+    "pattern": "role:master",
+    "index": 0
+  }

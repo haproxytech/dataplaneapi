@@ -6069,6 +6069,349 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/tcp_checks": {
+      "get": {
+        "description": "Returns all TCP checks that are configured in specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return an array of TCP checks",
+        "operationId": "getTCPChecks",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/tcp_checks"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP check of the specified type in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Add a new TCP check",
+        "operationId": "createTCPCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP check created",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/tcp_checks/{index}": {
+      "get": {
+        "description": "Returns one TCP check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return one TCP check",
+        "operationId": "getTCPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/tcp_check"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Replace a TCP check",
+        "operationId": "replaceTCPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP check replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP check configuration by it's index from the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Delete a TCP check",
+        "operationId": "deleteTCPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP check deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/tcp_request_rules": {
       "get": {
         "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
@@ -10750,6 +11093,9 @@ func init() {
             }
           }
         },
+        "tcp_check": {
+          "$ref": "#/definitions/tcp_check"
+        },
         "tunnel_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -12444,6 +12790,9 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "tcp_check": {
+          "$ref": "#/definitions/tcp_check"
         },
         "tcplog": {
           "type": "boolean",
@@ -18256,6 +18605,382 @@ func init() {
         "$ref": "#/definitions/stick_table"
       }
     },
+    "tcp_check": {
+      "type": "object",
+      "title": "TCP Check",
+      "required": [
+        "index",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "comment",
+            "connect",
+            "expect",
+            "send",
+            "send-lf",
+            "send-binary",
+            "send-binary-lf",
+            "set-var",
+            "set-var-fmt",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
+        "addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-display-name": "ALPN Protocols",
+          "x-nullable": false
+        },
+        "check_comment": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": [
+                "connect",
+                "expect",
+                "send",
+                "send-lf",
+                "send-binary",
+                "send-binary-lf"
+              ]
+            }
+          },
+          "x-nullable": false
+        },
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "data": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send"
+            }
+          }
+        },
+        "default": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "error_status": {
+          "type": "string",
+          "enum": [
+            "L7OKC",
+            "L7RSP",
+            "L7STS",
+            "L6RSP",
+            "L4CON"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "exclamation_mark": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Exclamation Mark"
+        },
+        "fmt": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-lf"
+            }
+          }
+        },
+        "hex_fmt": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-binary-lf"
+            }
+          }
+        },
+        "hex_string": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-binary"
+            }
+          }
+        },
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "linger": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "log_message": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "comment"
+            }
+          }
+        },
+        "match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "enum": [
+            "string",
+            "rstring",
+            "string-lf",
+            "binary",
+            "rbinary",
+            "binary-lf"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Match"
+        },
+        "min_recv": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "ok_status": {
+          "type": "string",
+          "enum": [
+            "L7OK",
+            "L7OKC",
+            "L6OK",
+            "L4OK"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_error": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_success": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "pattern": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          }
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": true
+        },
+        "port_string": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "proto": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "send_proxy": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "sni": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "ssl": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "status-code": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "tout_status": {
+          "type": "string",
+          "enum": [
+            "L7TOUT",
+            "L6TOUT",
+            "L4TOUT"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "var_expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var"
+              ]
+            }
+          },
+          "x-display-name": "Var Expression"
+        },
+        "var_fmt": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var-fmt"
+              ]
+            }
+          },
+          "x-display-name": "Var Format"
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "set-var-fmt",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "set-var-fmt",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "via_socks4": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        }
+      }
+    },
+    "tcp_checks": {
+      "type": "array",
+      "title": "TCP Checks Array",
+      "items": {
+        "$ref": "#/definitions/tcp_check"
+      }
+    },
     "tcp_request_rule": {
       "description": "HAProxy TCP Request Rule configuration (corresponds to tcp-request)",
       "type": "object",
@@ -19082,6 +19807,9 @@ func init() {
     },
     {
       "name": "Storage"
+    },
+    {
+      "name": "TCPCheck"
     },
     {
       "name": "TCPRequestRule"
@@ -27975,6 +28703,492 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/tcp_checks": {
+      "get": {
+        "description": "Returns all TCP checks that are configured in specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return an array of TCP checks",
+        "operationId": "getTCPChecks",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/tcp_checks"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new TCP check of the specified type in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Add a new TCP check",
+        "operationId": "createTCPCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TCP check created",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/tcp_checks/{index}": {
+      "get": {
+        "description": "Returns one TCP check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Return one TCP check",
+        "operationId": "getTCPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/tcp_check"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a TCP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Replace a TCP check",
+        "operationId": "replaceTCPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TCP check replaced",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/tcp_check"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a TCP check configuration by it's index from the specified parent.",
+        "tags": [
+          "TCPCheck"
+        ],
+        "summary": "Delete a TCP check",
+        "operationId": "deleteTCPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "TCP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "TCP check deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/tcp_request_rules": {
       "get": {
         "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
@@ -35185,6 +36399,9 @@ func init() {
             }
           }
         },
+        "tcp_check": {
+          "$ref": "#/definitions/tcp_check"
+        },
         "tunnel_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -36846,6 +38063,9 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "tcp_check": {
+          "$ref": "#/definitions/tcp_check"
         },
         "tcplog": {
           "type": "boolean",
@@ -42469,6 +43689,382 @@ func init() {
         "$ref": "#/definitions/stick_table"
       }
     },
+    "tcp_check": {
+      "type": "object",
+      "title": "TCP Check",
+      "required": [
+        "index",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "comment",
+            "connect",
+            "expect",
+            "send",
+            "send-lf",
+            "send-binary",
+            "send-binary-lf",
+            "set-var",
+            "set-var-fmt",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
+        "addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-display-name": "ALPN Protocols",
+          "x-nullable": false
+        },
+        "check_comment": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": [
+                "connect",
+                "expect",
+                "send",
+                "send-lf",
+                "send-binary",
+                "send-binary-lf"
+              ]
+            }
+          },
+          "x-nullable": false
+        },
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "data": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send"
+            }
+          }
+        },
+        "default": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "error_status": {
+          "type": "string",
+          "enum": [
+            "L7OKC",
+            "L7RSP",
+            "L7STS",
+            "L6RSP",
+            "L4CON"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "exclamation_mark": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Exclamation Mark"
+        },
+        "fmt": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-lf"
+            }
+          }
+        },
+        "hex_fmt": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-binary-lf"
+            }
+          }
+        },
+        "hex_string": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-binary"
+            }
+          }
+        },
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "linger": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "log_message": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "comment"
+            }
+          }
+        },
+        "match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "enum": [
+            "string",
+            "rstring",
+            "string-lf",
+            "binary",
+            "rbinary",
+            "binary-lf"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Match"
+        },
+        "min_recv": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "ok_status": {
+          "type": "string",
+          "enum": [
+            "L7OK",
+            "L7OKC",
+            "L6OK",
+            "L4OK"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_error": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_success": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "pattern": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          }
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": true
+        },
+        "port_string": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "proto": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "send_proxy": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "sni": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "ssl": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "status-code": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "tout_status": {
+          "type": "string",
+          "enum": [
+            "L7TOUT",
+            "L6TOUT",
+            "L4TOUT"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "var_expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var"
+              ]
+            }
+          },
+          "x-display-name": "Var Expression"
+        },
+        "var_fmt": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var-fmt"
+              ]
+            }
+          },
+          "x-display-name": "Var Format"
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "set-var-fmt",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "set-var-fmt",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "via_socks4": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        }
+      }
+    },
+    "tcp_checks": {
+      "type": "array",
+      "title": "TCP Checks Array",
+      "items": {
+        "$ref": "#/definitions/tcp_check"
+      }
+    },
     "tcp_request_rule": {
       "description": "HAProxy TCP Request Rule configuration (corresponds to tcp-request)",
       "type": "object",
@@ -43295,6 +44891,9 @@ func init() {
     },
     {
       "name": "Storage"
+    },
+    {
+      "name": "TCPCheck"
     },
     {
       "name": "TCPRequestRule"

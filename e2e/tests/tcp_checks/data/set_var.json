@@ -1,0 +1,7 @@
+{
+    "action": "set-var",
+    "var_scope": "check",
+    "var_name": "name",
+    "expr": "\"%H\"",
+    "index": 0
+}

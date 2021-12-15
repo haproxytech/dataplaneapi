@@ -80,6 +80,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=ServerSwitchingRule \
     --tags=TCPResponseRule \
     --tags=TCPRequestRule \
+    --tags=TCPCheck \
     --tags=Filter \
     --tags=StickRule \
     --tags=LogTarget \

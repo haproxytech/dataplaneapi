@@ -390,6 +390,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.TCPResponseRuleGetTCPResponseRulesHandler = &handlers.GetTCPResponseRulesHandlerImpl{Client: client}
 	api.TCPResponseRuleReplaceTCPResponseRuleHandler = &handlers.ReplaceTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup tcp check handlers
+	api.TCPCheckCreateTCPCheckHandler = &handlers.CreateTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckDeleteTCPCheckHandler = &handlers.DeleteTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckGetTCPCheckHandler = &handlers.GetTCPCheckHandlerImpl{Client: client}
+	api.TCPCheckGetTCPChecksHandler = &handlers.GetTCPChecksHandlerImpl{Client: client}
+	api.TCPCheckReplaceTCPCheckHandler = &handlers.ReplaceTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup backend switching rule handlers
 	api.BackendSwitchingRuleCreateBackendSwitchingRuleHandler = &handlers.CreateBackendSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
 	api.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler = &handlers.DeleteBackendSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}

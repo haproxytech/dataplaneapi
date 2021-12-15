@@ -1,0 +1,6 @@
+{
+    "action": "unset-var",
+    "scope": "check",
+    "name": "name",
+    "index": 0
+}

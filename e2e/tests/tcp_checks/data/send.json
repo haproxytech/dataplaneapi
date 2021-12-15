@@ -1,0 +1,5 @@
+{
+    "action": "send",
+    "data": "PING\r\n",
+    "index": 0
+  }

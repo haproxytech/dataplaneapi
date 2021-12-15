@@ -69,6 +69,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
 	"github.com/haproxytech/dataplaneapi/operations/stick_table"
 	"github.com/haproxytech/dataplaneapi/operations/storage"
+	"github.com/haproxytech/dataplaneapi/operations/tcp_check"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
@@ -215,6 +216,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageCreateStorageSSLCertificateHandler: storage.CreateStorageSSLCertificateHandlerFunc(func(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.CreateStorageSSLCertificate has not yet been implemented")
 		}),
+		TCPCheckCreateTCPCheckHandler: tcp_check.CreateTCPCheckHandlerFunc(func(params tcp_check.CreateTCPCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.CreateTCPCheck has not yet been implemented")
+		}),
 		TCPRequestRuleCreateTCPRequestRuleHandler: tcp_request_rule.CreateTCPRequestRuleHandlerFunc(func(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.CreateTCPRequestRule has not yet been implemented")
 		}),
@@ -310,6 +314,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StorageDeleteStorageSSLCertificateHandler: storage.DeleteStorageSSLCertificateHandlerFunc(func(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.DeleteStorageSSLCertificate has not yet been implemented")
+		}),
+		TCPCheckDeleteTCPCheckHandler: tcp_check.DeleteTCPCheckHandlerFunc(func(params tcp_check.DeleteTCPCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.DeleteTCPCheck has not yet been implemented")
 		}),
 		TCPRequestRuleDeleteTCPRequestRuleHandler: tcp_request_rule.DeleteTCPRequestRuleHandlerFunc(func(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.DeleteTCPRequestRule has not yet been implemented")
@@ -578,6 +585,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DiscoveryGetStorageEndpointsHandler: discovery.GetStorageEndpointsHandlerFunc(func(params discovery.GetStorageEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetStorageEndpoints has not yet been implemented")
 		}),
+		TCPCheckGetTCPCheckHandler: tcp_check.GetTCPCheckHandlerFunc(func(params tcp_check.GetTCPCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.GetTCPCheck has not yet been implemented")
+		}),
+		TCPCheckGetTCPChecksHandler: tcp_check.GetTCPChecksHandlerFunc(func(params tcp_check.GetTCPChecksParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.GetTCPChecks has not yet been implemented")
+		}),
 		TCPRequestRuleGetTCPRequestRuleHandler: tcp_request_rule.GetTCPRequestRuleHandlerFunc(func(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.GetTCPRequestRule has not yet been implemented")
 		}),
@@ -688,6 +701,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StorageReplaceStorageSSLCertificateHandler: storage.ReplaceStorageSSLCertificateHandlerFunc(func(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.ReplaceStorageSSLCertificate has not yet been implemented")
+		}),
+		TCPCheckReplaceTCPCheckHandler: tcp_check.ReplaceTCPCheckHandlerFunc(func(params tcp_check.ReplaceTCPCheckParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.ReplaceTCPCheck has not yet been implemented")
 		}),
 		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRule has not yet been implemented")
@@ -840,6 +856,8 @@ type DataPlaneAPI struct {
 	StorageCreateStorageMapFileHandler storage.CreateStorageMapFileHandler
 	// StorageCreateStorageSSLCertificateHandler sets the operation handler for the create storage s s l certificate operation
 	StorageCreateStorageSSLCertificateHandler storage.CreateStorageSSLCertificateHandler
+	// TCPCheckCreateTCPCheckHandler sets the operation handler for the create TCP check operation
+	TCPCheckCreateTCPCheckHandler tcp_check.CreateTCPCheckHandler
 	// TCPRequestRuleCreateTCPRequestRuleHandler sets the operation handler for the create TCP request rule operation
 	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
 	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
@@ -904,6 +922,8 @@ type DataPlaneAPI struct {
 	StorageDeleteStorageMapHandler storage.DeleteStorageMapHandler
 	// StorageDeleteStorageSSLCertificateHandler sets the operation handler for the delete storage s s l certificate operation
 	StorageDeleteStorageSSLCertificateHandler storage.DeleteStorageSSLCertificateHandler
+	// TCPCheckDeleteTCPCheckHandler sets the operation handler for the delete TCP check operation
+	TCPCheckDeleteTCPCheckHandler tcp_check.DeleteTCPCheckHandler
 	// TCPRequestRuleDeleteTCPRequestRuleHandler sets the operation handler for the delete TCP request rule operation
 	TCPRequestRuleDeleteTCPRequestRuleHandler tcp_request_rule.DeleteTCPRequestRuleHandler
 	// TCPResponseRuleDeleteTCPResponseRuleHandler sets the operation handler for the delete TCP response rule operation
@@ -1082,6 +1102,10 @@ type DataPlaneAPI struct {
 	StickTableGetStickTablesHandler stick_table.GetStickTablesHandler
 	// DiscoveryGetStorageEndpointsHandler sets the operation handler for the get storage endpoints operation
 	DiscoveryGetStorageEndpointsHandler discovery.GetStorageEndpointsHandler
+	// TCPCheckGetTCPCheckHandler sets the operation handler for the get TCP check operation
+	TCPCheckGetTCPCheckHandler tcp_check.GetTCPCheckHandler
+	// TCPCheckGetTCPChecksHandler sets the operation handler for the get TCP checks operation
+	TCPCheckGetTCPChecksHandler tcp_check.GetTCPChecksHandler
 	// TCPRequestRuleGetTCPRequestRuleHandler sets the operation handler for the get TCP request rule operation
 	TCPRequestRuleGetTCPRequestRuleHandler tcp_request_rule.GetTCPRequestRuleHandler
 	// TCPRequestRuleGetTCPRequestRulesHandler sets the operation handler for the get TCP request rules operation
@@ -1156,6 +1180,8 @@ type DataPlaneAPI struct {
 	StorageReplaceStorageMapFileHandler storage.ReplaceStorageMapFileHandler
 	// StorageReplaceStorageSSLCertificateHandler sets the operation handler for the replace storage s s l certificate operation
 	StorageReplaceStorageSSLCertificateHandler storage.ReplaceStorageSSLCertificateHandler
+	// TCPCheckReplaceTCPCheckHandler sets the operation handler for the replace TCP check operation
+	TCPCheckReplaceTCPCheckHandler tcp_check.ReplaceTCPCheckHandler
 	// TCPRequestRuleReplaceTCPRequestRuleHandler sets the operation handler for the replace TCP request rule operation
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
@@ -1362,6 +1388,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StorageCreateStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.CreateStorageSSLCertificateHandler")
 	}
+	if o.TCPCheckCreateTCPCheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.CreateTCPCheckHandler")
+	}
 	if o.TCPRequestRuleCreateTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.CreateTCPRequestRuleHandler")
 	}
@@ -1457,6 +1486,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StorageDeleteStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.DeleteStorageSSLCertificateHandler")
+	}
+	if o.TCPCheckDeleteTCPCheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.DeleteTCPCheckHandler")
 	}
 	if o.TCPRequestRuleDeleteTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.DeleteTCPRequestRuleHandler")
@@ -1725,6 +1757,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DiscoveryGetStorageEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetStorageEndpointsHandler")
 	}
+	if o.TCPCheckGetTCPCheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.GetTCPCheckHandler")
+	}
+	if o.TCPCheckGetTCPChecksHandler == nil {
+		unregistered = append(unregistered, "tcp_check.GetTCPChecksHandler")
+	}
 	if o.TCPRequestRuleGetTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.GetTCPRequestRuleHandler")
 	}
@@ -1835,6 +1873,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StorageReplaceStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.ReplaceStorageSSLCertificateHandler")
+	}
+	if o.TCPCheckReplaceTCPCheckHandler == nil {
+		unregistered = append(unregistered, "tcp_check.ReplaceTCPCheckHandler")
 	}
 	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
@@ -2112,6 +2153,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/tcp_checks"] = tcp_check.NewCreateTCPCheck(o.context, o.TCPCheckCreateTCPCheckHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewCreateTCPRequestRule(o.context, o.TCPRequestRuleCreateTCPRequestRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2237,6 +2282,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewDeleteStorageSSLCertificate(o.context, o.StorageDeleteStorageSSLCertificateHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_checks/{index}"] = tcp_check.NewDeleteTCPCheck(o.context, o.TCPCheckDeleteTCPCheckHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2596,6 +2645,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_checks/{index}"] = tcp_check.NewGetTCPCheck(o.context, o.TCPCheckGetTCPCheckHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/tcp_checks"] = tcp_check.NewGetTCPChecks(o.context, o.TCPCheckGetTCPChecksHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewGetTCPRequestRule(o.context, o.TCPRequestRuleGetTCPRequestRuleHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -2741,6 +2798,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewReplaceStorageSSLCertificate(o.context, o.StorageReplaceStorageSSLCertificateHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_checks/{index}"] = tcp_check.NewReplaceTCPCheck(o.context, o.TCPCheckReplaceTCPCheckHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
