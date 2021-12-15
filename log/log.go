@@ -38,6 +38,8 @@ func InitWithConfiguration(targets Targets, old LoggingOptions, oldSyslog Syslog
 	oldSyslogConfig = oldSyslog
 	clusterConfig = clusterTargets
 	node = nodeID
+	appLogger = nil
+	accessLogger = nil
 	return Init()
 }
 
