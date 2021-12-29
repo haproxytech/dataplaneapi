@@ -60,7 +60,7 @@ type EditClusterHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *ClusterInitiateCertificateRefreshHandlerImpl) Handle(params cluster.InitiateCertificateRefreshParams, principal interface{}) middleware.Responder {
-	if h.Config.Mode.Load() != "cluster" {
+	if h.Config.Mode.Load() != configuration.MODE_CLUSTER {
 		return cluster.NewInitiateCertificateRefreshForbidden()
 	}
 	h.Config.Notify.CertificateRefresh.Notify()
@@ -127,7 +127,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 		if p := params.AdvertisedPort; p != nil {
 			h.Config.APIOptions.APIPort = *p
 		}
-		h.Config.Mode.Store("cluster")
+		h.Config.Mode.Store(configuration.MODE_CLUSTER)
 		h.Config.Cluster.BootstrapKey.Store(params.Data.BootstrapKey)
 		h.Config.Cluster.Clear()
 		// ensuring configuration file saving occurs before notifying the monitor about the bootstrap key change
@@ -150,7 +150,7 @@ func (h *GetClusterHandlerImpl) Handle(params cluster.GetClusterParams, principa
 func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, principal interface{}) middleware.Responder {
 	log.Warningf("received instructions from %s to switch to standalone mode", params.HTTPRequest.RemoteAddr)
 	// Only do when dataplane is in cluster mode, if not, do nothing and return 204
-	if h.Config.Mode.Load() == "cluster" {
+	if h.Config.Mode.Load() == configuration.MODE_CLUSTER {
 		// If we don't want to keep the haproxy configuration, set it to dummy config
 		if params.Configuration == nil || *params.Configuration != "keep" {
 			log.Warning("clearing configuration as requested")
@@ -241,7 +241,7 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 			}
 		}
 		h.Config.Cluster.BootstrapKey.Store("")
-		h.Config.Mode.Store("single")
+		h.Config.Mode.Store(configuration.MODE_SINGLE)
 		h.Config.Status.Store("active")
 		h.Config.Cluster.Clear()
 		defer func() {
@@ -270,7 +270,7 @@ func (h *DeleteClusterHandlerImpl) err500(err error, transaction *models.Transac
 
 func (h *EditClusterHandlerImpl) Handle(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
 	// Only do when dataplane is in cluster mode, if not, do nothing and return 204
-	if h.Config.Mode.Load() == "cluster" {
+	if h.Config.Mode.Load() == configuration.MODE_CLUSTER {
 		// for now change only cluster log targets in PUT method
 		if params.Data != nil && params.Data.Cluster != nil {
 			if clusterLogTargetsChanged(h.Config.Cluster.ClusterLogTargets, params.Data.Cluster.ClusterLogTargets) {
@@ -311,7 +311,7 @@ func getClusterSettings(cfg *configuration.Configuration) *models.ClusterSetting
 	portStr := cfg.Cluster.Port.Load()
 	port := int64(portStr)
 	var clusterSettings *models.ClusterSettingsCluster
-	if cfg.Mode.Load() == "cluster" {
+	if cfg.Mode.Load() == configuration.MODE_CLUSTER {
 		clusterSettings = &models.ClusterSettingsCluster{
 			Address:           cfg.Cluster.URL.Load(),
 			Port:              &port,
