@@ -244,7 +244,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			}
 			c.cfg.Cluster.Name.Store(data["name"])
 			c.cfg.Cluster.Description.Store(data["description"])
-			c.cfg.Mode.Store("cluster")
+			c.cfg.Mode.Store(MODE_CLUSTER)
 			err = c.cfg.Save()
 			if err != nil {
 				log.Panic(err)

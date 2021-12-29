@@ -227,7 +227,7 @@ func (c *Configuration) Load() error {
 	}
 
 	if c.Mode.Load() == "" {
-		c.Mode.Store("single")
+		c.Mode.Store(MODE_SINGLE)
 	}
 
 	if c.Name.Load() == "" {
@@ -278,7 +278,7 @@ func (c *Configuration) Save() error {
 		cfg.Cluster.ClusterLogTargets = nil
 	}
 	// clean storage data if we are not in cluster mode or preparing to go into that mode
-	if cfg.Mode.Load() != "cluster" && cfg.Cluster.BootstrapKey.Load() == "" {
+	if cfg.Mode.Load() != MODE_CLUSTER && cfg.Cluster.BootstrapKey.Load() == "" {
 		storage := cfg.storage.Get()
 		storage.Cluster = nil
 	}
