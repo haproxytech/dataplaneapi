@@ -29,7 +29,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"path"
 	"strconv"
 	"strings"
@@ -342,23 +341,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		Status:      "waiting_approval",
 		Type:        DataplaneAPIType,
 	}
-	nodeData.Variables = map[string]string{}
-
-	// report the dataplane_cmdline if started from within haproxy
-	if c.cfg.HAProxy.MasterWorkerMode || os.Getenv("HAPROXY_MWORKER") == "1" {
-		nodeData.Variables["dataplane_cmdline"] = c.cfg.Cmdline.String()
-	}
-
-	processInfos, err := c.cli.Runtime.GetInfo()
-	if err != nil || len(processInfos) < 1 {
-		log.Error("unable to fetch processInfo")
-	} else {
-		if processInfos[0].Info != nil {
-			nodeData.Variables["haproxy_version"] = processInfos[0].Info.Version
-		} else {
-			log.Error("empty process info")
-		}
-	}
+	nodeData.Variables = c.getNodeVariables()
 
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
