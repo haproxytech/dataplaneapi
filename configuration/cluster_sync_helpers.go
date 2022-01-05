@@ -21,12 +21,12 @@ import (
 	"github.com/haproxytech/dataplaneapi/log"
 )
 
-func (c *ClusterSync) getNodeVariables() map[string]string {
-	variables := map[string]string{}
+func (c *ClusterSync) getNodeFacts() map[string]string {
+	facts := map[string]string{}
 
 	// report the dataplane_cmdline if started from within haproxy
 	if c.cfg.HAProxy.MasterWorkerMode || os.Getenv("HAPROXY_MWORKER") == "1" {
-		variables["dataplane_cmdline"] = c.cfg.Cmdline.String()
+		facts["dataplane_cmdline"] = c.cfg.Cmdline.String()
 	}
 
 	processInfos, err := c.cli.Runtime.GetInfo()
@@ -34,10 +34,10 @@ func (c *ClusterSync) getNodeVariables() map[string]string {
 		log.Error("unable to fetch processInfo")
 	} else {
 		if processInfos[0].Info != nil {
-			variables["haproxy_version"] = processInfos[0].Info.Version
+			facts["haproxy_version"] = processInfos[0].Info.Version
 		} else {
 			log.Error("empty process info")
 		}
 	}
-	return variables
+	return facts
 }
