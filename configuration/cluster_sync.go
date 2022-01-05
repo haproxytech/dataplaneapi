@@ -59,7 +59,7 @@ type Node struct {
 	Port        int64             `json:"port,omitempty"`
 	Status      string            `json:"status"`
 	Type        string            `json:"type"`
-	Variables   map[string]string `json:"variables"`
+	Facts       map[string]string `json:"facts"`
 }
 
 // ClusterSync fetches certificates for joining cluster
@@ -341,7 +341,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		Status:      "waiting_approval",
 		Type:        DataplaneAPIType,
 	}
-	nodeData.Variables = c.getNodeVariables()
+	nodeData.Facts = c.getNodeFacts()
 
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
