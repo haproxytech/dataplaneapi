@@ -151,7 +151,10 @@ type Configuration struct {
 	MapSync                *MapSync             `yaml:"-"`
 }
 
-var cfgInitOnce sync.Once
+var (
+	cfgInitOnce sync.Once
+	saveMutex   sync.Mutex
+)
 
 // Get returns pointer to configuration
 func Get() *Configuration {
@@ -256,6 +259,8 @@ func (c *Configuration) LoadRuntimeVars(swaggerJSON json.RawMessage, host string
 }
 
 func (c *Configuration) Save() error {
+	saveMutex.Lock()
+	defer saveMutex.Unlock()
 	copyConfigurationToStorage(c)
 	if len(c.ServiceDiscovery.Consuls) == 0 {
 		cfg := c.storage.Get()
