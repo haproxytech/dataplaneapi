@@ -22,7 +22,7 @@ diff:
     - SWAGGER_VERSION=$(curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $2}')
     - wget -q "https://github.com/go-swagger/go-swagger/releases/download/${SWAGGER_VERSION}/swagger_linux_amd64" -O /usr/local/bin/swagger && chmod +x /usr/local/bin/swagger
     - make generate-native
-    - test -z "$(git diff 2> /dev/null)" || exit "Specification is not generated, issue \`make swagger\` and commit the result"
+    - test -z "$(git diff 2> /dev/null)" || exit "Specification is not generated, issue \`make generate\` and commit the result"
     - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Specification generation created untracked files, cannot proceed"
 
 golangci-lint:
@@ -73,6 +73,9 @@ build:
 
 .e2e:
   stage: e2e
+  artifacts:
+    paths:
+      - build
   image:
     name: $CI_REGISTRY_GO/docker:stable
     entrypoint: [ "" ]
