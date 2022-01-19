@@ -17,6 +17,9 @@ diff:
       alias: docker
   tags:
     - go
+  only:
+    - merge_requests
+    - branches
   script:
     #- apk add make curl bash jq
     - SWAGGER_VERSION=$(curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $2}')
