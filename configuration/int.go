@@ -16,7 +16,7 @@
 package configuration
 
 import (
-	"fmt"
+	"strconv"
 	"sync/atomic"
 )
 
@@ -37,7 +37,7 @@ func (s *AtomicInt) Store(str int) {
 }
 
 func (s *AtomicInt) String() string {
-	return fmt.Sprintf("%d", s.Load())
+	return strconv.Itoa(s.Load())
 }
 
 func (s *AtomicInt) UnmarshalYAML(unmarshal func(interface{}) error) error {
