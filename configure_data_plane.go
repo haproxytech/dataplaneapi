@@ -362,6 +362,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.BindGetBindsHandler = &handlers.GetBindsHandlerImpl{Client: client}
 	api.BindReplaceBindHandler = &handlers.ReplaceBindHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup http check handlers
+	api.HTTPCheckGetHTTPCheckHandler = &handlers.GetHTTPCheckHandlerImpl{Client: client}
+	api.HTTPCheckGetHTTPChecksHandler = &handlers.GetHTTPChecksHandlerImpl{Client: client}
+	api.HTTPCheckCreateHTTPCheckHandler = &handlers.CreateHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceHTTPCheckHandler = &handlers.ReplaceHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckDeleteHTTPCheckHandler = &handlers.DeleteHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup http request rule handlers
 	api.HTTPRequestRuleCreateHTTPRequestRuleHandler = &handlers.CreateHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
 	api.HTTPRequestRuleDeleteHTTPRequestRuleHandler = &handlers.DeleteHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
