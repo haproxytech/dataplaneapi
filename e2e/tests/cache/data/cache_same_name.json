@@ -1,0 +1,5 @@
+{
+  "name": "test_cache",
+  "max_object_size": 1,
+  "total_max_size": 1000
+}
