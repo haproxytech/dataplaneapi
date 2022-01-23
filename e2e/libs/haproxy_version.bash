@@ -46,10 +46,10 @@ function haproxy_version_ge() {
     numerical_v="${major_minor//.}"
     numerical_target="${target//.}"
 
-    if [ "$numerical_v" -ge "$numerical_t" ]
+    if [ "$numerical_v" -ge "$numerical_target" ]
     then
-        return 1
-    else
         return 0
+    else
+        return 1
     fi
 }
