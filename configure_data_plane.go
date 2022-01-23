@@ -473,6 +473,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.PeerEntryGetPeerEntriesHandler = &handlers.GetPeerEntriesHandlerImpl{Client: client}
 	api.PeerEntryReplacePeerEntryHandler = &handlers.ReplacePeerEntryHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup cache handlers
+	api.CacheCreateCacheHandler = &handlers.CreateCacheHandlerImpl{Client: client, ReloadAgent: ra}
+	api.CacheDeleteCacheHandler = &handlers.DeleteCacheHandlerImpl{Client: client, ReloadAgent: ra}
+	api.CacheGetCacheHandler = &handlers.GetCacheHandlerImpl{Client: client}
+	api.CacheGetCachesHandler = &handlers.GetCachesHandlerImpl{Client: client}
+	api.CacheReplaceCacheHandler = &handlers.ReplaceCacheHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup stats handler
 	api.StatsGetStatsHandler = &handlers.GetStatsHandlerImpl{Client: client}
 

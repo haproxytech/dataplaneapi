@@ -39,6 +39,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/bind"
+	"github.com/haproxytech/dataplaneapi/operations/cache"
 	"github.com/haproxytech/dataplaneapi/operations/cluster"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
 	"github.com/haproxytech/dataplaneapi/operations/defaults"
@@ -151,6 +152,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindCreateBindHandler: bind.CreateBindHandlerFunc(func(params bind.CreateBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.CreateBind has not yet been implemented")
 		}),
+		CacheCreateCacheHandler: cache.CreateCacheHandlerFunc(func(params cache.CreateCacheParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cache.CreateCache has not yet been implemented")
+		}),
 		ServiceDiscoveryCreateConsulHandler: service_discovery.CreateConsulHandlerFunc(func(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.CreateConsul has not yet been implemented")
 		}),
@@ -243,6 +247,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindDeleteBindHandler: bind.DeleteBindHandlerFunc(func(params bind.DeleteBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.DeleteBind has not yet been implemented")
+		}),
+		CacheDeleteCacheHandler: cache.DeleteCacheHandlerFunc(func(params cache.DeleteCacheParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cache.DeleteCache has not yet been implemented")
 		}),
 		ClusterDeleteClusterHandler: cluster.DeleteClusterHandlerFunc(func(params cluster.DeleteClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.DeleteCluster has not yet been implemented")
@@ -381,6 +388,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindGetBindsHandler: bind.GetBindsHandlerFunc(func(params bind.GetBindsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.GetBinds has not yet been implemented")
+		}),
+		CacheGetCacheHandler: cache.GetCacheHandlerFunc(func(params cache.GetCacheParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cache.GetCache has not yet been implemented")
+		}),
+		CacheGetCachesHandler: cache.GetCachesHandlerFunc(func(params cache.GetCachesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cache.GetCaches has not yet been implemented")
 		}),
 		ClusterGetClusterHandler: cluster.GetClusterHandlerFunc(func(params cluster.GetClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.GetCluster has not yet been implemented")
@@ -646,6 +659,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.ReplaceBind has not yet been implemented")
 		}),
+		CacheReplaceCacheHandler: cache.ReplaceCacheHandlerFunc(func(params cache.ReplaceCacheParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation cache.ReplaceCache has not yet been implemented")
+		}),
 		ServiceDiscoveryReplaceConsulHandler: service_discovery.ReplaceConsulHandlerFunc(func(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.ReplaceConsul has not yet been implemented")
 		}),
@@ -828,6 +844,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleCreateBackendSwitchingRuleHandler backend_switching_rule.CreateBackendSwitchingRuleHandler
 	// BindCreateBindHandler sets the operation handler for the create bind operation
 	BindCreateBindHandler bind.CreateBindHandler
+	// CacheCreateCacheHandler sets the operation handler for the create cache operation
+	CacheCreateCacheHandler cache.CreateCacheHandler
 	// ServiceDiscoveryCreateConsulHandler sets the operation handler for the create consul operation
 	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
 	// FilterCreateFilterHandler sets the operation handler for the create filter operation
@@ -890,6 +908,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleDeleteBackendSwitchingRuleHandler backend_switching_rule.DeleteBackendSwitchingRuleHandler
 	// BindDeleteBindHandler sets the operation handler for the delete bind operation
 	BindDeleteBindHandler bind.DeleteBindHandler
+	// CacheDeleteCacheHandler sets the operation handler for the delete cache operation
+	CacheDeleteCacheHandler cache.DeleteCacheHandler
 	// ClusterDeleteClusterHandler sets the operation handler for the delete cluster operation
 	ClusterDeleteClusterHandler cluster.DeleteClusterHandler
 	// ServiceDiscoveryDeleteConsulHandler sets the operation handler for the delete consul operation
@@ -982,6 +1002,10 @@ type DataPlaneAPI struct {
 	BindGetBindHandler bind.GetBindHandler
 	// BindGetBindsHandler sets the operation handler for the get binds operation
 	BindGetBindsHandler bind.GetBindsHandler
+	// CacheGetCacheHandler sets the operation handler for the get cache operation
+	CacheGetCacheHandler cache.GetCacheHandler
+	// CacheGetCachesHandler sets the operation handler for the get caches operation
+	CacheGetCachesHandler cache.GetCachesHandler
 	// ClusterGetClusterHandler sets the operation handler for the get cluster operation
 	ClusterGetClusterHandler cluster.GetClusterHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
@@ -1158,6 +1182,8 @@ type DataPlaneAPI struct {
 	BackendSwitchingRuleReplaceBackendSwitchingRuleHandler backend_switching_rule.ReplaceBackendSwitchingRuleHandler
 	// BindReplaceBindHandler sets the operation handler for the replace bind operation
 	BindReplaceBindHandler bind.ReplaceBindHandler
+	// CacheReplaceCacheHandler sets the operation handler for the replace cache operation
+	CacheReplaceCacheHandler cache.ReplaceCacheHandler
 	// ServiceDiscoveryReplaceConsulHandler sets the operation handler for the replace consul operation
 	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
 	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
@@ -1348,6 +1374,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindCreateBindHandler == nil {
 		unregistered = append(unregistered, "bind.CreateBindHandler")
 	}
+	if o.CacheCreateCacheHandler == nil {
+		unregistered = append(unregistered, "cache.CreateCacheHandler")
+	}
 	if o.ServiceDiscoveryCreateConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.CreateConsulHandler")
 	}
@@ -1440,6 +1469,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindDeleteBindHandler == nil {
 		unregistered = append(unregistered, "bind.DeleteBindHandler")
+	}
+	if o.CacheDeleteCacheHandler == nil {
+		unregistered = append(unregistered, "cache.DeleteCacheHandler")
 	}
 	if o.ClusterDeleteClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.DeleteClusterHandler")
@@ -1578,6 +1610,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindGetBindsHandler == nil {
 		unregistered = append(unregistered, "bind.GetBindsHandler")
+	}
+	if o.CacheGetCacheHandler == nil {
+		unregistered = append(unregistered, "cache.GetCacheHandler")
+	}
+	if o.CacheGetCachesHandler == nil {
+		unregistered = append(unregistered, "cache.GetCachesHandler")
 	}
 	if o.ClusterGetClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.GetClusterHandler")
@@ -1843,6 +1881,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindReplaceBindHandler == nil {
 		unregistered = append(unregistered, "bind.ReplaceBindHandler")
 	}
+	if o.CacheReplaceCacheHandler == nil {
+		unregistered = append(unregistered, "cache.ReplaceCacheHandler")
+	}
 	if o.ServiceDiscoveryReplaceConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.ReplaceConsulHandler")
 	}
@@ -2106,6 +2147,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/caches"] = cache.NewCreateCache(o.context, o.CacheCreateCacheHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/service_discovery/consul"] = service_discovery.NewCreateConsul(o.context, o.ServiceDiscoveryCreateConsulHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2227,6 +2272,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/binds/{name}"] = bind.NewDeleteBind(o.context, o.BindDeleteBindHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/caches/{name}"] = cache.NewDeleteCache(o.context, o.CacheDeleteCacheHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2411,6 +2460,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/binds"] = bind.NewGetBinds(o.context, o.BindGetBindsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/caches/{name}"] = cache.NewGetCache(o.context, o.CacheGetCacheHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/caches"] = cache.NewGetCaches(o.context, o.CacheGetCachesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2763,6 +2820,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/binds/{name}"] = bind.NewReplaceBind(o.context, o.BindReplaceBindHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/caches/{name}"] = cache.NewReplaceCache(o.context, o.CacheReplaceCacheHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

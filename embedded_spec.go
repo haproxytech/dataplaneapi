@@ -1885,6 +1885,264 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/caches": {
+      "get": {
+        "description": "Returns an array of all configured caches.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Return an array of caches",
+        "operationId": "getCaches",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/caches"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new cache section to the configuration file.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Add a cache",
+        "operationId": "createCache",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cache created",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/caches/{name}": {
+      "get": {
+        "description": "Returns one cache section configuration by it's name.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Return a cache",
+        "operationId": "getCache",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Cache name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/cache"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a cache configuration by it's name.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Replace a cache",
+        "operationId": "replaceCache",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Cache name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cache replaced",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a cache from the configuration by it's name.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Delete a cache",
+        "operationId": "deleteCache",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Cache name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Cache deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults": {
       "get": {
         "description": "Returns defaults part of configuration.",
@@ -12057,6 +12315,46 @@ func init() {
         "$ref": "#/definitions/bind"
       }
     },
+    "cache": {
+      "description": "HAPRoxy Cache section",
+      "type": "object",
+      "title": "Cache",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "max_age": {
+          "type": "integer"
+        },
+        "max_object_size": {
+          "type": "integer"
+        },
+        "max_secondary_entries": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "process_vary": {
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "total_max_size": {
+          "type": "integer",
+          "maximum": 4095,
+          "minimum": 1
+        }
+      }
+    },
+    "caches": {
+      "description": "HAProxy caches array",
+      "type": "array",
+      "title": "Cache Sections",
+      "items": {
+        "$ref": "#/definitions/cache"
+      }
+    },
     "cluster_settings": {
       "description": "Settings related to a cluster.",
       "type": "object",
@@ -15173,6 +15471,17 @@ func init() {
           },
           "x-display-name": "ACK Key Format"
         },
+        "cache_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "cache-store"
+            }
+          },
+          "x-display-name": "Cache Name"
+        },
         "capture_id": {
           "type": "integer",
           "x-dependency": {
@@ -15611,7 +15920,8 @@ func init() {
             "track-sc1",
             "track-sc2",
             "strict-mode",
-            "lua"
+            "lua",
+            "cache-store"
           ],
           "x-nullable": false
         },
@@ -20484,6 +20794,9 @@ func init() {
       "name": "Bind"
     },
     {
+      "name": "Cache"
+    },
+    {
       "name": "Cluster"
     },
     {
@@ -23319,6 +23632,407 @@ func init() {
           },
           "204": {
             "description": "Bind deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/caches": {
+      "get": {
+        "description": "Returns an array of all configured caches.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Return an array of caches",
+        "operationId": "getCaches",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/caches"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new cache section to the configuration file.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Add a cache",
+        "operationId": "createCache",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cache created",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/caches/{name}": {
+      "get": {
+        "description": "Returns one cache section configuration by it's name.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Return a cache",
+        "operationId": "getCache",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Cache name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/cache"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a cache configuration by it's name.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Replace a cache",
+        "operationId": "replaceCache",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Cache name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cache replaced",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/cache"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a cache from the configuration by it's name.",
+        "tags": [
+          "Cache"
+        ],
+        "summary": "Delete a cache",
+        "operationId": "deleteCache",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Cache name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Cache deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -38315,6 +39029,46 @@ func init() {
         "$ref": "#/definitions/bind"
       }
     },
+    "cache": {
+      "description": "HAPRoxy Cache section",
+      "type": "object",
+      "title": "Cache",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "max_age": {
+          "type": "integer"
+        },
+        "max_object_size": {
+          "type": "integer"
+        },
+        "max_secondary_entries": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "process_vary": {
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "total_max_size": {
+          "type": "integer",
+          "maximum": 4095,
+          "minimum": 1
+        }
+      }
+    },
+    "caches": {
+      "description": "HAProxy caches array",
+      "type": "array",
+      "title": "Cache Sections",
+      "items": {
+        "$ref": "#/definitions/cache"
+      }
+    },
     "cluster_settings": {
       "description": "Settings related to a cluster.",
       "type": "object",
@@ -41288,6 +42042,17 @@ func init() {
           },
           "x-display-name": "ACK Key Format"
         },
+        "cache_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "cache-store"
+            }
+          },
+          "x-display-name": "Cache Name"
+        },
         "capture_id": {
           "type": "integer",
           "x-dependency": {
@@ -41726,7 +42491,8 @@ func init() {
             "track-sc1",
             "track-sc2",
             "strict-mode",
-            "lua"
+            "lua",
+            "cache-store"
           ],
           "x-nullable": false
         },
@@ -46492,6 +47258,9 @@ func init() {
     {
       "description": "Managing frontend bind configurations (advanced mode)",
       "name": "Bind"
+    },
+    {
+      "name": "Cache"
     },
     {
       "name": "Cluster"

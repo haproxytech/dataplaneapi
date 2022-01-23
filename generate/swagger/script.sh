@@ -100,6 +100,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=Storage \
     --tags="ACL Runtime" \
     --tags=ServerTemplate \
+    --tags=Cache \
     -r $SPEC_DIR/copyright.txt
 
 echo " ---> removing doc.go"
