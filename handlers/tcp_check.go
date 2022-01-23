@@ -55,9 +55,12 @@ type ReplaceTCPCheckHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams, principal interface{}) middleware.Responder {
-
 	t := ""
 	v := int64(0)
+	pName := ""
+	if params.ParentName != nil {
+		pName = *params.ParentName
+	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -75,7 +78,7 @@ func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams
 		return tcp_check.NewCreateTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateTCPCheck(params.ParentType, *params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration.CreateTCPCheck(params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewCreateTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -99,9 +102,12 @@ func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams
 
 // Handle executing the request and returning a response
 func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams, principal interface{}) middleware.Responder {
-
 	t := ""
 	v := int64(0)
+	pName := ""
+	if params.ParentName != nil {
+		pName = *params.ParentName
+	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -119,7 +125,7 @@ func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams
 		return tcp_check.NewDeleteTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteTCPCheck(params.Index, params.ParentType, *params.ParentName, t, v)
+	err := h.Client.Configuration.DeleteTCPCheck(params.Index, params.ParentType, pName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewDeleteTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -143,13 +149,17 @@ func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams
 
 // Handle executing the request and returning a response
 func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, principal interface{}) middleware.Responder {
-
 	t := ""
+	pName := ""
+	if params.ParentName != nil {
+		pName = *params.ParentName
+	}
+
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration.GetTCPCheck(params.Index, params.ParentType, *params.ParentName, t)
+	v, data, err := h.Client.Configuration.GetTCPCheck(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewGetTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -160,13 +170,16 @@ func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, prin
 
 // Handle executing the request and returning a response
 func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, principal interface{}) middleware.Responder {
-
 	t := ""
+	pName := ""
+	if params.ParentName != nil {
+		pName = *params.ParentName
+	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration.GetTCPChecks(params.ParentType, *params.ParentName, t)
+	v, data, err := h.Client.Configuration.GetTCPChecks(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -180,9 +193,12 @@ func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, pr
 
 // Handle executing the request and returning a response
 func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckParams, principal interface{}) middleware.Responder {
-
 	t := ""
 	v := int64(0)
+	pName := ""
+	if params.ParentName != nil {
+		pName = *params.ParentName
+	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -200,7 +216,7 @@ func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckPara
 		return tcp_check.NewReplaceTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditTCPCheck(params.Index, params.ParentType, *params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration.EditTCPCheck(params.Index, params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewReplaceTCPCheckDefault(int(*e.Code)).WithPayload(e)

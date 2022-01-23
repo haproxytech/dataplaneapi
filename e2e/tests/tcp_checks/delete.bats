@@ -24,29 +24,29 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_checks: Delete some TCP checks" {
-  resource_delete "$_TCP_CHECKS_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
+  resource_delete "$_TCP_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
 	assert_equal "$SC" 204
 
-  resource_delete "$_TCP_CHECKS_CERTS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
+  resource_delete "$_TCP_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
 	assert_equal "$SC" 204
 
-  resource_delete "$_TCP_CHECKS_CERTS_BASE_PATH/1000" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
+  resource_delete "$_TCP_CHECKS_BASE_PATH/1000" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
 	assert_equal "$SC" 404
 
-  resource_delete "$_TCP_CHECKS_CERTS_BASE_PATH/1000" "parent_type=frontend&parent_name=test_backend_delete&force_reload=true"
+  resource_delete "$_TCP_CHECKS_BASE_PATH/1000" "parent_type=frontend&parent_name=test_backend_delete&force_reload=true"
 	assert_equal "$SC" 422
 
-  resource_get "$_TCP_CHECKS_CERTS_BASE_PATH" "parent_type=backend&parent_name=test_backend_delete"
+  resource_get "$_TCP_CHECKS_BASE_PATH" "parent_type=backend&parent_name=test_backend_delete"
 	assert_equal "$SC" 200
   assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
 }
 
 @test "tcp_checks: Delete a non existant backend TCP check" {
-  resource_delete "$_TCP_CHECKS_CERTS_BASE_PATH/1000" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
+  resource_delete "$_TCP_CHECKS_BASE_PATH/1000" "parent_type=backend&parent_name=test_backend_delete&force_reload=true"
 	assert_equal "$SC" 404
 }
 
 @test "tcp_checks: Delete a non existant frontend TCP check" {
-  resource_delete "$_TCP_CHECKS_CERTS_BASE_PATH/1000" "parent_type=frontend&parent_name=test_backend_delete&force_reload=true"
+  resource_delete "$_TCP_CHECKS_BASE_PATH/1000" "parent_type=frontend&parent_name=test_backend_delete&force_reload=true"
 	assert_equal "$SC" 422
 }

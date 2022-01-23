@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_TCP_CHECKS_CERTS_BASE_PATH="/services/haproxy/configuration/tcp_checks"
+_TCP_CHECKS_BASE_PATH="/services/haproxy/configuration/tcp_checks"

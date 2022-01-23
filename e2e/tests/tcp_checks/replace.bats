@@ -24,21 +24,21 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_checks: Replace a TCP check connect" {
-    resource_put "$_TCP_CHECKS_CERTS_BASE_PATH/0" "data/replace/connect.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
+    resource_put "$_TCP_CHECKS_BASE_PATH/0" "data/replace/connect.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
     assert_equal "$SC" 200
 }
 
 @test "tcp_checks: Replace a TCP check send" {
-    resource_put "$_TCP_CHECKS_CERTS_BASE_PATH/1" "data/replace/send.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
+    resource_put "$_TCP_CHECKS_BASE_PATH/1" "data/replace/send.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
     assert_equal "$SC" 200
 }
 
 @test "tcp_checks: Replace a TCP check expect" {
-    resource_put "$_TCP_CHECKS_CERTS_BASE_PATH/2" "data/replace/expect.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
+    resource_put "$_TCP_CHECKS_BASE_PATH/2" "data/replace/expect.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
     assert_equal "$SC" 200
 }
 
 @test "tcp_checks: Replace a TCP check send-binary" {
-    resource_put "$_TCP_CHECKS_CERTS_BASE_PATH/3" "data/replace/send_binary.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
+    resource_put "$_TCP_CHECKS_BASE_PATH/3" "data/replace/send_binary.json" "parent_type=backend&parent_name=test_backend_replace&force_reload=true"
     assert_equal "$SC" 200
 }

@@ -24,8 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_checks: Return an array of all TCP checks from a backend" {
-  resource_get "$_TCP_CHECKS_CERTS_BASE_PATH" "parent_type=backend&parent_name=test_backend_get"
+  resource_get "$_TCP_CHECKS_BASE_PATH" "parent_type=backend&parent_name=test_backend_get"
 	assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 4
+  assert_equal "$(get_json_path "${BODY}" ".data | length")" 4
 }

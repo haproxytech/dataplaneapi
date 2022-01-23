@@ -1,6 +1,6 @@
 {
     "action": "unset-var",
-    "scope": "check",
-    "name": "name",
+    "var_scope": "check",
+    "var_name": "port",
     "index": 0
 }
