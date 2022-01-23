@@ -2677,6 +2677,349 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/http_checks": {
+      "get": {
+        "description": "Returns all HTTP checks that are configured in specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return an array of HTTP checks",
+        "operationId": "getHTTPChecks",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_check_rules"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP check of the specified type in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Add a new HTTP check",
+        "operationId": "createHTTPCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP check created",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_checks/{index}": {
+      "get": {
+        "description": "Returns one HTTP check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return one HTTP check",
+        "operationId": "getHTTPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_check_rule"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Replace a HTTP check",
+        "operationId": "replaceHTTPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP check replaced",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP check configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Delete a HTTP check",
+        "operationId": "deleteHTTPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP check deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/http_request_rules": {
       "get": {
         "description": "Returns all HTTP Request Rules that are configured in specified parent.",
@@ -10809,6 +11152,14 @@ func init() {
             "disabled"
           ]
         },
+        "accept_invalid_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Response"
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -10893,6 +11244,14 @@ func init() {
             }
           },
           "$ref": "#/definitions/forwardfor"
+        },
+        "h1_case_adjust_bogus_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Server"
         },
         "hash_type": {
           "type": "object",
@@ -11092,9 +11451,6 @@ func init() {
               ]
             }
           }
-        },
-        "tcp_check": {
-          "$ref": "#/definitions/tcp_check"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -12535,6 +12891,22 @@ func init() {
             "disabled"
           ]
         },
+        "accept_invalid_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Request"
+        },
+        "accept_invalid_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Response"
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -12652,6 +13024,22 @@ func init() {
         },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
+        },
+        "h1_case_adjust_bogus_client": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Client"
+        },
+        "h1_case_adjust_bogus_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Server"
         },
         "http-buffer-request": {
           "type": "string",
@@ -12790,9 +13178,6 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
-        },
-        "tcp_check": {
-          "$ref": "#/definitions/tcp_check"
         },
         "tcplog": {
           "type": "boolean",
@@ -13030,6 +13415,14 @@ func init() {
         "name"
       ],
       "properties": {
+        "accept_invalid_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Request"
+        },
         "bind_process": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -13090,6 +13483,14 @@ func init() {
             }
           },
           "$ref": "#/definitions/forwardfor"
+        },
+        "h1_case_adjust_bogus_client": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Client"
         },
         "http-buffer-request": {
           "type": "string",
@@ -13292,6 +13693,29 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
+        },
+        "h1_case_adjust": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "from",
+              "to"
+            ],
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              }
+            },
+            "x-go-name": "H1CaseAdjust"
+          },
+          "x-go-name": "H1CaseAdjusts"
+        },
+        "h1_case_adjust_file": {
+          "type": "string"
         },
         "hard_stop_after": {
           "type": "integer",
@@ -13528,6 +13952,373 @@ func init() {
             "send-state"
           ]
         }
+      }
+    },
+    "http_check_rule": {
+      "type": "object",
+      "title": "HTTP Check Rule",
+      "required": [
+        "index",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "comment",
+            "connect",
+            "disable-on-404",
+            "expect",
+            "send",
+            "send-state",
+            "set-var",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
+        "addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-display-name": "ALPN Protocols"
+        },
+        "body": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "body_log_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "check_comment": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": [
+                "comment",
+                "connect",
+                "expect",
+                "send"
+              ]
+            }
+          },
+          "x-nullable": false
+        },
+        "default": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "error_status": {
+          "type": "string",
+          "enum": [
+            "L7OKC",
+            "L7RSP",
+            "L7STS",
+            "L6RSP",
+            "L4CON"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "exclamation_mark": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Exclamation Mark"
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "x-go-name": "CheckHeader"
+          },
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          },
+          "x-go-name": "CheckHeaders"
+        },
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "linger": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "enum": [
+            "status",
+            "rstatus",
+            "hdr",
+            "fhdr",
+            "string",
+            "rstring"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Match"
+        },
+        "method": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "min_recv": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "ok_status": {
+          "type": "string",
+          "enum": [
+            "L7OK",
+            "L7OKC",
+            "L6OK",
+            "L4OK"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_error": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_success": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "pattern": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          }
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": true
+        },
+        "port_string": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "proto": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "send_proxy": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "sni": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "ssl": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "status-code": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "tout_status": {
+          "type": "string",
+          "enum": [
+            "L7TOUT",
+            "L6TOUT",
+            "L4TOUT"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "uri_log_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "var_expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var"
+              ]
+            }
+          },
+          "x-display-name": "Var Expression"
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "version": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "via_socks4": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        }
+      }
+    },
+    "http_check_rules": {
+      "type": "array",
+      "title": "HTTP Checks Array",
+      "items": {
+        "$ref": "#/definitions/http_check_rule"
       }
     },
     "http_request_rule": {
@@ -18666,23 +19457,6 @@ func init() {
           },
           "x-nullable": false
         },
-        "cond": {
-          "type": "string",
-          "enum": [
-            "if",
-            "unless"
-          ],
-          "x-display-name": "Condition"
-        },
-        "cond_test": {
-          "type": "string",
-          "x-dependency": {
-            "cond": {
-              "required": true
-            }
-          },
-          "x-display-name": "Condition Test"
-        },
         "data": {
           "type": "string",
           "x-dependency": {
@@ -18934,7 +19708,7 @@ func init() {
               ]
             }
           },
-          "x-display-name": "Var Format"
+          "x-display-name": "Var Log format"
         },
         "var_name": {
           "type": "string",
@@ -19734,6 +20508,9 @@ func init() {
     {
       "description": "Managing global configuration (advanced mode)",
       "name": "Global"
+    },
+    {
+      "name": "HTTPCheck"
     },
     {
       "name": "HTTPRequestRule"
@@ -23709,6 +24486,492 @@ func init() {
           },
           "400": {
             "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_checks": {
+      "get": {
+        "description": "Returns all HTTP checks that are configured in specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return an array of HTTP checks",
+        "operationId": "getHTTPChecks",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_check_rules"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP check of the specified type in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Add a new HTTP check",
+        "operationId": "createHTTPCheck",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP check created",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_checks/{index}": {
+      "get": {
+        "description": "Returns one HTTP check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Return one HTTP check",
+        "operationId": "getHTTPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_check_rule"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Check configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Replace a HTTP check",
+        "operationId": "replaceHTTPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP check replaced",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_check_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP check configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPCheck"
+        ],
+        "summary": "Delete a HTTP check",
+        "operationId": "deleteHTTPCheck",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP check Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP check deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
             "schema": {
               "$ref": "#/definitions/error"
             },
@@ -35507,6 +36770,22 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
+    "GlobalH1CaseAdjustItems0": {
+      "type": "object",
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        }
+      },
+      "x-go-name": "H1CaseAdjust"
+    },
     "GlobalLogSendHostname": {
       "type": "object",
       "required": [
@@ -35592,6 +36871,22 @@ func init() {
         }
       },
       "x-go-name": "RuntimeAPI"
+    },
+    "HTTPCheckRuleHeadersItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "x-go-name": "CheckHeader"
     },
     "HTTPRequestRuleReturnHdrsItems0": {
       "type": "object",
@@ -36115,6 +37410,14 @@ func init() {
             "disabled"
           ]
         },
+        "accept_invalid_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Response"
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -36199,6 +37502,14 @@ func init() {
             }
           },
           "$ref": "#/definitions/forwardfor"
+        },
+        "h1_case_adjust_bogus_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Server"
         },
         "hash_type": {
           "type": "object",
@@ -36398,9 +37709,6 @@ func init() {
               ]
             }
           }
-        },
-        "tcp_check": {
-          "$ref": "#/definitions/tcp_check"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -37808,6 +39116,22 @@ func init() {
             "disabled"
           ]
         },
+        "accept_invalid_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Request"
+        },
+        "accept_invalid_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Response"
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -37925,6 +39249,22 @@ func init() {
         },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
+        },
+        "h1_case_adjust_bogus_client": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Client"
+        },
+        "h1_case_adjust_bogus_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Server"
         },
         "http-buffer-request": {
           "type": "string",
@@ -38063,9 +39403,6 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
-        },
-        "tcp_check": {
-          "$ref": "#/definitions/tcp_check"
         },
         "tcplog": {
           "type": "boolean",
@@ -38303,6 +39640,14 @@ func init() {
         "name"
       ],
       "properties": {
+        "accept_invalid_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Invalid HTTP Request"
+        },
         "bind_process": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -38363,6 +39708,14 @@ func init() {
             }
           },
           "$ref": "#/definitions/forwardfor"
+        },
+        "h1_case_adjust_bogus_client": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "H1 Adjust Bogus Client"
         },
         "http-buffer-request": {
           "type": "string",
@@ -38551,6 +39904,16 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "h1_case_adjust": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalH1CaseAdjustItems0"
+          },
+          "x-go-name": "H1CaseAdjusts"
+        },
+        "h1_case_adjust_file": {
+          "type": "string"
+        },
         "hard_stop_after": {
           "type": "integer",
           "x-display-name": "Hard Stop After",
@@ -38729,6 +40092,360 @@ func init() {
             "send-state"
           ]
         }
+      }
+    },
+    "http_check_rule": {
+      "type": "object",
+      "title": "HTTP Check Rule",
+      "required": [
+        "index",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "comment",
+            "connect",
+            "disable-on-404",
+            "expect",
+            "send",
+            "send-state",
+            "set-var",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
+        "addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-display-name": "ALPN Protocols"
+        },
+        "body": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "body_log_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "check_comment": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": [
+                "comment",
+                "connect",
+                "expect",
+                "send"
+              ]
+            }
+          },
+          "x-nullable": false
+        },
+        "default": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "error_status": {
+          "type": "string",
+          "enum": [
+            "L7OKC",
+            "L7RSP",
+            "L7STS",
+            "L6RSP",
+            "L4CON"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "exclamation_mark": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Exclamation Mark"
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HTTPCheckRuleHeadersItems0"
+          },
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          },
+          "x-go-name": "CheckHeaders"
+        },
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "linger": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "match": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "enum": [
+            "status",
+            "rstatus",
+            "hdr",
+            "fhdr",
+            "string",
+            "rstring"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          },
+          "x-display-name": "Expect Match"
+        },
+        "method": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "min_recv": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "ok_status": {
+          "type": "string",
+          "enum": [
+            "L7OK",
+            "L7OKC",
+            "L6OK",
+            "L4OK"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_error": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "on_success": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "pattern": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "expect"
+            }
+          }
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": true
+        },
+        "port_string": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "proto": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          },
+          "x-nullable": false
+        },
+        "send_proxy": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "sni": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "ssl": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        },
+        "status-code": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "tout_status": {
+          "type": "string",
+          "enum": [
+            "L7TOUT",
+            "L6TOUT",
+            "L4TOUT"
+          ],
+          "x-dependency": {
+            "action": {
+              "value": "expect"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "uri_log_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "var_expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var"
+              ]
+            }
+          },
+          "x-display-name": "Var Expression"
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "version": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "send"
+            }
+          }
+        },
+        "via_socks4": {
+          "type": "boolean",
+          "x-dependency": {
+            "action": {
+              "value": "connect"
+            }
+          }
+        }
+      }
+    },
+    "http_check_rules": {
+      "type": "array",
+      "title": "HTTP Checks Array",
+      "items": {
+        "$ref": "#/definitions/http_check_rule"
       }
     },
     "http_request_rule": {
@@ -43750,23 +45467,6 @@ func init() {
           },
           "x-nullable": false
         },
-        "cond": {
-          "type": "string",
-          "enum": [
-            "if",
-            "unless"
-          ],
-          "x-display-name": "Condition"
-        },
-        "cond_test": {
-          "type": "string",
-          "x-dependency": {
-            "cond": {
-              "required": true
-            }
-          },
-          "x-display-name": "Condition Test"
-        },
         "data": {
           "type": "string",
           "x-dependency": {
@@ -44018,7 +45718,7 @@ func init() {
               ]
             }
           },
-          "x-display-name": "Var Format"
+          "x-display-name": "Var Log format"
         },
         "var_name": {
           "type": "string",
@@ -44818,6 +46518,9 @@ func init() {
     {
       "description": "Managing global configuration (advanced mode)",
       "name": "Global"
+    },
+    {
+      "name": "HTTPCheck"
     },
     {
       "name": "HTTPRequestRule"
