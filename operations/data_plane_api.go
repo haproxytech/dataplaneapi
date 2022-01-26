@@ -42,6 +42,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/cache"
 	"github.com/haproxytech/dataplaneapi/operations/cluster"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
+	"github.com/haproxytech/dataplaneapi/operations/declare_capture"
 	"github.com/haproxytech/dataplaneapi/operations/defaults"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
@@ -158,6 +159,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServiceDiscoveryCreateConsulHandler: service_discovery.CreateConsulHandlerFunc(func(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.CreateConsul has not yet been implemented")
 		}),
+		DeclareCaptureCreateDeclareCaptureHandler: declare_capture.CreateDeclareCaptureHandlerFunc(func(params declare_capture.CreateDeclareCaptureParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation declare_capture.CreateDeclareCapture has not yet been implemented")
+		}),
 		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.CreateFilter has not yet been implemented")
 		}),
@@ -256,6 +260,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServiceDiscoveryDeleteConsulHandler: service_discovery.DeleteConsulHandlerFunc(func(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.DeleteConsul has not yet been implemented")
+		}),
+		DeclareCaptureDeleteDeclareCaptureHandler: declare_capture.DeleteDeclareCaptureHandlerFunc(func(params declare_capture.DeleteDeclareCaptureParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation declare_capture.DeleteDeclareCapture has not yet been implemented")
 		}),
 		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.DeleteFilter has not yet been implemented")
@@ -409,6 +416,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServiceDiscoveryGetConsulsHandler: service_discovery.GetConsulsHandlerFunc(func(params service_discovery.GetConsulsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.GetConsuls has not yet been implemented")
+		}),
+		DeclareCaptureGetDeclareCaptureHandler: declare_capture.GetDeclareCaptureHandlerFunc(func(params declare_capture.GetDeclareCaptureParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation declare_capture.GetDeclareCapture has not yet been implemented")
+		}),
+		DeclareCaptureGetDeclareCapturesHandler: declare_capture.GetDeclareCapturesHandlerFunc(func(params declare_capture.GetDeclareCapturesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation declare_capture.GetDeclareCaptures has not yet been implemented")
 		}),
 		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.GetDefaults has not yet been implemented")
@@ -665,6 +678,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServiceDiscoveryReplaceConsulHandler: service_discovery.ReplaceConsulHandlerFunc(func(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.ReplaceConsul has not yet been implemented")
 		}),
+		DeclareCaptureReplaceDeclareCaptureHandler: declare_capture.ReplaceDeclareCaptureHandlerFunc(func(params declare_capture.ReplaceDeclareCaptureParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation declare_capture.ReplaceDeclareCapture has not yet been implemented")
+		}),
 		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.ReplaceDefaults has not yet been implemented")
 		}),
@@ -848,6 +864,8 @@ type DataPlaneAPI struct {
 	CacheCreateCacheHandler cache.CreateCacheHandler
 	// ServiceDiscoveryCreateConsulHandler sets the operation handler for the create consul operation
 	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
+	// DeclareCaptureCreateDeclareCaptureHandler sets the operation handler for the create declare capture operation
+	DeclareCaptureCreateDeclareCaptureHandler declare_capture.CreateDeclareCaptureHandler
 	// FilterCreateFilterHandler sets the operation handler for the create filter operation
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
@@ -914,6 +932,8 @@ type DataPlaneAPI struct {
 	ClusterDeleteClusterHandler cluster.DeleteClusterHandler
 	// ServiceDiscoveryDeleteConsulHandler sets the operation handler for the delete consul operation
 	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
+	// DeclareCaptureDeleteDeclareCaptureHandler sets the operation handler for the delete declare capture operation
+	DeclareCaptureDeleteDeclareCaptureHandler declare_capture.DeleteDeclareCaptureHandler
 	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
 	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
@@ -1016,6 +1036,10 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryGetConsulHandler service_discovery.GetConsulHandler
 	// ServiceDiscoveryGetConsulsHandler sets the operation handler for the get consuls operation
 	ServiceDiscoveryGetConsulsHandler service_discovery.GetConsulsHandler
+	// DeclareCaptureGetDeclareCaptureHandler sets the operation handler for the get declare capture operation
+	DeclareCaptureGetDeclareCaptureHandler declare_capture.GetDeclareCaptureHandler
+	// DeclareCaptureGetDeclareCapturesHandler sets the operation handler for the get declare captures operation
+	DeclareCaptureGetDeclareCapturesHandler declare_capture.GetDeclareCapturesHandler
 	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
 	DefaultsGetDefaultsHandler defaults.GetDefaultsHandler
 	// FilterGetFilterHandler sets the operation handler for the get filter operation
@@ -1186,6 +1210,8 @@ type DataPlaneAPI struct {
 	CacheReplaceCacheHandler cache.ReplaceCacheHandler
 	// ServiceDiscoveryReplaceConsulHandler sets the operation handler for the replace consul operation
 	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
+	// DeclareCaptureReplaceDeclareCaptureHandler sets the operation handler for the replace declare capture operation
+	DeclareCaptureReplaceDeclareCaptureHandler declare_capture.ReplaceDeclareCaptureHandler
 	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
 	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
@@ -1380,6 +1406,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServiceDiscoveryCreateConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.CreateConsulHandler")
 	}
+	if o.DeclareCaptureCreateDeclareCaptureHandler == nil {
+		unregistered = append(unregistered, "declare_capture.CreateDeclareCaptureHandler")
+	}
 	if o.FilterCreateFilterHandler == nil {
 		unregistered = append(unregistered, "filter.CreateFilterHandler")
 	}
@@ -1478,6 +1507,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServiceDiscoveryDeleteConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.DeleteConsulHandler")
+	}
+	if o.DeclareCaptureDeleteDeclareCaptureHandler == nil {
+		unregistered = append(unregistered, "declare_capture.DeleteDeclareCaptureHandler")
 	}
 	if o.FilterDeleteFilterHandler == nil {
 		unregistered = append(unregistered, "filter.DeleteFilterHandler")
@@ -1631,6 +1663,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServiceDiscoveryGetConsulsHandler == nil {
 		unregistered = append(unregistered, "service_discovery.GetConsulsHandler")
+	}
+	if o.DeclareCaptureGetDeclareCaptureHandler == nil {
+		unregistered = append(unregistered, "declare_capture.GetDeclareCaptureHandler")
+	}
+	if o.DeclareCaptureGetDeclareCapturesHandler == nil {
+		unregistered = append(unregistered, "declare_capture.GetDeclareCapturesHandler")
 	}
 	if o.DefaultsGetDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
@@ -1886,6 +1924,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServiceDiscoveryReplaceConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.ReplaceConsulHandler")
+	}
+	if o.DeclareCaptureReplaceDeclareCaptureHandler == nil {
+		unregistered = append(unregistered, "declare_capture.ReplaceDeclareCaptureHandler")
 	}
 	if o.DefaultsReplaceDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
@@ -2155,6 +2196,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/captures"] = declare_capture.NewCreateDeclareCapture(o.context, o.DeclareCaptureCreateDeclareCaptureHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2284,6 +2329,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/service_discovery/consul/{id}"] = service_discovery.NewDeleteConsul(o.context, o.ServiceDiscoveryDeleteConsulHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/captures/{index}"] = declare_capture.NewDeleteDeclareCapture(o.context, o.DeclareCaptureDeleteDeclareCaptureHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2488,6 +2537,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/service_discovery/consul"] = service_discovery.NewGetConsuls(o.context, o.ServiceDiscoveryGetConsulsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/captures/{index}"] = declare_capture.NewGetDeclareCapture(o.context, o.DeclareCaptureGetDeclareCaptureHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/captures"] = declare_capture.NewGetDeclareCaptures(o.context, o.DeclareCaptureGetDeclareCapturesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2828,6 +2885,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/service_discovery/consul/{id}"] = service_discovery.NewReplaceConsul(o.context, o.ServiceDiscoveryReplaceConsulHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/captures/{index}"] = declare_capture.NewReplaceDeclareCapture(o.context, o.DeclareCaptureReplaceDeclareCaptureHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

@@ -2143,6 +2143,299 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/captures": {
+      "get": {
+        "description": "Returns an array of all declare capture records that are configured in specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Return an array of declare captures",
+        "operationId": "getDeclareCaptures",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/captures"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new declare capture in the specified frontend in the configuration file.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Add a new declare capture",
+        "operationId": "createDeclareCapture",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Declare capture created",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/captures/{index}": {
+      "get": {
+        "description": "Returns one declare capture configuration by it's index in the specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Return one declare capture",
+        "operationId": "getDeclareCapture",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Declare Capture Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/capture"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a declare capture configuration by it's index in the specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Replace a declare capture",
+        "operationId": "replaceDeclareCapture",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Declare Capture Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Declare Capture replaced",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a declare capture configuration by it's index in the specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Delete a declare capture",
+        "operationId": "deleteDeclareCapture",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Declare Capture Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Declare Capture deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults": {
       "get": {
         "description": "Returns defaults part of configuration.",
@@ -11451,6 +11744,9 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "compression": {
+          "$ref": "#/definitions/compression"
+        },
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -11671,44 +11967,7 @@ func init() {
           "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
-          "type": "object",
-          "properties": {
-            "expire": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "keylen": {
-              "type": "integer",
-              "x-display-name": "Key Length",
-              "x-nullable": true
-            },
-            "nopurge": {
-              "type": "boolean",
-              "x-display-name": "No Purge"
-            },
-            "peers": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "size": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "store": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "ip",
-                "ipv6",
-                "integer",
-                "string",
-                "binary"
-              ]
-            }
-          }
+          "$ref": "#/definitions/config_stick_table"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -12355,6 +12614,40 @@ func init() {
         "$ref": "#/definitions/cache"
       }
     },
+    "capture": {
+      "type": "object",
+      "title": "Declare Capture",
+      "required": [
+        "index",
+        "type",
+        "length"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "length": {
+          "type": "integer",
+          "x-nullable": false
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response"
+          ],
+          "x-nullable": false
+        }
+      }
+    },
+    "captures": {
+      "type": "array",
+      "title": "Declare capture array",
+      "items": {
+        "$ref": "#/definitions/capture"
+      }
+    },
     "cluster_settings": {
       "description": "Settings related to a cluster.",
       "type": "object",
@@ -12444,6 +12737,72 @@ func init() {
             "waiting_approval"
           ],
           "readOnly": true
+        }
+      }
+    },
+    "compression": {
+      "type": "object",
+      "properties": {
+        "algorithms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "gzip",
+              "deflate",
+              "raw-deflate"
+            ]
+          }
+        },
+        "offload": {
+          "type": "boolean"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "config_stick_table": {
+      "type": "object",
+      "properties": {
+        "expire": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "keylen": {
+          "type": "integer",
+          "x-display-name": "Key Length",
+          "x-nullable": true
+        },
+        "nopurge": {
+          "type": "boolean",
+          "x-display-name": "No Purge"
+        },
+        "peers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "size": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "store": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ip",
+            "ipv6",
+            "integer",
+            "string",
+            "binary"
+          ]
         }
       }
     },
@@ -13258,6 +13617,9 @@ func init() {
           ],
           "x-display-name": "Client TCP Keep Alive"
         },
+        "compression": {
+          "$ref": "#/definitions/compression"
+        },
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -13751,6 +14113,9 @@ func init() {
           },
           "x-display-name": "Client TCP Keep Alive"
         },
+        "compression": {
+          "$ref": "#/definitions/compression"
+        },
         "contstats": {
           "type": "string",
           "enum": [
@@ -13902,6 +14267,9 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "stick_table": {
+          "$ref": "#/definitions/config_stick_table"
         },
         "tcplog": {
           "type": "boolean",
@@ -14270,6 +14638,7 @@ func init() {
             "send",
             "send-state",
             "set-var",
+            "set-var-fmt",
             "unset-var"
           ],
           "x-nullable": false
@@ -14359,20 +14728,7 @@ func init() {
         "headers": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "name",
-              "value"
-            ],
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              }
-            },
-            "x-go-name": "CheckHeader"
+            "$ref": "#/definitions/return_header"
           },
           "x-dependency": {
             "action": {
@@ -14568,6 +14924,18 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var-fmt"
+              ]
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -14576,6 +14944,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -14589,6 +14958,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -14733,19 +15103,8 @@ func init() {
         },
         "deny_status": {
           "type": "integer",
-          "enum": [
-            200,
-            400,
-            403,
-            405,
-            408,
-            425,
-            429,
-            500,
-            502,
-            503,
-            504
-          ],
+          "maximum": 599,
+          "minimum": 200,
           "x-dependency": {
             "type": {
               "value": [
@@ -14801,6 +15160,17 @@ func init() {
             }
           },
           "x-display-name": "Header Match"
+        },
+        "hdr_method": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "del-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Match Method"
         },
         "hdr_name": {
           "type": "string",
@@ -14954,6 +15324,50 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
+        "normalizer": {
+          "type": "string",
+          "enum": [
+            "fragment-encode",
+            "fragment-strip",
+            "path-merge-slashes",
+            "path-strip-dot",
+            "path-strip-dotdot",
+            "percent-decode-unreserved",
+            "percent-to-upercase",
+            "query-sort-by-name"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "normalize-uri"
+            }
+          }
+        },
+        "normalizer_full": {
+          "type": "boolean",
+          "x-dependency": {
+            "normalizer": {
+              "value": "path-strip-dotdot"
+            },
+            "type": {
+              "value": "normalize-uri"
+            }
+          }
+        },
+        "normalizer_strict": {
+          "type": "boolean",
+          "x-dependency": {
+            "normalizer": {
+              "value": [
+                "percent-decode-unreserved",
+                "percent-to-upercase"
+              ]
+            },
+            "type": {
+              "value": "normalize-uri"
+            }
+          }
+        },
         "path_fmt": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -14962,7 +15376,9 @@ func init() {
               "required": true,
               "value": [
                 "set-path",
-                "replace-path"
+                "set-pathq",
+                "replace-path",
+                "replace-pathq"
               ]
             }
           }
@@ -14975,7 +15391,9 @@ func init() {
               "required": true,
               "value": [
                 "set-path",
-                "replace-path"
+                "set-pathq",
+                "replace-path",
+                "replace-pathq"
               ]
             }
           }
@@ -15095,7 +15513,11 @@ func init() {
           ],
           "x-dependency": {
             "type": {
-              "value": "return"
+              "value": [
+                "deny",
+                "tarpit",
+                "return"
+              ]
             }
           }
         },
@@ -15103,7 +15525,11 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "value": "return"
+              "value": [
+                "deny",
+                "tarpit",
+                "return"
+              ]
             }
           },
           "x-display-name": "Return content type",
@@ -15112,19 +15538,7 @@ func init() {
         "return_hdrs": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "name",
-              "fmt"
-            ],
-            "properties": {
-              "fmt": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              }
-            }
+            "$ref": "#/definitions/return_header"
           },
           "x-dependency": {
             "return_content_format": {
@@ -15228,6 +15642,28 @@ func init() {
             }
           }
         },
+        "timeout": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
+        "timeout_type": {
+          "type": "string",
+          "enum": [
+            "server",
+            "tunnel"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
         "tos_value": {
           "type": "string",
           "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
@@ -15305,56 +15741,61 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
-            "allow",
-            "deny",
-            "auth",
-            "redirect",
-            "tarpit",
+            "add-acl",
             "add-header",
-            "replace-header",
-            "replace-value",
+            "allow",
+            "auth",
+            "cache-use",
+            "capture",
+            "del-acl",
             "del-header",
+            "del-map",
+            "deny",
+            "disable-l7-retry",
+            "do-resolve",
+            "early-hint",
+            "normalize-uri",
+            "redirect",
+            "reject",
+            "replace-header",
+            "replace-path",
+            "replace-pathq",
+            "replace-uri",
+            "replace-value",
+            "return",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "send-spoe-group",
+            "set-dst",
+            "set-dst-port",
             "set-header",
             "set-log-level",
+            "set-map",
+            "set-mark",
+            "set-method",
+            "set-nice",
             "set-path",
-            "replace-path",
+            "set-pathq",
+            "set-priority-class",
+            "set-priority-offset",
             "set-query",
+            "set-src",
+            "set-src-port",
+            "set-timeout",
+            "set-tos",
             "set-uri",
             "set-var",
-            "send-spoe-group",
-            "add-acl",
-            "del-acl",
-            "capture",
+            "silent-drop",
+            "strict-mode",
+            "tarpit",
             "track-sc0",
             "track-sc1",
             "track-sc2",
-            "set-map",
-            "del-map",
-            "cache-use",
-            "disable-l7-retry",
-            "early-hint",
-            "replace-uri",
-            "sc-inc-gpc0",
-            "sc-inc-gpc1",
-            "do-resolve",
-            "set-dst",
-            "set-dst-port",
-            "sc-set-gpt0",
-            "set-mark",
-            "set-nice",
-            "set-method",
-            "set-priority-class",
-            "set-priority-offset",
-            "set-src",
-            "set-src-por",
-            "wait-for-handshake",
-            "set-tos",
-            "silent-drop",
             "unset-var",
-            "strict-mode",
-            "lua",
             "use-service",
-            "return"
+            "wait-for-body",
+            "wait-for-handshake"
           ],
           "x-nullable": false
         },
@@ -15389,6 +15830,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -15397,6 +15848,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "do-resolve",
                 "unset-var"
               ]
@@ -15411,10 +15863,30 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
           }
+        },
+        "wait_at_least": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
+        },
+        "wait_time": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
         }
       },
       "additionalProperties": false,
@@ -15526,6 +15998,17 @@ func init() {
             "property": "acl_name"
           }
         },
+        "deny_status": {
+          "type": "integer",
+          "maximum": 599,
+          "minimum": 200,
+          "x-dependency": {
+            "type": {
+              "value": "deny"
+            }
+          },
+          "x-nullable": true
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -15553,6 +16036,17 @@ func init() {
             }
           },
           "x-display-name": "Header Match"
+        },
+        "hdr_method": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "del-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Match Method"
         },
         "hdr_name": {
           "type": "string",
@@ -15726,6 +16220,84 @@ func init() {
             }
           },
           "x-display-name": "Redirect Value"
+        },
+        "return_content": {
+          "type": "string",
+          "x-dependency": {
+            "return_content_format": {
+              "required": true,
+              "value": [
+                "errofile",
+                "errorfiles",
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          }
+        },
+        "return_content_format": {
+          "type": "string",
+          "enum": [
+            "default-errorfile",
+            "errorfile",
+            "errorfiles",
+            "file",
+            "lf-file",
+            "string",
+            "lf-string"
+          ],
+          "x-dependency": {
+            "type": {
+              "value": [
+                "deny",
+                "return"
+              ]
+            }
+          }
+        },
+        "return_content_type": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "deny",
+                "return"
+              ]
+            }
+          },
+          "x-display-name": "Return content type",
+          "x-nullable": true
+        },
+        "return_hdrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/return_header"
+          },
+          "x-dependency": {
+            "return_content_format": {
+              "value": [
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          },
+          "x-go-name": "ReturnHeaders"
+        },
+        "return_status_code": {
+          "type": "integer",
+          "maximum": 599,
+          "minimum": 200,
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          },
+          "x-display-name": "Return Error Code",
+          "x-nullable": true
         },
         "sc_expr": {
           "type": "string",
@@ -15891,37 +16463,39 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
+            "add-acl",
+            "add-header",
             "allow",
+            "cache-store",
+            "capture",
+            "del-acl",
+            "del-header",
+            "del-map",
             "deny",
             "redirect",
-            "add-header",
-            "set-header",
-            "del-header",
-            "set-log-level",
-            "set-var",
-            "set-status",
-            "send-spoe-group",
             "replace-header",
             "replace-value",
-            "add-acl",
-            "del-acl",
-            "capture",
-            "set-map",
-            "del-map",
+            "return",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
+            "send-spoe-group",
+            "set-header",
+            "set-log-level",
+            "set-map",
             "set-mark",
             "set-nice",
+            "set-status",
             "set-tos",
+            "set-var",
+            "set-var-fmt",
             "silent-drop",
-            "unset-var",
+            "strict-mode",
             "track-sc0",
             "track-sc1",
             "track-sc2",
-            "strict-mode",
-            "lua",
-            "cache-store"
+            "unset-var",
+            "wait-for-body"
           ],
           "x-nullable": false
         },
@@ -15935,6 +16509,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -15943,6 +16527,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -15956,10 +16541,30 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
           }
+        },
+        "wait_at_least": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
+        },
+        "wait_time": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
         }
       },
       "additionalProperties": false,
@@ -17547,6 +18152,22 @@ func init() {
         "$ref": "#/definitions/resolver"
       }
     },
+    "return_header": {
+      "type": "object",
+      "required": [
+        "name",
+        "fmt"
+      ],
+      "properties": {
+        "fmt": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "x-go-name": "ReturnHeader"
+    },
     "runtime_server": {
       "description": "Runtime transient server properties",
       "type": "object",
@@ -17612,7 +18233,8 @@ func init() {
       "type": "object",
       "title": "Server",
       "required": [
-        "name"
+        "name",
+        "address"
       ],
       "properties": {
         "address": {
@@ -20802,6 +21424,9 @@ func init() {
     {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
+    },
+    {
+      "name": "DeclareCapture"
     },
     {
       "description": "Managing defaults configuration (advanced mode)",
@@ -24033,6 +24658,442 @@ func init() {
           },
           "204": {
             "description": "Cache deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/captures": {
+      "get": {
+        "description": "Returns an array of all declare capture records that are configured in specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Return an array of declare captures",
+        "operationId": "getDeclareCaptures",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/captures"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new declare capture in the specified frontend in the configuration file.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Add a new declare capture",
+        "operationId": "createDeclareCapture",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Declare capture created",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/captures/{index}": {
+      "get": {
+        "description": "Returns one declare capture configuration by it's index in the specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Return one declare capture",
+        "operationId": "getDeclareCapture",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Declare Capture Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/capture"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a declare capture configuration by it's index in the specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Replace a declare capture",
+        "operationId": "replaceDeclareCapture",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Declare Capture Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Declare Capture replaced",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/capture"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a declare capture configuration by it's index in the specified frontend.",
+        "tags": [
+          "DeclareCapture"
+        ],
+        "summary": "Delete a declare capture",
+        "operationId": "deleteDeclareCapture",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Declare Capture Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent frontend name",
+            "name": "frontend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Declare Capture deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -37347,46 +38408,6 @@ func init() {
         }
       }
     },
-    "BackendStickTable": {
-      "type": "object",
-      "properties": {
-        "expire": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "keylen": {
-          "type": "integer",
-          "x-display-name": "Key Length",
-          "x-nullable": true
-        },
-        "nopurge": {
-          "type": "boolean",
-          "x-display-name": "No Purge"
-        },
-        "peers": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "size": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "store": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "ip",
-            "ipv6",
-            "integer",
-            "string",
-            "binary"
-          ]
-        }
-      }
-    },
     "ClusterSettingsCluster": {
       "type": "object",
       "title": "Cluster controller information",
@@ -37585,37 +38606,6 @@ func init() {
         }
       },
       "x-go-name": "RuntimeAPI"
-    },
-    "HTTPCheckRuleHeadersItems0": {
-      "type": "object",
-      "required": [
-        "name",
-        "value"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string"
-        }
-      },
-      "x-go-name": "CheckHeader"
-    },
-    "HTTPRequestRuleReturnHdrsItems0": {
-      "type": "object",
-      "required": [
-        "name",
-        "fmt"
-      ],
-      "properties": {
-        "fmt": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      }
     },
     "InfoAPI": {
       "type": "object",
@@ -38165,6 +39155,9 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "compression": {
+          "$ref": "#/definitions/compression"
+        },
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -38385,44 +39378,7 @@ func init() {
           "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
-          "type": "object",
-          "properties": {
-            "expire": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "keylen": {
-              "type": "integer",
-              "x-display-name": "Key Length",
-              "x-nullable": true
-            },
-            "nopurge": {
-              "type": "boolean",
-              "x-display-name": "No Purge"
-            },
-            "peers": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "size": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "store": {
-              "type": "string",
-              "pattern": "^[^\\s]+$"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "ip",
-                "ipv6",
-                "integer",
-                "string",
-                "binary"
-              ]
-            }
-          }
+          "$ref": "#/definitions/config_stick_table"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -39069,6 +40025,40 @@ func init() {
         "$ref": "#/definitions/cache"
       }
     },
+    "capture": {
+      "type": "object",
+      "title": "Declare Capture",
+      "required": [
+        "index",
+        "type",
+        "length"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "length": {
+          "type": "integer",
+          "x-nullable": false
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response"
+          ],
+          "x-nullable": false
+        }
+      }
+    },
+    "captures": {
+      "type": "array",
+      "title": "Declare capture array",
+      "items": {
+        "$ref": "#/definitions/capture"
+      }
+    },
     "cluster_settings": {
       "description": "Settings related to a cluster.",
       "type": "object",
@@ -39132,6 +40122,72 @@ func init() {
             "waiting_approval"
           ],
           "readOnly": true
+        }
+      }
+    },
+    "compression": {
+      "type": "object",
+      "properties": {
+        "algorithms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "gzip",
+              "deflate",
+              "raw-deflate"
+            ]
+          }
+        },
+        "offload": {
+          "type": "boolean"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "config_stick_table": {
+      "type": "object",
+      "properties": {
+        "expire": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "keylen": {
+          "type": "integer",
+          "x-display-name": "Key Length",
+          "x-nullable": true
+        },
+        "nopurge": {
+          "type": "boolean",
+          "x-display-name": "No Purge"
+        },
+        "peers": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "size": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "store": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ip",
+            "ipv6",
+            "integer",
+            "string",
+            "binary"
+          ]
         }
       }
     },
@@ -39939,6 +40995,9 @@ func init() {
           ],
           "x-display-name": "Client TCP Keep Alive"
         },
+        "compression": {
+          "$ref": "#/definitions/compression"
+        },
         "connect_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -40432,6 +41491,9 @@ func init() {
           },
           "x-display-name": "Client TCP Keep Alive"
         },
+        "compression": {
+          "$ref": "#/definitions/compression"
+        },
         "contstats": {
           "type": "string",
           "enum": [
@@ -40583,6 +41645,9 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "stick_table": {
+          "$ref": "#/definitions/config_stick_table"
         },
         "tcplog": {
           "type": "boolean",
@@ -40866,6 +41931,7 @@ func init() {
             "send",
             "send-state",
             "set-var",
+            "set-var-fmt",
             "unset-var"
           ],
           "x-nullable": false
@@ -40955,7 +42021,7 @@ func init() {
         "headers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/HTTPCheckRuleHeadersItems0"
+            "$ref": "#/definitions/return_header"
           },
           "x-dependency": {
             "action": {
@@ -41151,6 +42217,18 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-var-fmt"
+              ]
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -41159,6 +42237,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -41172,6 +42251,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -41316,19 +42396,8 @@ func init() {
         },
         "deny_status": {
           "type": "integer",
-          "enum": [
-            200,
-            400,
-            403,
-            405,
-            408,
-            425,
-            429,
-            500,
-            502,
-            503,
-            504
-          ],
+          "maximum": 599,
+          "minimum": 200,
           "x-dependency": {
             "type": {
               "value": [
@@ -41384,6 +42453,17 @@ func init() {
             }
           },
           "x-display-name": "Header Match"
+        },
+        "hdr_method": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "del-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Match Method"
         },
         "hdr_name": {
           "type": "string",
@@ -41537,6 +42617,50 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
+        "normalizer": {
+          "type": "string",
+          "enum": [
+            "fragment-encode",
+            "fragment-strip",
+            "path-merge-slashes",
+            "path-strip-dot",
+            "path-strip-dotdot",
+            "percent-decode-unreserved",
+            "percent-to-upercase",
+            "query-sort-by-name"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "normalize-uri"
+            }
+          }
+        },
+        "normalizer_full": {
+          "type": "boolean",
+          "x-dependency": {
+            "normalizer": {
+              "value": "path-strip-dotdot"
+            },
+            "type": {
+              "value": "normalize-uri"
+            }
+          }
+        },
+        "normalizer_strict": {
+          "type": "boolean",
+          "x-dependency": {
+            "normalizer": {
+              "value": [
+                "percent-decode-unreserved",
+                "percent-to-upercase"
+              ]
+            },
+            "type": {
+              "value": "normalize-uri"
+            }
+          }
+        },
         "path_fmt": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -41545,7 +42669,9 @@ func init() {
               "required": true,
               "value": [
                 "set-path",
-                "replace-path"
+                "set-pathq",
+                "replace-path",
+                "replace-pathq"
               ]
             }
           }
@@ -41558,7 +42684,9 @@ func init() {
               "required": true,
               "value": [
                 "set-path",
-                "replace-path"
+                "set-pathq",
+                "replace-path",
+                "replace-pathq"
               ]
             }
           }
@@ -41678,7 +42806,11 @@ func init() {
           ],
           "x-dependency": {
             "type": {
-              "value": "return"
+              "value": [
+                "deny",
+                "tarpit",
+                "return"
+              ]
             }
           }
         },
@@ -41686,7 +42818,11 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "value": "return"
+              "value": [
+                "deny",
+                "tarpit",
+                "return"
+              ]
             }
           },
           "x-display-name": "Return content type",
@@ -41695,7 +42831,7 @@ func init() {
         "return_hdrs": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/HTTPRequestRuleReturnHdrsItems0"
+            "$ref": "#/definitions/return_header"
           },
           "x-dependency": {
             "return_content_format": {
@@ -41799,6 +42935,28 @@ func init() {
             }
           }
         },
+        "timeout": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
+        "timeout_type": {
+          "type": "string",
+          "enum": [
+            "server",
+            "tunnel"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
         "tos_value": {
           "type": "string",
           "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
@@ -41876,56 +43034,61 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
-            "allow",
-            "deny",
-            "auth",
-            "redirect",
-            "tarpit",
+            "add-acl",
             "add-header",
-            "replace-header",
-            "replace-value",
+            "allow",
+            "auth",
+            "cache-use",
+            "capture",
+            "del-acl",
             "del-header",
+            "del-map",
+            "deny",
+            "disable-l7-retry",
+            "do-resolve",
+            "early-hint",
+            "normalize-uri",
+            "redirect",
+            "reject",
+            "replace-header",
+            "replace-path",
+            "replace-pathq",
+            "replace-uri",
+            "replace-value",
+            "return",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "send-spoe-group",
+            "set-dst",
+            "set-dst-port",
             "set-header",
             "set-log-level",
+            "set-map",
+            "set-mark",
+            "set-method",
+            "set-nice",
             "set-path",
-            "replace-path",
+            "set-pathq",
+            "set-priority-class",
+            "set-priority-offset",
             "set-query",
+            "set-src",
+            "set-src-port",
+            "set-timeout",
+            "set-tos",
             "set-uri",
             "set-var",
-            "send-spoe-group",
-            "add-acl",
-            "del-acl",
-            "capture",
+            "silent-drop",
+            "strict-mode",
+            "tarpit",
             "track-sc0",
             "track-sc1",
             "track-sc2",
-            "set-map",
-            "del-map",
-            "cache-use",
-            "disable-l7-retry",
-            "early-hint",
-            "replace-uri",
-            "sc-inc-gpc0",
-            "sc-inc-gpc1",
-            "do-resolve",
-            "set-dst",
-            "set-dst-port",
-            "sc-set-gpt0",
-            "set-mark",
-            "set-nice",
-            "set-method",
-            "set-priority-class",
-            "set-priority-offset",
-            "set-src",
-            "set-src-por",
-            "wait-for-handshake",
-            "set-tos",
-            "silent-drop",
             "unset-var",
-            "strict-mode",
-            "lua",
             "use-service",
-            "return"
+            "wait-for-body",
+            "wait-for-handshake"
           ],
           "x-nullable": false
         },
@@ -41960,6 +43123,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -41968,6 +43141,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "do-resolve",
                 "unset-var"
               ]
@@ -41982,10 +43156,30 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
           }
+        },
+        "wait_at_least": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
+        },
+        "wait_time": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
         }
       },
       "additionalProperties": false,
@@ -42097,6 +43291,17 @@ func init() {
             "property": "acl_name"
           }
         },
+        "deny_status": {
+          "type": "integer",
+          "maximum": 599,
+          "minimum": 200,
+          "x-dependency": {
+            "type": {
+              "value": "deny"
+            }
+          },
+          "x-nullable": true
+        },
         "hdr_format": {
           "type": "string",
           "x-dependency": {
@@ -42124,6 +43329,17 @@ func init() {
             }
           },
           "x-display-name": "Header Match"
+        },
+        "hdr_method": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "del-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Match Method"
         },
         "hdr_name": {
           "type": "string",
@@ -42297,6 +43513,84 @@ func init() {
             }
           },
           "x-display-name": "Redirect Value"
+        },
+        "return_content": {
+          "type": "string",
+          "x-dependency": {
+            "return_content_format": {
+              "required": true,
+              "value": [
+                "errofile",
+                "errorfiles",
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          }
+        },
+        "return_content_format": {
+          "type": "string",
+          "enum": [
+            "default-errorfile",
+            "errorfile",
+            "errorfiles",
+            "file",
+            "lf-file",
+            "string",
+            "lf-string"
+          ],
+          "x-dependency": {
+            "type": {
+              "value": [
+                "deny",
+                "return"
+              ]
+            }
+          }
+        },
+        "return_content_type": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "deny",
+                "return"
+              ]
+            }
+          },
+          "x-display-name": "Return content type",
+          "x-nullable": true
+        },
+        "return_hdrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/return_header"
+          },
+          "x-dependency": {
+            "return_content_format": {
+              "value": [
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          },
+          "x-go-name": "ReturnHeaders"
+        },
+        "return_status_code": {
+          "type": "integer",
+          "maximum": 599,
+          "minimum": 200,
+          "x-dependency": {
+            "type": {
+              "value": "return"
+            }
+          },
+          "x-display-name": "Return Error Code",
+          "x-nullable": true
         },
         "sc_expr": {
           "type": "string",
@@ -42462,37 +43756,39 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
+            "add-acl",
+            "add-header",
             "allow",
+            "cache-store",
+            "capture",
+            "del-acl",
+            "del-header",
+            "del-map",
             "deny",
             "redirect",
-            "add-header",
-            "set-header",
-            "del-header",
-            "set-log-level",
-            "set-var",
-            "set-status",
-            "send-spoe-group",
             "replace-header",
             "replace-value",
-            "add-acl",
-            "del-acl",
-            "capture",
-            "set-map",
-            "del-map",
+            "return",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
+            "send-spoe-group",
+            "set-header",
+            "set-log-level",
+            "set-map",
             "set-mark",
             "set-nice",
+            "set-status",
             "set-tos",
+            "set-var",
+            "set-var-fmt",
             "silent-drop",
-            "unset-var",
+            "strict-mode",
             "track-sc0",
             "track-sc1",
             "track-sc2",
-            "strict-mode",
-            "lua",
-            "cache-store"
+            "unset-var",
+            "wait-for-body"
           ],
           "x-nullable": false
         },
@@ -42506,6 +43802,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -42514,6 +43820,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -42527,10 +43834,30 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
           }
+        },
+        "wait_at_least": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
+        },
+        "wait_time": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "wait-for-body"
+            }
+          },
+          "x-nullable": true
         }
       },
       "additionalProperties": false,
@@ -44118,6 +45445,22 @@ func init() {
         "$ref": "#/definitions/resolver"
       }
     },
+    "return_header": {
+      "type": "object",
+      "required": [
+        "name",
+        "fmt"
+      ],
+      "properties": {
+        "fmt": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "x-go-name": "ReturnHeader"
+    },
     "runtime_server": {
       "description": "Runtime transient server properties",
       "type": "object",
@@ -44183,7 +45526,8 @@ func init() {
       "type": "object",
       "title": "Server",
       "required": [
-        "name"
+        "name",
+        "address"
       ],
       "properties": {
         "address": {
@@ -47268,6 +48612,9 @@ func init() {
     {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
+    },
+    {
+      "name": "DeclareCapture"
     },
     {
       "description": "Managing defaults configuration (advanced mode)",

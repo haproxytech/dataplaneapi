@@ -404,6 +404,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.TCPCheckGetTCPChecksHandler = &handlers.GetTCPChecksHandlerImpl{Client: client}
 	api.TCPCheckReplaceTCPCheckHandler = &handlers.ReplaceTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup declare capture handlers
+	api.DeclareCaptureCreateDeclareCaptureHandler = &handlers.CreateDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
+	api.DeclareCaptureDeleteDeclareCaptureHandler = &handlers.DeleteDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
+	api.DeclareCaptureGetDeclareCaptureHandler = &handlers.GetDeclareCaptureHandlerImpl{Client: client}
+	api.DeclareCaptureGetDeclareCapturesHandler = &handlers.GetDeclareCapturesHandlerImpl{Client: client}
+	api.DeclareCaptureReplaceDeclareCaptureHandler = &handlers.ReplaceDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup backend switching rule handlers
 	api.BackendSwitchingRuleCreateBackendSwitchingRuleHandler = &handlers.CreateBackendSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
 	api.BackendSwitchingRuleDeleteBackendSwitchingRuleHandler = &handlers.DeleteBackendSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
