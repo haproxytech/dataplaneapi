@@ -38,7 +38,7 @@ load 'utils/_helpers'
     assert_equal "$(get_json_path "$BODY" ".data.action")" "send"
     assert_equal 1 "$(get_json_path "$BODY" ".data.headers | length")"
     assert_equal "$(get_json_path "$BODY" ".data.headers[0].name")" "host"
-    assert_equal "$(get_json_path "$BODY" ".data.headers[0].value")" "haproxy.1wt.eu"
+    assert_equal "$(get_json_path "$BODY" ".data.headers[0].fmt")" "haproxy.1wt.eu"
 
 	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
     assert_equal "$(get_json_path "$BODY" ".data.action")" "expect"
