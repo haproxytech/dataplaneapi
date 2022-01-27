@@ -25,7 +25,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/client-native/v3/models"
 )
 
 // CreateHTTPRequestRuleCreatedCode is the HTTP code returned for type CreateHTTPRequestRuleCreated

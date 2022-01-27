@@ -13,7 +13,7 @@ CGO_ENABLED?=0
 all: update clean build
 
 update:
-	go get -v
+	go mod tidy -compat=1.17
 
 clean:
 	rm -rf ${DATAPLANEAPI_PATH}/build

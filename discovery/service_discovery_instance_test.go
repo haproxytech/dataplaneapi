@@ -1,3 +1,4 @@
+//go:build aws
 // +build aws
 
 // Copyright 2019 HAProxy Technologies
@@ -32,8 +33,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/autoscaling/types"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/google/uuid"
-	"github.com/haproxytech/client-native/v2/configuration"
-	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/client-native/v3/configuration"
+	"github.com/haproxytech/client-native/v3/models"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"

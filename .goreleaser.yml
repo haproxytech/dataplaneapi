@@ -2,7 +2,7 @@
 before:
   hooks:
     - go mod download
-    - go mod tidy
+    - go mod tidy -compat=1.17
     - make clean
     - mkdir build/
 builds:
@@ -19,7 +19,7 @@ builds:
       - freebsd
       - darwin
     goarch:
-      - 386
+      - "386"
       - amd64
       - arm
       - arm64

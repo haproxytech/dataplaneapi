@@ -21,7 +21,7 @@ import (
 	"strings"
 
 	"github.com/go-openapi/runtime/middleware"
-	client_native "github.com/haproxytech/client-native/v2"
+	client_native "github.com/haproxytech/client-native/v3"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"

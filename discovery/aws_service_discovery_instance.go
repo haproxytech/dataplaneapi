@@ -26,8 +26,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/haproxytech/client-native/v2/configuration"
-	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/client-native/v3/configuration"
+	"github.com/haproxytech/client-native/v3/models"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
 )

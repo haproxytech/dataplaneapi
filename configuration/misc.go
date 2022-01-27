@@ -24,8 +24,8 @@ import (
 	"path"
 	"syscall"
 
-	"github.com/haproxytech/client-native/v2/misc"
-	"github.com/haproxytech/client-native/v2/storage"
+	"github.com/haproxytech/client-native/v3/misc"
+	"github.com/haproxytech/client-native/v3/storage"
 )
 
 func DecodeBootstrapKey(key string) (map[string]string, error) {

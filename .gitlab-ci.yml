@@ -62,7 +62,7 @@ build:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:1.16
+    name: $CI_REGISTRY_GO/golang:1.17
     entrypoint: [ "" ]
   tags:
     - go

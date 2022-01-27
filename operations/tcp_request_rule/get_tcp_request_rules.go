@@ -29,7 +29,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/client-native/v3/models"
 )
 
 // GetTCPRequestRulesHandlerFunc turns a function with the right signature into a get TCP request rules handler

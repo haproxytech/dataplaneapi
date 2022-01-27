@@ -26,9 +26,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/haproxytech/client-native/v2/configuration"
-	client_errors "github.com/haproxytech/client-native/v2/errors"
-	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/client-native/v3/configuration"
+	client_errors "github.com/haproxytech/client-native/v3/errors"
+	"github.com/haproxytech/client-native/v3/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/rate"

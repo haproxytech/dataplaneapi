@@ -6,23 +6,23 @@ echo " ---> source folder: $SPEC_DIR"
 DST_DIR=$(mktemp -d)
 echo " ---> generate folder: $DST_DIR"
 # see if we have a replace directive
-CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Version' 2>/dev/null | awk -F"-" '{print $NF}') || ""
-REMOTE_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Version' 2>/dev/null | awk -F"/" '{print $1}') || ""
+CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v3")) | .New.Version' 2>/dev/null | awk -F"-" '{print $NF}') || ""
+REMOTE_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v3")) | .New.Version' 2>/dev/null | awk -F"/" '{print $1}') || ""
 if [ "$REMOTE_VERSION" = "null" ]; then
    # we have a local version of CN
-   CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Path' 2>/dev/null) || ""
+   CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v3")) | .New.Path' 2>/dev/null) || ""
 fi
 # if hash is to short take all of it (example v1.0.0-dev1)
-[ "${#CN_VERSION}" -gt 0 ] && [ "${#CN_VERSION}" -lt 6 ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Version')
+[ "${#CN_VERSION}" -gt 0 ] && [ "${#CN_VERSION}" -lt 6 ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v3")) | .New.Version')
 # check if version is there, if not, use one from require
-[ -z "$CN_VERSION" ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Require | .[] | select(.Path | contains("github.com/haproxytech/client-native/v2")) | .Version' 2>/dev/null | awk -F"-" '{print $NF}')
+[ -z "$CN_VERSION" ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Require | .[] | select(.Path | contains("github.com/haproxytech/client-native/v3")) | .Version' 2>/dev/null | awk -F"-" '{print $NF}')
 echo " ---> version of client native used: $CN_VERSION"
 # extract repository
-REPO_PATH=$(go mod edit -json | jq -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Path'  2>/dev/null |  awk -F"/" '{print $2 "/" $3}') || ""
+REPO_PATH=$(go mod edit -json | jq -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v3")) | .New.Path'  2>/dev/null |  awk -F"/" '{print $2 "/" $3}') || ""
 [ -z "$REPO_PATH" ] && REPO_PATH=haproxytech/client-native
 
 # extract url, gitlab and github have different urls to raw content
-URL_PATH=$(go mod edit -json | jq -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Path' 2>/dev/null |  awk -F"/" '{print $1}') || ""
+URL_PATH=$(go mod edit -json | jq -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v3")) | .New.Path' 2>/dev/null |  awk -F"/" '{print $1}') || ""
 EXTRA_PATH=""
 if [[ $URL_PATH =~ "gitlab" ]]; then
    EXTRA_PATH="-/raw/"
@@ -56,7 +56,7 @@ cp configure_data_plane.go $DST_DIR/dataplaneapi/configure_data_plane.go
 swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     -A "Data Plane" \
     -t $DST_DIR \
-    --existing-models github.com/haproxytech/client-native/v2/models \
+    --existing-models github.com/haproxytech/client-native/v3/models \
     --exclude-main \
     --skip-models \
     -s dataplaneapi \

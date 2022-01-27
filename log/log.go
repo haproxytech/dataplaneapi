@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/haproxytech/client-native/v2/models"
+	"github.com/haproxytech/client-native/v3/models"
 	apache_log "github.com/lestrrat-go/apache-logformat"
 	"github.com/sirupsen/logrus"
 )
