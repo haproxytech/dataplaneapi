@@ -15,7 +15,10 @@ fi
 # if hash is to short take all of it (example v1.0.0-dev1)
 [ "${#CN_VERSION}" -gt 0 ] && [ "${#CN_VERSION}" -lt 6 ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Version')
 # check if version is there, if not, use one from require
-[ -z "$CN_VERSION" ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Require | .[] | select(.Path | contains("github.com/haproxytech/client-native/v2")) | .Version' 2>/dev/null | awk -F"-" '{print $NF}')
+[ -z "$CN_VERSION" ] && CN_VERSION=$(go mod edit -json | jq -c -r '.Require | .[] | select(.Path | contains("github.com/haproxytech/client-native/v2")) | .Version' 2>/dev/null)
+# check if version contains '-' and if it is a 12 char commit hash then use it, if not use the whole tag
+suffix=$(echo $CN_VERSION | awk -F"-" '{print$NF}')
+[ -z "${CN_VERSION##*"-"*}" ] && [ ${#suffix} -eq 12 ] && CN_VERSION=$suffix
 echo " ---> version of client native used: $CN_VERSION"
 # extract repository
 REPO_PATH=$(go mod edit -json | jq -r '.Replace | .[] | select(.Old.Path | contains("github.com/haproxytech/client-native/v2")) | .New.Path'  2>/dev/null |  awk -F"/" '{print $2 "/" $3}') || ""
