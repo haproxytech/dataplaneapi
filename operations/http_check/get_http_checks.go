@@ -103,7 +103,7 @@ type GetHTTPChecksOKBody struct {
 
 	// data
 	// Required: true
-	Data models.HTTPCheckRules `json:"data"`
+	Data models.HTTPChecks `json:"data"`
 }
 
 // Validate validates this get HTTP checks o k body

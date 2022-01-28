@@ -40,7 +40,7 @@ type CreateHTTPCheckCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.HTTPCheckRule `json:"body,omitempty"`
+	Payload *models.HTTPCheck `json:"body,omitempty"`
 }
 
 // NewCreateHTTPCheckCreated creates CreateHTTPCheckCreated with default headers values
@@ -50,13 +50,13 @@ func NewCreateHTTPCheckCreated() *CreateHTTPCheckCreated {
 }
 
 // WithPayload adds the payload to the create Http check created response
-func (o *CreateHTTPCheckCreated) WithPayload(payload *models.HTTPCheckRule) *CreateHTTPCheckCreated {
+func (o *CreateHTTPCheckCreated) WithPayload(payload *models.HTTPCheck) *CreateHTTPCheckCreated {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the create Http check created response
-func (o *CreateHTTPCheckCreated) SetPayload(payload *models.HTTPCheckRule) {
+func (o *CreateHTTPCheckCreated) SetPayload(payload *models.HTTPCheck) {
 	o.Payload = payload
 }
 
@@ -88,7 +88,7 @@ type CreateHTTPCheckAccepted struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.HTTPCheckRule `json:"body,omitempty"`
+	Payload *models.HTTPCheck `json:"body,omitempty"`
 }
 
 // NewCreateHTTPCheckAccepted creates CreateHTTPCheckAccepted with default headers values
@@ -109,13 +109,13 @@ func (o *CreateHTTPCheckAccepted) SetReloadID(reloadID string) {
 }
 
 // WithPayload adds the payload to the create Http check accepted response
-func (o *CreateHTTPCheckAccepted) WithPayload(payload *models.HTTPCheckRule) *CreateHTTPCheckAccepted {
+func (o *CreateHTTPCheckAccepted) WithPayload(payload *models.HTTPCheck) *CreateHTTPCheckAccepted {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the create Http check accepted response
-func (o *CreateHTTPCheckAccepted) SetPayload(payload *models.HTTPCheckRule) {
+func (o *CreateHTTPCheckAccepted) SetPayload(payload *models.HTTPCheck) {
 	o.Payload = payload
 }
 

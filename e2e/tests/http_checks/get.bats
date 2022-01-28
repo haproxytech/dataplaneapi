@@ -26,22 +26,22 @@ load 'utils/_helpers'
 @test "http_checks: Return one HTTP Check from defaults" {
   	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=defaults"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "send-state"
+	assert_equal "$(get_json_path "$BODY" ".data.type")" "send-state"
 
 	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=defaults"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "disable-on-404"
+	assert_equal "$(get_json_path "$BODY" ".data.type")" "disable-on-404"
 }
 
 @test "http_checks: Return one HTTP Check from backend" {
 	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
-    assert_equal "$(get_json_path "$BODY" ".data.action")" "send"
+    assert_equal "$(get_json_path "$BODY" ".data.type")" "send"
     assert_equal 1 "$(get_json_path "$BODY" ".data.headers | length")"
     assert_equal "$(get_json_path "$BODY" ".data.headers[0].name")" "host"
     assert_equal "$(get_json_path "$BODY" ".data.headers[0].fmt")" "haproxy.1wt.eu"
 
 	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
-    assert_equal "$(get_json_path "$BODY" ".data.action")" "expect"
+    assert_equal "$(get_json_path "$BODY" ".data.type")" "expect"
     assert_equal "$(get_json_path "$BODY" ".data.match")" "status"
     assert_equal "$(get_json_path "$BODY" ".data.pattern")" "200-399"
 }

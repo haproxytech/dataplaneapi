@@ -1,4 +1,4 @@
 {
   "index": 0,
-  "action": "add-header"
+  "type": "add-header"
 }

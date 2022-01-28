@@ -62,7 +62,7 @@ type ReplaceHTTPCheckParams struct {
 	  Required: true
 	  In: body
 	*/
-	Data *models.HTTPCheckRule
+	Data *models.HTTPCheck
 	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
 	  In: query
 	  Default: false
@@ -105,7 +105,7 @@ func (o *ReplaceHTTPCheckParams) BindRequest(r *http.Request, route *middleware.
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.HTTPCheckRule
+		var body models.HTTPCheck
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("data", "body"))

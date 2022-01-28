@@ -40,7 +40,7 @@ type ReplaceHTTPCheckOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.HTTPCheckRule `json:"body,omitempty"`
+	Payload *models.HTTPCheck `json:"body,omitempty"`
 }
 
 // NewReplaceHTTPCheckOK creates ReplaceHTTPCheckOK with default headers values
@@ -50,13 +50,13 @@ func NewReplaceHTTPCheckOK() *ReplaceHTTPCheckOK {
 }
 
 // WithPayload adds the payload to the replace Http check o k response
-func (o *ReplaceHTTPCheckOK) WithPayload(payload *models.HTTPCheckRule) *ReplaceHTTPCheckOK {
+func (o *ReplaceHTTPCheckOK) WithPayload(payload *models.HTTPCheck) *ReplaceHTTPCheckOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the replace Http check o k response
-func (o *ReplaceHTTPCheckOK) SetPayload(payload *models.HTTPCheckRule) {
+func (o *ReplaceHTTPCheckOK) SetPayload(payload *models.HTTPCheck) {
 	o.Payload = payload
 }
 
@@ -88,7 +88,7 @@ type ReplaceHTTPCheckAccepted struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.HTTPCheckRule `json:"body,omitempty"`
+	Payload *models.HTTPCheck `json:"body,omitempty"`
 }
 
 // NewReplaceHTTPCheckAccepted creates ReplaceHTTPCheckAccepted with default headers values
@@ -109,13 +109,13 @@ func (o *ReplaceHTTPCheckAccepted) SetReloadID(reloadID string) {
 }
 
 // WithPayload adds the payload to the replace Http check accepted response
-func (o *ReplaceHTTPCheckAccepted) WithPayload(payload *models.HTTPCheckRule) *ReplaceHTTPCheckAccepted {
+func (o *ReplaceHTTPCheckAccepted) WithPayload(payload *models.HTTPCheck) *ReplaceHTTPCheckAccepted {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the replace Http check accepted response
-func (o *ReplaceHTTPCheckAccepted) SetPayload(payload *models.HTTPCheckRule) {
+func (o *ReplaceHTTPCheckAccepted) SetPayload(payload *models.HTTPCheck) {
 	o.Payload = payload
 }
 

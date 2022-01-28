@@ -3271,7 +3271,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/http_check_rules"
+                  "$ref": "#/definitions/http_checks"
                 }
               }
             },
@@ -3317,7 +3317,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           {
@@ -3334,13 +3334,13 @@ func init() {
           "201": {
             "description": "HTTP check created",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             },
             "headers": {
               "Reload-ID": {
@@ -3408,7 +3408,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/http_check_rule"
+                  "$ref": "#/definitions/http_check"
                 }
               }
             },
@@ -3464,7 +3464,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           {
@@ -3481,13 +3481,13 @@ func init() {
           "200": {
             "description": "HTTP check replaced",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             },
             "headers": {
               "Reload-ID": {
@@ -11843,7 +11843,7 @@ func init() {
           "x-display-name": "HTTP bufferrequest"
         },
         "http-check": {
-          "$ref": "#/definitions/http-check"
+          "$ref": "#/definitions/http_check"
         },
         "http-use-htx": {
           "type": "string",
@@ -13710,7 +13710,7 @@ func init() {
           "x-display-name": "HTTP bufferrequest"
         },
         "http-check": {
-          "$ref": "#/definitions/http-check"
+          "$ref": "#/definitions/http_check"
         },
         "http-use-htx": {
           "type": "string",
@@ -14568,86 +14568,19 @@ func init() {
       },
       "additionalProperties": false
     },
-    "http-check": {
+    "http_check": {
       "type": "object",
+      "title": "HTTP Check",
       "required": [
+        "index",
         "type"
       ],
       "properties": {
-        "exclamation_mark": {
-          "type": "boolean",
-          "x-dependency": {
-            "type": {
-              "value": "expect"
-            }
-          },
-          "x-display-name": "Expect Exclamation Mark"
-        },
-        "match": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "status",
-            "rstatus",
-            "string",
-            "rstring"
-          ],
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "expect"
-            }
-          },
-          "x-display-name": "Expect Match"
-        },
-        "pattern": {
-          "type": "string",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "expect"
-            }
-          },
-          "x-display-name": "Expect Pattern"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "disable-on-404",
-            "expect",
-            "send-state"
-          ]
-        }
-      }
-    },
-    "http_check_rule": {
-      "type": "object",
-      "title": "HTTP Check Rule",
-      "required": [
-        "index",
-        "action"
-      ],
-      "properties": {
-        "action": {
-          "type": "string",
-          "enum": [
-            "comment",
-            "connect",
-            "disable-on-404",
-            "expect",
-            "send",
-            "send-state",
-            "set-var",
-            "set-var-fmt",
-            "unset-var"
-          ],
-          "x-nullable": false
-        },
         "addr": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -14657,7 +14590,7 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -14666,7 +14599,7 @@ func init() {
         "body": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -14674,7 +14607,7 @@ func init() {
         "body_log_format": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -14682,7 +14615,7 @@ func init() {
         "check_comment": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": [
                 "comment",
                 "connect",
@@ -14696,7 +14629,7 @@ func init() {
         "default": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -14711,7 +14644,7 @@ func init() {
             "L4CON"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -14719,7 +14652,7 @@ func init() {
         "exclamation_mark": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           },
@@ -14731,7 +14664,7 @@ func init() {
             "$ref": "#/definitions/return_header"
           },
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           },
@@ -14744,7 +14677,7 @@ func init() {
         "linger": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -14761,7 +14694,7 @@ func init() {
             "rstring"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": "expect"
             }
@@ -14771,7 +14704,7 @@ func init() {
         "method": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -14779,7 +14712,7 @@ func init() {
         "min_recv": {
           "type": "integer",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -14793,7 +14726,7 @@ func init() {
             "L4OK"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -14801,7 +14734,7 @@ func init() {
         "on_error": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -14809,7 +14742,7 @@ func init() {
         "on_success": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -14817,7 +14750,7 @@ func init() {
         "pattern": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": "expect"
             }
@@ -14828,7 +14761,7 @@ func init() {
           "maximum": 65535,
           "minimum": 1,
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -14837,7 +14770,7 @@ func init() {
         "port_string": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -14845,7 +14778,7 @@ func init() {
         "proto": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -14854,7 +14787,7 @@ func init() {
         "send_proxy": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -14862,7 +14795,7 @@ func init() {
         "sni": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -14870,7 +14803,7 @@ func init() {
         "ssl": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -14878,7 +14811,7 @@ func init() {
         "status-code": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -14891,15 +14824,30 @@ func init() {
             "L4TOUT"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
         },
+        "type": {
+          "type": "string",
+          "enum": [
+            "comment",
+            "connect",
+            "disable-on-404",
+            "expect",
+            "send",
+            "send-state",
+            "set-var",
+            "set-var-fmt",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
         "uri": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -14907,7 +14855,7 @@ func init() {
         "uri_log_format": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -14915,7 +14863,7 @@ func init() {
         "var_expr": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var"
@@ -14927,7 +14875,7 @@ func init() {
         "var_format": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var-fmt"
@@ -14940,7 +14888,7 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var",
@@ -14954,7 +14902,7 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var",
@@ -14967,7 +14915,7 @@ func init() {
         "version": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -14975,18 +14923,18 @@ func init() {
         "via_socks4": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
         }
       }
     },
-    "http_check_rules": {
+    "http_checks": {
       "type": "array",
       "title": "HTTP Checks Array",
       "items": {
-        "$ref": "#/definitions/http_check_rule"
+        "$ref": "#/definitions/http_check"
       }
     },
     "http_request_rule": {
@@ -26333,7 +26281,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/http_check_rules"
+                  "$ref": "#/definitions/http_checks"
                 }
               }
             },
@@ -26388,7 +26336,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           {
@@ -26417,13 +26365,13 @@ func init() {
           "201": {
             "description": "HTTP check created",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             },
             "headers": {
               "Reload-ID": {
@@ -26522,7 +26470,7 @@ func init() {
                   "type": "integer"
                 },
                 "data": {
-                  "$ref": "#/definitions/http_check_rule"
+                  "$ref": "#/definitions/http_check"
                 }
               }
             },
@@ -26596,7 +26544,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           {
@@ -26625,13 +26573,13 @@ func init() {
           "200": {
             "description": "HTTP check replaced",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             }
           },
           "202": {
             "description": "Configuration change accepted and reload requested",
             "schema": {
-              "$ref": "#/definitions/http_check_rule"
+              "$ref": "#/definitions/http_check"
             },
             "headers": {
               "Reload-ID": {
@@ -39254,7 +39202,7 @@ func init() {
           "x-display-name": "HTTP bufferrequest"
         },
         "http-check": {
-          "$ref": "#/definitions/http-check"
+          "$ref": "#/definitions/http_check"
         },
         "http-use-htx": {
           "type": "string",
@@ -41088,7 +41036,7 @@ func init() {
           "x-display-name": "HTTP bufferrequest"
         },
         "http-check": {
-          "$ref": "#/definitions/http-check"
+          "$ref": "#/definitions/http_check"
         },
         "http-use-htx": {
           "type": "string",
@@ -41861,86 +41809,19 @@ func init() {
       },
       "additionalProperties": false
     },
-    "http-check": {
+    "http_check": {
       "type": "object",
+      "title": "HTTP Check",
       "required": [
+        "index",
         "type"
       ],
       "properties": {
-        "exclamation_mark": {
-          "type": "boolean",
-          "x-dependency": {
-            "type": {
-              "value": "expect"
-            }
-          },
-          "x-display-name": "Expect Exclamation Mark"
-        },
-        "match": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "status",
-            "rstatus",
-            "string",
-            "rstring"
-          ],
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "expect"
-            }
-          },
-          "x-display-name": "Expect Match"
-        },
-        "pattern": {
-          "type": "string",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "expect"
-            }
-          },
-          "x-display-name": "Expect Pattern"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "disable-on-404",
-            "expect",
-            "send-state"
-          ]
-        }
-      }
-    },
-    "http_check_rule": {
-      "type": "object",
-      "title": "HTTP Check Rule",
-      "required": [
-        "index",
-        "action"
-      ],
-      "properties": {
-        "action": {
-          "type": "string",
-          "enum": [
-            "comment",
-            "connect",
-            "disable-on-404",
-            "expect",
-            "send",
-            "send-state",
-            "set-var",
-            "set-var-fmt",
-            "unset-var"
-          ],
-          "x-nullable": false
-        },
         "addr": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -41950,7 +41831,7 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -41959,7 +41840,7 @@ func init() {
         "body": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -41967,7 +41848,7 @@ func init() {
         "body_log_format": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -41975,7 +41856,7 @@ func init() {
         "check_comment": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": [
                 "comment",
                 "connect",
@@ -41989,7 +41870,7 @@ func init() {
         "default": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -42004,7 +41885,7 @@ func init() {
             "L4CON"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -42012,7 +41893,7 @@ func init() {
         "exclamation_mark": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           },
@@ -42024,7 +41905,7 @@ func init() {
             "$ref": "#/definitions/return_header"
           },
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           },
@@ -42037,7 +41918,7 @@ func init() {
         "linger": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -42054,7 +41935,7 @@ func init() {
             "rstring"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": "expect"
             }
@@ -42064,7 +41945,7 @@ func init() {
         "method": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -42072,7 +41953,7 @@ func init() {
         "min_recv": {
           "type": "integer",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -42086,7 +41967,7 @@ func init() {
             "L4OK"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -42094,7 +41975,7 @@ func init() {
         "on_error": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -42102,7 +41983,7 @@ func init() {
         "on_success": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -42110,7 +41991,7 @@ func init() {
         "pattern": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": "expect"
             }
@@ -42121,7 +42002,7 @@ func init() {
           "maximum": 65535,
           "minimum": 1,
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -42130,7 +42011,7 @@ func init() {
         "port_string": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -42138,7 +42019,7 @@ func init() {
         "proto": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           },
@@ -42147,7 +42028,7 @@ func init() {
         "send_proxy": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -42155,7 +42036,7 @@ func init() {
         "sni": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -42163,7 +42044,7 @@ func init() {
         "ssl": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
@@ -42171,7 +42052,7 @@ func init() {
         "status-code": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
@@ -42184,15 +42065,30 @@ func init() {
             "L4TOUT"
           ],
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "expect"
             }
           }
         },
+        "type": {
+          "type": "string",
+          "enum": [
+            "comment",
+            "connect",
+            "disable-on-404",
+            "expect",
+            "send",
+            "send-state",
+            "set-var",
+            "set-var-fmt",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
         "uri": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -42200,7 +42096,7 @@ func init() {
         "uri_log_format": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -42208,7 +42104,7 @@ func init() {
         "var_expr": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var"
@@ -42220,7 +42116,7 @@ func init() {
         "var_format": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var-fmt"
@@ -42233,7 +42129,7 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var",
@@ -42247,7 +42143,7 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "action": {
+            "type": {
               "required": true,
               "value": [
                 "set-var",
@@ -42260,7 +42156,7 @@ func init() {
         "version": {
           "type": "string",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "send"
             }
           }
@@ -42268,18 +42164,18 @@ func init() {
         "via_socks4": {
           "type": "boolean",
           "x-dependency": {
-            "action": {
+            "type": {
               "value": "connect"
             }
           }
         }
       }
     },
-    "http_check_rules": {
+    "http_checks": {
       "type": "array",
       "title": "HTTP Checks Array",
       "items": {
-        "$ref": "#/definitions/http_check_rule"
+        "$ref": "#/definitions/http_check"
       }
     },
     "http_request_rule": {

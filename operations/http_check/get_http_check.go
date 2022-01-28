@@ -101,7 +101,7 @@ type GetHTTPCheckOKBody struct {
 	Version int64 `json:"_version,omitempty"`
 
 	// data
-	Data *models.HTTPCheckRule `json:"data,omitempty"`
+	Data *models.HTTPCheck `json:"data,omitempty"`
 }
 
 // Validate validates this get HTTP check o k body

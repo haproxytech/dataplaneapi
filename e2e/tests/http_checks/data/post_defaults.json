@@ -1,4 +1,4 @@
 {
     "index": 2,
-    "action": "disable-on-404"
+    "type": "disable-on-404"
 }

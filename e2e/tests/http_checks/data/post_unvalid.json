@@ -1,6 +1,6 @@
 {
   "index": 2,
-  "action": "send",
+  "type": "send",
   "method": "URI",
   "URI": "/",
   "headers": "bla"

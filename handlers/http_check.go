@@ -178,7 +178,7 @@ func (h *GetHTTPChecksHandlerImpl) Handle(params http_check.GetHTTPChecksParams,
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return http_check.NewGetHTTPChecksOK().WithPayload(&http_check.GetHTTPChecksOKBody{Version: v, Data: models.HTTPCheckRules{}})
+			return http_check.NewGetHTTPChecksOK().WithPayload(&http_check.GetHTTPChecksOKBody{Version: v, Data: models.HTTPChecks{}})
 		}
 		return http_check.NewGetHTTPChecksDefault(int(*e.Code)).WithPayload(e)
 	}
