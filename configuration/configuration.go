@@ -149,11 +149,11 @@ type Configuration struct {
 	Status                 AtomicString         `yaml:"status,omitempty"`
 	Cmdline                AtomicString         `yaml:"-"`
 	MapSync                *MapSync             `yaml:"-"`
+	mutex                  sync.Mutex
 }
 
 var (
 	cfgInitOnce sync.Once
-	saveMutex   sync.Mutex
 )
 
 // Get returns pointer to configuration
@@ -195,6 +195,9 @@ func (c *Configuration) UnSubscribeAll() {
 }
 
 func (c *Configuration) Load() error {
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
+
 	var err error
 	if c.HAProxy.DataplaneConfig == "" {
 		c.storage = &StorageDummy{}
@@ -259,8 +262,9 @@ func (c *Configuration) LoadRuntimeVars(swaggerJSON json.RawMessage, host string
 }
 
 func (c *Configuration) Save() error {
-	saveMutex.Lock()
-	defer saveMutex.Unlock()
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
+
 	copyConfigurationToStorage(c)
 	if len(c.ServiceDiscovery.Consuls) == 0 {
 		cfg := c.storage.Get()
