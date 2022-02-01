@@ -18,6 +18,7 @@
 load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/resource_client'
+load '../../libs/haproxy_config_setup'
 load '../../libs/version'
 
 load 'utils/_helpers'
@@ -39,7 +40,7 @@ load 'utils/_helpers'
 
 	# retrieve other transactions
 	resource_get "$_TRANSACTIONS_BASE_PATH"
-  assert_equal "$SC" 200
+  	assert_equal "$SC" 200
 	# iterate over them, should fail with 406 status code
 	for tx in $(echo "${BODY}" | jq -r '.[].id'); do
 		resource_put "$_TRANSACTIONS_BASE_PATH/${tx}" ""

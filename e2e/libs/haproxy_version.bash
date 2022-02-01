@@ -26,6 +26,8 @@
 function haproxy_version() {
     read -r SC RES < <(deprecated_auth_curl GET "/v2/services/haproxy/runtime/info")
     V="$(get_json_path "$RES" ".[0].info.version")"
+    debug $RES
+    debug $V
     echo "$V"
 }
 

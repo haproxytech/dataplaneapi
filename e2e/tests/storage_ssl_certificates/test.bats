@@ -19,6 +19,8 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_config_setup'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
@@ -127,6 +129,8 @@ load 'utils/_helpers'
 }
 
 @test "storage_ssl_certificates: Add a ssl certificate file with force reload" {
+    run docker cp "${BATS_TEST_DIRNAME}/data/3.pem" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/ssl/"
+    assert_success
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem?force_reload=true'
 
@@ -148,10 +152,17 @@ load 'utils/_helpers'
     new_logs=$(docker logs dataplaneapi-e2e 2>&1 | tail -n $new_logs_count)
 
     echo -e "$new_logs" # this will help debugging if the test fails
-    assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+    if haproxy_version_ge "2.5"
+    then
+        assert echo -e "$new_logs" | grep -q "Loading success"
+    else
+        assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+    fi
 }
 
 @test "storage_ssl_certificates: Replace a ssl certificate file contents with force reload" {
+    run docker cp "${BATS_TEST_DIRNAME}/data/3.pem" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/ssl/"
+    assert_success
 
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
 
@@ -167,7 +178,12 @@ load 'utils/_helpers'
     new_logs=$(docker logs dataplaneapi-e2e 2>&1 | tail -n $new_logs_count)
 
     echo -e "$new_logs" # this will help debugging if the test fails
-    assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+    if haproxy_version_ge "2.5"
+    then
+        assert echo -e "$new_logs" | grep -q "Loading success"
+    else
+        assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+    fi
 
     # clean up after the test
     dpa_docker_exec 'rm /etc/haproxy/ssl/1.pem'
