@@ -16,6 +16,6 @@
 package configuration
 
 const (
-	MODE_CLUSTER = "cluster"
-	MODE_SINGLE  = "single"
+	ModeCluster = "cluster"
+	ModeSingle  = "single"
 )

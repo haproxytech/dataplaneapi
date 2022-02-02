@@ -243,7 +243,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			}
 			c.cfg.Cluster.Name.Store(data["name"])
 			c.cfg.Cluster.Description.Store(data["description"])
-			c.cfg.Mode.Store(MODE_CLUSTER)
+			c.cfg.Mode.Store(ModeCluster)
 			err = c.cfg.Save()
 			if err != nil {
 				log.Panic(err)
@@ -365,9 +365,8 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	}
 	if resp.StatusCode != expectedResponseCodes[registerMethod] {
 		return fmt.Errorf("invalid status code [%d] %s", resp.StatusCode, string(body))
-	} else {
-		log.Warningf("success sending local info, joining in progress")
 	}
+	log.Warningf("success sending local info, joining in progress")
 	var responseData Node
 	err = json.Unmarshal(body, &responseData)
 	if err != nil {

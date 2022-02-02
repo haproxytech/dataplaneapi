@@ -86,22 +86,21 @@ func Init() error {
 		clusterTarget := *ct
 		var syslogAddr string
 		var syslogProto string
-		if clusterTarget.Protocol != nil && *clusterTarget.Protocol == "tcp" {
+		switch {
+		case clusterTarget.Protocol != nil && *clusterTarget.Protocol == "tcp":
 			port := 514
 			if clusterTarget.Port != nil {
 				port = int(*clusterTarget.Port)
 			}
 			syslogAddr = fmt.Sprintf("%s:%v", *clusterTarget.Address, port)
 			syslogProto = "tcp"
-		} else if clusterTarget.Protocol != nil && *clusterTarget.Protocol == "udp" {
+		case clusterTarget.Protocol != nil && *clusterTarget.Protocol == "udp":
 			if clusterTarget.Port == nil {
 				syslogAddr = *clusterTarget.Address
 			} else {
 				syslogAddr = fmt.Sprintf("%s:%v", *clusterTarget.Address, *clusterTarget.Port)
 			}
 			syslogProto = "unixgram"
-		} else {
-			continue
 		}
 		access := Target{
 			LogTo:          "syslog",

@@ -67,11 +67,11 @@ func (s *StorageHCL) SaveAs(filename string) error {
 
 	var b bytes.Buffer
 	e := gob.NewEncoder(&b)
-	if err := e.Encode(s.cfg); err != nil {
+	if err = e.Encode(s.cfg); err != nil {
 		return err
 	}
 	d := gob.NewDecoder(&b)
-	if err := d.Decode(&localCopy); err != nil {
+	if err = d.Decode(&localCopy); err != nil {
 		return err
 	}
 
@@ -79,20 +79,20 @@ func (s *StorageHCL) SaveAs(filename string) error {
 	if localCopy.Cluster != nil && len(localCopy.Cluster.ClusterLogTargets) > 0 {
 		// since this can contain " character, escape it
 		for index, value := range localCopy.Cluster.ClusterLogTargets {
-			localCopy.Cluster.ClusterLogTargets[index].LogFormat = strings.Replace(value.LogFormat, `"`, `\"`, -1)
+			localCopy.Cluster.ClusterLogTargets[index].LogFormat = strings.ReplaceAll(value.LogFormat, `"`, `\"`)
 		}
 	}
 	if localCopy.LogTargets != nil && len(*localCopy.LogTargets) > 0 {
 		var logTargets []log.Target
 		for _, value := range *localCopy.LogTargets {
-			value.ACLFormat = strings.Replace(value.ACLFormat, `"`, `\"`, -1)
+			value.ACLFormat = strings.ReplaceAll(value.ACLFormat, `"`, `\"`)
 			logTargets = append(logTargets, value)
 		}
 		localCopy.LogTargets = (*log.Targets)(&logTargets)
 	}
 	if localCopy.Log != nil {
 		if localCopy.Log.ACLFormat != nil {
-			aclF := strings.Replace(*localCopy.Log.ACLFormat, `"`, `\"`, -1)
+			aclF := strings.ReplaceAll(*localCopy.Log.ACLFormat, `"`, `\"`)
 			localCopy.Log.ACLFormat = &aclF
 		}
 	}

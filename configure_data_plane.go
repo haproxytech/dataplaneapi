@@ -158,6 +158,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 		for f, ok := range m {
 			if !ok {
+				// nolint:gocritic
 				log.Fatalf("The %s file is not declared in the HAPROXY_CFGFILES environment variable, cannot start.", f)
 			}
 		}
@@ -218,6 +219,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	ra, e := haproxy.NewReloadAgent(raParams)
 	if e != nil {
+		// nolint:gocritic
 		log.Fatalf("Cannot initialize reload agent: %v", e)
 	}
 
