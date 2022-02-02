@@ -76,6 +76,7 @@ var (
 	AppLogger             *log.Logger
 	AccLogger             *log.Logger
 	serverStartedCallback func()
+	clientMutex           sync.Mutex
 )
 
 func SetServerStartedCallback(callFunc func()) {
@@ -110,6 +111,9 @@ func configureFlags(api *operations.DataPlaneAPI) {
 }
 
 func configureAPI(api *operations.DataPlaneAPI) http.Handler {
+	clientMutex.Lock()
+	defer clientMutex.Unlock()
+
 	cfg := dataplaneapi_config.Get()
 
 	haproxyOptions := cfg.HAProxy
@@ -982,6 +986,8 @@ func reloadConfigurationFile(client *client_native.HAProxyClient, haproxyOptions
 		log.Fatalf(err.Error())
 	}
 	log.Info("Rereading Configuration Files")
+	clientMutex.Lock()
+	defer clientMutex.Unlock()
 	client.Configuration = confClient
 }
 
