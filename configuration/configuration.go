@@ -160,7 +160,6 @@ var (
 func Get() *Configuration {
 	cfgInitOnce.Do(func() {
 		cfg = &Configuration{}
-		cfg.initSignalHandler()
 		cfg.Notify.BootstrapKeyChanged = NewChanNotify()
 		cfg.Notify.ServerStarted = NewChanNotify()
 		cfg.Notify.CertificateRefresh = NewChanNotify()

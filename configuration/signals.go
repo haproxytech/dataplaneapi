@@ -80,7 +80,7 @@ func (cn *ChanNotify) notify(numTry int) {
 	}
 }
 
-func (c *Configuration) initSignalHandler() {
+func (c *Configuration) InitSignalHandler() {
 	osSignals := make(chan os.Signal, 1)
 	signal.Notify(osSignals, syscall.SIGINT, syscall.SIGTERM)
 

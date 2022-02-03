@@ -176,6 +176,8 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		os.Exit(1)
 	}
 
+	cfg.InitSignalHandler()
+
 	log.Infof("HAProxy Data Plane API %s %s%s", GitTag, GitCommit, GitDirty)
 	log.Infof("Build from: %s", GitRepo)
 	log.Infof("Build date: %s", BuildTime)
