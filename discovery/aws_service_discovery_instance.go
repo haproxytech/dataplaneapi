@@ -346,6 +346,7 @@ func (a *awsService) instancePortFromEC2(instance types.Instance) (port int, err
 
 func (a *awsInstance) serviceNameFromEC2(instance types.Instance) (string, error) {
 	var name, port string
+L:
 	for _, t := range instance.Tags {
 		switch {
 		case *t.Key == HAProxyServiceNameTag:
@@ -353,7 +354,7 @@ func (a *awsInstance) serviceNameFromEC2(instance types.Instance) (string, error
 		case *t.Key == HAProxyServicePortTag:
 			port = aws.ToString(t.Value)
 		case len(name) > 0 && len(port) > 0:
-			break
+			break L
 		}
 	}
 
