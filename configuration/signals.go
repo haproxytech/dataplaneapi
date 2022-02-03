@@ -81,22 +81,32 @@ func (cn *ChanNotify) notify(numTry int) {
 }
 
 func (c *Configuration) InitSignalHandler() {
-	osSignals := make(chan os.Signal, 1)
-	signal.Notify(osSignals, syscall.SIGINT, syscall.SIGTERM)
+	c.shutdownSignal = make(chan os.Signal, 1)
+	signal.Notify(c.shutdownSignal, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
-		sig := <-osSignals
-		log.Print(sig)
-		c.Notify.Shutdown.Notify()
+		for sig := range c.shutdownSignal {
+			log.Debug("Received signal ", sig)
+			c.Notify.Shutdown.Notify()
+		}
 	}()
 
-	osSignals2 := make(chan os.Signal, 1)
-	signal.Notify(osSignals2, syscall.SIGHUP)
+	c.reloadSignal = make(chan os.Signal, 1)
+	signal.Notify(c.reloadSignal, syscall.SIGHUP)
 
 	go func() {
-		for {
-			<-osSignals2
+		for sig := range c.reloadSignal {
+			log.Debug("Received signal ", sig)
 			c.Notify.Reload.Notify()
 		}
 	}()
+}
+
+func (c *Configuration) StopSignalHandler() {
+	log.Debug("Unloading signal handler")
+	signal.Stop(c.shutdownSignal)
+	signal.Stop(c.reloadSignal)
+	signal.Ignore(syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
+	close(c.shutdownSignal)
+	close(c.reloadSignal)
 }
