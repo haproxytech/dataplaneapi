@@ -150,6 +150,8 @@ type Configuration struct {
 	Cmdline                AtomicString         `yaml:"-"`
 	MapSync                *MapSync             `yaml:"-"`
 	mutex                  sync.Mutex
+	shutdownSignal         chan os.Signal
+	reloadSignal           chan os.Signal
 }
 
 var (

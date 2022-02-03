@@ -205,6 +205,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		log.Info("HAProxy Data Plane API reloading")
 		reload.Store(true)
 		cfg.UnSubscribeAll()
+		cfg.StopSignalHandler()
 		dataplaneapi.ContextHandler.Cancel()
 		err := server.Shutdown()
 		if err != nil {
