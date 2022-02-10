@@ -14556,6 +14556,30 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "tune_buffers_limit": {
+          "type": "integer",
+          "x-display-name": "Buffers Limit"
+        },
+        "tune_buffers_reserve": {
+          "type": "integer",
+          "x-display-name": "Buffers Reserve"
+        },
+        "tune_bufsize": {
+          "type": "integer",
+          "x-display-name": "Buffer Size"
+        },
+        "tune_http_cookielen": {
+          "type": "integer",
+          "x-display-name": "Maximum Cookie Length"
+        },
+        "tune_http_logurilen": {
+          "type": "integer",
+          "x-display-name": "Maximum URI Length"
+        },
+        "tune_http_maxhdr": {
+          "type": "integer",
+          "x-display-name": "Maximum Number of Headers"
+        },
         "tune_ssl_default_dh_param": {
           "type": "integer",
           "x-display-name": "SSL Default DH Parameter Size"
@@ -41796,6 +41820,30 @@ func init() {
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "tune_buffers_limit": {
+          "type": "integer",
+          "x-display-name": "Buffers Limit"
+        },
+        "tune_buffers_reserve": {
+          "type": "integer",
+          "x-display-name": "Buffers Reserve"
+        },
+        "tune_bufsize": {
+          "type": "integer",
+          "x-display-name": "Buffer Size"
+        },
+        "tune_http_cookielen": {
+          "type": "integer",
+          "x-display-name": "Maximum Cookie Length"
+        },
+        "tune_http_logurilen": {
+          "type": "integer",
+          "x-display-name": "Maximum URI Length"
+        },
+        "tune_http_maxhdr": {
+          "type": "integer",
+          "x-display-name": "Maximum Number of Headers"
         },
         "tune_ssl_default_dh_param": {
           "type": "integer",
