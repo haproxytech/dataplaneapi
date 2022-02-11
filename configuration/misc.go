@@ -17,7 +17,6 @@ package configuration
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -26,6 +25,7 @@ import (
 
 	"github.com/haproxytech/client-native/v3/misc"
 	"github.com/haproxytech/client-native/v3/storage"
+	jsoniter "github.com/json-iterator/go"
 )
 
 func DecodeBootstrapKey(key string) (map[string]string, error) {
@@ -34,6 +34,7 @@ func DecodeBootstrapKey(key string) (map[string]string, error) {
 		return nil, fmt.Errorf("%s - %w", key, err)
 	}
 	var decodedKey map[string]string
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	err = json.Unmarshal(raw, &decodedKey)
 	if err != nil {
 		return nil, fmt.Errorf("%s - %w", key, err)

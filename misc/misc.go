@@ -29,6 +29,7 @@ import (
 	"github.com/haproxytech/client-native/v3/configuration"
 	client_errors "github.com/haproxytech/client-native/v3/errors"
 	"github.com/haproxytech/client-native/v3/models"
+	jsoniter "github.com/json-iterator/go"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/rate"
@@ -113,6 +114,7 @@ func HandleContainerGetError(err error) *models.Error {
 // DiscoverChildPaths return children models.Endpoints given path
 func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, error) {
 	var m map[string]interface{}
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(spec, &m)
 	if err != nil {
 		return nil, err
