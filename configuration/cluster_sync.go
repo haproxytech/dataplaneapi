@@ -24,7 +24,6 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/asn1"
-	"encoding/json"
 	"encoding/pem"
 	"fmt"
 	"io/ioutil"
@@ -39,6 +38,7 @@ import (
 	client_native "github.com/haproxytech/client-native/v2"
 	"github.com/haproxytech/config-parser/v4/types"
 	"github.com/haproxytech/dataplaneapi/log"
+	jsoniter "github.com/json-iterator/go"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -144,6 +144,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 		Status:      cfg.Status.Load(),
 		Type:        DataplaneAPIType,
 	}
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
 	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(bytesRepresentation))
@@ -343,6 +344,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	}
 	nodeData.Facts = c.getNodeFacts()
 
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
 	req, err := http.NewRequest(registerMethod, url, bytes.NewBuffer(bytesRepresentation))
@@ -519,6 +521,7 @@ func (c *ClusterSync) fetchCert() {
 					break
 				}
 				var responseData Node
+				var json = jsoniter.ConfigCompatibleWithStandardLibrary
 				err = json.Unmarshal(body, &responseData)
 				if err != nil {
 					c.activateFetchCert(err)

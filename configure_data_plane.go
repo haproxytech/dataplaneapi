@@ -20,8 +20,8 @@ package dataplaneapi
 import (
 	"context"
 	"crypto/tls"
-	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"os/signal"
@@ -46,6 +46,7 @@ import (
 	parser "github.com/haproxytech/config-parser/v4"
 	"github.com/haproxytech/config-parser/v4/types"
 	"github.com/haproxytech/dataplaneapi/log"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/rs/cors"
 
 	"github.com/haproxytech/dataplaneapi/adapters"
@@ -173,11 +174,21 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// Example:
 	api.Logger = log.Printf
 
-	api.JSONConsumer = runtime.JSONConsumer()
+	api.JSONConsumer = runtime.ConsumerFunc(func(reader io.Reader, data interface{}) error {
+		var json = jsoniter.ConfigCompatibleWithStandardLibrary
+		dec := json.NewDecoder(reader)
+		dec.UseNumber() // preserve number formats
+		return dec.Decode(data)
+	})
 
 	api.TxtConsumer = runtime.TextConsumer()
 
-	api.JSONProducer = runtime.JSONProducer()
+	api.JSONProducer = runtime.ProducerFunc(func(writer io.Writer, data interface{}) error {
+		var json = jsoniter.ConfigCompatibleWithStandardLibrary
+		enc := json.NewEncoder(writer)
+		enc.SetEscapeHTML(false)
+		return enc.Encode(data)
+	})
 
 	api.ServerShutdown = serverShutdown
 
@@ -531,6 +542,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup specification handler
 	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
 		var m map[string]interface{}
+		var json = jsoniter.ConfigCompatibleWithStandardLibrary
 		if err := json.Unmarshal(SwaggerJSON, &m); err != nil {
 			e := misc.HandleError(err)
 			return specification.NewGetSpecificationDefault(int(*e.Code)).WithPayload(e)

@@ -28,6 +28,7 @@ import (
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/haproxytech/client-native/v2/models"
 	"github.com/haproxytech/dataplaneapi/log"
+	jsoniter "github.com/json-iterator/go"
 )
 
 var cfg *Configuration
@@ -247,6 +248,7 @@ func (c *Configuration) Load() error {
 
 func (c *Configuration) LoadRuntimeVars(swaggerJSON json.RawMessage, host string, port int) error {
 	var m map[string]interface{}
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(swaggerJSON, &m)
 	if err != nil {
 		return err
