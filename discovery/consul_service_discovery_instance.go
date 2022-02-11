@@ -86,6 +86,9 @@ func (c *consulInstance) setAPIClient() error {
 }
 
 func (c *consulInstance) watch() {
+	watchTimer := time.NewTimer(c.timeout)
+	defer watchTimer.Stop()
+
 	for {
 		select {
 		case _, ok := <-c.update:
@@ -112,13 +115,14 @@ func (c *consulInstance) watch() {
 			}
 		case <-c.ctx.Done():
 			c.stop()
-		case <-time.After(c.timeout):
+		case <-watchTimer.C:
 			c.logDebug("discovery job reconciliation started")
 			if err := c.updateServices(); err != nil {
 				// c.log.Errorf("error while updating service: %w", err)
 				c.stop()
 			}
 			c.logDebug("discovery job reconciliation completed")
+			watchTimer.Reset(c.timeout)
 		}
 	}
 }

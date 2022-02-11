@@ -148,6 +148,9 @@ func (a *awsInstance) start() {
 	go func() {
 		a.logDebug("discovery job starting")
 
+		discoveryTimer := time.NewTimer(a.timeout)
+		defer discoveryTimer.Stop()
+
 		for {
 			select {
 			case _, ok := <-a.update:
@@ -166,7 +169,7 @@ func (a *awsInstance) start() {
 				if err != nil {
 					a.stop()
 				}
-			case <-time.After(a.timeout):
+			case <-discoveryTimer.C:
 				a.logDebug("discovery job update triggered")
 
 				var api *ec2.Client
@@ -192,6 +195,7 @@ func (a *awsInstance) start() {
 				}
 
 				a.logDebug("discovery job reconciliation completed")
+				discoveryTimer.Reset(a.timeout)
 			case <-a.ctx.Done():
 				a.stop()
 			}
