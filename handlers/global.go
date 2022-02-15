@@ -27,12 +27,12 @@ import (
 
 // GetGlobalHandlerImpl implementation of the GetGlobalHandler interface
 type GetGlobalHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceGlobalHandlerImpl implementation of the ReplaceGlobalHandler interface
 type ReplaceGlobalHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -43,7 +43,7 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration.GetGlobalConfiguration(t)
+	v, data, err := h.Client.Configuration().GetGlobalConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
@@ -72,7 +72,7 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.PushGlobalConfiguration(params.Data, t, v)
+	err := h.Client.Configuration().PushGlobalConfiguration(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)

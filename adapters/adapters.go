@@ -125,18 +125,19 @@ func ApacheLogMiddleware(logger *log.ACLLogger) Adapter {
 	}
 }
 
-func ConfigVersionMiddleware(client *clientnative.HAProxyClient) Adapter {
+func ConfigVersionMiddleware(client clientnative.HAProxyClient) Adapter {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			qs := r.URL.Query()
 			tID := qs.Get("transaction_id")
-			tr, _ := client.Configuration.Transaction.GetTransaction(tID)
+			configuration := client.Configuration()
+			tr, _ := configuration.GetTransaction(tID)
 			var v int64
 			var err error
 			if tr != nil && tr.Status == models.TransactionStatusInProgress {
-				v, err = client.Configuration.GetConfigurationVersion(tr.ID)
+				v, err = configuration.GetConfigurationVersion(tr.ID)
 			} else {
-				v, err = client.Configuration.GetConfigurationVersion("")
+				v, err = configuration.GetConfigurationVersion("")
 			}
 			if err == nil {
 				configVersion = strconv.FormatInt(v, 10)

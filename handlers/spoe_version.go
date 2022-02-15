@@ -25,7 +25,7 @@ import (
 
 // SpoeGetSpoeConfigurationVersionHandlerImpl implementation of the SpoeGetSpoeConfigurationVersionHandler interface
 type SpoeGetSpoeConfigurationVersionHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
@@ -34,7 +34,7 @@ func (h *SpoeGetSpoeConfigurationVersionHandlerImpl) Handle(params spoe.GetSpoeC
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return spoe.NewGetSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))

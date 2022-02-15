@@ -26,25 +26,25 @@ import (
 )
 
 type CreateDeclareCaptureHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 type DeleteDeclareCaptureHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 type GetDeclareCaptureHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 type GetDeclareCapturesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 type ReplaceDeclareCaptureHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -66,14 +66,14 @@ func (h *CreateDeclareCaptureHandlerImpl) Handle(params capture.CreateDeclareCap
 		}
 		return capture.NewCreateDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
-	_, frontend, err := h.Client.Configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := h.Client.Configuration().GetFrontend(params.Frontend, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	err = h.Client.Configuration.CreateDeclareCapture(params.Frontend, params.Data, t, v)
+	err = h.Client.Configuration().CreateDeclareCapture(params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewCreateDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
@@ -111,7 +111,7 @@ func (h *DeleteDeclareCaptureHandlerImpl) Handle(params capture.DeleteDeclareCap
 		}
 		return capture.NewCreateDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
-	err := h.Client.Configuration.DeleteDeclareCapture(params.Index, params.Frontend, t, v)
+	err := h.Client.Configuration().DeleteDeclareCapture(params.Index, params.Frontend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewDeleteDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
@@ -136,14 +136,14 @@ func (h *GetDeclareCaptureHandlerImpl) Handle(params capture.GetDeclareCapturePa
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, frontend, err := h.Client.Configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := h.Client.Configuration().GetFrontend(params.Frontend, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	v, data, err := h.Client.Configuration.GetDeclareCapture(params.Index, params.Frontend, t)
+	v, data, err := h.Client.Configuration().GetDeclareCapture(params.Index, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewGetDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
@@ -156,14 +156,14 @@ func (h *GetDeclareCapturesHandlerImpl) Handle(params capture.GetDeclareCaptures
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, frontend, err := h.Client.Configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := h.Client.Configuration().GetFrontend(params.Frontend, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	v, data, err := h.Client.Configuration.GetDeclareCaptures(params.Frontend, t)
+	v, data, err := h.Client.Configuration().GetDeclareCaptures(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -192,14 +192,14 @@ func (h *ReplaceDeclareCaptureHandlerImpl) Handle(params capture.ReplaceDeclareC
 		}
 		return capture.NewReplaceDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
-	_, frontend, err := h.Client.Configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := h.Client.Configuration().GetFrontend(params.Frontend, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	err = h.Client.Configuration.EditDeclareCapture(params.Index, params.Frontend, params.Data, t, v)
+	err = h.Client.Configuration().EditDeclareCapture(params.Index, params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewReplaceDeclareCaptureDefault(int(*e.Code)).WithPayload(e)

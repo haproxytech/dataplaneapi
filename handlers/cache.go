@@ -27,29 +27,29 @@ import (
 
 // CreateCacheHandlerImpl implementation of the CreateCacheHandler interface using client-native client
 type CreateCacheHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteCacheHandlerImpl implementation of the DeleteCacheHandler interface using client-native client
 type DeleteCacheHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetCacheHandlerImpl implementation of the GetCacheHandler interface using client-native client
 type GetCacheHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetCachesHandlerImpl implementation of the GetCachesHandler interface using client-native client
 type GetCachesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceCacheHandlerImpl implementation of the ReplaceCacheHandler interface using client-native client
 type ReplaceCacheHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateCacheHandlerImpl) Handle(params cache.CreateCacheParams, principa
 		return cache.NewCreateCacheDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateCache(params.Data, t, v)
+	err := h.Client.Configuration().CreateCache(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewCreateCacheDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *DeleteCacheHandlerImpl) Handle(params cache.DeleteCacheParams, principa
 		return cache.NewDeleteCacheDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteCache(params.Name, t, v)
+	err := h.Client.Configuration().DeleteCache(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewDeleteCacheDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetCacheHandlerImpl) Handle(params cache.GetCacheParams, principal inte
 		t = *params.TransactionID
 	}
 
-	v, r, err := h.Client.Configuration.GetCache(params.Name, t)
+	v, r, err := h.Client.Configuration().GetCache(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewGetCacheDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetCachesHandlerImpl) Handle(params cache.GetCachesParams, principal in
 		t = *params.TransactionID
 	}
 
-	v, rs, err := h.Client.Configuration.GetCaches(t)
+	v, rs, err := h.Client.Configuration().GetCaches(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewGetCachesDefault(int(*e.Code)).WithPayload(e)
@@ -187,7 +187,7 @@ func (h *ReplaceCacheHandlerImpl) Handle(params cache.ReplaceCacheParams, princi
 		return cache.NewReplaceCacheDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditCache(params.Name, params.Data, t, v)
+	err := h.Client.Configuration().EditCache(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewReplaceCacheDefault(int(*e.Code)).WithPayload(e)

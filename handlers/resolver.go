@@ -27,29 +27,29 @@ import (
 
 // CreateResolverHandlerImpl implementation of the CreateResolverHandler interface using client-native client
 type CreateResolverHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteResolverHandlerImpl implementation of the DeleteResolverHandler interface using client-native client
 type DeleteResolverHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetResolverHandlerImpl implementation of the GetResolverHandler interface using client-native client
 type GetResolverHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetResolversHandlerImpl implementation of the GetResolversHandler interface using client-native client
 type GetResolversHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceResolverHandlerImpl implementation of the ReplaceResolverHandler interface using client-native client
 type ReplaceResolverHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateResolverHandlerImpl) Handle(params resolver.CreateResolverParams,
 		return resolver.NewCreateResolverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateResolver(params.Data, t, v)
+	err := h.Client.Configuration().CreateResolver(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewCreateResolverDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *DeleteResolverHandlerImpl) Handle(params resolver.DeleteResolverParams,
 		return resolver.NewDeleteResolverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteResolver(params.Name, t, v)
+	err := h.Client.Configuration().DeleteResolver(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewDeleteResolverDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, princ
 		t = *params.TransactionID
 	}
 
-	v, r, err := h.Client.Configuration.GetResolver(params.Name, t)
+	v, r, err := h.Client.Configuration().GetResolver(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewGetResolverDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, pri
 		t = *params.TransactionID
 	}
 
-	v, rs, err := h.Client.Configuration.GetResolvers(t)
+	v, rs, err := h.Client.Configuration().GetResolvers(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewGetResolversDefault(int(*e.Code)).WithPayload(e)
@@ -187,7 +187,7 @@ func (h *ReplaceResolverHandlerImpl) Handle(params resolver.ReplaceResolverParam
 		return resolver.NewReplaceResolverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditResolver(params.Name, params.Data, t, v)
+	err := h.Client.Configuration().EditResolver(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewReplaceResolverDefault(int(*e.Code)).WithPayload(e)

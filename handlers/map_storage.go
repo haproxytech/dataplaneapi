@@ -34,7 +34,7 @@ import (
 
 // StorageCreateStorageMapFileHandlerImpl implementation of the StorageCreateStorageMapFileHandler interface using client-native client
 type StorageCreateStorageMapFileHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateStorageMapFileParams, principal interface{}) middleware.Responder {
@@ -43,7 +43,7 @@ func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateSto
 		return storage.NewCreateStorageMapFileBadRequest()
 	}
 
-	filename, err := h.Client.MapStorage.Create(file.Header.Filename, params.FileUpload)
+	filename, err := h.Client.MapStorage().Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return storage.NewCreateStorageMapFileDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -61,7 +61,7 @@ func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateSto
 
 // GetMapStorageHandlerImpl implementation of the StorageGetAllStorageMapFilesHandler interface
 type GetAllStorageMapFilesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
@@ -69,7 +69,7 @@ func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMa
 	tempMaps := map[string]*models.Map{}
 
 	// get filenames for files in storage
-	filenames, err := h.Client.MapStorage.GetAll()
+	filenames, err := h.Client.MapStorage().GetAll()
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetAllStorageMapFilesDefault(int(*e.Code)).WithPayload(e)
@@ -85,7 +85,7 @@ func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMa
 	}
 
 	// get Map model instances for runtime-loaded files
-	runtimeMaps, err := h.Client.Runtime.ShowMaps()
+	runtimeMaps, err := h.Client.Runtime().ShowMaps()
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return storage.NewGetAllStorageMapFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -111,11 +111,11 @@ func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMa
 
 // StorageGetOneStorageMapHandlerImpl implementation of the StorageGetOneStorageMapHandler interface
 type GetOneStorageMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
-	filename, err := h.Client.MapStorage.Get(params.Name)
+	filename, err := h.Client.MapStorage().Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageMapDefault(int(*e.Code)).WithPayload(e)
@@ -133,13 +133,13 @@ func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapPara
 
 // StorageDeleteStorageMapHandlerImpl implementation of the StorageDeleteStorageMapHandler interface
 type StorageDeleteStorageMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorageMapParams, principal interface{}) middleware.Responder {
-	runningConf := strings.NewReader(h.Client.Configuration.Parser.String())
+	runningConf := strings.NewReader(h.Client.Configuration().Parser().String())
 
-	filename, err := h.Client.MapStorage.Get(params.Name)
+	filename, err := h.Client.MapStorage().Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -161,7 +161,7 @@ func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorage
 		lineNr++
 	}
 
-	err = h.Client.MapStorage.Delete(params.Name)
+	err = h.Client.MapStorage().Delete(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageMapDefault(int(*e.Code)).WithPayload(e)
@@ -171,12 +171,12 @@ func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorage
 
 // StorageReplaceStorageMapFileHandlerImpl implementation of the StorageReplaceStorageMapFileHandler interface
 type StorageReplaceStorageMapFileHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
-	_, err := h.Client.MapStorage.Replace(params.Name, params.Data)
+	_, err := h.Client.MapStorage().Replace(params.Name, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)

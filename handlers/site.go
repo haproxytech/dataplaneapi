@@ -27,29 +27,29 @@ import (
 
 // CreateSiteHandlerImpl implementation of the CreateSiteHandler interface using client-native client
 type CreateSiteHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteSiteHandlerImpl implementation of the DeleteSiteHandler interface using client-native client
 type DeleteSiteHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetSiteHandlerImpl implementation of the GetSiteHandler interface using client-native client
 type GetSiteHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetSitesHandlerImpl implementation of the GetSitesHandler interface using client-native client
 type GetSitesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceSiteHandlerImpl implementation of the ReplaceSiteHandler interface using client-native client
 type ReplaceSiteHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateSiteHandlerImpl) Handle(params sites.CreateSiteParams, principal 
 		return sites.NewCreateSiteDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateSite(params.Data, t, v)
+	err := h.Client.Configuration().CreateSite(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewCreateSiteDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +115,7 @@ func (h *DeleteSiteHandlerImpl) Handle(params sites.DeleteSiteParams, principal 
 		return sites.NewDeleteSiteDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteSite(params.Name, t, v)
+	err := h.Client.Configuration().DeleteSite(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewDeleteSiteDefault(int(*e.Code)).WithPayload(e)
@@ -142,7 +142,7 @@ func (h *GetSiteHandlerImpl) Handle(params sites.GetSiteParams, principal interf
 		t = *params.TransactionID
 	}
 
-	v, site, err := h.Client.Configuration.GetSite(params.Name, t)
+	v, site, err := h.Client.Configuration().GetSite(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewGetSiteDefault(int(*e.Code)).WithPayload(e)
@@ -157,7 +157,7 @@ func (h *GetSitesHandlerImpl) Handle(params sites.GetSitesParams, principal inte
 		t = *params.TransactionID
 	}
 
-	v, s, err := h.Client.Configuration.GetSites(t)
+	v, s, err := h.Client.Configuration().GetSites(t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -189,7 +189,7 @@ func (h *ReplaceSiteHandlerImpl) Handle(params sites.ReplaceSiteParams, principa
 		return sites.NewReplaceSiteDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditSite(params.Name, params.Data, t, v)
+	err := h.Client.Configuration().EditSite(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return sites.NewReplaceSiteDefault(int(*e.Code)).WithPayload(e)

@@ -48,7 +48,7 @@ type ServiceDiscoveries interface {
 
 // ServiceDiscoveriesParams contain the parameters for the service discovery initialization
 type ServiceDiscoveriesParams struct {
-	Client      *configuration.Client
+	Client      configuration.Configuration
 	ReloadAgent haproxy.IReloadAgent
 	Context     context.Context
 }

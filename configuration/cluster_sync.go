@@ -66,7 +66,7 @@ type Node struct {
 type ClusterSync struct {
 	cfg         *Configuration
 	certFetch   chan struct{}
-	cli         *client_native.HAProxyClient
+	cli         client_native.HAProxyClient
 	Context     context.Context
 	ReloadAgent haproxy.IReloadAgent
 }
@@ -76,7 +76,7 @@ var expectedResponseCodes = map[string]int{
 	"PUT":  200,
 }
 
-func (c *ClusterSync) Monitor(cfg *Configuration, cli *client_native.HAProxyClient) {
+func (c *ClusterSync) Monitor(cfg *Configuration, cli client_native.HAProxyClient) {
 	c.cfg = cfg
 	c.cli = cli
 
@@ -144,7 +144,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 		Status:      cfg.Status.Load(),
 		Type:        DataplaneAPIType,
 	}
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
 	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(bytesRepresentation))
@@ -344,7 +344,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	}
 	nodeData.Facts = c.getNodeFacts()
 
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
 	req, err := http.NewRequest(registerMethod, url, bytes.NewBuffer(bytesRepresentation))
@@ -375,22 +375,23 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		return err
 	}
 	if c.cfg.HAProxy.NodeIDFile != "" {
+		configuration := c.cli.Configuration()
 		// write id to file
 		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0644) // nolint:gosec
 		if errFID != nil {
 			return errFID
 		}
-		version, errVersion := c.cli.Configuration.GetVersion("")
+		version, errVersion := configuration.GetVersion("")
 		if errVersion != nil || version < 1 {
 			// silently fallback to 1
 			version = 1
 		}
-		t, err1 := c.cli.Configuration.StartTransaction(version)
+		t, err1 := configuration.StartTransaction(version)
 		if err1 != nil {
 			return err1
 		}
 		// write id to peers
-		_, peerSections, errorGet := c.cli.Configuration.GetPeerSections(t.ID)
+		_, peerSections, errorGet := configuration.GetPeerSections(t.ID)
 		if errorGet != nil {
 			return errorGet
 		}
@@ -400,7 +401,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 			dataplaneID = "localhost"
 		}
 		for _, section := range peerSections {
-			_, peerEntries, err1 := c.cli.Configuration.GetPeerEntries(section.Name, t.ID)
+			_, peerEntries, err1 := configuration.GetPeerEntries(section.Name, t.ID)
 			if err1 != nil {
 				return err1
 			}
@@ -408,19 +409,19 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 				if peer.Name == dataplaneID {
 					peerFound = true
 					peer.Name = responseData.ID
-					errEdit := c.cli.Configuration.EditPeerEntry(dataplaneID, section.Name, peer, t.ID, 0)
+					errEdit := configuration.EditPeerEntry(dataplaneID, section.Name, peer, t.ID, 0)
 					if errEdit != nil {
-						_ = c.cli.Configuration.DeleteTransaction(t.ID)
+						_ = configuration.DeleteTransaction(t.ID)
 						return err
 					}
 				}
 			}
 		}
 		if !peerFound {
-			_ = c.cli.Configuration.DeleteTransaction(t.ID)
+			_ = configuration.DeleteTransaction(t.ID)
 			return fmt.Errorf("peer [%s] not found in HAProxy config", dataplaneID)
 		}
-		_, err = c.cli.Configuration.CommitTransaction(t.ID)
+		_, err = configuration.CommitTransaction(t.ID)
 		if err != nil {
 			return err
 		}
@@ -520,7 +521,7 @@ func (c *ClusterSync) fetchCert() {
 					break
 				}
 				var responseData Node
-				var json = jsoniter.ConfigCompatibleWithStandardLibrary
+				json := jsoniter.ConfigCompatibleWithStandardLibrary
 				err = json.Unmarshal(body, &responseData)
 				if err != nil {
 					c.activateFetchCert(err)

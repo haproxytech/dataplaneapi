@@ -25,11 +25,11 @@ import (
 
 // SpoeCreateSpoeMessageHandlerImpl implementation of the SpoeCreateSpoeMessageHandler interface
 type SpoeCreateSpoeMessageHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -52,11 +52,11 @@ func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageP
 
 // SpoeDeleteSpoeMessageHandlerImpl implementation of the SpoeDeleteSpoeMessageHandler interface
 type SpoeDeleteSpoeMessageHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -79,12 +79,12 @@ func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageP
 
 // SpoeGetSpoeMessagesHandlerImpl implementation of the SpoeGetSpoeMessagesHandler interface
 type SpoeGetSpoeMessagesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
 func (h *SpoeGetSpoeMessagesHandlerImpl) Handle(params spoe.GetSpoeMessagesParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeMessagesDefault(int(*e.Code)).WithPayload(e)
@@ -103,11 +103,11 @@ func (h *SpoeGetSpoeMessagesHandlerImpl) Handle(params spoe.GetSpoeMessagesParam
 
 // SpoeGetSpoeMessageHandlerImpl implementation of the SpoeGetSpoeMessageHandler interface
 type SpoeGetSpoeMessageHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams, c interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -129,11 +129,11 @@ func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams,
 
 // SpoeReplaceSpoeMessageHandlerImpl implementation of the SpoeReplaceSpoeMessageHandler interface
 type SpoeReplaceSpoeMessageHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeReplaceSpoeMessageHandlerImpl) Handle(params spoe.ReplaceSpoeMessageParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeMessageDefault(int(*e.Code)).WithPayload(e)

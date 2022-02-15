@@ -27,29 +27,29 @@ import (
 
 // CreatePeerHandlerImpl implementation of the CreatePeerHandler interface using client-native client
 type CreatePeerHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeletePeerHandlerImpl implementation of the DeletePeerHandler interface using client-native client
 type DeletePeerHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetPeerHandlerImpl implementation of the GetPeerHandler interface using client-native client
 type GetPeerHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetPeersHandlerImpl implementation of the GetPeersHandler interface using client-native client
 type GetPeersHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplacePeerHandlerImpl implementation of the ReplacePeerHandler interface using client-native client
 type ReplacePeerHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal i
 		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreatePeerSection(params.Data, t, v)
+	err := h.Client.Configuration().CreatePeerSection(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *DeletePeerHandlerImpl) Handle(params peer.DeletePeerParams, principal i
 		return peer.NewDeletePeerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeletePeerSection(params.Name, t, v)
+	err := h.Client.Configuration().DeletePeerSection(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewDeletePeerDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal 
 		t = *params.TransactionID
 	}
 
-	v, p, err := h.Client.Configuration.GetPeerSection(params.Name, t)
+	v, p, err := h.Client.Configuration().GetPeerSection(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principa
 		t = *params.TransactionID
 	}
 
-	v, ps, err := h.Client.Configuration.GetPeerSections(t)
+	v, ps, err := h.Client.Configuration().GetPeerSections(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)

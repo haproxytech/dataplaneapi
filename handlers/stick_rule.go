@@ -27,29 +27,29 @@ import (
 
 // CreateStickRuleHandlerImpl implementation of the CreateStickRuleHandler interface using client-native client
 type CreateStickRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteStickRuleHandlerImpl implementation of the DeleteStickRuleHandler interface using client-native client
 type DeleteStickRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetStickRuleHandlerImpl implementation of the GetStickRuleHandler interface using client-native client
 type GetStickRuleHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetStickRulesHandlerImpl implementation of the GetStickRulesHandler interface using client-native client
 type GetStickRulesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceStickRuleHandlerImpl implementation of the ReplaceStickRuleHandler interface using client-native client
 type ReplaceStickRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateStickRuleHandlerImpl) Handle(params stick_rule.CreateStickRulePar
 		return stick_rule.NewCreateStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateStickRule(params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().CreateStickRule(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewCreateStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +115,7 @@ func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRulePar
 		return stick_rule.NewDeleteStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteStickRule(params.Index, params.Backend, t, v)
+	err := h.Client.Configuration().DeleteStickRule(params.Index, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewDeleteStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, p
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration.GetStickRule(params.Index, params.Backend, t)
+	v, rule, err := h.Client.Configuration().GetStickRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewGetStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams,
 		t = *params.TransactionID
 	}
 
-	v, rules, err := h.Client.Configuration.GetStickRules(params.Backend, t)
+	v, rules, err := h.Client.Configuration().GetStickRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,7 +190,7 @@ func (h *ReplaceStickRuleHandlerImpl) Handle(params stick_rule.ReplaceStickRuleP
 		return stick_rule.NewReplaceStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditStickRule(params.Index, params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().EditStickRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewReplaceStickRuleDefault(int(*e.Code)).WithPayload(e)

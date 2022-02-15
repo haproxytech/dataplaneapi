@@ -38,12 +38,12 @@ import (
 
 // GetHaproxyProcessInfoHandlerImpl implementation of the GetHaproxyProcessInfoHandler interface using client-native client
 type GetHaproxyProcessInfoHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
 func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
-	info, err := h.Client.Runtime.GetInfo()
+	info, err := h.Client.Runtime().GetInfo()
 	if err != nil {
 		code := misc.ErrHTTPInternalServerError
 		msg := err.Error()

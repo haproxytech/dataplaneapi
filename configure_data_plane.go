@@ -39,8 +39,11 @@ import (
 	"github.com/go-openapi/swag"
 	client_native "github.com/haproxytech/client-native/v3"
 	"github.com/haproxytech/client-native/v3/configuration"
+	configuration_options "github.com/haproxytech/client-native/v3/configuration/options"
 	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v3/options"
 	runtime_api "github.com/haproxytech/client-native/v3/runtime"
+	runtime_options "github.com/haproxytech/client-native/v3/runtime/options"
 	"github.com/haproxytech/client-native/v3/spoe"
 	"github.com/haproxytech/client-native/v3/storage"
 	parser "github.com/haproxytech/config-parser/v4"
@@ -176,7 +179,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.Logger = log.Printf
 
 	api.JSONConsumer = runtime.ConsumerFunc(func(reader io.Reader, data interface{}) error {
-		var json = jsoniter.ConfigCompatibleWithStandardLibrary
+		json := jsoniter.ConfigCompatibleWithStandardLibrary
 		dec := json.NewDecoder(reader)
 		dec.UseNumber() // preserve number formats
 		return dec.Decode(data)
@@ -185,7 +188,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.TxtConsumer = runtime.TextConsumer()
 
 	api.JSONProducer = runtime.ProducerFunc(func(writer io.Writer, data interface{}) error {
-		var json = jsoniter.ConfigCompatibleWithStandardLibrary
+		json := jsoniter.ConfigCompatibleWithStandardLibrary
 		enc := json.NewEncoder(writer)
 		enc.SetEscapeHTML(false)
 		return enc.Encode(data)
@@ -316,7 +319,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	if cfg.HAProxy.MaxOpenTransactions > 0 {
 		// creating the threshold limit using the CLI flag as hard quota and current open transactions as starting point
 		actualCount := func() uint64 {
-			ts, err := client.Configuration.GetTransactions(models.TransactionStatusInProgress)
+			ts, err := client.Configuration().GetTransactions(models.TransactionStatusInProgress)
 			if err != nil {
 				log.Errorf("Cannot retrieve current open transactions for rate limit, default to zero (%s)", err.Error())
 				return 0
@@ -572,7 +575,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup specification handler
 	api.SpecificationGetSpecificationHandler = specification.GetSpecificationHandlerFunc(func(params specification.GetSpecificationParams, principal interface{}) middleware.Responder {
 		var m map[string]interface{}
-		var json = jsoniter.ConfigCompatibleWithStandardLibrary
+		json := jsoniter.ConfigCompatibleWithStandardLibrary
 		if err := json.Unmarshal(SwaggerJSON, &m); err != nil {
 			e := misc.HandleError(err)
 			return specification.NewGetSpecificationDefault(int(*e.Code)).WithPayload(e)
@@ -582,7 +585,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// set up service discovery handlers
 	discovery := service_discovery.NewServiceDiscoveries(service_discovery.ServiceDiscoveriesParams{
-		Client:      client.Configuration,
+		Client:      client.Configuration(),
 		ReloadAgent: ra,
 		Context:     ctx,
 	})
@@ -796,7 +799,7 @@ func serverShutdown() {
 	}
 }
 
-func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) *client_native.HAProxyClient {
+func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) client_native.HAProxyClient {
 	// Initialize HAProxy native client
 	confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
 	if err != nil {
@@ -804,25 +807,27 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 	}
 
 	runtimeClient := configureRuntimeClient(cyx, confClient, haproxyOptions)
-	client := &client_native.HAProxyClient{}
-	if err = client.Init(confClient, runtimeClient); err != nil {
-		log.Fatalf("Error setting up native client: %v", err)
-	}
 
+	opt := []options.Option{
+		options.Configuration(confClient),
+		options.Runtime(runtimeClient),
+	}
 	if haproxyOptions.MapsDir != "" {
-		client.MapStorage, err = storage.New(haproxyOptions.MapsDir, storage.MapsType)
+		mapStorage, err := storage.New(haproxyOptions.MapsDir, storage.MapsType)
 		if err != nil {
 			log.Fatalf("error initializing map storage: %v", err)
 		}
+		opt = append(opt, options.MapStorage(mapStorage))
 	} else {
 		log.Fatalf("error trying to use empty string for managed map directory")
 	}
 
 	if haproxyOptions.SSLCertsDir != "" {
-		client.SSLCertStorage, err = storage.New(haproxyOptions.SSLCertsDir, storage.SSLType)
+		sslCertStorage, err := storage.New(haproxyOptions.SSLCertsDir, storage.SSLType)
 		if err != nil {
 			log.Fatalf("error initializing SSL certs storage: %v", err)
 		}
+		opt = append(opt, options.SSLCertStorage(sslCertStorage))
 	} else {
 		log.Fatalf("error trying to use empty string for managed map directory")
 	}
@@ -832,38 +837,40 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 			SpoeDir:        haproxyOptions.SpoeDir,
 			TransactionDir: haproxyOptions.SpoeTransactionDir,
 		}
-		client.Spoe, err = spoe.NewSpoe(prms)
+		spoe, err := spoe.NewSpoe(prms)
 		if err != nil {
 			log.Fatalf("error setting up spoe: %v", err)
 		}
+		opt = append(opt, options.Spoe(spoe))
 	} else {
 		log.Fatalf("error trying to use empty string for SPOE configuration directory")
+	}
+
+	client, err := client_native.New(context.Background(), opt...)
+	if err != nil {
+		log.Fatalf("Error initializing configuration client: %v", err)
 	}
 
 	return client
 }
 
-func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) (*configuration.Client, error) {
-	confClient := &configuration.Client{}
-	confParams := configuration.ClientParams{
-		ConfigurationFile:         haproxyOptions.ConfigFile,
-		Haproxy:                   haproxyOptions.HAProxy,
-		BackupsNumber:             haproxyOptions.BackupsNumber,
-		UseValidation:             false,
-		PersistentTransactions:    true,
-		TransactionDir:            haproxyOptions.TransactionDir,
-		ValidateCmd:               haproxyOptions.ValidateCmd,
-		ValidateConfigurationFile: true,
-		MasterWorker:              true,
-		UseMd5Hash:                !haproxyOptions.DisableInotify,
-	}
-
-	err := confClient.Init(confParams)
+func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) (configuration.Configuration, error) {
+	confClient, err := configuration.New(context.Background(),
+		configuration_options.ConfigurationFile(haproxyOptions.ConfigFile),
+		configuration_options.HAProxyBin(haproxyOptions.HAProxy),
+		configuration_options.Backups(haproxyOptions.BackupsNumber),
+		// configuration_options.UseModelsValidation this is false
+		configuration_options.UsePersistentTransactions,
+		configuration_options.TransactionsDir(haproxyOptions.TransactionDir),
+		configuration_options.ValidateCmd(haproxyOptions.ValidateCmd),
+		configuration_options.MasterWorker,
+		configuration_options.UseMd5Hash,
+	)
 	if err != nil {
 		return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())
 	}
 
-	p := confClient.Parser
+	p := confClient.Parser()
 	comments, err := p.Get(parser.Comments, parser.CommentsSectionName, "#")
 	insertDisclaimer := false
 	if err != nil {
@@ -891,11 +898,9 @@ func configureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 	return confClient, nil
 }
 
-func configureRuntimeClient(ctx context.Context, confClient *configuration.Client, haproxyOptions dataplaneapi_config.HAProxyConfiguration) *runtime_api.Client {
-	runtimeParams := runtime_api.ClientParams{
-		MapsDir: haproxyOptions.MapsDir,
-	}
-	runtimeClient := &runtime_api.Client{ClientParams: runtimeParams}
+func configureRuntimeClient(ctx context.Context, confClient configuration.Configuration, haproxyOptions dataplaneapi_config.HAProxyConfiguration) runtime_api.Runtime {
+	mapsDir := runtime_options.MapsDir(haproxyOptions.MapsDir)
+	var runtimeClient runtime_api.Runtime
 
 	_, globalConf, err := confClient.GetGlobalConfiguration("")
 
@@ -908,13 +913,17 @@ func configureRuntimeClient(ctx context.Context, confClient *configuration.Clien
 			// if nbproc is set, set nbproc sockets
 			if globalConf.Nbproc > 0 {
 				nbproc := int(globalConf.Nbproc)
-				if err = runtimeClient.InitWithMasterSocketAndContext(ctx, masterSocket, nbproc); err == nil {
+				ms := runtime_options.MasterSocket(masterSocket, nbproc)
+				runtimeClient, err = runtime_api.New(ctx, mapsDir, ms)
+				if err == nil {
 					return runtimeClient
 				}
 				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
 			} else {
 				// if nbproc is not set, use master socket with 1 process
-				if err = runtimeClient.InitWithMasterSocketAndContext(ctx, masterSocket, 1); err == nil {
+				ms := runtime_options.MasterSocket(masterSocket, 1)
+				runtimeClient, err = runtime_api.New(ctx, mapsDir, ms)
+				if err == nil {
 					return runtimeClient
 				}
 				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
@@ -927,7 +936,9 @@ func configureRuntimeClient(ctx context.Context, confClient *configuration.Clien
 			for _, r := range runtimeAPIs {
 				if misc.IsUnixSocketAddr(*r.Address) {
 					socketList[1] = *r.Address
-					if err = runtimeClient.InitWithSocketsAndContext(ctx, socketList); err == nil {
+					sockets := runtime_options.Sockets(socketList)
+					runtimeClient, err = runtime_api.New(ctx, mapsDir, sockets)
+					if err == nil {
 						return runtimeClient
 					}
 					log.Warningf("Error setting up runtime client with socket: %s : %s", *r.Address, err.Error())
@@ -954,7 +965,10 @@ func configureRuntimeClient(ctx context.Context, confClient *configuration.Clien
 			if len(sockets) < int(globalConf.Nbproc) {
 				log.Warning("Runtime API not configured properly, there are more processes then configured sockets")
 			}
-			if err = runtimeClient.InitWithSocketsAndContext(ctx, sockets); err == nil {
+
+			socketLst := runtime_options.Sockets(sockets)
+			runtimeClient, err = runtime_api.New(ctx, mapsDir, socketLst)
+			if err == nil {
 				return runtimeClient
 			}
 			log.Warningf("Error setting up runtime client with sockets: %v : %s", sockets, err.Error())
@@ -971,7 +985,7 @@ func configureRuntimeClient(ctx context.Context, confClient *configuration.Clien
 	return runtimeClient
 }
 
-func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.Signal, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
+func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.Signal, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	//nolint:gosimple
 	for {
 		select {
@@ -980,7 +994,7 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 				var clientCtx context.Context
 				cancel()
 				clientCtx, cancel = context.WithCancel(ctx)
-				client.Runtime = configureRuntimeClient(clientCtx, client.Configuration, haproxyOptions)
+				client.ReplaceRuntime(configureRuntimeClient(clientCtx, client.Configuration(), haproxyOptions))
 				log.Info("Reloaded Data Plane API")
 			} else if sig == syscall.SIGUSR2 {
 				reloadConfigurationFile(client, haproxyOptions, users)
@@ -991,7 +1005,7 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 	}
 }
 
-func reloadConfigurationFile(client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
+func reloadConfigurationFile(client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	confClient, err := configureConfigurationClient(haproxyOptions, mWorker)
 	if err != nil {
 		log.Fatalf(err.Error())
@@ -1002,13 +1016,13 @@ func reloadConfigurationFile(client *client_native.HAProxyClient, haproxyOptions
 	log.Info("Rereading Configuration Files")
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
-	client.Configuration = confClient
+	client.ReplaceConfiguration(confClient)
 }
 
-func startWatcher(ctx context.Context, client *client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
+func startWatcher(ctx context.Context, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
 	cb := func() {
 		reloadConfigurationFile(client, haproxyOptions, users)
-		if err := client.Configuration.IncrementVersion(); err != nil {
+		if err := client.Configuration().IncrementVersion(); err != nil {
 			log.Warningf("Failed to increment configuration version: %v", err)
 		}
 	}

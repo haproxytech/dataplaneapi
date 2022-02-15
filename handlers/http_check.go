@@ -27,29 +27,29 @@ import (
 
 // CreateHTTPCheckHandlerImpl implementation of the CreateHTTPCheckHandler interface using client-native client
 type CreateHTTPCheckHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteHTTPCheckHandlerImpl implementation of the DeleteHTTPCheckHandler interface using client-native client
 type DeleteHTTPCheckHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetHTTPCheckHandlerImpl implementation of the GetHTTPCheckHandler interface using client-native client
 type GetHTTPCheckHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetHTTPChecksHandlerImpl implementation of the GetHTTPChecksHandler interface using client-native client
 type GetHTTPChecksHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceHTTPCheckHandlerImpl implementation of the ReplaceHTTPCheckHandler interface using client-native client
 type ReplaceHTTPCheckHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -78,7 +78,7 @@ func (h *CreateHTTPCheckHandlerImpl) Handle(params http_check.CreateHTTPCheckPar
 		return http_check.NewCreateHTTPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateHTTPCheck(params.ParentType, pName, params.Data, t, v)
+	err := h.Client.Configuration().CreateHTTPCheck(params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_check.NewCreateHTTPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -124,7 +124,7 @@ func (h *DeleteHTTPCheckHandlerImpl) Handle(params http_check.DeleteHTTPCheckPar
 		return http_check.NewDeleteHTTPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteHTTPCheck(params.Index, params.ParentType, pName, t, v)
+	err := h.Client.Configuration().DeleteHTTPCheck(params.Index, params.ParentType, pName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_check.NewDeleteHTTPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -155,7 +155,7 @@ func (h *GetHTTPCheckHandlerImpl) Handle(params http_check.GetHTTPCheckParams, p
 		pName = *params.ParentName
 	}
 
-	v, rule, err := h.Client.Configuration.GetHTTPCheck(params.Index, params.ParentType, pName, t)
+	v, rule, err := h.Client.Configuration().GetHTTPCheck(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_check.NewGetHTTPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -174,7 +174,7 @@ func (h *GetHTTPChecksHandlerImpl) Handle(params http_check.GetHTTPChecksParams,
 		pName = *params.ParentName
 	}
 
-	v, rules, err := h.Client.Configuration.GetHTTPChecks(params.ParentType, pName, t)
+	v, rules, err := h.Client.Configuration().GetHTTPChecks(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -210,7 +210,7 @@ func (h *ReplaceHTTPCheckHandlerImpl) Handle(params http_check.ReplaceHTTPCheckP
 		return http_check.NewReplaceHTTPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditHTTPCheck(params.Index, params.ParentType, pName, params.Data, t, v)
+	err := h.Client.Configuration().EditHTTPCheck(params.Index, params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_check.NewReplaceHTTPCheckDefault(int(*e.Code)).WithPayload(e)

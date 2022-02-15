@@ -30,12 +30,12 @@ import (
 
 // GetRawConfigurationHandlerImpl implementation of the GetHAProxyConfigurationHandler interface
 type GetRawConfigurationHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // PostRawConfigurationHandlerImpl implementation of the PostHAProxyConfigurationHandler interface
 type PostRawConfigurationHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -51,7 +51,7 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 		v = *params.Version
 	}
 
-	v, data, err := h.Client.Configuration.GetRawConfiguration(t, v)
+	v, data, err := h.Client.Configuration().GetRawConfiguration(t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
@@ -81,7 +81,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 	if params.OnlyValidate != nil {
 		onlyValidate = *params.OnlyValidate
 	}
-	err := h.Client.Configuration.PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
+	err := h.Client.Configuration().PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
@@ -111,7 +111,8 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 	return configuration.NewPostHAProxyConfigurationAccepted().WithReloadID(rID).WithPayload(params.Data)
 }
 
-func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClient) error {
+func executeRuntimeActions(actionsStr string, client client_native.HAProxyClient) error {
+	runtime := client.Runtime()
 	actions := strings.Split(actionsStr, ";")
 	for _, a := range actions {
 		params := strings.Split(a, " ")
@@ -127,7 +128,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 				if err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
-				if err := client.Runtime.SetFrontendMaxConn(fName, int(maxConn)); err != nil {
+				if err := runtime.SetFrontendMaxConn(fName, int(maxConn)); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -138,7 +139,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 				backend := params[1]
 				server := params[2]
 				weight := params[3]
-				if err := client.Runtime.SetServerWeight(backend, server, weight); err != nil {
+				if err := runtime.SetServerWeight(backend, server, weight); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -152,7 +153,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 				if err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
-				if err := client.Runtime.SetServerCheckPort(backend, server, int(port)); err != nil {
+				if err := runtime.SetServerCheckPort(backend, server, int(port)); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -167,7 +168,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 				if err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
-				if err := client.Runtime.SetServerAddr(backend, server, ip, int(port)); err != nil {
+				if err := runtime.SetServerAddr(backend, server, ip, int(port)); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -178,7 +179,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 				backend := params[1]
 				server := params[2]
 				state := params[3]
-				if err := client.Runtime.SetServerState(backend, server, state); err != nil {
+				if err := runtime.SetServerState(backend, server, state); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -188,7 +189,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 			if len(params) > 2 {
 				backend := params[1]
 				server := params[2]
-				if err := client.Runtime.EnableAgentCheck(backend, server); err != nil {
+				if err := runtime.EnableAgentCheck(backend, server); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -198,7 +199,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 			if len(params) > 2 {
 				backend := params[1]
 				server := params[2]
-				if err := client.Runtime.DisableAgentCheck(backend, server); err != nil {
+				if err := runtime.DisableAgentCheck(backend, server); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -209,7 +210,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 				backend := params[1]
 				server := params[2]
 				addr := params[3]
-				if err := client.Runtime.SetServerAgentAddr(backend, server, addr); err != nil {
+				if err := runtime.SetServerAgentAddr(backend, server, addr); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {
@@ -220,7 +221,7 @@ func executeRuntimeActions(actionsStr string, client *client_native.HAProxyClien
 				backend := params[1]
 				server := params[2]
 				send := params[3]
-				if err := client.Runtime.SetServerAgentSend(backend, server, send); err != nil {
+				if err := runtime.SetServerAgentSend(backend, server, send); err != nil {
 					return fmt.Errorf("cannot execute %s: %s", action, err.Error())
 				}
 			} else {

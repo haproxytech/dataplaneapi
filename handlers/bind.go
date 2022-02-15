@@ -27,29 +27,29 @@ import (
 
 // CreateBindHandlerImpl implementation of the CreateBindHandler interface using client-native client
 type CreateBindHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteBindHandlerImpl implementation of the DeleteBindHandler interface using client-native client
 type DeleteBindHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetBindHandlerImpl implementation of the GetBindHandler interface using client-native client
 type GetBindHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetBindsHandlerImpl implementation of the GetBindsHandler interface using client-native client
 type GetBindsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceBindHandlerImpl implementation of the ReplaceBindHandler interface using client-native client
 type ReplaceBindHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal i
 		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateBind(params.Frontend, params.Data, t, v)
+	err := h.Client.Configuration().CreateBind(params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +115,7 @@ func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal i
 		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteBind(params.Name, params.Frontend, t, v)
+	err := h.Client.Configuration().DeleteBind(params.Name, params.Frontend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
@@ -142,7 +142,7 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 		t = *params.TransactionID
 	}
 
-	v, b, err := h.Client.Configuration.GetBind(params.Name, params.Frontend, t)
+	v, b, err := h.Client.Configuration().GetBind(params.Name, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
@@ -157,7 +157,7 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 		t = *params.TransactionID
 	}
 
-	v, bs, err := h.Client.Configuration.GetBinds(params.Frontend, t)
+	v, bs, err := h.Client.Configuration().GetBinds(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -189,7 +189,7 @@ func (h *ReplaceBindHandlerImpl) Handle(params bind.ReplaceBindParams, principal
 		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditBind(params.Name, params.Frontend, params.Data, t, v)
+	err := h.Client.Configuration().EditBind(params.Name, params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)

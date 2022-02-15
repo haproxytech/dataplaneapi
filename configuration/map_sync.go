@@ -46,7 +46,7 @@ func (ms *MapSync) Stop() {
 
 // SyncAll sync maps file entries with runtime maps entries for all configured files.
 // Missing runtime entries are appended to the map file
-func (ms *MapSync) SyncAll(client client_native.IHAProxyClient) {
+func (ms *MapSync) SyncAll(client client_native.HAProxyClient) {
 	haproxyOptions := Get().HAProxy
 
 	d := time.Duration(haproxyOptions.UpdateMapFilesPeriod)
@@ -55,7 +55,7 @@ func (ms *MapSync) SyncAll(client client_native.IHAProxyClient) {
 	for {
 		select {
 		case <-ticker.C:
-			maps, err := client.GetRuntime().ShowMaps()
+			maps, err := client.Runtime().ShowMaps()
 			if err != nil {
 				log.Warning("show maps sync error: ", err.Error())
 				continue
@@ -75,7 +75,7 @@ func (ms *MapSync) SyncAll(client client_native.IHAProxyClient) {
 }
 
 // Sync syncs one map file to runtime entries
-func (ms *MapSync) Sync(mp *models.Map, client client_native.IHAProxyClient) (bool, error) {
+func (ms *MapSync) Sync(mp *models.Map, client client_native.HAProxyClient) (bool, error) {
 	ms.mu.Lock()
 	defer ms.mu.Unlock()
 
@@ -83,12 +83,12 @@ func (ms *MapSync) Sync(mp *models.Map, client client_native.IHAProxyClient) (bo
 	if err != nil {
 		return false, fmt.Errorf("error reading map file: %s %s", mp.File, err.Error())
 	}
-	fileEntries := client.GetRuntime().ParseMapEntriesFromFile(rawFile, false)
+	fileEntries := client.Runtime().ParseMapEntriesFromFile(rawFile, false)
 	sort.Slice(fileEntries, func(i, j int) bool { return fileEntries[i].Key < fileEntries[j].Key })
 
 	// runtime map entries
 	id := fmt.Sprintf("#%s", mp.ID)
-	runtimeEntries, err := client.GetRuntime().ShowMapEntries(id)
+	runtimeEntries, err := client.Runtime().ShowMapEntries(id)
 	if err != nil {
 		return false, fmt.Errorf("getting runtime entries error: id: %s %s", id, err.Error())
 	}

@@ -26,7 +26,7 @@ import (
 
 type awsServiceDiscovery struct {
 	services    Store
-	client      *configuration.Client
+	client      configuration.Configuration
 	reloadAgent haproxy.IReloadAgent
 	context     context.Context
 }

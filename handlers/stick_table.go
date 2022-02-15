@@ -29,17 +29,17 @@ import (
 
 // GetStickTablesHandlerImpl implementation of the GetStickTablesHandler interface using client-native client
 type GetStickTablesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetStickTableHandlerImpl implementation of the GetStickTableHandler interface using client-native client
 type GetStickTableHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetStickTableEntriesHandlerImpl implementation of the GetStickTableEntriesHandler interface using client-native client
 type GetStickTableEntriesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
@@ -48,7 +48,7 @@ func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesPara
 	if params.Process != nil {
 		process = int(*params.Process)
 	}
-	stkTS, err := h.Client.Runtime.ShowTables(process)
+	stkTS, err := h.Client.Runtime().ShowTables(process)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTablesDefault(int(*e.Code)).WithPayload(e)
@@ -63,7 +63,7 @@ func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesPara
 
 // Handle executing the request and returning a response
 func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams, principal interface{}) middleware.Responder {
-	stkT, err := h.Client.Runtime.ShowTable(params.Name, int(params.Process))
+	stkT, err := h.Client.Runtime().ShowTable(params.Name, int(params.Process))
 	if stkT == nil {
 		msg := fmt.Sprintf("Stick table %s not found in process %d", params.Name, params.Process)
 		c := misc.ErrHTTPNotFound
@@ -95,7 +95,7 @@ func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTabl
 		key = *params.Key
 	}
 
-	stkEntries, err := h.Client.Runtime.GetTableEntries(params.StickTable, int(params.Process), filter, key)
+	stkEntries, err := h.Client.Runtime().GetTableEntries(params.StickTable, int(params.Process), filter, key)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
@@ -134,8 +134,8 @@ func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTabl
 	return stick_table.NewGetStickTableEntriesOK().WithPayload(stkEntries)
 }
 
-func findTableFields(name string, client *client_native.HAProxyClient) []*models.StickTableField {
-	_, bck, err := client.Configuration.GetBackend(name, "")
+func findTableFields(name string, client client_native.HAProxyClient) []*models.StickTableField {
+	_, bck, err := client.Configuration().GetBackend(name, "")
 	if err != nil {
 		return nil
 	}

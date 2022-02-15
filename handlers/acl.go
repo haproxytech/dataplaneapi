@@ -27,29 +27,29 @@ import (
 
 // CreateACLHandlerImpl implementation of the CreateACLHandler interface using client-native client
 type CreateACLHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteACLHandlerImpl implementation of the DeleteACLHandler interface using client-native client
 type DeleteACLHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetACLHandlerImpl implementation of the GetACLHandler interface using client-native client
 type GetACLHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetAclsHandlerImpl implementation of the GetAclsHandler interface using client-native client
 type GetAclsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceACLHandlerImpl implementation of the ReplaceACLHandler interface using client-native client
 type ReplaceACLHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal inte
 		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateACL(params.ParentType, params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration().CreateACL(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal inte
 		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteACL(params.Index, params.ParentType, params.ParentName, t, v)
+	err := h.Client.Configuration().DeleteACL(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration.GetACL(params.Index, params.ParentType, params.ParentName, t)
+	v, rule, err := h.Client.Configuration().GetACL(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
@@ -163,7 +163,7 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 		aclName = []string{*params.ACLName}
 	}
 
-	v, rules, err := h.Client.Configuration.GetACLs(params.ParentType, params.ParentName, t, aclName...)
+	v, rules, err := h.Client.Configuration().GetACLs(params.ParentType, params.ParentName, t, aclName...)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -195,7 +195,7 @@ func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal in
 		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditACL(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration().EditACL(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)

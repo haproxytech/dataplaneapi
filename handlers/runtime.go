@@ -33,7 +33,7 @@ var RuntimeSupportedFields = map[string][]string{
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
 // returns false if reload is not needed, or true if needed.
-func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType string, client *client_native.HAProxyClient) (reload bool) {
+func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType string, client client_native.HAProxyClient) (reload bool) {
 	// reflect kinds and values are loosely checked as they are bound strictly in
 	// schema, but in case of any panic, we will log and reload to ensure
 	// changes go through
@@ -50,6 +50,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 		return true
 	}
 
+	runtime := client.Runtime()
 	// objects are the same, do nothing and don't reload
 	diff := compareObjects(data, ondisk)
 	if len(diff) == 0 {
@@ -66,7 +67,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 					switch field {
 					case "Maxconn":
 						maxConn := fieldValue.Elem().Int()
-						err := client.Runtime.SetFrontendMaxConn(vData.Name, int(maxConn))
+						err := runtime.SetFrontendMaxConn(vData.Name, int(maxConn))
 						if err != nil {
 							// we have error's in runtime API changes, bail and reload
 							return true
@@ -88,14 +89,14 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 					switch field {
 					case "Weight":
 						weight := strconv.FormatInt(fieldValue.Elem().Int(), 10)
-						err := client.Runtime.SetServerWeight(parentName, vData.Name, weight)
+						err := runtime.SetServerWeight(parentName, vData.Name, weight)
 						if err != nil {
 							// we have error's in runtime API changes, bail and reload
 							return true
 						}
 					case "HealthCheckPort":
 						portVal := fieldValue.Elem().Int()
-						err := client.Runtime.SetServerCheckPort(parentName, vData.Name, int(portVal))
+						err := runtime.SetServerCheckPort(parentName, vData.Name, int(portVal))
 						if err != nil {
 							// we have error's in runtime API changes, bail and reload
 							return true
@@ -104,7 +105,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 						if !addrPortChanged {
 							portVal := reflect.ValueOf(vData).FieldByName("Port").Elem().Int()
 							addrVal := fieldValue.String()
-							err := client.Runtime.SetServerAddr(parentName, vData.Name, addrVal, int(portVal))
+							err := runtime.SetServerAddr(parentName, vData.Name, addrVal, int(portVal))
 							if err != nil {
 								// we have error's in runtime API changes, bail and reload
 								return true
@@ -115,7 +116,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 						if !addrPortChanged {
 							portVal := fieldValue.Elem().Int()
 							addrVal := reflect.ValueOf(vData).FieldByName("Address").String()
-							err := client.Runtime.SetServerAddr(parentName, vData.Name, addrVal, int(portVal))
+							err := runtime.SetServerAddr(parentName, vData.Name, addrVal, int(portVal))
 							if err != nil {
 								// we have error's in runtime API changes, bail and reload
 								return true
@@ -129,7 +130,7 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 						} else {
 							maint = "ready"
 						}
-						err := client.Runtime.SetServerState(parentName, vData.Name, maint)
+						err := runtime.SetServerState(parentName, vData.Name, maint)
 						if err != nil {
 							// we have error's in runtime API changes, bail and reload
 							return true
@@ -137,14 +138,14 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 					case "AgentCheck":
 						aCheck := fieldValue.String()
 						if aCheck == "enabled" {
-							err := client.Runtime.EnableAgentCheck(parentName, vData.Name)
+							err := runtime.EnableAgentCheck(parentName, vData.Name)
 							if err != nil {
 								// we have error's in runtime API changes, bail and reload
 								return true
 							}
 						}
 						if aCheck == "disabled" {
-							err := client.Runtime.DisableAgentCheck(parentName, vData.Name)
+							err := runtime.DisableAgentCheck(parentName, vData.Name)
 							if err != nil {
 								// we have error's in runtime API changes, bail and reload
 								return true
@@ -152,14 +153,14 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 						}
 					case "AgentAddr":
 						aAddr := fieldValue.String()
-						err := client.Runtime.SetServerAgentAddr(parentName, vData.Name, aAddr)
+						err := runtime.SetServerAgentAddr(parentName, vData.Name, aAddr)
 						if err != nil {
 							// we have error's in runtime API changes, bail and reload
 							return true
 						}
 					case "AgentSend":
 						aSend := fieldValue.String()
-						err := client.Runtime.SetServerAgentSend(parentName, vData.Name, aSend)
+						err := runtime.SetServerAgentSend(parentName, vData.Name, aSend)
 						if err != nil {
 							// we have error's in runtime API changes, bail and reload
 							return true

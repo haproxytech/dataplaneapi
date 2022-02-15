@@ -25,7 +25,7 @@ import (
 
 // GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
 type ConfigurationGetConfigurationVersionHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
@@ -34,7 +34,7 @@ func (h *ConfigurationGetConfigurationVersionHandlerImpl) Handle(params configur
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	v, err := h.Client.Configuration.GetConfigurationVersion(t)
+	v, err := h.Client.Configuration().GetConfigurationVersion(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetConfigurationVersionDefault(int(*e.Code)).WithPayload(e)

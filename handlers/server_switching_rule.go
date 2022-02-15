@@ -27,29 +27,29 @@ import (
 
 // CreateServerSwitchingRuleHandlerImpl implementation of the CreateServerSwitchingRuleHandler interface using client-native client
 type CreateServerSwitchingRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteServerSwitchingRuleHandlerImpl implementation of the DeleteServerSwitchingRuleHandler interface using client-native client
 type DeleteServerSwitchingRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetServerSwitchingRuleHandlerImpl implementation of the GetServerSwitchingRuleHandler interface using client-native client
 type GetServerSwitchingRuleHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetServerSwitchingRulesHandlerImpl implementation of the GetServerSwitchingRulesHandler interface using client-native client
 type GetServerSwitchingRulesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceServerSwitchingRuleHandlerImpl implementation of the ReplaceServerSwitchingRuleHandler interface using client-native client
 type ReplaceServerSwitchingRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateServerSwitchingRuleHandlerImpl) Handle(params server_switching_ru
 		return server_switching_rule.NewCreateServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateServerSwitchingRule(params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().CreateServerSwitchingRule(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewCreateServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *DeleteServerSwitchingRuleHandlerImpl) Handle(params server_switching_ru
 		return server_switching_rule.NewDeleteServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteServerSwitchingRule(params.Index, params.Backend, t, v)
+	err := h.Client.Configuration().DeleteServerSwitchingRule(params.Index, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewDeleteServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -144,7 +144,7 @@ func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration.GetServerSwitchingRule(params.Index, params.Backend, t)
+	v, rule, err := h.Client.Configuration().GetServerSwitchingRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -159,7 +159,7 @@ func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule
 		t = *params.TransactionID
 	}
 
-	v, rules, err := h.Client.Configuration.GetServerSwitchingRules(params.Backend, t)
+	v, rules, err := h.Client.Configuration().GetServerSwitchingRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -191,7 +191,7 @@ func (h *ReplaceServerSwitchingRuleHandlerImpl) Handle(params server_switching_r
 		return server_switching_rule.NewReplaceServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditServerSwitchingRule(params.Index, params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().EditServerSwitchingRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewReplaceServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)

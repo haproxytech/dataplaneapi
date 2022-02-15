@@ -26,7 +26,7 @@ import (
 
 // SpoeCreateSpoeHandlerImpl implementation of the SpoeCreateSpoeAgentHandler interface
 type SpoeCreateSpoeHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeCreateSpoeHandlerImpl) Handle(params spoe.CreateSpoeParams, principal interface{}) middleware.Responder {
@@ -34,7 +34,7 @@ func (h *SpoeCreateSpoeHandlerImpl) Handle(params spoe.CreateSpoeParams, princip
 	if !ok {
 		return spoe.NewCreateSpoeBadRequest()
 	}
-	path, err := h.Client.Spoe.Create(file.Header.Filename, params.FileUpload)
+	path, err := h.Client.Spoe().Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeDefault(int(*e.Code)).WithPayload(e)
@@ -44,11 +44,11 @@ func (h *SpoeCreateSpoeHandlerImpl) Handle(params spoe.CreateSpoeParams, princip
 
 // SpoeDeleteSpoeFileHandlerImpl implementation of the SpoeDeleteSpoeFileHandler interface
 type SpoeDeleteSpoeFileHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeDeleteSpoeFileHandlerImpl) Handle(params spoe.DeleteSpoeFileParams, principal interface{}) middleware.Responder {
-	err := h.Client.Spoe.Delete(params.Name)
+	err := h.Client.Spoe().Delete(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeFileDefault(int(*e.Code)).WithPayload(e)
@@ -58,12 +58,12 @@ func (h *SpoeDeleteSpoeFileHandlerImpl) Handle(params spoe.DeleteSpoeFileParams,
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler interface
 type SpoeGetAllSpoeFilesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
 func (h *SpoeGetAllSpoeFilesHandlerImpl) Handle(params spoe.GetAllSpoeFilesParams, principal interface{}) middleware.Responder {
-	files, err := h.Client.Spoe.GetAll()
+	files, err := h.Client.Spoe().GetAll()
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
@@ -73,11 +73,11 @@ func (h *SpoeGetAllSpoeFilesHandlerImpl) Handle(params spoe.GetAllSpoeFilesParam
 
 // SpoeGetOneSpoeFileHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface
 type SpoeGetOneSpoeFileHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeGetOneSpoeFileHandlerImpl) Handle(params spoe.GetOneSpoeFileParams, principal interface{}) middleware.Responder {
-	path, err := h.Client.Spoe.Get(params.Name)
+	path, err := h.Client.Spoe().Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetOneSpoeFileDefault(int(*e.Code)).WithPayload(e)

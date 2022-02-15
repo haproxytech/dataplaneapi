@@ -91,7 +91,7 @@ func (a awsService) GetServers() (servers []configuration.ServiceServer) {
 	return
 }
 
-func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client *configuration.Client, reloadAgent haproxy.IReloadAgent) (*awsInstance, error) {
+func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client configuration.Configuration, reloadAgent haproxy.IReloadAgent) (*awsInstance, error) {
 	timeout, err := time.ParseDuration(fmt.Sprintf("%ds", *params.RetryTimeout))
 	if err != nil {
 		return nil, err

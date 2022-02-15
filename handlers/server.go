@@ -27,29 +27,29 @@ import (
 
 // CreateServerHandlerImpl implementation of the CreateServerHandler interface using client-native client
 type CreateServerHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteServerHandlerImpl implementation of the DeleteServerHandler interface using client-native client
 type DeleteServerHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetServerHandlerImpl implementation of the GetServerHandler interface using client-native client
 type GetServerHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetServersHandlerImpl implementation of the GetServersHandler interface using client-native client
 type GetServersHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceServerHandlerImpl implementation of the ReplaceServerHandler interface using client-native client
 type ReplaceServerHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateServer(params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().CreateServer(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +115,7 @@ func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, princ
 		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteServer(params.Name, params.Backend, t, v)
+	err := h.Client.Configuration().DeleteServer(params.Name, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal i
 		t = *params.TransactionID
 	}
 
-	v, srv, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
+	v, srv, err := h.Client.Configuration().GetServer(params.Name, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetServerDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 		t = *params.TransactionID
 	}
 
-	v, srvs, err := h.Client.Configuration.GetServers(params.Backend, t)
+	v, srvs, err := h.Client.Configuration().GetServers(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,13 +190,13 @@ func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, pri
 		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, ondisk, err := h.Client.Configuration.GetServer(params.Name, params.Backend, t)
+	_, ondisk, err := h.Client.Configuration().GetServer(params.Name, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = h.Client.Configuration.EditServer(params.Name, params.Backend, params.Data, t, v)
+	err = h.Client.Configuration().EditServer(params.Name, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)

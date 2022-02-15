@@ -27,29 +27,29 @@ import (
 
 // CreateFilterHandlerImpl implementation of the CreateFilterHandler interface using client-native client
 type CreateFilterHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteFilterHandlerImpl implementation of the DeleteFilterHandler interface using client-native client
 type DeleteFilterHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetFilterHandlerImpl implementation of the GetFilterHandler interface using client-native client
 type GetFilterHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetFiltersHandlerImpl implementation of the GetFiltersHandler interface using client-native client
 type GetFiltersHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceFilterHandlerImpl implementation of the ReplaceFilterHandler interface using client-native client
 type ReplaceFilterHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, princ
 		return filter.NewCreateFilterDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateFilter(params.ParentType, params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration().CreateFilter(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewCreateFilterDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +115,7 @@ func (h *DeleteFilterHandlerImpl) Handle(params filter.DeleteFilterParams, princ
 		return filter.NewDeleteFilterDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteFilter(params.Index, params.ParentType, params.ParentName, t, v)
+	err := h.Client.Configuration().DeleteFilter(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewDeleteFilterDefault(int(*e.Code)).WithPayload(e)
@@ -142,7 +142,7 @@ func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal i
 		t = *params.TransactionID
 	}
 
-	v, f, err := h.Client.Configuration.GetFilter(params.Index, params.ParentType, params.ParentName, t)
+	v, f, err := h.Client.Configuration().GetFilter(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewGetFilterDefault(int(*e.Code)).WithPayload(e)
@@ -157,7 +157,7 @@ func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal
 		t = *params.TransactionID
 	}
 
-	v, fs, err := h.Client.Configuration.GetFilters(params.ParentType, params.ParentName, t)
+	v, fs, err := h.Client.Configuration().GetFilters(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -189,7 +189,7 @@ func (h *ReplaceFilterHandlerImpl) Handle(params filter.ReplaceFilterParams, pri
 		return filter.NewReplaceFilterDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditFilter(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	err := h.Client.Configuration().EditFilter(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewReplaceFilterDefault(int(*e.Code)).WithPayload(e)

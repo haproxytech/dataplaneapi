@@ -25,11 +25,11 @@ import (
 
 // SpoeCreateSpoeAgentHandlerImpl implementation of the SpoeCreateSpoeAgentHandler interface
 type SpoeCreateSpoeAgentHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -52,11 +52,11 @@ func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParam
 
 // SpoeDeleteSpoeAgentHandlerImpl implementation of the SpoeDeleteSpoeAgentHandler interface
 type SpoeDeleteSpoeAgentHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -79,12 +79,12 @@ func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParam
 
 // SpoeGetSpoeAgentsHandlerImpl implementation of the SpoeGetSpoeAgentsHandler interface
 type SpoeGetSpoeAgentsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
 func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
@@ -103,11 +103,11 @@ func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, p
 
 // SpoeGetSpoeAgentHandlerImpl implementation of the SpoeGetSpoeAgentHandler interface
 type SpoeGetSpoeAgentHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -129,11 +129,11 @@ func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, pri
 
 // SpoeReplaceSpoeAgentHandlerImpl implementation of the SpoeReplaceSpoeAgentHandler interface
 type SpoeReplaceSpoeAgentHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)

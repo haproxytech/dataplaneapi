@@ -27,12 +27,12 @@ import (
 
 // SpoeTransactionsStartSpoeTransactionHandlerImpl implementation of the SpoeTransactionsStartSpoeTransactionHandler interface
 type SpoeTransactionsStartSpoeTransactionHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
 func (th *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_transactions.StartSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -52,12 +52,12 @@ func (th *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_tr
 
 // SpoeTransactionsDeleteSpoeTransactionHandlerImpl implementation of the DeleteTransactionHandler interface
 type SpoeTransactionsDeleteSpoeTransactionHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
 func (th *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_transactions.DeleteSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -72,12 +72,12 @@ func (th *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_t
 
 // SpoeTransactionsGetSpoeTransactionHandlerImpl implementation of the SpoeTransactionsGetSpoeTransactionHandler interface
 type SpoeTransactionsGetSpoeTransactionHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
 func (th *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -97,12 +97,12 @@ func (th *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_tran
 
 // SpoeTransactionsGetSpoeTransactionsHandlerImpl implementation of the SpoeTransactionsGetSpoeTransactionsHandler interface
 type SpoeTransactionsGetSpoeTransactionsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
 func (th *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionsParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -132,13 +132,13 @@ func (th *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_tra
 
 // SpoeTransactionsCommitSpoeTransactionHandlerImpl implementation of the SpoeTransactionsCommitSpoeTransactionHandler interface
 type SpoeTransactionsCommitSpoeTransactionHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // Handle executing the request and returning a response
 func (th *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_transactions.CommitSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe.GetSingleSpoe(params.Spoe)
+	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)

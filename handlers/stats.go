@@ -26,7 +26,7 @@ import (
 
 // GetStatsHandlerImpl implementation of the GetStatsHandler interface using client-native client
 type GetStatsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
@@ -47,7 +47,7 @@ func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal inte
 		}
 	}
 
-	s := h.Client.Runtime.GetStats()
+	s := h.Client.Runtime().GetStats()
 
 	errorFound := false
 	for _, nStat := range s {

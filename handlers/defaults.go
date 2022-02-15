@@ -27,12 +27,12 @@ import (
 
 // GetDefaultsHandlerImpl implementation of the GetDefaultsHandler interface
 type GetDefaultsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceDefaultsHandlerImpl implementation of the ReplaceDefaultsHandler interface
 type ReplaceDefaultsHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -43,7 +43,7 @@ func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, princ
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration.GetDefaultsConfiguration(t)
+	v, data, err := h.Client.Configuration().GetDefaultsConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
@@ -72,7 +72,7 @@ func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParam
 		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.PushDefaultsConfiguration(params.Data, t, v)
+	err := h.Client.Configuration().PushDefaultsConfiguration(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)

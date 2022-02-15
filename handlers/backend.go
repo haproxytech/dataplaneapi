@@ -27,29 +27,29 @@ import (
 
 // CreateBackendHandlerImpl implementation of the CreateBackendHandler interface using client-native client
 type CreateBackendHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteBackendHandlerImpl implementation of the DeleteBackendHandler interface using client-native client
 type DeleteBackendHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetBackendHandlerImpl implementation of the GetBackendHandler interface using client-native client
 type GetBackendHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetBackendsHandlerImpl implementation of the GetBackendsHandler interface using client-native client
 type GetBackendsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceBackendHandlerImpl implementation of the ReplaceBackendHandler interface using client-native client
 type ReplaceBackendHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateBackend(params.Data, t, v)
+	err := h.Client.Configuration().CreateBackend(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *DeleteBackendHandlerImpl) Handle(params backend.DeleteBackendParams, pr
 		return backend.NewDeleteBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteBackend(params.Name, t, v)
+	err := h.Client.Configuration().DeleteBackend(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewDeleteBackendDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 		t = *params.TransactionID
 	}
 
-	v, bck, err := h.Client.Configuration.GetBackend(params.Name, t)
+	v, bck, err := h.Client.Configuration().GetBackend(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewGetBackendDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 		t = *params.TransactionID
 	}
 
-	v, bcks, err := h.Client.Configuration.GetBackends(t)
+	v, bcks, err := h.Client.Configuration().GetBackends(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewGetBackendsDefault(int(*e.Code)).WithPayload(e)
@@ -187,7 +187,7 @@ func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, 
 		return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditBackend(params.Name, params.Data, t, v)
+	err := h.Client.Configuration().EditBackend(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)

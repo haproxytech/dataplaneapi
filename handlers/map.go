@@ -30,22 +30,28 @@ import (
 
 // GetMapsHandlerImpl implementation of the GetAllRuntimeMapFilesHandler interface using client-native client
 type GetMapsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
 func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
 	mapList := []*models.Map{}
 
-	runtimeMaps, err := h.Client.Runtime.ShowMaps()
+	runtimeMaps, err := h.Client.Runtime().ShowMaps()
+	if err != nil {
+		status := misc.GetHTTPStatusFromErr(err)
+		return maps.NewShowRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
+	}
+
+	mapsDir, err := h.Client.Runtime().GetMapsDir()
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewShowRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 
 	for _, m := range runtimeMaps {
-		if *params.IncludeUnmanaged || strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
-			if strings.HasPrefix(filepath.Dir(m.File), h.Client.Runtime.MapsDir) {
+		if *params.IncludeUnmanaged || strings.HasPrefix(filepath.Dir(m.File), mapsDir) {
+			if strings.HasPrefix(filepath.Dir(m.File), mapsDir) {
 				m.StorageName = filepath.Base(m.File)
 			}
 			mapList = append(mapList, m)
@@ -56,11 +62,11 @@ func (h *GetMapsHandlerImpl) Handle(params maps.GetAllRuntimeMapFilesParams, pri
 
 // GetMapHandlerImpl implementation of the MapsGetOneRuntimeMapHandler interface using client-native client
 type GetMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *GetMapHandlerImpl) Handle(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
-	m, err := h.Client.Runtime.GetMap(params.Name)
+	m, err := h.Client.Runtime().GetMap(params.Name)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewGetOneRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -73,7 +79,7 @@ func (h *GetMapHandlerImpl) Handle(params maps.GetOneRuntimeMapParams, principal
 
 // ClearMapHandlerImpl implementation of the ClearRuntimeMapHandler interface using client-native client
 type ClearMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principal interface{}) middleware.Responder {
@@ -81,13 +87,13 @@ func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principa
 	if params.ForceDelete != nil {
 		forceDelete = *params.ForceDelete
 	}
-	err := h.Client.Runtime.ClearMap(params.Name, forceDelete)
+	err := h.Client.Runtime().ClearMap(params.Name, forceDelete)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	if *params.ForceSync {
-		m, err := h.Client.Runtime.GetMap(params.Name)
+		m, err := h.Client.Runtime().GetMap(params.Name)
 		if err != nil {
 			status := misc.GetHTTPStatusFromErr(err)
 			return maps.NewClearRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -104,11 +110,11 @@ func (h *ClearMapHandlerImpl) Handle(params maps.ClearRuntimeMapParams, principa
 
 // ShowMapHandlerImpl implementation of the ShowMapHandlerImpl interface using client-native client
 type ShowMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *ShowMapHandlerImpl) Handle(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
-	m, err := h.Client.Runtime.ShowMapEntries(params.Map)
+	m, err := h.Client.Runtime().ShowMapEntries(params.Map)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewShowRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -121,17 +127,17 @@ func (h *ShowMapHandlerImpl) Handle(params maps.ShowRuntimeMapParams, principal 
 
 // AddMapEntryHandlerImpl implementation of the AddMapEntryHandler interface using client-native client
 type AddMapEntryHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
-	err := h.Client.Runtime.AddMapEntry(params.Map, params.Data.Key, params.Data.Value)
+	err := h.Client.Runtime().AddMapEntry(params.Map, params.Data.Key, params.Data.Value)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	if *params.ForceSync {
-		m, err := h.Client.Runtime.GetMap(params.Map)
+		m, err := h.Client.Runtime().GetMap(params.Map)
 		if err != nil {
 			status := misc.GetHTTPStatusFromErr(err)
 			return maps.NewAddMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -147,17 +153,17 @@ func (h *AddMapEntryHandlerImpl) Handle(params maps.AddMapEntryParams, principal
 }
 
 type MapsAddPayloadRuntimeMapHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *MapsAddPayloadRuntimeMapHandlerImpl) Handle(params maps.AddPayloadRuntimeMapParams, principal interface{}) middleware.Responder {
-	err := h.Client.Runtime.AddMapPayloadVersioned(params.Name, params.Data)
+	err := h.Client.Runtime().AddMapPayloadVersioned(params.Name, params.Data)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewAddPayloadRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	if *params.ForceSync {
-		m, err := h.Client.Runtime.GetMap(params.Name)
+		m, err := h.Client.Runtime().GetMap(params.Name)
 		if err != nil {
 			status := misc.GetHTTPStatusFromErr(err)
 			return maps.NewAddPayloadRuntimeMapDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -174,11 +180,11 @@ func (h *MapsAddPayloadRuntimeMapHandlerImpl) Handle(params maps.AddPayloadRunti
 
 // GetRuntimeMapEntryHandlerImpl implementation of the GetRuntimeMapEntryHandler interface using client-native client
 type GetRuntimeMapEntryHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *GetRuntimeMapEntryHandlerImpl) Handle(params maps.GetRuntimeMapEntryParams, principal interface{}) middleware.Responder {
-	m, err := h.Client.Runtime.GetMapEntry(params.Map, params.ID)
+	m, err := h.Client.Runtime().GetMapEntry(params.Map, params.ID)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -191,21 +197,21 @@ func (h *GetRuntimeMapEntryHandlerImpl) Handle(params maps.GetRuntimeMapEntryPar
 
 // ReplaceRuntimeMapEntryHandlerImpl implementation of the ReplaceRuntimeMapEntryHandler interface using client-native client
 type ReplaceRuntimeMapEntryHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMapEntryParams, principal interface{}) middleware.Responder {
-	err := h.Client.Runtime.SetMapEntry(params.Map, params.ID, *params.Data.Value)
+	err := h.Client.Runtime().SetMapEntry(params.Map, params.ID, *params.Data.Value)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
-	e, err := h.Client.Runtime.GetMapEntry(params.Map, params.ID)
+	e, err := h.Client.Runtime().GetMapEntry(params.Map, params.ID)
 	if err != nil {
 		return maps.NewReplaceRuntimeMapEntryNotFound()
 	}
 	if *params.ForceSync {
-		m, err := h.Client.Runtime.GetMap(params.Map)
+		m, err := h.Client.Runtime().GetMap(params.Map)
 		if err != nil {
 			status := misc.GetHTTPStatusFromErr(err)
 			return maps.NewGetRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -222,17 +228,17 @@ func (h *ReplaceRuntimeMapEntryHandlerImpl) Handle(params maps.ReplaceRuntimeMap
 
 // DeleteRuntimeMapEntryHandlerImpl implementation of the DeleteRuntimeMapEntryHandler interface using client-native client
 type DeleteRuntimeMapEntryHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 func (h *DeleteRuntimeMapEntryHandlerImpl) Handle(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
-	err := h.Client.Runtime.DeleteMapEntry(params.Map, params.ID)
+	err := h.Client.Runtime().DeleteMapEntry(params.Map, params.ID)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))
 	}
 	if *params.ForceSync {
-		m, err := h.Client.Runtime.GetMap(params.Map)
+		m, err := h.Client.Runtime().GetMap(params.Map)
 		if err != nil {
 			status := misc.GetHTTPStatusFromErr(err)
 			return maps.NewDeleteRuntimeMapEntryDefault(status).WithPayload(misc.SetError(status, err.Error()))

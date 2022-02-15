@@ -28,22 +28,22 @@ import (
 
 // GetRuntimeServerHandlerImpl implementation of the GetRuntimeServerHandler interface using client-native client
 type GetRuntimeServerHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetRuntimeServersHandlerImpl implementation of the GetRuntimeServersHandler interface using client-native client
 type GetRuntimeServersHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceRuntimeServerHandlerImpl implementation of the ReplaceRuntimeServerHandler interface using client-native client
 type ReplaceRuntimeServerHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // Handle executing the request and returning a response
 func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
-	rs, err := h.Client.Runtime.GetServerState(params.Backend, params.Name)
+	rs, err := h.Client.Runtime().GetServerState(params.Backend, params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewGetRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -60,7 +60,7 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 
 // Handle executing the request and returning a response
 func (h *GetRuntimeServersHandlerImpl) Handle(params server.GetRuntimeServersParams, principal interface{}) middleware.Responder {
-	rs, err := h.Client.Runtime.GetServersState(params.Backend)
+	rs, err := h.Client.Runtime().GetServersState(params.Backend)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -74,7 +74,7 @@ func (h *GetRuntimeServersHandlerImpl) Handle(params server.GetRuntimeServersPar
 
 // Handle executing the request and returning a response
 func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
-	rs, err := h.Client.Runtime.GetServerState(params.Backend, params.Name)
+	rs, err := h.Client.Runtime().GetServerState(params.Backend, params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -88,7 +88,7 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 
 	// change operational state
 	if params.Data.OperationalState != "" && rs.OperationalState != params.Data.OperationalState {
-		err = h.Client.Runtime.SetServerHealth(params.Backend, params.Name, params.Data.OperationalState)
+		err = h.Client.Runtime().SetServerHealth(params.Backend, params.Name, params.Data.OperationalState)
 		if err != nil {
 			e := misc.HandleError(err)
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -97,18 +97,18 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 
 	// change admin state
 	if params.Data.AdminState != "" && rs.AdminState != params.Data.AdminState {
-		err = h.Client.Runtime.SetServerState(params.Backend, params.Name, params.Data.AdminState)
+		err = h.Client.Runtime().SetServerState(params.Backend, params.Name, params.Data.AdminState)
 		if err != nil {
 			e := misc.HandleError(err)
 
 			// try to revert operational state and fall silently
 			//nolint:errcheck
-			h.Client.Runtime.SetServerHealth(params.Backend, params.Name, rs.OperationalState)
+			h.Client.Runtime().SetServerHealth(params.Backend, params.Name, rs.OperationalState)
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 		}
 	}
 
-	rs, err = h.Client.Runtime.GetServerState(params.Backend, params.Name)
+	rs, err = h.Client.Runtime().GetServerState(params.Backend, params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)

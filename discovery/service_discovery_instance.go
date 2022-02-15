@@ -53,14 +53,14 @@ type discoveryInstanceParams struct {
 // ServiceDiscoveryInstance manages and updates all services of a single service discovery.
 type ServiceDiscoveryInstance struct {
 	services      map[string]*confService
-	client        *configuration.Client
+	client        configuration.Configuration
 	reloadAgent   haproxy.IReloadAgent
 	params        discoveryInstanceParams
 	transactionID string
 }
 
 // NewServiceDiscoveryInstance creates a new ServiceDiscoveryInstance.
-func NewServiceDiscoveryInstance(client *configuration.Client, reloadAgent haproxy.IReloadAgent, params discoveryInstanceParams) *ServiceDiscoveryInstance {
+func NewServiceDiscoveryInstance(client configuration.Configuration, reloadAgent haproxy.IReloadAgent, params discoveryInstanceParams) *ServiceDiscoveryInstance {
 	return &ServiceDiscoveryInstance{
 		client:      client,
 		reloadAgent: reloadAgent,

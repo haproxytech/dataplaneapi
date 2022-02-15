@@ -27,29 +27,29 @@ import (
 
 // CreateLogTargetHandlerImpl implementation of the CreateLogTargetHandler interface using client-native client
 type CreateLogTargetHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteLogTargetHandlerImpl implementation of the DeleteLogTargetHandler interface using client-native client
 type DeleteLogTargetHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetLogTargetHandlerImpl implementation of the GetLogTargetHandler interface using client-native client
 type GetLogTargetHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetLogTargetsHandlerImpl implementation of the GetLogTargetsHandler interface using client-native client
 type GetLogTargetsHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceLogTargetHandlerImpl implementation of the ReplaceLogTargetHandler interface using client-native client
 type ReplaceLogTargetHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -88,7 +88,7 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 		pName = *params.ParentName
 	}
 
-	err := h.Client.Configuration.CreateLogTarget(params.ParentType, pName, params.Data, t, v)
+	err := h.Client.Configuration().CreateLogTarget(params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
@@ -144,7 +144,7 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 		pName = *params.ParentName
 	}
 
-	err := h.Client.Configuration.DeleteLogTarget(params.Index, params.ParentType, pName, t, v)
+	err := h.Client.Configuration().DeleteLogTarget(params.Index, params.ParentType, pName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewDeleteLogTargetDefault(int(*e.Code)).WithPayload(e)
@@ -185,7 +185,7 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 		pName = *params.ParentName
 	}
 
-	v, logTarget, err := h.Client.Configuration.GetLogTarget(params.Index, params.ParentType, pName, t)
+	v, logTarget, err := h.Client.Configuration().GetLogTarget(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewGetLogTargetDefault(int(*e.Code)).WithPayload(e)
@@ -213,7 +213,7 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 		pName = *params.ParentName
 	}
 
-	v, logTargets, err := h.Client.Configuration.GetLogTargets(params.ParentType, pName, t)
+	v, logTargets, err := h.Client.Configuration().GetLogTargets(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -258,7 +258,7 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 		pName = *params.ParentName
 	}
 
-	err := h.Client.Configuration.EditLogTarget(params.Index, params.ParentType, pName, params.Data, t, v)
+	err := h.Client.Configuration().EditLogTarget(params.Index, params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)

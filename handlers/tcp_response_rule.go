@@ -27,29 +27,29 @@ import (
 
 // CreateTCPResponseRuleHandlerImpl implementation of the CreateTCPResponseRuleHandler interface using client-native client
 type CreateTCPResponseRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteTCPResponseRuleHandlerImpl implementation of the DeleteTCPResponseRuleHandler interface using client-native client
 type DeleteTCPResponseRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetTCPResponseRuleHandlerImpl implementation of the GetTCPResponseRuleHandler interface using client-native client
 type GetTCPResponseRuleHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetTCPResponseRulesHandlerImpl implementation of the GetTCPResponseRulesHandler interface using client-native client
 type GetTCPResponseRulesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceTCPResponseRuleHandlerImpl implementation of the ReplaceTCPResponseRuleHandler interface using client-native client
 type ReplaceTCPResponseRuleHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Creat
 		return tcp_response_rule.NewCreateTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateTCPResponseRule(params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().CreateTCPResponseRule(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewCreateTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *DeleteTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Delet
 		return tcp_response_rule.NewDeleteTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteTCPResponseRule(params.Index, params.Backend, t, v)
+	err := h.Client.Configuration().DeleteTCPResponseRule(params.Index, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewDeleteTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPRe
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration.GetTCPResponseRule(params.Index, params.Backend, t)
+	v, rule, err := h.Client.Configuration().GetTCPResponseRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewGetTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPR
 		t = *params.TransactionID
 	}
 
-	v, rules, err := h.Client.Configuration.GetTCPResponseRules(params.Backend, t)
+	v, rules, err := h.Client.Configuration().GetTCPResponseRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,7 +190,7 @@ func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Repl
 		return tcp_response_rule.NewReplaceTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.EditTCPResponseRule(params.Index, params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().EditTCPResponseRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewReplaceTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)

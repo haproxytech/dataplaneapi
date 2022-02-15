@@ -27,29 +27,29 @@ import (
 
 // CreateServerTemplateHandlerImpl implementation of the CreateServerTemplateHandler interface using client-native client
 type CreateServerTemplateHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // DeleteServerTemplateHandlerImpl implementation of the DeleteServerTemplateHandler interface using client-native client
 type DeleteServerTemplateHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // GetServerTemplateHandlerImpl implementation of the GetServerTemplateHandler interface using client-native client
 type GetServerTemplateHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // GetServerTemplatesHandlerImpl implementation of the GetServerTemplatesHandler interface using client-native client
 type GetServerTemplatesHandlerImpl struct {
-	Client *client_native.HAProxyClient
+	Client client_native.HAProxyClient
 }
 
 // ReplaceServerTemplateHandlerImpl implementation of the ReplaceServerTemplateHandler interface using client-native client
 type ReplaceServerTemplateHandlerImpl struct {
-	Client      *client_native.HAProxyClient
+	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -74,7 +74,7 @@ func (h *CreateServerTemplateHandlerImpl) Handle(params server_template.CreateSe
 		return server_template.NewCreateServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.CreateServerTemplate(params.Backend, params.Data, t, v)
+	err := h.Client.Configuration().CreateServerTemplate(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewCreateServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +115,7 @@ func (h *DeleteServerTemplateHandlerImpl) Handle(params server_template.DeleteSe
 		return server_template.NewDeleteServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration.DeleteServerTemplate(params.Prefix, params.Backend, t, v)
+	err := h.Client.Configuration().DeleteServerTemplate(params.Prefix, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewDeleteServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +143,7 @@ func (h *GetServerTemplateHandlerImpl) Handle(params server_template.GetServerTe
 		t = *params.TransactionID
 	}
 
-	v, template, err := h.Client.Configuration.GetServerTemplate(params.Prefix, params.Backend, t)
+	v, template, err := h.Client.Configuration().GetServerTemplate(params.Prefix, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewGetServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +158,7 @@ func (h *GetServerTemplatesHandlerImpl) Handle(params server_template.GetServerT
 		t = *params.TransactionID
 	}
 
-	v, templates, err := h.Client.Configuration.GetServerTemplates(params.Backend, t)
+	v, templates, err := h.Client.Configuration().GetServerTemplates(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,13 +190,13 @@ func (h *ReplaceServerTemplateHandlerImpl) Handle(params server_template.Replace
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, ondisk, err := h.Client.Configuration.GetServerTemplate(params.Prefix, params.Backend, t)
+	_, ondisk, err := h.Client.Configuration().GetServerTemplate(params.Prefix, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = h.Client.Configuration.EditServerTemplate(params.Prefix, params.Backend, params.Data, t, v)
+	err = h.Client.Configuration().EditServerTemplate(params.Prefix, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)

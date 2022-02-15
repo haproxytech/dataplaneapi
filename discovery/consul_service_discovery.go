@@ -28,7 +28,7 @@ import (
 
 type consulServiceDiscovery struct {
 	consulServices Store
-	client         *configuration.Client
+	client         configuration.Configuration
 	reloadAgent    haproxy.IReloadAgent
 	context        context.Context
 }
