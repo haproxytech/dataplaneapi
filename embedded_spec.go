@@ -16162,7 +16162,8 @@ func init() {
       "type": "object",
       "title": "Server",
       "required": [
-        "name"
+        "name",
+        "address"
       ],
       "properties": {
         "address": {
@@ -40480,7 +40481,8 @@ func init() {
       "type": "object",
       "title": "Server",
       "required": [
-        "name"
+        "name",
+        "address"
       ],
       "properties": {
         "address": {
