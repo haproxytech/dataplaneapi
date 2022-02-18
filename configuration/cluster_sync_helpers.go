@@ -29,7 +29,11 @@ func (c *ClusterSync) getNodeFacts() map[string]string {
 		facts["dataplane_cmdline"] = c.cfg.Cmdline.String()
 	}
 
-	processInfos, err := c.cli.Runtime().GetInfo()
+	runtime, err := c.cli.Runtime()
+	if err != nil {
+		log.Errorf("unable to fetch processInfo: %s", err.Error())
+	}
+	processInfos, err := runtime.GetInfo()
 	if err != nil || len(processInfos) < 1 {
 		log.Error("unable to fetch processInfo")
 	} else {

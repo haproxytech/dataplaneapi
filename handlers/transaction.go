@@ -62,8 +62,13 @@ type CommitTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (th *StartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
-	t, err := th.Client.Configuration().StartTransaction(params.Version)
+func (h *StartTransactionHandlerImpl) Handle(params transactions.StartTransactionParams, principal interface{}) middleware.Responder {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewStartTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	t, err := configuration.StartTransaction(params.Version)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewStartTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -72,8 +77,13 @@ func (th *StartTransactionHandlerImpl) Handle(params transactions.StartTransacti
 }
 
 // Handle executing the request and returning a response
-func (th *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
-	err := th.Client.Configuration().DeleteTransaction(params.ID)
+func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.DeleteTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -82,8 +92,13 @@ func (th *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransac
 }
 
 // Handle executing the request and returning a response
-func (th *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
-	t, err := th.Client.Configuration().GetTransaction(params.ID)
+func (h *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewGetTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	t, err := configuration.GetTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
@@ -92,12 +107,19 @@ func (th *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionPa
 }
 
 // Handle executing the request and returning a response
-func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
+func (h *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
 	s := ""
 	if params.Status != nil {
 		s = *params.Status
 	}
-	ts, err := th.Client.Configuration().GetTransactions(s)
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ts, err := configuration.GetTransactions(s)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
@@ -106,14 +128,21 @@ func (th *GetTransactionsHandlerImpl) Handle(params transactions.GetTransactions
 }
 
 // Handle executing the request and returning a response
-func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
-	th.Mutex.Lock()
-	defer th.Mutex.Unlock()
+func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransactionParams, principal interface{}) middleware.Responder {
+	h.Mutex.Lock()
+	defer h.Mutex.Unlock()
 
 	var err error
 
 	var transaction *models.Transaction
-	if transaction, err = th.Client.Configuration().GetTransaction(params.ID); err != nil {
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if transaction, err = configuration.GetTransaction(params.ID); err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -125,7 +154,7 @@ func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransac
 	}
 
 	var t *models.Transaction
-	t, err = th.Client.Configuration().CommitTransaction(params.ID)
+	t, err = configuration.CommitTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -133,26 +162,26 @@ func (th *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransac
 
 	// Deleting outdated transactions with mismatching version ID
 	var txs *models.Transactions
-	txs, err = th.Client.Configuration().GetTransactions(models.TransactionStatusInProgress)
+	txs, err = configuration.GetTransactions(models.TransactionStatusInProgress)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	for _, tx := range *txs {
 		if tx.Version <= t.Version {
-			_ = th.Client.Configuration().MarkTransactionOutdated(tx.ID)
+			_ = configuration.MarkTransactionOutdated(tx.ID)
 		}
 	}
 
 	if *params.ForceReload {
-		err := th.ReloadAgent.ForceReload()
+		err := h.ReloadAgent.ForceReload()
 		if err != nil {
 			e := misc.HandleError(err)
 			return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 		}
 		return transactions.NewCommitTransactionOK().WithPayload(t)
 	}
-	rID := th.ReloadAgent.Reload()
+	rID := h.ReloadAgent.Reload()
 	return transactions.NewCommitTransactionAccepted().WithReloadID(rID).WithPayload(t)
 }
 

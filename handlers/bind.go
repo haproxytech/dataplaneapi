@@ -74,7 +74,13 @@ func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal i
 		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateBind(params.Frontend, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateBind(params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +121,13 @@ func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal i
 		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteBind(params.Name, params.Frontend, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteBind(params.Name, params.Frontend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
@@ -142,7 +154,13 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 		t = *params.TransactionID
 	}
 
-	v, b, err := h.Client.Configuration().GetBind(params.Name, params.Frontend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, b, err := configuration.GetBind(params.Name, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
@@ -157,7 +175,13 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 		t = *params.TransactionID
 	}
 
-	v, bs, err := h.Client.Configuration().GetBinds(params.Frontend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, bs, err := configuration.GetBinds(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -189,7 +213,13 @@ func (h *ReplaceBindHandlerImpl) Handle(params bind.ReplaceBindParams, principal
 		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditBind(params.Name, params.Frontend, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditBind(params.Name, params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)

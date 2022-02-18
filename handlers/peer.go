@@ -74,7 +74,13 @@ func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal i
 		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreatePeerSection(params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreatePeerSection(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +122,13 @@ func (h *DeletePeerHandlerImpl) Handle(params peer.DeletePeerParams, principal i
 		return peer.NewDeletePeerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeletePeerSection(params.Name, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return peer.NewDeletePeerDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeletePeerSection(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewDeletePeerDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +155,13 @@ func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal 
 		t = *params.TransactionID
 	}
 
-	v, p, err := h.Client.Configuration().GetPeerSection(params.Name, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, p, err := configuration.GetPeerSection(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +176,13 @@ func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principa
 		t = *params.TransactionID
 	}
 
-	v, ps, err := h.Client.Configuration().GetPeerSections(t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, ps, err := configuration.GetPeerSections(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)

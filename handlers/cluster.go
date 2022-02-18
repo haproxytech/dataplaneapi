@@ -69,7 +69,11 @@ func (h *ClusterInitiateCertificateRefreshHandlerImpl) Handle(params cluster.Ini
 
 func (h *CreateClusterHandlerImpl) err500(err error, transaction *models.Transaction) middleware.Responder {
 	if transaction != nil {
-		_ = h.Client.Configuration().DeleteTransaction(transaction.ID)
+
+		configuration, err := h.Client.Configuration()
+		if err == nil {
+			_ = configuration.DeleteTransaction(transaction.ID)
+		}
 	}
 	msg := err.Error()
 	code := int64(500)
@@ -82,7 +86,11 @@ func (h *CreateClusterHandlerImpl) err500(err error, transaction *models.Transac
 func (h *CreateClusterHandlerImpl) err406(err error, transaction *models.Transaction) middleware.Responder {
 	// 406 Not Acceptable
 	if transaction != nil {
-		_ = h.Client.Configuration().DeleteTransaction(transaction.ID)
+
+		configuration, err := h.Client.Configuration()
+		if err == nil {
+			_ = configuration.DeleteTransaction(transaction.ID)
+		}
 	}
 	msg := err.Error()
 	code := int64(406)
@@ -95,7 +103,10 @@ func (h *CreateClusterHandlerImpl) err406(err error, transaction *models.Transac
 func (h *CreateClusterHandlerImpl) err409(err error, transaction *models.Transaction) middleware.Responder {
 	// 409 Conflict
 	if transaction != nil {
-		_ = h.Client.Configuration().DeleteTransaction(transaction.ID)
+		configuration, err := h.Client.Configuration()
+		if err == nil {
+			_ = configuration.DeleteTransaction(transaction.ID)
+		}
 	}
 	msg := err.Error()
 	code := int64(409)
@@ -154,44 +165,49 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 		// If we don't want to keep the haproxy configuration, set it to dummy config
 		if params.Configuration == nil || *params.Configuration != "keep" {
 			log.Warning("clearing configuration as requested")
-			version, errVersion := h.Client.Configuration().GetVersion("")
+
+			configuration, err := h.Client.Configuration()
+			if err != nil {
+				return h.err500(err, nil)
+			}
+			version, errVersion := configuration.GetVersion("")
 			if errVersion != nil || version < 1 {
 				// silently fallback to 1
 				version = 1
 			}
-			transaction, err := h.Client.Configuration().StartTransaction(version)
+			transaction, err := configuration.StartTransaction(version)
 			if err != nil {
 				return h.err500(err, transaction)
 			}
 			// delete backends
-			_, backends, err := h.Client.Configuration().GetBackends(transaction.ID)
+			_, backends, err := configuration.GetBackends(transaction.ID)
 			if err != nil {
 				return h.err500(err, transaction)
 			}
 			for _, backend := range backends {
-				err = h.Client.Configuration().DeleteBackend(backend.Name, transaction.ID, 0)
+				err = configuration.DeleteBackend(backend.Name, transaction.ID, 0)
 				if err != nil {
 					return h.err500(err, transaction)
 				}
 			}
 			// delete all frontends
-			_, frontends, err := h.Client.Configuration().GetFrontends(transaction.ID)
+			_, frontends, err := configuration.GetFrontends(transaction.ID)
 			if err != nil {
 				return h.err500(err, transaction)
 			}
 			for _, frontend := range frontends {
-				err = h.Client.Configuration().DeleteFrontend(frontend.Name, transaction.ID, 0)
+				err = configuration.DeleteFrontend(frontend.Name, transaction.ID, 0)
 				if err != nil {
 					return h.err500(err, transaction)
 				}
 			}
 
 			// now create dummy frontend so haproxy does not complain
-			err = h.Client.Configuration().CreateFrontend(&models.Frontend{Name: "disabled"}, transaction.ID, 0)
+			err = configuration.CreateFrontend(&models.Frontend{Name: "disabled"}, transaction.ID, 0)
 			if err != nil {
 				return h.err500(err, transaction)
 			}
-			err = h.Client.Configuration().CreateBind("disabled", &models.Bind{
+			err = configuration.CreateBind("disabled", &models.Bind{
 				BindParams: models.BindParams{
 					Name: "tmp",
 				},
@@ -206,14 +222,14 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 				if err != nil {
 					return h.err500(err, transaction)
 				}
-				_, peerSections, errPeers := h.Client.Configuration().GetPeerSections(transaction.ID)
+				_, peerSections, errPeers := configuration.GetPeerSections(transaction.ID)
 				if errPeers != nil {
 					return h.err500(errPeers, transaction)
 				}
 				peerFound := false
 				dataplaneID := h.Config.Cluster.ID.Load()
 				for _, section := range peerSections {
-					_, peerEntries, errPeersEntries := h.Client.Configuration().GetPeerEntries(section.Name, transaction.ID)
+					_, peerEntries, errPeersEntries := configuration.GetPeerEntries(section.Name, transaction.ID)
 					if errPeersEntries != nil {
 						return h.err500(errPeersEntries, transaction)
 					}
@@ -221,7 +237,7 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 						if peer.Name == dataplaneID {
 							peerFound = true
 							peer.Name = "localhost"
-							errPeerEntry := h.Client.Configuration().EditPeerEntry(dataplaneID, section.Name, peer, transaction.ID, 0)
+							errPeerEntry := configuration.EditPeerEntry(dataplaneID, section.Name, peer, transaction.ID, 0)
 							if errPeerEntry != nil {
 								return h.err500(errPeerEntry, transaction)
 							}
@@ -232,7 +248,7 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 					return h.err500(fmt.Errorf("peer [%s] not found in HAProxy config", dataplaneID), transaction)
 				}
 			}
-			_, err = h.Client.Configuration().CommitTransaction(transaction.ID)
+			_, err = configuration.CommitTransaction(transaction.ID)
 			if err != nil {
 				return h.err500(err, nil)
 			}
@@ -260,7 +276,11 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 
 func (h *DeleteClusterHandlerImpl) err500(err error, transaction *models.Transaction) middleware.Responder {
 	if transaction != nil {
-		_ = h.Client.Configuration().DeleteTransaction(transaction.ID)
+
+		configuration, err := h.Client.Configuration()
+		if err == nil {
+			_ = configuration.DeleteTransaction(transaction.ID)
+		}
 	}
 	msg := err.Error()
 	code := int64(500)

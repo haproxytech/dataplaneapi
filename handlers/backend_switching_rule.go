@@ -73,7 +73,12 @@ func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateBackendSwitchingRule(params.Frontend, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.CreateBackendSwitchingRule(params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -114,7 +119,13 @@ func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 		return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteBackendSwitchingRule(params.Index, params.Frontend, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteBackendSwitchingRule(params.Index, params.Frontend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -142,7 +153,13 @@ func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rul
 		t = *params.TransactionID
 	}
 
-	v, bckRule, err := h.Client.Configuration().GetBackendSwitchingRule(params.Index, params.Frontend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, bckRule, err := configuration.GetBackendSwitchingRule(params.Index, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewGetBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -157,7 +174,13 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 		t = *params.TransactionID
 	}
 
-	v, bckRules, err := h.Client.Configuration().GetBackendSwitchingRules(params.Frontend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, bckRules, err := configuration.GetBackendSwitchingRules(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -189,7 +212,13 @@ func (h *ReplaceBackendSwitchingRuleHandlerImpl) Handle(params backend_switching
 		return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditBackendSwitchingRule(params.Index, params.Frontend, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditBackendSwitchingRule(params.Index, params.Frontend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)

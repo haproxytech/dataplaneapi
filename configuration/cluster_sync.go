@@ -375,7 +375,10 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		return err
 	}
 	if c.cfg.HAProxy.NodeIDFile != "" {
-		configuration := c.cli.Configuration()
+		configuration, errCfg := c.cli.Configuration()
+		if errCfg != nil {
+			return errCfg
+		}
 		// write id to file
 		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0644) // nolint:gosec
 		if errFID != nil {

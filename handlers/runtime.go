@@ -50,7 +50,10 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 		return true
 	}
 
-	runtime := client.Runtime()
+	runtime, err := client.Runtime()
+	if err != nil {
+		return true
+	}
 	// objects are the same, do nothing and don't reload
 	diff := compareObjects(data, ondisk)
 	if len(diff) == 0 {

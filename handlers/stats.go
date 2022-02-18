@@ -47,7 +47,13 @@ func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal inte
 		}
 	}
 
-	s := h.Client.Runtime().GetStats()
+	runtime, err := h.Client.Runtime()
+	if err != nil {
+		e := misc.HandleError(err)
+		return stats.NewGetStatsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	s := runtime.GetStats()
 
 	errorFound := false
 	for _, nStat := range s {

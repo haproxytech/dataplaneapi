@@ -28,8 +28,14 @@ type SpoeCreateSpoeScopeHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (s *SpoeCreateSpoeScopeHandlerImpl) Handle(params spoe.CreateSpoeScopeParams, principal interface{}) middleware.Responder {
-	ss, err := s.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeCreateSpoeScopeHandlerImpl) Handle(params spoe.CreateSpoeScopeParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeScopeDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeScopeDefault(int(*e.Code)).WithPayload(e)
@@ -55,8 +61,14 @@ type SpoeDeleteSpoeScopeHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (s *SpoeDeleteSpoeScopeHandlerImpl) Handle(params spoe.DeleteSpoeScopeParams, principal interface{}) middleware.Responder {
-	ss, err := s.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeDeleteSpoeScopeHandlerImpl) Handle(params spoe.DeleteSpoeScopeParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewDeleteSpoeScopeDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeScopeDefault(int(*e.Code)).WithPayload(e)
@@ -83,8 +95,14 @@ type SpoeGetSpoeScopesHandlerImpl struct {
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (s *SpoeGetSpoeScopesHandlerImpl) Handle(params spoe.GetSpoeScopesParams, principal interface{}) middleware.Responder {
-	ss, err := s.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeGetSpoeScopesHandlerImpl) Handle(params spoe.GetSpoeScopesParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
@@ -106,8 +124,14 @@ type SpoeGetSpoeScopeHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (s *SpoeGetSpoeScopeHandlerImpl) Handle(params spoe.GetSpoeScopeParams, principal interface{}) middleware.Responder {
-	ss, err := s.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeGetSpoeScopeHandlerImpl) Handle(params spoe.GetSpoeScopeParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)

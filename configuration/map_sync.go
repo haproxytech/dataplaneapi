@@ -55,7 +55,12 @@ func (ms *MapSync) SyncAll(client client_native.HAProxyClient) {
 	for {
 		select {
 		case <-ticker.C:
-			maps, err := client.Runtime().ShowMaps()
+			runtime, err := client.Runtime()
+			if err != nil {
+				log.Warning("show maps sync error: ", err.Error())
+				continue
+			}
+			maps, err := runtime.ShowMaps()
 			if err != nil {
 				log.Warning("show maps sync error: ", err.Error())
 				continue
@@ -83,12 +88,16 @@ func (ms *MapSync) Sync(mp *models.Map, client client_native.HAProxyClient) (boo
 	if err != nil {
 		return false, fmt.Errorf("error reading map file: %s %s", mp.File, err.Error())
 	}
-	fileEntries := client.Runtime().ParseMapEntriesFromFile(rawFile, false)
+	runtime, err := client.Runtime()
+	if err != nil {
+		return false, fmt.Errorf("getting runtime entries error: id: %s %s", mp.ID, err.Error())
+	}
+	fileEntries := runtime.ParseMapEntriesFromFile(rawFile, false)
 	sort.Slice(fileEntries, func(i, j int) bool { return fileEntries[i].Key < fileEntries[j].Key })
 
 	// runtime map entries
 	id := fmt.Sprintf("#%s", mp.ID)
-	runtimeEntries, err := client.Runtime().ShowMapEntries(id)
+	runtimeEntries, err := runtime.ShowMapEntries(id)
 	if err != nil {
 		return false, fmt.Errorf("getting runtime entries error: id: %s %s", id, err.Error())
 	}

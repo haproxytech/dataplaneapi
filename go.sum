@@ -174,6 +174,8 @@ github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/haproxytech/client-native/v3 v3.0.0 h1:D3bx4ylnkKfRqDVFk15ZLcMyKVTgdgNN25NKAjb6LYo=
+github.com/haproxytech/client-native/v3 v3.0.0/go.mod h1:5qDnA7M1HmgJ/CTy6ByUomvnfgAgpH6R8NYZMdcMQ9k=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220215134434-54d66ef01d26 h1:IWU3pWA4MzYzi0N5NDUgMf06V6bmXCsHok0hBMM1Zik=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220215134434-54d66ef01d26/go.mod h1:pEuHx+aFhn0lIdvAg1OaawQfeRkpq1I8HzjtZN4/PLI=
 github.com/haproxytech/go-logger v1.0.1-0.20211022075555-178f1cdf4d84 h1:rSLHjJ4VGvMZcGAGQ9GaXuhvdswu1iLVXTThLX6OKN8=

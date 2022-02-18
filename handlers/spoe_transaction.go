@@ -31,8 +31,14 @@ type SpoeTransactionsStartSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (th *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_transactions.StartSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeTransactionsStartSpoeTransactionHandlerImpl) Handle(params spoe_transactions.StartSpoeTransactionParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -56,8 +62,14 @@ type SpoeTransactionsDeleteSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (th *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_transactions.DeleteSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeTransactionsDeleteSpoeTransactionHandlerImpl) Handle(params spoe_transactions.DeleteSpoeTransactionParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -76,8 +88,14 @@ type SpoeTransactionsGetSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (th *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeTransactionsGetSpoeTransactionHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -101,8 +119,14 @@ type SpoeTransactionsGetSpoeTransactionsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (th *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionsParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeTransactionsGetSpoeTransactionsHandlerImpl) Handle(params spoe_transactions.GetSpoeTransactionsParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -137,8 +161,14 @@ type SpoeTransactionsCommitSpoeTransactionHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (th *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_transactions.CommitSpoeTransactionParams, principal interface{}) middleware.Responder {
-	ss, err := th.Client.Spoe().GetSingleSpoe(params.Spoe)
+func (h *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_transactions.CommitSpoeTransactionParams, principal interface{}) middleware.Responder {
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe_transactions.NewStartSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
@@ -154,13 +184,13 @@ func (th *SpoeTransactionsCommitSpoeTransactionHandlerImpl) Handle(params spoe_t
 		Status:  t.Status,
 	}
 	if *params.ForceReload {
-		err := th.ReloadAgent.ForceReload()
+		err := h.ReloadAgent.ForceReload()
 		if err != nil {
 			e := misc.HandleError(err)
 			return spoe_transactions.NewCommitSpoeTransactionDefault(int(*e.Code)).WithPayload(e)
 		}
 		return spoe_transactions.NewCommitSpoeTransactionOK().WithPayload(m)
 	}
-	rID := th.ReloadAgent.Reload()
+	rID := h.ReloadAgent.Reload()
 	return spoe_transactions.NewCommitSpoeTransactionAccepted().WithReloadID(rID).WithPayload(m)
 }

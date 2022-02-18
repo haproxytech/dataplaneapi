@@ -130,10 +130,12 @@ func ConfigVersionMiddleware(client clientnative.HAProxyClient) Adapter {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			qs := r.URL.Query()
 			tID := qs.Get("transaction_id")
-			configuration := client.Configuration()
+			configuration, err := client.Configuration()
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusNotImplemented)
+			}
 			tr, _ := configuration.GetTransaction(tID)
 			var v int64
-			var err error
 			if tr != nil && tr.Status == models.TransactionStatusInProgress {
 				v, err = configuration.GetConfigurationVersion(tr.ID)
 			} else {

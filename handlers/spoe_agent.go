@@ -29,7 +29,13 @@ type SpoeCreateSpoeAgentHandlerImpl struct {
 }
 
 func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -56,7 +62,12 @@ type SpoeDeleteSpoeAgentHandlerImpl struct {
 }
 
 func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewDeleteSpoeAgentDefault(int(*e.Code)).WithPayload(e)
+	}
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -84,7 +95,13 @@ type SpoeGetSpoeAgentsHandlerImpl struct {
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
 func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
@@ -107,7 +124,13 @@ type SpoeGetSpoeAgentHandlerImpl struct {
 }
 
 func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -133,7 +156,13 @@ type SpoeReplaceSpoeAgentHandlerImpl struct {
 }
 
 func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentParams, principal interface{}) middleware.Responder {
-	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)

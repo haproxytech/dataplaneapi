@@ -74,7 +74,13 @@ func (h *CreateTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.CreateT
 		return tcp_request_rule.NewCreateTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateTCPRequestRule(params.ParentType, params.ParentName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_request_rule.NewCreateTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateTCPRequestRule(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_request_rule.NewCreateTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +121,13 @@ func (h *DeleteTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.DeleteT
 		return tcp_request_rule.NewDeleteTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteTCPRequestRule(params.Index, params.ParentType, params.ParentName, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_request_rule.NewDeleteTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteTCPRequestRule(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_request_rule.NewDeleteTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +155,13 @@ func (h *GetTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.GetTCPRequ
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration().GetTCPRequestRule(params.Index, params.ParentType, params.ParentName, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_request_rule.NewGetTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rule, err := configuration.GetTCPRequestRule(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_request_rule.NewGetTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +176,13 @@ func (h *GetTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.GetTCPReq
 		t = *params.TransactionID
 	}
 
-	v, rules, err := h.Client.Configuration().GetTCPRequestRules(params.ParentType, params.ParentName, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_request_rule.NewGetTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rules, err := configuration.GetTCPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,7 +214,13 @@ func (h *ReplaceTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.Replac
 		return tcp_request_rule.NewReplaceTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditTCPRequestRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_request_rule.NewReplaceTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditTCPRequestRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_request_rule.NewReplaceTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)

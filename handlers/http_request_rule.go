@@ -74,7 +74,13 @@ func (h *CreateHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.Creat
 		return http_request_rule.NewCreateHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateHTTPRequestRule(params.ParentType, params.ParentName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_request_rule.NewCreateHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateHTTPRequestRule(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_request_rule.NewCreateHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +122,13 @@ func (h *DeleteHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.Delet
 		return http_request_rule.NewDeleteHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteHTTPRequestRule(params.Index, params.ParentType, params.ParentName, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_request_rule.NewDeleteHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteHTTPRequestRule(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_request_rule.NewDeleteHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +155,13 @@ func (h *GetHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.GetHTTPR
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration().GetHTTPRequestRule(params.Index, params.ParentType, params.ParentName, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_request_rule.NewGetHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rule, err := configuration.GetHTTPRequestRule(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_request_rule.NewGetHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +176,13 @@ func (h *GetHTTPRequestRulesHandlerImpl) Handle(params http_request_rule.GetHTTP
 		t = *params.TransactionID
 	}
 
-	v, rules, err := h.Client.Configuration().GetHTTPRequestRules(params.ParentType, params.ParentName, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_request_rule.NewGetHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rules, err := configuration.GetHTTPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,7 +214,13 @@ func (h *ReplaceHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.Repl
 		return http_request_rule.NewReplaceHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditHTTPRequestRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_request_rule.NewReplaceHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditHTTPRequestRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_request_rule.NewReplaceHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)

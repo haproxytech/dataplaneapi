@@ -319,7 +319,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	if cfg.HAProxy.MaxOpenTransactions > 0 {
 		// creating the threshold limit using the CLI flag as hard quota and current open transactions as starting point
 		actualCount := func() uint64 {
-			ts, err := client.Configuration().GetTransactions(models.TransactionStatusInProgress)
+			configuration, err := client.Configuration()
+			if err != nil {
+				log.Errorf("Cannot retrieve current open transactions for rate limit, default to zero (%s)", err.Error())
+				return 0
+			}
+			ts, err := configuration.GetTransactions(models.TransactionStatusInProgress)
 			if err != nil {
 				log.Errorf("Cannot retrieve current open transactions for rate limit, default to zero (%s)", err.Error())
 				return 0
@@ -583,9 +588,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		return specification.NewGetSpecificationOK().WithPayload(&m)
 	})
 
+	configurationClient, err := client.Configuration()
+	if err != nil {
+		log.Fatal(err)
+	}
 	// set up service discovery handlers
 	discovery := service_discovery.NewServiceDiscoveries(service_discovery.ServiceDiscoveriesParams{
-		Client:      client.Configuration(),
+		Client:      configurationClient,
 		ReloadAgent: ra,
 		Context:     ctx,
 	})
@@ -619,16 +628,16 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// create stored AWS instances
 	for _, data := range cfg.ServiceDiscovery.AWSRegions {
-		var err error
+		var errSD error
 
 		if data.ID == nil || len(*data.ID) == 0 {
 			data.ID = service_discovery.NewServiceDiscoveryUUID()
 		}
-		if err = service_discovery.ValidateAWSData(data, true); err != nil {
-			log.Fatalf("Error validating AWS instance: " + err.Error())
+		if errSD = service_discovery.ValidateAWSData(data, true); errSD != nil {
+			log.Fatalf("Error validating AWS instance: " + errSD.Error())
 		}
-		if err = discovery.AddNode("aws", *data.ID, data); err != nil {
-			log.Warning("Error creating AWS instance: " + err.Error())
+		if errSD = discovery.AddNode("aws", *data.ID, data); errSD != nil {
+			log.Warning("Error creating AWS instance: " + errSD.Error())
 		}
 	}
 	_ = cfg.SaveAWS(cfg.ServiceDiscovery.AWSRegions)
@@ -846,7 +855,7 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 		log.Fatalf("error trying to use empty string for SPOE configuration directory")
 	}
 
-	client, err := client_native.New(context.Background(), opt...)
+	client, err := client_native.New(cyx, opt...)
 	if err != nil {
 		log.Fatalf("Error initializing configuration client: %v", err)
 	}
@@ -994,8 +1003,13 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 				var clientCtx context.Context
 				cancel()
 				clientCtx, cancel = context.WithCancel(ctx)
-				client.ReplaceRuntime(configureRuntimeClient(clientCtx, client.Configuration(), haproxyOptions))
-				log.Info("Reloaded Data Plane API")
+				configuration, err := client.Configuration()
+				if err != nil {
+					log.Infof("Unable to reload Data Plane API: %s", err.Error())
+				} else {
+					client.ReplaceRuntime(configureRuntimeClient(clientCtx, configuration, haproxyOptions))
+					log.Info("Reloaded Data Plane API")
+				}
 			} else if sig == syscall.SIGUSR2 {
 				reloadConfigurationFile(client, haproxyOptions, users)
 			}
@@ -1022,7 +1036,12 @@ func reloadConfigurationFile(client client_native.HAProxyClient, haproxyOptions 
 func startWatcher(ctx context.Context, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
 	cb := func() {
 		reloadConfigurationFile(client, haproxyOptions, users)
-		if err := client.Configuration().IncrementVersion(); err != nil {
+		configuration, err := client.Configuration()
+		if err != nil {
+			log.Warningf("Failed to increment configuration version: %v", err)
+			return
+		}
+		if err := configuration.IncrementVersion(); err != nil {
 			log.Warningf("Failed to increment configuration version: %v", err)
 		}
 	}

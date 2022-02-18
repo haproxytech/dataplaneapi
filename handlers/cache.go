@@ -74,7 +74,13 @@ func (h *CreateCacheHandlerImpl) Handle(params cache.CreateCacheParams, principa
 		return cache.NewCreateCacheDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateCache(params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return cache.NewCreateCacheDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateCache(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewCreateCacheDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +122,13 @@ func (h *DeleteCacheHandlerImpl) Handle(params cache.DeleteCacheParams, principa
 		return cache.NewDeleteCacheDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteCache(params.Name, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return cache.NewDeleteCacheDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteCache(params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewDeleteCacheDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +155,13 @@ func (h *GetCacheHandlerImpl) Handle(params cache.GetCacheParams, principal inte
 		t = *params.TransactionID
 	}
 
-	v, r, err := h.Client.Configuration().GetCache(params.Name, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return cache.NewGetCacheDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, r, err := configuration.GetCache(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewGetCacheDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +176,13 @@ func (h *GetCachesHandlerImpl) Handle(params cache.GetCachesParams, principal in
 		t = *params.TransactionID
 	}
 
-	v, rs, err := h.Client.Configuration().GetCaches(t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return cache.NewGetCachesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rs, err := configuration.GetCaches(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewGetCachesDefault(int(*e.Code)).WithPayload(e)
@@ -187,7 +211,13 @@ func (h *ReplaceCacheHandlerImpl) Handle(params cache.ReplaceCacheParams, princi
 		return cache.NewReplaceCacheDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditCache(params.Name, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return cache.NewReplaceCacheDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditCache(params.Name, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewReplaceCacheDefault(int(*e.Code)).WithPayload(e)

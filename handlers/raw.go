@@ -51,7 +51,13 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 		v = *params.Version
 	}
 
-	v, data, err := h.Client.Configuration().GetRawConfiguration(t, v)
+	cfg, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return configuration.NewGetConfigurationVersionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, data, err := cfg.GetRawConfiguration(t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
@@ -81,7 +87,13 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 	if params.OnlyValidate != nil {
 		onlyValidate = *params.OnlyValidate
 	}
-	err := h.Client.Configuration().PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
+
+	cfg, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = cfg.PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
@@ -112,7 +124,10 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 }
 
 func executeRuntimeActions(actionsStr string, client client_native.HAProxyClient) error {
-	runtime := client.Runtime()
+	runtime, err := client.Runtime()
+	if err != nil {
+		return err
+	}
 	actions := strings.Split(actionsStr, ";")
 	for _, a := range actions {
 		params := strings.Split(a, " ")

@@ -34,7 +34,14 @@ func (h *SpoeGetSpoeConfigurationVersionHandlerImpl) Handle(params spoe.GetSpoeC
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	ss, err := h.Client.Spoe().GetSingleSpoe(params.Spoe)
+
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return spoe.NewGetSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))

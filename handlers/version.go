@@ -34,7 +34,14 @@ func (h *ConfigurationGetConfigurationVersionHandlerImpl) Handle(params configur
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	v, err := h.Client.Configuration().GetConfigurationVersion(t)
+
+	cfg, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return configuration.NewGetConfigurationVersionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, err := cfg.GetConfigurationVersion(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetConfigurationVersionDefault(int(*e.Code)).WithPayload(e)

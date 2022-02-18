@@ -78,7 +78,13 @@ func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams
 		return tcp_check.NewCreateTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateTCPCheck(params.ParentType, pName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_check.NewCreateTCPCheckDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateTCPCheck(params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewCreateTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -125,7 +131,13 @@ func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams
 		return tcp_check.NewDeleteTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteTCPCheck(params.Index, params.ParentType, pName, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_check.NewDeleteTCPCheckDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteTCPCheck(params.Index, params.ParentType, pName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewDeleteTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -159,7 +171,13 @@ func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, prin
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration().GetTCPCheck(params.Index, params.ParentType, pName, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_check.NewGetTCPCheckDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, data, err := configuration.GetTCPCheck(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewGetTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -179,7 +197,13 @@ func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, pr
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration().GetTCPChecks(params.ParentType, pName, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_check.NewGetTCPChecksDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, data, err := configuration.GetTCPChecks(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -216,7 +240,13 @@ func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckPara
 		return tcp_check.NewReplaceTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditTCPCheck(params.Index, params.ParentType, pName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_check.NewReplaceTCPCheckDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditTCPCheck(params.Index, params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewReplaceTCPCheckDefault(int(*e.Code)).WithPayload(e)

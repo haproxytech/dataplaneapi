@@ -43,7 +43,13 @@ func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, princ
 		t = *params.TransactionID
 	}
 
-	v, data, err := h.Client.Configuration().GetDefaultsConfiguration(t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, data, err := configuration.GetDefaultsConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
@@ -72,7 +78,13 @@ func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParam
 		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().PushDefaultsConfiguration(params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.PushDefaultsConfiguration(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)

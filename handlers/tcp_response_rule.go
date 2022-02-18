@@ -74,7 +74,13 @@ func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Creat
 		return tcp_response_rule.NewCreateTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateTCPResponseRule(params.Backend, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_response_rule.NewCreateTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateTCPResponseRule(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewCreateTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +122,13 @@ func (h *DeleteTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Delet
 		return tcp_response_rule.NewDeleteTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteTCPResponseRule(params.Index, params.Backend, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_response_rule.NewDeleteTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteTCPResponseRule(params.Index, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewDeleteTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +155,12 @@ func (h *GetTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.GetTCPRe
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration().GetTCPResponseRule(params.Index, params.Backend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_response_rule.NewGetTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+	v, rule, err := configuration.GetTCPResponseRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewGetTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +175,13 @@ func (h *GetTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.GetTCPR
 		t = *params.TransactionID
 	}
 
-	v, rules, err := h.Client.Configuration().GetTCPResponseRules(params.Backend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_response_rule.NewGetTCPResponseRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rules, err := configuration.GetTCPResponseRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,7 +213,13 @@ func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Repl
 		return tcp_response_rule.NewReplaceTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditTCPResponseRule(params.Index, params.Backend, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_response_rule.NewReplaceTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditTCPResponseRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewReplaceTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)

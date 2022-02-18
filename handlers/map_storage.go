@@ -43,7 +43,13 @@ func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateSto
 		return storage.NewCreateStorageMapFileBadRequest()
 	}
 
-	filename, err := h.Client.MapStorage().Create(file.Header.Filename, params.FileUpload)
+	st, err := h.Client.MapStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewCreateStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	filename, err := st.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return storage.NewCreateStorageMapFileDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -68,8 +74,14 @@ type GetAllStorageMapFilesHandlerImpl struct {
 func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
 	tempMaps := map[string]*models.Map{}
 
+	st, err := h.Client.MapStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewCreateStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	// get filenames for files in storage
-	filenames, err := h.Client.MapStorage().GetAll()
+	filenames, err := st.GetAll()
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetAllStorageMapFilesDefault(int(*e.Code)).WithPayload(e)
@@ -84,8 +96,13 @@ func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMa
 		}
 	}
 
+	rn, err := h.Client.Runtime()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewCreateStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+	}
 	// get Map model instances for runtime-loaded files
-	runtimeMaps, err := h.Client.Runtime().ShowMaps()
+	runtimeMaps, err := rn.ShowMaps()
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return storage.NewGetAllStorageMapFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -115,7 +132,13 @@ type GetOneStorageMapHandlerImpl struct {
 }
 
 func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
-	filename, err := h.Client.MapStorage().Get(params.Name)
+	st, err := h.Client.MapStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewGetAllStorageMapFilesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	filename, err := st.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageMapDefault(int(*e.Code)).WithPayload(e)
@@ -137,9 +160,21 @@ type StorageDeleteStorageMapHandlerImpl struct {
 }
 
 func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorageMapParams, principal interface{}) middleware.Responder {
-	runningConf := strings.NewReader(h.Client.Configuration().Parser().String())
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewCreateStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+	}
 
-	filename, err := h.Client.MapStorage().Get(params.Name)
+	st, err := h.Client.MapStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewCreateStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	runningConf := strings.NewReader(configuration.Parser().String())
+
+	filename, err := st.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -161,7 +196,7 @@ func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorage
 		lineNr++
 	}
 
-	err = h.Client.MapStorage().Delete(params.Name)
+	err = st.Delete(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageMapDefault(int(*e.Code)).WithPayload(e)
@@ -176,7 +211,13 @@ type StorageReplaceStorageMapFileHandlerImpl struct {
 }
 
 func (h *StorageReplaceStorageMapFileHandlerImpl) Handle(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
-	_, err := h.Client.MapStorage().Replace(params.Name, params.Data)
+	st, err := h.Client.MapStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	_, err = st.Replace(params.Name, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)

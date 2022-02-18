@@ -74,7 +74,13 @@ func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal inte
 		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateACL(params.ParentType, params.ParentName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateACL(params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
@@ -115,8 +121,13 @@ func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal inte
 		}
 		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
 	}
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+	}
 
-	err := h.Client.Configuration().DeleteACL(params.Index, params.ParentType, params.ParentName, t, v)
+	err = configuration.DeleteACL(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +154,13 @@ func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{
 		t = *params.TransactionID
 	}
 
-	v, rule, err := h.Client.Configuration().GetACL(params.Index, params.ParentType, params.ParentName, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rule, err := configuration.GetACL(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
@@ -163,7 +180,13 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 		aclName = []string{*params.ACLName}
 	}
 
-	v, rules, err := h.Client.Configuration().GetACLs(params.ParentType, params.ParentName, t, aclName...)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, rules, err := configuration.GetACLs(params.ParentType, params.ParentName, t, aclName...)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -195,7 +218,12 @@ func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal in
 		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditACL(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.EditACL(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)

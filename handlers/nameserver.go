@@ -74,7 +74,12 @@ func (h *CreateNameserverHandlerImpl) Handle(params nameserver.CreateNameserverP
 		return nameserver.NewCreateNameserverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateNameserver(params.Resolver, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return nameserver.NewCreateNameserverDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.CreateNameserver(params.Resolver, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return nameserver.NewCreateNameserverDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +120,13 @@ func (h *DeleteNameserverHandlerImpl) Handle(params nameserver.DeleteNameserverP
 		return nameserver.NewDeleteNameserverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteNameserver(params.Name, params.Resolver, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return nameserver.NewDeleteNameserverDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteNameserver(params.Name, params.Resolver, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return nameserver.NewDeleteNameserverDefault(int(*e.Code)).WithPayload(e)
@@ -142,7 +153,13 @@ func (h *GetNameserverHandlerImpl) Handle(params nameserver.GetNameserverParams,
 		t = *params.TransactionID
 	}
 
-	v, b, err := h.Client.Configuration().GetNameserver(params.Name, params.Resolver, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return nameserver.NewGetNameserverDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, b, err := configuration.GetNameserver(params.Name, params.Resolver, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return nameserver.NewGetNameserverDefault(int(*e.Code)).WithPayload(e)
@@ -157,7 +174,13 @@ func (h *GetNameserversHandlerImpl) Handle(params nameserver.GetNameserversParam
 		t = *params.TransactionID
 	}
 
-	v, bs, err := h.Client.Configuration().GetNameservers(params.Resolver, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return nameserver.NewGetNameserversDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, bs, err := configuration.GetNameservers(params.Resolver, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return nameserver.NewGetNameserversDefault(int(*e.Code)).WithPayload(e)
@@ -186,7 +209,13 @@ func (h *ReplaceNameserverHandlerImpl) Handle(params nameserver.ReplaceNameserve
 		return nameserver.NewReplaceNameserverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().EditNameserver(params.Name, params.Resolver, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return nameserver.NewReplaceNameserverDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditNameserver(params.Name, params.Resolver, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return nameserver.NewReplaceNameserverDefault(int(*e.Code)).WithPayload(e)

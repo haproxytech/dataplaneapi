@@ -34,7 +34,14 @@ func (h *SpoeCreateSpoeHandlerImpl) Handle(params spoe.CreateSpoeParams, princip
 	if !ok {
 		return spoe.NewCreateSpoeBadRequest()
 	}
-	path, err := h.Client.Spoe().Create(file.Header.Filename, params.FileUpload)
+
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewCreateSpoeDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	path, err := spoeStorage.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeDefault(int(*e.Code)).WithPayload(e)
@@ -48,7 +55,13 @@ type SpoeDeleteSpoeFileHandlerImpl struct {
 }
 
 func (h *SpoeDeleteSpoeFileHandlerImpl) Handle(params spoe.DeleteSpoeFileParams, principal interface{}) middleware.Responder {
-	err := h.Client.Spoe().Delete(params.Name)
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewDeleteSpoeFileDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = spoeStorage.Delete(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeFileDefault(int(*e.Code)).WithPayload(e)
@@ -63,7 +76,13 @@ type SpoeGetAllSpoeFilesHandlerImpl struct {
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
 func (h *SpoeGetAllSpoeFilesHandlerImpl) Handle(params spoe.GetAllSpoeFilesParams, principal interface{}) middleware.Responder {
-	files, err := h.Client.Spoe().GetAll()
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	files, err := spoeStorage.GetAll()
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
@@ -77,7 +96,13 @@ type SpoeGetOneSpoeFileHandlerImpl struct {
 }
 
 func (h *SpoeGetOneSpoeFileHandlerImpl) Handle(params spoe.GetOneSpoeFileParams, principal interface{}) middleware.Responder {
-	path, err := h.Client.Spoe().Get(params.Name)
+	spoeStorage, err := h.Client.Spoe()
+	if err != nil {
+		e := misc.HandleError(err)
+		return spoe.NewGetOneSpoeFileDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	path, err := spoeStorage.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetOneSpoeFileDefault(int(*e.Code)).WithPayload(e)

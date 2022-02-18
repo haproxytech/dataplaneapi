@@ -74,7 +74,13 @@ func (h *CreateServerTemplateHandlerImpl) Handle(params server_template.CreateSe
 		return server_template.NewCreateServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().CreateServerTemplate(params.Backend, params.Data, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return server_template.NewCreateServerTemplateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.CreateServerTemplate(params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewCreateServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -115,7 +121,13 @@ func (h *DeleteServerTemplateHandlerImpl) Handle(params server_template.DeleteSe
 		return server_template.NewDeleteServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err := h.Client.Configuration().DeleteServerTemplate(params.Prefix, params.Backend, t, v)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return server_template.NewDeleteServerTemplateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.DeleteServerTemplate(params.Prefix, params.Backend, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewDeleteServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -143,7 +155,13 @@ func (h *GetServerTemplateHandlerImpl) Handle(params server_template.GetServerTe
 		t = *params.TransactionID
 	}
 
-	v, template, err := h.Client.Configuration().GetServerTemplate(params.Prefix, params.Backend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return server_template.NewGetServerTemplateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, template, err := configuration.GetServerTemplate(params.Prefix, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewGetServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -158,7 +176,13 @@ func (h *GetServerTemplatesHandlerImpl) Handle(params server_template.GetServerT
 		t = *params.TransactionID
 	}
 
-	v, templates, err := h.Client.Configuration().GetServerTemplates(params.Backend, t)
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return server_template.NewGetServerTemplatesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	v, templates, err := configuration.GetServerTemplates(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -190,13 +214,19 @@ func (h *ReplaceServerTemplateHandlerImpl) Handle(params server_template.Replace
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, ondisk, err := h.Client.Configuration().GetServerTemplate(params.Prefix, params.Backend, t)
+	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = h.Client.Configuration().EditServerTemplate(params.Prefix, params.Backend, params.Data, t, v)
+	_, ondisk, err := configuration.GetServerTemplate(params.Prefix, params.Backend, t)
+	if err != nil {
+		e := misc.HandleError(err)
+		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.EditServerTemplate(params.Prefix, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)

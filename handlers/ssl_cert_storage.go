@@ -38,7 +38,13 @@ type StorageGetAllStorageSSLCertificatesHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *StorageGetAllStorageSSLCertificatesHandlerImpl) Handle(params storage.GetAllStorageSSLCertificatesParams, principal interface{}) middleware.Responder {
-	filelist, err := h.Client.SSLCertStorage().GetAll()
+	sslStorage, err := h.Client.SSLCertStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewGetAllStorageSSLCertificatesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	filelist, err := sslStorage.GetAll()
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetAllStorageSSLCertificatesDefault(int(*e.Code)).WithPayload(e)
@@ -61,7 +67,13 @@ type StorageGetOneStorageSSLCertificateHandlerImpl struct {
 }
 
 func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.GetOneStorageSSLCertificateParams, principal interface{}) middleware.Responder {
-	filename, err := h.Client.SSLCertStorage().Get(params.Name)
+	sslStorage, err := h.Client.SSLCertStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewGetOneStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	filename, err := sslStorage.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -84,9 +96,20 @@ type StorageDeleteStorageSSLCertificateHandlerImpl struct {
 }
 
 func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
-	runningConf := strings.NewReader(h.Client.Configuration().Parser().String())
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
+	runningConf := strings.NewReader(configuration.Parser().String())
 
-	filename, err := h.Client.SSLCertStorage().Get(params.Name)
+	sslStorage, err := h.Client.SSLCertStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	filename, err := sslStorage.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -108,7 +131,7 @@ func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.De
 		lineNr++
 	}
 
-	err = h.Client.SSLCertStorage().Delete(params.Name)
+	err = sslStorage.Delete(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -147,7 +170,13 @@ type StorageReplaceStorageSSLCertificateHandlerImpl struct {
 }
 
 func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
-	filename, err := h.Client.SSLCertStorage().Replace(params.Name, params.Data)
+	sslStorage, err := h.Client.SSLCertStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewReplaceStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	filename, err := sslStorage.Replace(params.Name, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -191,11 +220,17 @@ type StorageCreateStorageSSLCertificateHandlerImpl struct {
 }
 
 func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
+	sslStorage, err := h.Client.SSLCertStorage()
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewCreateStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	file, ok := params.FileUpload.(*runtime.File)
 	if !ok {
 		return storage.NewCreateStorageSSLCertificateBadRequest()
 	}
-	filename, err := h.Client.SSLCertStorage().Create(file.Header.Filename, params.FileUpload)
+	filename, err := sslStorage.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewCreateStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
