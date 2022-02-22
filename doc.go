@@ -23,7 +23,7 @@
 //    http
 //  Host: localhost
 //  BasePath: /v2
-//  Version: 2.4
+//  Version: 2.5
 //  Contact: HAProxy Support<support@haproxy.com> https://my.haproxy.com/portal/cust/login
 //
 //  Consumes:
