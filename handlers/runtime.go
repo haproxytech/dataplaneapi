@@ -46,10 +46,6 @@ func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType st
 	}()
 
 	// check if runtime client is valid, if not, return reload needed
-	if client.Runtime == nil {
-		return true
-	}
-
 	runtime, err := client.Runtime()
 	if err != nil {
 		return true
