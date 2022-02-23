@@ -69,9 +69,8 @@ func (h *ClusterInitiateCertificateRefreshHandlerImpl) Handle(params cluster.Ini
 
 func (h *CreateClusterHandlerImpl) err500(err error, transaction *models.Transaction) middleware.Responder {
 	if transaction != nil {
-
-		configuration, err := h.Client.Configuration()
-		if err == nil {
+		configuration, confErr := h.Client.Configuration()
+		if confErr == nil {
 			_ = configuration.DeleteTransaction(transaction.ID)
 		}
 	}
@@ -86,9 +85,8 @@ func (h *CreateClusterHandlerImpl) err500(err error, transaction *models.Transac
 func (h *CreateClusterHandlerImpl) err406(err error, transaction *models.Transaction) middleware.Responder {
 	// 406 Not Acceptable
 	if transaction != nil {
-
-		configuration, err := h.Client.Configuration()
-		if err == nil {
+		configuration, confErr := h.Client.Configuration()
+		if confErr == nil {
 			_ = configuration.DeleteTransaction(transaction.ID)
 		}
 	}
@@ -103,8 +101,8 @@ func (h *CreateClusterHandlerImpl) err406(err error, transaction *models.Transac
 func (h *CreateClusterHandlerImpl) err409(err error, transaction *models.Transaction) middleware.Responder {
 	// 409 Conflict
 	if transaction != nil {
-		configuration, err := h.Client.Configuration()
-		if err == nil {
+		configuration, confErr := h.Client.Configuration()
+		if confErr == nil {
 			_ = configuration.DeleteTransaction(transaction.ID)
 		}
 	}
@@ -276,9 +274,8 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 
 func (h *DeleteClusterHandlerImpl) err500(err error, transaction *models.Transaction) middleware.Responder {
 	if transaction != nil {
-
-		configuration, err := h.Client.Configuration()
-		if err == nil {
+		configuration, confErr := h.Client.Configuration()
+		if confErr == nil {
 			_ = configuration.DeleteTransaction(transaction.ID)
 		}
 	}
