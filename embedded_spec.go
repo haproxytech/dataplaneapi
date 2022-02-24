@@ -10833,6 +10833,191 @@ func init() {
         }
       }
     },
+    "/services/haproxy/storage/general": {
+      "get": {
+        "description": "Returns a list of all managed general use files",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return a list of all managed general use files",
+        "operationId": "getAllStorageGeneralFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/general_files"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a managed storage general use file with contents.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Creates a managed storage general use file with contents",
+        "operationId": "createStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "General use file content",
+            "name": "file_upload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "General use file created with its contents",
+            "schema": {
+              "$ref": "#/definitions/general_file"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/general/{name}": {
+      "get": {
+        "description": "Returns the contents of one managed general use file from disk",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return the contents of one managed general use file from disk",
+        "operationId": "getOneStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "General use file storage_name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces the contents of a managed general use file on disk",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Replace contents of a managed general use file on disk",
+        "operationId": "replaceStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "General use file storage_name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/parameters/skip_reload"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "General use file replaced"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a managed general use file from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Deletes a managed general use file from disk",
+        "operationId": "deleteStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "General use file storage_name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "General use file deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/storage/maps": {
       "get": {
         "description": "Returns a list of all managed map files",
@@ -14316,6 +14501,33 @@ func init() {
       "title": "Frontends",
       "items": {
         "$ref": "#/definitions/frontend"
+      }
+    },
+    "general_file": {
+      "description": "General use file",
+      "type": "object",
+      "title": "General use file",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "general_files": {
+      "description": "Array of general use files",
+      "type": "array",
+      "title": "General Files Array",
+      "items": {
+        "$ref": "#/definitions/general_file"
       }
     },
     "global": {
@@ -20085,14 +20297,6 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
-    "ssl_cert_entries": {
-      "description": "Array of entries of runtime SSL Certificate Entry",
-      "type": "array",
-      "title": "SSL Certificate Entries",
-      "items": {
-        "$ref": "#/definitions/ssl_cert_entry"
-      }
-    },
     "ssl_cert_entry": {
       "description": "One SSL/TLS certificate",
       "type": "object",
@@ -20163,54 +20367,6 @@ func init() {
       "title": "SSL Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
-      }
-    },
-    "ssl_crt_list": {
-      "description": "One SSL/TLS certificate",
-      "type": "object",
-      "title": "crt-list",
-      "properties": {
-        "file": {
-          "type": "string"
-        }
-      }
-    },
-    "ssl_crt_list_entries": {
-      "description": "Array of entries of runtime SSL Certificate Entry",
-      "type": "array",
-      "title": "SSL Certificate Entries",
-      "items": {
-        "$ref": "#/definitions/ssl_crt_list_entry"
-      }
-    },
-    "ssl_crt_list_entry": {
-      "description": "One SSL/TLS certificate",
-      "type": "object",
-      "title": "One crt-list Entry",
-      "properties": {
-        "file": {
-          "type": "string"
-        },
-        "line_number": {
-          "type": "string"
-        },
-        "sni_filters": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "ssl_bind_config": {
-          "type": "string"
-        }
-      }
-    },
-    "ssl_crt_lists": {
-      "description": "Array of entries of runtime crt-list",
-      "type": "array",
-      "title": "SSL crt-list",
-      "items": {
-        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "stats_options": {
@@ -37573,6 +37729,307 @@ func init() {
         }
       }
     },
+    "/services/haproxy/storage/general": {
+      "get": {
+        "description": "Returns a list of all managed general use files",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return a list of all managed general use files",
+        "operationId": "getAllStorageGeneralFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/general_files"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a managed storage general use file with contents.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Creates a managed storage general use file with contents",
+        "operationId": "createStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "General use file content",
+            "name": "file_upload",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "General use file created with its contents",
+            "schema": {
+              "$ref": "#/definitions/general_file"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/general/{name}": {
+      "get": {
+        "description": "Returns the contents of one managed general use file from disk",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return the contents of one managed general use file from disk",
+        "operationId": "getOneStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "General use file storage_name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces the contents of a managed general use file on disk",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Replace contents of a managed general use file on disk",
+        "operationId": "replaceStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "General use file storage_name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "General use file replaced"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a managed general use file from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Deletes a managed general use file from disk",
+        "operationId": "deleteStorageGeneralFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "General use file storage_name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "General use file deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/storage/maps": {
       "get": {
         "description": "Returns a list of all managed map files",
@@ -42113,6 +42570,33 @@ func init() {
       "title": "Frontends",
       "items": {
         "$ref": "#/definitions/frontend"
+      }
+    },
+    "general_file": {
+      "description": "General use file",
+      "type": "object",
+      "title": "General use file",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "general_files": {
+      "description": "Array of general use files",
+      "type": "array",
+      "title": "General Files Array",
+      "items": {
+        "$ref": "#/definitions/general_file"
       }
     },
     "global": {
@@ -47750,14 +48234,6 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
-    "ssl_cert_entries": {
-      "description": "Array of entries of runtime SSL Certificate Entry",
-      "type": "array",
-      "title": "SSL Certificate Entries",
-      "items": {
-        "$ref": "#/definitions/ssl_cert_entry"
-      }
-    },
     "ssl_cert_entry": {
       "description": "One SSL/TLS certificate",
       "type": "object",
@@ -47828,54 +48304,6 @@ func init() {
       "title": "SSL Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
-      }
-    },
-    "ssl_crt_list": {
-      "description": "One SSL/TLS certificate",
-      "type": "object",
-      "title": "crt-list",
-      "properties": {
-        "file": {
-          "type": "string"
-        }
-      }
-    },
-    "ssl_crt_list_entries": {
-      "description": "Array of entries of runtime SSL Certificate Entry",
-      "type": "array",
-      "title": "SSL Certificate Entries",
-      "items": {
-        "$ref": "#/definitions/ssl_crt_list_entry"
-      }
-    },
-    "ssl_crt_list_entry": {
-      "description": "One SSL/TLS certificate",
-      "type": "object",
-      "title": "One crt-list Entry",
-      "properties": {
-        "file": {
-          "type": "string"
-        },
-        "line_number": {
-          "type": "string"
-        },
-        "sni_filters": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "ssl_bind_config": {
-          "type": "string"
-        }
-      }
-    },
-    "ssl_crt_lists": {
-      "description": "Array of entries of runtime crt-list",
-      "type": "array",
-      "title": "SSL crt-list",
-      "items": {
-        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "stats_options": {
