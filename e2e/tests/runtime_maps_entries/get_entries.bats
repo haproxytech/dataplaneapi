@@ -38,3 +38,9 @@ load 'utils/_helpers'
     resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "map=not-exists.map"
     assert_equal "$SC" 404
 }
+
+@test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/234" {
+    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "map=empty.map"
+    assert_equal "$SC" 200
+    assert_equal "$($BODY)" ""
+}
