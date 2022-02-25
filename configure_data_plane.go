@@ -659,6 +659,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StorageReplaceStorageSSLCertificateHandler = &handlers.StorageReplaceStorageSSLCertificateHandlerImpl{Client: client, ReloadAgent: ra}
 	api.StorageCreateStorageSSLCertificateHandler = &handlers.StorageCreateStorageSSLCertificateHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// general file storage handlers
+	api.StorageCreateStorageGeneralFileHandler = &handlers.StorageCreateStorageGeneralFileHandlerImpl{Client: client}
+	api.StorageGetAllStorageGeneralFilesHandler = &handlers.StorageGetAllStorageGeneralFilesHandlerImpl{Client: client}
+	api.StorageGetOneStorageGeneralFileHandler = &handlers.StorageGetOneStorageGeneralFileHandlerImpl{Client: client}
+	api.StorageDeleteStorageGeneralFileHandler = &handlers.StorageDeleteStorageGeneralFileHandlerImpl{Client: client}
+	api.StorageReplaceStorageGeneralFileHandler = &handlers.StorageReplaceStorageGeneralFileHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup OpenAPI v3 specification handler
 	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.Swagger{}
@@ -839,6 +846,16 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 		opt = append(opt, options.SSLCertStorage(sslCertStorage))
 	} else {
 		log.Fatalf("error trying to use empty string for managed map directory")
+	}
+
+	if haproxyOptions.GeneralStorageDir != "" {
+		generalStorage, err := storage.New(haproxyOptions.GeneralStorageDir, storage.GeneralType)
+		if err != nil {
+			log.Fatalf("error initializing General storage: %v", err)
+		}
+		opt = append(opt, options.GeneralStorage(generalStorage))
+	} else {
+		log.Fatalf("error trying to use empty string for managed general files directory")
 	}
 
 	if haproxyOptions.SpoeDir != "" {

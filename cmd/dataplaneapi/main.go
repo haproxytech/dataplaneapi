@@ -157,6 +157,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			if storageDir != "" {
 				cfg.HAProxy.MapsDir = path.Join(storageDir, string(storage.MapsType))
 				cfg.HAProxy.SSLCertsDir = path.Join(storageDir, string(storage.SSLType))
+				cfg.HAProxy.GeneralStorageDir = path.Join(storageDir, string(storage.GeneralType))
 				cfg.HAProxy.SpoeDir = path.Join(storageDir, string(storage.SpoeType))
 				cfg.HAProxy.SpoeTransactionDir = path.Join(storageDir, string(storage.SpoeTransactionsType))
 				cfg.HAProxy.BackupsDir = path.Join(storageDir, string(storage.BackupsType))
