@@ -12108,6 +12108,14 @@ func init() {
           },
           "$ref": "#/definitions/httpchk_params"
         },
+        "log_health_checks": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log Health Checks"
+        },
         "log_tag": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -13837,6 +13845,14 @@ func init() {
         "default_server": {
           "$ref": "#/definitions/default_server"
         },
+        "disable_h2_upgrade": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Disable HTTP/2 Upgrade"
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -13965,6 +13981,14 @@ func init() {
         "log_format_sd": {
           "type": "string",
           "x-display-name": "Log Format SD"
+        },
+        "log_health_checks": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log Health Checks"
         },
         "log_separate_errors": {
           "type": "string",
@@ -14323,6 +14347,14 @@ func init() {
             "property": "name"
           }
         },
+        "disable_h2_upgrade": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Disable HTTP/2 Upgrade"
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -14535,6 +14567,10 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "ca_base": {
+          "type": "string",
+          "x-display-name": "SSL CA Certificates Base Directory"
+        },
         "chroot": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -14562,6 +14598,10 @@ func init() {
           },
           "x-display-name": "CPU Maps",
           "x-go-name": "CPUMaps"
+        },
+        "crt_base": {
+          "type": "string",
+          "x-display-name": "SSL Certificates Base Directory"
         },
         "daemon": {
           "type": "string",
@@ -40210,6 +40250,14 @@ func init() {
           },
           "$ref": "#/definitions/httpchk_params"
         },
+        "log_health_checks": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log Health Checks"
+        },
         "log_tag": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -41906,6 +41954,14 @@ func init() {
         "default_server": {
           "$ref": "#/definitions/default_server"
         },
+        "disable_h2_upgrade": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Disable HTTP/2 Upgrade"
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -42034,6 +42090,14 @@ func init() {
         "log_format_sd": {
           "type": "string",
           "x-display-name": "Log Format SD"
+        },
+        "log_health_checks": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Log Health Checks"
         },
         "log_separate_errors": {
           "type": "string",
@@ -42392,6 +42456,14 @@ func init() {
             "property": "name"
           }
         },
+        "disable_h2_upgrade": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Disable HTTP/2 Upgrade"
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -42604,6 +42676,10 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "ca_base": {
+          "type": "string",
+          "x-display-name": "SSL CA Certificates Base Directory"
+        },
         "chroot": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -42616,6 +42692,10 @@ func init() {
           },
           "x-display-name": "CPU Maps",
           "x-go-name": "CPUMaps"
+        },
+        "crt_base": {
+          "type": "string",
+          "x-display-name": "SSL Certificates Base Directory"
         },
         "daemon": {
           "type": "string",
