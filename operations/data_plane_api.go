@@ -222,6 +222,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StickRuleCreateStickRuleHandler: stick_rule.CreateStickRuleHandlerFunc(func(params stick_rule.CreateStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.CreateStickRule has not yet been implemented")
 		}),
+		StorageCreateStorageGeneralFileHandler: storage.CreateStorageGeneralFileHandlerFunc(func(params storage.CreateStorageGeneralFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateStorageGeneralFile has not yet been implemented")
+		}),
 		StorageCreateStorageMapFileHandler: storage.CreateStorageMapFileHandlerFunc(func(params storage.CreateStorageMapFileParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.CreateStorageMapFile has not yet been implemented")
 		}),
@@ -330,6 +333,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StickRuleDeleteStickRuleHandler: stick_rule.DeleteStickRuleHandlerFunc(func(params stick_rule.DeleteStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.DeleteStickRule has not yet been implemented")
 		}),
+		StorageDeleteStorageGeneralFileHandler: storage.DeleteStorageGeneralFileHandlerFunc(func(params storage.DeleteStorageGeneralFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.DeleteStorageGeneralFile has not yet been implemented")
+		}),
 		StorageDeleteStorageMapHandler: storage.DeleteStorageMapHandlerFunc(func(params storage.DeleteStorageMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.DeleteStorageMap has not yet been implemented")
 		}),
@@ -371,6 +377,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		SpoeGetAllSpoeFilesHandler: spoe.GetAllSpoeFilesHandlerFunc(func(params spoe.GetAllSpoeFilesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation spoe.GetAllSpoeFiles has not yet been implemented")
+		}),
+		StorageGetAllStorageGeneralFilesHandler: storage.GetAllStorageGeneralFilesHandlerFunc(func(params storage.GetAllStorageGeneralFilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetAllStorageGeneralFiles has not yet been implemented")
 		}),
 		StorageGetAllStorageMapFilesHandler: storage.GetAllStorageMapFilesHandlerFunc(func(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.GetAllStorageMapFiles has not yet been implemented")
@@ -488,6 +497,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		SpoeGetOneSpoeFileHandler: spoe.GetOneSpoeFileHandlerFunc(func(params spoe.GetOneSpoeFileParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation spoe.GetOneSpoeFile has not yet been implemented")
+		}),
+		StorageGetOneStorageGeneralFileHandler: storage.GetOneStorageGeneralFileHandlerFunc(func(params storage.GetOneStorageGeneralFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetOneStorageGeneralFile has not yet been implemented")
 		}),
 		StorageGetOneStorageMapHandler: storage.GetOneStorageMapHandlerFunc(func(params storage.GetOneStorageMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.GetOneStorageMap has not yet been implemented")
@@ -744,6 +756,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StickRuleReplaceStickRuleHandler: stick_rule.ReplaceStickRuleHandlerFunc(func(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.ReplaceStickRule has not yet been implemented")
 		}),
+		StorageReplaceStorageGeneralFileHandler: storage.ReplaceStorageGeneralFileHandlerFunc(func(params storage.ReplaceStorageGeneralFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReplaceStorageGeneralFile has not yet been implemented")
+		}),
 		StorageReplaceStorageMapFileHandler: storage.ReplaceStorageMapFileHandlerFunc(func(params storage.ReplaceStorageMapFileParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.ReplaceStorageMapFile has not yet been implemented")
 		}),
@@ -906,6 +921,8 @@ type DataPlaneAPI struct {
 	SpoeCreateSpoeScopeHandler spoe.CreateSpoeScopeHandler
 	// StickRuleCreateStickRuleHandler sets the operation handler for the create stick rule operation
 	StickRuleCreateStickRuleHandler stick_rule.CreateStickRuleHandler
+	// StorageCreateStorageGeneralFileHandler sets the operation handler for the create storage general file operation
+	StorageCreateStorageGeneralFileHandler storage.CreateStorageGeneralFileHandler
 	// StorageCreateStorageMapFileHandler sets the operation handler for the create storage map file operation
 	StorageCreateStorageMapFileHandler storage.CreateStorageMapFileHandler
 	// StorageCreateStorageSSLCertificateHandler sets the operation handler for the create storage s s l certificate operation
@@ -978,6 +995,8 @@ type DataPlaneAPI struct {
 	SpoeTransactionsDeleteSpoeTransactionHandler spoe_transactions.DeleteSpoeTransactionHandler
 	// StickRuleDeleteStickRuleHandler sets the operation handler for the delete stick rule operation
 	StickRuleDeleteStickRuleHandler stick_rule.DeleteStickRuleHandler
+	// StorageDeleteStorageGeneralFileHandler sets the operation handler for the delete storage general file operation
+	StorageDeleteStorageGeneralFileHandler storage.DeleteStorageGeneralFileHandler
 	// StorageDeleteStorageMapHandler sets the operation handler for the delete storage map operation
 	StorageDeleteStorageMapHandler storage.DeleteStorageMapHandler
 	// StorageDeleteStorageSSLCertificateHandler sets the operation handler for the delete storage s s l certificate operation
@@ -1006,6 +1025,8 @@ type DataPlaneAPI struct {
 	MapsGetAllRuntimeMapFilesHandler maps.GetAllRuntimeMapFilesHandler
 	// SpoeGetAllSpoeFilesHandler sets the operation handler for the get all spoe files operation
 	SpoeGetAllSpoeFilesHandler spoe.GetAllSpoeFilesHandler
+	// StorageGetAllStorageGeneralFilesHandler sets the operation handler for the get all storage general files operation
+	StorageGetAllStorageGeneralFilesHandler storage.GetAllStorageGeneralFilesHandler
 	// StorageGetAllStorageMapFilesHandler sets the operation handler for the get all storage map files operation
 	StorageGetAllStorageMapFilesHandler storage.GetAllStorageMapFilesHandler
 	// StorageGetAllStorageSSLCertificatesHandler sets the operation handler for the get all storage s s l certificates operation
@@ -1084,6 +1105,8 @@ type DataPlaneAPI struct {
 	MapsGetOneRuntimeMapHandler maps.GetOneRuntimeMapHandler
 	// SpoeGetOneSpoeFileHandler sets the operation handler for the get one spoe file operation
 	SpoeGetOneSpoeFileHandler spoe.GetOneSpoeFileHandler
+	// StorageGetOneStorageGeneralFileHandler sets the operation handler for the get one storage general file operation
+	StorageGetOneStorageGeneralFileHandler storage.GetOneStorageGeneralFileHandler
 	// StorageGetOneStorageMapHandler sets the operation handler for the get one storage map operation
 	StorageGetOneStorageMapHandler storage.GetOneStorageMapHandler
 	// StorageGetOneStorageSSLCertificateHandler sets the operation handler for the get one storage s s l certificate operation
@@ -1254,6 +1277,8 @@ type DataPlaneAPI struct {
 	SpoeReplaceSpoeMessageHandler spoe.ReplaceSpoeMessageHandler
 	// StickRuleReplaceStickRuleHandler sets the operation handler for the replace stick rule operation
 	StickRuleReplaceStickRuleHandler stick_rule.ReplaceStickRuleHandler
+	// StorageReplaceStorageGeneralFileHandler sets the operation handler for the replace storage general file operation
+	StorageReplaceStorageGeneralFileHandler storage.ReplaceStorageGeneralFileHandler
 	// StorageReplaceStorageMapFileHandler sets the operation handler for the replace storage map file operation
 	StorageReplaceStorageMapFileHandler storage.ReplaceStorageMapFileHandler
 	// StorageReplaceStorageSSLCertificateHandler sets the operation handler for the replace storage s s l certificate operation
@@ -1469,6 +1494,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StickRuleCreateStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.CreateStickRuleHandler")
 	}
+	if o.StorageCreateStorageGeneralFileHandler == nil {
+		unregistered = append(unregistered, "storage.CreateStorageGeneralFileHandler")
+	}
 	if o.StorageCreateStorageMapFileHandler == nil {
 		unregistered = append(unregistered, "storage.CreateStorageMapFileHandler")
 	}
@@ -1577,6 +1605,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StickRuleDeleteStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.DeleteStickRuleHandler")
 	}
+	if o.StorageDeleteStorageGeneralFileHandler == nil {
+		unregistered = append(unregistered, "storage.DeleteStorageGeneralFileHandler")
+	}
 	if o.StorageDeleteStorageMapHandler == nil {
 		unregistered = append(unregistered, "storage.DeleteStorageMapHandler")
 	}
@@ -1618,6 +1649,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.SpoeGetAllSpoeFilesHandler == nil {
 		unregistered = append(unregistered, "spoe.GetAllSpoeFilesHandler")
+	}
+	if o.StorageGetAllStorageGeneralFilesHandler == nil {
+		unregistered = append(unregistered, "storage.GetAllStorageGeneralFilesHandler")
 	}
 	if o.StorageGetAllStorageMapFilesHandler == nil {
 		unregistered = append(unregistered, "storage.GetAllStorageMapFilesHandler")
@@ -1735,6 +1769,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.SpoeGetOneSpoeFileHandler == nil {
 		unregistered = append(unregistered, "spoe.GetOneSpoeFileHandler")
+	}
+	if o.StorageGetOneStorageGeneralFileHandler == nil {
+		unregistered = append(unregistered, "storage.GetOneStorageGeneralFileHandler")
 	}
 	if o.StorageGetOneStorageMapHandler == nil {
 		unregistered = append(unregistered, "storage.GetOneStorageMapHandler")
@@ -1990,6 +2027,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StickRuleReplaceStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.ReplaceStickRuleHandler")
+	}
+	if o.StorageReplaceStorageGeneralFileHandler == nil {
+		unregistered = append(unregistered, "storage.ReplaceStorageGeneralFileHandler")
 	}
 	if o.StorageReplaceStorageMapFileHandler == nil {
 		unregistered = append(unregistered, "storage.ReplaceStorageMapFileHandler")
@@ -2280,6 +2320,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/storage/general"] = storage.NewCreateStorageGeneralFile(o.context, o.StorageCreateStorageGeneralFileHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/storage/maps"] = storage.NewCreateStorageMapFile(o.context, o.StorageCreateStorageMapFileHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2424,6 +2468,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/storage/general/{name}"] = storage.NewDeleteStorageGeneralFile(o.context, o.StorageDeleteStorageGeneralFileHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/storage/maps/{name}"] = storage.NewDeleteStorageMap(o.context, o.StorageDeleteStorageMapHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -2477,6 +2525,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/spoe/spoe_files"] = spoe.NewGetAllSpoeFiles(o.context, o.SpoeGetAllSpoeFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/general"] = storage.NewGetAllStorageGeneralFiles(o.context, o.StorageGetAllStorageGeneralFilesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2633,6 +2685,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/spoe/spoe_files/{name}"] = spoe.NewGetOneSpoeFile(o.context, o.SpoeGetOneSpoeFileHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/general/{name}"] = storage.NewGetOneStorageGeneralFile(o.context, o.StorageGetOneStorageGeneralFileHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2973,6 +3029,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewReplaceStickRule(o.context, o.StickRuleReplaceStickRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/storage/general/{name}"] = storage.NewReplaceStorageGeneralFile(o.context, o.StorageReplaceStorageGeneralFileHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
