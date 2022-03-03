@@ -11,6 +11,7 @@ dataplaneapi {
   resources {
     maps_dir      = "/etc/haproxy/maps"
     ssl_certs_dir = "/etc/haproxy/ssl"
+    general_storage_dir = "/etc/haproxy/general"
     spoe_dir      = "/etc/haproxy/spoe"
   }
 
