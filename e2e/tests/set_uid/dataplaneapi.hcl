@@ -12,6 +12,7 @@ dataplaneapi {
   resources {
     maps_dir                  = "/home/testuiduser/maps"
     ssl_certs_dir             = "/home/testuiduser/ssl"
+    general_storage_dir       = "/home/testuiduser/general"
     spoe_dir                  = "/home/testuiduser/spoe"
     spoe_transaction_dir      = "/home/testuiduser/spoe-td"
   }
