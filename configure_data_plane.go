@@ -366,6 +366,26 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.FrontendGetFrontendsHandler = &handlers.GetFrontendsHandlerImpl{Client: client}
 	api.FrontendReplaceFrontendHandler = &handlers.ReplaceFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup userlist handlers
+	api.UserlistCreateUserlistHandler = &handlers.CreateUserListHandlerImpl{Client: client, ReloadAgent: ra}
+	api.UserlistDeleteUserlistHandler = &handlers.DeleteUserListHandlerImpl{Client: client, ReloadAgent: ra}
+	api.UserlistGetUserlistHandler = &handlers.GetUserListHandlerImpl{Client: client}
+	api.UserlistGetUserlistsHandler = &handlers.GetUserListsHandlerImpl{Client: client}
+
+	// setup user handlers
+	api.UserCreateUserHandler = &handlers.CreateUserHandlerImpl{Client: client, ReloadAgent: ra}
+	api.UserDeleteUserHandler = &handlers.DeleteUserHandlerImpl{Client: client, ReloadAgent: ra}
+	api.UserGetUserHandler = &handlers.GetUserHandlerImpl{Client: client}
+	api.UserGetUsersHandler = &handlers.GetUsersHandlerImpl{Client: client}
+	api.UserReplaceUserHandler = &handlers.ReplaceUserHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup group handlers
+	api.GroupCreateGroupHandler = &handlers.CreateGroupHandlerImpl{Client: client, ReloadAgent: ra}
+	api.GroupDeleteGroupHandler = &handlers.DeleteGroupHandlerImpl{Client: client, ReloadAgent: ra}
+	api.GroupGetGroupHandler = &handlers.GetGroupHandlerImpl{Client: client}
+	api.GroupGetGroupsHandler = &handlers.GetGroupsHandlerImpl{Client: client}
+	api.GroupReplaceGroupHandler = &handlers.ReplaceGroupHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup server handlers
 	api.ServerCreateServerHandler = &handlers.CreateServerHandlerImpl{Client: client, ReloadAgent: ra}
 	api.ServerDeleteServerHandler = &handlers.DeleteServerHandlerImpl{Client: client, ReloadAgent: ra}

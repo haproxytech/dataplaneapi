@@ -164,6 +164,7 @@ github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c h1:964Od4U6p2jUkFxvCy
 github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
 github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=
 github.com/google/go-cmp v0.3.0/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
+github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.4 h1:L8R9j+yAqZuZjsqh/z+F1NCffTKKLShY6zXTItVIZ8M=
 github.com/google/go-cmp v0.5.4/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
@@ -173,8 +174,8 @@ github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v3 v3.0.1-0.20220302131506-8b716084b44e h1:9d96Gj9knZXZefPZ3g2/5EqjsYe8athd+IgeJhp3hOo=
-github.com/haproxytech/client-native/v3 v3.0.1-0.20220302131506-8b716084b44e/go.mod h1:MO6McrkZkJhgYarK3zyWy/Ptq9T062kUTgHiHPUHusM=
+github.com/haproxytech/client-native/v3 v3.0.1-0.20220307094148-438b7a7f1196 h1:frLELUBzqqtuafj3UeKvFcg1/putjP9QcqxCBwXNH2w=
+github.com/haproxytech/client-native/v3 v3.0.1-0.20220307094148-438b7a7f1196/go.mod h1:MO6McrkZkJhgYarK3zyWy/Ptq9T062kUTgHiHPUHusM=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220301132206-36a2f420d8a9 h1:8Zr7/TK5GMNyv8jEHilUxolidyGak11nCJhFqJil/2o=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220301132206-36a2f420d8a9/go.mod h1:pEuHx+aFhn0lIdvAg1OaawQfeRkpq1I8HzjtZN4/PLI=
 github.com/haproxytech/go-logger v1.0.1-0.20211022075555-178f1cdf4d84 h1:rSLHjJ4VGvMZcGAGQ9GaXuhvdswu1iLVXTThLX6OKN8=
@@ -415,6 +416,7 @@ gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=
+gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c/go.mod h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q=
 gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
 gopkg.in/yaml.v2 v2.2.1/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=

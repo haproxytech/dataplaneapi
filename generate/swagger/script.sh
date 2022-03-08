@@ -105,6 +105,9 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=ServerTemplate \
     --tags=Cache \
     --tags=DeclareCapture \
+    --tags=Userlist \
+    --tags=User \
+    --tags=Group \
     -r $SPEC_DIR/copyright.txt
 
 echo " ---> removing doc.go"

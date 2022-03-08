@@ -48,6 +48,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/filter"
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
 	"github.com/haproxytech/dataplaneapi/operations/global"
+	"github.com/haproxytech/dataplaneapi/operations/group"
 	"github.com/haproxytech/dataplaneapi/operations/http_check"
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
@@ -76,6 +77,8 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
+	"github.com/haproxytech/dataplaneapi/operations/user"
+	"github.com/haproxytech/dataplaneapi/operations/userlist"
 )
 
 // NewDataPlaneAPI creates a new DataPlane instance
@@ -168,6 +171,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		FrontendCreateFrontendHandler: frontend.CreateFrontendHandlerFunc(func(params frontend.CreateFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation frontend.CreateFrontend has not yet been implemented")
 		}),
+		GroupCreateGroupHandler: group.CreateGroupHandlerFunc(func(params group.CreateGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation group.CreateGroup has not yet been implemented")
+		}),
 		HTTPCheckCreateHTTPCheckHandler: http_check.CreateHTTPCheckHandlerFunc(func(params http_check.CreateHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.CreateHTTPCheck has not yet been implemented")
 		}),
@@ -240,6 +246,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPResponseRuleCreateTCPResponseRuleHandler: tcp_response_rule.CreateTCPResponseRuleHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.CreateTCPResponseRule has not yet been implemented")
 		}),
+		UserCreateUserHandler: user.CreateUserHandlerFunc(func(params user.CreateUserParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation user.CreateUser has not yet been implemented")
+		}),
+		UserlistCreateUserlistHandler: userlist.CreateUserlistHandlerFunc(func(params userlist.CreateUserlistParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation userlist.CreateUserlist has not yet been implemented")
+		}),
 		ServiceDiscoveryDeleteAWSRegionHandler: service_discovery.DeleteAWSRegionHandlerFunc(func(params service_discovery.DeleteAWSRegionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.DeleteAWSRegion has not yet been implemented")
 		}),
@@ -272,6 +284,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		FrontendDeleteFrontendHandler: frontend.DeleteFrontendHandlerFunc(func(params frontend.DeleteFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation frontend.DeleteFrontend has not yet been implemented")
+		}),
+		GroupDeleteGroupHandler: group.DeleteGroupHandlerFunc(func(params group.DeleteGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation group.DeleteGroup has not yet been implemented")
 		}),
 		HTTPCheckDeleteHTTPCheckHandler: http_check.DeleteHTTPCheckHandlerFunc(func(params http_check.DeleteHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.DeleteHTTPCheck has not yet been implemented")
@@ -353,6 +368,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TransactionsDeleteTransactionHandler: transactions.DeleteTransactionHandlerFunc(func(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.DeleteTransaction has not yet been implemented")
+		}),
+		UserDeleteUserHandler: user.DeleteUserHandlerFunc(func(params user.DeleteUserParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation user.DeleteUser has not yet been implemented")
+		}),
+		UserlistDeleteUserlistHandler: userlist.DeleteUserlistHandlerFunc(func(params userlist.DeleteUserlistParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation userlist.DeleteUserlist has not yet been implemented")
 		}),
 		ClusterEditClusterHandler: cluster.EditClusterHandlerFunc(func(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.EditCluster has not yet been implemented")
@@ -449,6 +470,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		GlobalGetGlobalHandler: global.GetGlobalHandlerFunc(func(params global.GetGlobalParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation global.GetGlobal has not yet been implemented")
+		}),
+		GroupGetGroupHandler: group.GetGroupHandlerFunc(func(params group.GetGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation group.GetGroup has not yet been implemented")
+		}),
+		GroupGetGroupsHandler: group.GetGroupsHandlerFunc(func(params group.GetGroupsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation group.GetGroups has not yet been implemented")
 		}),
 		ConfigurationGetHAProxyConfigurationHandler: configuration.GetHAProxyConfigurationHandlerFunc(func(params configuration.GetHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation configuration.GetHAProxyConfiguration has not yet been implemented")
@@ -660,6 +687,18 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TransactionsGetTransactionsHandler: transactions.GetTransactionsHandlerFunc(func(params transactions.GetTransactionsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.GetTransactions has not yet been implemented")
 		}),
+		UserGetUserHandler: user.GetUserHandlerFunc(func(params user.GetUserParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation user.GetUser has not yet been implemented")
+		}),
+		UserlistGetUserlistHandler: userlist.GetUserlistHandlerFunc(func(params userlist.GetUserlistParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation userlist.GetUserlist has not yet been implemented")
+		}),
+		UserlistGetUserlistsHandler: userlist.GetUserlistsHandlerFunc(func(params userlist.GetUserlistsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation userlist.GetUserlists has not yet been implemented")
+		}),
+		UserGetUsersHandler: user.GetUsersHandlerFunc(func(params user.GetUsersParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation user.GetUsers has not yet been implemented")
+		}),
 		ClusterInitiateCertificateRefreshHandler: cluster.InitiateCertificateRefreshHandlerFunc(func(params cluster.InitiateCertificateRefreshParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.InitiateCertificateRefresh has not yet been implemented")
 		}),
@@ -704,6 +743,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		GlobalReplaceGlobalHandler: global.ReplaceGlobalHandlerFunc(func(params global.ReplaceGlobalParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation global.ReplaceGlobal has not yet been implemented")
+		}),
+		GroupReplaceGroupHandler: group.ReplaceGroupHandlerFunc(func(params group.ReplaceGroupParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation group.ReplaceGroup has not yet been implemented")
 		}),
 		HTTPCheckReplaceHTTPCheckHandler: http_check.ReplaceHTTPCheckHandlerFunc(func(params http_check.ReplaceHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.ReplaceHTTPCheck has not yet been implemented")
@@ -773,6 +815,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPResponseRuleReplaceTCPResponseRuleHandler: tcp_response_rule.ReplaceTCPResponseRuleHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.ReplaceTCPResponseRule has not yet been implemented")
+		}),
+		UserReplaceUserHandler: user.ReplaceUserHandlerFunc(func(params user.ReplaceUserParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation user.ReplaceUser has not yet been implemented")
 		}),
 		MapsShowRuntimeMapHandler: maps.ShowRuntimeMapHandlerFunc(func(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ShowRuntimeMap has not yet been implemented")
@@ -885,6 +930,8 @@ type DataPlaneAPI struct {
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
 	FrontendCreateFrontendHandler frontend.CreateFrontendHandler
+	// GroupCreateGroupHandler sets the operation handler for the create group operation
+	GroupCreateGroupHandler group.CreateGroupHandler
 	// HTTPCheckCreateHTTPCheckHandler sets the operation handler for the create HTTP check operation
 	HTTPCheckCreateHTTPCheckHandler http_check.CreateHTTPCheckHandler
 	// HTTPRequestRuleCreateHTTPRequestRuleHandler sets the operation handler for the create HTTP request rule operation
@@ -933,6 +980,10 @@ type DataPlaneAPI struct {
 	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
 	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
 	TCPResponseRuleCreateTCPResponseRuleHandler tcp_response_rule.CreateTCPResponseRuleHandler
+	// UserCreateUserHandler sets the operation handler for the create user operation
+	UserCreateUserHandler user.CreateUserHandler
+	// UserlistCreateUserlistHandler sets the operation handler for the create userlist operation
+	UserlistCreateUserlistHandler userlist.CreateUserlistHandler
 	// ServiceDiscoveryDeleteAWSRegionHandler sets the operation handler for the delete a w s region operation
 	ServiceDiscoveryDeleteAWSRegionHandler service_discovery.DeleteAWSRegionHandler
 	// ACLDeleteACLHandler sets the operation handler for the delete Acl operation
@@ -955,6 +1006,8 @@ type DataPlaneAPI struct {
 	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
 	FrontendDeleteFrontendHandler frontend.DeleteFrontendHandler
+	// GroupDeleteGroupHandler sets the operation handler for the delete group operation
+	GroupDeleteGroupHandler group.DeleteGroupHandler
 	// HTTPCheckDeleteHTTPCheckHandler sets the operation handler for the delete HTTP check operation
 	HTTPCheckDeleteHTTPCheckHandler http_check.DeleteHTTPCheckHandler
 	// HTTPRequestRuleDeleteHTTPRequestRuleHandler sets the operation handler for the delete HTTP request rule operation
@@ -1009,6 +1062,10 @@ type DataPlaneAPI struct {
 	TCPResponseRuleDeleteTCPResponseRuleHandler tcp_response_rule.DeleteTCPResponseRuleHandler
 	// TransactionsDeleteTransactionHandler sets the operation handler for the delete transaction operation
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
+	// UserDeleteUserHandler sets the operation handler for the delete user operation
+	UserDeleteUserHandler user.DeleteUserHandler
+	// UserlistDeleteUserlistHandler sets the operation handler for the delete userlist operation
+	UserlistDeleteUserlistHandler userlist.DeleteUserlistHandler
 	// ClusterEditClusterHandler sets the operation handler for the edit cluster operation
 	ClusterEditClusterHandler cluster.EditClusterHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
@@ -1073,6 +1130,10 @@ type DataPlaneAPI struct {
 	FrontendGetFrontendsHandler frontend.GetFrontendsHandler
 	// GlobalGetGlobalHandler sets the operation handler for the get global operation
 	GlobalGetGlobalHandler global.GetGlobalHandler
+	// GroupGetGroupHandler sets the operation handler for the get group operation
+	GroupGetGroupHandler group.GetGroupHandler
+	// GroupGetGroupsHandler sets the operation handler for the get groups operation
+	GroupGetGroupsHandler group.GetGroupsHandler
 	// ConfigurationGetHAProxyConfigurationHandler sets the operation handler for the get h a proxy configuration operation
 	ConfigurationGetHAProxyConfigurationHandler configuration.GetHAProxyConfigurationHandler
 	// HTTPCheckGetHTTPCheckHandler sets the operation handler for the get HTTP check operation
@@ -1213,6 +1274,14 @@ type DataPlaneAPI struct {
 	TransactionsGetTransactionHandler transactions.GetTransactionHandler
 	// TransactionsGetTransactionsHandler sets the operation handler for the get transactions operation
 	TransactionsGetTransactionsHandler transactions.GetTransactionsHandler
+	// UserGetUserHandler sets the operation handler for the get user operation
+	UserGetUserHandler user.GetUserHandler
+	// UserlistGetUserlistHandler sets the operation handler for the get userlist operation
+	UserlistGetUserlistHandler userlist.GetUserlistHandler
+	// UserlistGetUserlistsHandler sets the operation handler for the get userlists operation
+	UserlistGetUserlistsHandler userlist.GetUserlistsHandler
+	// UserGetUsersHandler sets the operation handler for the get users operation
+	UserGetUsersHandler user.GetUsersHandler
 	// ClusterInitiateCertificateRefreshHandler sets the operation handler for the initiate certificate refresh operation
 	ClusterInitiateCertificateRefreshHandler cluster.InitiateCertificateRefreshHandler
 	// ClusterPostClusterHandler sets the operation handler for the post cluster operation
@@ -1243,6 +1312,8 @@ type DataPlaneAPI struct {
 	FrontendReplaceFrontendHandler frontend.ReplaceFrontendHandler
 	// GlobalReplaceGlobalHandler sets the operation handler for the replace global operation
 	GlobalReplaceGlobalHandler global.ReplaceGlobalHandler
+	// GroupReplaceGroupHandler sets the operation handler for the replace group operation
+	GroupReplaceGroupHandler group.ReplaceGroupHandler
 	// HTTPCheckReplaceHTTPCheckHandler sets the operation handler for the replace HTTP check operation
 	HTTPCheckReplaceHTTPCheckHandler http_check.ReplaceHTTPCheckHandler
 	// HTTPRequestRuleReplaceHTTPRequestRuleHandler sets the operation handler for the replace HTTP request rule operation
@@ -1289,6 +1360,8 @@ type DataPlaneAPI struct {
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
 	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
+	// UserReplaceUserHandler sets the operation handler for the replace user operation
+	UserReplaceUserHandler user.ReplaceUserHandler
 	// MapsShowRuntimeMapHandler sets the operation handler for the show runtime map operation
 	MapsShowRuntimeMapHandler maps.ShowRuntimeMapHandler
 	// SpoeTransactionsStartSpoeTransactionHandler sets the operation handler for the start spoe transaction operation
@@ -1440,6 +1513,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.FrontendCreateFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.CreateFrontendHandler")
 	}
+	if o.GroupCreateGroupHandler == nil {
+		unregistered = append(unregistered, "group.CreateGroupHandler")
+	}
 	if o.HTTPCheckCreateHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.CreateHTTPCheckHandler")
 	}
@@ -1512,6 +1588,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPResponseRuleCreateTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleHandler")
 	}
+	if o.UserCreateUserHandler == nil {
+		unregistered = append(unregistered, "user.CreateUserHandler")
+	}
+	if o.UserlistCreateUserlistHandler == nil {
+		unregistered = append(unregistered, "userlist.CreateUserlistHandler")
+	}
 	if o.ServiceDiscoveryDeleteAWSRegionHandler == nil {
 		unregistered = append(unregistered, "service_discovery.DeleteAWSRegionHandler")
 	}
@@ -1544,6 +1626,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.FrontendDeleteFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.DeleteFrontendHandler")
+	}
+	if o.GroupDeleteGroupHandler == nil {
+		unregistered = append(unregistered, "group.DeleteGroupHandler")
 	}
 	if o.HTTPCheckDeleteHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.DeleteHTTPCheckHandler")
@@ -1625,6 +1710,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TransactionsDeleteTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.DeleteTransactionHandler")
+	}
+	if o.UserDeleteUserHandler == nil {
+		unregistered = append(unregistered, "user.DeleteUserHandler")
+	}
+	if o.UserlistDeleteUserlistHandler == nil {
+		unregistered = append(unregistered, "userlist.DeleteUserlistHandler")
 	}
 	if o.ClusterEditClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.EditClusterHandler")
@@ -1721,6 +1812,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.GlobalGetGlobalHandler == nil {
 		unregistered = append(unregistered, "global.GetGlobalHandler")
+	}
+	if o.GroupGetGroupHandler == nil {
+		unregistered = append(unregistered, "group.GetGroupHandler")
+	}
+	if o.GroupGetGroupsHandler == nil {
+		unregistered = append(unregistered, "group.GetGroupsHandler")
 	}
 	if o.ConfigurationGetHAProxyConfigurationHandler == nil {
 		unregistered = append(unregistered, "configuration.GetHAProxyConfigurationHandler")
@@ -1932,6 +2029,18 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TransactionsGetTransactionsHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionsHandler")
 	}
+	if o.UserGetUserHandler == nil {
+		unregistered = append(unregistered, "user.GetUserHandler")
+	}
+	if o.UserlistGetUserlistHandler == nil {
+		unregistered = append(unregistered, "userlist.GetUserlistHandler")
+	}
+	if o.UserlistGetUserlistsHandler == nil {
+		unregistered = append(unregistered, "userlist.GetUserlistsHandler")
+	}
+	if o.UserGetUsersHandler == nil {
+		unregistered = append(unregistered, "user.GetUsersHandler")
+	}
 	if o.ClusterInitiateCertificateRefreshHandler == nil {
 		unregistered = append(unregistered, "cluster.InitiateCertificateRefreshHandler")
 	}
@@ -1976,6 +2085,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.GlobalReplaceGlobalHandler == nil {
 		unregistered = append(unregistered, "global.ReplaceGlobalHandler")
+	}
+	if o.GroupReplaceGroupHandler == nil {
+		unregistered = append(unregistered, "group.ReplaceGroupHandler")
 	}
 	if o.HTTPCheckReplaceHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.ReplaceHTTPCheckHandler")
@@ -2045,6 +2157,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPResponseRuleReplaceTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleHandler")
+	}
+	if o.UserReplaceUserHandler == nil {
+		unregistered = append(unregistered, "user.ReplaceUserHandler")
 	}
 	if o.MapsShowRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ShowRuntimeMapHandler")
@@ -2248,6 +2363,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/groups"] = group.NewCreateGroup(o.context, o.GroupCreateGroupHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/http_checks"] = http_check.NewCreateHTTPCheck(o.context, o.HTTPCheckCreateHTTPCheckHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2341,6 +2460,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/users"] = user.NewCreateUser(o.context, o.UserCreateUserHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/userlists"] = userlist.NewCreateUserlist(o.context, o.UserlistCreateUserlistHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2385,6 +2512,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{name}"] = frontend.NewDeleteFrontend(o.context, o.FrontendDeleteFrontendHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/groups/{name}"] = group.NewDeleteGroup(o.context, o.GroupDeleteGroupHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2493,6 +2624,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/transactions/{id}"] = transactions.NewDeleteTransaction(o.context, o.TransactionsDeleteTransactionHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/users/{username}"] = user.NewDeleteUser(o.context, o.UserDeleteUserHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/userlists/{name}"] = userlist.NewDeleteUserlist(o.context, o.UserlistDeleteUserlistHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -2621,6 +2760,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/global"] = global.NewGetGlobal(o.context, o.GlobalGetGlobalHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/groups/{name}"] = group.NewGetGroup(o.context, o.GroupGetGroupHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/groups"] = group.NewGetGroups(o.context, o.GroupGetGroupsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -2901,6 +3048,22 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/transactions"] = transactions.NewGetTransactions(o.context, o.TransactionsGetTransactionsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/users/{username}"] = user.NewGetUser(o.context, o.UserGetUserHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/userlists/{name}"] = userlist.NewGetUserlist(o.context, o.UserlistGetUserlistHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/userlists"] = userlist.NewGetUserlists(o.context, o.UserlistGetUserlistsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/users"] = user.NewGetUsers(o.context, o.UserGetUsersHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2961,6 +3124,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/global"] = global.NewReplaceGlobal(o.context, o.GlobalReplaceGlobalHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/groups/{name}"] = group.NewReplaceGroup(o.context, o.GroupReplaceGroupHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -3053,6 +3220,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/users/{username}"] = user.NewReplaceUser(o.context, o.UserReplaceUserHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
