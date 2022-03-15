@@ -32,6 +32,7 @@ func (c *ClusterSync) getNodeFacts() map[string]string {
 	runtime, err := c.cli.Runtime()
 	if err != nil {
 		log.Errorf("unable to fetch processInfo: %s", err.Error())
+		return facts
 	}
 	processInfos, err := runtime.GetInfo()
 	if err != nil || len(processInfos) < 1 {
