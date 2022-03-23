@@ -39,8 +39,10 @@ const (
 
 type IReloadAgent interface {
 	Reload() string
+	ReloadWithCallback(func()) string
 	Restart() error
 	ForceReload() error
+	ForceReloadWithCallback(func()) error
 	GetReloads() models.Reloads
 	GetReload(id string) *models.Reload
 }
@@ -53,6 +55,7 @@ type reloadCache struct {
 	index         int64
 	retention     int
 	mu            sync.RWMutex
+	callbacks     map[string]func()
 }
 
 type ReloadAgentParams struct {
@@ -134,8 +137,13 @@ func (ra *ReloadAgent) handleReload(id string) {
 		log.WithFieldsf(logFields, log.WarnLevel, "Reload failed: %s", err)
 	} else {
 		ra.cache.succeedReload(response)
+		callback, ok := ra.cache.callbacks[id]
+		if ok {
+			callback()
+		}
 		log.WithFields(logFields, log.DebugLevel, "Handling reload completed, waiting for new requests")
 	}
+	delete(ra.cache.callbacks, id)
 }
 
 func (ra *ReloadAgent) handleReloads() {
@@ -238,6 +246,27 @@ func (ra *ReloadAgent) ForceReload() error {
 	return nil
 }
 
+// Reload schedules a reload, callback is called only if reload is successfull
+func (ra *ReloadAgent) ReloadWithCallback(callback func()) string {
+	next := ra.cache.getNext()
+	if next == "" {
+		next = ra.cache.newReloadWithCallback(callback)
+		log.WithFields(map[string]interface{}{logFieldReloadID: next}, log.DebugLevel, "Scheduling a new reload...")
+	}
+
+	return next
+}
+
+// ForceReload calls reload directly, callback is called only if reload is successfull
+func (ra *ReloadAgent) ForceReloadWithCallback(callback func()) error {
+	r, err := ra.reloadHAProxy("force")
+	if err != nil {
+		return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
+	}
+	callback()
+	return nil
+}
+
 func (rc *reloadCache) Init(retention int) {
 	rc.mu.Lock()
 	defer rc.mu.Unlock()
@@ -247,6 +276,7 @@ func (rc *reloadCache) Init(retention int) {
 	rc.lastSuccess = nil
 	rc.index = 0
 	rc.retention = retention
+	rc.callbacks = make(map[string]func())
 }
 
 func (rc *reloadCache) newReload() string {
@@ -256,6 +286,12 @@ func (rc *reloadCache) newReload() string {
 	rc.index++
 	rc.next = id
 	return rc.next
+}
+
+func (rc *reloadCache) newReloadWithCallback(callback func()) string {
+	next := rc.newReload()
+	rc.callbacks[next] = callback
+	return next
 }
 
 func (rc *reloadCache) getNext() string {
@@ -427,5 +463,5 @@ func copyFile(src, dest string) error {
 	if err != nil {
 		return err
 	}
-	return renameio.WriteFile(dest, data, 0644)
+	return renameio.WriteFile(dest, data, 0o644)
 }
