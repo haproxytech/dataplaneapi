@@ -16,13 +16,17 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v3"
+	"github.com/haproxytech/client-native/v3/models"
 
+	cn "github.com/haproxytech/dataplaneapi/client-native"
+	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
@@ -93,18 +97,25 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
+	_, globalConf, err := cfg.GetGlobalConfiguration("")
+	if err != nil {
+		e := misc.HandleError(err)
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+	}
+	runtimeAPIsOld := globalConf.RuntimeAPIs
 	err = cfg.PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
+
 	if onlyValidate {
 		// return here without reloading, since config is only validated.
 		return configuration.NewPostHAProxyConfigurationAccepted().WithPayload(params.Data)
 	}
 	if skipReload {
 		if params.XRuntimeActions != nil {
-			if err := executeRuntimeActions(*params.XRuntimeActions, h.Client); err != nil {
+			if err = executeRuntimeActions(*params.XRuntimeActions, h.Client); err != nil {
 				e := misc.HandleError(err)
 				return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 			}
@@ -112,15 +123,82 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(params.Data)
 	}
 	if forceReload {
-		err := h.ReloadAgent.ForceReload()
+		callbackNeeded, reconfigureFunc, err := h.reconfigureRuntime(runtimeAPIsOld)
+		if err != nil {
+			e := misc.HandleError(err)
+			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		}
+		if callbackNeeded {
+			err = h.ReloadAgent.ForceReloadWithCallback(reconfigureFunc)
+		} else {
+			err = h.ReloadAgent.ForceReload()
+		}
 		if err != nil {
 			e := misc.HandleError(err)
 			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 		}
 		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(params.Data)
 	}
-	rID := h.ReloadAgent.Reload()
+	callbackNeeded, reconfigureFunc, err := h.reconfigureRuntime(runtimeAPIsOld)
+	if err != nil {
+		e := misc.HandleError(err)
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	var rID string
+	if callbackNeeded {
+		rID = h.ReloadAgent.ReloadWithCallback(reconfigureFunc)
+	} else {
+		rID = h.ReloadAgent.Reload()
+	}
+
 	return configuration.NewPostHAProxyConfigurationAccepted().WithReloadID(rID).WithPayload(params.Data)
+}
+
+func (h *PostRawConfigurationHandlerImpl) reconfigureRuntime(runtimeAPIsOld []*models.RuntimeAPI) (callbackNeeded bool, callback func(), err error) {
+	cfg, err := h.Client.Configuration()
+	if err != nil {
+		return false, nil, err
+	}
+	_, globalConf, err := cfg.GetGlobalConfiguration("")
+	if err != nil {
+		return false, nil, err
+	}
+	runtimeAPIsNew := globalConf.RuntimeAPIs
+	reconfigureRuntime := false
+	if len(runtimeAPIsOld) != len(runtimeAPIsNew) {
+		reconfigureRuntime = true
+	} else {
+		for _, runtimeOld := range runtimeAPIsOld {
+			if runtimeOld.Address == nil {
+				continue
+			}
+			found := false
+			for _, runtimeNew := range runtimeAPIsNew {
+				if runtimeNew.Address == nil {
+					continue
+				}
+				if *runtimeNew.Address == *runtimeOld.Address {
+					found = true
+					break
+				}
+			}
+			if !found {
+				reconfigureRuntime = true
+				break
+			}
+		}
+	}
+
+	if reconfigureRuntime {
+		dpapiCfg := dataplaneapi_config.Get()
+		haproxyOptions := dpapiCfg.HAProxy
+		return true, func() {
+			h.Client.ReplaceRuntime(cn.ConfigureRuntimeClient(context.Background(), cfg, haproxyOptions))
+		}, nil
+	}
+
+	return false, nil, nil
 }
 
 func executeRuntimeActions(actionsStr string, client client_native.HAProxyClient) error {
