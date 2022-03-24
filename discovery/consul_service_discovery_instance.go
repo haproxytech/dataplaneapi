@@ -18,6 +18,7 @@ package discovery
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"time"
 
 	"github.com/haproxytech/client-native/v3/configuration"
@@ -144,9 +145,14 @@ func (c *consulInstance) updateServices() error {
 	if err != nil {
 		return err
 	}
+	re := regexp.MustCompile(c.params.Regexp)
 	newIndexes := make(map[string]uint64)
 	for se := range cServices {
 		if se == "consul" {
+			continue
+		}
+		match := re.MatchString(se)
+		if !match {
 			continue
 		}
 		nodes, meta, err := c.api.Health().Service(se, "", false, &api.QueryOptions{})
