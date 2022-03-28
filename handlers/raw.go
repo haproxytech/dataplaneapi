@@ -123,7 +123,9 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(params.Data)
 	}
 	if forceReload {
-		callbackNeeded, reconfigureFunc, err := h.reconfigureRuntime(runtimeAPIsOld)
+		var callbackNeeded bool
+		var reconfigureFunc func()
+		callbackNeeded, reconfigureFunc, err = h.reconfigureRuntime(runtimeAPIsOld)
 		if err != nil {
 			e := misc.HandleError(err)
 			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)

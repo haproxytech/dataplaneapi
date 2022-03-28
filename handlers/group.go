@@ -247,7 +247,7 @@ func (h *ReplaceGroupHandlerImpl) Handle(params group.ReplaceGroupParams, princi
 		return group.NewReplaceGroupNotFound()
 	}
 
-	v, g, err := configuration.GetGroup(params.Name, params.Userlist, t)
+	_, g, err := configuration.GetGroup(params.Name, params.Userlist, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return group.NewGetGroupDefault(int(*e.Code)).WithPayload(e)

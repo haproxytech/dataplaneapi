@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	socketsList   = map[int]string{}
+	socketsList   = map[int]string{} //nolint:unused
 	muSocketsList sync.Mutex
 )
 
