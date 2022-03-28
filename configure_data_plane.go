@@ -31,6 +31,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
+	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
@@ -605,16 +606,15 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// create stored consul instances
 	for _, data := range cfg.ServiceDiscovery.Consuls {
-		var err error
-
+		var errSD error
 		if data.ID == nil || len(*data.ID) == 0 {
 			data.ID = service_discovery.NewServiceDiscoveryUUID()
 		}
-		if err = service_discovery.ValidateConsulData(data, true); err != nil {
-			log.Fatalf("Error validating Consul instance: " + err.Error())
+		if errSD = service_discovery.ValidateConsulData(data, true); errSD != nil {
+			log.Fatalf("Error validating Consul instance: " + errSD.Error())
 		}
-		if err = discovery.AddNode("consul", *data.ID, data); err != nil {
-			log.Warning("Error creating consul instance: " + err.Error())
+		if errSD = discovery.AddNode("consul", *data.ID, data); errSD != nil {
+			log.Warning("Error creating consul instance: " + errSD.Error())
 		}
 	}
 	_ = cfg.SaveConsuls(cfg.ServiceDiscovery.Consuls)
@@ -662,7 +662,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup OpenAPI v3 specification handler
 	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.Swagger{}
-		err := v2.UnmarshalJSON(SwaggerJSON)
+		err = v2.UnmarshalJSON(SwaggerJSON)
 		if err != nil {
 			e := misc.HandleError(err)
 			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
@@ -675,7 +675,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			v2.Host = cfg.RuntimeData.Host
 		}
 
-		v3, err := openapi2conv.ToV3Swagger(&v2)
+		var v3 *openapi3.Swagger
+		v3, err = openapi2conv.ToV3Swagger(&v2)
 		if err != nil {
 			e := misc.HandleError(err)
 			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
@@ -822,7 +823,8 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 		options.Runtime(runtimeClient),
 	}
 	if haproxyOptions.MapsDir != "" {
-		mapStorage, err := storage.New(haproxyOptions.MapsDir, storage.MapsType)
+		var mapStorage storage.Storage
+		mapStorage, err = storage.New(haproxyOptions.MapsDir, storage.MapsType)
 		if err != nil {
 			log.Fatalf("error initializing map storage: %v", err)
 		}
@@ -832,7 +834,8 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 	}
 
 	if haproxyOptions.SSLCertsDir != "" {
-		sslCertStorage, err := storage.New(haproxyOptions.SSLCertsDir, storage.SSLType)
+		var sslCertStorage storage.Storage
+		sslCertStorage, err = storage.New(haproxyOptions.SSLCertsDir, storage.SSLType)
 		if err != nil {
 			log.Fatalf("error initializing SSL certs storage: %v", err)
 		}
@@ -842,7 +845,8 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 	}
 
 	if haproxyOptions.GeneralStorageDir != "" {
-		generalStorage, err := storage.New(haproxyOptions.GeneralStorageDir, storage.GeneralType)
+		var generalStorage storage.Storage
+		generalStorage, err = storage.New(haproxyOptions.GeneralStorageDir, storage.GeneralType)
 		if err != nil {
 			log.Fatalf("error initializing General storage: %v", err)
 		}
@@ -856,11 +860,12 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 			SpoeDir:        haproxyOptions.SpoeDir,
 			TransactionDir: haproxyOptions.SpoeTransactionDir,
 		}
-		spoe, err := spoe.NewSpoe(prms)
+		var spoeClient spoe.Spoe
+		spoeClient, err = spoe.NewSpoe(prms)
 		if err != nil {
 			log.Fatalf("error setting up spoe: %v", err)
 		}
-		opt = append(opt, options.Spoe(spoe))
+		opt = append(opt, options.Spoe(spoeClient))
 	} else {
 		log.Fatalf("error trying to use empty string for SPOE configuration directory")
 	}
