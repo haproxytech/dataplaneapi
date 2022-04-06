@@ -20,14 +20,17 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v3"
 	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v3/runtime"
 
 	cn "github.com/haproxytech/dataplaneapi/client-native"
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
 )
@@ -196,7 +199,22 @@ func (h *PostRawConfigurationHandlerImpl) reconfigureRuntime(runtimeAPIsOld []*m
 		dpapiCfg := dataplaneapi_config.Get()
 		haproxyOptions := dpapiCfg.HAProxy
 		return true, func() {
-			h.Client.ReplaceRuntime(cn.ConfigureRuntimeClient(context.Background(), cfg, haproxyOptions))
+			var rnt runtime.Runtime
+			i := 1
+			for i < 10 {
+				rnt = cn.ConfigureRuntimeClient(context.Background(), cfg, haproxyOptions)
+				if rnt != nil {
+					break
+				}
+				time.Sleep(time.Duration(i) * time.Second)
+				i += i // exponential backoof
+			}
+			h.Client.ReplaceRuntime(rnt)
+			if rnt == nil {
+				log.Debugf("reload callback completed, no runtime API")
+			} else {
+				log.Debugf("reload callback completed, runtime API reconfigured")
+			}
 		}, nil
 	}
 
