@@ -18,11 +18,11 @@ package handlers
 import (
 	"fmt"
 	"reflect"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v3"
 	"github.com/haproxytech/client-native/v3/models"
 
@@ -173,83 +173,12 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 				// silently fallback to 1
 				version = 1
 			}
-			transaction, err := configuration.StartTransaction(version)
-			if err != nil {
-				return h.err500(err, transaction)
-			}
-			// delete backends
-			_, backends, err := configuration.GetBackends(transaction.ID)
-			if err != nil {
-				return h.err500(err, transaction)
-			}
-			for _, backend := range backends {
-				err = configuration.DeleteBackend(backend.Name, transaction.ID, 0)
-				if err != nil {
-					return h.err500(err, transaction)
-				}
-			}
-			// delete all frontends
-			_, frontends, err := configuration.GetFrontends(transaction.ID)
-			if err != nil {
-				return h.err500(err, transaction)
-			}
-			for _, frontend := range frontends {
-				err = configuration.DeleteFrontend(frontend.Name, transaction.ID, 0)
-				if err != nil {
-					return h.err500(err, transaction)
-				}
-			}
 
-			// now create dummy frontend so haproxy does not complain
-			err = configuration.CreateFrontend(&models.Frontend{Name: "disabled"}, transaction.ID, 0)
-			if err != nil {
-				return h.err500(err, transaction)
-			}
-			err = configuration.CreateBind("disabled", &models.Bind{
-				BindParams: models.BindParams{
-					Name: "tmp",
-				},
-				Address: fmt.Sprintf("/tmp/dataplaneapi-%s.sock", h.Config.Name.Load()),
-			}, transaction.ID, 0)
-			if err != nil {
-				return h.err500(err, transaction)
-			}
-			// now reset peer-id
-			if h.Config.HAProxy.NodeIDFile != "" {
-				err = renameio.WriteFile(h.Config.HAProxy.NodeIDFile, []byte("localhost"), 0644)
-				if err != nil {
-					return h.err500(err, transaction)
-				}
-				_, peerSections, errPeers := configuration.GetPeerSections(transaction.ID)
-				if errPeers != nil {
-					return h.err500(errPeers, transaction)
-				}
-				peerFound := false
-				dataplaneID := h.Config.Cluster.ID.Load()
-				for _, section := range peerSections {
-					_, peerEntries, errPeersEntries := configuration.GetPeerEntries(section.Name, transaction.ID)
-					if errPeersEntries != nil {
-						return h.err500(errPeersEntries, transaction)
-					}
-					for _, peer := range peerEntries {
-						if peer.Name == dataplaneID {
-							peerFound = true
-							peer.Name = "localhost"
-							errPeerEntry := configuration.EditPeerEntry(dataplaneID, section.Name, peer, transaction.ID, 0)
-							if errPeerEntry != nil {
-								return h.err500(errPeerEntry, transaction)
-							}
-						}
-					}
-				}
-				if !peerFound && dataplaneID != "" {
-					return h.err500(fmt.Errorf("peer [%s] not found in HAProxy config", dataplaneID), transaction)
-				}
-			}
-			_, err = configuration.CommitTransaction(transaction.ID)
-			if err != nil {
+			config := fmt.Sprintf(DummyConfig, time.Now().Format("01-02-2006 15:04:05 MST"), h.Config.Name.Load())
+			if err = configuration.PostRawConfiguration(&config, version, true); err != nil {
 				return h.err500(err, nil)
 			}
+
 			// we need to restart haproxy
 			err = h.ReloadAgent.Restart()
 			if err != nil {
@@ -363,3 +292,17 @@ func clusterLogTargetsChanged(old []*models.ClusterLogTarget, new []*models.Clus
 	}
 	return true
 }
+
+const DummyConfig = `# NOTE: This configuration file was managed by the Fusion Control Plane.
+# Fusion released the control at %s
+
+defaults
+  mode http
+  timeout connect 5000
+  timeout client 30000
+  timeout server 10000
+
+frontend disabled
+  bind /tmp/dataplaneapi-%s.sock name tmp
+
+`
