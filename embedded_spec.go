@@ -12761,6 +12761,11 @@ func init() {
             "enabled",
             "disabled"
           ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-display-name": "H1 Adjust Bogus Server"
         },
         "hash_type": {
@@ -12796,10 +12801,54 @@ func init() {
             "enabled",
             "disabled"
           ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-display-name": "HTTP bufferrequest"
         },
         "http-check": {
           "$ref": "#/definitions/http_check"
+        },
+        "http-keep-alive": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP keep-alive"
+        },
+        "http-no-delay": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP low interactive delays"
+        },
+        "http-server-close": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP server close"
         },
         "http-use-htx": {
           "type": "string",
@@ -12848,6 +12897,19 @@ func init() {
             }
           }
         },
+        "http_proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP proxy mode"
+        },
         "http_request_timeout": {
           "type": "integer",
           "x-dependency": {
@@ -12878,6 +12940,19 @@ func init() {
             }
           },
           "$ref": "#/definitions/httpchk_params"
+        },
+        "httpclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP connection closing"
         },
         "log_health_checks": {
           "type": "string",
@@ -12927,11 +13002,37 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "srvtcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "Server TCP Keep Alive"
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
+        },
+        "tcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP Keep Alive"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -14557,6 +14658,11 @@ func init() {
           ],
           "x-display-name": "All Backups"
         },
+        "backlog": {
+          "type": "integer",
+          "x-display-name": "Backlog",
+          "x-nullable": true
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -14823,8 +14929,24 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "srvtcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Server TCP Keep Alive"
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "tcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "TCP Keep Alive"
         },
         "tcplog": {
           "type": "boolean",
@@ -15070,6 +15192,11 @@ func init() {
           ],
           "x-display-name": "Accept Invalid HTTP Request"
         },
+        "backlog": {
+          "type": "integer",
+          "x-display-name": "Backlog",
+          "x-nullable": true
+        },
         "bind_process": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -15266,6 +15393,19 @@ func init() {
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
         },
+        "tcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP Keep Alive"
+        },
         "tcplog": {
           "type": "boolean",
           "x-dependency": {
@@ -15384,6 +15524,10 @@ func init() {
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "gid": {
+          "type": "integer",
+          "x-display-name": "GID"
         },
         "group": {
           "type": "string",
@@ -15822,6 +15966,10 @@ func init() {
           "x-deprecated": true,
           "x-display-name": "SSL Default DH Parameter Size"
         },
+        "uid": {
+          "type": "integer",
+          "x-display-name": "UID"
+        },
         "user": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -16004,7 +16152,8 @@ func init() {
             "type": {
               "value": "expect"
             }
-          }
+          },
+          "x-nullable": true
         },
         "ok_status": {
           "type": "string",
@@ -21210,6 +21359,38 @@ func init() {
     "stats_options": {
       "type": "object",
       "properties": {
+        "stats_admin": {
+          "type": "boolean",
+          "x-display-name": "Stats Admin"
+        },
+        "stats_admin_cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-dependency": {
+            "stats_admin": {
+              "required": true,
+              "value": true
+            }
+          },
+          "x-display-name": "Stats Admin Condition"
+        },
+        "stats_admin_cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "stats_admin_cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Stats Admin Condition Test",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
+        },
         "stats_enable": {
           "type": "boolean",
           "x-display-name": "Stats Enable"
@@ -42152,6 +42333,11 @@ func init() {
             "enabled",
             "disabled"
           ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-display-name": "H1 Adjust Bogus Server"
         },
         "hash_type": {
@@ -42187,10 +42373,54 @@ func init() {
             "enabled",
             "disabled"
           ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
           "x-display-name": "HTTP bufferrequest"
         },
         "http-check": {
           "$ref": "#/definitions/http_check"
+        },
+        "http-keep-alive": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP keep-alive"
+        },
+        "http-no-delay": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP low interactive delays"
+        },
+        "http-server-close": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP server close"
         },
         "http-use-htx": {
           "type": "string",
@@ -42239,6 +42469,19 @@ func init() {
             }
           }
         },
+        "http_proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP proxy mode"
+        },
         "http_request_timeout": {
           "type": "integer",
           "x-dependency": {
@@ -42269,6 +42512,19 @@ func init() {
             }
           },
           "$ref": "#/definitions/httpchk_params"
+        },
+        "httpclose": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "http"
+            }
+          },
+          "x-display-name": "HTTP connection closing"
         },
         "log_health_checks": {
           "type": "string",
@@ -42318,11 +42574,37 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "srvtcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "Server TCP Keep Alive"
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
+        },
+        "tcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP Keep Alive"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -43915,6 +44197,11 @@ func init() {
           ],
           "x-display-name": "All Backups"
         },
+        "backlog": {
+          "type": "integer",
+          "x-display-name": "Backlog",
+          "x-nullable": true
+        },
         "balance": {
           "$ref": "#/definitions/balance"
         },
@@ -44181,8 +44468,24 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "srvtcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Server TCP Keep Alive"
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "tcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "TCP Keep Alive"
         },
         "tcplog": {
           "type": "boolean",
@@ -44428,6 +44731,11 @@ func init() {
           ],
           "x-display-name": "Accept Invalid HTTP Request"
         },
+        "backlog": {
+          "type": "integer",
+          "x-display-name": "Backlog",
+          "x-nullable": true
+        },
         "bind_process": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -44624,6 +44932,19 @@ func init() {
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
         },
+        "tcpka": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "mode": {
+              "value": "tcp"
+            }
+          },
+          "x-display-name": "TCP Keep Alive"
+        },
         "tcplog": {
           "type": "boolean",
           "x-dependency": {
@@ -44727,6 +45048,10 @@ func init() {
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "gid": {
+          "type": "integer",
+          "x-display-name": "GID"
         },
         "group": {
           "type": "string",
@@ -45111,6 +45436,10 @@ func init() {
           "x-deprecated": true,
           "x-display-name": "SSL Default DH Parameter Size"
         },
+        "uid": {
+          "type": "integer",
+          "x-display-name": "UID"
+        },
         "user": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -45293,7 +45622,8 @@ func init() {
             "type": {
               "value": "expect"
             }
-          }
+          },
+          "x-nullable": true
         },
         "ok_status": {
           "type": "string",
@@ -50436,6 +50766,38 @@ func init() {
     "stats_options": {
       "type": "object",
       "properties": {
+        "stats_admin": {
+          "type": "boolean",
+          "x-display-name": "Stats Admin"
+        },
+        "stats_admin_cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-dependency": {
+            "stats_admin": {
+              "required": true,
+              "value": true
+            }
+          },
+          "x-display-name": "Stats Admin Condition"
+        },
+        "stats_admin_cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "stats_admin_cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Stats Admin Condition Test",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
+        },
         "stats_enable": {
           "type": "boolean",
           "x-display-name": "Stats Enable"
