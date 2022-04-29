@@ -16437,7 +16437,6 @@ func init() {
           "type": "integer",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
@@ -16459,7 +16458,6 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
@@ -45907,7 +45905,6 @@ func init() {
           "type": "integer",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
@@ -45929,7 +45926,6 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
