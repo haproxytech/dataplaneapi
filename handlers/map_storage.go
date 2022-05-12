@@ -72,8 +72,6 @@ type GetAllStorageMapFilesHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMapFilesParams, principal interface{}) middleware.Responder {
-	tempMaps := map[string]*models.Map{}
-
 	st, err := h.Client.MapStorage()
 	if err != nil {
 		e := misc.HandleError(err)
@@ -87,40 +85,14 @@ func (h *GetAllStorageMapFilesHandlerImpl) Handle(params storage.GetAllStorageMa
 		return storage.NewGetAllStorageMapFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 
+	retMaps := models.Maps{}
 	for _, f := range filenames {
-		tempMaps[f] = &models.Map{
-			Description: "managed but not loaded map file (no runtime ID)",
+		retMaps = append(retMaps, &models.Map{
+			Description: "managed map file",
 			File:        f,
 			ID:          "",
 			StorageName: filepath.Base(f),
-		}
-	}
-
-	rn, err := h.Client.Runtime()
-	if err != nil {
-		e := misc.HandleError(err)
-		return storage.NewCreateStorageMapFileDefault(int(*e.Code)).WithPayload(e)
-	}
-	// get Map model instances for runtime-loaded files
-	runtimeMaps, err := rn.ShowMaps()
-	if err != nil {
-		status := misc.GetHTTPStatusFromErr(err)
-		return storage.NewGetAllStorageMapFilesDefault(status).WithPayload(misc.SetError(status, err.Error()))
-	}
-
-	for _, m := range runtimeMaps {
-		// map file is in runtime, but not in storage: must be removed
-		if _, ok := tempMaps[m.File]; !ok {
-			continue
-		}
-		// update (overwrite) info for on-disk files with runtime info
-		tempMaps[m.File] = m
-	}
-
-	// convert to a list to return
-	var retMaps []*models.Map
-	for _, v := range tempMaps {
-		retMaps = append(retMaps, v)
+		})
 	}
 
 	return &storage.GetAllStorageMapFilesOK{Payload: retMaps}
