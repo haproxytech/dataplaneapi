@@ -114,7 +114,7 @@ func HandleContainerGetError(err error) *models.Error {
 // DiscoverChildPaths return children models.Endpoints given path
 func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, error) {
 	var m map[string]interface{}
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(spec, &m)
 	if err != nil {
 		return nil, err
@@ -124,8 +124,14 @@ func DiscoverChildPaths(path string, spec json.RawMessage) (models.Endpoints, er
 	for key, value := range paths {
 		v := value.(map[string]interface{})
 		if g, ok := v["get"].(map[string]interface{}); ok {
-			title := g["summary"].(string)
-			description := g["description"].(string)
+			title := ""
+			if titleInterface, ok := g["summary"]; ok && titleInterface != nil {
+				title = titleInterface.(string)
+			}
+			description := ""
+			if descInterface, ok := g["description"]; ok && descInterface != nil {
+				description = descInterface.(string)
+			}
 
 			if strings.HasPrefix(key, path) && key != path {
 				resource := key[len(path):]
