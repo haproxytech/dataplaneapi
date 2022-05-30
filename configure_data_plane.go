@@ -123,14 +123,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			haproxyOptions.MasterRuntime = strings.Replace(masterRuntime, "unix@", "", 1)
 		}
 	}
-	// Override options with env variables
-	if os.Getenv("HAPROXY_MWORKER") == "1" {
-		mWorker = true
-		masterRuntime := os.Getenv("HAPROXY_MASTER_CLI")
-		if misc.IsUnixSocketAddr(masterRuntime) {
-			haproxyOptions.MasterRuntime = strings.Replace(masterRuntime, "unix@", "", 1)
-		}
-	}
 
 	if cfgFiles := os.Getenv("HAPROXY_CFGFILES"); cfgFiles != "" {
 		m := map[string]bool{"configuration": false}
