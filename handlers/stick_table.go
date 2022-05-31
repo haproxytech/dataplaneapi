@@ -42,6 +42,10 @@ type GetStickTableEntriesHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
+type SetStickTableEntriesHandlerImpl struct {
+	Client client_native.HAProxyClient
+}
+
 // Handle executing the request and returning a response
 func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
 	process := 0
@@ -94,6 +98,23 @@ func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams
 	}
 
 	return stick_table.NewGetStickTableOK().WithPayload(stkT)
+}
+
+// Handle executing the request and returning a response
+func (h *SetStickTableEntriesHandlerImpl) Handle(params stick_table.SetStickTableEntriesParams, principal interface{}) middleware.Responder {
+	runtime, err := h.Client.Runtime()
+	if err != nil {
+		e := misc.HandleError(err)
+		return stick_table.NewSetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = runtime.SetTableEntry(params.StickTable, *params.StickTableEntry.Key, *params.StickTableEntry.DataType, int(params.Process))
+	if err != nil {
+		e := misc.HandleError(err)
+		return stick_table.NewSetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	return stick_table.NewSetStickTableEntriesNoContent()
 }
 
 // Handle executing the request and returning a response

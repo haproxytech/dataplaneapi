@@ -9677,6 +9677,58 @@ func init() {
             "$ref": "#/responses/DefaultError"
           }
         }
+      },
+      "post": {
+        "description": "Create or update a stick-table entry in the table.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Set Entry to Stick Table",
+        "operationId": "setStickTableEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Stick table name",
+            "name": "stick_table",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not only first process is returned",
+            "name": "process",
+            "in": "query",
+            "required": true
+          },
+          {
+            "description": "Stick table entry",
+            "name": "stick_table_entry",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "key",
+                "data_type"
+              ],
+              "properties": {
+                "data_type": {
+                  "$ref": "#/definitions/stick_table_entry"
+                },
+                "key": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
       }
     },
     "/services/haproxy/runtime/stick_tables": {
@@ -15478,6 +15530,9 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "busy_polling": {
+          "type": "boolean"
+        },
         "ca_base": {
           "type": "string",
           "x-display-name": "SSL CA Certificates Base Directory"
@@ -15630,9 +15685,44 @@ func init() {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
         },
+        "max_spread_checks": {
+          "type": "integer"
+        },
+        "maxcompcpuusage": {
+          "type": "integer",
+          "x-display-name": "Maximum HAProxy CPU usage"
+        },
+        "maxcomprate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process input compression rate"
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections"
+        },
+        "maxconnrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent connections"
+        },
+        "maxpipes": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of pipes"
+        },
+        "maxsessrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of sessions per second"
+        },
+        "maxsslconn": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent SSL connections"
+        },
+        "maxsslrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of SSL sessions per second"
+        },
+        "maxzlibmem": {
+          "type": "integer",
+          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
         "nbproc": {
           "type": "integer",
@@ -15642,9 +15732,46 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of Threads"
         },
+        "noepoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
+        },
+        "noevports": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
+        },
+        "nogetaddrinfo": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of getaddrinfo for name resolving"
+        },
+        "nokqueue": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
+        },
+        "nopoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"poll\" event polling system"
+        },
+        "noreuseport": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of SO_REUSEPORT"
+        },
+        "nosplice": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
+        },
         "pidfile": {
           "type": "string",
           "x-display-name": "PID File"
+        },
+        "profiling_tasks": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "x-display-name": "Enable or disables per-task CPU profiling"
         },
         "runtime_apis": {
           "type": "array",
@@ -15678,6 +15805,10 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Server State File"
+        },
+        "spread_checks": {
+          "type": "integer",
+          "x-display-name": "Add some randomness in the check interval"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",
@@ -37158,6 +37289,67 @@ func init() {
             }
           }
         }
+      },
+      "post": {
+        "description": "Create or update a stick-table entry in the table.",
+        "tags": [
+          "StickTable"
+        ],
+        "summary": "Set Entry to Stick Table",
+        "operationId": "setStickTableEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Stick table name",
+            "name": "stick_table",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Process number if master-worker mode, if not only first process is returned",
+            "name": "process",
+            "in": "query",
+            "required": true
+          },
+          {
+            "description": "Stick table entry",
+            "name": "stick_table_entry",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "key",
+                "data_type"
+              ],
+              "properties": {
+                "data_type": {
+                  "$ref": "#/definitions/stick_table_entry"
+                },
+                "key": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
       }
     },
     "/services/haproxy/runtime/stick_tables": {
@@ -45015,6 +45207,9 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "busy_polling": {
+          "type": "boolean"
+        },
         "ca_base": {
           "type": "string",
           "x-display-name": "SSL CA Certificates Base Directory"
@@ -45112,9 +45307,44 @@ func init() {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
         },
+        "max_spread_checks": {
+          "type": "integer"
+        },
+        "maxcompcpuusage": {
+          "type": "integer",
+          "x-display-name": "Maximum HAProxy CPU usage"
+        },
+        "maxcomprate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process input compression rate"
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections"
+        },
+        "maxconnrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent connections"
+        },
+        "maxpipes": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of pipes"
+        },
+        "maxsessrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of sessions per second"
+        },
+        "maxsslconn": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent SSL connections"
+        },
+        "maxsslrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of SSL sessions per second"
+        },
+        "maxzlibmem": {
+          "type": "integer",
+          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
         "nbproc": {
           "type": "integer",
@@ -45124,9 +45354,46 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of Threads"
         },
+        "noepoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
+        },
+        "noevports": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
+        },
+        "nogetaddrinfo": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of getaddrinfo for name resolving"
+        },
+        "nokqueue": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
+        },
+        "nopoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"poll\" event polling system"
+        },
+        "noreuseport": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of SO_REUSEPORT"
+        },
+        "nosplice": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
+        },
         "pidfile": {
           "type": "string",
           "x-display-name": "PID File"
+        },
+        "profiling_tasks": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "x-display-name": "Enable or disables per-task CPU profiling"
         },
         "runtime_apis": {
           "type": "array",
@@ -45145,6 +45412,10 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "Server State File"
+        },
+        "spread_checks": {
+          "type": "integer",
+          "x-display-name": "Add some randomness in the check interval"
         },
         "ssl_default_bind_ciphers": {
           "type": "string",

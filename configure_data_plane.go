@@ -557,6 +557,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.StickTableGetStickTablesHandler = &handlers.GetStickTablesHandlerImpl{Client: client}
 	api.StickTableGetStickTableHandler = &handlers.GetStickTableHandlerImpl{Client: client}
 	api.StickTableGetStickTableEntriesHandler = &handlers.GetStickTableEntriesHandlerImpl{Client: client}
+	api.StickTableSetStickTableEntriesHandler = &handlers.SetStickTableEntriesHandlerImpl{Client: client}
 
 	// setup ACL runtime handlers
 	api.ACLRuntimeGetServicesHaproxyRuntimeAclsHandler = &handlers.GetACLSHandlerRuntimeImpl{Client: client}
