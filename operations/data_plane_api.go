@@ -819,6 +819,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		UserReplaceUserHandler: user.ReplaceUserHandlerFunc(func(params user.ReplaceUserParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation user.ReplaceUser has not yet been implemented")
 		}),
+		StickTableSetStickTableEntriesHandler: stick_table.SetStickTableEntriesHandlerFunc(func(params stick_table.SetStickTableEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation stick_table.SetStickTableEntries has not yet been implemented")
+		}),
 		MapsShowRuntimeMapHandler: maps.ShowRuntimeMapHandlerFunc(func(params maps.ShowRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ShowRuntimeMap has not yet been implemented")
 		}),
@@ -1362,6 +1365,8 @@ type DataPlaneAPI struct {
 	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
 	// UserReplaceUserHandler sets the operation handler for the replace user operation
 	UserReplaceUserHandler user.ReplaceUserHandler
+	// StickTableSetStickTableEntriesHandler sets the operation handler for the set stick table entries operation
+	StickTableSetStickTableEntriesHandler stick_table.SetStickTableEntriesHandler
 	// MapsShowRuntimeMapHandler sets the operation handler for the show runtime map operation
 	MapsShowRuntimeMapHandler maps.ShowRuntimeMapHandler
 	// SpoeTransactionsStartSpoeTransactionHandler sets the operation handler for the start spoe transaction operation
@@ -2160,6 +2165,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.UserReplaceUserHandler == nil {
 		unregistered = append(unregistered, "user.ReplaceUserHandler")
+	}
+	if o.StickTableSetStickTableEntriesHandler == nil {
+		unregistered = append(unregistered, "stick_table.SetStickTableEntriesHandler")
 	}
 	if o.MapsShowRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ShowRuntimeMapHandler")
@@ -3224,6 +3232,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/users/{username}"] = user.NewReplaceUser(o.context, o.UserReplaceUserHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/stick_table_entries"] = stick_table.NewSetStickTableEntries(o.context, o.StickTableSetStickTableEntriesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
