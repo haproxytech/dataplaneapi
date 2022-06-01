@@ -25,6 +25,7 @@ import (
 
 type RFC5424Hook struct {
 	syslog *syslog5424.Syslog
+	sender *syslog5424.Sender
 	msgID  string
 }
 
@@ -67,89 +68,26 @@ func NewRFC5424Hook(opts Target) (logrus.Hook, error) {
 		return nil, fmt.Errorf("no address has been declared")
 	}
 
-	var severity syslog5424.Priority
-	switch strings.ToLower(opts.SyslogLevel) {
-	case "debug":
-		severity = syslog5424.LogDEBUG
-	case "info":
-		severity = syslog5424.LogINFO
-	case "notice":
-		severity = syslog5424.LogNOTICE
-	case "warning":
-		severity = syslog5424.LogWARNING
-	case "error":
-		severity = syslog5424.LogERR
-	case "critical":
-		severity = syslog5424.LogCRIT
-	case "alert":
-		severity = syslog5424.LogALERT
-	case "emergency":
-		severity = syslog5424.LogEMERG
-	default:
-		return nil, fmt.Errorf("unrecognized severity: %s", opts.SyslogLevel)
+	priority := strings.Join([]string{opts.SyslogFacility, opts.SyslogLevel}, ".")
+	var priorityParsed syslog5424.Priority
+	if err := priorityParsed.Set(priority); err != nil {
+		return nil, err
 	}
 
-	var facility syslog5424.Priority
-	switch opts.SyslogFacility {
-	case "kern":
-		facility = syslog5424.LogKERN
-	case "user":
-		facility = syslog5424.LogUSER
-	case "mail":
-		facility = syslog5424.LogMAIL
-	case "daemon":
-		facility = syslog5424.LogDAEMON
-	case "auth":
-		facility = syslog5424.LogAUTH
-	case "syslog":
-		facility = syslog5424.LogSYSLOG
-	case "lpr":
-		facility = syslog5424.LogLPR
-	case "news":
-		facility = syslog5424.LogNEWS
-	case "uucp":
-		facility = syslog5424.LogUUCP
-	case "cron":
-		facility = syslog5424.LogCRON
-	case "authpriv":
-		facility = syslog5424.LogAUTHPRIV
-	case "ftp":
-		facility = syslog5424.LogFTP
-	case "local0":
-		facility = syslog5424.LogLOCAL0
-	case "local1":
-		facility = syslog5424.LogLOCAL1
-	case "local2":
-		facility = syslog5424.LogLOCAL2
-	case "local3":
-		facility = syslog5424.LogLOCAL3
-	case "local4":
-		facility = syslog5424.LogLOCAL4
-	case "local5":
-		facility = syslog5424.LogLOCAL5
-	case "local6":
-		facility = syslog5424.LogLOCAL6
-	case "local7":
-		facility = syslog5424.LogLOCAL7
-	default:
-		return nil, fmt.Errorf("unrecognized facility: %s", opts.SyslogFacility)
-	}
-
-	slConn, chErr, err := syslog5424.Dial(opts.SyslogProto, opts.SyslogAddr)
-	if err != nil {
-		fmt.Printf("error establishing syslog output: %s\n", err)
-	}
-
-	go func(ch <-chan error) {
-		for i := range ch {
-			fmt.Printf("Error received from the syslog server: %s\n", i.Error())
-		}
-	}(chErr)
-
-	syslogServer, err := syslog5424.New(slConn, facility|severity, opts.SyslogTag)
+	slConn, _, err := syslog5424.Dial(opts.SyslogProto, opts.SyslogAddr)
 	if err != nil {
 		return nil, err
 	}
 
-	return &RFC5424Hook{syslog: syslogServer, msgID: opts.SyslogMsgID}, nil
+	syslogServer, err := syslog5424.New(slConn, priorityParsed, opts.SyslogTag)
+	if err != nil {
+		return nil, err
+	}
+
+	return &RFC5424Hook{syslog: syslogServer, sender: slConn, msgID: opts.SyslogMsgID}, nil
+}
+
+func (r RFC5424Hook) Close() error {
+	r.sender.End()
+	return nil
 }
