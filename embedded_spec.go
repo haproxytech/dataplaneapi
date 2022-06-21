@@ -15576,6 +15576,13 @@ func init() {
             "disabled"
           ]
         },
+        "description": {
+          "type": "string",
+          "x-display-name": "Text that describes the instance"
+        },
+        "expose_experimental_directives": {
+          "type": "boolean"
+        },
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
@@ -15583,6 +15590,11 @@ func init() {
         "gid": {
           "type": "integer",
           "x-display-name": "GID"
+        },
+        "grace": {
+          "type": "integer",
+          "x-display-name": "Defines a delay between SIGUSR1 and real soft-stop",
+          "x-nullable": true
         },
         "group": {
           "type": "string",
@@ -15612,10 +15624,22 @@ func init() {
         "h1_case_adjust_file": {
           "type": "string"
         },
+        "h2_workaround_bogus_websocket_clients": {
+          "type": "boolean"
+        },
         "hard_stop_after": {
           "type": "integer",
           "x-display-name": "Hard Stop After",
           "x-nullable": true
+        },
+        "insecure_fork_wanted": {
+          "type": "boolean"
+        },
+        "insecure_setuid_wanted": {
+          "type": "boolean"
+        },
+        "issuers_chain_path": {
+          "type": "string"
         },
         "localpeer": {
           "type": "string",
@@ -15641,6 +15665,9 @@ func init() {
             }
           },
           "x-display-name": "Log Send Hostname"
+        },
+        "lua_load_per_thread": {
+          "type": "string"
         },
         "lua_loads": {
           "type": "array",
@@ -15724,6 +15751,9 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
+        "mworker_max_reloads": {
+          "type": "integer"
+        },
         "nbproc": {
           "type": "integer",
           "x-display-name": "Number of Processes"
@@ -15731,6 +15761,9 @@ func init() {
         "nbthread": {
           "type": "integer",
           "x-display-name": "Number of Threads"
+        },
+        "node": {
+          "type": "string"
         },
         "noepoll": {
           "type": "boolean",
@@ -15760,9 +15793,15 @@ func init() {
           "type": "boolean",
           "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
+        "numa_cpu_mapping": {
+          "type": "boolean"
+        },
         "pidfile": {
           "type": "string",
           "x-display-name": "PID File"
+        },
+        "pp2_never_send_local": {
+          "type": "boolean"
         },
         "profiling_tasks": {
           "type": "string",
@@ -15806,6 +15845,9 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Server State File"
         },
+        "set_dumpable": {
+          "type": "boolean"
+        },
         "spread_checks": {
           "type": "integer",
           "x-display-name": "Add some randomness in the check interval"
@@ -15817,6 +15859,10 @@ func init() {
         "ssl_default_bind_ciphersuites": {
           "type": "string",
           "x-display-name": "SSL Default Bind Ciphersuites"
+        },
+        "ssl_default_bind_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Curves"
         },
         "ssl_default_bind_options": {
           "type": "string",
@@ -15842,9 +15888,16 @@ func init() {
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
         },
+        "ssl_skip_self_issued_ca": {
+          "type": "boolean",
+          "x-display-name": "Self issued CA, aka x509 root CA"
+        },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "strict_limits": {
+          "type": "boolean"
         },
         "tune_options": {
           "type": "object",
@@ -16101,10 +16154,38 @@ func init() {
           "type": "integer",
           "x-display-name": "UID"
         },
+        "ulimit_n": {
+          "type": "integer"
+        },
         "user": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "User"
+        },
+        "wurfl_options": {
+          "type": "object",
+          "properties": {
+            "cache_size": {
+              "type": "integer",
+              "x-display-name": "Sets the WURFL Useragent cache size"
+            },
+            "data_file": {
+              "type": "string",
+              "x-display-name": "The path of the WURFL data file"
+            },
+            "information_list": {
+              "type": "string",
+              "x-display-name": "A space-delimited list of WURFL capabilities"
+            },
+            "information_list_separator": {
+              "type": "string",
+              "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
+            },
+            "patch_file": {
+              "type": "string",
+              "x-display-name": "A list of WURFL patch file paths"
+            }
+          }
         }
       },
       "additionalProperties": false
@@ -41914,6 +41995,31 @@ func init() {
         }
       }
     },
+    "GlobalWurflOptions": {
+      "type": "object",
+      "properties": {
+        "cache_size": {
+          "type": "integer",
+          "x-display-name": "Sets the WURFL Useragent cache size"
+        },
+        "data_file": {
+          "type": "string",
+          "x-display-name": "The path of the WURFL data file"
+        },
+        "information_list": {
+          "type": "string",
+          "x-display-name": "A space-delimited list of WURFL capabilities"
+        },
+        "information_list_separator": {
+          "type": "string",
+          "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
+        },
+        "patch_file": {
+          "type": "string",
+          "x-display-name": "A list of WURFL patch file paths"
+        }
+      }
+    },
     "InfoAPI": {
       "type": "object",
       "properties": {
@@ -45238,6 +45344,13 @@ func init() {
             "disabled"
           ]
         },
+        "description": {
+          "type": "string",
+          "x-display-name": "Text that describes the instance"
+        },
+        "expose_experimental_directives": {
+          "type": "boolean"
+        },
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
@@ -45245,6 +45358,11 @@ func init() {
         "gid": {
           "type": "integer",
           "x-display-name": "GID"
+        },
+        "grace": {
+          "type": "integer",
+          "x-display-name": "Defines a delay between SIGUSR1 and real soft-stop",
+          "x-nullable": true
         },
         "group": {
           "type": "string",
@@ -45261,10 +45379,22 @@ func init() {
         "h1_case_adjust_file": {
           "type": "string"
         },
+        "h2_workaround_bogus_websocket_clients": {
+          "type": "boolean"
+        },
         "hard_stop_after": {
           "type": "integer",
           "x-display-name": "Hard Stop After",
           "x-nullable": true
+        },
+        "insecure_fork_wanted": {
+          "type": "boolean"
+        },
+        "insecure_setuid_wanted": {
+          "type": "boolean"
+        },
+        "issuers_chain_path": {
+          "type": "string"
         },
         "localpeer": {
           "type": "string",
@@ -45290,6 +45420,9 @@ func init() {
             }
           },
           "x-display-name": "Log Send Hostname"
+        },
+        "lua_load_per_thread": {
+          "type": "string"
         },
         "lua_loads": {
           "type": "array",
@@ -45346,6 +45479,9 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
+        "mworker_max_reloads": {
+          "type": "integer"
+        },
         "nbproc": {
           "type": "integer",
           "x-display-name": "Number of Processes"
@@ -45353,6 +45489,9 @@ func init() {
         "nbthread": {
           "type": "integer",
           "x-display-name": "Number of Threads"
+        },
+        "node": {
+          "type": "string"
         },
         "noepoll": {
           "type": "boolean",
@@ -45382,9 +45521,15 @@ func init() {
           "type": "boolean",
           "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
+        "numa_cpu_mapping": {
+          "type": "boolean"
+        },
         "pidfile": {
           "type": "string",
           "x-display-name": "PID File"
+        },
+        "pp2_never_send_local": {
+          "type": "boolean"
         },
         "profiling_tasks": {
           "type": "string",
@@ -45413,6 +45558,9 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Server State File"
         },
+        "set_dumpable": {
+          "type": "boolean"
+        },
         "spread_checks": {
           "type": "integer",
           "x-display-name": "Add some randomness in the check interval"
@@ -45424,6 +45572,10 @@ func init() {
         "ssl_default_bind_ciphersuites": {
           "type": "string",
           "x-display-name": "SSL Default Bind Ciphersuites"
+        },
+        "ssl_default_bind_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Curves"
         },
         "ssl_default_bind_options": {
           "type": "string",
@@ -45449,9 +45601,16 @@ func init() {
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
         },
+        "ssl_skip_self_issued_ca": {
+          "type": "boolean",
+          "x-display-name": "Self issued CA, aka x509 root CA"
+        },
         "stats_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "strict_limits": {
+          "type": "boolean"
         },
         "tune_options": {
           "type": "object",
@@ -45709,10 +45868,38 @@ func init() {
           "type": "integer",
           "x-display-name": "UID"
         },
+        "ulimit_n": {
+          "type": "integer"
+        },
         "user": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "User"
+        },
+        "wurfl_options": {
+          "type": "object",
+          "properties": {
+            "cache_size": {
+              "type": "integer",
+              "x-display-name": "Sets the WURFL Useragent cache size"
+            },
+            "data_file": {
+              "type": "string",
+              "x-display-name": "The path of the WURFL data file"
+            },
+            "information_list": {
+              "type": "string",
+              "x-display-name": "A space-delimited list of WURFL capabilities"
+            },
+            "information_list_separator": {
+              "type": "string",
+              "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
+            },
+            "patch_file": {
+              "type": "string",
+              "x-display-name": "A list of WURFL patch file paths"
+            }
+          }
         }
       },
       "additionalProperties": false
