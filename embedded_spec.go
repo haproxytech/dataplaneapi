@@ -15094,6 +15094,21 @@ func init() {
           ],
           "x-display-name": "Client TCP Keep Alive"
         },
+        "clitcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Cnt",
+          "x-nullable": true
+        },
+        "clitcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Idle",
+          "x-nullable": true
+        },
+        "clitcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Intvl",
+          "x-nullable": true
+        },
         "compression": {
           "$ref": "#/definitions/compression"
         },
@@ -15626,6 +15641,21 @@ func init() {
             }
           },
           "x-display-name": "Client TCP Keep Alive"
+        },
+        "clitcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Cnt",
+          "x-nullable": true
+        },
+        "clitcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Idle",
+          "x-nullable": true
+        },
+        "clitcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Intvl",
+          "x-nullable": true
         },
         "compression": {
           "$ref": "#/definitions/compression"
@@ -45774,6 +45804,21 @@ func init() {
           ],
           "x-display-name": "Client TCP Keep Alive"
         },
+        "clitcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Cnt",
+          "x-nullable": true
+        },
+        "clitcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Idle",
+          "x-nullable": true
+        },
+        "clitcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Intvl",
+          "x-nullable": true
+        },
         "compression": {
           "$ref": "#/definitions/compression"
         },
@@ -46306,6 +46351,21 @@ func init() {
             }
           },
           "x-display-name": "Client TCP Keep Alive"
+        },
+        "clitcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Cnt",
+          "x-nullable": true
+        },
+        "clitcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Idle",
+          "x-nullable": true
+        },
+        "clitcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Clitcpka Intvl",
+          "x-nullable": true
         },
         "compression": {
           "$ref": "#/definitions/compression"
