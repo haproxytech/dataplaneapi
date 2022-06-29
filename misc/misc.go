@@ -21,17 +21,21 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 
+	"github.com/GehirnInc/crypt"
 	"github.com/haproxytech/client-native/v3/configuration"
 	client_errors "github.com/haproxytech/client-native/v3/errors"
 	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/config-parser/v4/types"
 	jsoniter "github.com/json-iterator/go"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/rate"
 )
 
@@ -259,4 +263,40 @@ func RandomString(size int) (string, error) {
 	result = strings.ReplaceAll(result, `-`, ``)
 	result = strings.ReplaceAll(result, `_`, ``)
 	return result[:size], err
+}
+
+func IsNetworkErr(err error) bool {
+	if err == nil {
+		return false
+	}
+	if _, ok := err.(net.Error); ok {
+		return true
+	}
+	return false
+}
+
+func CreateClusterUser() (types.User, string, error) {
+	// create a new user for connecting to cluster
+	name, err := RandomString(8)
+	if err != nil {
+		return types.User{}, "", err
+	}
+	pwd, err := RandomString(24)
+	if err != nil {
+		return types.User{}, "", err
+	}
+
+	cryptAlg := crypt.New(crypt.SHA512)
+	hash, err := cryptAlg.Generate([]byte(pwd), nil)
+	if err != nil {
+		return types.User{}, "", err
+	}
+	name = fmt.Sprintf("dpapi-c-%s", name)
+	log.Infof("Creating user %s for cluster connection", name)
+	user := types.User{
+		Name:       name,
+		IsInsecure: false,
+		Password:   hash,
+	}
+	return user, pwd, nil
 }

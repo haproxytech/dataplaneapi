@@ -33,7 +33,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GehirnInc/crypt"
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v3"
 	"github.com/haproxytech/config-parser/v4/types"
@@ -115,7 +114,7 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 				log.Warning(err)
 				continue
 			}
-			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0o644)
 			if err != nil {
 				log.Warning(err)
 				continue
@@ -174,12 +173,12 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 		return err
 	}
 	log.Infof("Cluster re joined, status: %s", responseData.Status)
-	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(csr), 0o644)
 	if err != nil {
 		log.Warning(err)
 		return err
 	}
-	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o644)
 	if err != nil {
 		log.Warning(err)
 		return err
@@ -254,12 +253,12 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				log.Warning(err)
 				break
 			}
-			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o644)
 			if err != nil {
 				log.Warning(err)
 				break
 			}
-			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0o644)
 			if err != nil {
 				log.Warning(err)
 				break
@@ -273,11 +272,45 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				registerMerhod = method
 			}
 			log.Warningf("issuing cluster join request to cluster %s at %s", data["name"], data["address"])
-			err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), registerMerhod, csr, key)
+			userStore := GetUsersStore()
+			user, pwd, err := misc.CreateClusterUser()
 			if err != nil {
-				log.Warning(err)
+				log.Error(err)
 				break
 			}
+			err = userStore.AddUser(user)
+			if err != nil {
+				log.Error(err)
+				break
+			}
+			backOff := 1
+			numTries := 0
+			maxTries := 10
+			for {
+				err = c.issueJoinRequest(url, data["port"], data["api-base-path"], c.cfg.Cluster.APIRegisterPath.Load(), registerMerhod, csr, key, user, pwd)
+				if err == nil {
+					break
+				}
+				log.Error(err)
+				if !misc.IsNetworkErr(err) {
+					break
+				}
+				numTries++
+				backOff *= 2
+				if backOff > 60 {
+					backOff = 60
+				}
+				if numTries > maxTries {
+					log.Error("Joining cluster failed")
+					break
+				}
+				log.Warningf("Joining cluster will be retried after %d seconds [%d/%d]", backOff, numTries, maxTries)
+				time.Sleep(time.Second * time.Duration(backOff))
+			}
+			if err != nil {
+				break
+			}
+
 			if !c.cfg.Cluster.CertificateFetched.Load() {
 				log.Warningf("starting certificate fetch")
 				c.certFetch <- struct{}{}
@@ -288,37 +321,9 @@ func (c *ClusterSync) monitorBootstrapKey() {
 	}
 }
 
-func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath string, registerMethod string, csr, key string) error {
+func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath string, registerMethod string, csr, key string, user types.User, userPWD string) error {
 	url = fmt.Sprintf("%s:%s/%s", url, port, strings.TrimLeft(path.Join(basePath, registerPath), "/"))
 	apiCfg := c.cfg.APIOptions
-	userStore := GetUsersStore()
-
-	// create a new user for connecting to cluster
-	name, err := misc.RandomString(8)
-	if err != nil {
-		return err
-	}
-	pwd, err := misc.RandomString(24)
-	if err != nil {
-		return err
-	}
-
-	cryptAlg := crypt.New(crypt.SHA512)
-	hash, err := cryptAlg.Generate([]byte(pwd), nil)
-	if err != nil {
-		return err
-	}
-	name = fmt.Sprintf("dpapi-c-%s", name)
-	log.Infof("Creating user %s for cluster connection", name)
-	user := types.User{
-		Name:       name,
-		IsInsecure: false,
-		Password:   hash,
-	}
-	err = userStore.AddUser(user)
-	if err != nil {
-		return err
-	}
 
 	apiAddress := apiCfg.APIAddress
 	if apiAddress == "" {
@@ -333,7 +338,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 		// ID:          "",
 		Address:     apiAddress,
 		APIBasePath: c.cfg.RuntimeData.APIBasePath,
-		APIPassword: pwd,
+		APIPassword: userPWD,
 		APIUser:     user.Name,
 		Certificate: csr,
 		Description: "",
@@ -380,7 +385,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 			return errCfg
 		}
 		// write id to file
-		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0644) // nolint:gosec
+		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0o644) // nolint:gosec
 		if errFID != nil {
 			return errFID
 		}
@@ -459,7 +464,7 @@ func (c *ClusterSync) checkCertificate(node Node) (fetched bool, err error) {
 		c.cfg.Status.Store("unconfigured")
 		return false, nil
 	}
-	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(node.Certificate), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(node.Certificate), 0o644)
 	if err != nil {
 		c.cfg.Status.Store("unconfigured")
 		return false, err
