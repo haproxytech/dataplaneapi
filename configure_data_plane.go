@@ -407,6 +407,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.HTTPRequestRuleGetHTTPRequestRulesHandler = &handlers.GetHTTPRequestRulesHandlerImpl{Client: client}
 	api.HTTPRequestRuleReplaceHTTPRequestRuleHandler = &handlers.ReplaceHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup http after response rule handlers
+	api.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler = &handlers.CreateHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleHandler = &handlers.DeleteHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler = &handlers.GetHTTPAfterResponseRuleHandlerImpl{Client: client}
+	api.HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler = &handlers.GetHTTPAfterResponseRulesHandlerImpl{Client: client}
+	api.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler = &handlers.ReplaceHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup http response rule handlers
 	api.HTTPResponseRuleCreateHTTPResponseRuleHandler = &handlers.CreateHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
 	api.HTTPResponseRuleDeleteHTTPResponseRuleHandler = &handlers.DeleteHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
