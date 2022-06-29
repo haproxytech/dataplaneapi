@@ -49,6 +49,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
 	"github.com/haproxytech/dataplaneapi/operations/global"
 	"github.com/haproxytech/dataplaneapi/operations/group"
+	"github.com/haproxytech/dataplaneapi/operations/http_after_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_check"
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
@@ -174,6 +175,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		GroupCreateGroupHandler: group.CreateGroupHandlerFunc(func(params group.CreateGroupParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation group.CreateGroup has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler: http_after_response_rule.CreateHTTPAfterResponseRuleHandlerFunc(func(params http_after_response_rule.CreateHTTPAfterResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.CreateHTTPAfterResponseRule has not yet been implemented")
+		}),
 		HTTPCheckCreateHTTPCheckHandler: http_check.CreateHTTPCheckHandlerFunc(func(params http_check.CreateHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.CreateHTTPCheck has not yet been implemented")
 		}),
@@ -287,6 +291,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		GroupDeleteGroupHandler: group.DeleteGroupHandlerFunc(func(params group.DeleteGroupParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation group.DeleteGroup has not yet been implemented")
+		}),
+		HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleHandler: http_after_response_rule.DeleteHTTPAfterResponseRuleHandlerFunc(func(params http_after_response_rule.DeleteHTTPAfterResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.DeleteHTTPAfterResponseRule has not yet been implemented")
 		}),
 		HTTPCheckDeleteHTTPCheckHandler: http_check.DeleteHTTPCheckHandlerFunc(func(params http_check.DeleteHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.DeleteHTTPCheck has not yet been implemented")
@@ -479,6 +486,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ConfigurationGetHAProxyConfigurationHandler: configuration.GetHAProxyConfigurationHandlerFunc(func(params configuration.GetHAProxyConfigurationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation configuration.GetHAProxyConfiguration has not yet been implemented")
+		}),
+		HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler: http_after_response_rule.GetHTTPAfterResponseRuleHandlerFunc(func(params http_after_response_rule.GetHTTPAfterResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.GetHTTPAfterResponseRule has not yet been implemented")
+		}),
+		HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler: http_after_response_rule.GetHTTPAfterResponseRulesHandlerFunc(func(params http_after_response_rule.GetHTTPAfterResponseRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.GetHTTPAfterResponseRules has not yet been implemented")
 		}),
 		HTTPCheckGetHTTPCheckHandler: http_check.GetHTTPCheckHandlerFunc(func(params http_check.GetHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.GetHTTPCheck has not yet been implemented")
@@ -747,6 +760,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		GroupReplaceGroupHandler: group.ReplaceGroupHandlerFunc(func(params group.ReplaceGroupParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation group.ReplaceGroup has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler: http_after_response_rule.ReplaceHTTPAfterResponseRuleHandlerFunc(func(params http_after_response_rule.ReplaceHTTPAfterResponseRuleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.ReplaceHTTPAfterResponseRule has not yet been implemented")
+		}),
 		HTTPCheckReplaceHTTPCheckHandler: http_check.ReplaceHTTPCheckHandlerFunc(func(params http_check.ReplaceHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.ReplaceHTTPCheck has not yet been implemented")
 		}),
@@ -935,6 +951,8 @@ type DataPlaneAPI struct {
 	FrontendCreateFrontendHandler frontend.CreateFrontendHandler
 	// GroupCreateGroupHandler sets the operation handler for the create group operation
 	GroupCreateGroupHandler group.CreateGroupHandler
+	// HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler sets the operation handler for the create HTTP after response rule operation
+	HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler http_after_response_rule.CreateHTTPAfterResponseRuleHandler
 	// HTTPCheckCreateHTTPCheckHandler sets the operation handler for the create HTTP check operation
 	HTTPCheckCreateHTTPCheckHandler http_check.CreateHTTPCheckHandler
 	// HTTPRequestRuleCreateHTTPRequestRuleHandler sets the operation handler for the create HTTP request rule operation
@@ -1011,6 +1029,8 @@ type DataPlaneAPI struct {
 	FrontendDeleteFrontendHandler frontend.DeleteFrontendHandler
 	// GroupDeleteGroupHandler sets the operation handler for the delete group operation
 	GroupDeleteGroupHandler group.DeleteGroupHandler
+	// HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleHandler sets the operation handler for the delete HTTP after response rule operation
+	HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleHandler http_after_response_rule.DeleteHTTPAfterResponseRuleHandler
 	// HTTPCheckDeleteHTTPCheckHandler sets the operation handler for the delete HTTP check operation
 	HTTPCheckDeleteHTTPCheckHandler http_check.DeleteHTTPCheckHandler
 	// HTTPRequestRuleDeleteHTTPRequestRuleHandler sets the operation handler for the delete HTTP request rule operation
@@ -1139,6 +1159,10 @@ type DataPlaneAPI struct {
 	GroupGetGroupsHandler group.GetGroupsHandler
 	// ConfigurationGetHAProxyConfigurationHandler sets the operation handler for the get h a proxy configuration operation
 	ConfigurationGetHAProxyConfigurationHandler configuration.GetHAProxyConfigurationHandler
+	// HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler sets the operation handler for the get HTTP after response rule operation
+	HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler http_after_response_rule.GetHTTPAfterResponseRuleHandler
+	// HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler sets the operation handler for the get HTTP after response rules operation
+	HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler http_after_response_rule.GetHTTPAfterResponseRulesHandler
 	// HTTPCheckGetHTTPCheckHandler sets the operation handler for the get HTTP check operation
 	HTTPCheckGetHTTPCheckHandler http_check.GetHTTPCheckHandler
 	// HTTPCheckGetHTTPChecksHandler sets the operation handler for the get HTTP checks operation
@@ -1317,6 +1341,8 @@ type DataPlaneAPI struct {
 	GlobalReplaceGlobalHandler global.ReplaceGlobalHandler
 	// GroupReplaceGroupHandler sets the operation handler for the replace group operation
 	GroupReplaceGroupHandler group.ReplaceGroupHandler
+	// HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler sets the operation handler for the replace HTTP after response rule operation
+	HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler http_after_response_rule.ReplaceHTTPAfterResponseRuleHandler
 	// HTTPCheckReplaceHTTPCheckHandler sets the operation handler for the replace HTTP check operation
 	HTTPCheckReplaceHTTPCheckHandler http_check.ReplaceHTTPCheckHandler
 	// HTTPRequestRuleReplaceHTTPRequestRuleHandler sets the operation handler for the replace HTTP request rule operation
@@ -1521,6 +1547,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.GroupCreateGroupHandler == nil {
 		unregistered = append(unregistered, "group.CreateGroupHandler")
 	}
+	if o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.CreateHTTPAfterResponseRuleHandler")
+	}
 	if o.HTTPCheckCreateHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.CreateHTTPCheckHandler")
 	}
@@ -1634,6 +1663,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.GroupDeleteGroupHandler == nil {
 		unregistered = append(unregistered, "group.DeleteGroupHandler")
+	}
+	if o.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.DeleteHTTPAfterResponseRuleHandler")
 	}
 	if o.HTTPCheckDeleteHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.DeleteHTTPCheckHandler")
@@ -1826,6 +1858,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ConfigurationGetHAProxyConfigurationHandler == nil {
 		unregistered = append(unregistered, "configuration.GetHAProxyConfigurationHandler")
+	}
+	if o.HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.GetHTTPAfterResponseRuleHandler")
+	}
+	if o.HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.GetHTTPAfterResponseRulesHandler")
 	}
 	if o.HTTPCheckGetHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.GetHTTPCheckHandler")
@@ -2093,6 +2131,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.GroupReplaceGroupHandler == nil {
 		unregistered = append(unregistered, "group.ReplaceGroupHandler")
+	}
+	if o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.ReplaceHTTPAfterResponseRuleHandler")
 	}
 	if o.HTTPCheckReplaceHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.ReplaceHTTPCheckHandler")
@@ -2375,6 +2416,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/http_after_response_rules"] = http_after_response_rule.NewCreateHTTPAfterResponseRule(o.context, o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/http_checks"] = http_check.NewCreateHTTPCheck(o.context, o.HTTPCheckCreateHTTPCheckHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2524,6 +2569,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/groups/{name}"] = group.NewDeleteGroup(o.context, o.GroupDeleteGroupHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/http_after_response_rules/{index}"] = http_after_response_rule.NewDeleteHTTPAfterResponseRule(o.context, o.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2780,6 +2829,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/raw"] = configuration.NewGetHAProxyConfiguration(o.context, o.ConfigurationGetHAProxyConfigurationHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/http_after_response_rules/{index}"] = http_after_response_rule.NewGetHTTPAfterResponseRule(o.context, o.HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/http_after_response_rules"] = http_after_response_rule.NewGetHTTPAfterResponseRules(o.context, o.HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3136,6 +3193,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/groups/{name}"] = group.NewReplaceGroup(o.context, o.GroupReplaceGroupHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/http_after_response_rules/{index}"] = http_after_response_rule.NewReplaceHTTPAfterResponseRule(o.context, o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

@@ -3516,6 +3516,354 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/http_after_response_rules": {
+      "get": {
+        "description": "Returns all HTTP After Response Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return an array of all HTTP After Response Rules",
+        "operationId": "getHTTPAfterResponseRules",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_after_response_rules"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP After Response Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Add a new HTTP After Response Rule",
+        "operationId": "createHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_after_response_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return one HTTP After Response Rule",
+        "operationId": "getHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_after_response_rule"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Replace a HTTP After Response Rule",
+        "operationId": "replaceHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP After Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP After Response Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Delete a HTTP After Response Rule",
+        "operationId": "deleteHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP After Response Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/http_checks": {
       "get": {
         "description": "Returns all HTTP checks that are configured in specified parent.",
@@ -15580,12 +15928,54 @@ func init() {
           "type": "string",
           "x-display-name": "Text that describes the instance"
         },
+        "device_atlas_options": {
+          "type": "object",
+          "properties": {
+            "json_file": {
+              "type": "string",
+              "x-display-name": "JSON file"
+            },
+            "log_level": {
+              "type": "string",
+              "x-display-name": "Log Level"
+            },
+            "properties_cookie": {
+              "type": "string",
+              "x-display-name": "Properties Cookie"
+            },
+            "separator": {
+              "type": "string",
+              "x-display-name": "Separator"
+            }
+          }
+        },
         "expose_experimental_directives": {
           "type": "boolean"
         },
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "fifty_one_degrees_options": {
+          "type": "object",
+          "properties": {
+            "cache_size": {
+              "type": "integer",
+              "x-display-name": "Cache Size"
+            },
+            "data_file": {
+              "type": "string",
+              "x-display-name": "Data File"
+            },
+            "property_name_list": {
+              "type": "string",
+              "x-display-name": "Name List"
+            },
+            "property_separator": {
+              "type": "string",
+              "x-display-name": "Property Separator"
+            }
+          }
         },
         "gid": {
           "type": "integer",
@@ -15812,6 +16202,9 @@ func init() {
           ],
           "x-display-name": "Enable or disables per-task CPU profiling"
         },
+        "quiet": {
+          "type": "boolean"
+        },
         "runtime_apis": {
           "type": "array",
           "items": {
@@ -15880,6 +16273,36 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Server Options"
         },
+        "ssl_dh_param_file": {
+          "type": "string"
+        },
+        "ssl_engines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "algorithms": {
+                "type": "string",
+                "x-display-name": "Algorithms",
+                "x-nullable": true
+              },
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              }
+            },
+            "x-go-name": "SslEngine"
+          },
+          "x-display-name": "SSL Engines",
+          "x-go-name": "SslEngines"
+        },
+        "ssl_load_extra_files": {
+          "type": "string",
+          "x-display-name": "SSL Load Extra Files"
+        },
         "ssl_mode_async": {
           "type": "string",
           "enum": [
@@ -15888,9 +16311,22 @@ func init() {
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
         },
+        "ssl_server_verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-display-name": "Verify server certificates"
+        },
         "ssl_skip_self_issued_ca": {
           "type": "boolean",
           "x-display-name": "Self issued CA, aka x509 root CA"
+        },
+        "stats_maxconn": {
+          "type": "integer",
+          "x-display-name": "Stats maxconn",
+          "x-nullable": true
         },
         "stats_timeout": {
           "type": "integer",
@@ -15898,6 +16334,33 @@ func init() {
         },
         "strict_limits": {
           "type": "boolean"
+        },
+        "thread_group_lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "group",
+              "num_or_range"
+            ],
+            "properties": {
+              "group": {
+                "type": "string",
+                "x-display-name": "Group"
+              },
+              "num_or_range": {
+                "type": "string",
+                "x-display-name": "Number or Range"
+              }
+            },
+            "x-go-name": "ThreadGroup"
+          },
+          "x-display-name": "Thread Groups",
+          "x-go-name": "ThreadGroupLines"
+        },
+        "thread_groups": {
+          "type": "integer",
+          "x-display-name": "Number of Thread Groups"
         },
         "tune_options": {
           "type": "object",
@@ -15923,6 +16386,14 @@ func init() {
             "fail_alloc": {
               "type": "boolean",
               "x-display-name": "Failed Allocation Chance"
+            },
+            "fd_edge_triggered": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Edge-triggered polling mode"
             },
             "h2_header_table_size": {
               "type": "integer",
@@ -16186,6 +16657,9 @@ func init() {
               "x-display-name": "A list of WURFL patch file paths"
             }
           }
+        },
+        "zero_warning": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -16215,6 +16689,200 @@ func init() {
       "title": "Groups",
       "items": {
         "$ref": "#/definitions/group"
+      }
+    },
+    "http_after_response_rule": {
+      "description": "HAProxy HTTP after response rule configuration (corresponds to http-after-response directives)",
+      "type": "object",
+      "title": "HTTP after Response Rule",
+      "required": [
+        "index",
+        "type"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
+        },
+        "hdr_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value",
+                "set-header",
+                "add-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Format"
+        },
+        "hdr_match": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Match"
+        },
+        "hdr_method": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "del-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Match Method"
+        },
+        "hdr_name": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-header",
+                "replace-header",
+                "del-header",
+                "set-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Name"
+        },
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "status": {
+          "type": "integer",
+          "maximum": 999,
+          "minimum": 100,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-status"
+            }
+          },
+          "x-nullable": false
+        },
+        "status_reason": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-status"
+            }
+          }
+        },
+        "strict_mode": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "strict-mode"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "add-header",
+            "allow",
+            "del-header",
+            "replace-header",
+            "replace-value",
+            "set-header",
+            "set-status",
+            "set-var",
+            "strict-mode",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
+        "var_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          },
+          "x-display-name": "Var Expression"
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "cond": "unless",
+        "cond_test": "{ src 192.168.0.0/16 }",
+        "hdr_format": "max-age=31536000",
+        "hdr_name": "Strict-Transport-Security",
+        "index": 0,
+        "type": "set-header"
+      }
+    },
+    "http_after_response_rules": {
+      "description": "HAProxy HTTP after response rules array (corresponds to http-after-response directives)",
+      "type": "array",
+      "title": "HTTP After Response Rules Array",
+      "items": {
+        "$ref": "#/definitions/http_after_response_rule"
       }
     },
     "http_check": {
@@ -28322,6 +28990,497 @@ func init() {
           },
           "204": {
             "description": "Group deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_after_response_rules": {
+      "get": {
+        "description": "Returns all HTTP After Response Rules that are configured in specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return an array of all HTTP After Response Rules",
+        "operationId": "getHTTPAfterResponseRules",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_after_response_rules"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP After Response Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Add a new HTTP After Response Rule",
+        "operationId": "createHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_after_response_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Return one HTTP After Response Rule",
+        "operationId": "getHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_after_response_rule"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP After Response Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Replace a HTTP After Response Rule",
+        "operationId": "replaceHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP After Response Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_after_response_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP After Response Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "HTTPAfterResponseRule"
+        ],
+        "summary": "Delete a HTTP After Response Rule",
+        "operationId": "deleteHTTPAfterResponseRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP After Response Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP After Response Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -41661,6 +42820,48 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
+    "GlobalDeviceAtlasOptions": {
+      "type": "object",
+      "properties": {
+        "json_file": {
+          "type": "string",
+          "x-display-name": "JSON file"
+        },
+        "log_level": {
+          "type": "string",
+          "x-display-name": "Log Level"
+        },
+        "properties_cookie": {
+          "type": "string",
+          "x-display-name": "Properties Cookie"
+        },
+        "separator": {
+          "type": "string",
+          "x-display-name": "Separator"
+        }
+      }
+    },
+    "GlobalFiftyOneDegreesOptions": {
+      "type": "object",
+      "properties": {
+        "cache_size": {
+          "type": "integer",
+          "x-display-name": "Cache Size"
+        },
+        "data_file": {
+          "type": "string",
+          "x-display-name": "Data File"
+        },
+        "property_name_list": {
+          "type": "string",
+          "x-display-name": "Name List"
+        },
+        "property_separator": {
+          "type": "string",
+          "x-display-name": "Property Separator"
+        }
+      }
+    },
     "GlobalH1CaseAdjustItems0": {
       "type": "object",
       "required": [
@@ -41748,6 +42949,42 @@ func init() {
       },
       "x-go-name": "RuntimeAPI"
     },
+    "GlobalSslEnginesItems0": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "algorithms": {
+          "type": "string",
+          "x-display-name": "Algorithms",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        }
+      },
+      "x-go-name": "SslEngine"
+    },
+    "GlobalThreadGroupLinesItems0": {
+      "type": "object",
+      "required": [
+        "group",
+        "num_or_range"
+      ],
+      "properties": {
+        "group": {
+          "type": "string",
+          "x-display-name": "Group"
+        },
+        "num_or_range": {
+          "type": "string",
+          "x-display-name": "Number or Range"
+        }
+      },
+      "x-go-name": "ThreadGroup"
+    },
     "GlobalTuneOptions": {
       "type": "object",
       "properties": {
@@ -41772,6 +43009,14 @@ func init() {
         "fail_alloc": {
           "type": "boolean",
           "x-display-name": "Failed Allocation Chance"
+        },
+        "fd_edge_triggered": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Edge-triggered polling mode"
         },
         "h2_header_table_size": {
           "type": "integer",
@@ -45348,12 +46593,54 @@ func init() {
           "type": "string",
           "x-display-name": "Text that describes the instance"
         },
+        "device_atlas_options": {
+          "type": "object",
+          "properties": {
+            "json_file": {
+              "type": "string",
+              "x-display-name": "JSON file"
+            },
+            "log_level": {
+              "type": "string",
+              "x-display-name": "Log Level"
+            },
+            "properties_cookie": {
+              "type": "string",
+              "x-display-name": "Properties Cookie"
+            },
+            "separator": {
+              "type": "string",
+              "x-display-name": "Separator"
+            }
+          }
+        },
         "expose_experimental_directives": {
           "type": "boolean"
         },
         "external_check": {
           "type": "boolean",
           "x-display-name": "External Check"
+        },
+        "fifty_one_degrees_options": {
+          "type": "object",
+          "properties": {
+            "cache_size": {
+              "type": "integer",
+              "x-display-name": "Cache Size"
+            },
+            "data_file": {
+              "type": "string",
+              "x-display-name": "Data File"
+            },
+            "property_name_list": {
+              "type": "string",
+              "x-display-name": "Name List"
+            },
+            "property_separator": {
+              "type": "string",
+              "x-display-name": "Property Separator"
+            }
+          }
         },
         "gid": {
           "type": "integer",
@@ -45540,6 +46827,9 @@ func init() {
           ],
           "x-display-name": "Enable or disables per-task CPU profiling"
         },
+        "quiet": {
+          "type": "boolean"
+        },
         "runtime_apis": {
           "type": "array",
           "items": {
@@ -45593,6 +46883,21 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Server Options"
         },
+        "ssl_dh_param_file": {
+          "type": "string"
+        },
+        "ssl_engines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalSslEnginesItems0"
+          },
+          "x-display-name": "SSL Engines",
+          "x-go-name": "SslEngines"
+        },
+        "ssl_load_extra_files": {
+          "type": "string",
+          "x-display-name": "SSL Load Extra Files"
+        },
         "ssl_mode_async": {
           "type": "string",
           "enum": [
@@ -45601,9 +46906,22 @@ func init() {
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
         },
+        "ssl_server_verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-display-name": "Verify server certificates"
+        },
         "ssl_skip_self_issued_ca": {
           "type": "boolean",
           "x-display-name": "Self issued CA, aka x509 root CA"
+        },
+        "stats_maxconn": {
+          "type": "integer",
+          "x-display-name": "Stats maxconn",
+          "x-nullable": true
         },
         "stats_timeout": {
           "type": "integer",
@@ -45611,6 +46929,18 @@ func init() {
         },
         "strict_limits": {
           "type": "boolean"
+        },
+        "thread_group_lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalThreadGroupLinesItems0"
+          },
+          "x-display-name": "Thread Groups",
+          "x-go-name": "ThreadGroupLines"
+        },
+        "thread_groups": {
+          "type": "integer",
+          "x-display-name": "Number of Thread Groups"
         },
         "tune_options": {
           "type": "object",
@@ -45636,6 +46966,14 @@ func init() {
             "fail_alloc": {
               "type": "boolean",
               "x-display-name": "Failed Allocation Chance"
+            },
+            "fd_edge_triggered": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Edge-triggered polling mode"
             },
             "h2_header_table_size": {
               "type": "integer",
@@ -45900,6 +47238,9 @@ func init() {
               "x-display-name": "A list of WURFL patch file paths"
             }
           }
+        },
+        "zero_warning": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -45929,6 +47270,200 @@ func init() {
       "title": "Groups",
       "items": {
         "$ref": "#/definitions/group"
+      }
+    },
+    "http_after_response_rule": {
+      "description": "HAProxy HTTP after response rule configuration (corresponds to http-after-response directives)",
+      "type": "object",
+      "title": "HTTP after Response Rule",
+      "required": [
+        "index",
+        "type"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
+        },
+        "hdr_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value",
+                "set-header",
+                "add-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Format"
+        },
+        "hdr_match": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "replace-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Match"
+        },
+        "hdr_method": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": [
+                "del-header"
+              ]
+            }
+          },
+          "x-display-name": "Header Match Method"
+        },
+        "hdr_name": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "add-header",
+                "replace-header",
+                "del-header",
+                "set-header",
+                "replace-value"
+              ]
+            }
+          },
+          "x-display-name": "Header Name"
+        },
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "status": {
+          "type": "integer",
+          "maximum": 999,
+          "minimum": 100,
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-status"
+            }
+          },
+          "x-nullable": false
+        },
+        "status_reason": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-status"
+            }
+          }
+        },
+        "strict_mode": {
+          "type": "string",
+          "enum": [
+            "on",
+            "off"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "strict-mode"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "add-header",
+            "allow",
+            "del-header",
+            "replace-header",
+            "replace-value",
+            "set-header",
+            "set-status",
+            "set-var",
+            "strict-mode",
+            "unset-var"
+          ],
+          "x-nullable": false
+        },
+        "var_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var"
+            }
+          },
+          "x-display-name": "Var Expression"
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-var",
+                "unset-var"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "cond": "unless",
+        "cond_test": "{ src 192.168.0.0/16 }",
+        "hdr_format": "max-age=31536000",
+        "hdr_name": "Strict-Transport-Security",
+        "index": 0,
+        "type": "set-header"
+      }
+    },
+    "http_after_response_rules": {
+      "description": "HAProxy HTTP after response rules array (corresponds to http-after-response directives)",
+      "type": "array",
+      "title": "HTTP After Response Rules Array",
+      "items": {
+        "$ref": "#/definitions/http_after_response_rule"
       }
     },
     "http_check": {

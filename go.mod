@@ -22,8 +22,8 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.2.0
-	github.com/haproxytech/client-native/v3 v3.1.1-0.20220621085505-24714fe7548f
-	github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220428133329-7d0ec01198d4
+	github.com/haproxytech/client-native/v3 v3.1.1-0.20220628171631-221bad4e7096
+	github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220628074828-4e0a4ed4925a
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.4.0
@@ -36,7 +36,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.6.1
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
-	golang.org/x/sys v0.0.0-20211102192858-4dd72447c267
+	golang.org/x/sys v0.0.0-20220503163025-988cb79eb6c6
 	gopkg.in/yaml.v2 v2.3.0
 )
 
@@ -62,7 +62,7 @@ require (
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/google/go-cmp v0.5.4 // indirect
-	github.com/haproxytech/go-logger v1.0.1-0.20211022075555-178f1cdf4d84 // indirect
+	github.com/haproxytech/go-logger v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
 	github.com/hashicorp/go-hclog v0.12.0 // indirect
 	github.com/hashicorp/go-immutable-radix v1.0.0 // indirect
