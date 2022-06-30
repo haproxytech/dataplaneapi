@@ -121,7 +121,7 @@ func (ra *ReloadAgent) setLkgPath(configFile, path string) {
 	ra.lkgConfigFile = configFile + ".lkg"
 }
 
-func (ra *ReloadAgent) handleReload(id string) {
+func (ra *ReloadAgent) handleReload(id string) (string, error) {
 	logFields := map[string]interface{}{logFieldReloadID: id}
 	ra.cache.mu.Lock()
 	ra.cache.current = id
@@ -144,6 +144,8 @@ func (ra *ReloadAgent) handleReload(id string) {
 		log.WithFields(logFields, log.DebugLevel, "Handling reload completed, waiting for new requests")
 	}
 	delete(ra.cache.callbacks, id)
+
+	return response, err
 }
 
 func (ra *ReloadAgent) handleReloads() {
@@ -239,6 +241,15 @@ func (ra *ReloadAgent) Reload() string {
 
 // ForceReload calls reload directly
 func (ra *ReloadAgent) ForceReload() error {
+	next := ra.cache.getNext()
+	if next != "" {
+		r, err := ra.handleReload(next)
+		if err != nil {
+			return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
+		}
+		return nil
+	}
+
 	r, err := ra.reloadHAProxy("force")
 	if err != nil {
 		return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
@@ -259,6 +270,15 @@ func (ra *ReloadAgent) ReloadWithCallback(callback func()) string {
 
 // ForceReload calls reload directly, callback is called only if reload is successfull
 func (ra *ReloadAgent) ForceReloadWithCallback(callback func()) error {
+	next := ra.cache.getNext()
+	if next != "" {
+		r, err := ra.handleReload(next)
+		if err != nil {
+			return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
+		}
+		return nil
+	}
+
 	r, err := ra.reloadHAProxy("force")
 	if err != nil {
 		return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
