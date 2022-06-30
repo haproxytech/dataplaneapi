@@ -118,7 +118,7 @@ func (ra *ReloadAgent) setLkgPath(configFile, path string) {
 	ra.lkgConfigFile = configFile + ".lkg"
 }
 
-func (ra *ReloadAgent) handleReload(id string) {
+func (ra *ReloadAgent) handleReload(id string) (string, error) {
 	logFields := map[string]interface{}{logFieldReloadID: id}
 	ra.cache.mu.Lock()
 	ra.cache.current = id
@@ -136,6 +136,8 @@ func (ra *ReloadAgent) handleReload(id string) {
 		ra.cache.succeedReload(response)
 		log.WithFields(logFields, log.DebugLevel, "Handling reload completed, waiting for new requests")
 	}
+
+	return response, err
 }
 
 func (ra *ReloadAgent) handleReloads() {
@@ -231,6 +233,15 @@ func (ra *ReloadAgent) Reload() string {
 
 // ForceReload calls reload directly
 func (ra *ReloadAgent) ForceReload() error {
+	next := ra.cache.getNext()
+	if next != "" {
+		r, err := ra.handleReload(next)
+		if err != nil {
+			return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
+		}
+		return nil
+	}
+
 	r, err := ra.reloadHAProxy("force")
 	if err != nil {
 		return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
@@ -427,5 +438,5 @@ func copyFile(src, dest string) error {
 	if err != nil {
 		return err
 	}
-	return renameio.WriteFile(dest, data, 0644)
+	return renameio.WriteFile(dest, data, 0o644)
 }
