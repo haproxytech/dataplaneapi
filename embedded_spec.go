@@ -13100,6 +13100,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "checkcache": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Checkcache"
+        },
         "compression": {
           "$ref": "#/definitions/compression"
         },
@@ -13354,6 +13362,14 @@ func init() {
           },
           "x-display-name": "HTTP connection closing"
         },
+        "independent_streams": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Independent Streams"
+        },
         "log_health_checks": {
           "type": "string",
           "enum": [
@@ -13381,8 +13397,40 @@ func init() {
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
+        "nolinger": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Nolinger"
+        },
+        "originalto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Originalto"
+        },
+        "persist": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Persist"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
+        },
+        "prefer_last_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Prefer Last Server"
         },
         "queue_timeout": {
           "type": "integer",
@@ -13401,6 +13449,14 @@ func init() {
         },
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
+        },
+        "spop_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Spop Check"
         },
         "srvtcpka": {
           "type": "string",
@@ -13421,6 +13477,14 @@ func init() {
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
         },
+        "tcp_smart_connect": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Connect"
+        },
         "tcpka": {
           "type": "string",
           "enum": [
@@ -13433,6 +13497,14 @@ func init() {
             }
           },
           "x-display-name": "TCP Keep Alive"
+        },
+        "transparent": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Transparent"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -15074,6 +15146,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "checkcache": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Checkcache"
+        },
         "clflog": {
           "type": "boolean",
           "x-display-name": "CLF Log"
@@ -15228,6 +15308,14 @@ func init() {
             "http-keep-alive"
           ]
         },
+        "http_ignore_probes": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Ignore Probes"
+        },
         "http_keep_alive_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -15252,12 +15340,36 @@ func init() {
             "safe"
           ]
         },
+        "http_use_proxy_header": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Use Proxy Header"
+        },
         "httpchk_params": {
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
           "type": "boolean",
           "x-display-name": "HTTP Log"
+        },
+        "httpslog": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Httpslog"
+        },
+        "independent_streams": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Independent Streams"
         },
         "load_server_state_from_file": {
           "type": "string",
@@ -15319,8 +15431,40 @@ func init() {
         "mysql_check_params": {
           "$ref": "#/definitions/mysql_check_params"
         },
+        "nolinger": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Nolinger"
+        },
+        "originalto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Originalto"
+        },
+        "persist": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Persist"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
+        },
+        "prefer_last_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Prefer Last Server"
         },
         "queue_timeout": {
           "type": "integer",
@@ -15344,6 +15488,14 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "socket_stats": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Socket Stats"
+        },
         "srvtcpka": {
           "type": "string",
           "enum": [
@@ -15354,6 +15506,22 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "tcp_smart_accept": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Accept"
+        },
+        "tcp_smart_connect": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Connect"
         },
         "tcpka": {
           "type": "string",
@@ -15366,6 +15534,14 @@ func init() {
         "tcplog": {
           "type": "boolean",
           "x-display-name": "TCP Log"
+        },
+        "transparent": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Transparent"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -15741,6 +15917,14 @@ func init() {
             }
           }
         },
+        "http_ignore_probes": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Ignore Probes"
+        },
         "http_keep_alive_timeout": {
           "type": "integer",
           "x-dependency": {
@@ -15759,6 +15943,14 @@ func init() {
           },
           "x-nullable": true
         },
+        "http_use_proxy_header": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Use Proxy Header"
+        },
         "httplog": {
           "type": "boolean",
           "x-dependency": {
@@ -15767,6 +15959,22 @@ func init() {
             }
           },
           "x-display-name": "HTTP Log"
+        },
+        "httpslog": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Httpslog"
+        },
+        "independent_streams": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Independent Streams"
         },
         "log_format": {
           "type": "string"
@@ -15817,11 +16025,43 @@ func init() {
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
+        "nolinger": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Nolinger"
+        },
+        "originalto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Originalto"
+        },
+        "socket_stats": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Socket Stats"
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
+        },
+        "tcp_smart_accept": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Accept"
         },
         "tcpka": {
           "type": "string",
@@ -16270,6 +16510,52 @@ func init() {
         },
         "set_dumpable": {
           "type": "boolean"
+        },
+        "set_var": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "expr"
+            ],
+            "properties": {
+              "expr": {
+                "type": "string",
+                "x-display-name": "Expression"
+              },
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              }
+            },
+            "x-go-name": "SetVar"
+          },
+          "x-display-name": "Set variables",
+          "x-go-name": "SetVars"
+        },
+        "set_var_fmt": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "format"
+            ],
+            "properties": {
+              "format": {
+                "type": "string",
+                "x-display-name": "Format"
+              },
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              }
+            },
+            "x-go-name": "SetVarFmt"
+          },
+          "x-display-name": "Set variable formats",
+          "x-go-name": "SetVarFmts"
         },
         "spread_checks": {
           "type": "integer",
@@ -42979,6 +43265,42 @@ func init() {
       },
       "x-go-name": "RuntimeAPI"
     },
+    "GlobalSetVarFmtItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "format"
+      ],
+      "properties": {
+        "format": {
+          "type": "string",
+          "x-display-name": "Format"
+        },
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        }
+      },
+      "x-go-name": "SetVarFmt"
+    },
+    "GlobalSetVarItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "expr"
+      ],
+      "properties": {
+        "expr": {
+          "type": "string",
+          "x-display-name": "Expression"
+        },
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        }
+      },
+      "x-go-name": "SetVar"
+    },
     "GlobalSslEnginesItems0": {
       "type": "object",
       "required": [
@@ -43843,6 +44165,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "checkcache": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Checkcache"
+        },
         "compression": {
           "$ref": "#/definitions/compression"
         },
@@ -44097,6 +44427,14 @@ func init() {
           },
           "x-display-name": "HTTP connection closing"
         },
+        "independent_streams": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Independent Streams"
+        },
         "log_health_checks": {
           "type": "string",
           "enum": [
@@ -44124,8 +44462,40 @@ func init() {
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
+        "nolinger": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Nolinger"
+        },
+        "originalto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Originalto"
+        },
+        "persist": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Persist"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
+        },
+        "prefer_last_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Prefer Last Server"
         },
         "queue_timeout": {
           "type": "integer",
@@ -44144,6 +44514,14 @@ func init() {
         },
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
+        },
+        "spop_check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Spop Check"
         },
         "srvtcpka": {
           "type": "string",
@@ -44164,6 +44542,14 @@ func init() {
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
         },
+        "tcp_smart_connect": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Connect"
+        },
         "tcpka": {
           "type": "string",
           "enum": [
@@ -44176,6 +44562,14 @@ func init() {
             }
           },
           "x-display-name": "TCP Keep Alive"
+        },
+        "transparent": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Transparent"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -45784,6 +46178,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "checkcache": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Checkcache"
+        },
         "clflog": {
           "type": "boolean",
           "x-display-name": "CLF Log"
@@ -45938,6 +46340,14 @@ func init() {
             "http-keep-alive"
           ]
         },
+        "http_ignore_probes": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Ignore Probes"
+        },
         "http_keep_alive_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -45962,12 +46372,36 @@ func init() {
             "safe"
           ]
         },
+        "http_use_proxy_header": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Use Proxy Header"
+        },
         "httpchk_params": {
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
           "type": "boolean",
           "x-display-name": "HTTP Log"
+        },
+        "httpslog": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Httpslog"
+        },
+        "independent_streams": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Independent Streams"
         },
         "load_server_state_from_file": {
           "type": "string",
@@ -46029,8 +46463,40 @@ func init() {
         "mysql_check_params": {
           "$ref": "#/definitions/mysql_check_params"
         },
+        "nolinger": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Nolinger"
+        },
+        "originalto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Originalto"
+        },
+        "persist": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Persist"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
+        },
+        "prefer_last_server": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Prefer Last Server"
         },
         "queue_timeout": {
           "type": "integer",
@@ -46054,6 +46520,14 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "socket_stats": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Socket Stats"
+        },
         "srvtcpka": {
           "type": "string",
           "enum": [
@@ -46064,6 +46538,22 @@ func init() {
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
+        },
+        "tcp_smart_accept": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Accept"
+        },
+        "tcp_smart_connect": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Connect"
         },
         "tcpka": {
           "type": "string",
@@ -46076,6 +46566,14 @@ func init() {
         "tcplog": {
           "type": "boolean",
           "x-display-name": "TCP Log"
+        },
+        "transparent": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Transparent"
         },
         "tunnel_timeout": {
           "type": "integer",
@@ -46451,6 +46949,14 @@ func init() {
             }
           }
         },
+        "http_ignore_probes": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Ignore Probes"
+        },
         "http_keep_alive_timeout": {
           "type": "integer",
           "x-dependency": {
@@ -46469,6 +46975,14 @@ func init() {
           },
           "x-nullable": true
         },
+        "http_use_proxy_header": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Use Proxy Header"
+        },
         "httplog": {
           "type": "boolean",
           "x-dependency": {
@@ -46477,6 +46991,22 @@ func init() {
             }
           },
           "x-display-name": "HTTP Log"
+        },
+        "httpslog": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Httpslog"
+        },
+        "independent_streams": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Independent Streams"
         },
         "log_format": {
           "type": "string"
@@ -46527,11 +47057,43 @@ func init() {
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
         },
+        "nolinger": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Nolinger"
+        },
+        "originalto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Originalto"
+        },
+        "socket_stats": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Socket Stats"
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
+        },
+        "tcp_smart_accept": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Tcp Smart Accept"
         },
         "tcpka": {
           "type": "string",
@@ -46910,6 +47472,22 @@ func init() {
         },
         "set_dumpable": {
           "type": "boolean"
+        },
+        "set_var": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalSetVarItems0"
+          },
+          "x-display-name": "Set variables",
+          "x-go-name": "SetVars"
+        },
+        "set_var_fmt": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalSetVarFmtItems0"
+          },
+          "x-display-name": "Set variable formats",
+          "x-go-name": "SetVarFmts"
         },
         "spread_checks": {
           "type": "integer",
