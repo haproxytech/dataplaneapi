@@ -13804,6 +13804,21 @@ func init() {
           },
           "x-display-name": "Server TCP Keep Alive"
         },
+        "srvtcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Cnt",
+          "x-nullable": true
+        },
+        "srvtcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Idle",
+          "x-nullable": true
+        },
+        "srvtcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Intvl",
+          "x-nullable": true
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
@@ -15836,6 +15851,21 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Server TCP Keep Alive"
+        },
+        "srvtcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Cnt",
+          "x-nullable": true
+        },
+        "srvtcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Idle",
+          "x-nullable": true
+        },
+        "srvtcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Intvl",
+          "x-nullable": true
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
@@ -45408,6 +45438,21 @@ func init() {
           },
           "x-display-name": "Server TCP Keep Alive"
         },
+        "srvtcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Cnt",
+          "x-nullable": true
+        },
+        "srvtcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Idle",
+          "x-nullable": true
+        },
+        "srvtcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Intvl",
+          "x-nullable": true
+        },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
@@ -47407,6 +47452,21 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Server TCP Keep Alive"
+        },
+        "srvtcpka_cnt": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Cnt",
+          "x-nullable": true
+        },
+        "srvtcpka_idle": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Idle",
+          "x-nullable": true
+        },
+        "srvtcpka_intvl": {
+          "type": "integer",
+          "x-display-name": "Srvtcpka Intvl",
+          "x-nullable": true
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
