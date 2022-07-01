@@ -74,6 +74,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=Global \
     --tags=Frontend \
     --tags=Backend \
+    --tags=Ring \
     --tags=Bind \
     --tags=Server \
     --tags=Configuration \

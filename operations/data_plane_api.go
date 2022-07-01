@@ -61,6 +61,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/peer_entry"
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
+	"github.com/haproxytech/dataplaneapi/operations/ring"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/server_template"
@@ -202,6 +203,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.CreateResolver has not yet been implemented")
 		}),
+		RingCreateRingHandler: ring.CreateRingHandlerFunc(func(params ring.CreateRingParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ring.CreateRing has not yet been implemented")
+		}),
 		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.CreateServer has not yet been implemented")
 		}),
@@ -318,6 +322,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ResolverDeleteResolverHandler: resolver.DeleteResolverHandlerFunc(func(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.DeleteResolver has not yet been implemented")
+		}),
+		RingDeleteRingHandler: ring.DeleteRingHandlerFunc(func(params ring.DeleteRingParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ring.DeleteRing has not yet been implemented")
 		}),
 		MapsDeleteRuntimeMapEntryHandler: maps.DeleteRuntimeMapEntryHandlerFunc(func(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.DeleteRuntimeMapEntry has not yet been implemented")
@@ -574,6 +581,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverGetResolversHandler: resolver.GetResolversHandlerFunc(func(params resolver.GetResolversParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.GetResolvers has not yet been implemented")
 		}),
+		RingGetRingHandler: ring.GetRingHandlerFunc(func(params ring.GetRingParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ring.GetRing has not yet been implemented")
+		}),
+		RingGetRingsHandler: ring.GetRingsHandlerFunc(func(params ring.GetRingsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ring.GetRings has not yet been implemented")
+		}),
 		DiscoveryGetRuntimeEndpointsHandler: discovery.GetRuntimeEndpointsHandlerFunc(func(params discovery.GetRuntimeEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetRuntimeEndpoints has not yet been implemented")
 		}),
@@ -784,6 +797,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ResolverReplaceResolverHandler: resolver.ReplaceResolverHandlerFunc(func(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.ReplaceResolver has not yet been implemented")
 		}),
+		RingReplaceRingHandler: ring.ReplaceRingHandlerFunc(func(params ring.ReplaceRingParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation ring.ReplaceRing has not yet been implemented")
+		}),
 		MapsReplaceRuntimeMapEntryHandler: maps.ReplaceRuntimeMapEntryHandlerFunc(func(params maps.ReplaceRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ReplaceRuntimeMapEntry has not yet been implemented")
 		}),
@@ -969,6 +985,8 @@ type DataPlaneAPI struct {
 	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
 	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
+	// RingCreateRingHandler sets the operation handler for the create ring operation
+	RingCreateRingHandler ring.CreateRingHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
 	ServerCreateServerHandler server.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
@@ -1047,6 +1065,8 @@ type DataPlaneAPI struct {
 	PeerEntryDeletePeerEntryHandler peer_entry.DeletePeerEntryHandler
 	// ResolverDeleteResolverHandler sets the operation handler for the delete resolver operation
 	ResolverDeleteResolverHandler resolver.DeleteResolverHandler
+	// RingDeleteRingHandler sets the operation handler for the delete ring operation
+	RingDeleteRingHandler ring.DeleteRingHandler
 	// MapsDeleteRuntimeMapEntryHandler sets the operation handler for the delete runtime map entry operation
 	MapsDeleteRuntimeMapEntryHandler maps.DeleteRuntimeMapEntryHandler
 	// ServerDeleteServerHandler sets the operation handler for the delete server operation
@@ -1217,6 +1237,10 @@ type DataPlaneAPI struct {
 	ResolverGetResolverHandler resolver.GetResolverHandler
 	// ResolverGetResolversHandler sets the operation handler for the get resolvers operation
 	ResolverGetResolversHandler resolver.GetResolversHandler
+	// RingGetRingHandler sets the operation handler for the get ring operation
+	RingGetRingHandler ring.GetRingHandler
+	// RingGetRingsHandler sets the operation handler for the get rings operation
+	RingGetRingsHandler ring.GetRingsHandler
 	// DiscoveryGetRuntimeEndpointsHandler sets the operation handler for the get runtime endpoints operation
 	DiscoveryGetRuntimeEndpointsHandler discovery.GetRuntimeEndpointsHandler
 	// MapsGetRuntimeMapEntryHandler sets the operation handler for the get runtime map entry operation
@@ -1357,6 +1381,8 @@ type DataPlaneAPI struct {
 	PeerEntryReplacePeerEntryHandler peer_entry.ReplacePeerEntryHandler
 	// ResolverReplaceResolverHandler sets the operation handler for the replace resolver operation
 	ResolverReplaceResolverHandler resolver.ReplaceResolverHandler
+	// RingReplaceRingHandler sets the operation handler for the replace ring operation
+	RingReplaceRingHandler ring.ReplaceRingHandler
 	// MapsReplaceRuntimeMapEntryHandler sets the operation handler for the replace runtime map entry operation
 	MapsReplaceRuntimeMapEntryHandler maps.ReplaceRuntimeMapEntryHandler
 	// ServerReplaceRuntimeServerHandler sets the operation handler for the replace runtime server operation
@@ -1574,6 +1600,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
 	}
+	if o.RingCreateRingHandler == nil {
+		unregistered = append(unregistered, "ring.CreateRingHandler")
+	}
 	if o.ServerCreateServerHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerHandler")
 	}
@@ -1690,6 +1719,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ResolverDeleteResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.DeleteResolverHandler")
+	}
+	if o.RingDeleteRingHandler == nil {
+		unregistered = append(unregistered, "ring.DeleteRingHandler")
 	}
 	if o.MapsDeleteRuntimeMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.DeleteRuntimeMapEntryHandler")
@@ -1946,6 +1978,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ResolverGetResolversHandler == nil {
 		unregistered = append(unregistered, "resolver.GetResolversHandler")
 	}
+	if o.RingGetRingHandler == nil {
+		unregistered = append(unregistered, "ring.GetRingHandler")
+	}
+	if o.RingGetRingsHandler == nil {
+		unregistered = append(unregistered, "ring.GetRingsHandler")
+	}
 	if o.DiscoveryGetRuntimeEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetRuntimeEndpointsHandler")
 	}
@@ -2155,6 +2193,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ResolverReplaceResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.ReplaceResolverHandler")
+	}
+	if o.RingReplaceRingHandler == nil {
+		unregistered = append(unregistered, "ring.ReplaceRingHandler")
 	}
 	if o.MapsReplaceRuntimeMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.ReplaceRuntimeMapEntryHandler")
@@ -2452,6 +2493,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/rings"] = ring.NewCreateRing(o.context, o.RingCreateRingHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2605,6 +2650,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewDeleteResolver(o.context, o.ResolverDeleteResolverHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/rings/{name}"] = ring.NewDeleteRing(o.context, o.RingDeleteRingHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2948,6 +2997,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/rings/{name}"] = ring.NewGetRing(o.context, o.RingGetRingHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/rings"] = ring.NewGetRings(o.context, o.RingGetRingsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/runtime"] = discovery.NewGetRuntimeEndpoints(o.context, o.DiscoveryGetRuntimeEndpointsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -3225,6 +3282,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewReplaceResolver(o.context, o.ResolverReplaceResolverHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/rings/{name}"] = ring.NewReplaceRing(o.context, o.RingReplaceRingHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

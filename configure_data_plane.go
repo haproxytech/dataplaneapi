@@ -345,6 +345,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.BackendGetBackendsHandler = &handlers.GetBackendsHandlerImpl{Client: client}
 	api.BackendReplaceBackendHandler = &handlers.ReplaceBackendHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup ring handlers
+	api.RingCreateRingHandler = &handlers.CreateRingHandlerImpl{Client: client, ReloadAgent: ra}
+	api.RingDeleteRingHandler = &handlers.DeleteRingHandlerImpl{Client: client, ReloadAgent: ra}
+	api.RingGetRingHandler = &handlers.GetRingHandlerImpl{Client: client}
+	api.RingGetRingsHandler = &handlers.GetRingsHandlerImpl{Client: client}
+	api.RingReplaceRingHandler = &handlers.ReplaceRingHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup frontend handlers
 	api.FrontendCreateFrontendHandler = &handlers.CreateFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 	api.FrontendDeleteFrontendHandler = &handlers.DeleteFrontendHandlerImpl{Client: client, ReloadAgent: ra}

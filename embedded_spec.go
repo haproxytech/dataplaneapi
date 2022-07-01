@@ -6427,6 +6427,264 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/rings": {
+      "get": {
+        "description": "Returns an array of all configured rings.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Return an array of rings",
+        "operationId": "getRings",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/rings"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new ring to the configuration file.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Add a ring",
+        "operationId": "createRing",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ring created",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/rings/{name}": {
+      "get": {
+        "description": "Returns one ring configuration by it's name.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Return a ring",
+        "operationId": "getRing",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Ring name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/ring"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a ring configuration by it's name.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Replace a ring",
+        "operationId": "replaceRing",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Ring name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ring replaced",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a ring from the configuration by it's name.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Delete a ring",
+        "operationId": "deleteRing",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Ring name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Ring deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/server_switching_rules": {
       "get": {
         "description": "Returns all Backend Switching Rules that are configured in specified backend.",
@@ -20748,6 +21006,66 @@ func init() {
       },
       "x-go-name": "ReturnHeader"
     },
+    "ring": {
+      "description": "HAProxy ring configuration",
+      "type": "object",
+      "title": "Ring",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "x-display-name": "The description is an optional description string of the ring"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "iso",
+            "local",
+            "raw",
+            "rfc3164",
+            "rfc5424",
+            "short",
+            "priority",
+            "timed"
+          ],
+          "x-display-name": "Format used to store events into the ring buffer"
+        },
+        "maxlen": {
+          "type": "integer",
+          "x-display-name": "The maximum length of an event message stored into the ring",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "size": {
+          "type": "integer",
+          "x-display-name": "Optional size in bytes for the ring-buffer",
+          "x-nullable": true
+        },
+        "timeout_connect": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "timeout_server": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "rings": {
+      "description": "HAProxy rings array",
+      "type": "array",
+      "title": "Rings",
+      "items": {
+        "$ref": "#/definitions/ring"
+      }
+    },
     "runtime_server": {
       "description": "Runtime transient server properties",
       "type": "object",
@@ -24094,6 +24412,9 @@ func init() {
     },
     {
       "name": "Resolver"
+    },
+    {
+      "name": "Ring"
     },
     {
       "description": "Managing backend server configurations (advanced mode)",
@@ -33508,6 +33829,407 @@ func init() {
           },
           "204": {
             "description": "Resolver deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/rings": {
+      "get": {
+        "description": "Returns an array of all configured rings.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Return an array of rings",
+        "operationId": "getRings",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/rings"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new ring to the configuration file.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Add a ring",
+        "operationId": "createRing",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ring created",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/rings/{name}": {
+      "get": {
+        "description": "Returns one ring configuration by it's name.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Return a ring",
+        "operationId": "getRing",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Ring name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/ring"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a ring configuration by it's name.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Replace a ring",
+        "operationId": "replaceRing",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Ring name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ring replaced",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ring"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a ring from the configuration by it's name.",
+        "tags": [
+          "Ring"
+        ],
+        "summary": "Delete a ring",
+        "operationId": "deleteRing",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Ring name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Ring deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -51651,6 +52373,66 @@ func init() {
       },
       "x-go-name": "ReturnHeader"
     },
+    "ring": {
+      "description": "HAProxy ring configuration",
+      "type": "object",
+      "title": "Ring",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "x-display-name": "The description is an optional description string of the ring"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "iso",
+            "local",
+            "raw",
+            "rfc3164",
+            "rfc5424",
+            "short",
+            "priority",
+            "timed"
+          ],
+          "x-display-name": "Format used to store events into the ring buffer"
+        },
+        "maxlen": {
+          "type": "integer",
+          "x-display-name": "The maximum length of an event message stored into the ring",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "size": {
+          "type": "integer",
+          "x-display-name": "Optional size in bytes for the ring-buffer",
+          "x-nullable": true
+        },
+        "timeout_connect": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "timeout_server": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "rings": {
+      "description": "HAProxy rings array",
+      "type": "array",
+      "title": "Rings",
+      "items": {
+        "$ref": "#/definitions/ring"
+      }
+    },
     "runtime_server": {
       "description": "Runtime transient server properties",
       "type": "object",
@@ -54892,6 +55674,9 @@ func init() {
     },
     {
       "name": "Resolver"
+    },
+    {
+      "name": "Ring"
     },
     {
       "description": "Managing backend server configurations (advanced mode)",
