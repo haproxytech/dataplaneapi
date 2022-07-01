@@ -59,10 +59,9 @@ type ReplaceServerParams struct {
 	HTTPRequest *http.Request `json:"-"`
 
 	/*Parent backend name
-	  Required: true
 	  In: query
 	*/
-	Backend string
+	Backend *string
 	/*
 	  Required: true
 	  In: body
@@ -78,6 +77,14 @@ type ReplaceServerParams struct {
 	  In: path
 	*/
 	Name string
+	/*Parent name
+	  In: query
+	*/
+	ParentName *string
+	/*Parent type
+	  In: query
+	*/
+	ParentType *string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -136,6 +143,16 @@ func (o *ReplaceServerParams) BindRequest(r *http.Request, route *middleware.Mat
 		res = append(res, err)
 	}
 
+	qParentName, qhkParentName, _ := qs.GetOK("parent_name")
+	if err := o.bindParentName(qParentName, qhkParentName, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qParentType, qhkParentType, _ := qs.GetOK("parent_type")
+	if err := o.bindParentType(qParentType, qhkParentType, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qTransactionID, qhkTransactionID, _ := qs.GetOK("transaction_id")
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
@@ -154,21 +171,18 @@ func (o *ReplaceServerParams) BindRequest(r *http.Request, route *middleware.Mat
 
 // bindBackend binds and validates parameter Backend from query.
 func (o *ReplaceServerParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("backend", "query")
-	}
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
-	// Required: true
+	// Required: false
 	// AllowEmptyValue: false
-	if err := validate.RequiredString("backend", "query", raw); err != nil {
-		return err
+	if raw == "" { // empty values pass all other validations
+		return nil
 	}
 
-	o.Backend = raw
+	o.Backend = &raw
 
 	return nil
 }
@@ -207,6 +221,56 @@ func (o *ReplaceServerParams) bindName(rawData []string, hasKey bool, formats st
 	// Parameter is provided by construction from the route
 
 	o.Name = raw
+
+	return nil
+}
+
+// bindParentName binds and validates parameter ParentName from query.
+func (o *ReplaceServerParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.ParentName = &raw
+
+	return nil
+}
+
+// bindParentType binds and validates parameter ParentType from query.
+func (o *ReplaceServerParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.ParentType = &raw
+
+	if err := o.validateParentType(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateParentType carries on validations for parameter ParentType
+func (o *ReplaceServerParams) validateParentType(formats strfmt.Registry) error {
+
+	if err := validate.Enum("parent_type", "query", *o.ParentType, []interface{}{"backend", "ring"}); err != nil {
+		return err
+	}
 
 	return nil
 }

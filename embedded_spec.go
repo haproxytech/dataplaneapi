@@ -7284,8 +7284,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "$ref": "#/parameters/transaction_id"
@@ -7332,8 +7347,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "name": "data",
@@ -7404,8 +7434,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "$ref": "#/parameters/transaction_id"
@@ -7459,8 +7504,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "name": "data",
@@ -7529,8 +7589,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "$ref": "#/parameters/transaction_id"
@@ -35143,8 +35218,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "type": "string",
@@ -35204,8 +35294,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "name": "data",
@@ -35315,8 +35420,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "type": "string",
@@ -35392,8 +35512,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "name": "data",
@@ -35501,8 +35636,23 @@ func init() {
             "type": "string",
             "description": "Parent backend name",
             "name": "backend",
-            "in": "query",
-            "required": true
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "backend",
+              "ring"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query"
           },
           {
             "type": "string",

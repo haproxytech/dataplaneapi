@@ -33,8 +33,10 @@ import (
 type ReplaceServerURL struct {
 	Name string
 
-	Backend       string
+	Backend       *string
 	ForceReload   *bool
+	ParentName    *string
+	ParentType    *string
 	TransactionID *string
 	Version       *int64
 
@@ -79,7 +81,10 @@ func (o *ReplaceServerURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	backendQ := o.Backend
+	var backendQ string
+	if o.Backend != nil {
+		backendQ = *o.Backend
+	}
 	if backendQ != "" {
 		qs.Set("backend", backendQ)
 	}
@@ -90,6 +95,22 @@ func (o *ReplaceServerURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
+	}
+
+	var parentNameQ string
+	if o.ParentName != nil {
+		parentNameQ = *o.ParentName
+	}
+	if parentNameQ != "" {
+		qs.Set("parent_name", parentNameQ)
+	}
+
+	var parentTypeQ string
+	if o.ParentType != nil {
+		parentTypeQ = *o.ParentType
+	}
+	if parentTypeQ != "" {
+		qs.Set("parent_type", parentTypeQ)
 	}
 
 	var transactionIDQ string

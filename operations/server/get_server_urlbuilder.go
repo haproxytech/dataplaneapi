@@ -31,7 +31,9 @@ import (
 type GetServerURL struct {
 	Name string
 
-	Backend       string
+	Backend       *string
+	ParentName    *string
+	ParentType    *string
 	TransactionID *string
 
 	_basePath string
@@ -75,9 +77,28 @@ func (o *GetServerURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	backendQ := o.Backend
+	var backendQ string
+	if o.Backend != nil {
+		backendQ = *o.Backend
+	}
 	if backendQ != "" {
 		qs.Set("backend", backendQ)
+	}
+
+	var parentNameQ string
+	if o.ParentName != nil {
+		parentNameQ = *o.ParentName
+	}
+	if parentNameQ != "" {
+		qs.Set("parent_name", parentNameQ)
+	}
+
+	var parentTypeQ string
+	if o.ParentType != nil {
+		parentTypeQ = *o.ParentType
+	}
+	if parentTypeQ != "" {
+		qs.Set("parent_type", parentTypeQ)
 	}
 
 	var transactionIDQ string
