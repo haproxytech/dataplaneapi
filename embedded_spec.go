@@ -13783,6 +13783,30 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "splice_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Auto"
+        },
+        "splice_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Request"
+        },
+        "splice_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Response"
+        },
         "spop_check": {
           "type": "string",
           "enum": [
@@ -15573,6 +15597,14 @@ func init() {
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
+        "dontlog_normal": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Dontlog Normal"
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -15668,6 +15700,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "http_no_delay": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP No Delay"
+        },
         "http_pretend_keepalive": {
           "type": "string",
           "enum": [
@@ -15710,6 +15750,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Httpslog"
+        },
+        "idle_close_on_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Idle Close On Response"
         },
         "independent_streams": {
           "type": "string",
@@ -15843,6 +15891,30 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Socket Stats"
+        },
+        "splice_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Auto"
+        },
+        "splice_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Request"
+        },
+        "splice_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Response"
         },
         "srvtcpka": {
           "type": "string",
@@ -16222,6 +16294,13 @@ func init() {
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
+        "dontlog_normal": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -16297,6 +16376,14 @@ func init() {
           },
           "x-nullable": true
         },
+        "http_no_delay": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP No Delay"
+        },
         "http_request_timeout": {
           "type": "integer",
           "x-dependency": {
@@ -16330,6 +16417,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Httpslog"
+        },
+        "idle_close_on_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Idle Close On Response"
         },
         "independent_streams": {
           "type": "string",
@@ -16411,6 +16506,30 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Socket Stats"
+        },
+        "splice_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Auto"
+        },
+        "splice_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Request"
+        },
+        "splice_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Response"
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
@@ -45417,6 +45536,30 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "splice_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Auto"
+        },
+        "splice_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Request"
+        },
+        "splice_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Response"
+        },
         "spop_check": {
           "type": "string",
           "enum": [
@@ -47174,6 +47317,14 @@ func init() {
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
+        "dontlog_normal": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Dontlog Normal"
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -47269,6 +47420,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "http_no_delay": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP No Delay"
+        },
         "http_pretend_keepalive": {
           "type": "string",
           "enum": [
@@ -47311,6 +47470,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Httpslog"
+        },
+        "idle_close_on_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Idle Close On Response"
         },
         "independent_streams": {
           "type": "string",
@@ -47444,6 +47611,30 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Socket Stats"
+        },
+        "splice_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Auto"
+        },
+        "splice_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Request"
+        },
+        "splice_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Response"
         },
         "srvtcpka": {
           "type": "string",
@@ -47823,6 +48014,13 @@ func init() {
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
+        "dontlog_normal": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "dontlognull": {
           "type": "string",
           "enum": [
@@ -47898,6 +48096,14 @@ func init() {
           },
           "x-nullable": true
         },
+        "http_no_delay": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP No Delay"
+        },
         "http_request_timeout": {
           "type": "integer",
           "x-dependency": {
@@ -47931,6 +48137,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Httpslog"
+        },
+        "idle_close_on_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Idle Close On Response"
         },
         "independent_streams": {
           "type": "string",
@@ -48012,6 +48226,30 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Socket Stats"
+        },
+        "splice_auto": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Auto"
+        },
+        "splice_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Request"
+        },
+        "splice_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Splice Response"
         },
         "stats_options": {
           "$ref": "#/definitions/stats_options"
