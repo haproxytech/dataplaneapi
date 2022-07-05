@@ -23092,6 +23092,56 @@ func init() {
         "$ref": "#/definitions/ssl_certificate"
       }
     },
+    "stats_auth": {
+      "type": "object",
+      "required": [
+        "user",
+        "passwd"
+      ],
+      "properties": {
+        "passwd": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        }
+      }
+    },
+    "stats_http_request": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          }
+        },
+        "realm": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "auth"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "deny",
+            "auth"
+          ]
+        }
+      }
+    },
     "stats_options": {
       "type": "object",
       "properties": {
@@ -23127,6 +23177,13 @@ func init() {
             "property": "acl_name"
           }
         },
+        "stats_auths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/stats_auth"
+          },
+          "x-display-name": "Stats Auths"
+        },
         "stats_enable": {
           "type": "boolean",
           "x-display-name": "Stats Enable"
@@ -23135,9 +23192,30 @@ func init() {
           "type": "boolean",
           "x-display-name": "Stats Hide Version"
         },
+        "stats_http_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/stats_http_request"
+          },
+          "x-display-name": "Stats HTTP Requests"
+        },
         "stats_maxconn": {
           "type": "integer",
           "minimum": 1
+        },
+        "stats_realm": {
+          "type": "boolean",
+          "x-display-name": "Stats Realm"
+        },
+        "stats_realm_realm": {
+          "type": "string",
+          "x-dependency": {
+            "stats_realm": {
+              "required": true,
+              "value": true
+            }
+          },
+          "x-nullable": true
         },
         "stats_refresh_delay": {
           "type": "integer",
@@ -23150,6 +23228,10 @@ func init() {
         "stats_show_legends": {
           "type": "boolean",
           "x-display-name": "Stats Show Legends"
+        },
+        "stats_show_modules": {
+          "type": "boolean",
+          "x-display-name": "Stats Show Modules"
         },
         "stats_show_node_name": {
           "type": "string",
@@ -54620,6 +54702,56 @@ func init() {
         "$ref": "#/definitions/ssl_certificate"
       }
     },
+    "stats_auth": {
+      "type": "object",
+      "required": [
+        "user",
+        "passwd"
+      ],
+      "properties": {
+        "passwd": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        }
+      }
+    },
+    "stats_http_request": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          }
+        },
+        "realm": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "auth"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "deny",
+            "auth"
+          ]
+        }
+      }
+    },
     "stats_options": {
       "type": "object",
       "properties": {
@@ -54655,6 +54787,13 @@ func init() {
             "property": "acl_name"
           }
         },
+        "stats_auths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/stats_auth"
+          },
+          "x-display-name": "Stats Auths"
+        },
         "stats_enable": {
           "type": "boolean",
           "x-display-name": "Stats Enable"
@@ -54663,9 +54802,30 @@ func init() {
           "type": "boolean",
           "x-display-name": "Stats Hide Version"
         },
+        "stats_http_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/stats_http_request"
+          },
+          "x-display-name": "Stats HTTP Requests"
+        },
         "stats_maxconn": {
           "type": "integer",
           "minimum": 1
+        },
+        "stats_realm": {
+          "type": "boolean",
+          "x-display-name": "Stats Realm"
+        },
+        "stats_realm_realm": {
+          "type": "string",
+          "x-dependency": {
+            "stats_realm": {
+              "required": true,
+              "value": true
+            }
+          },
+          "x-nullable": true
         },
         "stats_refresh_delay": {
           "type": "integer",
@@ -54678,6 +54838,10 @@ func init() {
         "stats_show_legends": {
           "type": "boolean",
           "x-display-name": "Stats Show Legends"
+        },
+        "stats_show_modules": {
+          "type": "boolean",
+          "x-display-name": "Stats Show Modules"
         },
         "stats_show_node_name": {
           "type": "string",
