@@ -16945,6 +16945,29 @@ func init() {
         "pp2_never_send_local": {
           "type": "boolean"
         },
+        "presetenv": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              },
+              "value": {
+                "type": "string",
+                "x-display-name": "Value"
+              }
+            },
+            "x-go-name": "PresetEnv"
+          },
+          "x-display-name": "Preset environment variables",
+          "x-go-name": "PresetEnvs"
+        },
         "profiling_tasks": {
           "type": "string",
           "enum": [
@@ -16956,6 +16979,10 @@ func init() {
         },
         "quiet": {
           "type": "boolean"
+        },
+        "resetenv": {
+          "type": "string",
+          "x-display-name": "Remove all environment variables except the ones specified"
         },
         "runtime_apis": {
           "type": "array",
@@ -17038,6 +17065,29 @@ func init() {
           },
           "x-display-name": "Set variable formats",
           "x-go-name": "SetVarFmts"
+        },
+        "setenv": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              },
+              "value": {
+                "type": "string",
+                "x-display-name": "Value"
+              }
+            },
+            "x-go-name": "SetEnv"
+          },
+          "x-display-name": "Set environment variables",
+          "x-go-name": "SetEnvs"
         },
         "spread_checks": {
           "type": "integer",
@@ -17425,6 +17475,10 @@ func init() {
         },
         "ulimit_n": {
           "type": "integer"
+        },
+        "unsetenv": {
+          "type": "string",
+          "x-display-name": "Removes environment variables specified in arguments"
         },
         "user": {
           "type": "string",
@@ -44350,6 +44404,24 @@ func init() {
       },
       "x-go-name": "LuaPrependPath"
     },
+    "GlobalPresetenvItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        },
+        "value": {
+          "type": "string",
+          "x-display-name": "Value"
+        }
+      },
+      "x-go-name": "PresetEnv"
+    },
     "GlobalRuntimeApisItems0": {
       "type": "object",
       "required": [
@@ -44403,6 +44475,24 @@ func init() {
         }
       },
       "x-go-name": "SetVar"
+    },
+    "GlobalSetenvItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        },
+        "value": {
+          "type": "string",
+          "x-display-name": "Value"
+        }
+      },
+      "x-go-name": "SetEnv"
     },
     "GlobalSslEnginesItems0": {
       "type": "object",
@@ -48692,6 +48782,14 @@ func init() {
         "pp2_never_send_local": {
           "type": "boolean"
         },
+        "presetenv": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalPresetenvItems0"
+          },
+          "x-display-name": "Preset environment variables",
+          "x-go-name": "PresetEnvs"
+        },
         "profiling_tasks": {
           "type": "string",
           "enum": [
@@ -48703,6 +48801,10 @@ func init() {
         },
         "quiet": {
           "type": "boolean"
+        },
+        "resetenv": {
+          "type": "string",
+          "x-display-name": "Remove all environment variables except the ones specified"
         },
         "runtime_apis": {
           "type": "array",
@@ -48740,6 +48842,14 @@ func init() {
           },
           "x-display-name": "Set variable formats",
           "x-go-name": "SetVarFmts"
+        },
+        "setenv": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlobalSetenvItems0"
+          },
+          "x-display-name": "Set environment variables",
+          "x-go-name": "SetEnvs"
         },
         "spread_checks": {
           "type": "integer",
@@ -49098,6 +49208,10 @@ func init() {
         },
         "ulimit_n": {
           "type": "integer"
+        },
+        "unsetenv": {
+          "type": "string",
+          "x-display-name": "Removes environment variables specified in arguments"
         },
         "user": {
           "type": "string",
