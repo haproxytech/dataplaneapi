@@ -12,7 +12,7 @@ import (
 
 type CreateHTTPAfterResponseRuleHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.CreateHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
@@ -63,7 +63,7 @@ func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_respons
 
 type DeleteHTTPAfterResponseRuleHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.DeleteHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
@@ -166,7 +166,7 @@ func (g GetHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_response_
 
 type ReplaceHTTPAfterResponseRuleHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.ReplaceHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
