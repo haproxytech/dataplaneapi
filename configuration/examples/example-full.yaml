@@ -60,8 +60,9 @@ haproxy:
   master_worker_mode: false # bool
   reload:
     reload_delay: 5 # int 2
-    reload_cmd: null # string 2
-    restart_cmd: null # string 2
+    reload_cmd: "systemctl reload haproxy"
+    restart_cmd: "systemctl restart haproxy"
+    status_cmd: "systemctl status haproxy"
     reload_retention: 1 # int 2
     validate_cmd: null # string 2
 cluster:

@@ -40,6 +40,7 @@ type HAProxyConfiguration struct {
 	ReloadDelay          int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5" group:"reload"`
 	ReloadCmd            string `short:"r" long:"reload-cmd" description:"Reload command" group:"reload"`
 	RestartCmd           string `short:"s" long:"restart-cmd" description:"Restart command" group:"reload"`
+	StatusCmd            string `long:"status-cmd" description:"Status command" group:"reload"`
 	ReloadRetention      int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1" group:"reload"`
 	TransactionDir       string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy" group:"transaction"`
 	BackupsNumber        int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0" group:"transaction"`
@@ -156,9 +157,7 @@ type Configuration struct {
 	reloadSignal           chan os.Signal
 }
 
-var (
-	cfgInitOnce sync.Once
-)
+var cfgInitOnce sync.Once
 
 // Get returns pointer to configuration
 func Get() *Configuration {
@@ -249,7 +248,7 @@ func (c *Configuration) Load() error {
 
 func (c *Configuration) LoadRuntimeVars(swaggerJSON json.RawMessage, host string, port int) error {
 	var m map[string]interface{}
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(swaggerJSON, &m)
 	if err != nil {
 		return err

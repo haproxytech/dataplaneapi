@@ -85,6 +85,7 @@ type configTypeReload struct {
 	ReloadDelay     *int    `yaml:"reload_delay,omitempty" hcl:"reload_delay,omitempty"`
 	ReloadCmd       *string `yaml:"reload_cmd,omitempty" hcl:"reload_cmd,omitempty"`
 	RestartCmd      *string `yaml:"restart_cmd,omitempty" hcl:"restart_cmd,omitempty"`
+	StatusCmd      	*string `yaml:"status_cmd,omitempty" hcl:"status_cmd,omitempty"`
 	ReloadRetention *int    `yaml:"reload_retention,omitempty" hcl:"reload_retention,omitempty"`
 	ValidateCmd     *string `yaml:"validate_cmd,omitempty" hcl:"validate_cmd,omitempty"`
 }
@@ -240,6 +241,9 @@ func copyToConfiguration(cfg *Configuration) {
 	}
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.Reload != nil && cfgStorage.Haproxy.Reload.RestartCmd != nil && !misc.HasOSArg("s", "restart-cmd", "") {
 		cfg.HAProxy.RestartCmd = *cfgStorage.Haproxy.Reload.RestartCmd
+	}
+	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.Reload != nil && cfgStorage.Haproxy.Reload.StatusCmd != nil && !misc.HasOSArg("", "status-cmd", "") {
+		cfg.HAProxy.StatusCmd = *cfgStorage.Haproxy.Reload.StatusCmd
 	}
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.Reload != nil && cfgStorage.Haproxy.Reload.ReloadRetention != nil && !misc.HasOSArg("", "reload-retention", "") {
 		cfg.HAProxy.ReloadRetention = *cfgStorage.Haproxy.Reload.ReloadRetention

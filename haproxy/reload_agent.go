@@ -43,6 +43,7 @@ type IReloadAgent interface {
 	Restart() error
 	ForceReload() error
 	ForceReloadWithCallback(func()) error
+	Status() (bool, error)
 	GetReloads() models.Reloads
 	GetReload(id string) *models.Reload
 }
@@ -62,6 +63,7 @@ type ReloadAgentParams struct {
 	Delay      int
 	ReloadCmd  string
 	RestartCmd string
+	StatusCmd  string
 	ConfigFile string
 	BackupDir  string
 	Retention  int
@@ -73,6 +75,7 @@ type ReloadAgent struct {
 	delay         int
 	reloadCmd     string
 	restartCmd    string
+	statusCmd     string
 	configFile    string
 	lkgConfigFile string
 	done          <-chan struct{}
@@ -84,6 +87,7 @@ func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 
 	ra.reloadCmd = params.ReloadCmd
 	ra.restartCmd = params.RestartCmd
+	ra.statusCmd = params.StatusCmd
 	ra.configFile = params.ConfigFile
 
 	if params.Ctx == nil {
@@ -441,6 +445,23 @@ func (ra *ReloadAgent) GetReload(id string) *models.Reload {
 
 func (ra *ReloadAgent) Restart() error {
 	return ra.restartHAProxy()
+}
+
+func (ra *ReloadAgent) Status() (bool, error) {
+	return ra.status()
+}
+
+func (ra *ReloadAgent) status() (bool, error) {
+	if ra.statusCmd == "" {
+		return false, fmt.Errorf("status command not configured")
+	}
+	resp, err := execCmd(ra.statusCmd)
+	if err != nil {
+		log.Debugf("haproxy status check failed: %s", resp)
+		return false, nil
+	}
+	log.Debugf("haproxy status check successful: %s", resp)
+	return true, nil
 }
 
 func getTimeIndexFromID(id string) (time.Time, int64, error) {

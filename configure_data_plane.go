@@ -211,6 +211,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		Delay:      haproxyOptions.ReloadDelay,
 		ReloadCmd:  haproxyOptions.ReloadCmd,
 		RestartCmd: haproxyOptions.RestartCmd,
+		StatusCmd:  haproxyOptions.StatusCmd,
 		ConfigFile: haproxyOptions.ConfigFile,
 		BackupDir:  haproxyOptions.BackupsDir,
 		Retention:  haproxyOptions.ReloadRetention,
@@ -753,6 +754,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			log.Fatalf("Error starting Data Plane API: %s\n Stacktrace from panic: \n%s", err, string(debug.Stack()))
 		}
 	}()
+
+	// Health
+	api.HealthGetHealthHandler = &handlers.GetHealthHandlerImpl{HAProxy: ra}
 
 	// middlewares
 	var adpts []adapters.Adapter

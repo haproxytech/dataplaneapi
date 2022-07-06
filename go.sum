@@ -175,8 +175,8 @@ github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v3 v3.1.1-0.20220706134924-687bc1e4fcfd h1:jwufMmcdi5zd5p+Ll5k7D6EBcm7gMkbYobGnJnY+jhU=
-github.com/haproxytech/client-native/v3 v3.1.1-0.20220706134924-687bc1e4fcfd/go.mod h1:PSYFdp1t3h2MJGdJ4cr7jVQtSn0bT5MkYITdDuDvSdA=
+github.com/haproxytech/client-native/v3 v3.1.1-0.20220706141425-f4b9bd8b7913 h1:qhRsHGWaGgU18Y7PRwxtW9F5jAOgK4X6ZkmGiTl+dNM=
+github.com/haproxytech/client-native/v3 v3.1.1-0.20220706141425-f4b9bd8b7913/go.mod h1:PSYFdp1t3h2MJGdJ4cr7jVQtSn0bT5MkYITdDuDvSdA=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220705063916-e4e79c6d3321 h1:Jzl5PJuFhNU8HWjE6CRwikvZ7is0I3G7+FlSBk4u/Zs=
 github.com/haproxytech/config-parser/v4 v4.0.0-rc2.0.20220705063916-e4e79c6d3321/go.mod h1:7V8tKWPnQGC7tANP3uoMc5tU42fEQOe3fdQWkPdjU4o=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=

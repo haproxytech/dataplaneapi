@@ -247,6 +247,30 @@ func init() {
         }
       }
     },
+    "/health": {
+      "get": {
+        "description": "Return managed services health",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Health"
+        ],
+        "summary": "Return managed services health",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/health"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/info": {
       "get": {
         "description": "Return API, hardware and OS information",
@@ -17543,6 +17567,19 @@ func init() {
         "$ref": "#/definitions/group"
       }
     },
+    "health": {
+      "type": "object",
+      "properties": {
+        "haproxy": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ]
+        }
+      }
+    },
     "http_after_response_rule": {
       "description": "HAProxy HTTP after response rule configuration (corresponds to http-after-response directives)",
       "type": "object",
@@ -25123,6 +25160,39 @@ func init() {
           },
           "403": {
             "description": "refresh not possible"
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Return managed services health",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Health"
+        ],
+        "summary": "Return managed services health",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/health"
+            }
           },
           "default": {
             "description": "General Error",
@@ -49274,6 +49344,19 @@ func init() {
       "title": "Groups",
       "items": {
         "$ref": "#/definitions/group"
+      }
+    },
+    "health": {
+      "type": "object",
+      "properties": {
+        "haproxy": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ]
+        }
       }
     },
     "http_after_response_rule": {

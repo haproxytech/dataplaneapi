@@ -49,6 +49,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
 	"github.com/haproxytech/dataplaneapi/operations/global"
 	"github.com/haproxytech/dataplaneapi/operations/group"
+	"github.com/haproxytech/dataplaneapi/operations/health"
 	"github.com/haproxytech/dataplaneapi/operations/http_after_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_check"
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
@@ -523,6 +524,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		InformationGetHaproxyProcessInfoHandler: information.GetHaproxyProcessInfoHandlerFunc(func(params information.GetHaproxyProcessInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation information.GetHaproxyProcessInfo has not yet been implemented")
+		}),
+		HealthGetHealthHandler: health.GetHealthHandlerFunc(func(params health.GetHealthParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation health.GetHealth has not yet been implemented")
 		}),
 		InformationGetInfoHandler: information.GetInfoHandlerFunc(func(params information.GetInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation information.GetInfo has not yet been implemented")
@@ -1199,6 +1203,8 @@ type DataPlaneAPI struct {
 	DiscoveryGetHaproxyEndpointsHandler discovery.GetHaproxyEndpointsHandler
 	// InformationGetHaproxyProcessInfoHandler sets the operation handler for the get haproxy process info operation
 	InformationGetHaproxyProcessInfoHandler information.GetHaproxyProcessInfoHandler
+	// HealthGetHealthHandler sets the operation handler for the get health operation
+	HealthGetHealthHandler health.GetHealthHandler
 	// InformationGetInfoHandler sets the operation handler for the get info operation
 	InformationGetInfoHandler information.GetInfoHandler
 	// LogTargetGetLogTargetHandler sets the operation handler for the get log target operation
@@ -1920,6 +1926,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.InformationGetHaproxyProcessInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetHaproxyProcessInfoHandler")
+	}
+	if o.HealthGetHealthHandler == nil {
+		unregistered = append(unregistered, "health.GetHealthHandler")
 	}
 	if o.InformationGetInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetInfoHandler")
@@ -2918,6 +2927,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/info"] = information.NewGetHaproxyProcessInfo(o.context, o.InformationGetHaproxyProcessInfoHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/health"] = health.NewGetHealth(o.context, o.HealthGetHealthHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

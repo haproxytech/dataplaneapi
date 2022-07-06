@@ -74,8 +74,9 @@ haproxy {
 
   reload {
     reload_delay = 5
-    reload_cmd = "null"
-    restart_cmd = "null"
+    reload_cmd = "systemctl reload haproxy"
+    restart_cmd = "systemctl restart haproxy"
+    status_cmd = "systemctl status haproxy"
     reload_retention = 1
     validate_cmd = "null"
   }

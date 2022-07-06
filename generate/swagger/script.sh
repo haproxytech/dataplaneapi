@@ -66,6 +66,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=Discovery \
     --tags=ServiceDiscovery \
     --tags=Information \
+    --tags=Health \
     --tags=Specification \
     --tags=SpecificationOpenapiv3 \
     --tags=Transactions \
