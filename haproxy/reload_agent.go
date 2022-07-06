@@ -158,6 +158,7 @@ func (ra *ReloadAgent) handleReloads() {
 		select {
 		case <-ticker.C:
 			if next := ra.cache.getNext(); next != "" {
+				// nolint:errcheck
 				ra.handleReload(next)
 			}
 		case <-ra.done:
