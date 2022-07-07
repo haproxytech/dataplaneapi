@@ -21,6 +21,7 @@ package stick_rule
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
@@ -104,7 +105,7 @@ func (o *CreateStickRuleParams) BindRequest(r *http.Request, route *middleware.M
 		var body models.StickRule
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -114,13 +115,19 @@ func (o *CreateStickRuleParams) BindRequest(r *http.Request, route *middleware.M
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -135,7 +142,6 @@ func (o *CreateStickRuleParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -145,7 +151,7 @@ func (o *CreateStickRuleParams) BindRequest(r *http.Request, route *middleware.M
 // bindBackend binds and validates parameter Backend from query.
 func (o *CreateStickRuleParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -154,10 +160,10 @@ func (o *CreateStickRuleParams) bindBackend(rawData []string, hasKey bool, forma
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -172,6 +178,7 @@ func (o *CreateStickRuleParams) bindForceReload(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewCreateStickRuleParams()
 		return nil
@@ -195,10 +202,10 @@ func (o *CreateStickRuleParams) bindTransactionID(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -213,6 +220,7 @@ func (o *CreateStickRuleParams) bindVersion(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

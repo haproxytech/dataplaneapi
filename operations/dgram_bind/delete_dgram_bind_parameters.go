@@ -115,7 +115,6 @@ func (o *DeleteDgramBindParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -131,6 +130,7 @@ func (o *DeleteDgramBindParams) bindForceReload(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteDgramBindParams()
 		return nil
@@ -148,7 +148,7 @@ func (o *DeleteDgramBindParams) bindForceReload(rawData []string, hasKey bool, f
 // bindLogForward binds and validates parameter LogForward from query.
 func (o *DeleteDgramBindParams) bindLogForward(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("log_forward", "query")
+		return errors.Required("log_forward", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -157,10 +157,10 @@ func (o *DeleteDgramBindParams) bindLogForward(rawData []string, hasKey bool, fo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("log_forward", "query", raw); err != nil {
 		return err
 	}
-
 	o.LogForward = raw
 
 	return nil
@@ -175,7 +175,6 @@ func (o *DeleteDgramBindParams) bindName(rawData []string, hasKey bool, formats 
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -190,10 +189,10 @@ func (o *DeleteDgramBindParams) bindTransactionID(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -208,6 +207,7 @@ func (o *DeleteDgramBindParams) bindVersion(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

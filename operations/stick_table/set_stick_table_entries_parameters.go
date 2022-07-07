@@ -21,6 +21,7 @@ package stick_table
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -32,7 +33,8 @@ import (
 )
 
 // NewSetStickTableEntriesParams creates a new SetStickTableEntriesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewSetStickTableEntriesParams() SetStickTableEntriesParams {
 
 	return SetStickTableEntriesParams{}
@@ -95,6 +97,11 @@ func (o *SetStickTableEntriesParams) BindRequest(r *http.Request, route *middlew
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.StickTableEntry = body
 			}
@@ -109,7 +116,7 @@ func (o *SetStickTableEntriesParams) BindRequest(r *http.Request, route *middlew
 // bindProcess binds and validates parameter Process from query.
 func (o *SetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("process", "query")
+		return errors.Required("process", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -118,6 +125,7 @@ func (o *SetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("process", "query", raw); err != nil {
 		return err
 	}
@@ -134,7 +142,7 @@ func (o *SetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, 
 // bindStickTable binds and validates parameter StickTable from query.
 func (o *SetStickTableEntriesParams) bindStickTable(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("stick_table", "query")
+		return errors.Required("stick_table", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -143,10 +151,10 @@ func (o *SetStickTableEntriesParams) bindStickTable(rawData []string, hasKey boo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("stick_table", "query", raw); err != nil {
 		return err
 	}
-
 	o.StickTable = raw
 
 	return nil

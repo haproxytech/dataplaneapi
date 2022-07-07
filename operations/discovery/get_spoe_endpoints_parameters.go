@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetSpoeEndpointsParams creates a new GetSpoeEndpointsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetSpoeEndpointsParams() GetSpoeEndpointsParams {
 
 	return GetSpoeEndpointsParams{}

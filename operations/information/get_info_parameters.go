@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetInfoParams creates a new GetInfoParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetInfoParams() GetInfoParams {
 
 	return GetInfoParams{}

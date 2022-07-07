@@ -104,7 +104,6 @@ func (o *DeleteRingParams) BindRequest(r *http.Request, route *middleware.Matche
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -120,6 +119,7 @@ func (o *DeleteRingParams) bindForceReload(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteRingParams()
 		return nil
@@ -143,7 +143,6 @@ func (o *DeleteRingParams) bindName(rawData []string, hasKey bool, formats strfm
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -158,10 +157,10 @@ func (o *DeleteRingParams) bindTransactionID(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -176,6 +175,7 @@ func (o *DeleteRingParams) bindVersion(rawData []string, hasKey bool, formats st
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetOpenapiv3SpecificationParams creates a new GetOpenapiv3SpecificationParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetOpenapiv3SpecificationParams() GetOpenapiv3SpecificationParams {
 
 	return GetOpenapiv3SpecificationParams{}

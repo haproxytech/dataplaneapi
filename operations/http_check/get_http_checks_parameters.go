@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetHTTPChecksParams creates a new GetHTTPChecksParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetHTTPChecksParams() GetHTTPChecksParams {
 
 	return GetHTTPChecksParams{}
@@ -86,7 +87,6 @@ func (o *GetHTTPChecksParams) BindRequest(r *http.Request, route *middleware.Mat
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -102,10 +102,10 @@ func (o *GetHTTPChecksParams) bindParentName(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentName = &raw
 
 	return nil
@@ -114,7 +114,7 @@ func (o *GetHTTPChecksParams) bindParentName(rawData []string, hasKey bool, form
 // bindParentType binds and validates parameter ParentType from query.
 func (o *GetHTTPChecksParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_type", "query")
+		return errors.Required("parent_type", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -123,10 +123,10 @@ func (o *GetHTTPChecksParams) bindParentType(rawData []string, hasKey bool, form
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("parent_type", "query", raw); err != nil {
 		return err
 	}
-
 	o.ParentType = raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -139,7 +139,7 @@ func (o *GetHTTPChecksParams) bindParentType(rawData []string, hasKey bool, form
 // validateParentType carries on validations for parameter ParentType
 func (o *GetHTTPChecksParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", o.ParentType, []interface{}{"backend", "defaults"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", o.ParentType, []interface{}{"backend", "defaults"}, true); err != nil {
 		return err
 	}
 
@@ -155,10 +155,10 @@ func (o *GetHTTPChecksParams) bindTransactionID(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

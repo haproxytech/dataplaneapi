@@ -21,6 +21,7 @@ package maps
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -48,7 +49,7 @@ func NewReplaceRuntimeMapEntry(ctx *middleware.Context, handler ReplaceRuntimeMa
 	return &ReplaceRuntimeMapEntry{Context: ctx, Handler: handler}
 }
 
-/*ReplaceRuntimeMapEntry swagger:route PUT /services/haproxy/runtime/maps_entries/{id} Maps replaceRuntimeMapEntry
+/* ReplaceRuntimeMapEntry swagger:route PUT /services/haproxy/runtime/maps_entries/{id} Maps replaceRuntimeMapEntry
 
 Replace the value corresponding to each id in a map
 
@@ -63,21 +64,20 @@ type ReplaceRuntimeMapEntry struct {
 func (o *ReplaceRuntimeMapEntry) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceRuntimeMapEntryParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -86,7 +86,6 @@ func (o *ReplaceRuntimeMapEntry) ServeHTTP(rw http.ResponseWriter, r *http.Reque
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -121,6 +120,11 @@ func (o *ReplaceRuntimeMapEntryBody) validateValue(formats strfmt.Registry) erro
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this replace runtime map entry body based on context it is used
+func (o *ReplaceRuntimeMapEntryBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

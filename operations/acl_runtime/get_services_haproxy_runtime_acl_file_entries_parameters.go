@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetServicesHaproxyRuntimeACLFileEntriesParams creates a new GetServicesHaproxyRuntimeACLFileEntriesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetServicesHaproxyRuntimeACLFileEntriesParams() GetServicesHaproxyRuntimeACLFileEntriesParams {
 
 	return GetServicesHaproxyRuntimeACLFileEntriesParams{}
@@ -68,7 +69,6 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesParams) BindRequest(r *http.Requ
 	if err := o.bindACLID(qACLID, qhkACLID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -78,7 +78,7 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesParams) BindRequest(r *http.Requ
 // bindACLID binds and validates parameter ACLID from query.
 func (o *GetServicesHaproxyRuntimeACLFileEntriesParams) bindACLID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("acl_id", "query")
+		return errors.Required("acl_id", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -87,10 +87,10 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesParams) bindACLID(rawData []stri
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("acl_id", "query", raw); err != nil {
 		return err
 	}
-
 	o.ACLID = raw
 
 	return nil

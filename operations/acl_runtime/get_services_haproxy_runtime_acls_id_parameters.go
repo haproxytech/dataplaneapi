@@ -29,7 +29,8 @@ import (
 )
 
 // NewGetServicesHaproxyRuntimeAclsIDParams creates a new GetServicesHaproxyRuntimeAclsIDParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetServicesHaproxyRuntimeAclsIDParams() GetServicesHaproxyRuntimeAclsIDParams {
 
 	return GetServicesHaproxyRuntimeAclsIDParams{}
@@ -64,7 +65,6 @@ func (o *GetServicesHaproxyRuntimeAclsIDParams) BindRequest(r *http.Request, rou
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *GetServicesHaproxyRuntimeAclsIDParams) bindID(rawData []string, hasKey 
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil

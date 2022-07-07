@@ -30,7 +30,8 @@ import (
 )
 
 // NewGetSitesParams creates a new GetSitesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetSitesParams() GetSitesParams {
 
 	return GetSitesParams{}
@@ -66,7 +67,6 @@ func (o *GetSitesParams) BindRequest(r *http.Request, route *middleware.MatchedR
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -82,10 +82,10 @@ func (o *GetSitesParams) bindTransactionID(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

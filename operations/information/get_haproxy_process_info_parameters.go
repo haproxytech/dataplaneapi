@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetHaproxyProcessInfoParams creates a new GetHaproxyProcessInfoParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetHaproxyProcessInfoParams() GetHaproxyProcessInfoParams {
 
 	return GetHaproxyProcessInfoParams{}

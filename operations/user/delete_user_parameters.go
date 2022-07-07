@@ -115,7 +115,6 @@ func (o *DeleteUserParams) BindRequest(r *http.Request, route *middleware.Matche
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -131,6 +130,7 @@ func (o *DeleteUserParams) bindForceReload(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteUserParams()
 		return nil
@@ -154,10 +154,10 @@ func (o *DeleteUserParams) bindTransactionID(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -166,7 +166,7 @@ func (o *DeleteUserParams) bindTransactionID(rawData []string, hasKey bool, form
 // bindUserlist binds and validates parameter Userlist from query.
 func (o *DeleteUserParams) bindUserlist(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("userlist", "query")
+		return errors.Required("userlist", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -175,10 +175,10 @@ func (o *DeleteUserParams) bindUserlist(rawData []string, hasKey bool, formats s
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("userlist", "query", raw); err != nil {
 		return err
 	}
-
 	o.Userlist = raw
 
 	return nil
@@ -193,7 +193,6 @@ func (o *DeleteUserParams) bindUsername(rawData []string, hasKey bool, formats s
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Username = raw
 
 	return nil
@@ -208,6 +207,7 @@ func (o *DeleteUserParams) bindVersion(rawData []string, hasKey bool, formats st
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

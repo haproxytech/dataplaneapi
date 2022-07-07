@@ -21,6 +21,7 @@ package spoe
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
@@ -35,7 +36,8 @@ import (
 )
 
 // NewCreateSpoeAgentParams creates a new CreateSpoeAgentParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewCreateSpoeAgentParams() CreateSpoeAgentParams {
 
 	return CreateSpoeAgentParams{}
@@ -91,7 +93,7 @@ func (o *CreateSpoeAgentParams) BindRequest(r *http.Request, route *middleware.M
 		var body models.SpoeAgent
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -101,13 +103,19 @@ func (o *CreateSpoeAgentParams) BindRequest(r *http.Request, route *middleware.M
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qScope, qhkScope, _ := qs.GetOK("scope")
 	if err := o.bindScope(qScope, qhkScope, route.Formats); err != nil {
 		res = append(res, err)
@@ -127,7 +135,6 @@ func (o *CreateSpoeAgentParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -137,7 +144,7 @@ func (o *CreateSpoeAgentParams) BindRequest(r *http.Request, route *middleware.M
 // bindScope binds and validates parameter Scope from query.
 func (o *CreateSpoeAgentParams) bindScope(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("scope", "query")
+		return errors.Required("scope", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -146,10 +153,10 @@ func (o *CreateSpoeAgentParams) bindScope(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("scope", "query", raw); err != nil {
 		return err
 	}
-
 	o.Scope = raw
 
 	return nil
@@ -158,7 +165,7 @@ func (o *CreateSpoeAgentParams) bindScope(rawData []string, hasKey bool, formats
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *CreateSpoeAgentParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -167,10 +174,10 @@ func (o *CreateSpoeAgentParams) bindSpoe(rawData []string, hasKey bool, formats 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -185,10 +192,10 @@ func (o *CreateSpoeAgentParams) bindTransactionID(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -203,6 +210,7 @@ func (o *CreateSpoeAgentParams) bindVersion(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

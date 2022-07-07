@@ -31,7 +31,8 @@ import (
 )
 
 // NewShowRuntimeMapParams creates a new ShowRuntimeMapParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewShowRuntimeMapParams() ShowRuntimeMapParams {
 
 	return ShowRuntimeMapParams{}
@@ -68,7 +69,6 @@ func (o *ShowRuntimeMapParams) BindRequest(r *http.Request, route *middleware.Ma
 	if err := o.bindMap(qMap, qhkMap, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -78,7 +78,7 @@ func (o *ShowRuntimeMapParams) BindRequest(r *http.Request, route *middleware.Ma
 // bindMap binds and validates parameter Map from query.
 func (o *ShowRuntimeMapParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -87,10 +87,10 @@ func (o *ShowRuntimeMapParams) bindMap(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("map", "query", raw); err != nil {
 		return err
 	}
-
 	o.Map = raw
 
 	return nil

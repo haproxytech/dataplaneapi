@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetGroupParams creates a new GetGroupParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetGroupParams() GetGroupParams {
 
 	return GetGroupParams{}
@@ -87,7 +88,6 @@ func (o *GetGroupParams) BindRequest(r *http.Request, route *middleware.MatchedR
 	if err := o.bindUserlist(qUserlist, qhkUserlist, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -103,7 +103,6 @@ func (o *GetGroupParams) bindName(rawData []string, hasKey bool, formats strfmt.
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -118,10 +117,10 @@ func (o *GetGroupParams) bindTransactionID(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -130,7 +129,7 @@ func (o *GetGroupParams) bindTransactionID(rawData []string, hasKey bool, format
 // bindUserlist binds and validates parameter Userlist from query.
 func (o *GetGroupParams) bindUserlist(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("userlist", "query")
+		return errors.Required("userlist", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -139,10 +138,10 @@ func (o *GetGroupParams) bindUserlist(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("userlist", "query", raw); err != nil {
 		return err
 	}
-
 	o.Userlist = raw
 
 	return nil

@@ -97,7 +97,6 @@ func (o *CommitSpoeTransactionParams) BindRequest(r *http.Request, route *middle
 	if err := o.bindSpoe(qSpoe, qhkSpoe, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -113,6 +112,7 @@ func (o *CommitSpoeTransactionParams) bindForceReload(rawData []string, hasKey b
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewCommitSpoeTransactionParams()
 		return nil
@@ -136,7 +136,6 @@ func (o *CommitSpoeTransactionParams) bindID(rawData []string, hasKey bool, form
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil
@@ -145,7 +144,7 @@ func (o *CommitSpoeTransactionParams) bindID(rawData []string, hasKey bool, form
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *CommitSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -154,10 +153,10 @@ func (o *CommitSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, fo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil

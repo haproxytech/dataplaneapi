@@ -32,6 +32,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
+// CreateStorageSSLCertificateMaxParseMemory sets the maximum size in bytes for
+// the multipart form parser for this operation.
+//
+// The default value is 32 MB.
+// The multipart parser stores up to this + 10MB.
+var CreateStorageSSLCertificateMaxParseMemory int64 = 32 << 20
+
 // NewCreateStorageSSLCertificateParams creates a new CreateStorageSSLCertificateParams object
 // with the default values initialized.
 func NewCreateStorageSSLCertificateParams() CreateStorageSSLCertificateParams {
@@ -78,7 +85,7 @@ func (o *CreateStorageSSLCertificateParams) BindRequest(r *http.Request, route *
 
 	qs := runtime.Values(r.URL.Query())
 
-	if err := r.ParseMultipartForm(32 << 20); err != nil {
+	if err := r.ParseMultipartForm(CreateStorageSSLCertificateMaxParseMemory); err != nil {
 		if err != http.ErrNotMultipart {
 			return errors.New(400, "%v", err)
 		} else if err := r.ParseForm(); err != nil {
@@ -101,7 +108,6 @@ func (o *CreateStorageSSLCertificateParams) BindRequest(r *http.Request, route *
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -124,6 +130,7 @@ func (o *CreateStorageSSLCertificateParams) bindForceReload(rawData []string, ha
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewCreateStorageSSLCertificateParams()
 		return nil

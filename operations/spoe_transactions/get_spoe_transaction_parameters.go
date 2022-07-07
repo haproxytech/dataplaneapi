@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetSpoeTransactionParams creates a new GetSpoeTransactionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetSpoeTransactionParams() GetSpoeTransactionParams {
 
 	return GetSpoeTransactionParams{}
@@ -78,7 +79,6 @@ func (o *GetSpoeTransactionParams) BindRequest(r *http.Request, route *middlewar
 	if err := o.bindSpoe(qSpoe, qhkSpoe, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -94,7 +94,6 @@ func (o *GetSpoeTransactionParams) bindID(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil
@@ -103,7 +102,7 @@ func (o *GetSpoeTransactionParams) bindID(rawData []string, hasKey bool, formats
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *GetSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -112,10 +111,10 @@ func (o *GetSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, forma
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil

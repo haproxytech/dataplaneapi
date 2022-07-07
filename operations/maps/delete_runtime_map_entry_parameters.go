@@ -97,7 +97,6 @@ func (o *DeleteRuntimeMapEntryParams) BindRequest(r *http.Request, route *middle
 	if err := o.bindMap(qMap, qhkMap, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -113,6 +112,7 @@ func (o *DeleteRuntimeMapEntryParams) bindForceSync(rawData []string, hasKey boo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteRuntimeMapEntryParams()
 		return nil
@@ -136,7 +136,6 @@ func (o *DeleteRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, form
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil
@@ -145,7 +144,7 @@ func (o *DeleteRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, form
 // bindMap binds and validates parameter Map from query.
 func (o *DeleteRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -154,10 +153,10 @@ func (o *DeleteRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, for
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("map", "query", raw); err != nil {
 		return err
 	}
-
 	o.Map = raw
 
 	return nil

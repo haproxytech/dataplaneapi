@@ -97,7 +97,7 @@ func (o *ReplaceStorageSSLCertificateParams) BindRequest(r *http.Request, route 
 		var body string
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -106,8 +106,9 @@ func (o *ReplaceStorageSSLCertificateParams) BindRequest(r *http.Request, route 
 			o.Data = body
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -122,7 +123,6 @@ func (o *ReplaceStorageSSLCertificateParams) BindRequest(r *http.Request, route 
 	if err := o.bindSkipReload(qSkipReload, qhkSkipReload, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -138,6 +138,7 @@ func (o *ReplaceStorageSSLCertificateParams) bindForceReload(rawData []string, h
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplaceStorageSSLCertificateParams()
 		return nil
@@ -161,7 +162,6 @@ func (o *ReplaceStorageSSLCertificateParams) bindName(rawData []string, hasKey b
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -176,6 +176,7 @@ func (o *ReplaceStorageSSLCertificateParams) bindSkipReload(rawData []string, ha
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplaceStorageSSLCertificateParams()
 		return nil

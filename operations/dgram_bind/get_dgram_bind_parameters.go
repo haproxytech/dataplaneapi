@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetDgramBindParams creates a new GetDgramBindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetDgramBindParams() GetDgramBindParams {
 
 	return GetDgramBindParams{}
@@ -87,7 +88,6 @@ func (o *GetDgramBindParams) BindRequest(r *http.Request, route *middleware.Matc
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -97,7 +97,7 @@ func (o *GetDgramBindParams) BindRequest(r *http.Request, route *middleware.Matc
 // bindLogForward binds and validates parameter LogForward from query.
 func (o *GetDgramBindParams) bindLogForward(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("log_forward", "query")
+		return errors.Required("log_forward", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -106,10 +106,10 @@ func (o *GetDgramBindParams) bindLogForward(rawData []string, hasKey bool, forma
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("log_forward", "query", raw); err != nil {
 		return err
 	}
-
 	o.LogForward = raw
 
 	return nil
@@ -124,7 +124,6 @@ func (o *GetDgramBindParams) bindName(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -139,10 +138,10 @@ func (o *GetDgramBindParams) bindTransactionID(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

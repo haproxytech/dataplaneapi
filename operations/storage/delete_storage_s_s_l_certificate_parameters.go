@@ -100,7 +100,6 @@ func (o *DeleteStorageSSLCertificateParams) BindRequest(r *http.Request, route *
 	if err := o.bindSkipReload(qSkipReload, qhkSkipReload, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -116,6 +115,7 @@ func (o *DeleteStorageSSLCertificateParams) bindForceReload(rawData []string, ha
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteStorageSSLCertificateParams()
 		return nil
@@ -139,7 +139,6 @@ func (o *DeleteStorageSSLCertificateParams) bindName(rawData []string, hasKey bo
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -154,6 +153,7 @@ func (o *DeleteStorageSSLCertificateParams) bindSkipReload(rawData []string, has
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteStorageSSLCertificateParams()
 		return nil

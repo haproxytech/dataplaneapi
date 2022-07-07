@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetTransactionsParams creates a new GetTransactionsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetTransactionsParams() GetTransactionsParams {
 
 	return GetTransactionsParams{}
@@ -67,7 +68,6 @@ func (o *GetTransactionsParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindStatus(qStatus, qhkStatus, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -83,10 +83,10 @@ func (o *GetTransactionsParams) bindStatus(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Status = &raw
 
 	if err := o.validateStatus(formats); err != nil {
@@ -99,7 +99,7 @@ func (o *GetTransactionsParams) bindStatus(rawData []string, hasKey bool, format
 // validateStatus carries on validations for parameter Status
 func (o *GetTransactionsParams) validateStatus(formats strfmt.Registry) error {
 
-	if err := validate.Enum("status", "query", *o.Status, []interface{}{"failed", "in_progress"}); err != nil {
+	if err := validate.EnumCase("status", "query", *o.Status, []interface{}{"failed", "in_progress"}, true); err != nil {
 		return err
 	}
 

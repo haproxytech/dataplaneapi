@@ -44,7 +44,7 @@ func NewCreateBackendSwitchingRule(ctx *middleware.Context, handler CreateBacken
 	return &CreateBackendSwitchingRule{Context: ctx, Handler: handler}
 }
 
-/*CreateBackendSwitchingRule swagger:route POST /services/haproxy/configuration/backend_switching_rules BackendSwitchingRule createBackendSwitchingRule
+/* CreateBackendSwitchingRule swagger:route POST /services/haproxy/configuration/backend_switching_rules BackendSwitchingRule createBackendSwitchingRule
 
 Add a new Backend Switching Rule
 
@@ -59,21 +59,20 @@ type CreateBackendSwitchingRule struct {
 func (o *CreateBackendSwitchingRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewCreateBackendSwitchingRuleParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *CreateBackendSwitchingRule) ServeHTTP(rw http.ResponseWriter, r *http.R
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

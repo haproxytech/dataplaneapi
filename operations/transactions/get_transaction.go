@@ -44,7 +44,7 @@ func NewGetTransaction(ctx *middleware.Context, handler GetTransactionHandler) *
 	return &GetTransaction{Context: ctx, Handler: handler}
 }
 
-/*GetTransaction swagger:route GET /services/haproxy/transactions/{id} Transactions getTransaction
+/* GetTransaction swagger:route GET /services/haproxy/transactions/{id} Transactions getTransaction
 
 Return one HAProxy configuration transactions
 
@@ -59,21 +59,20 @@ type GetTransaction struct {
 func (o *GetTransaction) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetTransactionParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *GetTransaction) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

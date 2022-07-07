@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetStatsParams creates a new GetStatsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetStatsParams() GetStatsParams {
 
 	return GetStatsParams{}
@@ -85,7 +86,6 @@ func (o *GetStatsParams) BindRequest(r *http.Request, route *middleware.MatchedR
 	if err := o.bindType(qType, qhkType, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -101,10 +101,10 @@ func (o *GetStatsParams) bindName(rawData []string, hasKey bool, formats strfmt.
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Name = &raw
 
 	return nil
@@ -119,10 +119,10 @@ func (o *GetStatsParams) bindParent(rawData []string, hasKey bool, formats strfm
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Parent = &raw
 
 	return nil
@@ -137,10 +137,10 @@ func (o *GetStatsParams) bindType(rawData []string, hasKey bool, formats strfmt.
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Type = &raw
 
 	if err := o.validateType(formats); err != nil {
@@ -153,7 +153,7 @@ func (o *GetStatsParams) bindType(rawData []string, hasKey bool, formats strfmt.
 // validateType carries on validations for parameter Type
 func (o *GetStatsParams) validateType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("type", "query", *o.Type, []interface{}{"frontend", "backend", "server"}); err != nil {
+	if err := validate.EnumCase("type", "query", *o.Type, []interface{}{"frontend", "backend", "server"}, true); err != nil {
 		return err
 	}
 

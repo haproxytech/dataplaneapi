@@ -29,7 +29,8 @@ import (
 )
 
 // NewGetTransactionParams creates a new GetTransactionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetTransactionParams() GetTransactionParams {
 
 	return GetTransactionParams{}
@@ -64,7 +65,6 @@ func (o *GetTransactionParams) BindRequest(r *http.Request, route *middleware.Ma
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *GetTransactionParams) bindID(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil

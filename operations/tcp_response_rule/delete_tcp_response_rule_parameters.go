@@ -115,7 +115,6 @@ func (o *DeleteTCPResponseRuleParams) BindRequest(r *http.Request, route *middle
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -125,7 +124,7 @@ func (o *DeleteTCPResponseRuleParams) BindRequest(r *http.Request, route *middle
 // bindBackend binds and validates parameter Backend from query.
 func (o *DeleteTCPResponseRuleParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -134,10 +133,10 @@ func (o *DeleteTCPResponseRuleParams) bindBackend(rawData []string, hasKey bool,
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -152,6 +151,7 @@ func (o *DeleteTCPResponseRuleParams) bindForceReload(rawData []string, hasKey b
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteTCPResponseRuleParams()
 		return nil
@@ -194,10 +194,10 @@ func (o *DeleteTCPResponseRuleParams) bindTransactionID(rawData []string, hasKey
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -212,6 +212,7 @@ func (o *DeleteTCPResponseRuleParams) bindVersion(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

@@ -32,7 +32,8 @@ import (
 )
 
 // NewStartTransactionParams creates a new StartTransactionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewStartTransactionParams() StartTransactionParams {
 
 	return StartTransactionParams{}
@@ -69,7 +70,6 @@ func (o *StartTransactionParams) BindRequest(r *http.Request, route *middleware.
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -79,7 +79,7 @@ func (o *StartTransactionParams) BindRequest(r *http.Request, route *middleware.
 // bindVersion binds and validates parameter Version from query.
 func (o *StartTransactionParams) bindVersion(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("version", "query")
+		return errors.Required("version", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -88,6 +88,7 @@ func (o *StartTransactionParams) bindVersion(rawData []string, hasKey bool, form
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("version", "query", raw); err != nil {
 		return err
 	}

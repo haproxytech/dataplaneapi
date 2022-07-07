@@ -30,7 +30,8 @@ import (
 )
 
 // NewGetReloadParams creates a new GetReloadParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetReloadParams() GetReloadParams {
 
 	return GetReloadParams{}
@@ -66,7 +67,6 @@ func (o *GetReloadParams) BindRequest(r *http.Request, route *middleware.Matched
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -82,7 +82,6 @@ func (o *GetReloadParams) bindID(rawData []string, hasKey bool, formats strfmt.R
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	if err := o.validateID(formats); err != nil {

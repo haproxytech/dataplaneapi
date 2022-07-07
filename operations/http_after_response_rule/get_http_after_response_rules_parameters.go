@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetHTTPAfterResponseRulesParams creates a new GetHTTPAfterResponseRulesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetHTTPAfterResponseRulesParams() GetHTTPAfterResponseRulesParams {
 
 	return GetHTTPAfterResponseRulesParams{}
@@ -87,7 +88,6 @@ func (o *GetHTTPAfterResponseRulesParams) BindRequest(r *http.Request, route *mi
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -97,7 +97,7 @@ func (o *GetHTTPAfterResponseRulesParams) BindRequest(r *http.Request, route *mi
 // bindParentName binds and validates parameter ParentName from query.
 func (o *GetHTTPAfterResponseRulesParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_name", "query")
+		return errors.Required("parent_name", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -106,10 +106,10 @@ func (o *GetHTTPAfterResponseRulesParams) bindParentName(rawData []string, hasKe
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("parent_name", "query", raw); err != nil {
 		return err
 	}
-
 	o.ParentName = raw
 
 	return nil
@@ -118,7 +118,7 @@ func (o *GetHTTPAfterResponseRulesParams) bindParentName(rawData []string, hasKe
 // bindParentType binds and validates parameter ParentType from query.
 func (o *GetHTTPAfterResponseRulesParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_type", "query")
+		return errors.Required("parent_type", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -127,10 +127,10 @@ func (o *GetHTTPAfterResponseRulesParams) bindParentType(rawData []string, hasKe
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("parent_type", "query", raw); err != nil {
 		return err
 	}
-
 	o.ParentType = raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -143,7 +143,7 @@ func (o *GetHTTPAfterResponseRulesParams) bindParentType(rawData []string, hasKe
 // validateParentType carries on validations for parameter ParentType
 func (o *GetHTTPAfterResponseRulesParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend"}, true); err != nil {
 		return err
 	}
 
@@ -159,10 +159,10 @@ func (o *GetHTTPAfterResponseRulesParams) bindTransactionID(rawData []string, ha
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

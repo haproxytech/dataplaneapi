@@ -29,7 +29,8 @@ import (
 )
 
 // NewGetOneStorageMapParams creates a new GetOneStorageMapParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetOneStorageMapParams() GetOneStorageMapParams {
 
 	return GetOneStorageMapParams{}
@@ -64,7 +65,6 @@ func (o *GetOneStorageMapParams) BindRequest(r *http.Request, route *middleware.
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *GetOneStorageMapParams) bindName(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil

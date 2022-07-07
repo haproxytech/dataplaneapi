@@ -44,7 +44,7 @@ func NewReplaceConsul(ctx *middleware.Context, handler ReplaceConsulHandler) *Re
 	return &ReplaceConsul{Context: ctx, Handler: handler}
 }
 
-/*ReplaceConsul swagger:route PUT /service_discovery/consul/{id} ServiceDiscovery replaceConsul
+/* ReplaceConsul swagger:route PUT /service_discovery/consul/{id} ServiceDiscovery replaceConsul
 
 Replace a Consul server
 
@@ -59,21 +59,20 @@ type ReplaceConsul struct {
 func (o *ReplaceConsul) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceConsulParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *ReplaceConsul) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

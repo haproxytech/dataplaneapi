@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetRuntimeMapEntryParams creates a new GetRuntimeMapEntryParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetRuntimeMapEntryParams() GetRuntimeMapEntryParams {
 
 	return GetRuntimeMapEntryParams{}
@@ -78,7 +79,6 @@ func (o *GetRuntimeMapEntryParams) BindRequest(r *http.Request, route *middlewar
 	if err := o.bindMap(qMap, qhkMap, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -94,7 +94,6 @@ func (o *GetRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil
@@ -103,7 +102,7 @@ func (o *GetRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, formats
 // bindMap binds and validates parameter Map from query.
 func (o *GetRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -112,10 +111,10 @@ func (o *GetRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, format
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("map", "query", raw); err != nil {
 		return err
 	}
-
 	o.Map = raw
 
 	return nil

@@ -132,7 +132,6 @@ func (o *DeleteServerParams) BindRequest(r *http.Request, route *middleware.Matc
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -148,10 +147,10 @@ func (o *DeleteServerParams) bindBackend(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Backend = &raw
 
 	return nil
@@ -166,6 +165,7 @@ func (o *DeleteServerParams) bindForceReload(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteServerParams()
 		return nil
@@ -189,7 +189,6 @@ func (o *DeleteServerParams) bindName(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -204,10 +203,10 @@ func (o *DeleteServerParams) bindParentName(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentName = &raw
 
 	return nil
@@ -222,10 +221,10 @@ func (o *DeleteServerParams) bindParentType(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentType = &raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -238,7 +237,7 @@ func (o *DeleteServerParams) bindParentType(rawData []string, hasKey bool, forma
 // validateParentType carries on validations for parameter ParentType
 func (o *DeleteServerParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", *o.ParentType, []interface{}{"backend", "ring"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"backend", "ring"}, true); err != nil {
 		return err
 	}
 
@@ -254,10 +253,10 @@ func (o *DeleteServerParams) bindTransactionID(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -272,6 +271,7 @@ func (o *DeleteServerParams) bindVersion(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

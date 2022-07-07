@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetRuntimeServerParams creates a new GetRuntimeServerParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetRuntimeServerParams() GetRuntimeServerParams {
 
 	return GetRuntimeServerParams{}
@@ -78,7 +79,6 @@ func (o *GetRuntimeServerParams) BindRequest(r *http.Request, route *middleware.
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -88,7 +88,7 @@ func (o *GetRuntimeServerParams) BindRequest(r *http.Request, route *middleware.
 // bindBackend binds and validates parameter Backend from query.
 func (o *GetRuntimeServerParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -97,10 +97,10 @@ func (o *GetRuntimeServerParams) bindBackend(rawData []string, hasKey bool, form
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -115,7 +115,6 @@ func (o *GetRuntimeServerParams) bindName(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil

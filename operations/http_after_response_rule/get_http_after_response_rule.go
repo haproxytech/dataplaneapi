@@ -21,6 +21,7 @@ package http_after_response_rule
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -49,7 +50,7 @@ func NewGetHTTPAfterResponseRule(ctx *middleware.Context, handler GetHTTPAfterRe
 	return &GetHTTPAfterResponseRule{Context: ctx, Handler: handler}
 }
 
-/*GetHTTPAfterResponseRule swagger:route GET /services/haproxy/configuration/http_after_response_rules/{index} HTTPAfterResponseRule getHttpAfterResponseRule
+/* GetHTTPAfterResponseRule swagger:route GET /services/haproxy/configuration/http_after_response_rules/{index} HTTPAfterResponseRule getHttpAfterResponseRule
 
 Return one HTTP After Response Rule
 
@@ -64,21 +65,20 @@ type GetHTTPAfterResponseRule struct {
 func (o *GetHTTPAfterResponseRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetHTTPAfterResponseRuleParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -87,7 +87,6 @@ func (o *GetHTTPAfterResponseRule) ServeHTTP(rw http.ResponseWriter, r *http.Req
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -119,7 +118,6 @@ func (o *GetHTTPAfterResponseRuleOKBody) Validate(formats strfmt.Registry) error
 }
 
 func (o *GetHTTPAfterResponseRuleOKBody) validateData(formats strfmt.Registry) error {
-
 	if swag.IsZero(o.Data) { // not required
 		return nil
 	}
@@ -128,6 +126,38 @@ func (o *GetHTTPAfterResponseRuleOKBody) validateData(formats strfmt.Registry) e
 		if err := o.Data.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getHttpAfterResponseRuleOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getHttpAfterResponseRuleOK" + "." + "data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get HTTP after response rule o k body based on the context it is used
+func (o *GetHTTPAfterResponseRuleOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetHTTPAfterResponseRuleOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Data != nil {
+		if err := o.Data.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getHttpAfterResponseRuleOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getHttpAfterResponseRuleOK" + "." + "data")
 			}
 			return err
 		}

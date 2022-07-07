@@ -21,6 +21,7 @@ package stick_table
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -50,7 +51,7 @@ func NewSetStickTableEntries(ctx *middleware.Context, handler SetStickTableEntri
 	return &SetStickTableEntries{Context: ctx, Handler: handler}
 }
 
-/*SetStickTableEntries swagger:route POST /services/haproxy/runtime/stick_table_entries StickTable setStickTableEntries
+/* SetStickTableEntries swagger:route POST /services/haproxy/runtime/stick_table_entries StickTable setStickTableEntries
 
 Set Entry to Stick Table
 
@@ -65,21 +66,20 @@ type SetStickTableEntries struct {
 func (o *SetStickTableEntries) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewSetStickTableEntriesParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -88,7 +88,6 @@ func (o *SetStickTableEntries) ServeHTTP(rw http.ResponseWriter, r *http.Request
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -135,6 +134,8 @@ func (o *SetStickTableEntriesBody) validateDataType(formats strfmt.Registry) err
 		if err := o.DataType.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("stick_table_entry" + "." + "data_type")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("stick_table_entry" + "." + "data_type")
 			}
 			return err
 		}
@@ -147,6 +148,36 @@ func (o *SetStickTableEntriesBody) validateKey(formats strfmt.Registry) error {
 
 	if err := validate.Required("stick_table_entry"+"."+"key", "body", o.Key); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this set stick table entries body based on the context it is used
+func (o *SetStickTableEntriesBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDataType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *SetStickTableEntriesBody) contextValidateDataType(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.DataType != nil {
+		if err := o.DataType.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("stick_table_entry" + "." + "data_type")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("stick_table_entry" + "." + "data_type")
+			}
+			return err
+		}
 	}
 
 	return nil

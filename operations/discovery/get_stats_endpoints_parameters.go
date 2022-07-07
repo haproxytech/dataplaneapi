@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetStatsEndpointsParams creates a new GetStatsEndpointsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetStatsEndpointsParams() GetStatsEndpointsParams {
 
 	return GetStatsEndpointsParams{}

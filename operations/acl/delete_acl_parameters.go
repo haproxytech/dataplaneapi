@@ -125,7 +125,6 @@ func (o *DeleteACLParams) BindRequest(r *http.Request, route *middleware.Matched
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -141,6 +140,7 @@ func (o *DeleteACLParams) bindForceReload(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteACLParams()
 		return nil
@@ -177,7 +177,7 @@ func (o *DeleteACLParams) bindIndex(rawData []string, hasKey bool, formats strfm
 // bindParentName binds and validates parameter ParentName from query.
 func (o *DeleteACLParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_name", "query")
+		return errors.Required("parent_name", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -186,10 +186,10 @@ func (o *DeleteACLParams) bindParentName(rawData []string, hasKey bool, formats 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("parent_name", "query", raw); err != nil {
 		return err
 	}
-
 	o.ParentName = raw
 
 	return nil
@@ -198,7 +198,7 @@ func (o *DeleteACLParams) bindParentName(rawData []string, hasKey bool, formats 
 // bindParentType binds and validates parameter ParentType from query.
 func (o *DeleteACLParams) bindParentType(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("parent_type", "query")
+		return errors.Required("parent_type", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -207,10 +207,10 @@ func (o *DeleteACLParams) bindParentType(rawData []string, hasKey bool, formats 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("parent_type", "query", raw); err != nil {
 		return err
 	}
-
 	o.ParentType = raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -223,7 +223,7 @@ func (o *DeleteACLParams) bindParentType(rawData []string, hasKey bool, formats 
 // validateParentType carries on validations for parameter ParentType
 func (o *DeleteACLParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend"}, true); err != nil {
 		return err
 	}
 
@@ -239,10 +239,10 @@ func (o *DeleteACLParams) bindTransactionID(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -257,6 +257,7 @@ func (o *DeleteACLParams) bindVersion(rawData []string, hasKey bool, formats str
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

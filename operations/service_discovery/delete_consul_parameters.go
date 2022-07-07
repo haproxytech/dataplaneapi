@@ -29,7 +29,8 @@ import (
 )
 
 // NewDeleteConsulParams creates a new DeleteConsulParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewDeleteConsulParams() DeleteConsulParams {
 
 	return DeleteConsulParams{}
@@ -64,7 +65,6 @@ func (o *DeleteConsulParams) BindRequest(r *http.Request, route *middleware.Matc
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *DeleteConsulParams) bindID(rawData []string, hasKey bool, formats strfm
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil

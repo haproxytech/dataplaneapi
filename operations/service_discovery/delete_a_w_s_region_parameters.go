@@ -29,7 +29,8 @@ import (
 )
 
 // NewDeleteAWSRegionParams creates a new DeleteAWSRegionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewDeleteAWSRegionParams() DeleteAWSRegionParams {
 
 	return DeleteAWSRegionParams{}
@@ -64,7 +65,6 @@ func (o *DeleteAWSRegionParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *DeleteAWSRegionParams) bindID(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil

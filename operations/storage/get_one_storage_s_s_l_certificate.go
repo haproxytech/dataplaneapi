@@ -44,7 +44,7 @@ func NewGetOneStorageSSLCertificate(ctx *middleware.Context, handler GetOneStora
 	return &GetOneStorageSSLCertificate{Context: ctx, Handler: handler}
 }
 
-/*GetOneStorageSSLCertificate swagger:route GET /services/haproxy/storage/ssl_certificates/{name} Storage getOneStorageSSLCertificate
+/* GetOneStorageSSLCertificate swagger:route GET /services/haproxy/storage/ssl_certificates/{name} Storage getOneStorageSSLCertificate
 
 Return one SSL certificate from disk
 
@@ -59,21 +59,20 @@ type GetOneStorageSSLCertificate struct {
 func (o *GetOneStorageSSLCertificate) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetOneStorageSSLCertificateParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *GetOneStorageSSLCertificate) ServeHTTP(rw http.ResponseWriter, r *http.
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

@@ -21,6 +21,7 @@ package transactions
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -46,7 +47,7 @@ func NewStartTransaction(ctx *middleware.Context, handler StartTransactionHandle
 	return &StartTransaction{Context: ctx, Handler: handler}
 }
 
-/*StartTransaction swagger:route POST /services/haproxy/transactions Transactions startTransaction
+/* StartTransaction swagger:route POST /services/haproxy/transactions Transactions startTransaction
 
 Start a new transaction
 
@@ -61,21 +62,20 @@ type StartTransaction struct {
 func (o *StartTransaction) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewStartTransactionParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -84,12 +84,12 @@ func (o *StartTransaction) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
 
 // StartTransactionTooManyRequestsBody start transaction too many requests body
+// Example: {"code":429,"message":"cannot start a new transaction, reached the maximum amount of 20 active transactions available"}
 //
 // swagger:model StartTransactionTooManyRequestsBody
 type StartTransactionTooManyRequestsBody struct {
@@ -103,6 +103,11 @@ type StartTransactionTooManyRequestsBody struct {
 
 // Validate validates this start transaction too many requests body
 func (o *StartTransactionTooManyRequestsBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this start transaction too many requests body based on context it is used
+func (o *StartTransactionTooManyRequestsBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

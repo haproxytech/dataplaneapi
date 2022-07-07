@@ -44,7 +44,7 @@ func NewGetSpoeTransactions(ctx *middleware.Context, handler GetSpoeTransactions
 	return &GetSpoeTransactions{Context: ctx, Handler: handler}
 }
 
-/*GetSpoeTransactions swagger:route GET /services/haproxy/spoe_transactions SpoeTransactions getSpoeTransactions
+/* GetSpoeTransactions swagger:route GET /services/haproxy/spoe_transactions SpoeTransactions getSpoeTransactions
 
 Return list of SPOE configuration transactions.
 
@@ -59,21 +59,20 @@ type GetSpoeTransactions struct {
 func (o *GetSpoeTransactions) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetSpoeTransactionsParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *GetSpoeTransactions) ServeHTTP(rw http.ResponseWriter, r *http.Request)
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

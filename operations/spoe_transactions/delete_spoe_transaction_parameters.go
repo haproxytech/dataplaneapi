@@ -31,7 +31,8 @@ import (
 )
 
 // NewDeleteSpoeTransactionParams creates a new DeleteSpoeTransactionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewDeleteSpoeTransactionParams() DeleteSpoeTransactionParams {
 
 	return DeleteSpoeTransactionParams{}
@@ -78,7 +79,6 @@ func (o *DeleteSpoeTransactionParams) BindRequest(r *http.Request, route *middle
 	if err := o.bindSpoe(qSpoe, qhkSpoe, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -94,7 +94,6 @@ func (o *DeleteSpoeTransactionParams) bindID(rawData []string, hasKey bool, form
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil
@@ -103,7 +102,7 @@ func (o *DeleteSpoeTransactionParams) bindID(rawData []string, hasKey bool, form
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *DeleteSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -112,10 +111,10 @@ func (o *DeleteSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, fo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil

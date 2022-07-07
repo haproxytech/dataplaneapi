@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetServerTemplateParams creates a new GetServerTemplateParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetServerTemplateParams() GetServerTemplateParams {
 
 	return GetServerTemplateParams{}
@@ -87,7 +88,6 @@ func (o *GetServerTemplateParams) BindRequest(r *http.Request, route *middleware
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -97,7 +97,7 @@ func (o *GetServerTemplateParams) BindRequest(r *http.Request, route *middleware
 // bindBackend binds and validates parameter Backend from query.
 func (o *GetServerTemplateParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -106,10 +106,10 @@ func (o *GetServerTemplateParams) bindBackend(rawData []string, hasKey bool, for
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -124,7 +124,6 @@ func (o *GetServerTemplateParams) bindPrefix(rawData []string, hasKey bool, form
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Prefix = raw
 
 	return nil
@@ -139,10 +138,10 @@ func (o *GetServerTemplateParams) bindTransactionID(rawData []string, hasKey boo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

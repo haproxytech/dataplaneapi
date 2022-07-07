@@ -148,5 +148,5 @@ func (h *SpoeGetSpoeScopeHandlerImpl) Handle(params spoe.GetSpoeScopeParams, pri
 	if scope == nil {
 		return spoe.NewGetSpoeScopeNotFound()
 	}
-	return spoe.NewGetSpoeScopeOK().WithPayload(&spoe.GetSpoeScopeOKBody{Version: v, Data: *scope})
+	return spoe.NewGetSpoeScopeOK().WithPayload(&spoe.GetSpoeScopeOKBody{Version: v, Data: scope})
 }

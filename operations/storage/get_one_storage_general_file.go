@@ -44,7 +44,7 @@ func NewGetOneStorageGeneralFile(ctx *middleware.Context, handler GetOneStorageG
 	return &GetOneStorageGeneralFile{Context: ctx, Handler: handler}
 }
 
-/*GetOneStorageGeneralFile swagger:route GET /services/haproxy/storage/general/{name} Storage getOneStorageGeneralFile
+/* GetOneStorageGeneralFile swagger:route GET /services/haproxy/storage/general/{name} Storage getOneStorageGeneralFile
 
 Return the contents of one managed general use file from disk
 
@@ -59,21 +59,20 @@ type GetOneStorageGeneralFile struct {
 func (o *GetOneStorageGeneralFile) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetOneStorageGeneralFileParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *GetOneStorageGeneralFile) ServeHTTP(rw http.ResponseWriter, r *http.Req
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetBindParams creates a new GetBindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetBindParams() GetBindParams {
 
 	return GetBindParams{}
@@ -104,7 +105,6 @@ func (o *GetBindParams) BindRequest(r *http.Request, route *middleware.MatchedRo
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -120,10 +120,10 @@ func (o *GetBindParams) bindFrontend(rawData []string, hasKey bool, formats strf
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Frontend = &raw
 
 	return nil
@@ -138,7 +138,6 @@ func (o *GetBindParams) bindName(rawData []string, hasKey bool, formats strfmt.R
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -153,10 +152,10 @@ func (o *GetBindParams) bindParentName(rawData []string, hasKey bool, formats st
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentName = &raw
 
 	return nil
@@ -171,10 +170,10 @@ func (o *GetBindParams) bindParentType(rawData []string, hasKey bool, formats st
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentType = &raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -187,7 +186,7 @@ func (o *GetBindParams) bindParentType(rawData []string, hasKey bool, formats st
 // validateParentType carries on validations for parameter ParentType
 func (o *GetBindParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}, true); err != nil {
 		return err
 	}
 
@@ -203,10 +202,10 @@ func (o *GetBindParams) bindTransactionID(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

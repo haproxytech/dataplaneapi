@@ -76,7 +76,6 @@ func (o *GetAllRuntimeMapFilesParams) BindRequest(r *http.Request, route *middle
 	if err := o.bindIncludeUnmanaged(qIncludeUnmanaged, qhkIncludeUnmanaged, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -92,6 +91,7 @@ func (o *GetAllRuntimeMapFilesParams) bindIncludeUnmanaged(rawData []string, has
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewGetAllRuntimeMapFilesParams()
 		return nil

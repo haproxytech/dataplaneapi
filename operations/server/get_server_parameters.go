@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetServerParams creates a new GetServerParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetServerParams() GetServerParams {
 
 	return GetServerParams{}
@@ -104,7 +105,6 @@ func (o *GetServerParams) BindRequest(r *http.Request, route *middleware.Matched
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -120,10 +120,10 @@ func (o *GetServerParams) bindBackend(rawData []string, hasKey bool, formats str
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Backend = &raw
 
 	return nil
@@ -138,7 +138,6 @@ func (o *GetServerParams) bindName(rawData []string, hasKey bool, formats strfmt
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -153,10 +152,10 @@ func (o *GetServerParams) bindParentName(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentName = &raw
 
 	return nil
@@ -171,10 +170,10 @@ func (o *GetServerParams) bindParentType(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentType = &raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -187,7 +186,7 @@ func (o *GetServerParams) bindParentType(rawData []string, hasKey bool, formats 
 // validateParentType carries on validations for parameter ParentType
 func (o *GetServerParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", *o.ParentType, []interface{}{"backend", "ring"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"backend", "ring"}, true); err != nil {
 		return err
 	}
 
@@ -203,10 +202,10 @@ func (o *GetServerParams) bindTransactionID(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

@@ -21,6 +21,7 @@ package bind
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
@@ -111,7 +112,7 @@ func (o *ReplaceBindParams) BindRequest(r *http.Request, route *middleware.Match
 		var body models.Bind
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -121,13 +122,19 @@ func (o *ReplaceBindParams) BindRequest(r *http.Request, route *middleware.Match
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -162,7 +169,6 @@ func (o *ReplaceBindParams) BindRequest(r *http.Request, route *middleware.Match
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -178,6 +184,7 @@ func (o *ReplaceBindParams) bindForceReload(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplaceBindParams()
 		return nil
@@ -201,10 +208,10 @@ func (o *ReplaceBindParams) bindFrontend(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Frontend = &raw
 
 	return nil
@@ -219,7 +226,6 @@ func (o *ReplaceBindParams) bindName(rawData []string, hasKey bool, formats strf
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -234,10 +240,10 @@ func (o *ReplaceBindParams) bindParentName(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentName = &raw
 
 	return nil
@@ -252,10 +258,10 @@ func (o *ReplaceBindParams) bindParentType(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentType = &raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -268,7 +274,7 @@ func (o *ReplaceBindParams) bindParentType(rawData []string, hasKey bool, format
 // validateParentType carries on validations for parameter ParentType
 func (o *ReplaceBindParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}, true); err != nil {
 		return err
 	}
 
@@ -284,10 +290,10 @@ func (o *ReplaceBindParams) bindTransactionID(rawData []string, hasKey bool, for
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -302,6 +308,7 @@ func (o *ReplaceBindParams) bindVersion(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

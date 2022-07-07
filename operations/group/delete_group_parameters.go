@@ -115,7 +115,6 @@ func (o *DeleteGroupParams) BindRequest(r *http.Request, route *middleware.Match
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -131,6 +130,7 @@ func (o *DeleteGroupParams) bindForceReload(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteGroupParams()
 		return nil
@@ -154,7 +154,6 @@ func (o *DeleteGroupParams) bindName(rawData []string, hasKey bool, formats strf
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -169,10 +168,10 @@ func (o *DeleteGroupParams) bindTransactionID(rawData []string, hasKey bool, for
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -181,7 +180,7 @@ func (o *DeleteGroupParams) bindTransactionID(rawData []string, hasKey bool, for
 // bindUserlist binds and validates parameter Userlist from query.
 func (o *DeleteGroupParams) bindUserlist(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("userlist", "query")
+		return errors.Required("userlist", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -190,10 +189,10 @@ func (o *DeleteGroupParams) bindUserlist(rawData []string, hasKey bool, formats 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("userlist", "query", raw); err != nil {
 		return err
 	}
-
 	o.Userlist = raw
 
 	return nil
@@ -208,6 +207,7 @@ func (o *DeleteGroupParams) bindVersion(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

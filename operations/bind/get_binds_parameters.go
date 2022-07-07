@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetBindsParams creates a new GetBindsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetBindsParams() GetBindsParams {
 
 	return GetBindsParams{}
@@ -94,7 +95,6 @@ func (o *GetBindsParams) BindRequest(r *http.Request, route *middleware.MatchedR
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -110,10 +110,10 @@ func (o *GetBindsParams) bindFrontend(rawData []string, hasKey bool, formats str
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Frontend = &raw
 
 	return nil
@@ -128,10 +128,10 @@ func (o *GetBindsParams) bindParentName(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentName = &raw
 
 	return nil
@@ -146,10 +146,10 @@ func (o *GetBindsParams) bindParentType(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentType = &raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -162,7 +162,7 @@ func (o *GetBindsParams) bindParentType(rawData []string, hasKey bool, formats s
 // validateParentType carries on validations for parameter ParentType
 func (o *GetBindsParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}, true); err != nil {
 		return err
 	}
 
@@ -178,10 +178,10 @@ func (o *GetBindsParams) bindTransactionID(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

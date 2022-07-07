@@ -30,7 +30,8 @@ import (
 )
 
 // NewGetResolversParams creates a new GetResolversParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetResolversParams() GetResolversParams {
 
 	return GetResolversParams{}
@@ -66,7 +67,6 @@ func (o *GetResolversParams) BindRequest(r *http.Request, route *middleware.Matc
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -82,10 +82,10 @@ func (o *GetResolversParams) bindTransactionID(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

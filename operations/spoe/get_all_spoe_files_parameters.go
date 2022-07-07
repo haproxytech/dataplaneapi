@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetAllSpoeFilesParams creates a new GetAllSpoeFilesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetAllSpoeFilesParams() GetAllSpoeFilesParams {
 
 	return GetAllSpoeFilesParams{}

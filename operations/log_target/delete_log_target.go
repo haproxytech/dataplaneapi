@@ -44,7 +44,7 @@ func NewDeleteLogTarget(ctx *middleware.Context, handler DeleteLogTargetHandler)
 	return &DeleteLogTarget{Context: ctx, Handler: handler}
 }
 
-/*DeleteLogTarget swagger:route DELETE /services/haproxy/configuration/log_targets/{index} LogTarget deleteLogTarget
+/* DeleteLogTarget swagger:route DELETE /services/haproxy/configuration/log_targets/{index} LogTarget deleteLogTarget
 
 Delete a Log Target
 
@@ -59,21 +59,20 @@ type DeleteLogTarget struct {
 func (o *DeleteLogTarget) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteLogTargetParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteLogTarget) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

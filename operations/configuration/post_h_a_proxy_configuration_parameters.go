@@ -119,7 +119,7 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 		var body string
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -128,8 +128,9 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 			o.Data = body
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -154,7 +155,6 @@ func (o *PostHAProxyConfigurationParams) BindRequest(r *http.Request, route *mid
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -173,7 +173,6 @@ func (o *PostHAProxyConfigurationParams) bindXRuntimeActions(rawData []string, h
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.XRuntimeActions = &raw
 
 	return nil
@@ -188,6 +187,7 @@ func (o *PostHAProxyConfigurationParams) bindForceReload(rawData []string, hasKe
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewPostHAProxyConfigurationParams()
 		return nil
@@ -211,6 +211,7 @@ func (o *PostHAProxyConfigurationParams) bindOnlyValidate(rawData []string, hasK
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewPostHAProxyConfigurationParams()
 		return nil
@@ -234,6 +235,7 @@ func (o *PostHAProxyConfigurationParams) bindSkipReload(rawData []string, hasKey
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewPostHAProxyConfigurationParams()
 		return nil
@@ -257,6 +259,7 @@ func (o *PostHAProxyConfigurationParams) bindSkipVersion(rawData []string, hasKe
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewPostHAProxyConfigurationParams()
 		return nil
@@ -280,6 +283,7 @@ func (o *PostHAProxyConfigurationParams) bindVersion(rawData []string, hasKey bo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

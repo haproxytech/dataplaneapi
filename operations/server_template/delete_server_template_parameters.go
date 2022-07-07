@@ -115,7 +115,6 @@ func (o *DeleteServerTemplateParams) BindRequest(r *http.Request, route *middlew
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -125,7 +124,7 @@ func (o *DeleteServerTemplateParams) BindRequest(r *http.Request, route *middlew
 // bindBackend binds and validates parameter Backend from query.
 func (o *DeleteServerTemplateParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -134,10 +133,10 @@ func (o *DeleteServerTemplateParams) bindBackend(rawData []string, hasKey bool, 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -152,6 +151,7 @@ func (o *DeleteServerTemplateParams) bindForceReload(rawData []string, hasKey bo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteServerTemplateParams()
 		return nil
@@ -175,7 +175,6 @@ func (o *DeleteServerTemplateParams) bindPrefix(rawData []string, hasKey bool, f
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Prefix = raw
 
 	return nil
@@ -190,10 +189,10 @@ func (o *DeleteServerTemplateParams) bindTransactionID(rawData []string, hasKey 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -208,6 +207,7 @@ func (o *DeleteServerTemplateParams) bindVersion(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

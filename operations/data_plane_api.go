@@ -65,7 +65,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/ring"
-	"github.com/haproxytech/dataplaneapi/operations/server"
+	serverops "github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/server_template"
 	"github.com/haproxytech/dataplaneapi/operations/service_discovery"
@@ -98,6 +98,7 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		PreServerShutdown:   func() {},
 		ServerShutdown:      func() {},
 		spec:                spec,
+		useSwaggerUI:        false,
 		ServeError:          errors.ServeError,
 		BasicAuthenticator:  security.BasicAuth,
 		APIKeyAuthenticator: security.APIKeyAuth,
@@ -215,7 +216,7 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		RingCreateRingHandler: ring.CreateRingHandlerFunc(func(params ring.CreateRingParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ring.CreateRing has not yet been implemented")
 		}),
-		ServerCreateServerHandler: server.CreateServerHandlerFunc(func(params server.CreateServerParams, principal interface{}) middleware.Responder {
+		ServerCreateServerHandler: serverops.CreateServerHandlerFunc(func(params serverops.CreateServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.CreateServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleCreateServerSwitchingRuleHandler: server_switching_rule.CreateServerSwitchingRuleHandlerFunc(func(params server_switching_rule.CreateServerSwitchingRuleParams, principal interface{}) middleware.Responder {
@@ -344,7 +345,7 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MapsDeleteRuntimeMapEntryHandler: maps.DeleteRuntimeMapEntryHandlerFunc(func(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.DeleteRuntimeMapEntry has not yet been implemented")
 		}),
-		ServerDeleteServerHandler: server.DeleteServerHandlerFunc(func(params server.DeleteServerParams, principal interface{}) middleware.Responder {
+		ServerDeleteServerHandler: serverops.DeleteServerHandlerFunc(func(params serverops.DeleteServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.DeleteServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleDeleteServerSwitchingRuleHandler: server_switching_rule.DeleteServerSwitchingRuleHandlerFunc(func(params server_switching_rule.DeleteServerSwitchingRuleParams, principal interface{}) middleware.Responder {
@@ -623,13 +624,13 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MapsGetRuntimeMapEntryHandler: maps.GetRuntimeMapEntryHandlerFunc(func(params maps.GetRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetRuntimeMapEntry has not yet been implemented")
 		}),
-		ServerGetRuntimeServerHandler: server.GetRuntimeServerHandlerFunc(func(params server.GetRuntimeServerParams, principal interface{}) middleware.Responder {
+		ServerGetRuntimeServerHandler: serverops.GetRuntimeServerHandlerFunc(func(params serverops.GetRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetRuntimeServer has not yet been implemented")
 		}),
-		ServerGetRuntimeServersHandler: server.GetRuntimeServersHandlerFunc(func(params server.GetRuntimeServersParams, principal interface{}) middleware.Responder {
+		ServerGetRuntimeServersHandler: serverops.GetRuntimeServersHandlerFunc(func(params serverops.GetRuntimeServersParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetRuntimeServers has not yet been implemented")
 		}),
-		ServerGetServerHandler: server.GetServerHandlerFunc(func(params server.GetServerParams, principal interface{}) middleware.Responder {
+		ServerGetServerHandler: serverops.GetServerHandlerFunc(func(params serverops.GetServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleGetServerSwitchingRuleHandler: server_switching_rule.GetServerSwitchingRuleHandlerFunc(func(params server_switching_rule.GetServerSwitchingRuleParams, principal interface{}) middleware.Responder {
@@ -644,7 +645,7 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServerTemplateGetServerTemplatesHandler: server_template.GetServerTemplatesHandlerFunc(func(params server_template.GetServerTemplatesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server_template.GetServerTemplates has not yet been implemented")
 		}),
-		ServerGetServersHandler: server.GetServersHandlerFunc(func(params server.GetServersParams, principal interface{}) middleware.Responder {
+		ServerGetServersHandler: serverops.GetServersHandlerFunc(func(params serverops.GetServersParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetServers has not yet been implemented")
 		}),
 		DiscoveryGetServicesEndpointsHandler: discovery.GetServicesEndpointsHandlerFunc(func(params discovery.GetServicesEndpointsParams, principal interface{}) middleware.Responder {
@@ -839,10 +840,10 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MapsReplaceRuntimeMapEntryHandler: maps.ReplaceRuntimeMapEntryHandlerFunc(func(params maps.ReplaceRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ReplaceRuntimeMapEntry has not yet been implemented")
 		}),
-		ServerReplaceRuntimeServerHandler: server.ReplaceRuntimeServerHandlerFunc(func(params server.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
+		ServerReplaceRuntimeServerHandler: serverops.ReplaceRuntimeServerHandlerFunc(func(params serverops.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.ReplaceRuntimeServer has not yet been implemented")
 		}),
-		ServerReplaceServerHandler: server.ReplaceServerHandlerFunc(func(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
+		ServerReplaceServerHandler: serverops.ReplaceServerHandlerFunc(func(params serverops.ReplaceServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.ReplaceServer has not yet been implemented")
 		}),
 		ServerSwitchingRuleReplaceServerSwitchingRuleHandler: server_switching_rule.ReplaceServerSwitchingRuleHandlerFunc(func(params server_switching_rule.ReplaceServerSwitchingRuleParams, principal interface{}) middleware.Responder {
@@ -922,13 +923,16 @@ type DataPlaneAPI struct {
 	defaultConsumes string
 	defaultProduces string
 	Middleware      func(middleware.Builder) http.Handler
+	useSwaggerUI    bool
 
 	// BasicAuthenticator generates a runtime.Authenticator from the supplied basic auth function.
 	// It has a default implementation in the security package, however you can replace it for your particular usage.
 	BasicAuthenticator func(security.UserPassAuthentication) runtime.Authenticator
+
 	// APIKeyAuthenticator generates a runtime.Authenticator from the supplied token auth function.
 	// It has a default implementation in the security package, however you can replace it for your particular usage.
 	APIKeyAuthenticator func(string, string, security.TokenAuthentication) runtime.Authenticator
+
 	// BearerAuthenticator generates a runtime.Authenticator from the supplied bearer token auth function.
 	// It has a default implementation in the security package, however you can replace it for your particular usage.
 	BearerAuthenticator func(string, security.ScopedTokenAuthentication) runtime.Authenticator
@@ -1028,7 +1032,7 @@ type DataPlaneAPI struct {
 	// RingCreateRingHandler sets the operation handler for the create ring operation
 	RingCreateRingHandler ring.CreateRingHandler
 	// ServerCreateServerHandler sets the operation handler for the create server operation
-	ServerCreateServerHandler server.CreateServerHandler
+	ServerCreateServerHandler serverops.CreateServerHandler
 	// ServerSwitchingRuleCreateServerSwitchingRuleHandler sets the operation handler for the create server switching rule operation
 	ServerSwitchingRuleCreateServerSwitchingRuleHandler server_switching_rule.CreateServerSwitchingRuleHandler
 	// ServerTemplateCreateServerTemplateHandler sets the operation handler for the create server template operation
@@ -1114,7 +1118,7 @@ type DataPlaneAPI struct {
 	// MapsDeleteRuntimeMapEntryHandler sets the operation handler for the delete runtime map entry operation
 	MapsDeleteRuntimeMapEntryHandler maps.DeleteRuntimeMapEntryHandler
 	// ServerDeleteServerHandler sets the operation handler for the delete server operation
-	ServerDeleteServerHandler server.DeleteServerHandler
+	ServerDeleteServerHandler serverops.DeleteServerHandler
 	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
 	ServerSwitchingRuleDeleteServerSwitchingRuleHandler server_switching_rule.DeleteServerSwitchingRuleHandler
 	// ServerTemplateDeleteServerTemplateHandler sets the operation handler for the delete server template operation
@@ -1300,11 +1304,11 @@ type DataPlaneAPI struct {
 	// MapsGetRuntimeMapEntryHandler sets the operation handler for the get runtime map entry operation
 	MapsGetRuntimeMapEntryHandler maps.GetRuntimeMapEntryHandler
 	// ServerGetRuntimeServerHandler sets the operation handler for the get runtime server operation
-	ServerGetRuntimeServerHandler server.GetRuntimeServerHandler
+	ServerGetRuntimeServerHandler serverops.GetRuntimeServerHandler
 	// ServerGetRuntimeServersHandler sets the operation handler for the get runtime servers operation
-	ServerGetRuntimeServersHandler server.GetRuntimeServersHandler
+	ServerGetRuntimeServersHandler serverops.GetRuntimeServersHandler
 	// ServerGetServerHandler sets the operation handler for the get server operation
-	ServerGetServerHandler server.GetServerHandler
+	ServerGetServerHandler serverops.GetServerHandler
 	// ServerSwitchingRuleGetServerSwitchingRuleHandler sets the operation handler for the get server switching rule operation
 	ServerSwitchingRuleGetServerSwitchingRuleHandler server_switching_rule.GetServerSwitchingRuleHandler
 	// ServerSwitchingRuleGetServerSwitchingRulesHandler sets the operation handler for the get server switching rules operation
@@ -1314,7 +1318,7 @@ type DataPlaneAPI struct {
 	// ServerTemplateGetServerTemplatesHandler sets the operation handler for the get server templates operation
 	ServerTemplateGetServerTemplatesHandler server_template.GetServerTemplatesHandler
 	// ServerGetServersHandler sets the operation handler for the get servers operation
-	ServerGetServersHandler server.GetServersHandler
+	ServerGetServersHandler serverops.GetServersHandler
 	// DiscoveryGetServicesEndpointsHandler sets the operation handler for the get services endpoints operation
 	DiscoveryGetServicesEndpointsHandler discovery.GetServicesEndpointsHandler
 	// SitesGetSiteHandler sets the operation handler for the get site operation
@@ -1444,9 +1448,9 @@ type DataPlaneAPI struct {
 	// MapsReplaceRuntimeMapEntryHandler sets the operation handler for the replace runtime map entry operation
 	MapsReplaceRuntimeMapEntryHandler maps.ReplaceRuntimeMapEntryHandler
 	// ServerReplaceRuntimeServerHandler sets the operation handler for the replace runtime server operation
-	ServerReplaceRuntimeServerHandler server.ReplaceRuntimeServerHandler
+	ServerReplaceRuntimeServerHandler serverops.ReplaceRuntimeServerHandler
 	// ServerReplaceServerHandler sets the operation handler for the replace server operation
-	ServerReplaceServerHandler server.ReplaceServerHandler
+	ServerReplaceServerHandler serverops.ReplaceServerHandler
 	// ServerSwitchingRuleReplaceServerSwitchingRuleHandler sets the operation handler for the replace server switching rule operation
 	ServerSwitchingRuleReplaceServerSwitchingRuleHandler server_switching_rule.ReplaceServerSwitchingRuleHandler
 	// ServerTemplateReplaceServerTemplateHandler sets the operation handler for the replace server template operation
@@ -1483,6 +1487,7 @@ type DataPlaneAPI struct {
 	SpoeTransactionsStartSpoeTransactionHandler spoe_transactions.StartSpoeTransactionHandler
 	// TransactionsStartTransactionHandler sets the operation handler for the start transaction operation
 	TransactionsStartTransactionHandler transactions.StartTransactionHandler
+
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -1500,6 +1505,16 @@ type DataPlaneAPI struct {
 
 	// User defined logger function.
 	Logger func(string, ...interface{})
+}
+
+// UseRedoc for documentation at /docs
+func (o *DataPlaneAPI) UseRedoc() {
+	o.useSwaggerUI = false
+}
+
+// UseSwaggerUI for documentation at /docs
+func (o *DataPlaneAPI) UseSwaggerUI() {
+	o.useSwaggerUI = true
 }
 
 // SetDefaultProduces sets the default produces media type
@@ -2596,7 +2611,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/servers"] = server.NewCreateServer(o.context, o.ServerCreateServerHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/servers"] = serverops.NewCreateServer(o.context, o.ServerCreateServerHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2768,7 +2783,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/servers/{name}"] = server.NewDeleteServer(o.context, o.ServerDeleteServerHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/servers/{name}"] = serverops.NewDeleteServer(o.context, o.ServerDeleteServerHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3140,15 +3155,15 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/runtime/servers/{name}"] = server.NewGetRuntimeServer(o.context, o.ServerGetRuntimeServerHandler)
+	o.handlers["GET"]["/services/haproxy/runtime/servers/{name}"] = serverops.NewGetRuntimeServer(o.context, o.ServerGetRuntimeServerHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/runtime/servers"] = server.NewGetRuntimeServers(o.context, o.ServerGetRuntimeServersHandler)
+	o.handlers["GET"]["/services/haproxy/runtime/servers"] = serverops.NewGetRuntimeServers(o.context, o.ServerGetRuntimeServersHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/servers/{name}"] = server.NewGetServer(o.context, o.ServerGetServerHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/servers/{name}"] = serverops.NewGetServer(o.context, o.ServerGetServerHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3168,7 +3183,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/servers"] = server.NewGetServers(o.context, o.ServerGetServersHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/servers"] = serverops.NewGetServers(o.context, o.ServerGetServersHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3428,11 +3443,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/runtime/servers/{name}"] = server.NewReplaceRuntimeServer(o.context, o.ServerReplaceRuntimeServerHandler)
+	o.handlers["PUT"]["/services/haproxy/runtime/servers/{name}"] = serverops.NewReplaceRuntimeServer(o.context, o.ServerReplaceRuntimeServerHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/servers/{name}"] = server.NewReplaceServer(o.context, o.ServerReplaceServerHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/servers/{name}"] = serverops.NewReplaceServer(o.context, o.ServerReplaceServerHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -3514,6 +3529,9 @@ func (o *DataPlaneAPI) Serve(builder middleware.Builder) http.Handler {
 
 	if o.Middleware != nil {
 		return o.Middleware(builder)
+	}
+	if o.useSwaggerUI {
+		return o.context.APIHandlerSwaggerUI(builder)
 	}
 	return o.context.APIHandler(builder)
 }

@@ -29,7 +29,8 @@ import (
 )
 
 // NewDeleteSpoeFileParams creates a new DeleteSpoeFileParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewDeleteSpoeFileParams() DeleteSpoeFileParams {
 
 	return DeleteSpoeFileParams{}
@@ -64,7 +65,6 @@ func (o *DeleteSpoeFileParams) BindRequest(r *http.Request, route *middleware.Ma
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *DeleteSpoeFileParams) bindName(rawData []string, hasKey bool, formats s
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil

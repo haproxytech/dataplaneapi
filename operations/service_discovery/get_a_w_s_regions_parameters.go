@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetAWSRegionsParams creates a new GetAWSRegionsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetAWSRegionsParams() GetAWSRegionsParams {
 
 	return GetAWSRegionsParams{}

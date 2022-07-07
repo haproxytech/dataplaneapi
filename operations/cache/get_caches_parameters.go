@@ -30,7 +30,8 @@ import (
 )
 
 // NewGetCachesParams creates a new GetCachesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetCachesParams() GetCachesParams {
 
 	return GetCachesParams{}
@@ -66,7 +67,6 @@ func (o *GetCachesParams) BindRequest(r *http.Request, route *middleware.Matched
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -82,10 +82,10 @@ func (o *GetCachesParams) bindTransactionID(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

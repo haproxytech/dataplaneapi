@@ -132,7 +132,6 @@ func (o *DeleteBindParams) BindRequest(r *http.Request, route *middleware.Matche
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -148,6 +147,7 @@ func (o *DeleteBindParams) bindForceReload(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteBindParams()
 		return nil
@@ -171,10 +171,10 @@ func (o *DeleteBindParams) bindFrontend(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Frontend = &raw
 
 	return nil
@@ -189,7 +189,6 @@ func (o *DeleteBindParams) bindName(rawData []string, hasKey bool, formats strfm
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -204,10 +203,10 @@ func (o *DeleteBindParams) bindParentName(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentName = &raw
 
 	return nil
@@ -222,10 +221,10 @@ func (o *DeleteBindParams) bindParentType(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ParentType = &raw
 
 	if err := o.validateParentType(formats); err != nil {
@@ -238,7 +237,7 @@ func (o *DeleteBindParams) bindParentType(rawData []string, hasKey bool, formats
 // validateParentType carries on validations for parameter ParentType
 func (o *DeleteBindParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}, true); err != nil {
 		return err
 	}
 
@@ -254,10 +253,10 @@ func (o *DeleteBindParams) bindTransactionID(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -272,6 +271,7 @@ func (o *DeleteBindParams) bindVersion(rawData []string, hasKey bool, formats st
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

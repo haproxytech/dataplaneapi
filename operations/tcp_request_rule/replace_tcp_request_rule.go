@@ -44,7 +44,7 @@ func NewReplaceTCPRequestRule(ctx *middleware.Context, handler ReplaceTCPRequest
 	return &ReplaceTCPRequestRule{Context: ctx, Handler: handler}
 }
 
-/*ReplaceTCPRequestRule swagger:route PUT /services/haproxy/configuration/tcp_request_rules/{index} TCPRequestRule replaceTcpRequestRule
+/* ReplaceTCPRequestRule swagger:route PUT /services/haproxy/configuration/tcp_request_rules/{index} TCPRequestRule replaceTcpRequestRule
 
 Replace a TCP Request Rule
 
@@ -59,21 +59,20 @@ type ReplaceTCPRequestRule struct {
 func (o *ReplaceTCPRequestRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceTCPRequestRuleParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *ReplaceTCPRequestRule) ServeHTTP(rw http.ResponseWriter, r *http.Reques
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

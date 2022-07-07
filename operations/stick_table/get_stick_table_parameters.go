@@ -32,7 +32,8 @@ import (
 )
 
 // NewGetStickTableParams creates a new GetStickTableParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetStickTableParams() GetStickTableParams {
 
 	return GetStickTableParams{}
@@ -79,7 +80,6 @@ func (o *GetStickTableParams) BindRequest(r *http.Request, route *middleware.Mat
 	if err := o.bindProcess(qProcess, qhkProcess, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -95,7 +95,6 @@ func (o *GetStickTableParams) bindName(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -104,7 +103,7 @@ func (o *GetStickTableParams) bindName(rawData []string, hasKey bool, formats st
 // bindProcess binds and validates parameter Process from query.
 func (o *GetStickTableParams) bindProcess(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("process", "query")
+		return errors.Required("process", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -113,6 +112,7 @@ func (o *GetStickTableParams) bindProcess(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("process", "query", raw); err != nil {
 		return err
 	}

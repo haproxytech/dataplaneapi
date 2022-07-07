@@ -32,7 +32,8 @@ import (
 )
 
 // NewGetTCPResponseRuleParams creates a new GetTCPResponseRuleParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetTCPResponseRuleParams() GetTCPResponseRuleParams {
 
 	return GetTCPResponseRuleParams{}
@@ -88,7 +89,6 @@ func (o *GetTCPResponseRuleParams) BindRequest(r *http.Request, route *middlewar
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -98,7 +98,7 @@ func (o *GetTCPResponseRuleParams) BindRequest(r *http.Request, route *middlewar
 // bindBackend binds and validates parameter Backend from query.
 func (o *GetTCPResponseRuleParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -107,10 +107,10 @@ func (o *GetTCPResponseRuleParams) bindBackend(rawData []string, hasKey bool, fo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -144,10 +144,10 @@ func (o *GetTCPResponseRuleParams) bindTransactionID(rawData []string, hasKey bo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

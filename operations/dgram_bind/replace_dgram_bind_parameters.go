@@ -21,6 +21,7 @@ package dgram_bind
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
@@ -104,7 +105,7 @@ func (o *ReplaceDgramBindParams) BindRequest(r *http.Request, route *middleware.
 		var body models.DgramBind
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -114,13 +115,19 @@ func (o *ReplaceDgramBindParams) BindRequest(r *http.Request, route *middleware.
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -145,7 +152,6 @@ func (o *ReplaceDgramBindParams) BindRequest(r *http.Request, route *middleware.
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -161,6 +167,7 @@ func (o *ReplaceDgramBindParams) bindForceReload(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplaceDgramBindParams()
 		return nil
@@ -178,7 +185,7 @@ func (o *ReplaceDgramBindParams) bindForceReload(rawData []string, hasKey bool, 
 // bindLogForward binds and validates parameter LogForward from query.
 func (o *ReplaceDgramBindParams) bindLogForward(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("log_forward", "query")
+		return errors.Required("log_forward", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -187,10 +194,10 @@ func (o *ReplaceDgramBindParams) bindLogForward(rawData []string, hasKey bool, f
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("log_forward", "query", raw); err != nil {
 		return err
 	}
-
 	o.LogForward = raw
 
 	return nil
@@ -205,7 +212,6 @@ func (o *ReplaceDgramBindParams) bindName(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -220,10 +226,10 @@ func (o *ReplaceDgramBindParams) bindTransactionID(rawData []string, hasKey bool
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -238,6 +244,7 @@ func (o *ReplaceDgramBindParams) bindVersion(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

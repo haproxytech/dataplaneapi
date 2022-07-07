@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetSpoeConfigurationVersionParams creates a new GetSpoeConfigurationVersionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetSpoeConfigurationVersionParams() GetSpoeConfigurationVersionParams {
 
 	return GetSpoeConfigurationVersionParams{}
@@ -77,7 +78,6 @@ func (o *GetSpoeConfigurationVersionParams) BindRequest(r *http.Request, route *
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -87,7 +87,7 @@ func (o *GetSpoeConfigurationVersionParams) BindRequest(r *http.Request, route *
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *GetSpoeConfigurationVersionParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -96,10 +96,10 @@ func (o *GetSpoeConfigurationVersionParams) bindSpoe(rawData []string, hasKey bo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -114,10 +114,10 @@ func (o *GetSpoeConfigurationVersionParams) bindTransactionID(rawData []string, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

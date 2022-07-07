@@ -21,6 +21,7 @@ package service_discovery
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
@@ -28,12 +29,14 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v3/models"
 )
 
 // NewReplaceAWSRegionParams creates a new ReplaceAWSRegionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewReplaceAWSRegionParams() ReplaceAWSRegionParams {
 
 	return ReplaceAWSRegionParams{}
@@ -74,7 +77,7 @@ func (o *ReplaceAWSRegionParams) BindRequest(r *http.Request, route *middleware.
 		var body models.AwsRegion
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -84,18 +87,23 @@ func (o *ReplaceAWSRegionParams) BindRequest(r *http.Request, route *middleware.
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	rID, rhkID, _ := route.Params.GetOK("id")
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -111,7 +119,6 @@ func (o *ReplaceAWSRegionParams) bindID(rawData []string, hasKey bool, formats s
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil

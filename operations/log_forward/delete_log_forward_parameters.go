@@ -104,7 +104,6 @@ func (o *DeleteLogForwardParams) BindRequest(r *http.Request, route *middleware.
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -120,6 +119,7 @@ func (o *DeleteLogForwardParams) bindForceReload(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteLogForwardParams()
 		return nil
@@ -143,7 +143,6 @@ func (o *DeleteLogForwardParams) bindName(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -158,10 +157,10 @@ func (o *DeleteLogForwardParams) bindTransactionID(rawData []string, hasKey bool
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -176,6 +175,7 @@ func (o *DeleteLogForwardParams) bindVersion(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

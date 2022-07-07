@@ -30,7 +30,8 @@ import (
 )
 
 // NewGetLogForwardParams creates a new GetLogForwardParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetLogForwardParams() GetLogForwardParams {
 
 	return GetLogForwardParams{}
@@ -76,7 +77,6 @@ func (o *GetLogForwardParams) BindRequest(r *http.Request, route *middleware.Mat
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -92,7 +92,6 @@ func (o *GetLogForwardParams) bindName(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -107,10 +106,10 @@ func (o *GetLogForwardParams) bindTransactionID(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

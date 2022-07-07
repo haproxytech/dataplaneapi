@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetUsersParams creates a new GetUsersParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetUsersParams() GetUsersParams {
 
 	return GetUsersParams{}
@@ -77,7 +78,6 @@ func (o *GetUsersParams) BindRequest(r *http.Request, route *middleware.MatchedR
 	if err := o.bindUserlist(qUserlist, qhkUserlist, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -93,10 +93,10 @@ func (o *GetUsersParams) bindTransactionID(rawData []string, hasKey bool, format
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -105,7 +105,7 @@ func (o *GetUsersParams) bindTransactionID(rawData []string, hasKey bool, format
 // bindUserlist binds and validates parameter Userlist from query.
 func (o *GetUsersParams) bindUserlist(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("userlist", "query")
+		return errors.Required("userlist", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -114,10 +114,10 @@ func (o *GetUsersParams) bindUserlist(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("userlist", "query", raw); err != nil {
 		return err
 	}
-
 	o.Userlist = raw
 
 	return nil

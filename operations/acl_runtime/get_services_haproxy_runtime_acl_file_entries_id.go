@@ -44,7 +44,7 @@ func NewGetServicesHaproxyRuntimeACLFileEntriesID(ctx *middleware.Context, handl
 	return &GetServicesHaproxyRuntimeACLFileEntriesID{Context: ctx, Handler: handler}
 }
 
-/*GetServicesHaproxyRuntimeACLFileEntriesID swagger:route GET /services/haproxy/runtime/acl_file_entries/{id} ACL Runtime getServicesHaproxyRuntimeAclFileEntriesId
+/* GetServicesHaproxyRuntimeACLFileEntriesID swagger:route GET /services/haproxy/runtime/acl_file_entries/{id} ACL Runtime getServicesHaproxyRuntimeAclFileEntriesId
 
 Return an ACL entry
 
@@ -59,21 +59,20 @@ type GetServicesHaproxyRuntimeACLFileEntriesID struct {
 func (o *GetServicesHaproxyRuntimeACLFileEntriesID) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetServicesHaproxyRuntimeACLFileEntriesIDParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesID) ServeHTTP(rw http.ResponseWr
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

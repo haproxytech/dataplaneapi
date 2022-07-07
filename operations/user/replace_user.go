@@ -44,7 +44,7 @@ func NewReplaceUser(ctx *middleware.Context, handler ReplaceUserHandler) *Replac
 	return &ReplaceUser{Context: ctx, Handler: handler}
 }
 
-/*ReplaceUser swagger:route PUT /services/haproxy/configuration/users/{username} User replaceUser
+/* ReplaceUser swagger:route PUT /services/haproxy/configuration/users/{username} User replaceUser
 
 Replace a user
 
@@ -57,21 +57,20 @@ type ReplaceUser struct {
 func (o *ReplaceUser) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceUserParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -80,7 +79,6 @@ func (o *ReplaceUser) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

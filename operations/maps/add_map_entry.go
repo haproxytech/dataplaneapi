@@ -44,7 +44,7 @@ func NewAddMapEntry(ctx *middleware.Context, handler AddMapEntryHandler) *AddMap
 	return &AddMapEntry{Context: ctx, Handler: handler}
 }
 
-/*AddMapEntry swagger:route POST /services/haproxy/runtime/maps_entries Maps addMapEntry
+/* AddMapEntry swagger:route POST /services/haproxy/runtime/maps_entries Maps addMapEntry
 
 Adds an entry into the map file
 
@@ -59,21 +59,20 @@ type AddMapEntry struct {
 func (o *AddMapEntry) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewAddMapEntryParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *AddMapEntry) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

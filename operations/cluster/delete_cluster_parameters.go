@@ -32,7 +32,8 @@ import (
 )
 
 // NewDeleteClusterParams creates a new DeleteClusterParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewDeleteClusterParams() DeleteClusterParams {
 
 	return DeleteClusterParams{}
@@ -77,7 +78,6 @@ func (o *DeleteClusterParams) BindRequest(r *http.Request, route *middleware.Mat
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -93,10 +93,10 @@ func (o *DeleteClusterParams) bindConfiguration(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Configuration = &raw
 
 	if err := o.validateConfiguration(formats); err != nil {
@@ -109,7 +109,7 @@ func (o *DeleteClusterParams) bindConfiguration(rawData []string, hasKey bool, f
 // validateConfiguration carries on validations for parameter Configuration
 func (o *DeleteClusterParams) validateConfiguration(formats strfmt.Registry) error {
 
-	if err := validate.Enum("configuration", "query", *o.Configuration, []interface{}{"keep"}); err != nil {
+	if err := validate.EnumCase("configuration", "query", *o.Configuration, []interface{}{"keep"}, true); err != nil {
 		return err
 	}
 
@@ -125,6 +125,7 @@ func (o *DeleteClusterParams) bindVersion(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
