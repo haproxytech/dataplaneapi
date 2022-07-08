@@ -16,6 +16,8 @@
 package handlers
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v3"
 	"github.com/haproxytech/client-native/v3/models"
@@ -53,6 +55,19 @@ type ReplaceBindHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+func bindTypeParams(frontend *string, parentType *string, parentName *string) (pType string, pName string, err error) {
+	if frontend != nil && *frontend != "" {
+		return "frontend", *frontend, nil
+	}
+	if parentType == nil || *parentType == "" {
+		return "", "", fmt.Errorf("parentType empty")
+	}
+	if parentName == nil || *parentName == "" {
+		return "", "", fmt.Errorf("parentName empty")
+	}
+	return *parentType, *parentName, nil
+}
+
 // Handle executing the request and returning a response
 func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -80,7 +95,12 @@ func (h *CreateBindHandlerImpl) Handle(params bind.CreateBindParams, principal i
 		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateBind(params.Frontend, params.Data, t, v)
+	pType, pName, err := bindTypeParams(params.Frontend, params.ParentType, params.ParentName)
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.CreateBind(pType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewCreateBindDefault(int(*e.Code)).WithPayload(e)
@@ -127,7 +147,12 @@ func (h *DeleteBindHandlerImpl) Handle(params bind.DeleteBindParams, principal i
 		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteBind(params.Name, params.Frontend, t, v)
+	pType, pName, err := bindTypeParams(params.Frontend, params.ParentType, params.ParentName)
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.DeleteBind(params.Name, pType, pName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewDeleteBindDefault(int(*e.Code)).WithPayload(e)
@@ -160,7 +185,12 @@ func (h *GetBindHandlerImpl) Handle(params bind.GetBindParams, principal interfa
 		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, b, err := configuration.GetBind(params.Name, params.Frontend, t)
+	pType, pName, err := bindTypeParams(params.Frontend, params.ParentType, params.ParentName)
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
+	}
+	v, b, err := configuration.GetBind(params.Name, pType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewGetBindDefault(int(*e.Code)).WithPayload(e)
@@ -181,7 +211,12 @@ func (h *GetBindsHandlerImpl) Handle(params bind.GetBindsParams, principal inter
 		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, bs, err := configuration.GetBinds(params.Frontend, t)
+	pType, pName, err := bindTypeParams(params.Frontend, params.ParentType, params.ParentName)
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewGetBindsDefault(int(*e.Code)).WithPayload(e)
+	}
+	v, bs, err := configuration.GetBinds(pType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -219,7 +254,12 @@ func (h *ReplaceBindHandlerImpl) Handle(params bind.ReplaceBindParams, principal
 		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditBind(params.Name, params.Frontend, params.Data, t, v)
+	pType, pName, err := bindTypeParams(params.Frontend, params.ParentType, params.ParentName)
+	if err != nil {
+		e := misc.HandleError(err)
+		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.EditBind(params.Name, pType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return bind.NewReplaceBindDefault(int(*e.Code)).WithPayload(e)

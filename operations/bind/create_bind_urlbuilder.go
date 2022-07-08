@@ -31,7 +31,9 @@ import (
 // CreateBindURL generates an URL for the create bind operation
 type CreateBindURL struct {
 	ForceReload   *bool
-	Frontend      string
+	Frontend      *string
+	ParentName    *string
+	ParentType    *string
 	TransactionID *string
 	Version       *int64
 
@@ -77,9 +79,28 @@ func (o *CreateBindURL) Build() (*url.URL, error) {
 		qs.Set("force_reload", forceReloadQ)
 	}
 
-	frontendQ := o.Frontend
+	var frontendQ string
+	if o.Frontend != nil {
+		frontendQ = *o.Frontend
+	}
 	if frontendQ != "" {
 		qs.Set("frontend", frontendQ)
+	}
+
+	var parentNameQ string
+	if o.ParentName != nil {
+		parentNameQ = *o.ParentName
+	}
+	if parentNameQ != "" {
+		qs.Set("parent_name", parentNameQ)
+	}
+
+	var parentTypeQ string
+	if o.ParentType != nil {
+		parentTypeQ = *o.ParentType
+	}
+	if parentTypeQ != "" {
+		qs.Set("parent_type", parentTypeQ)
 	}
 
 	var transactionIDQ string

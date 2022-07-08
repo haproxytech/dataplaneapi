@@ -28,7 +28,9 @@ import (
 
 // GetBindsURL generates an URL for the get binds operation
 type GetBindsURL struct {
-	Frontend      string
+	Frontend      *string
+	ParentName    *string
+	ParentType    *string
 	TransactionID *string
 
 	_basePath string
@@ -65,9 +67,28 @@ func (o *GetBindsURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	frontendQ := o.Frontend
+	var frontendQ string
+	if o.Frontend != nil {
+		frontendQ = *o.Frontend
+	}
 	if frontendQ != "" {
 		qs.Set("frontend", frontendQ)
+	}
+
+	var parentNameQ string
+	if o.ParentName != nil {
+		parentNameQ = *o.ParentName
+	}
+	if parentNameQ != "" {
+		qs.Set("parent_name", parentNameQ)
+	}
+
+	var parentTypeQ string
+	if o.ParentType != nil {
+		parentTypeQ = *o.ParentType
+	}
+	if parentTypeQ != "" {
+		qs.Set("parent_type", parentTypeQ)
 	}
 
 	var transactionIDQ string
