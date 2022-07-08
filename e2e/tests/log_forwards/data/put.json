@@ -1,0 +1,6 @@
+{
+  "backlog": 100,
+  "maxconn": 200,
+  "name": "sylog-loadb",
+  "timeout_client": 40000
+}

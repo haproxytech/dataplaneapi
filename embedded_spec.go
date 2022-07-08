@@ -2553,6 +2553,299 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/dgram_binds": {
+      "get": {
+        "description": "Returns an array of all dgram binds that are configured in specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Return an array of dgram binds",
+        "operationId": "getDgramBinds",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/dgram_binds"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new dgram bind in the specified log forward in the configuration file.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Add a new dgram bind",
+        "operationId": "createDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Bind created",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/dgram_binds/{name}": {
+      "get": {
+        "description": "Returns one dgram bind configuration by it's name in the specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Return one dgram bind",
+        "operationId": "getDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/dgram_bind"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a dgram bind configuration by it's name in the specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Replace a dgram bind",
+        "operationId": "replaceDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bind replaced",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a dgram bind configuration by it's name in the specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Delete a dgram bind",
+        "operationId": "deleteDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Bind deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -4917,6 +5210,264 @@ func init() {
           },
           "204": {
             "description": "HTTP Response Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_forwards": {
+      "get": {
+        "description": "Returns an array of all configured log forwards.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Return an array of log forwards",
+        "operationId": "getLogForwards",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/log_forwards"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new log_forward to the configuration file.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Add a log forward",
+        "operationId": "createLogForward",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Forward created",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_forwards/{name}": {
+      "get": {
+        "description": "Returns one log forward configuration by it's name.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Return a log forward",
+        "operationId": "getLogForward",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Log Forward name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/log_forward"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a log forward configuration by it's name.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Replace a log forward",
+        "operationId": "replaceLogForward",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Log Forward name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log Forward replaced",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a log forward from the configuration by it's name.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Delete a log forward",
+        "operationId": "deleteLogForward",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Log Forward name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Log Forward deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -15473,6 +16024,15 @@ func init() {
         "weight": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
         }
       }
     },
@@ -16021,6 +16581,51 @@ func init() {
         }
       },
       "additionalProperties": false
+    },
+    "dgram_bind": {
+      "description": "HAProxy log forward dgram bind configuration",
+      "type": "object",
+      "title": "Dgram Bind",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "interface": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "port-range-end": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "transparent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "dgram_binds": {
+      "description": "HAProxy dgram bind array",
+      "type": "array",
+      "title": "Dgram Bind",
+      "items": {
+        "$ref": "#/definitions/dgram_bind"
+      }
     },
     "endpoint": {
       "description": "Endpoint definition",
@@ -19852,6 +20457,42 @@ func init() {
         }
       }
     },
+    "log_forward": {
+      "description": "HAProxy log forward configuration",
+      "type": "object",
+      "title": "Log Forward",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "backlog": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "timeout_client": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "log_forwards": {
+      "description": "HAProxy log forwards array",
+      "type": "array",
+      "title": "Log Forwards",
+      "items": {
+        "$ref": "#/definitions/log_forward"
+      }
+    },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
       "type": "object",
@@ -22001,6 +22642,15 @@ func init() {
         "weight": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
         }
       },
       "additionalProperties": false,
@@ -22637,6 +23287,15 @@ func init() {
         "weight": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
         }
       },
       "additionalProperties": false,
@@ -24762,6 +25421,9 @@ func init() {
       "name": "Defaults"
     },
     {
+      "name": "DgramBind"
+    },
+    {
       "description": "API autodiscover endpoints",
       "name": "Discovery"
     },
@@ -24787,6 +25449,9 @@ func init() {
     },
     {
       "name": "Information"
+    },
+    {
+      "name": "LogForward"
     },
     {
       "name": "LogTarget"
@@ -28626,6 +29291,442 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/dgram_binds": {
+      "get": {
+        "description": "Returns an array of all dgram binds that are configured in specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Return an array of dgram binds",
+        "operationId": "getDgramBinds",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/dgram_binds"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new dgram bind in the specified log forward in the configuration file.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Add a new dgram bind",
+        "operationId": "createDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Bind created",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/dgram_binds/{name}": {
+      "get": {
+        "description": "Returns one dgram bind configuration by it's name in the specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Return one dgram bind",
+        "operationId": "getDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/dgram_bind"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a dgram bind configuration by it's name in the specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Replace a dgram bind",
+        "operationId": "replaceDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bind replaced",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/dgram_bind"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a dgram bind configuration by it's name in the specified log forward.",
+        "tags": [
+          "DgramBind"
+        ],
+        "summary": "Delete a dgram bind",
+        "operationId": "deleteDgramBind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bind name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent log forward name",
+            "name": "log_forward",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Bind deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/filters": {
       "get": {
         "description": "Returns all Filters that are configured in specified parent.",
@@ -32016,6 +33117,407 @@ func init() {
           },
           "204": {
             "description": "HTTP Response Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_forwards": {
+      "get": {
+        "description": "Returns an array of all configured log forwards.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Return an array of log forwards",
+        "operationId": "getLogForwards",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/log_forwards"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new log_forward to the configuration file.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Add a log forward",
+        "operationId": "createLogForward",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Forward created",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_forwards/{name}": {
+      "get": {
+        "description": "Returns one log forward configuration by it's name.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Return a log forward",
+        "operationId": "getLogForward",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Log Forward name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/log_forward"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a log forward configuration by it's name.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Replace a log forward",
+        "operationId": "replaceLogForward",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Log Forward name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log Forward replaced",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_forward"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a log forward from the configuration by it's name.",
+        "tags": [
+          "LogForward"
+        ],
+        "summary": "Delete a log forward",
+        "operationId": "deleteLogForward",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Log Forward name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Log Forward deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -47411,6 +48913,15 @@ func init() {
         "weight": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
         }
       }
     },
@@ -47959,6 +49470,51 @@ func init() {
         }
       },
       "additionalProperties": false
+    },
+    "dgram_bind": {
+      "description": "HAProxy log forward dgram bind configuration",
+      "type": "object",
+      "title": "Dgram Bind",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "interface": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "port-range-end": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "transparent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "dgram_binds": {
+      "description": "HAProxy dgram bind array",
+      "type": "array",
+      "title": "Dgram Bind",
+      "items": {
+        "$ref": "#/definitions/dgram_bind"
+      }
     },
     "endpoint": {
       "description": "Endpoint definition",
@@ -51631,6 +53187,42 @@ func init() {
         }
       }
     },
+    "log_forward": {
+      "description": "HAProxy log forward configuration",
+      "type": "object",
+      "title": "Log Forward",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "backlog": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false
+        },
+        "timeout_client": {
+          "type": "integer",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "log_forwards": {
+      "description": "HAProxy log forwards array",
+      "type": "array",
+      "title": "Log Forwards",
+      "items": {
+        "$ref": "#/definitions/log_forward"
+      }
+    },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
       "type": "object",
@@ -53780,6 +55372,15 @@ func init() {
         "weight": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
         }
       },
       "additionalProperties": false,
@@ -54416,6 +56017,15 @@ func init() {
         "weight": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
         }
       },
       "additionalProperties": false,
@@ -56436,6 +58046,9 @@ func init() {
       "name": "Defaults"
     },
     {
+      "name": "DgramBind"
+    },
+    {
       "description": "API autodiscover endpoints",
       "name": "Discovery"
     },
@@ -56461,6 +58074,9 @@ func init() {
     },
     {
       "name": "Information"
+    },
+    {
+      "name": "LogForward"
     },
     {
       "name": "LogTarget"

@@ -44,6 +44,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
 	"github.com/haproxytech/dataplaneapi/operations/declare_capture"
 	"github.com/haproxytech/dataplaneapi/operations/defaults"
+	"github.com/haproxytech/dataplaneapi/operations/dgram_bind"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
@@ -55,6 +56,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
+	"github.com/haproxytech/dataplaneapi/operations/log_forward"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
 	"github.com/haproxytech/dataplaneapi/operations/nameserver"
@@ -168,6 +170,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DeclareCaptureCreateDeclareCaptureHandler: declare_capture.CreateDeclareCaptureHandlerFunc(func(params declare_capture.CreateDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.CreateDeclareCapture has not yet been implemented")
 		}),
+		DgramBindCreateDgramBindHandler: dgram_bind.CreateDgramBindHandlerFunc(func(params dgram_bind.CreateDgramBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation dgram_bind.CreateDgramBind has not yet been implemented")
+		}),
 		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.CreateFilter has not yet been implemented")
 		}),
@@ -188,6 +193,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleCreateHTTPResponseRuleHandler: http_response_rule.CreateHTTPResponseRuleHandlerFunc(func(params http_response_rule.CreateHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.CreateHTTPResponseRule has not yet been implemented")
+		}),
+		LogForwardCreateLogForwardHandler: log_forward.CreateLogForwardHandlerFunc(func(params log_forward.CreateLogForwardParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_forward.CreateLogForward has not yet been implemented")
 		}),
 		LogTargetCreateLogTargetHandler: log_target.CreateLogTargetHandlerFunc(func(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.CreateLogTarget has not yet been implemented")
@@ -288,6 +296,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DeclareCaptureDeleteDeclareCaptureHandler: declare_capture.DeleteDeclareCaptureHandlerFunc(func(params declare_capture.DeleteDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.DeleteDeclareCapture has not yet been implemented")
 		}),
+		DgramBindDeleteDgramBindHandler: dgram_bind.DeleteDgramBindHandlerFunc(func(params dgram_bind.DeleteDgramBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation dgram_bind.DeleteDgramBind has not yet been implemented")
+		}),
 		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.DeleteFilter has not yet been implemented")
 		}),
@@ -308,6 +319,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleDeleteHTTPResponseRuleHandler: http_response_rule.DeleteHTTPResponseRuleHandlerFunc(func(params http_response_rule.DeleteHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.DeleteHTTPResponseRule has not yet been implemented")
+		}),
+		LogForwardDeleteLogForwardHandler: log_forward.DeleteLogForwardHandlerFunc(func(params log_forward.DeleteLogForwardParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_forward.DeleteLogForward has not yet been implemented")
 		}),
 		LogTargetDeleteLogTargetHandler: log_target.DeleteLogTargetHandlerFunc(func(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.DeleteLogTarget has not yet been implemented")
@@ -471,6 +485,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.GetDefaults has not yet been implemented")
 		}),
+		DgramBindGetDgramBindHandler: dgram_bind.GetDgramBindHandlerFunc(func(params dgram_bind.GetDgramBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation dgram_bind.GetDgramBind has not yet been implemented")
+		}),
+		DgramBindGetDgramBindsHandler: dgram_bind.GetDgramBindsHandlerFunc(func(params dgram_bind.GetDgramBindsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation dgram_bind.GetDgramBinds has not yet been implemented")
+		}),
 		FilterGetFilterHandler: filter.GetFilterHandlerFunc(func(params filter.GetFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.GetFilter has not yet been implemented")
 		}),
@@ -530,6 +550,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		InformationGetInfoHandler: information.GetInfoHandlerFunc(func(params information.GetInfoParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation information.GetInfo has not yet been implemented")
+		}),
+		LogForwardGetLogForwardHandler: log_forward.GetLogForwardHandlerFunc(func(params log_forward.GetLogForwardParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_forward.GetLogForward has not yet been implemented")
+		}),
+		LogForwardGetLogForwardsHandler: log_forward.GetLogForwardsHandlerFunc(func(params log_forward.GetLogForwardsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_forward.GetLogForwards has not yet been implemented")
 		}),
 		LogTargetGetLogTargetHandler: log_target.GetLogTargetHandlerFunc(func(params log_target.GetLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.GetLogTarget has not yet been implemented")
@@ -765,6 +791,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.ReplaceDefaults has not yet been implemented")
 		}),
+		DgramBindReplaceDgramBindHandler: dgram_bind.ReplaceDgramBindHandlerFunc(func(params dgram_bind.ReplaceDgramBindParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation dgram_bind.ReplaceDgramBind has not yet been implemented")
+		}),
 		FilterReplaceFilterHandler: filter.ReplaceFilterHandlerFunc(func(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.ReplaceFilter has not yet been implemented")
 		}),
@@ -788,6 +817,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPResponseRuleReplaceHTTPResponseRuleHandler: http_response_rule.ReplaceHTTPResponseRuleHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRule has not yet been implemented")
+		}),
+		LogForwardReplaceLogForwardHandler: log_forward.ReplaceLogForwardHandlerFunc(func(params log_forward.ReplaceLogForwardParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_forward.ReplaceLogForward has not yet been implemented")
 		}),
 		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.ReplaceLogTarget has not yet been implemented")
@@ -965,6 +997,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
 	// DeclareCaptureCreateDeclareCaptureHandler sets the operation handler for the create declare capture operation
 	DeclareCaptureCreateDeclareCaptureHandler declare_capture.CreateDeclareCaptureHandler
+	// DgramBindCreateDgramBindHandler sets the operation handler for the create dgram bind operation
+	DgramBindCreateDgramBindHandler dgram_bind.CreateDgramBindHandler
 	// FilterCreateFilterHandler sets the operation handler for the create filter operation
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
@@ -979,6 +1013,8 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleCreateHTTPRequestRuleHandler http_request_rule.CreateHTTPRequestRuleHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleHandler sets the operation handler for the create HTTP response rule operation
 	HTTPResponseRuleCreateHTTPResponseRuleHandler http_response_rule.CreateHTTPResponseRuleHandler
+	// LogForwardCreateLogForwardHandler sets the operation handler for the create log forward operation
+	LogForwardCreateLogForwardHandler log_forward.CreateLogForwardHandler
 	// LogTargetCreateLogTargetHandler sets the operation handler for the create log target operation
 	LogTargetCreateLogTargetHandler log_target.CreateLogTargetHandler
 	// NameserverCreateNameserverHandler sets the operation handler for the create nameserver operation
@@ -1045,6 +1081,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
 	// DeclareCaptureDeleteDeclareCaptureHandler sets the operation handler for the delete declare capture operation
 	DeclareCaptureDeleteDeclareCaptureHandler declare_capture.DeleteDeclareCaptureHandler
+	// DgramBindDeleteDgramBindHandler sets the operation handler for the delete dgram bind operation
+	DgramBindDeleteDgramBindHandler dgram_bind.DeleteDgramBindHandler
 	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
 	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
@@ -1059,6 +1097,8 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleDeleteHTTPRequestRuleHandler http_request_rule.DeleteHTTPRequestRuleHandler
 	// HTTPResponseRuleDeleteHTTPResponseRuleHandler sets the operation handler for the delete HTTP response rule operation
 	HTTPResponseRuleDeleteHTTPResponseRuleHandler http_response_rule.DeleteHTTPResponseRuleHandler
+	// LogForwardDeleteLogForwardHandler sets the operation handler for the delete log forward operation
+	LogForwardDeleteLogForwardHandler log_forward.DeleteLogForwardHandler
 	// LogTargetDeleteLogTargetHandler sets the operation handler for the delete log target operation
 	LogTargetDeleteLogTargetHandler log_target.DeleteLogTargetHandler
 	// NameserverDeleteNameserverHandler sets the operation handler for the delete nameserver operation
@@ -1167,6 +1207,10 @@ type DataPlaneAPI struct {
 	DeclareCaptureGetDeclareCapturesHandler declare_capture.GetDeclareCapturesHandler
 	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
 	DefaultsGetDefaultsHandler defaults.GetDefaultsHandler
+	// DgramBindGetDgramBindHandler sets the operation handler for the get dgram bind operation
+	DgramBindGetDgramBindHandler dgram_bind.GetDgramBindHandler
+	// DgramBindGetDgramBindsHandler sets the operation handler for the get dgram binds operation
+	DgramBindGetDgramBindsHandler dgram_bind.GetDgramBindsHandler
 	// FilterGetFilterHandler sets the operation handler for the get filter operation
 	FilterGetFilterHandler filter.GetFilterHandler
 	// FilterGetFiltersHandler sets the operation handler for the get filters operation
@@ -1207,6 +1251,10 @@ type DataPlaneAPI struct {
 	HealthGetHealthHandler health.GetHealthHandler
 	// InformationGetInfoHandler sets the operation handler for the get info operation
 	InformationGetInfoHandler information.GetInfoHandler
+	// LogForwardGetLogForwardHandler sets the operation handler for the get log forward operation
+	LogForwardGetLogForwardHandler log_forward.GetLogForwardHandler
+	// LogForwardGetLogForwardsHandler sets the operation handler for the get log forwards operation
+	LogForwardGetLogForwardsHandler log_forward.GetLogForwardsHandler
 	// LogTargetGetLogTargetHandler sets the operation handler for the get log target operation
 	LogTargetGetLogTargetHandler log_target.GetLogTargetHandler
 	// LogTargetGetLogTargetsHandler sets the operation handler for the get log targets operation
@@ -1363,6 +1411,8 @@ type DataPlaneAPI struct {
 	DeclareCaptureReplaceDeclareCaptureHandler declare_capture.ReplaceDeclareCaptureHandler
 	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
 	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
+	// DgramBindReplaceDgramBindHandler sets the operation handler for the replace dgram bind operation
+	DgramBindReplaceDgramBindHandler dgram_bind.ReplaceDgramBindHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
 	FilterReplaceFilterHandler filter.ReplaceFilterHandler
 	// FrontendReplaceFrontendHandler sets the operation handler for the replace frontend operation
@@ -1379,6 +1429,8 @@ type DataPlaneAPI struct {
 	HTTPRequestRuleReplaceHTTPRequestRuleHandler http_request_rule.ReplaceHTTPRequestRuleHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleHandler sets the operation handler for the replace HTTP response rule operation
 	HTTPResponseRuleReplaceHTTPResponseRuleHandler http_response_rule.ReplaceHTTPResponseRuleHandler
+	// LogForwardReplaceLogForwardHandler sets the operation handler for the replace log forward operation
+	LogForwardReplaceLogForwardHandler log_forward.ReplaceLogForwardHandler
 	// LogTargetReplaceLogTargetHandler sets the operation handler for the replace log target operation
 	LogTargetReplaceLogTargetHandler log_target.ReplaceLogTargetHandler
 	// NameserverReplaceNameserverHandler sets the operation handler for the replace nameserver operation
@@ -1570,6 +1622,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DeclareCaptureCreateDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.CreateDeclareCaptureHandler")
 	}
+	if o.DgramBindCreateDgramBindHandler == nil {
+		unregistered = append(unregistered, "dgram_bind.CreateDgramBindHandler")
+	}
 	if o.FilterCreateFilterHandler == nil {
 		unregistered = append(unregistered, "filter.CreateFilterHandler")
 	}
@@ -1590,6 +1645,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPResponseRuleCreateHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.CreateHTTPResponseRuleHandler")
+	}
+	if o.LogForwardCreateLogForwardHandler == nil {
+		unregistered = append(unregistered, "log_forward.CreateLogForwardHandler")
 	}
 	if o.LogTargetCreateLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.CreateLogTargetHandler")
@@ -1690,6 +1748,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DeclareCaptureDeleteDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.DeleteDeclareCaptureHandler")
 	}
+	if o.DgramBindDeleteDgramBindHandler == nil {
+		unregistered = append(unregistered, "dgram_bind.DeleteDgramBindHandler")
+	}
 	if o.FilterDeleteFilterHandler == nil {
 		unregistered = append(unregistered, "filter.DeleteFilterHandler")
 	}
@@ -1710,6 +1771,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPResponseRuleDeleteHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.DeleteHTTPResponseRuleHandler")
+	}
+	if o.LogForwardDeleteLogForwardHandler == nil {
+		unregistered = append(unregistered, "log_forward.DeleteLogForwardHandler")
 	}
 	if o.LogTargetDeleteLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.DeleteLogTargetHandler")
@@ -1873,6 +1937,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DefaultsGetDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
 	}
+	if o.DgramBindGetDgramBindHandler == nil {
+		unregistered = append(unregistered, "dgram_bind.GetDgramBindHandler")
+	}
+	if o.DgramBindGetDgramBindsHandler == nil {
+		unregistered = append(unregistered, "dgram_bind.GetDgramBindsHandler")
+	}
 	if o.FilterGetFilterHandler == nil {
 		unregistered = append(unregistered, "filter.GetFilterHandler")
 	}
@@ -1932,6 +2002,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.InformationGetInfoHandler == nil {
 		unregistered = append(unregistered, "information.GetInfoHandler")
+	}
+	if o.LogForwardGetLogForwardHandler == nil {
+		unregistered = append(unregistered, "log_forward.GetLogForwardHandler")
+	}
+	if o.LogForwardGetLogForwardsHandler == nil {
+		unregistered = append(unregistered, "log_forward.GetLogForwardsHandler")
 	}
 	if o.LogTargetGetLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.GetLogTargetHandler")
@@ -2167,6 +2243,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DefaultsReplaceDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
 	}
+	if o.DgramBindReplaceDgramBindHandler == nil {
+		unregistered = append(unregistered, "dgram_bind.ReplaceDgramBindHandler")
+	}
 	if o.FilterReplaceFilterHandler == nil {
 		unregistered = append(unregistered, "filter.ReplaceFilterHandler")
 	}
@@ -2190,6 +2269,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPResponseRuleReplaceHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleHandler")
+	}
+	if o.LogForwardReplaceLogForwardHandler == nil {
+		unregistered = append(unregistered, "log_forward.ReplaceLogForwardHandler")
 	}
 	if o.LogTargetReplaceLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
@@ -2454,6 +2536,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/dgram_binds"] = dgram_bind.NewCreateDgramBind(o.context, o.DgramBindCreateDgramBindHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2479,6 +2565,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/http_response_rules"] = http_response_rule.NewCreateHTTPResponseRule(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/log_forwards"] = log_forward.NewCreateLogForward(o.context, o.LogForwardCreateLogForwardHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2614,6 +2704,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/dgram_binds/{name}"] = dgram_bind.NewDeleteDgramBind(o.context, o.DgramBindDeleteDgramBindHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/filters/{index}"] = filter.NewDeleteFilter(o.context, o.FilterDeleteFilterHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -2639,6 +2733,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewDeleteHTTPResponseRule(o.context, o.HTTPResponseRuleDeleteHTTPResponseRuleHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/log_forwards/{name}"] = log_forward.NewDeleteLogForward(o.context, o.LogForwardDeleteLogForwardHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2858,6 +2956,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/dgram_binds/{name}"] = dgram_bind.NewGetDgramBind(o.context, o.DgramBindGetDgramBindHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/dgram_binds"] = dgram_bind.NewGetDgramBinds(o.context, o.DgramBindGetDgramBindsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/filters/{index}"] = filter.NewGetFilter(o.context, o.FilterGetFilterHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -2935,6 +3041,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/info"] = information.NewGetInfo(o.context, o.InformationGetInfoHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/log_forwards/{name}"] = log_forward.NewGetLogForward(o.context, o.LogForwardGetLogForwardHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/log_forwards"] = log_forward.NewGetLogForwards(o.context, o.LogForwardGetLogForwardsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3250,6 +3364,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/dgram_binds/{name}"] = dgram_bind.NewReplaceDgramBind(o.context, o.DgramBindReplaceDgramBindHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/filters/{index}"] = filter.NewReplaceFilter(o.context, o.FilterReplaceFilterHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -3279,6 +3397,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewReplaceHTTPResponseRule(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/log_forwards/{name}"] = log_forward.NewReplaceLogForward(o.context, o.LogForwardReplaceLogForwardHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

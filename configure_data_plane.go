@@ -353,6 +353,20 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.RingGetRingsHandler = &handlers.GetRingsHandlerImpl{Client: client}
 	api.RingReplaceRingHandler = &handlers.ReplaceRingHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup log forward handlers
+	api.LogForwardCreateLogForwardHandler = &handlers.CreateLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogForwardDeleteLogForwardHandler = &handlers.DeleteLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogForwardGetLogForwardHandler = &handlers.GetLogForwardHandlerImpl{Client: client}
+	api.LogForwardGetLogForwardsHandler = &handlers.GetLogForwardsHandlerImpl{Client: client}
+	api.LogForwardReplaceLogForwardHandler = &handlers.ReplaceLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup dgram bind handlers
+	api.DgramBindCreateDgramBindHandler = &handlers.CreateDgramBindHandlerImpl{Client: client, ReloadAgent: ra}
+	api.DgramBindDeleteDgramBindHandler = &handlers.DeleteDgramBindHandlerImpl{Client: client, ReloadAgent: ra}
+	api.DgramBindGetDgramBindHandler = &handlers.GetDgramBindHandlerImpl{Client: client}
+	api.DgramBindGetDgramBindsHandler = &handlers.GetDgramBindsHandlerImpl{Client: client}
+	api.DgramBindReplaceDgramBindHandler = &handlers.ReplaceDgramBindHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup frontend handlers
 	api.FrontendCreateFrontendHandler = &handlers.CreateFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 	api.FrontendDeleteFrontendHandler = &handlers.DeleteFrontendHandlerImpl{Client: client, ReloadAgent: ra}

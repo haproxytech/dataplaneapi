@@ -1,0 +1,6 @@
+{
+  "backlog": 10,
+  "maxconn": 20,
+  "name": "test_log_forward",
+  "timeout_client": 50000
+}

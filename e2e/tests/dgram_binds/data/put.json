@@ -1,0 +1,7 @@
+{
+	"address": "127.0.0.1",
+  "name": "sylog-loadb2",
+  "port": 1500,
+  "interface": "eth0",
+  "transparent": true
+}
