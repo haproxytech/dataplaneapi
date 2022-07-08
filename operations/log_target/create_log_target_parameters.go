@@ -220,7 +220,7 @@ func (o *CreateLogTargetParams) bindParentType(rawData []string, hasKey bool, fo
 // validateParentType carries on validations for parameter ParentType
 func (o *CreateLogTargetParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.Enum("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend", "defaults", "global"}); err != nil {
+	if err := validate.Enum("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend", "defaults", "global", "log_forward"}); err != nil {
 		return err
 	}
 

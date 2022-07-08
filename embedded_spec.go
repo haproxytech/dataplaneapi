@@ -5573,7 +5573,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -5633,7 +5634,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -5717,7 +5719,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -5784,7 +5787,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -5866,7 +5870,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -33716,7 +33721,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -33789,7 +33795,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -33912,7 +33919,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -34001,7 +34009,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
@@ -34122,7 +34131,8 @@ func init() {
               "frontend",
               "backend",
               "defaults",
-              "global"
+              "global",
+              "log_forward"
             ],
             "type": "string",
             "description": "Parent type",
