@@ -28,9 +28,9 @@ import (
 	"strings"
 
 	"github.com/GehirnInc/crypt"
-	"github.com/haproxytech/client-native/v3/configuration"
-	client_errors "github.com/haproxytech/client-native/v3/errors"
-	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v4/configuration"
+	client_errors "github.com/haproxytech/client-native/v4/errors"
+	"github.com/haproxytech/client-native/v4/models"
 	"github.com/haproxytech/config-parser/v4/types"
 	jsoniter "github.com/json-iterator/go"
 

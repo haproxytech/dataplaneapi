@@ -24,8 +24,8 @@ import (
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-	client_native "github.com/haproxytech/client-native/v3"
-	models "github.com/haproxytech/client-native/v3/models"
+	client_native "github.com/haproxytech/client-native/v4"
+	models "github.com/haproxytech/client-native/v4/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -71,7 +71,6 @@ type StorageGetAllStorageGeneralFilesHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *StorageGetAllStorageGeneralFilesHandlerImpl) Handle(params storage.GetAllStorageGeneralFilesParams, principal interface{}) middleware.Responder {
-
 	gs, err := h.Client.GeneralStorage()
 	if err != nil {
 		e := misc.HandleError(err)

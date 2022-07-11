@@ -30,7 +30,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v4/models"
 )
 
 // GetSpoeAgentHandlerFunc turns a function with the right signature into a get spoe agent handler

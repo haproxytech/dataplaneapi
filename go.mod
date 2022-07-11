@@ -2,8 +2,6 @@ module github.com/haproxytech/dataplaneapi
 
 go 1.17
 
-replace github.com/haproxytech/client-native/v3 => ../client-native
-
 require (
 	github.com/GehirnInc/crypt v0.0.0-20200316065508-bb7000b8a962
 	github.com/aws/aws-sdk-go-v2 v1.3.1
@@ -13,8 +11,8 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.2.0
 	github.com/docker/go-units v0.4.0
 	github.com/dustinkirkland/golang-petname v0.0.0-20191129215211-8e5a1ed0cff0
-	github.com/fsnotify/fsnotify v1.4.9
-	github.com/getkin/kin-openapi v0.17.0
+	github.com/fsnotify/fsnotify v1.5.4
+	github.com/getkin/kin-openapi v0.97.0
 	github.com/go-openapi/errors v0.20.2
 	github.com/go-openapi/loads v0.21.1
 	github.com/go-openapi/runtime v0.24.1
@@ -24,16 +22,16 @@ require (
 	github.com/go-openapi/validate v0.22.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.3.0
-	github.com/haproxytech/client-native/v3 v3.1.1
+	github.com/haproxytech/client-native/v4 v4.0.0-rc1
 	github.com/haproxytech/config-parser/v4 v4.0.0-rc3.0.20220707144330-d923070bf375
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
-	github.com/jessevdk/go-flags v1.4.0
+	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
 	github.com/rodaine/hclencoder v0.0.0-20200910194838-aaa140ee61ed
-	github.com/rs/cors v1.7.0
+	github.com/rs/cors v1.8.0
 	github.com/shirou/gopsutil v3.21.4+incompatible
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.8.0
@@ -54,7 +52,6 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fatih/color v1.9.0 // indirect
-	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/go-openapi/analysis v0.21.2 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
@@ -62,7 +59,6 @@ require (
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
-	github.com/haproxytech/client-native/v4 v4.0.0-rc1 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
 	github.com/hashicorp/go-hclog v0.12.0 // indirect
@@ -70,6 +66,7 @@ require (
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
 	github.com/hashicorp/golang-lru v0.5.0 // indirect
 	github.com/hashicorp/serf v0.9.3 // indirect
+	github.com/invopop/yaml v0.1.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect

@@ -18,7 +18,7 @@ package discovery
 import (
 	"sync"
 
-	"github.com/haproxytech/client-native/v3/configuration"
+	"github.com/haproxytech/client-native/v4/configuration"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"

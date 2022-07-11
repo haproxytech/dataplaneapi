@@ -32,7 +32,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v4/models"
 )
 
 // NewCreateHTTPResponseRuleParams creates a new CreateHTTPResponseRuleParams object

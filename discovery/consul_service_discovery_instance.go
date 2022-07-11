@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/haproxytech/client-native/v3/configuration"
-	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v4/configuration"
+	"github.com/haproxytech/client-native/v4/models"
 	"github.com/haproxytech/dataplaneapi/log"
 
 	"github.com/hashicorp/consul/api"

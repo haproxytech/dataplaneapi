@@ -23,8 +23,8 @@ import (
 	"sync"
 	"time"
 
-	client_native "github.com/haproxytech/client-native/v3"
-	"github.com/haproxytech/client-native/v3/models"
+	client_native "github.com/haproxytech/client-native/v4"
+	"github.com/haproxytech/client-native/v4/models"
 	"github.com/haproxytech/dataplaneapi/log"
 )
 

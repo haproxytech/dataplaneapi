@@ -17,7 +17,7 @@
 package configuration
 
 import (
-	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v4/models"
 	"github.com/jessevdk/go-flags"
 
 	dpapilog "github.com/haproxytech/dataplaneapi/log"

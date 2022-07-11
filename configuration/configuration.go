@@ -26,7 +26,7 @@ import (
 	"time"
 
 	petname "github.com/dustinkirkland/golang-petname"
-	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v4/models"
 	"github.com/haproxytech/dataplaneapi/log"
 	jsoniter "github.com/json-iterator/go"
 )

@@ -23,8 +23,8 @@ import (
 	"path"
 	"syscall"
 
-	"github.com/haproxytech/client-native/v3/misc"
-	"github.com/haproxytech/client-native/v3/storage"
+	"github.com/haproxytech/client-native/v4/misc"
+	"github.com/haproxytech/client-native/v4/storage"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -34,7 +34,7 @@ func DecodeBootstrapKey(key string) (map[string]string, error) {
 		return nil, fmt.Errorf("%s - %w", key, err)
 	}
 	var decodedKey map[string]string
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	err = json.Unmarshal(raw, &decodedKey)
 	if err != nil {
 		return nil, fmt.Errorf("%s - %w", key, err)

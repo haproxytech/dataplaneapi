@@ -26,8 +26,8 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	client_native "github.com/haproxytech/client-native/v3"
-	"github.com/haproxytech/client-native/v3/models"
+	client_native "github.com/haproxytech/client-native/v4"
+	"github.com/haproxytech/client-native/v4/models"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
 	"golang.org/x/sys/unix"

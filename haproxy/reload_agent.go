@@ -29,7 +29,7 @@ import (
 	"time"
 
 	"github.com/google/renameio"
-	"github.com/haproxytech/client-native/v3/models"
+	"github.com/haproxytech/client-native/v4/models"
 	"github.com/haproxytech/dataplaneapi/log"
 )
 

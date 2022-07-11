@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/haproxytech/client-native/v3/configuration"
-	configuration_options "github.com/haproxytech/client-native/v3/configuration/options"
-	runtime_api "github.com/haproxytech/client-native/v3/runtime"
-	runtime_options "github.com/haproxytech/client-native/v3/runtime/options"
+	"github.com/haproxytech/client-native/v4/configuration"
+	configuration_options "github.com/haproxytech/client-native/v4/configuration/options"
+	runtime_api "github.com/haproxytech/client-native/v4/runtime"
+	runtime_options "github.com/haproxytech/client-native/v4/runtime/options"
 	parser "github.com/haproxytech/config-parser/v4"
 	"github.com/haproxytech/config-parser/v4/types"
 
