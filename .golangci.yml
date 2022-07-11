@@ -38,8 +38,3 @@ issues:
 run:
   skip-dirs:
     - test
-
-# golangci.com configuration
-# https://github.com/golangci/golangci/wiki/Configuration
-service:
-  golangci-lint-version: 1.17.x # use the fixed version to not introduce new linters unexpectedly

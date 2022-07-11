@@ -10,7 +10,7 @@ variables:
 diff:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/docker:stable-go1.17
+    name: $CI_REGISTRY_GO/docker:stable-go1.18
     entrypoint: [ "" ]
   services:
     - name: $CI_REGISTRY_GO/docker:20.10.5-dind
@@ -34,13 +34,13 @@ golangci-lint:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golangci/golangci-lint:v1.21.0
-    entrypoint: [ "" ]
+    name: $CI_REGISTRY_GO/lint:1.46.2
+    entrypoint: [""]
   tags:
     - go
   script:
     - golangci-lint cache clean && go clean -modcache -cache -i
-    - golangci-lint run -v --color always --timeout 120s
+    - golangci-lint run --timeout 5m --color always --max-issues-per-linter 0 --max-same-issues 0
   only:
     - merge_requests
     - branches
@@ -62,7 +62,7 @@ build:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:1.17
+    name: $CI_REGISTRY_GO/golang:1.18
     entrypoint: [ "" ]
   tags:
     - go
