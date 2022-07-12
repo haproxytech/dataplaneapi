@@ -115,7 +115,7 @@ func (c *ClusterSync) monitorCertificateRefresh() {
 				log.Warning(err)
 				continue
 			}
-			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0o644)
 			if err != nil {
 				log.Warning(err)
 				continue
@@ -174,12 +174,12 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 		return err
 	}
 	log.Infof("Cluster re joined, status: %s", responseData.Status)
-	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(csr), 0o644)
 	if err != nil {
 		log.Warning(err)
 		return err
 	}
-	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o644)
 	if err != nil {
 		log.Warning(err)
 		return err
@@ -254,12 +254,12 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				log.Warning(err)
 				break
 			}
-			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0644)
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.key", c.cfg.Name.Load())), []byte(key), 0o644)
 			if err != nil {
 				log.Warning(err)
 				break
 			}
-			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0644)
+			err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s-csr.crt", c.cfg.Name.Load())), []byte(csr), 0o644)
 			if err != nil {
 				log.Warning(err)
 				break
@@ -380,7 +380,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 			return errCfg
 		}
 		// write id to file
-		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0644) // nolint:gosec
+		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0o644) // nolint:gosec
 		if errFID != nil {
 			return errFID
 		}
@@ -459,7 +459,7 @@ func (c *ClusterSync) checkCertificate(node Node) (fetched bool, err error) {
 		c.cfg.Status.Store("unconfigured")
 		return false, nil
 	}
-	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(node.Certificate), 0644)
+	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(node.Certificate), 0o644)
 	if err != nil {
 		c.cfg.Status.Store("unconfigured")
 		return false, err
