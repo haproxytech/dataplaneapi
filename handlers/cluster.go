@@ -161,7 +161,7 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 			}
 
 			config := fmt.Sprintf(DummyConfig, time.Now().Format("01-02-2006 15:04:05 MST"), h.Config.Name.Load())
-			if err := configuration.PostRawConfiguration(&config, version, true); err != nil {
+			if err := h.Client.Configuration.PostRawConfiguration(&config, version, true); err != nil {
 				return h.err500(err, nil)
 			}
 
