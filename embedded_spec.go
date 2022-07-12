@@ -15166,7 +15166,8 @@ func init() {
             "type": {
               "value": "expect"
             }
-          }
+          },
+          "x-nullable": true
         },
         "ok_status": {
           "type": "string",
@@ -15450,7 +15451,6 @@ func init() {
           "type": "integer",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
@@ -15472,7 +15472,6 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
@@ -43166,7 +43165,8 @@ func init() {
             "type": {
               "value": "expect"
             }
-          }
+          },
+          "x-nullable": true
         },
         "ok_status": {
           "type": "string",
@@ -43450,7 +43450,6 @@ func init() {
           "type": "integer",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
@@ -43472,7 +43471,6 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "capture"
             }
           },
