@@ -8,18 +8,18 @@
       "name": "site_backend",
       "servers": [
         {
+          "proxy-v2-options": null,
+          "weight": 30,
           "address": "127.0.1.1",
           "name": "site_server_01",
-          "port": 4567,
-          "proxy-v2-options": null,
-          "weight": 30
+          "port": 4567
         },
         {
+          "proxy-v2-options": null,
+          "weight": 70,
           "address": "127.0.1.2",
           "name": "site_server_02",
-          "port": 4567,
-          "proxy-v2-options": null,
-          "weight": 70
+          "port": 4567
         }
       ],
       "use_as": "default"

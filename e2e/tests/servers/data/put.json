@@ -1,8 +1,8 @@
 {
-  "address": "10.1.1.2",
   "check": "enabled",
-  "name": "server_01",
-  "port": 8081,
   "proxy-v2-options": null,
-  "weight": 10
+  "weight": 10,
+  "address": "10.1.1.2",
+  "name": "server_01",
+  "port": 8081
 }

@@ -15551,131 +15551,17 @@ func init() {
     "default_server": {
       "type": "object",
       "title": "Default Server",
+      "allOf": [
+        {
+          "$ref": "#/definitions/server_params"
+        }
+      ],
       "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "agent-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "agent-check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "agent-port": {
-              "required": true
-            }
-          }
-        },
-        "agent-inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "agent-port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "agent-send": {
-          "type": "string"
-        },
-        "allow_0rtt": {
-          "type": "boolean"
-        },
-        "alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "ALPN Protocols"
-        },
-        "backup": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
         "ca_file": {
           "type": "string",
           "x-dependency": {
             "ssl": {
               "value": true
-            }
-          }
-        },
-        "check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "check-ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check_alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Protocols"
-        },
-        "check_proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Name"
-        },
-        "check_via_socks4": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ciphers": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ciphersuites": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "cookie": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "crl_file": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
             }
           }
         },
@@ -15686,10 +15572,6 @@ func init() {
             "disabled"
           ]
         },
-        "downinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
         "enabled": {
           "type": "string",
           "enum": [
@@ -15697,422 +15579,11 @@ func init() {
             "disabled"
           ]
         },
-        "error_limit": {
-          "type": "integer",
-          "x-display-name": "Error count"
-        },
-        "fall": {
-          "type": "integer",
-          "x-display-name": "Nr. of consecutive failed checks",
-          "x-nullable": true
-        },
-        "fastinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "force_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "health_check_port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "init-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "log_proto": {
-          "type": "string",
-          "enum": [
-            "legacy",
-            "octet-count"
-          ]
-        },
-        "max_reuse": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "maxconn": {
-          "type": "integer",
-          "x-display-name": "Max Concurrent Connections",
-          "x-nullable": true
-        },
-        "maxqueue": {
-          "type": "integer",
-          "x-display-name": "Max Number of Connections",
-          "x-nullable": true
-        },
-        "minconn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "namespace": {
-          "type": "string"
-        },
-        "no_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_verifyhost": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "npn": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "observe": {
-          "type": "string",
-          "enum": [
-            "layer4",
-            "layer7"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "on-error": {
-          "type": "string",
-          "enum": [
-            "fastinter",
-            "fail-check",
-            "sudden-death",
-            "mark-down"
-          ]
-        },
-        "on-marked-down": {
-          "type": "string",
-          "enum": [
-            "shutdown-sessions"
-          ]
-        },
-        "on-marked-up": {
-          "type": "string",
-          "enum": [
-            "shutdown-backup-sessions"
-          ]
-        },
-        "pool_low_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_max_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_purge_delay": {
-          "type": "integer",
-          "x-nullable": true
-        },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
-        },
-        "proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "proxy-v2-options": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
-              "authority",
-              "crc32c",
-              "unique-id"
-            ]
-          }
-        },
-        "redir": {
-          "type": "string",
-          "x-display-name": "Prefix"
-        },
-        "resolve-net": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve-prefer": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "ipv4",
-            "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve_opts": {
-          "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
-        },
-        "resolvers": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dynamic-enum": {
-            "operation": "getResolvers",
-            "property": "name"
-          }
-        },
-        "rise": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send-proxy-v2": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl_cn": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "slowstart": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "socks4": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "check-via-socks4": {
-              "required": true
-            }
-          }
-        },
-        "source": {
-          "type": "string"
-        },
-        "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ssl_certificate": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ssl_max_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_min_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_reuse": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "stick": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tcp_ut": {
-          "type": "integer"
-        },
-        "tfo": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tls_tickets": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "track": {
-          "type": "string"
-        },
-        "verify": {
-          "type": "string",
-          "enum": [
-            "none",
-            "required"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "verifyhost": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            },
-            "verify": {
-              "value": "required"
-            }
-          }
-        },
-        "weight": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "ws": {
-          "type": "string",
-          "enum": [
-            "auto",
-            "h1",
-            "h2"
-          ],
-          "x-display-name": "Relaying websocket stream protocol"
         }
       }
     },
@@ -22195,12 +21666,45 @@ func init() {
         "name",
         "address"
       ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/server_params"
+        }
+      ],
       "properties": {
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "address": "10.1.1.1",
+        "check": "enabled",
+        "name": "www",
+        "port": 8080,
+        "weight": 80
+      }
+    },
+    "server_params": {
+      "type": "object",
+      "properties": {
         "agent-addr": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -22373,10 +21877,6 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
         "init-addr": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -22417,11 +21917,6 @@ func init() {
         "minconn": {
           "type": "integer",
           "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
         },
         "namespace": {
           "type": "string"
@@ -22519,12 +22014,6 @@ func init() {
         },
         "pool_purge_delay": {
           "type": "integer",
-          "x-nullable": true
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
           "x-nullable": true
         },
         "proto": {
@@ -22757,14 +22246,6 @@ func init() {
           ],
           "x-display-name": "Relaying websocket stream protocol"
         }
-      },
-      "additionalProperties": false,
-      "example": {
-        "address": "10.1.1.1",
-        "check": "enabled",
-        "name": "www",
-        "port": 8080,
-        "weight": 80
       }
     },
     "server_switching_rule": {
@@ -22837,329 +22318,23 @@ func init() {
         "num_or_range",
         "fqdn"
       ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/server_params"
+        }
+      ],
       "properties": {
-        "agent-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "agent-check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "agent-port": {
-              "required": true
-            }
-          }
-        },
-        "agent-inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "agent-port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "agent-send": {
-          "type": "string"
-        },
-        "allow_0rtt": {
-          "type": "boolean"
-        },
-        "alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "ALPN Protocols"
-        },
-        "backup": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "check-ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check_alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Protocols"
-        },
-        "check_proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Name"
-        },
-        "check_via_socks4": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ciphers": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ciphersuites": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "cookie": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "crl_file": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "downinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "error_limit": {
-          "type": "integer",
-          "x-display-name": "Error count"
-        },
-        "fall": {
-          "type": "integer",
-          "x-display-name": "Nr. of consecutive failed checks",
-          "x-nullable": true
-        },
-        "fastinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "force_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
         "fqdn": {
           "type": "string",
           "x-nullable": false
-        },
-        "health_check_port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
         },
         "id": {
           "type": "integer",
           "x-nullable": true
         },
-        "init-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": true
-        },
-        "inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "log_proto": {
-          "type": "string",
-          "enum": [
-            "legacy",
-            "octet-count"
-          ]
-        },
-        "maintenance": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "max_reuse": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "maxconn": {
-          "type": "integer",
-          "x-display-name": "Max Concurrent Connections",
-          "x-nullable": true
-        },
-        "maxqueue": {
-          "type": "integer",
-          "x-display-name": "Max Number of Connections",
-          "x-nullable": true
-        },
-        "minconn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "namespace": {
-          "type": "string"
-        },
-        "no_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_verifyhost": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "npn": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
         "num_or_range": {
           "type": "string",
           "x-nullable": false
-        },
-        "observe": {
-          "type": "string",
-          "enum": [
-            "layer4",
-            "layer7"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "on-error": {
-          "type": "string",
-          "enum": [
-            "fastinter",
-            "fail-check",
-            "sudden-death",
-            "mark-down"
-          ]
-        },
-        "on-marked-down": {
-          "type": "string",
-          "enum": [
-            "shutdown-sessions"
-          ]
-        },
-        "on-marked-up": {
-          "type": "string",
-          "enum": [
-            "shutdown-backup-sessions"
-          ]
-        },
-        "pool_low_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_max_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_purge_delay": {
-          "type": "integer",
-          "x-nullable": true
         },
         "port": {
           "type": "integer",
@@ -23171,236 +22346,6 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
-        },
-        "proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "proxy-v2-options": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
-              "authority",
-              "crc32c",
-              "unique-id"
-            ]
-          }
-        },
-        "redir": {
-          "type": "string",
-          "x-display-name": "Prefix"
-        },
-        "resolve-net": {
-          "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve-prefer": {
-          "type": "string",
-          "enum": [
-            "ipv4",
-            "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve_opts": {
-          "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
-        },
-        "resolvers": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dynamic-enum": {
-            "operation": "getResolvers",
-            "property": "name"
-          }
-        },
-        "rise": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send-proxy-v2": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl_cn": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "slowstart": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "socks4": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "check-via-socks4": {
-              "required": true
-            }
-          }
-        },
-        "source": {
-          "type": "string"
-        },
-        "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ssl_cafile": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          },
-          "x-display-name": "SSL CA File"
-        },
-        "ssl_certificate": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ssl_max_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_min_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_reuse": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "stick": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tcp_ut": {
-          "type": "integer"
-        },
-        "tfo": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tls_tickets": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "track": {
-          "type": "string"
-        },
-        "verify": {
-          "type": "string",
-          "enum": [
-            "none",
-            "required"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "verifyhost": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            },
-            "verify": {
-              "value": "required"
-            }
-          }
-        },
-        "weight": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "ws": {
-          "type": "string",
-          "enum": [
-            "auto",
-            "h1",
-            "h2"
-          ],
-          "x-display-name": "Relaying websocket stream protocol"
         }
       },
       "additionalProperties": false,
@@ -48545,131 +47490,17 @@ func init() {
     "default_server": {
       "type": "object",
       "title": "Default Server",
+      "allOf": [
+        {
+          "$ref": "#/definitions/server_params"
+        }
+      ],
       "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "agent-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "agent-check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "agent-port": {
-              "required": true
-            }
-          }
-        },
-        "agent-inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "agent-port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "agent-send": {
-          "type": "string"
-        },
-        "allow_0rtt": {
-          "type": "boolean"
-        },
-        "alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "ALPN Protocols"
-        },
-        "backup": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
         "ca_file": {
           "type": "string",
           "x-dependency": {
             "ssl": {
               "value": true
-            }
-          }
-        },
-        "check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "check-ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check_alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Protocols"
-        },
-        "check_proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Name"
-        },
-        "check_via_socks4": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ciphers": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ciphersuites": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "cookie": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "crl_file": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
             }
           }
         },
@@ -48680,10 +47511,6 @@ func init() {
             "disabled"
           ]
         },
-        "downinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
         "enabled": {
           "type": "string",
           "enum": [
@@ -48691,422 +47518,11 @@ func init() {
             "disabled"
           ]
         },
-        "error_limit": {
-          "type": "integer",
-          "x-display-name": "Error count"
-        },
-        "fall": {
-          "type": "integer",
-          "x-display-name": "Nr. of consecutive failed checks",
-          "x-nullable": true
-        },
-        "fastinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "force_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "health_check_port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "init-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "log_proto": {
-          "type": "string",
-          "enum": [
-            "legacy",
-            "octet-count"
-          ]
-        },
-        "max_reuse": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "maxconn": {
-          "type": "integer",
-          "x-display-name": "Max Concurrent Connections",
-          "x-nullable": true
-        },
-        "maxqueue": {
-          "type": "integer",
-          "x-display-name": "Max Number of Connections",
-          "x-nullable": true
-        },
-        "minconn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "namespace": {
-          "type": "string"
-        },
-        "no_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_verifyhost": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "npn": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "observe": {
-          "type": "string",
-          "enum": [
-            "layer4",
-            "layer7"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "on-error": {
-          "type": "string",
-          "enum": [
-            "fastinter",
-            "fail-check",
-            "sudden-death",
-            "mark-down"
-          ]
-        },
-        "on-marked-down": {
-          "type": "string",
-          "enum": [
-            "shutdown-sessions"
-          ]
-        },
-        "on-marked-up": {
-          "type": "string",
-          "enum": [
-            "shutdown-backup-sessions"
-          ]
-        },
-        "pool_low_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_max_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_purge_delay": {
-          "type": "integer",
-          "x-nullable": true
-        },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
-        },
-        "proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "proxy-v2-options": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
-              "authority",
-              "crc32c",
-              "unique-id"
-            ]
-          }
-        },
-        "redir": {
-          "type": "string",
-          "x-display-name": "Prefix"
-        },
-        "resolve-net": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve-prefer": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "enum": [
-            "ipv4",
-            "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve_opts": {
-          "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
-        },
-        "resolvers": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dynamic-enum": {
-            "operation": "getResolvers",
-            "property": "name"
-          }
-        },
-        "rise": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send-proxy-v2": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl_cn": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "slowstart": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "socks4": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "check-via-socks4": {
-              "required": true
-            }
-          }
-        },
-        "source": {
-          "type": "string"
-        },
-        "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ssl_certificate": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ssl_max_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_min_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_reuse": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "stick": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tcp_ut": {
-          "type": "integer"
-        },
-        "tfo": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tls_tickets": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "track": {
-          "type": "string"
-        },
-        "verify": {
-          "type": "string",
-          "enum": [
-            "none",
-            "required"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "verifyhost": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            },
-            "verify": {
-              "value": "required"
-            }
-          }
-        },
-        "weight": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "ws": {
-          "type": "string",
-          "enum": [
-            "auto",
-            "h1",
-            "h2"
-          ],
-          "x-display-name": "Relaying websocket stream protocol"
         }
       }
     },
@@ -55030,12 +53446,45 @@ func init() {
         "name",
         "address"
       ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/server_params"
+        }
+      ],
       "properties": {
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
         },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "address": "10.1.1.1",
+        "check": "enabled",
+        "name": "www",
+        "port": 8080,
+        "weight": 80
+      }
+    },
+    "server_params": {
+      "type": "object",
+      "properties": {
         "agent-addr": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -55208,10 +53657,6 @@ func init() {
           "minimum": 1,
           "x-nullable": true
         },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
         "init-addr": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -55252,11 +53697,6 @@ func init() {
         "minconn": {
           "type": "integer",
           "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
         },
         "namespace": {
           "type": "string"
@@ -55354,12 +53794,6 @@ func init() {
         },
         "pool_purge_delay": {
           "type": "integer",
-          "x-nullable": true
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
           "x-nullable": true
         },
         "proto": {
@@ -55592,14 +54026,6 @@ func init() {
           ],
           "x-display-name": "Relaying websocket stream protocol"
         }
-      },
-      "additionalProperties": false,
-      "example": {
-        "address": "10.1.1.1",
-        "check": "enabled",
-        "name": "www",
-        "port": 8080,
-        "weight": 80
       }
     },
     "server_switching_rule": {
@@ -55672,329 +54098,23 @@ func init() {
         "num_or_range",
         "fqdn"
       ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/server_params"
+        }
+      ],
       "properties": {
-        "agent-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "agent-check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "agent-port": {
-              "required": true
-            }
-          }
-        },
-        "agent-inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "agent-port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "agent-send": {
-          "type": "string"
-        },
-        "allow_0rtt": {
-          "type": "boolean"
-        },
-        "alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "ALPN Protocols"
-        },
-        "backup": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check-sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "check-ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "check_alpn": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Protocols"
-        },
-        "check_proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Name"
-        },
-        "check_via_socks4": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ciphers": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ciphersuites": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "cookie": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "crl_file": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "downinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "error_limit": {
-          "type": "integer",
-          "x-display-name": "Error count"
-        },
-        "fall": {
-          "type": "integer",
-          "x-display-name": "Nr. of consecutive failed checks",
-          "x-nullable": true
-        },
-        "fastinter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "force_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "force_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
         "fqdn": {
           "type": "string",
           "x-nullable": false
-        },
-        "health_check_port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
         },
         "id": {
           "type": "integer",
           "x-nullable": true
         },
-        "init-addr": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": true
-        },
-        "inter": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "log_proto": {
-          "type": "string",
-          "enum": [
-            "legacy",
-            "octet-count"
-          ]
-        },
-        "maintenance": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "max_reuse": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "maxconn": {
-          "type": "integer",
-          "x-display-name": "Max Concurrent Connections",
-          "x-nullable": true
-        },
-        "maxqueue": {
-          "type": "integer",
-          "x-display-name": "Max Number of Connections",
-          "x-nullable": true
-        },
-        "minconn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "namespace": {
-          "type": "string"
-        },
-        "no_sslv3": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv10": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv11": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv12": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_tlsv13": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "no_verifyhost": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "npn": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
         "num_or_range": {
           "type": "string",
           "x-nullable": false
-        },
-        "observe": {
-          "type": "string",
-          "enum": [
-            "layer4",
-            "layer7"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "on-error": {
-          "type": "string",
-          "enum": [
-            "fastinter",
-            "fail-check",
-            "sudden-death",
-            "mark-down"
-          ]
-        },
-        "on-marked-down": {
-          "type": "string",
-          "enum": [
-            "shutdown-sessions"
-          ]
-        },
-        "on-marked-up": {
-          "type": "string",
-          "enum": [
-            "shutdown-backup-sessions"
-          ]
-        },
-        "pool_low_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_max_conn": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "pool_purge_delay": {
-          "type": "integer",
-          "x-nullable": true
         },
         "port": {
           "type": "integer",
@@ -56006,236 +54126,6 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
-        },
-        "proto": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "proxy-v2-options": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
-              "authority",
-              "crc32c",
-              "unique-id"
-            ]
-          }
-        },
-        "redir": {
-          "type": "string",
-          "x-display-name": "Prefix"
-        },
-        "resolve-net": {
-          "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve-prefer": {
-          "type": "string",
-          "enum": [
-            "ipv4",
-            "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
-        },
-        "resolve_opts": {
-          "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
-        },
-        "resolvers": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dynamic-enum": {
-            "operation": "getResolvers",
-            "property": "name"
-          }
-        },
-        "rise": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "send-proxy": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send-proxy-v2": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "send_proxy_v2_ssl_cn": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "slowstart": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "sni": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "socks4": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "check-via-socks4": {
-              "required": true
-            }
-          }
-        },
-        "source": {
-          "type": "string"
-        },
-        "ssl": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "ssl_cafile": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          },
-          "x-display-name": "SSL CA File"
-        },
-        "ssl_certificate": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "ssl_max_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_min_ver": {
-          "type": "string",
-          "enum": [
-            "SSLv3",
-            "TLSv1.0",
-            "TLSv1.1",
-            "TLSv1.2",
-            "TLSv1.3"
-          ]
-        },
-        "ssl_reuse": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "stick": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tcp_ut": {
-          "type": "integer"
-        },
-        "tfo": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "tls_tickets": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "track": {
-          "type": "string"
-        },
-        "verify": {
-          "type": "string",
-          "enum": [
-            "none",
-            "required"
-          ],
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            }
-          }
-        },
-        "verifyhost": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": "enabled"
-            },
-            "verify": {
-              "value": "required"
-            }
-          }
-        },
-        "weight": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "ws": {
-          "type": "string",
-          "enum": [
-            "auto",
-            "h1",
-            "h2"
-          ],
-          "x-display-name": "Relaying websocket stream protocol"
         }
       },
       "additionalProperties": false,
