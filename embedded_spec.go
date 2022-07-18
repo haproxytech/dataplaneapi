@@ -51,7 +51,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.5"
+    "version": "2.6"
   },
   "basePath": "/v2",
   "paths": {
@@ -20716,6 +20716,31 @@ func init() {
         },
         "nolog": {
           "type": "boolean"
+        },
+        "sample_range": {
+          "type": "string",
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
+        },
+        "sample_size": {
+          "type": "integer",
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            },
+            "sample_range": {
+              "required": true
+            }
+          }
         }
       },
       "additionalProperties": false
@@ -25641,7 +25666,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.5"
+    "version": "2.6"
   },
   "basePath": "/v2",
   "paths": {
@@ -53526,6 +53551,31 @@ func init() {
         },
         "nolog": {
           "type": "boolean"
+        },
+        "sample_range": {
+          "type": "string",
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            }
+          }
+        },
+        "sample_size": {
+          "type": "integer",
+          "x-dependency": {
+            "global": {
+              "value": false
+            },
+            "nolog": {
+              "value": false
+            },
+            "sample_range": {
+              "required": true
+            }
+          }
         }
       },
       "additionalProperties": false
