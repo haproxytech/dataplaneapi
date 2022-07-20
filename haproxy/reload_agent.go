@@ -29,6 +29,7 @@ import (
 	"time"
 
 	"github.com/google/renameio"
+	"github.com/haproxytech/client-native/v2/misc"
 	"github.com/haproxytech/client-native/v2/models"
 	"github.com/haproxytech/dataplaneapi/log"
 )
@@ -98,7 +99,9 @@ func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 	}
 	ra.delay = params.Delay
 
-	ra.setLkgPath(params.ConfigFile, params.BackupDir)
+	if err := ra.setLkgPath(params.ConfigFile, params.BackupDir); err != nil {
+		return nil, err
+	}
 
 	// create last known good file, assume it is valid when starting
 	if err := copyFile(ra.configFile, ra.lkgConfigFile); err != nil {
@@ -110,12 +113,18 @@ func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 	return ra, nil
 }
 
-func (ra *ReloadAgent) setLkgPath(configFile, path string) {
+func (ra *ReloadAgent) setLkgPath(configFile, path string) error {
 	if path != "" {
+		var err error
+		path, err = misc.CheckOrCreateWritableDirectory(path)
+		if err != nil {
+			return err
+		}
 		ra.lkgConfigFile = fmt.Sprintf("%s/%s.lkg", path, filepath.Base(configFile))
-		return
+		return nil
 	}
 	ra.lkgConfigFile = configFile + ".lkg"
+	return nil
 }
 
 func (ra *ReloadAgent) handleReload(id string) (string, error) {
