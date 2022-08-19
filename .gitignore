@@ -2,3 +2,4 @@ build/
 vendor/
 cmd/dataplaneapi/*
 .vscode/
+.test/

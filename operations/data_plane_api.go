@@ -58,6 +58,8 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/information"
 	"github.com/haproxytech/dataplaneapi/operations/log_forward"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
+	"github.com/haproxytech/dataplaneapi/operations/mailer_entry"
+	"github.com/haproxytech/dataplaneapi/operations/mailers"
 	"github.com/haproxytech/dataplaneapi/operations/maps"
 	"github.com/haproxytech/dataplaneapi/operations/nameserver"
 	"github.com/haproxytech/dataplaneapi/operations/peer"
@@ -201,6 +203,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogTargetCreateLogTargetHandler: log_target.CreateLogTargetHandlerFunc(func(params log_target.CreateLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.CreateLogTarget has not yet been implemented")
 		}),
+		MailerEntryCreateMailerEntryHandler: mailer_entry.CreateMailerEntryHandlerFunc(func(params mailer_entry.CreateMailerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailer_entry.CreateMailerEntry has not yet been implemented")
+		}),
+		MailersCreateMailersSectionHandler: mailers.CreateMailersSectionHandlerFunc(func(params mailers.CreateMailersSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailers.CreateMailersSection has not yet been implemented")
+		}),
 		NameserverCreateNameserverHandler: nameserver.CreateNameserverHandlerFunc(func(params nameserver.CreateNameserverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.CreateNameserver has not yet been implemented")
 		}),
@@ -327,6 +335,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogTargetDeleteLogTargetHandler: log_target.DeleteLogTargetHandlerFunc(func(params log_target.DeleteLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.DeleteLogTarget has not yet been implemented")
 		}),
+		MailerEntryDeleteMailerEntryHandler: mailer_entry.DeleteMailerEntryHandlerFunc(func(params mailer_entry.DeleteMailerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailer_entry.DeleteMailerEntry has not yet been implemented")
+		}),
+		MailersDeleteMailersSectionHandler: mailers.DeleteMailersSectionHandlerFunc(func(params mailers.DeleteMailersSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailers.DeleteMailersSection has not yet been implemented")
+		}),
 		NameserverDeleteNameserverHandler: nameserver.DeleteNameserverHandlerFunc(func(params nameserver.DeleteNameserverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.DeleteNameserver has not yet been implemented")
 		}),
@@ -407,6 +421,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ClusterEditClusterHandler: cluster.EditClusterHandlerFunc(func(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.EditCluster has not yet been implemented")
+		}),
+		MailersEditMailersSectionHandler: mailers.EditMailersSectionHandlerFunc(func(params mailers.EditMailersSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailers.EditMailersSection has not yet been implemented")
 		}),
 		DiscoveryGetAPIEndpointsHandler: discovery.GetAPIEndpointsHandlerFunc(func(params discovery.GetAPIEndpointsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation discovery.GetAPIEndpoints has not yet been implemented")
@@ -563,6 +580,18 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		LogTargetGetLogTargetsHandler: log_target.GetLogTargetsHandlerFunc(func(params log_target.GetLogTargetsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.GetLogTargets has not yet been implemented")
+		}),
+		MailerEntryGetMailerEntriesHandler: mailer_entry.GetMailerEntriesHandlerFunc(func(params mailer_entry.GetMailerEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailer_entry.GetMailerEntries has not yet been implemented")
+		}),
+		MailerEntryGetMailerEntryHandler: mailer_entry.GetMailerEntryHandlerFunc(func(params mailer_entry.GetMailerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailer_entry.GetMailerEntry has not yet been implemented")
+		}),
+		MailersGetMailersSectionHandler: mailers.GetMailersSectionHandlerFunc(func(params mailers.GetMailersSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailers.GetMailersSection has not yet been implemented")
+		}),
+		MailersGetMailersSectionsHandler: mailers.GetMailersSectionsHandlerFunc(func(params mailers.GetMailersSectionsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailers.GetMailersSections has not yet been implemented")
 		}),
 		NameserverGetNameserverHandler: nameserver.GetNameserverHandlerFunc(func(params nameserver.GetNameserverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.GetNameserver has not yet been implemented")
@@ -825,6 +854,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.ReplaceLogTarget has not yet been implemented")
 		}),
+		MailerEntryReplaceMailerEntryHandler: mailer_entry.ReplaceMailerEntryHandlerFunc(func(params mailer_entry.ReplaceMailerEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation mailer_entry.ReplaceMailerEntry has not yet been implemented")
+		}),
 		NameserverReplaceNameserverHandler: nameserver.ReplaceNameserverHandlerFunc(func(params nameserver.ReplaceNameserverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.ReplaceNameserver has not yet been implemented")
 		}),
@@ -1021,6 +1053,10 @@ type DataPlaneAPI struct {
 	LogForwardCreateLogForwardHandler log_forward.CreateLogForwardHandler
 	// LogTargetCreateLogTargetHandler sets the operation handler for the create log target operation
 	LogTargetCreateLogTargetHandler log_target.CreateLogTargetHandler
+	// MailerEntryCreateMailerEntryHandler sets the operation handler for the create mailer entry operation
+	MailerEntryCreateMailerEntryHandler mailer_entry.CreateMailerEntryHandler
+	// MailersCreateMailersSectionHandler sets the operation handler for the create mailers section operation
+	MailersCreateMailersSectionHandler mailers.CreateMailersSectionHandler
 	// NameserverCreateNameserverHandler sets the operation handler for the create nameserver operation
 	NameserverCreateNameserverHandler nameserver.CreateNameserverHandler
 	// PeerCreatePeerHandler sets the operation handler for the create peer operation
@@ -1105,6 +1141,10 @@ type DataPlaneAPI struct {
 	LogForwardDeleteLogForwardHandler log_forward.DeleteLogForwardHandler
 	// LogTargetDeleteLogTargetHandler sets the operation handler for the delete log target operation
 	LogTargetDeleteLogTargetHandler log_target.DeleteLogTargetHandler
+	// MailerEntryDeleteMailerEntryHandler sets the operation handler for the delete mailer entry operation
+	MailerEntryDeleteMailerEntryHandler mailer_entry.DeleteMailerEntryHandler
+	// MailersDeleteMailersSectionHandler sets the operation handler for the delete mailers section operation
+	MailersDeleteMailersSectionHandler mailers.DeleteMailersSectionHandler
 	// NameserverDeleteNameserverHandler sets the operation handler for the delete nameserver operation
 	NameserverDeleteNameserverHandler nameserver.DeleteNameserverHandler
 	// PeerDeletePeerHandler sets the operation handler for the delete peer operation
@@ -1159,6 +1199,8 @@ type DataPlaneAPI struct {
 	UserlistDeleteUserlistHandler userlist.DeleteUserlistHandler
 	// ClusterEditClusterHandler sets the operation handler for the edit cluster operation
 	ClusterEditClusterHandler cluster.EditClusterHandler
+	// MailersEditMailersSectionHandler sets the operation handler for the edit mailers section operation
+	MailersEditMailersSectionHandler mailers.EditMailersSectionHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
 	DiscoveryGetAPIEndpointsHandler discovery.GetAPIEndpointsHandler
 	// ServiceDiscoveryGetAWSRegionHandler sets the operation handler for the get a w s region operation
@@ -1263,6 +1305,14 @@ type DataPlaneAPI struct {
 	LogTargetGetLogTargetHandler log_target.GetLogTargetHandler
 	// LogTargetGetLogTargetsHandler sets the operation handler for the get log targets operation
 	LogTargetGetLogTargetsHandler log_target.GetLogTargetsHandler
+	// MailerEntryGetMailerEntriesHandler sets the operation handler for the get mailer entries operation
+	MailerEntryGetMailerEntriesHandler mailer_entry.GetMailerEntriesHandler
+	// MailerEntryGetMailerEntryHandler sets the operation handler for the get mailer entry operation
+	MailerEntryGetMailerEntryHandler mailer_entry.GetMailerEntryHandler
+	// MailersGetMailersSectionHandler sets the operation handler for the get mailers section operation
+	MailersGetMailersSectionHandler mailers.GetMailersSectionHandler
+	// MailersGetMailersSectionsHandler sets the operation handler for the get mailers sections operation
+	MailersGetMailersSectionsHandler mailers.GetMailersSectionsHandler
 	// NameserverGetNameserverHandler sets the operation handler for the get nameserver operation
 	NameserverGetNameserverHandler nameserver.GetNameserverHandler
 	// NameserverGetNameserversHandler sets the operation handler for the get nameservers operation
@@ -1437,6 +1487,8 @@ type DataPlaneAPI struct {
 	LogForwardReplaceLogForwardHandler log_forward.ReplaceLogForwardHandler
 	// LogTargetReplaceLogTargetHandler sets the operation handler for the replace log target operation
 	LogTargetReplaceLogTargetHandler log_target.ReplaceLogTargetHandler
+	// MailerEntryReplaceMailerEntryHandler sets the operation handler for the replace mailer entry operation
+	MailerEntryReplaceMailerEntryHandler mailer_entry.ReplaceMailerEntryHandler
 	// NameserverReplaceNameserverHandler sets the operation handler for the replace nameserver operation
 	NameserverReplaceNameserverHandler nameserver.ReplaceNameserverHandler
 	// PeerEntryReplacePeerEntryHandler sets the operation handler for the replace peer entry operation
@@ -1667,6 +1719,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.LogTargetCreateLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.CreateLogTargetHandler")
 	}
+	if o.MailerEntryCreateMailerEntryHandler == nil {
+		unregistered = append(unregistered, "mailer_entry.CreateMailerEntryHandler")
+	}
+	if o.MailersCreateMailersSectionHandler == nil {
+		unregistered = append(unregistered, "mailers.CreateMailersSectionHandler")
+	}
 	if o.NameserverCreateNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.CreateNameserverHandler")
 	}
@@ -1793,6 +1851,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.LogTargetDeleteLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.DeleteLogTargetHandler")
 	}
+	if o.MailerEntryDeleteMailerEntryHandler == nil {
+		unregistered = append(unregistered, "mailer_entry.DeleteMailerEntryHandler")
+	}
+	if o.MailersDeleteMailersSectionHandler == nil {
+		unregistered = append(unregistered, "mailers.DeleteMailersSectionHandler")
+	}
 	if o.NameserverDeleteNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.DeleteNameserverHandler")
 	}
@@ -1873,6 +1937,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ClusterEditClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.EditClusterHandler")
+	}
+	if o.MailersEditMailersSectionHandler == nil {
+		unregistered = append(unregistered, "mailers.EditMailersSectionHandler")
 	}
 	if o.DiscoveryGetAPIEndpointsHandler == nil {
 		unregistered = append(unregistered, "discovery.GetAPIEndpointsHandler")
@@ -2029,6 +2096,18 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.LogTargetGetLogTargetsHandler == nil {
 		unregistered = append(unregistered, "log_target.GetLogTargetsHandler")
+	}
+	if o.MailerEntryGetMailerEntriesHandler == nil {
+		unregistered = append(unregistered, "mailer_entry.GetMailerEntriesHandler")
+	}
+	if o.MailerEntryGetMailerEntryHandler == nil {
+		unregistered = append(unregistered, "mailer_entry.GetMailerEntryHandler")
+	}
+	if o.MailersGetMailersSectionHandler == nil {
+		unregistered = append(unregistered, "mailers.GetMailersSectionHandler")
+	}
+	if o.MailersGetMailersSectionsHandler == nil {
+		unregistered = append(unregistered, "mailers.GetMailersSectionsHandler")
 	}
 	if o.NameserverGetNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.GetNameserverHandler")
@@ -2290,6 +2369,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.LogTargetReplaceLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
+	}
+	if o.MailerEntryReplaceMailerEntryHandler == nil {
+		unregistered = append(unregistered, "mailer_entry.ReplaceMailerEntryHandler")
 	}
 	if o.NameserverReplaceNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.ReplaceNameserverHandler")
@@ -2591,6 +2673,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/mailer_entries"] = mailer_entry.NewCreateMailerEntry(o.context, o.MailerEntryCreateMailerEntryHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/mailers_section"] = mailers.NewCreateMailersSection(o.context, o.MailersCreateMailersSectionHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/nameservers"] = nameserver.NewCreateNameserver(o.context, o.NameserverCreateNameserverHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2759,6 +2849,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/mailer_entries/{name}"] = mailer_entry.NewDeleteMailerEntry(o.context, o.MailerEntryDeleteMailerEntryHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/mailers_section/{name}"] = mailers.NewDeleteMailersSection(o.context, o.MailersDeleteMailersSectionHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewDeleteNameserver(o.context, o.NameserverDeleteNameserverHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -2864,6 +2962,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/cluster"] = cluster.NewEditCluster(o.context, o.ClusterEditClusterHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/mailers_section/{name}"] = mailers.NewEditMailersSection(o.context, o.MailersEditMailersSectionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3072,6 +3174,22 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/log_targets"] = log_target.NewGetLogTargets(o.context, o.LogTargetGetLogTargetsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/mailer_entries"] = mailer_entry.NewGetMailerEntries(o.context, o.MailerEntryGetMailerEntriesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/mailer_entries/{name}"] = mailer_entry.NewGetMailerEntry(o.context, o.MailerEntryGetMailerEntryHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/mailers_section/{name}"] = mailers.NewGetMailersSection(o.context, o.MailersGetMailersSectionHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/mailers_section"] = mailers.NewGetMailersSections(o.context, o.MailersGetMailersSectionsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3420,6 +3538,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/mailer_entries/{name}"] = mailer_entry.NewReplaceMailerEntry(o.context, o.MailerEntryReplaceMailerEntryHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

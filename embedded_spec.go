@@ -5911,6 +5911,557 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/mailer_entries": {
+      "get": {
+        "description": "Returns an array of all the mailer_entries configured in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Return an array of mailer_entries",
+        "operationId": "getMailerEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailer_entries"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new mailer entry to the specified mailers section in the configuration file.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Add a new mailer_entry",
+        "operationId": "createMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "MailerEntry created",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/mailer_entries/{name}": {
+      "get": {
+        "description": "Returns one mailer_entry configuration by it's name in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Return one mailer_entry",
+        "operationId": "getMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "MailerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent mailers name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailer_entry"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a mailer entry configuration by it's name in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Replace a mailer_entry",
+        "operationId": "replaceMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "MailerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MailerEntry replaced",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a mailer entry configuration by it's name in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Delete a mailer_entry",
+        "operationId": "deleteMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "MailerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "MailerEntry deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/mailers_section": {
+      "get": {
+        "description": "Returns an array of all the configured mailers in HAProxy",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Return an array of mailers sections",
+        "operationId": "getMailersSections",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailers_sections"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new empty Mailers section",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Add a new Mailers section",
+        "operationId": "createMailersSection",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Mailers created",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/mailers_section/{name}": {
+      "get": {
+        "description": "Returns one mailers configuration by it's name.",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Return a Mailers section",
+        "operationId": "getMailersSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Mailers name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailers_section"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a mailers configuration by it's name.",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Modify a Mailers section",
+        "operationId": "editMailersSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Mailers name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mailers configuration updated",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a mailers from the configuration by it's name.",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Delete a Mailers section",
+        "operationId": "deleteMailersSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Mailers name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Mailers deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/nameservers": {
       "get": {
         "description": "Returns an array of all configured nameservers.",
@@ -14125,6 +14676,9 @@ func init() {
             }
           }
         },
+        "email_alert": {
+          "$ref": "#/definitions/email_alert"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -15752,6 +16306,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "email_alert": {
+          "$ref": "#/definitions/email_alert"
+        },
         "error_files": {
           "type": "array",
           "items": {
@@ -16178,6 +16735,49 @@ func init() {
         "$ref": "#/definitions/dgram_bind"
       }
     },
+    "email_alert": {
+      "description": "Send emails for important log messages.",
+      "type": "object",
+      "title": "Email Alert",
+      "required": [
+        "from",
+        "mailers",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "string",
+          "pattern": "^\\S+@\\S+$"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+          ]
+        },
+        "mailers": {
+          "type": "string",
+          "x-dynamic-enum": {
+            "operation": "getMailersSections",
+            "property": "name"
+          }
+        },
+        "myhostname": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^\\S+@\\S+$"
+        }
+      }
+    },
     "endpoint": {
       "description": "Endpoint definition",
       "type": "object",
@@ -16488,6 +17088,9 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Don't Log Null"
+        },
+        "email_alert": {
+          "$ref": "#/definitions/email_alert"
         },
         "forwardfor": {
           "x-dependency": {
@@ -20222,6 +20825,71 @@ func init() {
       "title": "Log Target Array",
       "items": {
         "$ref": "#/definitions/log_target"
+      }
+    },
+    "mailer_entries": {
+      "description": "HAProxy mailer entries",
+      "type": "array",
+      "title": "Mailer Entries",
+      "items": {
+        "$ref": "#/definitions/mailer_entry"
+      }
+    },
+    "mailer_entry": {
+      "description": "Mailer entry of a Mailers section",
+      "type": "object",
+      "title": "Mailer Entry",
+      "required": [
+        "name",
+        "address",
+        "port"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^\\S+$",
+          "x-nullable": false
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": false
+        }
+      }
+    },
+    "mailers_section": {
+      "description": "A list of SMTP servers used by HAProxy to send emails.",
+      "type": "object",
+      "title": "Mailers Section",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        },
+        "timeout": {
+          "type": "integer",
+          "x-display-name": "Timeout to send an email in milliseconds",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "mailers_sections": {
+      "description": "HAProxy mailers_section array",
+      "type": "array",
+      "title": "Mailers Sections",
+      "items": {
+        "$ref": "#/definitions/mailers_section"
       }
     },
     "map": {
@@ -24505,6 +25173,12 @@ func init() {
     },
     {
       "name": "LogTarget"
+    },
+    {
+      "name": "MailerEntry"
+    },
+    {
+      "name": "Mailers"
     },
     {
       "name": "Maps"
@@ -33144,6 +33818,843 @@ func init() {
           },
           "204": {
             "description": "Log Target deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/mailer_entries": {
+      "get": {
+        "description": "Returns an array of all the mailer_entries configured in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Return an array of mailer_entries",
+        "operationId": "getMailerEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailer_entries"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new mailer entry to the specified mailers section in the configuration file.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Add a new mailer_entry",
+        "operationId": "createMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "MailerEntry created",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/mailer_entries/{name}": {
+      "get": {
+        "description": "Returns one mailer_entry configuration by it's name in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Return one mailer_entry",
+        "operationId": "getMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "MailerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent mailers name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailer_entry"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a mailer entry configuration by it's name in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Replace a mailer_entry",
+        "operationId": "replaceMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "MailerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MailerEntry replaced",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailer_entry"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a mailer entry configuration by it's name in the specified mailers section.",
+        "tags": [
+          "MailerEntry"
+        ],
+        "summary": "Delete a mailer_entry",
+        "operationId": "deleteMailerEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "MailerEntry name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent mailers section name",
+            "name": "mailers_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "MailerEntry deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/mailers_section": {
+      "get": {
+        "description": "Returns an array of all the configured mailers in HAProxy",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Return an array of mailers sections",
+        "operationId": "getMailersSections",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailers_sections"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new empty Mailers section",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Add a new Mailers section",
+        "operationId": "createMailersSection",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Mailers created",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/mailers_section/{name}": {
+      "get": {
+        "description": "Returns one mailers configuration by it's name.",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Return a Mailers section",
+        "operationId": "getMailersSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Mailers name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/mailers_section"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a mailers configuration by it's name.",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Modify a Mailers section",
+        "operationId": "editMailersSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Mailers name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mailers configuration updated",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/mailers_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a mailers from the configuration by it's name.",
+        "tags": [
+          "Mailers"
+        ],
+        "summary": "Delete a Mailers section",
+        "operationId": "deleteMailersSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Mailers name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Mailers deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -46097,6 +47608,9 @@ func init() {
             }
           }
         },
+        "email_alert": {
+          "$ref": "#/definitions/email_alert"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -47691,6 +49205,9 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "email_alert": {
+          "$ref": "#/definitions/email_alert"
+        },
         "error_files": {
           "type": "array",
           "items": {
@@ -48117,6 +49634,49 @@ func init() {
         "$ref": "#/definitions/dgram_bind"
       }
     },
+    "email_alert": {
+      "description": "Send emails for important log messages.",
+      "type": "object",
+      "title": "Email Alert",
+      "required": [
+        "from",
+        "mailers",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "string",
+          "pattern": "^\\S+@\\S+$"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+          ]
+        },
+        "mailers": {
+          "type": "string",
+          "x-dynamic-enum": {
+            "operation": "getMailersSections",
+            "property": "name"
+          }
+        },
+        "myhostname": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^\\S+@\\S+$"
+        }
+      }
+    },
     "endpoint": {
       "description": "Endpoint definition",
       "type": "object",
@@ -48427,6 +49987,9 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Don't Log Null"
+        },
+        "email_alert": {
+          "$ref": "#/definitions/email_alert"
         },
         "forwardfor": {
           "x-dependency": {
@@ -52002,6 +53565,72 @@ func init() {
       "title": "Log Target Array",
       "items": {
         "$ref": "#/definitions/log_target"
+      }
+    },
+    "mailer_entries": {
+      "description": "HAProxy mailer entries",
+      "type": "array",
+      "title": "Mailer Entries",
+      "items": {
+        "$ref": "#/definitions/mailer_entry"
+      }
+    },
+    "mailer_entry": {
+      "description": "Mailer entry of a Mailers section",
+      "type": "object",
+      "title": "Mailer Entry",
+      "required": [
+        "name",
+        "address",
+        "port"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^\\S+$",
+          "x-nullable": false
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": false
+        }
+      }
+    },
+    "mailers_section": {
+      "description": "A list of SMTP servers used by HAProxy to send emails.",
+      "type": "object",
+      "title": "Mailers Section",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "Timeout to send an email in milliseconds",
+          "x-nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "mailers_sections": {
+      "description": "HAProxy mailers_section array",
+      "type": "array",
+      "title": "Mailers Sections",
+      "items": {
+        "$ref": "#/definitions/mailers_section"
       }
     },
     "map": {
@@ -56180,6 +57809,12 @@ func init() {
     },
     {
       "name": "LogTarget"
+    },
+    {
+      "name": "MailerEntry"
+    },
+    {
+      "name": "Mailers"
     },
     {
       "name": "Maps"

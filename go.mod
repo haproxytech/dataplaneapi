@@ -22,8 +22,8 @@ require (
 	github.com/go-openapi/validate v0.22.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.3.0
-	github.com/haproxytech/client-native/v4 v4.0.1-0.20220719093029-6a53cf3b5fdb
-	github.com/haproxytech/config-parser/v4 v4.0.0-rc4.0.20220718074928-6aefcc433cd6
+	github.com/haproxytech/client-native/v4 v4.0.1-0.20220819135713-5bf184951594
+	github.com/haproxytech/config-parser/v4 v4.0.0-rc4.0.20220809125401-f49cd9e38275
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.5.0
@@ -36,7 +36,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.8.0
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
-	golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e
+	golang.org/x/sys v0.0.0-20220808155132-1c4a2a72c664
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -53,10 +53,9 @@ require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
-	github.com/go-openapi/analysis v0.21.2 // indirect
+	github.com/go-openapi/analysis v0.21.3 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.20.0 // indirect
-	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
@@ -86,6 +85,6 @@ require (
 	github.com/tebeka/strftime v0.1.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	github.com/tklauser/numcpus v0.2.2 // indirect
-	go.mongodb.org/mongo-driver v1.8.3 // indirect
+	go.mongodb.org/mongo-driver v1.10.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

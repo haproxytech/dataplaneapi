@@ -527,6 +527,20 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.NameserverGetNameserversHandler = &handlers.GetNameserversHandlerImpl{Client: client}
 	api.NameserverReplaceNameserverHandler = &handlers.ReplaceNameserverHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup mailers sections handlers
+	api.MailersCreateMailersSectionHandler = &handlers.CreateMailersSectionHandlerImpl{Client: client, ReloadAgent: ra}
+	api.MailersDeleteMailersSectionHandler = &handlers.DeleteMailersSectionHandlerImpl{Client: client, ReloadAgent: ra}
+	api.MailersGetMailersSectionHandler = &handlers.GetMailersSectionHandlerImpl{Client: client}
+	api.MailersGetMailersSectionsHandler = &handlers.GetMailersSectionsHandlerImpl{Client: client}
+	api.MailersEditMailersSectionHandler = &handlers.EditMailersSectionHandlerImpl{Client: client, ReloadAgent: ra}
+
+	// setup mailer entry handlers
+	api.MailerEntryCreateMailerEntryHandler = &handlers.CreateMailerEntryHandlerImpl{Client: client, ReloadAgent: ra}
+	api.MailerEntryDeleteMailerEntryHandler = &handlers.DeleteMailerEntryHandlerImpl{Client: client, ReloadAgent: ra}
+	api.MailerEntryGetMailerEntryHandler = &handlers.GetMailerEntryHandlerImpl{Client: client}
+	api.MailerEntryGetMailerEntriesHandler = &handlers.GetMailerEntriesHandlerImpl{Client: client}
+	api.MailerEntryReplaceMailerEntryHandler = &handlers.ReplaceMailerEntryHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup peer section handlers
 	api.PeerCreatePeerHandler = &handlers.CreatePeerHandlerImpl{Client: client, ReloadAgent: ra}
 	api.PeerDeletePeerHandler = &handlers.DeletePeerHandlerImpl{Client: client, ReloadAgent: ra}
