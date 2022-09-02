@@ -44,12 +44,12 @@ func NewDeletePeer(ctx *middleware.Context, handler DeletePeerHandler) *DeletePe
 	return &DeletePeer{Context: ctx, Handler: handler}
 }
 
-/* DeletePeer swagger:route DELETE /services/haproxy/configuration/peer_section/{name} Peer deletePeer
+/*
+	DeletePeer swagger:route DELETE /services/haproxy/configuration/peer_section/{name} Peer deletePeer
 
-Delete a peer
+# Delete a peer
 
 Deletes a peer from the configuration by it's name.
-
 */
 type DeletePeer struct {
 	Context *middleware.Context

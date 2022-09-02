@@ -31,7 +31,8 @@ import (
 // DeleteMailersSectionAcceptedCode is the HTTP code returned for type DeleteMailersSectionAccepted
 const DeleteMailersSectionAcceptedCode int = 202
 
-/*DeleteMailersSectionAccepted Configuration change accepted and reload requested
+/*
+DeleteMailersSectionAccepted Configuration change accepted and reload requested
 
 swagger:response deleteMailersSectionAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteMailersSectionAccepted) WriteResponse(rw http.ResponseWriter, pro
 // DeleteMailersSectionNoContentCode is the HTTP code returned for type DeleteMailersSectionNoContent
 const DeleteMailersSectionNoContentCode int = 204
 
-/*DeleteMailersSectionNoContent Mailers deleted
+/*
+DeleteMailersSectionNoContent Mailers deleted
 
 swagger:response deleteMailersSectionNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteMailersSectionNoContent) WriteResponse(rw http.ResponseWriter, pr
 // DeleteMailersSectionNotFoundCode is the HTTP code returned for type DeleteMailersSectionNotFound
 const DeleteMailersSectionNotFoundCode int = 404
 
-/*DeleteMailersSectionNotFound The specified resource was not found
+/*
+DeleteMailersSectionNotFound The specified resource was not found
 
 swagger:response deleteMailersSectionNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteMailersSectionNotFound) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*DeleteMailersSectionDefault General Error
+/*
+DeleteMailersSectionDefault General Error
 
 swagger:response deleteMailersSectionDefault
 */

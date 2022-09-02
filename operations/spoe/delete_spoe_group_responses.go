@@ -31,7 +31,8 @@ import (
 // DeleteSpoeGroupNoContentCode is the HTTP code returned for type DeleteSpoeGroupNoContent
 const DeleteSpoeGroupNoContentCode int = 204
 
-/*DeleteSpoeGroupNoContent Spoe group deleted
+/*
+DeleteSpoeGroupNoContent Spoe group deleted
 
 swagger:response deleteSpoeGroupNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteSpoeGroupNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteSpoeGroupNotFoundCode is the HTTP code returned for type DeleteSpoeGroupNotFound
 const DeleteSpoeGroupNotFoundCode int = 404
 
-/*DeleteSpoeGroupNotFound The specified resource was not found
+/*
+DeleteSpoeGroupNotFound The specified resource was not found
 
 swagger:response deleteSpoeGroupNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteSpoeGroupNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteSpoeGroupDefault General Error
+/*
+DeleteSpoeGroupDefault General Error
 
 swagger:response deleteSpoeGroupDefault
 */

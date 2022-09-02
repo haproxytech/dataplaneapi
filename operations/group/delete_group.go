@@ -44,10 +44,10 @@ func NewDeleteGroup(ctx *middleware.Context, handler DeleteGroupHandler) *Delete
 	return &DeleteGroup{Context: ctx, Handler: handler}
 }
 
-/* DeleteGroup swagger:route DELETE /services/haproxy/configuration/groups/{name} Group deleteGroup
+/*
+	DeleteGroup swagger:route DELETE /services/haproxy/configuration/groups/{name} Group deleteGroup
 
 Delete a group
-
 */
 type DeleteGroup struct {
 	Context *middleware.Context

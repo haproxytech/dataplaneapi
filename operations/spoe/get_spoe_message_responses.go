@@ -31,7 +31,8 @@ import (
 // GetSpoeMessageOKCode is the HTTP code returned for type GetSpoeMessageOK
 const GetSpoeMessageOKCode int = 200
 
-/*GetSpoeMessageOK Successful operation
+/*
+GetSpoeMessageOK Successful operation
 
 swagger:response getSpoeMessageOK
 */
@@ -97,7 +98,8 @@ func (o *GetSpoeMessageOK) WriteResponse(rw http.ResponseWriter, producer runtim
 // GetSpoeMessageNotFoundCode is the HTTP code returned for type GetSpoeMessageNotFound
 const GetSpoeMessageNotFoundCode int = 404
 
-/*GetSpoeMessageNotFound The specified resource was not found
+/*
+GetSpoeMessageNotFound The specified resource was not found
 
 swagger:response getSpoeMessageNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetSpoeMessageNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*GetSpoeMessageDefault General Error
+/*
+GetSpoeMessageDefault General Error
 
 swagger:response getSpoeMessageDefault
 */

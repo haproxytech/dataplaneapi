@@ -31,7 +31,8 @@ import (
 // ReplaceGlobalOKCode is the HTTP code returned for type ReplaceGlobalOK
 const ReplaceGlobalOKCode int = 200
 
-/*ReplaceGlobalOK Global replaced
+/*
+ReplaceGlobalOK Global replaced
 
 swagger:response replaceGlobalOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceGlobalOK) WriteResponse(rw http.ResponseWriter, producer runtime
 // ReplaceGlobalAcceptedCode is the HTTP code returned for type ReplaceGlobalAccepted
 const ReplaceGlobalAcceptedCode int = 202
 
-/*ReplaceGlobalAccepted Configuration change accepted and reload requested
+/*
+ReplaceGlobalAccepted Configuration change accepted and reload requested
 
 swagger:response replaceGlobalAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceGlobalAccepted) WriteResponse(rw http.ResponseWriter, producer r
 // ReplaceGlobalBadRequestCode is the HTTP code returned for type ReplaceGlobalBadRequest
 const ReplaceGlobalBadRequestCode int = 400
 
-/*ReplaceGlobalBadRequest Bad request
+/*
+ReplaceGlobalBadRequest Bad request
 
 swagger:response replaceGlobalBadRequest
 */
@@ -204,7 +207,8 @@ func (o *ReplaceGlobalBadRequest) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*ReplaceGlobalDefault General Error
+/*
+ReplaceGlobalDefault General Error
 
 swagger:response replaceGlobalDefault
 */

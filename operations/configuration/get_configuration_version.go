@@ -44,12 +44,12 @@ func NewGetConfigurationVersion(ctx *middleware.Context, handler GetConfiguratio
 	return &GetConfigurationVersion{Context: ctx, Handler: handler}
 }
 
-/* GetConfigurationVersion swagger:route GET /services/haproxy/configuration/version Configuration getConfigurationVersion
+/*
+	GetConfigurationVersion swagger:route GET /services/haproxy/configuration/version Configuration getConfigurationVersion
 
-Return a configuration version
+# Return a configuration version
 
 Returns configuration version.
-
 */
 type GetConfigurationVersion struct {
 	Context *middleware.Context

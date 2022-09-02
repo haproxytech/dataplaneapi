@@ -31,7 +31,8 @@ import (
 // GetServicesHaproxyRuntimeAclsIDOKCode is the HTTP code returned for type GetServicesHaproxyRuntimeAclsIDOK
 const GetServicesHaproxyRuntimeAclsIDOKCode int = 200
 
-/*GetServicesHaproxyRuntimeAclsIDOK Successful operation
+/*
+GetServicesHaproxyRuntimeAclsIDOK Successful operation
 
 swagger:response getServicesHaproxyRuntimeAclsIdOK
 */
@@ -75,7 +76,8 @@ func (o *GetServicesHaproxyRuntimeAclsIDOK) WriteResponse(rw http.ResponseWriter
 // GetServicesHaproxyRuntimeAclsIDNotFoundCode is the HTTP code returned for type GetServicesHaproxyRuntimeAclsIDNotFound
 const GetServicesHaproxyRuntimeAclsIDNotFoundCode int = 404
 
-/*GetServicesHaproxyRuntimeAclsIDNotFound The specified resource was not found
+/*
+GetServicesHaproxyRuntimeAclsIDNotFound The specified resource was not found
 
 swagger:response getServicesHaproxyRuntimeAclsIdNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetServicesHaproxyRuntimeAclsIDNotFound) WriteResponse(rw http.Response
 	}
 }
 
-/*GetServicesHaproxyRuntimeAclsIDDefault General Error
+/*
+GetServicesHaproxyRuntimeAclsIDDefault General Error
 
 swagger:response getServicesHaproxyRuntimeAclsIdDefault
 */

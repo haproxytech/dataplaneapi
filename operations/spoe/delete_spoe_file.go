@@ -44,12 +44,12 @@ func NewDeleteSpoeFile(ctx *middleware.Context, handler DeleteSpoeFileHandler) *
 	return &DeleteSpoeFile{Context: ctx, Handler: handler}
 }
 
-/* DeleteSpoeFile swagger:route DELETE /services/haproxy/spoe/spoe_files/{name} Spoe deleteSpoeFile
+/*
+	DeleteSpoeFile swagger:route DELETE /services/haproxy/spoe/spoe_files/{name} Spoe deleteSpoeFile
 
-Delete SPOE file
+# Delete SPOE file
 
 Deletes SPOE file.
-
 */
 type DeleteSpoeFile struct {
 	Context *middleware.Context

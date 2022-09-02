@@ -50,12 +50,12 @@ func NewGetServerSwitchingRule(ctx *middleware.Context, handler GetServerSwitchi
 	return &GetServerSwitchingRule{Context: ctx, Handler: handler}
 }
 
-/* GetServerSwitchingRule swagger:route GET /services/haproxy/configuration/server_switching_rules/{index} ServerSwitchingRule getServerSwitchingRule
+/*
+	GetServerSwitchingRule swagger:route GET /services/haproxy/configuration/server_switching_rules/{index} ServerSwitchingRule getServerSwitchingRule
 
-Return one Server Switching Rule
+# Return one Server Switching Rule
 
 Returns one Server Switching Rule configuration by it's index in the specified backend.
-
 */
 type GetServerSwitchingRule struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // ReplaceRingOKCode is the HTTP code returned for type ReplaceRingOK
 const ReplaceRingOKCode int = 200
 
-/*ReplaceRingOK Ring replaced
+/*
+ReplaceRingOK Ring replaced
 
 swagger:response replaceRingOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceRingOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // ReplaceRingAcceptedCode is the HTTP code returned for type ReplaceRingAccepted
 const ReplaceRingAcceptedCode int = 202
 
-/*ReplaceRingAccepted Configuration change accepted and reload requested
+/*
+ReplaceRingAccepted Configuration change accepted and reload requested
 
 swagger:response replaceRingAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceRingAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // ReplaceRingBadRequestCode is the HTTP code returned for type ReplaceRingBadRequest
 const ReplaceRingBadRequestCode int = 400
 
-/*ReplaceRingBadRequest Bad request
+/*
+ReplaceRingBadRequest Bad request
 
 swagger:response replaceRingBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceRingBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 // ReplaceRingNotFoundCode is the HTTP code returned for type ReplaceRingNotFound
 const ReplaceRingNotFoundCode int = 404
 
-/*ReplaceRingNotFound The specified resource was not found
+/*
+ReplaceRingNotFound The specified resource was not found
 
 swagger:response replaceRingNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceRingNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*ReplaceRingDefault General Error
+/*
+ReplaceRingDefault General Error
 
 swagger:response replaceRingDefault
 */

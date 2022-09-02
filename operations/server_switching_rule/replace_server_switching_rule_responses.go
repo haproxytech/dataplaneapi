@@ -31,7 +31,8 @@ import (
 // ReplaceServerSwitchingRuleOKCode is the HTTP code returned for type ReplaceServerSwitchingRuleOK
 const ReplaceServerSwitchingRuleOKCode int = 200
 
-/*ReplaceServerSwitchingRuleOK Server Switching Rule replaced
+/*
+ReplaceServerSwitchingRuleOK Server Switching Rule replaced
 
 swagger:response replaceServerSwitchingRuleOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceServerSwitchingRuleOK) WriteResponse(rw http.ResponseWriter, pro
 // ReplaceServerSwitchingRuleAcceptedCode is the HTTP code returned for type ReplaceServerSwitchingRuleAccepted
 const ReplaceServerSwitchingRuleAcceptedCode int = 202
 
-/*ReplaceServerSwitchingRuleAccepted Configuration change accepted and reload requested
+/*
+ReplaceServerSwitchingRuleAccepted Configuration change accepted and reload requested
 
 swagger:response replaceServerSwitchingRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceServerSwitchingRuleAccepted) WriteResponse(rw http.ResponseWrite
 // ReplaceServerSwitchingRuleBadRequestCode is the HTTP code returned for type ReplaceServerSwitchingRuleBadRequest
 const ReplaceServerSwitchingRuleBadRequestCode int = 400
 
-/*ReplaceServerSwitchingRuleBadRequest Bad request
+/*
+ReplaceServerSwitchingRuleBadRequest Bad request
 
 swagger:response replaceServerSwitchingRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceServerSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWri
 // ReplaceServerSwitchingRuleNotFoundCode is the HTTP code returned for type ReplaceServerSwitchingRuleNotFound
 const ReplaceServerSwitchingRuleNotFoundCode int = 404
 
-/*ReplaceServerSwitchingRuleNotFound The specified resource was not found
+/*
+ReplaceServerSwitchingRuleNotFound The specified resource was not found
 
 swagger:response replaceServerSwitchingRuleNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceServerSwitchingRuleNotFound) WriteResponse(rw http.ResponseWrite
 	}
 }
 
-/*ReplaceServerSwitchingRuleDefault General Error
+/*
+ReplaceServerSwitchingRuleDefault General Error
 
 swagger:response replaceServerSwitchingRuleDefault
 */

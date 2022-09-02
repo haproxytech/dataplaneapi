@@ -51,12 +51,12 @@ func NewGetTCPChecks(ctx *middleware.Context, handler GetTCPChecksHandler) *GetT
 	return &GetTCPChecks{Context: ctx, Handler: handler}
 }
 
-/* GetTCPChecks swagger:route GET /services/haproxy/configuration/tcp_checks TCPCheck getTcpChecks
+/*
+	GetTCPChecks swagger:route GET /services/haproxy/configuration/tcp_checks TCPCheck getTcpChecks
 
-Return an array of TCP checks
+# Return an array of TCP checks
 
 Returns all TCP checks that are configured in specified parent.
-
 */
 type GetTCPChecks struct {
 	Context *middleware.Context

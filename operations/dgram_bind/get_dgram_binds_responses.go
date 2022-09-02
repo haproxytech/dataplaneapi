@@ -31,7 +31,8 @@ import (
 // GetDgramBindsOKCode is the HTTP code returned for type GetDgramBindsOK
 const GetDgramBindsOKCode int = 200
 
-/*GetDgramBindsOK Successful operation
+/*
+GetDgramBindsOK Successful operation
 
 swagger:response getDgramBindsOK
 */
@@ -94,7 +95,8 @@ func (o *GetDgramBindsOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetDgramBindsDefault General Error
+/*
+GetDgramBindsDefault General Error
 
 swagger:response getDgramBindsDefault
 */

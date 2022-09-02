@@ -50,12 +50,12 @@ func NewGetMailerEntry(ctx *middleware.Context, handler GetMailerEntryHandler) *
 	return &GetMailerEntry{Context: ctx, Handler: handler}
 }
 
-/* GetMailerEntry swagger:route GET /services/haproxy/configuration/mailer_entries/{name} MailerEntry getMailerEntry
+/*
+	GetMailerEntry swagger:route GET /services/haproxy/configuration/mailer_entries/{name} MailerEntry getMailerEntry
 
 Return one mailer_entry
 
 Returns one mailer_entry configuration by it's name in the specified mailers section.
-
 */
 type GetMailerEntry struct {
 	Context *middleware.Context

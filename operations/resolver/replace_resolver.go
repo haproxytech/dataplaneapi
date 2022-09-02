@@ -44,12 +44,12 @@ func NewReplaceResolver(ctx *middleware.Context, handler ReplaceResolverHandler)
 	return &ReplaceResolver{Context: ctx, Handler: handler}
 }
 
-/* ReplaceResolver swagger:route PUT /services/haproxy/configuration/resolvers/{name} Resolver replaceResolver
+/*
+	ReplaceResolver swagger:route PUT /services/haproxy/configuration/resolvers/{name} Resolver replaceResolver
 
-Replace a resolver
+# Replace a resolver
 
 Replaces a resolver configuration by it's name.
-
 */
 type ReplaceResolver struct {
 	Context *middleware.Context

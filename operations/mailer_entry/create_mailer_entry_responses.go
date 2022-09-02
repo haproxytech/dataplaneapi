@@ -31,7 +31,8 @@ import (
 // CreateMailerEntryCreatedCode is the HTTP code returned for type CreateMailerEntryCreated
 const CreateMailerEntryCreatedCode int = 201
 
-/*CreateMailerEntryCreated MailerEntry created
+/*
+CreateMailerEntryCreated MailerEntry created
 
 swagger:response createMailerEntryCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateMailerEntryCreated) WriteResponse(rw http.ResponseWriter, produce
 // CreateMailerEntryAcceptedCode is the HTTP code returned for type CreateMailerEntryAccepted
 const CreateMailerEntryAcceptedCode int = 202
 
-/*CreateMailerEntryAccepted Configuration change accepted and reload requested
+/*
+CreateMailerEntryAccepted Configuration change accepted and reload requested
 
 swagger:response createMailerEntryAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateMailerEntryAccepted) WriteResponse(rw http.ResponseWriter, produc
 // CreateMailerEntryBadRequestCode is the HTTP code returned for type CreateMailerEntryBadRequest
 const CreateMailerEntryBadRequestCode int = 400
 
-/*CreateMailerEntryBadRequest Bad request
+/*
+CreateMailerEntryBadRequest Bad request
 
 swagger:response createMailerEntryBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateMailerEntryBadRequest) WriteResponse(rw http.ResponseWriter, prod
 // CreateMailerEntryConflictCode is the HTTP code returned for type CreateMailerEntryConflict
 const CreateMailerEntryConflictCode int = 409
 
-/*CreateMailerEntryConflict The specified resource already exists
+/*
+CreateMailerEntryConflict The specified resource already exists
 
 swagger:response createMailerEntryConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateMailerEntryConflict) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*CreateMailerEntryDefault General Error
+/*
+CreateMailerEntryDefault General Error
 
 swagger:response createMailerEntryDefault
 */

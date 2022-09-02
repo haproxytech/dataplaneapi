@@ -44,12 +44,12 @@ func NewCreateFilter(ctx *middleware.Context, handler CreateFilterHandler) *Crea
 	return &CreateFilter{Context: ctx, Handler: handler}
 }
 
-/* CreateFilter swagger:route POST /services/haproxy/configuration/filters Filter createFilter
+/*
+	CreateFilter swagger:route POST /services/haproxy/configuration/filters Filter createFilter
 
-Add a new Filter
+# Add a new Filter
 
 Adds a new Filter of the specified type in the specified parent.
-
 */
 type CreateFilter struct {
 	Context *middleware.Context

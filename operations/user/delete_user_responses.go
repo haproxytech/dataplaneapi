@@ -31,7 +31,8 @@ import (
 // DeleteUserAcceptedCode is the HTTP code returned for type DeleteUserAccepted
 const DeleteUserAcceptedCode int = 202
 
-/*DeleteUserAccepted Configuration change accepted and reload requested
+/*
+DeleteUserAccepted Configuration change accepted and reload requested
 
 swagger:response deleteUserAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteUserAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // DeleteUserNoContentCode is the HTTP code returned for type DeleteUserNoContent
 const DeleteUserNoContentCode int = 204
 
-/*DeleteUserNoContent User deleted
+/*
+DeleteUserNoContent User deleted
 
 swagger:response deleteUserNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteUserNoContent) WriteResponse(rw http.ResponseWriter, producer run
 // DeleteUserNotFoundCode is the HTTP code returned for type DeleteUserNotFound
 const DeleteUserNotFoundCode int = 404
 
-/*DeleteUserNotFound The specified resource was not found
+/*
+DeleteUserNotFound The specified resource was not found
 
 swagger:response deleteUserNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteUserNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*DeleteUserDefault General Error
+/*
+DeleteUserDefault General Error
 
 swagger:response deleteUserDefault
 */

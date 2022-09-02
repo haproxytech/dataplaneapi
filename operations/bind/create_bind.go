@@ -44,12 +44,12 @@ func NewCreateBind(ctx *middleware.Context, handler CreateBindHandler) *CreateBi
 	return &CreateBind{Context: ctx, Handler: handler}
 }
 
-/* CreateBind swagger:route POST /services/haproxy/configuration/binds Bind createBind
+/*
+	CreateBind swagger:route POST /services/haproxy/configuration/binds Bind createBind
 
-Add a new bind
+# Add a new bind
 
 Adds a new bind in the specified frontend in the configuration file.
-
 */
 type CreateBind struct {
 	Context *middleware.Context

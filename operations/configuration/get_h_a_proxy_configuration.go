@@ -49,12 +49,12 @@ func NewGetHAProxyConfiguration(ctx *middleware.Context, handler GetHAProxyConfi
 	return &GetHAProxyConfiguration{Context: ctx, Handler: handler}
 }
 
-/* GetHAProxyConfiguration swagger:route GET /services/haproxy/configuration/raw Configuration getHAProxyConfiguration
+/*
+	GetHAProxyConfiguration swagger:route GET /services/haproxy/configuration/raw Configuration getHAProxyConfiguration
 
-Return HAProxy configuration
+# Return HAProxy configuration
 
 Returns HAProxy configuration file in plain text
-
 */
 type GetHAProxyConfiguration struct {
 	Context *middleware.Context

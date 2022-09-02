@@ -44,12 +44,12 @@ func NewDeleteStorageGeneralFile(ctx *middleware.Context, handler DeleteStorageG
 	return &DeleteStorageGeneralFile{Context: ctx, Handler: handler}
 }
 
-/* DeleteStorageGeneralFile swagger:route DELETE /services/haproxy/storage/general/{name} Storage deleteStorageGeneralFile
+/*
+	DeleteStorageGeneralFile swagger:route DELETE /services/haproxy/storage/general/{name} Storage deleteStorageGeneralFile
 
-Deletes a managed general use file from disk
+# Deletes a managed general use file from disk
 
 Deletes a managed general use file from disk.
-
 */
 type DeleteStorageGeneralFile struct {
 	Context *middleware.Context

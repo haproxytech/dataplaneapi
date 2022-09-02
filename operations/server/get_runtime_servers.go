@@ -44,12 +44,12 @@ func NewGetRuntimeServers(ctx *middleware.Context, handler GetRuntimeServersHand
 	return &GetRuntimeServers{Context: ctx, Handler: handler}
 }
 
-/* GetRuntimeServers swagger:route GET /services/haproxy/runtime/servers Server getRuntimeServers
+/*
+	GetRuntimeServers swagger:route GET /services/haproxy/runtime/servers Server getRuntimeServers
 
 Return an array of runtime servers' settings
 
 Returns an array of all servers' runtime settings.
-
 */
 type GetRuntimeServers struct {
 	Context *middleware.Context

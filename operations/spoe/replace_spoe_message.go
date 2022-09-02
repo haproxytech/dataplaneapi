@@ -44,12 +44,12 @@ func NewReplaceSpoeMessage(ctx *middleware.Context, handler ReplaceSpoeMessageHa
 	return &ReplaceSpoeMessage{Context: ctx, Handler: handler}
 }
 
-/* ReplaceSpoeMessage swagger:route PUT /services/haproxy/spoe/spoe_messages/{name} Spoe replaceSpoeMessage
+/*
+	ReplaceSpoeMessage swagger:route PUT /services/haproxy/spoe/spoe_messages/{name} Spoe replaceSpoeMessage
 
-Replace a spoe message
+# Replace a spoe message
 
 Replaces a spoe message configuration in one SPOE scope.
-
 */
 type ReplaceSpoeMessage struct {
 	Context *middleware.Context

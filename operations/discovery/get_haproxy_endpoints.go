@@ -44,12 +44,12 @@ func NewGetHaproxyEndpoints(ctx *middleware.Context, handler GetHaproxyEndpoints
 	return &GetHaproxyEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetHaproxyEndpoints swagger:route GET /services/haproxy Discovery getHaproxyEndpoints
+/*
+	GetHaproxyEndpoints swagger:route GET /services/haproxy Discovery getHaproxyEndpoints
 
-Return list of HAProxy related endpoints
+# Return list of HAProxy related endpoints
 
 Returns a list of HAProxy related endpoints.
-
 */
 type GetHaproxyEndpoints struct {
 	Context *middleware.Context

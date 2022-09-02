@@ -31,7 +31,8 @@ import (
 // GetTCPRequestRulesOKCode is the HTTP code returned for type GetTCPRequestRulesOK
 const GetTCPRequestRulesOKCode int = 200
 
-/*GetTCPRequestRulesOK Successful operation
+/*
+GetTCPRequestRulesOK Successful operation
 
 swagger:response getTcpRequestRulesOK
 */
@@ -94,7 +95,8 @@ func (o *GetTCPRequestRulesOK) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetTCPRequestRulesDefault General Error
+/*
+GetTCPRequestRulesDefault General Error
 
 swagger:response getTcpRequestRulesDefault
 */

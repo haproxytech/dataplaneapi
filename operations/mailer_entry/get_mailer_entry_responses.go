@@ -31,7 +31,8 @@ import (
 // GetMailerEntryOKCode is the HTTP code returned for type GetMailerEntryOK
 const GetMailerEntryOKCode int = 200
 
-/*GetMailerEntryOK Successful operation
+/*
+GetMailerEntryOK Successful operation
 
 swagger:response getMailerEntryOK
 */
@@ -97,7 +98,8 @@ func (o *GetMailerEntryOK) WriteResponse(rw http.ResponseWriter, producer runtim
 // GetMailerEntryNotFoundCode is the HTTP code returned for type GetMailerEntryNotFound
 const GetMailerEntryNotFoundCode int = 404
 
-/*GetMailerEntryNotFound The specified resource already exists
+/*
+GetMailerEntryNotFound The specified resource already exists
 
 swagger:response getMailerEntryNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetMailerEntryNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*GetMailerEntryDefault General Error
+/*
+GetMailerEntryDefault General Error
 
 swagger:response getMailerEntryDefault
 */

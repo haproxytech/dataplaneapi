@@ -44,12 +44,12 @@ func NewAddPayloadRuntimeACL(ctx *middleware.Context, handler AddPayloadRuntimeA
 	return &AddPayloadRuntimeACL{Context: ctx, Handler: handler}
 }
 
-/* AddPayloadRuntimeACL swagger:route PUT /services/haproxy/runtime/acl_file_entries ACL Runtime addPayloadRuntimeAcl
+/*
+	AddPayloadRuntimeACL swagger:route PUT /services/haproxy/runtime/acl_file_entries ACL Runtime addPayloadRuntimeAcl
 
-Add a new ACL payload
+# Add a new ACL payload
 
 Adds a new ACL payload.
-
 */
 type AddPayloadRuntimeACL struct {
 	Context *middleware.Context

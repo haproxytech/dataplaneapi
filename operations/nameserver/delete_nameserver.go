@@ -44,12 +44,12 @@ func NewDeleteNameserver(ctx *middleware.Context, handler DeleteNameserverHandle
 	return &DeleteNameserver{Context: ctx, Handler: handler}
 }
 
-/* DeleteNameserver swagger:route DELETE /services/haproxy/configuration/nameservers/{name} Nameserver deleteNameserver
+/*
+	DeleteNameserver swagger:route DELETE /services/haproxy/configuration/nameservers/{name} Nameserver deleteNameserver
 
-Delete a nameserver
+# Delete a nameserver
 
 Deletes a nameserver from the resolvers section by it's name.
-
 */
 type DeleteNameserver struct {
 	Context *middleware.Context

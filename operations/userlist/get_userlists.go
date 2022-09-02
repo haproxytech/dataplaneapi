@@ -51,12 +51,12 @@ func NewGetUserlists(ctx *middleware.Context, handler GetUserlistsHandler) *GetU
 	return &GetUserlists{Context: ctx, Handler: handler}
 }
 
-/* GetUserlists swagger:route GET /services/haproxy/configuration/userlists Userlist getUserlists
+/*
+	GetUserlists swagger:route GET /services/haproxy/configuration/userlists Userlist getUserlists
 
-Return an array of userlists
+# Return an array of userlists
 
 Returns an array of all configured userlists.
-
 */
 type GetUserlists struct {
 	Context *middleware.Context

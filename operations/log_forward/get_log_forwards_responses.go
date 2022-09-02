@@ -31,7 +31,8 @@ import (
 // GetLogForwardsOKCode is the HTTP code returned for type GetLogForwardsOK
 const GetLogForwardsOKCode int = 200
 
-/*GetLogForwardsOK Successful operation
+/*
+GetLogForwardsOK Successful operation
 
 swagger:response getLogForwardsOK
 */
@@ -94,7 +95,8 @@ func (o *GetLogForwardsOK) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 }
 
-/*GetLogForwardsDefault General Error
+/*
+GetLogForwardsDefault General Error
 
 swagger:response getLogForwardsDefault
 */

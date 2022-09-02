@@ -31,7 +31,8 @@ import (
 // GetCachesOKCode is the HTTP code returned for type GetCachesOK
 const GetCachesOKCode int = 200
 
-/*GetCachesOK Successful operation
+/*
+GetCachesOK Successful operation
 
 swagger:response getCachesOK
 */
@@ -94,7 +95,8 @@ func (o *GetCachesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	}
 }
 
-/*GetCachesDefault General Error
+/*
+GetCachesDefault General Error
 
 swagger:response getCachesDefault
 */

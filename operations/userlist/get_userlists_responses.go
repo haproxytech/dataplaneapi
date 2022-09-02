@@ -31,7 +31,8 @@ import (
 // GetUserlistsOKCode is the HTTP code returned for type GetUserlistsOK
 const GetUserlistsOKCode int = 200
 
-/*GetUserlistsOK Successful operation
+/*
+GetUserlistsOK Successful operation
 
 swagger:response getUserlistsOK
 */
@@ -94,7 +95,8 @@ func (o *GetUserlistsOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	}
 }
 
-/*GetUserlistsDefault General Error
+/*
+GetUserlistsDefault General Error
 
 swagger:response getUserlistsDefault
 */

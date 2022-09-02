@@ -44,10 +44,10 @@ func NewReplaceGroup(ctx *middleware.Context, handler ReplaceGroupHandler) *Repl
 	return &ReplaceGroup{Context: ctx, Handler: handler}
 }
 
-/* ReplaceGroup swagger:route PUT /services/haproxy/configuration/groups/{name} Group replaceGroup
+/*
+	ReplaceGroup swagger:route PUT /services/haproxy/configuration/groups/{name} Group replaceGroup
 
 Replace a group
-
 */
 type ReplaceGroup struct {
 	Context *middleware.Context

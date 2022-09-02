@@ -44,12 +44,12 @@ func NewGetCluster(ctx *middleware.Context, handler GetClusterHandler) *GetClust
 	return &GetCluster{Context: ctx, Handler: handler}
 }
 
-/* GetCluster swagger:route GET /cluster Cluster getCluster
+/*
+	GetCluster swagger:route GET /cluster Cluster getCluster
 
-Return cluster data
+# Return cluster data
 
 Returns cluster data
-
 */
 type GetCluster struct {
 	Context *middleware.Context

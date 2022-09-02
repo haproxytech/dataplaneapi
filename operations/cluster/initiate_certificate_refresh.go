@@ -44,12 +44,12 @@ func NewInitiateCertificateRefresh(ctx *middleware.Context, handler InitiateCert
 	return &InitiateCertificateRefresh{Context: ctx, Handler: handler}
 }
 
-/* InitiateCertificateRefresh swagger:route POST /cluster/certificate Cluster initiateCertificateRefresh
+/*
+	InitiateCertificateRefresh swagger:route POST /cluster/certificate Cluster initiateCertificateRefresh
+
+# Initiates a certificate refresh
 
 Initiates a certificate refresh
-
-Initiates a certificate refresh
-
 */
 type InitiateCertificateRefresh struct {
 	Context *middleware.Context

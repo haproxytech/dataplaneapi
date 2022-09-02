@@ -44,10 +44,10 @@ func NewCreateGroup(ctx *middleware.Context, handler CreateGroupHandler) *Create
 	return &CreateGroup{Context: ctx, Handler: handler}
 }
 
-/* CreateGroup swagger:route POST /services/haproxy/configuration/groups Group createGroup
+/*
+	CreateGroup swagger:route POST /services/haproxy/configuration/groups Group createGroup
 
 Add a new userlist group
-
 */
 type CreateGroup struct {
 	Context *middleware.Context

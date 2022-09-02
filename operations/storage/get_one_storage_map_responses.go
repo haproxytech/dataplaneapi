@@ -32,7 +32,8 @@ import (
 // GetOneStorageMapOKCode is the HTTP code returned for type GetOneStorageMapOK
 const GetOneStorageMapOKCode int = 200
 
-/*GetOneStorageMapOK Successful operation
+/*
+GetOneStorageMapOK Successful operation
 
 swagger:response getOneStorageMapOK
 */
@@ -74,7 +75,8 @@ func (o *GetOneStorageMapOK) WriteResponse(rw http.ResponseWriter, producer runt
 // GetOneStorageMapNotFoundCode is the HTTP code returned for type GetOneStorageMapNotFound
 const GetOneStorageMapNotFoundCode int = 404
 
-/*GetOneStorageMapNotFound The specified resource was not found
+/*
+GetOneStorageMapNotFound The specified resource was not found
 
 swagger:response getOneStorageMapNotFound
 */
@@ -137,7 +139,8 @@ func (o *GetOneStorageMapNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*GetOneStorageMapDefault General Error
+/*
+GetOneStorageMapDefault General Error
 
 swagger:response getOneStorageMapDefault
 */

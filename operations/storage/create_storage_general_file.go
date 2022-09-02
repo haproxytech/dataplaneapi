@@ -44,12 +44,12 @@ func NewCreateStorageGeneralFile(ctx *middleware.Context, handler CreateStorageG
 	return &CreateStorageGeneralFile{Context: ctx, Handler: handler}
 }
 
-/* CreateStorageGeneralFile swagger:route POST /services/haproxy/storage/general Storage createStorageGeneralFile
+/*
+	CreateStorageGeneralFile swagger:route POST /services/haproxy/storage/general Storage createStorageGeneralFile
 
-Creates a managed storage general use file with contents
+# Creates a managed storage general use file with contents
 
 Creates a managed storage general use file with contents.
-
 */
 type CreateStorageGeneralFile struct {
 	Context *middleware.Context

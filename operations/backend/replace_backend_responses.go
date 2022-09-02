@@ -31,7 +31,8 @@ import (
 // ReplaceBackendOKCode is the HTTP code returned for type ReplaceBackendOK
 const ReplaceBackendOKCode int = 200
 
-/*ReplaceBackendOK Backend replaced
+/*
+ReplaceBackendOK Backend replaced
 
 swagger:response replaceBackendOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceBackendOK) WriteResponse(rw http.ResponseWriter, producer runtim
 // ReplaceBackendAcceptedCode is the HTTP code returned for type ReplaceBackendAccepted
 const ReplaceBackendAcceptedCode int = 202
 
-/*ReplaceBackendAccepted Configuration change accepted and reload requested
+/*
+ReplaceBackendAccepted Configuration change accepted and reload requested
 
 swagger:response replaceBackendAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceBackendAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // ReplaceBackendBadRequestCode is the HTTP code returned for type ReplaceBackendBadRequest
 const ReplaceBackendBadRequestCode int = 400
 
-/*ReplaceBackendBadRequest Bad request
+/*
+ReplaceBackendBadRequest Bad request
 
 swagger:response replaceBackendBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceBackendBadRequest) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceBackendNotFoundCode is the HTTP code returned for type ReplaceBackendNotFound
 const ReplaceBackendNotFoundCode int = 404
 
-/*ReplaceBackendNotFound The specified resource was not found
+/*
+ReplaceBackendNotFound The specified resource was not found
 
 swagger:response replaceBackendNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceBackendNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*ReplaceBackendDefault General Error
+/*
+ReplaceBackendDefault General Error
 
 swagger:response replaceBackendDefault
 */

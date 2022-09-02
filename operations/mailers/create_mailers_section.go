@@ -44,12 +44,12 @@ func NewCreateMailersSection(ctx *middleware.Context, handler CreateMailersSecti
 	return &CreateMailersSection{Context: ctx, Handler: handler}
 }
 
-/* CreateMailersSection swagger:route POST /services/haproxy/configuration/mailers_section Mailers createMailersSection
+/*
+	CreateMailersSection swagger:route POST /services/haproxy/configuration/mailers_section Mailers createMailersSection
 
-Add a new Mailers section
+# Add a new Mailers section
 
 Creates a new empty Mailers section
-
 */
 type CreateMailersSection struct {
 	Context *middleware.Context

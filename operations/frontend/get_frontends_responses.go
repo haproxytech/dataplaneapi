@@ -31,7 +31,8 @@ import (
 // GetFrontendsOKCode is the HTTP code returned for type GetFrontendsOK
 const GetFrontendsOKCode int = 200
 
-/*GetFrontendsOK Successful operation
+/*
+GetFrontendsOK Successful operation
 
 swagger:response getFrontendsOK
 */
@@ -94,7 +95,8 @@ func (o *GetFrontendsOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	}
 }
 
-/*GetFrontendsDefault General Error
+/*
+GetFrontendsDefault General Error
 
 swagger:response getFrontendsDefault
 */

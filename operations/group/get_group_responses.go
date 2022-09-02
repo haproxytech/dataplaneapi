@@ -31,7 +31,8 @@ import (
 // GetGroupOKCode is the HTTP code returned for type GetGroupOK
 const GetGroupOKCode int = 200
 
-/*GetGroupOK Successful operation
+/*
+GetGroupOK Successful operation
 
 swagger:response getGroupOK
 */
@@ -97,7 +98,8 @@ func (o *GetGroupOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 // GetGroupNotFoundCode is the HTTP code returned for type GetGroupNotFound
 const GetGroupNotFoundCode int = 404
 
-/*GetGroupNotFound The specified resource already exists
+/*
+GetGroupNotFound The specified resource already exists
 
 swagger:response getGroupNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetGroupNotFound) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 }
 
-/*GetGroupDefault General Error
+/*
+GetGroupDefault General Error
 
 swagger:response getGroupDefault
 */

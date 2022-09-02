@@ -31,7 +31,8 @@ import (
 // DeleteTransactionNoContentCode is the HTTP code returned for type DeleteTransactionNoContent
 const DeleteTransactionNoContentCode int = 204
 
-/*DeleteTransactionNoContent Transaction deleted
+/*
+DeleteTransactionNoContent Transaction deleted
 
 swagger:response deleteTransactionNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteTransactionNoContent) WriteResponse(rw http.ResponseWriter, produ
 // DeleteTransactionNotFoundCode is the HTTP code returned for type DeleteTransactionNotFound
 const DeleteTransactionNotFoundCode int = 404
 
-/*DeleteTransactionNotFound The specified resource was not found
+/*
+DeleteTransactionNotFound The specified resource was not found
 
 swagger:response deleteTransactionNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteTransactionNotFound) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*DeleteTransactionDefault General Error
+/*
+DeleteTransactionDefault General Error
 
 swagger:response deleteTransactionDefault
 */

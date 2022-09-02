@@ -51,12 +51,12 @@ func NewGetAWSRegions(ctx *middleware.Context, handler GetAWSRegionsHandler) *Ge
 	return &GetAWSRegions{Context: ctx, Handler: handler}
 }
 
-/* GetAWSRegions swagger:route GET /service_discovery/aws ServiceDiscovery getAWSRegions
+/*
+	GetAWSRegions swagger:route GET /service_discovery/aws ServiceDiscovery getAWSRegions
 
-Return an array of all configured AWS regions
+# Return an array of all configured AWS regions
 
 Return all configured AWS regions.
-
 */
 type GetAWSRegions struct {
 	Context *middleware.Context

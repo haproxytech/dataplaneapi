@@ -31,7 +31,8 @@ import (
 // GetLogTargetsOKCode is the HTTP code returned for type GetLogTargetsOK
 const GetLogTargetsOKCode int = 200
 
-/*GetLogTargetsOK Successful operation
+/*
+GetLogTargetsOK Successful operation
 
 swagger:response getLogTargetsOK
 */
@@ -94,7 +95,8 @@ func (o *GetLogTargetsOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetLogTargetsDefault General Error
+/*
+GetLogTargetsDefault General Error
 
 swagger:response getLogTargetsDefault
 */

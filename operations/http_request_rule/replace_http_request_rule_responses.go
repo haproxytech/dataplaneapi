@@ -31,7 +31,8 @@ import (
 // ReplaceHTTPRequestRuleOKCode is the HTTP code returned for type ReplaceHTTPRequestRuleOK
 const ReplaceHTTPRequestRuleOKCode int = 200
 
-/*ReplaceHTTPRequestRuleOK HTTP Request Rule replaced
+/*
+ReplaceHTTPRequestRuleOK HTTP Request Rule replaced
 
 swagger:response replaceHttpRequestRuleOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceHTTPRequestRuleOK) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceHTTPRequestRuleAcceptedCode is the HTTP code returned for type ReplaceHTTPRequestRuleAccepted
 const ReplaceHTTPRequestRuleAcceptedCode int = 202
 
-/*ReplaceHTTPRequestRuleAccepted Configuration change accepted and reload requested
+/*
+ReplaceHTTPRequestRuleAccepted Configuration change accepted and reload requested
 
 swagger:response replaceHttpRequestRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceHTTPRequestRuleAccepted) WriteResponse(rw http.ResponseWriter, p
 // ReplaceHTTPRequestRuleBadRequestCode is the HTTP code returned for type ReplaceHTTPRequestRuleBadRequest
 const ReplaceHTTPRequestRuleBadRequestCode int = 400
 
-/*ReplaceHTTPRequestRuleBadRequest Bad request
+/*
+ReplaceHTTPRequestRuleBadRequest Bad request
 
 swagger:response replaceHttpRequestRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceHTTPRequestRuleBadRequest) WriteResponse(rw http.ResponseWriter,
 // ReplaceHTTPRequestRuleNotFoundCode is the HTTP code returned for type ReplaceHTTPRequestRuleNotFound
 const ReplaceHTTPRequestRuleNotFoundCode int = 404
 
-/*ReplaceHTTPRequestRuleNotFound The specified resource was not found
+/*
+ReplaceHTTPRequestRuleNotFound The specified resource was not found
 
 swagger:response replaceHttpRequestRuleNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceHTTPRequestRuleNotFound) WriteResponse(rw http.ResponseWriter, p
 	}
 }
 
-/*ReplaceHTTPRequestRuleDefault General Error
+/*
+ReplaceHTTPRequestRuleDefault General Error
 
 swagger:response replaceHttpRequestRuleDefault
 */

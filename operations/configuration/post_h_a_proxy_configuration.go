@@ -44,12 +44,12 @@ func NewPostHAProxyConfiguration(ctx *middleware.Context, handler PostHAProxyCon
 	return &PostHAProxyConfiguration{Context: ctx, Handler: handler}
 }
 
-/* PostHAProxyConfiguration swagger:route POST /services/haproxy/configuration/raw Configuration postHAProxyConfiguration
+/*
+	PostHAProxyConfiguration swagger:route POST /services/haproxy/configuration/raw Configuration postHAProxyConfiguration
 
-Push new haproxy configuration
+# Push new haproxy configuration
 
 Push a new haproxy configuration file in plain text
-
 */
 type PostHAProxyConfiguration struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewCreateHTTPAfterResponseRule(ctx *middleware.Context, handler CreateHTTPA
 	return &CreateHTTPAfterResponseRule{Context: ctx, Handler: handler}
 }
 
-/* CreateHTTPAfterResponseRule swagger:route POST /services/haproxy/configuration/http_after_response_rules HTTPAfterResponseRule createHttpAfterResponseRule
+/*
+	CreateHTTPAfterResponseRule swagger:route POST /services/haproxy/configuration/http_after_response_rules HTTPAfterResponseRule createHttpAfterResponseRule
 
-Add a new HTTP After Response Rule
+# Add a new HTTP After Response Rule
 
 Adds a new HTTP After Response Rule of the specified type in the specified parent.
-
 */
 type CreateHTTPAfterResponseRule struct {
 	Context *middleware.Context

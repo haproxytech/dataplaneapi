@@ -44,12 +44,12 @@ func NewCreateSpoeAgent(ctx *middleware.Context, handler CreateSpoeAgentHandler)
 	return &CreateSpoeAgent{Context: ctx, Handler: handler}
 }
 
-/* CreateSpoeAgent swagger:route POST /services/haproxy/spoe/spoe_agents Spoe createSpoeAgent
+/*
+	CreateSpoeAgent swagger:route POST /services/haproxy/spoe/spoe_agents Spoe createSpoeAgent
 
-Add a new spoe agent to scope
+# Add a new spoe agent to scope
 
 Adds a new spoe agent to the spoe scope.
-
 */
 type CreateSpoeAgent struct {
 	Context *middleware.Context

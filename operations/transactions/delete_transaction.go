@@ -44,12 +44,12 @@ func NewDeleteTransaction(ctx *middleware.Context, handler DeleteTransactionHand
 	return &DeleteTransaction{Context: ctx, Handler: handler}
 }
 
-/* DeleteTransaction swagger:route DELETE /services/haproxy/transactions/{id} Transactions deleteTransaction
+/*
+	DeleteTransaction swagger:route DELETE /services/haproxy/transactions/{id} Transactions deleteTransaction
 
-Delete a transaction
+# Delete a transaction
 
 Deletes a transaction.
-
 */
 type DeleteTransaction struct {
 	Context *middleware.Context

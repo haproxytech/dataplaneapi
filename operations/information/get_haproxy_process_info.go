@@ -44,12 +44,12 @@ func NewGetHaproxyProcessInfo(ctx *middleware.Context, handler GetHaproxyProcess
 	return &GetHaproxyProcessInfo{Context: ctx, Handler: handler}
 }
 
-/* GetHaproxyProcessInfo swagger:route GET /services/haproxy/runtime/info Information getHaproxyProcessInfo
+/*
+	GetHaproxyProcessInfo swagger:route GET /services/haproxy/runtime/info Information getHaproxyProcessInfo
+
+# Return HAProxy process information
 
 Return HAProxy process information
-
-Return HAProxy process information
-
 */
 type GetHaproxyProcessInfo struct {
 	Context *middleware.Context

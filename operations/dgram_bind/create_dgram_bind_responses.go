@@ -31,7 +31,8 @@ import (
 // CreateDgramBindCreatedCode is the HTTP code returned for type CreateDgramBindCreated
 const CreateDgramBindCreatedCode int = 201
 
-/*CreateDgramBindCreated Bind created
+/*
+CreateDgramBindCreated Bind created
 
 swagger:response createDgramBindCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateDgramBindCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreateDgramBindAcceptedCode is the HTTP code returned for type CreateDgramBindAccepted
 const CreateDgramBindAcceptedCode int = 202
 
-/*CreateDgramBindAccepted Configuration change accepted and reload requested
+/*
+CreateDgramBindAccepted Configuration change accepted and reload requested
 
 swagger:response createDgramBindAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateDgramBindAccepted) WriteResponse(rw http.ResponseWriter, producer
 // CreateDgramBindBadRequestCode is the HTTP code returned for type CreateDgramBindBadRequest
 const CreateDgramBindBadRequestCode int = 400
 
-/*CreateDgramBindBadRequest Bad request
+/*
+CreateDgramBindBadRequest Bad request
 
 swagger:response createDgramBindBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateDgramBindBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreateDgramBindConflictCode is the HTTP code returned for type CreateDgramBindConflict
 const CreateDgramBindConflictCode int = 409
 
-/*CreateDgramBindConflict The specified resource already exists
+/*
+CreateDgramBindConflict The specified resource already exists
 
 swagger:response createDgramBindConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateDgramBindConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreateDgramBindDefault General Error
+/*
+CreateDgramBindDefault General Error
 
 swagger:response createDgramBindDefault
 */

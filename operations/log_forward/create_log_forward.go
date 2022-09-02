@@ -44,12 +44,12 @@ func NewCreateLogForward(ctx *middleware.Context, handler CreateLogForwardHandle
 	return &CreateLogForward{Context: ctx, Handler: handler}
 }
 
-/* CreateLogForward swagger:route POST /services/haproxy/configuration/log_forwards LogForward createLogForward
+/*
+	CreateLogForward swagger:route POST /services/haproxy/configuration/log_forwards LogForward createLogForward
 
-Add a log forward
+# Add a log forward
 
 Adds a new log_forward to the configuration file.
-
 */
 type CreateLogForward struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewClearRuntimeMap(ctx *middleware.Context, handler ClearRuntimeMapHandler)
 	return &ClearRuntimeMap{Context: ctx, Handler: handler}
 }
 
-/* ClearRuntimeMap swagger:route DELETE /services/haproxy/runtime/maps/{name} Maps clearRuntimeMap
+/*
+	ClearRuntimeMap swagger:route DELETE /services/haproxy/runtime/maps/{name} Maps clearRuntimeMap
 
-Remove all map entries from the map file
+# Remove all map entries from the map file
 
 Remove all map entries from the map file.
-
 */
 type ClearRuntimeMap struct {
 	Context *middleware.Context

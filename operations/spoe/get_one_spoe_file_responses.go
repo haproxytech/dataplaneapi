@@ -31,7 +31,8 @@ import (
 // GetOneSpoeFileOKCode is the HTTP code returned for type GetOneSpoeFileOK
 const GetOneSpoeFileOKCode int = 200
 
-/*GetOneSpoeFileOK Successful operation
+/*
+GetOneSpoeFileOK Successful operation
 
 swagger:response getOneSpoeFileOK
 */
@@ -97,7 +98,8 @@ func (o *GetOneSpoeFileOK) WriteResponse(rw http.ResponseWriter, producer runtim
 // GetOneSpoeFileNotFoundCode is the HTTP code returned for type GetOneSpoeFileNotFound
 const GetOneSpoeFileNotFoundCode int = 404
 
-/*GetOneSpoeFileNotFound The specified resource was not found
+/*
+GetOneSpoeFileNotFound The specified resource was not found
 
 swagger:response getOneSpoeFileNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetOneSpoeFileNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*GetOneSpoeFileDefault General Error
+/*
+GetOneSpoeFileDefault General Error
 
 swagger:response getOneSpoeFileDefault
 */

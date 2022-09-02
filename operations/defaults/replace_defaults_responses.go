@@ -31,7 +31,8 @@ import (
 // ReplaceDefaultsOKCode is the HTTP code returned for type ReplaceDefaultsOK
 const ReplaceDefaultsOKCode int = 200
 
-/*ReplaceDefaultsOK Defaults replaced
+/*
+ReplaceDefaultsOK Defaults replaced
 
 swagger:response replaceDefaultsOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceDefaultsOK) WriteResponse(rw http.ResponseWriter, producer runti
 // ReplaceDefaultsAcceptedCode is the HTTP code returned for type ReplaceDefaultsAccepted
 const ReplaceDefaultsAcceptedCode int = 202
 
-/*ReplaceDefaultsAccepted Configuration change accepted and reload requested
+/*
+ReplaceDefaultsAccepted Configuration change accepted and reload requested
 
 swagger:response replaceDefaultsAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceDefaultsAccepted) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceDefaultsBadRequestCode is the HTTP code returned for type ReplaceDefaultsBadRequest
 const ReplaceDefaultsBadRequestCode int = 400
 
-/*ReplaceDefaultsBadRequest Bad request
+/*
+ReplaceDefaultsBadRequest Bad request
 
 swagger:response replaceDefaultsBadRequest
 */
@@ -204,7 +207,8 @@ func (o *ReplaceDefaultsBadRequest) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*ReplaceDefaultsDefault General Error
+/*
+ReplaceDefaultsDefault General Error
 
 swagger:response replaceDefaultsDefault
 */

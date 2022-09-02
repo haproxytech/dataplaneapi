@@ -31,7 +31,8 @@ import (
 // DeleteHTTPAfterResponseRuleAcceptedCode is the HTTP code returned for type DeleteHTTPAfterResponseRuleAccepted
 const DeleteHTTPAfterResponseRuleAcceptedCode int = 202
 
-/*DeleteHTTPAfterResponseRuleAccepted Configuration change accepted and reload requested
+/*
+DeleteHTTPAfterResponseRuleAccepted Configuration change accepted and reload requested
 
 swagger:response deleteHttpAfterResponseRuleAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteHTTPAfterResponseRuleAccepted) WriteResponse(rw http.ResponseWrit
 // DeleteHTTPAfterResponseRuleNoContentCode is the HTTP code returned for type DeleteHTTPAfterResponseRuleNoContent
 const DeleteHTTPAfterResponseRuleNoContentCode int = 204
 
-/*DeleteHTTPAfterResponseRuleNoContent HTTP After Response Rule deleted
+/*
+DeleteHTTPAfterResponseRuleNoContent HTTP After Response Rule deleted
 
 swagger:response deleteHttpAfterResponseRuleNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteHTTPAfterResponseRuleNoContent) WriteResponse(rw http.ResponseWri
 // DeleteHTTPAfterResponseRuleNotFoundCode is the HTTP code returned for type DeleteHTTPAfterResponseRuleNotFound
 const DeleteHTTPAfterResponseRuleNotFoundCode int = 404
 
-/*DeleteHTTPAfterResponseRuleNotFound The specified resource was not found
+/*
+DeleteHTTPAfterResponseRuleNotFound The specified resource was not found
 
 swagger:response deleteHttpAfterResponseRuleNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteHTTPAfterResponseRuleNotFound) WriteResponse(rw http.ResponseWrit
 	}
 }
 
-/*DeleteHTTPAfterResponseRuleDefault General Error
+/*
+DeleteHTTPAfterResponseRuleDefault General Error
 
 swagger:response deleteHttpAfterResponseRuleDefault
 */

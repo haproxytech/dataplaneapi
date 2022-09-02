@@ -31,7 +31,8 @@ import (
 // GetConsulsOKCode is the HTTP code returned for type GetConsulsOK
 const GetConsulsOKCode int = 200
 
-/*GetConsulsOK Successful operation
+/*
+GetConsulsOK Successful operation
 
 swagger:response getConsulsOK
 */
@@ -72,7 +73,8 @@ func (o *GetConsulsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 }
 
-/*GetConsulsDefault General Error
+/*
+GetConsulsDefault General Error
 
 swagger:response getConsulsDefault
 */

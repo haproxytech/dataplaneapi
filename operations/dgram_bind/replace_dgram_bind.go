@@ -44,12 +44,12 @@ func NewReplaceDgramBind(ctx *middleware.Context, handler ReplaceDgramBindHandle
 	return &ReplaceDgramBind{Context: ctx, Handler: handler}
 }
 
-/* ReplaceDgramBind swagger:route PUT /services/haproxy/configuration/dgram_binds/{name} DgramBind replaceDgramBind
+/*
+	ReplaceDgramBind swagger:route PUT /services/haproxy/configuration/dgram_binds/{name} DgramBind replaceDgramBind
 
-Replace a dgram bind
+# Replace a dgram bind
 
 Replaces a dgram bind configuration by it's name in the specified log forward.
-
 */
 type ReplaceDgramBind struct {
 	Context *middleware.Context

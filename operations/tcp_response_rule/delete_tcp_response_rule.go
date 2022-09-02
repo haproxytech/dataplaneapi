@@ -44,12 +44,12 @@ func NewDeleteTCPResponseRule(ctx *middleware.Context, handler DeleteTCPResponse
 	return &DeleteTCPResponseRule{Context: ctx, Handler: handler}
 }
 
-/* DeleteTCPResponseRule swagger:route DELETE /services/haproxy/configuration/tcp_response_rules/{index} TCPResponseRule deleteTcpResponseRule
+/*
+	DeleteTCPResponseRule swagger:route DELETE /services/haproxy/configuration/tcp_response_rules/{index} TCPResponseRule deleteTcpResponseRule
 
-Delete a TCP Response Rule
+# Delete a TCP Response Rule
 
 Deletes a TCP Response Rule configuration by it's index from the specified backend.
-
 */
 type DeleteTCPResponseRule struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // ReplaceFrontendOKCode is the HTTP code returned for type ReplaceFrontendOK
 const ReplaceFrontendOKCode int = 200
 
-/*ReplaceFrontendOK Frontend replaced
+/*
+ReplaceFrontendOK Frontend replaced
 
 swagger:response replaceFrontendOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceFrontendOK) WriteResponse(rw http.ResponseWriter, producer runti
 // ReplaceFrontendAcceptedCode is the HTTP code returned for type ReplaceFrontendAccepted
 const ReplaceFrontendAcceptedCode int = 202
 
-/*ReplaceFrontendAccepted Configuration change accepted and reload requested
+/*
+ReplaceFrontendAccepted Configuration change accepted and reload requested
 
 swagger:response replaceFrontendAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceFrontendAccepted) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceFrontendBadRequestCode is the HTTP code returned for type ReplaceFrontendBadRequest
 const ReplaceFrontendBadRequestCode int = 400
 
-/*ReplaceFrontendBadRequest Bad request
+/*
+ReplaceFrontendBadRequest Bad request
 
 swagger:response replaceFrontendBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceFrontendBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // ReplaceFrontendNotFoundCode is the HTTP code returned for type ReplaceFrontendNotFound
 const ReplaceFrontendNotFoundCode int = 404
 
-/*ReplaceFrontendNotFound The specified resource was not found
+/*
+ReplaceFrontendNotFound The specified resource was not found
 
 swagger:response replaceFrontendNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceFrontendNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*ReplaceFrontendDefault General Error
+/*
+ReplaceFrontendDefault General Error
 
 swagger:response replaceFrontendDefault
 */

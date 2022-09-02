@@ -31,7 +31,8 @@ import (
 // GetRingsOKCode is the HTTP code returned for type GetRingsOK
 const GetRingsOKCode int = 200
 
-/*GetRingsOK Successful operation
+/*
+GetRingsOK Successful operation
 
 swagger:response getRingsOK
 */
@@ -94,7 +95,8 @@ func (o *GetRingsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 }
 
-/*GetRingsDefault General Error
+/*
+GetRingsDefault General Error
 
 swagger:response getRingsDefault
 */

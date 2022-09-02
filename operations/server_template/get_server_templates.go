@@ -51,12 +51,12 @@ func NewGetServerTemplates(ctx *middleware.Context, handler GetServerTemplatesHa
 	return &GetServerTemplates{Context: ctx, Handler: handler}
 }
 
-/* GetServerTemplates swagger:route GET /services/haproxy/configuration/server_templates ServerTemplate getServerTemplates
+/*
+	GetServerTemplates swagger:route GET /services/haproxy/configuration/server_templates ServerTemplate getServerTemplates
 
-Return an array of server templates
+# Return an array of server templates
 
 Returns an array of all server templates that are configured in specified backend.
-
 */
 type GetServerTemplates struct {
 	Context *middleware.Context

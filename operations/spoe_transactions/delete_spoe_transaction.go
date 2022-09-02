@@ -44,12 +44,12 @@ func NewDeleteSpoeTransaction(ctx *middleware.Context, handler DeleteSpoeTransac
 	return &DeleteSpoeTransaction{Context: ctx, Handler: handler}
 }
 
-/* DeleteSpoeTransaction swagger:route DELETE /services/haproxy/spoe_transactions/{id} SpoeTransactions deleteSpoeTransaction
+/*
+	DeleteSpoeTransaction swagger:route DELETE /services/haproxy/spoe_transactions/{id} SpoeTransactions deleteSpoeTransaction
 
-Delete a transaction
+# Delete a transaction
 
 Deletes a transaction.
-
 */
 type DeleteSpoeTransaction struct {
 	Context *middleware.Context

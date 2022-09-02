@@ -31,7 +31,8 @@ import (
 // GetPeerEntryOKCode is the HTTP code returned for type GetPeerEntryOK
 const GetPeerEntryOKCode int = 200
 
-/*GetPeerEntryOK Successful operation
+/*
+GetPeerEntryOK Successful operation
 
 swagger:response getPeerEntryOK
 */
@@ -97,7 +98,8 @@ func (o *GetPeerEntryOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetPeerEntryNotFoundCode is the HTTP code returned for type GetPeerEntryNotFound
 const GetPeerEntryNotFoundCode int = 404
 
-/*GetPeerEntryNotFound The specified resource already exists
+/*
+GetPeerEntryNotFound The specified resource already exists
 
 swagger:response getPeerEntryNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetPeerEntryNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetPeerEntryDefault General Error
+/*
+GetPeerEntryDefault General Error
 
 swagger:response getPeerEntryDefault
 */

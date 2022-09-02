@@ -31,7 +31,8 @@ import (
 // GetRingOKCode is the HTTP code returned for type GetRingOK
 const GetRingOKCode int = 200
 
-/*GetRingOK Successful operation
+/*
+GetRingOK Successful operation
 
 swagger:response getRingOK
 */
@@ -97,7 +98,8 @@ func (o *GetRingOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 // GetRingNotFoundCode is the HTTP code returned for type GetRingNotFound
 const GetRingNotFoundCode int = 404
 
-/*GetRingNotFound The specified resource was not found
+/*
+GetRingNotFound The specified resource was not found
 
 swagger:response getRingNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetRingNotFound) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetRingDefault General Error
+/*
+GetRingDefault General Error
 
 swagger:response getRingDefault
 */

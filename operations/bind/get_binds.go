@@ -51,12 +51,12 @@ func NewGetBinds(ctx *middleware.Context, handler GetBindsHandler) *GetBinds {
 	return &GetBinds{Context: ctx, Handler: handler}
 }
 
-/* GetBinds swagger:route GET /services/haproxy/configuration/binds Bind getBinds
+/*
+	GetBinds swagger:route GET /services/haproxy/configuration/binds Bind getBinds
 
-Return an array of binds
+# Return an array of binds
 
 Returns an array of all binds that are configured in specified frontend.
-
 */
 type GetBinds struct {
 	Context *middleware.Context

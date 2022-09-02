@@ -44,13 +44,13 @@ func NewCreateAWSRegion(ctx *middleware.Context, handler CreateAWSRegionHandler)
 	return &CreateAWSRegion{Context: ctx, Handler: handler}
 }
 
-/* CreateAWSRegion swagger:route POST /service_discovery/aws ServiceDiscovery createAWSRegion
+/*
+	CreateAWSRegion swagger:route POST /service_discovery/aws ServiceDiscovery createAWSRegion
 
-Add a new AWS region
+# Add a new AWS region
 
 Add a new AWS region.
 Credentials are not required in case Dataplane API is running in an EC2 instance with proper IAM role attached.
-
 */
 type CreateAWSRegion struct {
 	Context *middleware.Context

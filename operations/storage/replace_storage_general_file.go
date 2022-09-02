@@ -44,12 +44,12 @@ func NewReplaceStorageGeneralFile(ctx *middleware.Context, handler ReplaceStorag
 	return &ReplaceStorageGeneralFile{Context: ctx, Handler: handler}
 }
 
-/* ReplaceStorageGeneralFile swagger:route PUT /services/haproxy/storage/general/{name} Storage replaceStorageGeneralFile
+/*
+	ReplaceStorageGeneralFile swagger:route PUT /services/haproxy/storage/general/{name} Storage replaceStorageGeneralFile
 
-Replace contents of a managed general use file on disk
+# Replace contents of a managed general use file on disk
 
 Replaces the contents of a managed general use file on disk
-
 */
 type ReplaceStorageGeneralFile struct {
 	Context *middleware.Context

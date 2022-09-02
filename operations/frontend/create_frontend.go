@@ -44,12 +44,12 @@ func NewCreateFrontend(ctx *middleware.Context, handler CreateFrontendHandler) *
 	return &CreateFrontend{Context: ctx, Handler: handler}
 }
 
-/* CreateFrontend swagger:route POST /services/haproxy/configuration/frontends Frontend createFrontend
+/*
+	CreateFrontend swagger:route POST /services/haproxy/configuration/frontends Frontend createFrontend
 
-Add a frontend
+# Add a frontend
 
 Adds a new frontend to the configuration file.
-
 */
 type CreateFrontend struct {
 	Context *middleware.Context

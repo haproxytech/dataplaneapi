@@ -31,7 +31,8 @@ import (
 // GetFrontendOKCode is the HTTP code returned for type GetFrontendOK
 const GetFrontendOKCode int = 200
 
-/*GetFrontendOK Successful operation
+/*
+GetFrontendOK Successful operation
 
 swagger:response getFrontendOK
 */
@@ -97,7 +98,8 @@ func (o *GetFrontendOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // GetFrontendNotFoundCode is the HTTP code returned for type GetFrontendNotFound
 const GetFrontendNotFoundCode int = 404
 
-/*GetFrontendNotFound The specified resource was not found
+/*
+GetFrontendNotFound The specified resource was not found
 
 swagger:response getFrontendNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetFrontendNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*GetFrontendDefault General Error
+/*
+GetFrontendDefault General Error
 
 swagger:response getFrontendDefault
 */

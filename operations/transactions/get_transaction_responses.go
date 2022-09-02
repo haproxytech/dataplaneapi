@@ -31,7 +31,8 @@ import (
 // GetTransactionOKCode is the HTTP code returned for type GetTransactionOK
 const GetTransactionOKCode int = 200
 
-/*GetTransactionOK Successful operation
+/*
+GetTransactionOK Successful operation
 
 swagger:response getTransactionOK
 */
@@ -75,7 +76,8 @@ func (o *GetTransactionOK) WriteResponse(rw http.ResponseWriter, producer runtim
 // GetTransactionNotFoundCode is the HTTP code returned for type GetTransactionNotFound
 const GetTransactionNotFoundCode int = 404
 
-/*GetTransactionNotFound The specified resource was not found
+/*
+GetTransactionNotFound The specified resource was not found
 
 swagger:response getTransactionNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetTransactionNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*GetTransactionDefault General Error
+/*
+GetTransactionDefault General Error
 
 swagger:response getTransactionDefault
 */

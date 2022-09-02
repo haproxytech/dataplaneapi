@@ -44,12 +44,12 @@ func NewGetTransactions(ctx *middleware.Context, handler GetTransactionsHandler)
 	return &GetTransactions{Context: ctx, Handler: handler}
 }
 
-/* GetTransactions swagger:route GET /services/haproxy/transactions Transactions getTransactions
+/*
+	GetTransactions swagger:route GET /services/haproxy/transactions Transactions getTransactions
 
 Return list of HAProxy configuration transactions.
 
 Returns a list of HAProxy configuration transactions. Transactions can be filtered by their status.
-
 */
 type GetTransactions struct {
 	Context *middleware.Context

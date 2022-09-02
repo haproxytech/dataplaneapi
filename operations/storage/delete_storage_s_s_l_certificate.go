@@ -44,12 +44,12 @@ func NewDeleteStorageSSLCertificate(ctx *middleware.Context, handler DeleteStora
 	return &DeleteStorageSSLCertificate{Context: ctx, Handler: handler}
 }
 
-/* DeleteStorageSSLCertificate swagger:route DELETE /services/haproxy/storage/ssl_certificates/{name} Storage deleteStorageSSLCertificate
+/*
+	DeleteStorageSSLCertificate swagger:route DELETE /services/haproxy/storage/ssl_certificates/{name} Storage deleteStorageSSLCertificate
 
-Delete SSL certificate from disk
+# Delete SSL certificate from disk
 
 Deletes SSL certificate from disk.
-
 */
 type DeleteStorageSSLCertificate struct {
 	Context *middleware.Context

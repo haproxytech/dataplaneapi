@@ -44,12 +44,12 @@ func NewShowRuntimeMap(ctx *middleware.Context, handler ShowRuntimeMapHandler) *
 	return &ShowRuntimeMap{Context: ctx, Handler: handler}
 }
 
-/* ShowRuntimeMap swagger:route GET /services/haproxy/runtime/maps_entries Maps showRuntimeMap
+/*
+	ShowRuntimeMap swagger:route GET /services/haproxy/runtime/maps_entries Maps showRuntimeMap
 
-Return one map runtime entries
+# Return one map runtime entries
 
 Returns an array of all entries in a given runtime map file.
-
 */
 type ShowRuntimeMap struct {
 	Context *middleware.Context

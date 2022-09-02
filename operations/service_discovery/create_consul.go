@@ -44,12 +44,12 @@ func NewCreateConsul(ctx *middleware.Context, handler CreateConsulHandler) *Crea
 	return &CreateConsul{Context: ctx, Handler: handler}
 }
 
-/* CreateConsul swagger:route POST /service_discovery/consul ServiceDiscovery createConsul
+/*
+	CreateConsul swagger:route POST /service_discovery/consul ServiceDiscovery createConsul
 
-Add a new Consul server
+# Add a new Consul server
 
 Adds a new Consul server.
-
 */
 type CreateConsul struct {
 	Context *middleware.Context

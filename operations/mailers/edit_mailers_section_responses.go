@@ -31,7 +31,8 @@ import (
 // EditMailersSectionOKCode is the HTTP code returned for type EditMailersSectionOK
 const EditMailersSectionOKCode int = 200
 
-/*EditMailersSectionOK Mailers configuration updated
+/*
+EditMailersSectionOK Mailers configuration updated
 
 swagger:response editMailersSectionOK
 */
@@ -75,7 +76,8 @@ func (o *EditMailersSectionOK) WriteResponse(rw http.ResponseWriter, producer ru
 // EditMailersSectionAcceptedCode is the HTTP code returned for type EditMailersSectionAccepted
 const EditMailersSectionAcceptedCode int = 202
 
-/*EditMailersSectionAccepted Configuration change accepted and reload requested
+/*
+EditMailersSectionAccepted Configuration change accepted and reload requested
 
 swagger:response editMailersSectionAccepted
 */
@@ -141,7 +143,8 @@ func (o *EditMailersSectionAccepted) WriteResponse(rw http.ResponseWriter, produ
 // EditMailersSectionBadRequestCode is the HTTP code returned for type EditMailersSectionBadRequest
 const EditMailersSectionBadRequestCode int = 400
 
-/*EditMailersSectionBadRequest Bad request
+/*
+EditMailersSectionBadRequest Bad request
 
 swagger:response editMailersSectionBadRequest
 */
@@ -207,7 +210,8 @@ func (o *EditMailersSectionBadRequest) WriteResponse(rw http.ResponseWriter, pro
 // EditMailersSectionNotFoundCode is the HTTP code returned for type EditMailersSectionNotFound
 const EditMailersSectionNotFoundCode int = 404
 
-/*EditMailersSectionNotFound The specified resource was not found
+/*
+EditMailersSectionNotFound The specified resource was not found
 
 swagger:response editMailersSectionNotFound
 */
@@ -270,7 +274,8 @@ func (o *EditMailersSectionNotFound) WriteResponse(rw http.ResponseWriter, produ
 	}
 }
 
-/*EditMailersSectionDefault General Error
+/*
+EditMailersSectionDefault General Error
 
 swagger:response editMailersSectionDefault
 */

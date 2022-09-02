@@ -47,12 +47,12 @@ func NewStartTransaction(ctx *middleware.Context, handler StartTransactionHandle
 	return &StartTransaction{Context: ctx, Handler: handler}
 }
 
-/* StartTransaction swagger:route POST /services/haproxy/transactions Transactions startTransaction
+/*
+	StartTransaction swagger:route POST /services/haproxy/transactions Transactions startTransaction
 
-Start a new transaction
+# Start a new transaction
 
 Starts a new transaction and returns it's id
-
 */
 type StartTransaction struct {
 	Context *middleware.Context

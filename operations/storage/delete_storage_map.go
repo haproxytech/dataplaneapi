@@ -44,12 +44,12 @@ func NewDeleteStorageMap(ctx *middleware.Context, handler DeleteStorageMapHandle
 	return &DeleteStorageMap{Context: ctx, Handler: handler}
 }
 
-/* DeleteStorageMap swagger:route DELETE /services/haproxy/storage/maps/{name} Storage deleteStorageMap
+/*
+	DeleteStorageMap swagger:route DELETE /services/haproxy/storage/maps/{name} Storage deleteStorageMap
 
-Deletes a managed map file from disk
+# Deletes a managed map file from disk
 
 Deletes a managed map file from disk.
-
 */
 type DeleteStorageMap struct {
 	Context *middleware.Context

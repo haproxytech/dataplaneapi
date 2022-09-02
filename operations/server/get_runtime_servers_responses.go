@@ -31,7 +31,8 @@ import (
 // GetRuntimeServersOKCode is the HTTP code returned for type GetRuntimeServersOK
 const GetRuntimeServersOKCode int = 200
 
-/*GetRuntimeServersOK Successful operation
+/*
+GetRuntimeServersOK Successful operation
 
 swagger:response getRuntimeServersOK
 */
@@ -75,7 +76,8 @@ func (o *GetRuntimeServersOK) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*GetRuntimeServersDefault General Error
+/*
+GetRuntimeServersDefault General Error
 
 swagger:response getRuntimeServersDefault
 */

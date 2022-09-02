@@ -31,7 +31,8 @@ import (
 // CreateResolverCreatedCode is the HTTP code returned for type CreateResolverCreated
 const CreateResolverCreatedCode int = 201
 
-/*CreateResolverCreated Resolver created
+/*
+CreateResolverCreated Resolver created
 
 swagger:response createResolverCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateResolverCreated) WriteResponse(rw http.ResponseWriter, producer r
 // CreateResolverAcceptedCode is the HTTP code returned for type CreateResolverAccepted
 const CreateResolverAcceptedCode int = 202
 
-/*CreateResolverAccepted Configuration change accepted and reload requested
+/*
+CreateResolverAccepted Configuration change accepted and reload requested
 
 swagger:response createResolverAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateResolverAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // CreateResolverBadRequestCode is the HTTP code returned for type CreateResolverBadRequest
 const CreateResolverBadRequestCode int = 400
 
-/*CreateResolverBadRequest Bad request
+/*
+CreateResolverBadRequest Bad request
 
 swagger:response createResolverBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateResolverBadRequest) WriteResponse(rw http.ResponseWriter, produce
 // CreateResolverConflictCode is the HTTP code returned for type CreateResolverConflict
 const CreateResolverConflictCode int = 409
 
-/*CreateResolverConflict The specified resource already exists
+/*
+CreateResolverConflict The specified resource already exists
 
 swagger:response createResolverConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateResolverConflict) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*CreateResolverDefault General Error
+/*
+CreateResolverDefault General Error
 
 swagger:response createResolverDefault
 */

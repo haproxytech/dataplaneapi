@@ -51,10 +51,10 @@ func NewGetGroups(ctx *middleware.Context, handler GetGroupsHandler) *GetGroups 
 	return &GetGroups{Context: ctx, Handler: handler}
 }
 
-/* GetGroups swagger:route GET /services/haproxy/configuration/groups Group getGroups
+/*
+	GetGroups swagger:route GET /services/haproxy/configuration/groups Group getGroups
 
 Return an array of userlist groups
-
 */
 type GetGroups struct {
 	Context *middleware.Context

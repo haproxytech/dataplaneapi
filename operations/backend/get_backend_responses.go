@@ -31,7 +31,8 @@ import (
 // GetBackendOKCode is the HTTP code returned for type GetBackendOK
 const GetBackendOKCode int = 200
 
-/*GetBackendOK Successful operation
+/*
+GetBackendOK Successful operation
 
 swagger:response getBackendOK
 */
@@ -97,7 +98,8 @@ func (o *GetBackendOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 // GetBackendNotFoundCode is the HTTP code returned for type GetBackendNotFound
 const GetBackendNotFoundCode int = 404
 
-/*GetBackendNotFound The specified resource was not found
+/*
+GetBackendNotFound The specified resource was not found
 
 swagger:response getBackendNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetBackendNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*GetBackendDefault General Error
+/*
+GetBackendDefault General Error
 
 swagger:response getBackendDefault
 */

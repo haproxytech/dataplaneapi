@@ -44,12 +44,12 @@ func NewDeleteCluster(ctx *middleware.Context, handler DeleteClusterHandler) *De
 	return &DeleteCluster{Context: ctx, Handler: handler}
 }
 
-/* DeleteCluster swagger:route DELETE /cluster Cluster deleteCluster
+/*
+	DeleteCluster swagger:route DELETE /cluster Cluster deleteCluster
 
-Delete cluster settings
+# Delete cluster settings
 
 Delete cluster settings and move the node back to single mode
-
 */
 type DeleteCluster struct {
 	Context *middleware.Context

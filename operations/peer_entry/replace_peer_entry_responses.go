@@ -31,7 +31,8 @@ import (
 // ReplacePeerEntryOKCode is the HTTP code returned for type ReplacePeerEntryOK
 const ReplacePeerEntryOKCode int = 200
 
-/*ReplacePeerEntryOK PeerEntry replaced
+/*
+ReplacePeerEntryOK PeerEntry replaced
 
 swagger:response replacePeerEntryOK
 */
@@ -75,7 +76,8 @@ func (o *ReplacePeerEntryOK) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplacePeerEntryAcceptedCode is the HTTP code returned for type ReplacePeerEntryAccepted
 const ReplacePeerEntryAcceptedCode int = 202
 
-/*ReplacePeerEntryAccepted Configuration change accepted and reload requested
+/*
+ReplacePeerEntryAccepted Configuration change accepted and reload requested
 
 swagger:response replacePeerEntryAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplacePeerEntryAccepted) WriteResponse(rw http.ResponseWriter, produce
 // ReplacePeerEntryBadRequestCode is the HTTP code returned for type ReplacePeerEntryBadRequest
 const ReplacePeerEntryBadRequestCode int = 400
 
-/*ReplacePeerEntryBadRequest Bad request
+/*
+ReplacePeerEntryBadRequest Bad request
 
 swagger:response replacePeerEntryBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplacePeerEntryBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // ReplacePeerEntryNotFoundCode is the HTTP code returned for type ReplacePeerEntryNotFound
 const ReplacePeerEntryNotFoundCode int = 404
 
-/*ReplacePeerEntryNotFound The specified resource was not found
+/*
+ReplacePeerEntryNotFound The specified resource was not found
 
 swagger:response replacePeerEntryNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplacePeerEntryNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*ReplacePeerEntryDefault General Error
+/*
+ReplacePeerEntryDefault General Error
 
 swagger:response replacePeerEntryDefault
 */

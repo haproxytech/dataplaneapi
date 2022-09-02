@@ -31,7 +31,8 @@ import (
 // GetUserOKCode is the HTTP code returned for type GetUserOK
 const GetUserOKCode int = 200
 
-/*GetUserOK Successful operation
+/*
+GetUserOK Successful operation
 
 swagger:response getUserOK
 */
@@ -97,7 +98,8 @@ func (o *GetUserOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 // GetUserNotFoundCode is the HTTP code returned for type GetUserNotFound
 const GetUserNotFoundCode int = 404
 
-/*GetUserNotFound The specified resource already exists
+/*
+GetUserNotFound The specified resource already exists
 
 swagger:response getUserNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetUserNotFound) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetUserDefault General Error
+/*
+GetUserDefault General Error
 
 swagger:response getUserDefault
 */

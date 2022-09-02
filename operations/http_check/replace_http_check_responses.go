@@ -31,7 +31,8 @@ import (
 // ReplaceHTTPCheckOKCode is the HTTP code returned for type ReplaceHTTPCheckOK
 const ReplaceHTTPCheckOKCode int = 200
 
-/*ReplaceHTTPCheckOK HTTP check replaced
+/*
+ReplaceHTTPCheckOK HTTP check replaced
 
 swagger:response replaceHttpCheckOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceHTTPCheckOK) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplaceHTTPCheckAcceptedCode is the HTTP code returned for type ReplaceHTTPCheckAccepted
 const ReplaceHTTPCheckAcceptedCode int = 202
 
-/*ReplaceHTTPCheckAccepted Configuration change accepted and reload requested
+/*
+ReplaceHTTPCheckAccepted Configuration change accepted and reload requested
 
 swagger:response replaceHttpCheckAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceHTTPCheckAccepted) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceHTTPCheckBadRequestCode is the HTTP code returned for type ReplaceHTTPCheckBadRequest
 const ReplaceHTTPCheckBadRequestCode int = 400
 
-/*ReplaceHTTPCheckBadRequest Bad request
+/*
+ReplaceHTTPCheckBadRequest Bad request
 
 swagger:response replaceHttpCheckBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceHTTPCheckBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // ReplaceHTTPCheckNotFoundCode is the HTTP code returned for type ReplaceHTTPCheckNotFound
 const ReplaceHTTPCheckNotFoundCode int = 404
 
-/*ReplaceHTTPCheckNotFound The specified resource was not found
+/*
+ReplaceHTTPCheckNotFound The specified resource was not found
 
 swagger:response replaceHttpCheckNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceHTTPCheckNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*ReplaceHTTPCheckDefault General Error
+/*
+ReplaceHTTPCheckDefault General Error
 
 swagger:response replaceHttpCheckDefault
 */

@@ -44,12 +44,12 @@ func NewCreatePeer(ctx *middleware.Context, handler CreatePeerHandler) *CreatePe
 	return &CreatePeer{Context: ctx, Handler: handler}
 }
 
-/* CreatePeer swagger:route POST /services/haproxy/configuration/peer_section Peer createPeer
+/*
+	CreatePeer swagger:route POST /services/haproxy/configuration/peer_section Peer createPeer
 
-Add a peer
+# Add a peer
 
 Adds a new peer to the configuration file.
-
 */
 type CreatePeer struct {
 	Context *middleware.Context

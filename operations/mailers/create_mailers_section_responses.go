@@ -31,7 +31,8 @@ import (
 // CreateMailersSectionCreatedCode is the HTTP code returned for type CreateMailersSectionCreated
 const CreateMailersSectionCreatedCode int = 201
 
-/*CreateMailersSectionCreated Mailers created
+/*
+CreateMailersSectionCreated Mailers created
 
 swagger:response createMailersSectionCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateMailersSectionCreated) WriteResponse(rw http.ResponseWriter, prod
 // CreateMailersSectionAcceptedCode is the HTTP code returned for type CreateMailersSectionAccepted
 const CreateMailersSectionAcceptedCode int = 202
 
-/*CreateMailersSectionAccepted Configuration change accepted and reload requested
+/*
+CreateMailersSectionAccepted Configuration change accepted and reload requested
 
 swagger:response createMailersSectionAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateMailersSectionAccepted) WriteResponse(rw http.ResponseWriter, pro
 // CreateMailersSectionBadRequestCode is the HTTP code returned for type CreateMailersSectionBadRequest
 const CreateMailersSectionBadRequestCode int = 400
 
-/*CreateMailersSectionBadRequest Bad request
+/*
+CreateMailersSectionBadRequest Bad request
 
 swagger:response createMailersSectionBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateMailersSectionBadRequest) WriteResponse(rw http.ResponseWriter, p
 // CreateMailersSectionConflictCode is the HTTP code returned for type CreateMailersSectionConflict
 const CreateMailersSectionConflictCode int = 409
 
-/*CreateMailersSectionConflict The specified resource already exists
+/*
+CreateMailersSectionConflict The specified resource already exists
 
 swagger:response createMailersSectionConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateMailersSectionConflict) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*CreateMailersSectionDefault General Error
+/*
+CreateMailersSectionDefault General Error
 
 swagger:response createMailersSectionDefault
 */

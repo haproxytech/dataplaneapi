@@ -44,12 +44,12 @@ func NewDeleteSpoeScope(ctx *middleware.Context, handler DeleteSpoeScopeHandler)
 	return &DeleteSpoeScope{Context: ctx, Handler: handler}
 }
 
-/* DeleteSpoeScope swagger:route DELETE /services/haproxy/spoe/spoe_scopes/{name} Spoe deleteSpoeScope
+/*
+	DeleteSpoeScope swagger:route DELETE /services/haproxy/spoe/spoe_scopes/{name} Spoe deleteSpoeScope
 
-Delete a SPOE scope
+# Delete a SPOE scope
 
 Deletes a SPOE scope from the configuration file.
-
 */
 type DeleteSpoeScope struct {
 	Context *middleware.Context

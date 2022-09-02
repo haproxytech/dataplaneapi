@@ -51,12 +51,12 @@ func NewGetHTTPAfterResponseRules(ctx *middleware.Context, handler GetHTTPAfterR
 	return &GetHTTPAfterResponseRules{Context: ctx, Handler: handler}
 }
 
-/* GetHTTPAfterResponseRules swagger:route GET /services/haproxy/configuration/http_after_response_rules HTTPAfterResponseRule getHttpAfterResponseRules
+/*
+	GetHTTPAfterResponseRules swagger:route GET /services/haproxy/configuration/http_after_response_rules HTTPAfterResponseRule getHttpAfterResponseRules
 
-Return an array of all HTTP After Response Rules
+# Return an array of all HTTP After Response Rules
 
 Returns all HTTP After Response Rules that are configured in specified parent.
-
 */
 type GetHTTPAfterResponseRules struct {
 	Context *middleware.Context

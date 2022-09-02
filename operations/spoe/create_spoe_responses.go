@@ -31,7 +31,8 @@ import (
 // CreateSpoeCreatedCode is the HTTP code returned for type CreateSpoeCreated
 const CreateSpoeCreatedCode int = 201
 
-/*CreateSpoeCreated SPOE file created with its entries
+/*
+CreateSpoeCreated SPOE file created with its entries
 
 swagger:response createSpoeCreated
 */
@@ -73,7 +74,8 @@ func (o *CreateSpoeCreated) WriteResponse(rw http.ResponseWriter, producer runti
 // CreateSpoeBadRequestCode is the HTTP code returned for type CreateSpoeBadRequest
 const CreateSpoeBadRequestCode int = 400
 
-/*CreateSpoeBadRequest Bad request
+/*
+CreateSpoeBadRequest Bad request
 
 swagger:response createSpoeBadRequest
 */
@@ -139,7 +141,8 @@ func (o *CreateSpoeBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateSpoeConflictCode is the HTTP code returned for type CreateSpoeConflict
 const CreateSpoeConflictCode int = 409
 
-/*CreateSpoeConflict The specified resource already exists
+/*
+CreateSpoeConflict The specified resource already exists
 
 swagger:response createSpoeConflict
 */
@@ -202,7 +205,8 @@ func (o *CreateSpoeConflict) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*CreateSpoeDefault General Error
+/*
+CreateSpoeDefault General Error
 
 swagger:response createSpoeDefault
 */

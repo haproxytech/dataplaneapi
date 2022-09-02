@@ -21,7 +21,6 @@ package maps
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"io"
 	"net/http"
 
@@ -102,7 +101,7 @@ func (o *AddPayloadRuntimeMapParams) BindRequest(r *http.Request, route *middlew
 				res = append(res, err)
 			}
 
-			ctx := validate.WithOperationRequest(context.Background())
+			ctx := validate.WithOperationRequest(r.Context())
 			if err := body.ContextValidate(ctx, route.Formats); err != nil {
 				res = append(res, err)
 			}

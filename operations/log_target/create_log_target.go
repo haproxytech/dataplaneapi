@@ -44,12 +44,12 @@ func NewCreateLogTarget(ctx *middleware.Context, handler CreateLogTargetHandler)
 	return &CreateLogTarget{Context: ctx, Handler: handler}
 }
 
-/* CreateLogTarget swagger:route POST /services/haproxy/configuration/log_targets LogTarget createLogTarget
+/*
+	CreateLogTarget swagger:route POST /services/haproxy/configuration/log_targets LogTarget createLogTarget
 
-Add a new Log Target
+# Add a new Log Target
 
 Adds a new Log Target of the specified type in the specified parent.
-
 */
 type CreateLogTarget struct {
 	Context *middleware.Context

@@ -51,12 +51,12 @@ func NewGetLogForwards(ctx *middleware.Context, handler GetLogForwardsHandler) *
 	return &GetLogForwards{Context: ctx, Handler: handler}
 }
 
-/* GetLogForwards swagger:route GET /services/haproxy/configuration/log_forwards LogForward getLogForwards
+/*
+	GetLogForwards swagger:route GET /services/haproxy/configuration/log_forwards LogForward getLogForwards
 
-Return an array of log forwards
+# Return an array of log forwards
 
 Returns an array of all configured log forwards.
-
 */
 type GetLogForwards struct {
 	Context *middleware.Context

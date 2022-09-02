@@ -31,7 +31,8 @@ import (
 // GetACLOKCode is the HTTP code returned for type GetACLOK
 const GetACLOKCode int = 200
 
-/*GetACLOK Successful operation
+/*
+GetACLOK Successful operation
 
 swagger:response getAclOK
 */
@@ -97,7 +98,8 @@ func (o *GetACLOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produc
 // GetACLNotFoundCode is the HTTP code returned for type GetACLNotFound
 const GetACLNotFoundCode int = 404
 
-/*GetACLNotFound The specified resource was not found
+/*
+GetACLNotFound The specified resource was not found
 
 swagger:response getAclNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetACLNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.
 	}
 }
 
-/*GetACLDefault General Error
+/*
+GetACLDefault General Error
 
 swagger:response getAclDefault
 */

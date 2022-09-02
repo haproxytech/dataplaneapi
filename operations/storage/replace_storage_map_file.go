@@ -44,12 +44,12 @@ func NewReplaceStorageMapFile(ctx *middleware.Context, handler ReplaceStorageMap
 	return &ReplaceStorageMapFile{Context: ctx, Handler: handler}
 }
 
-/* ReplaceStorageMapFile swagger:route PUT /services/haproxy/storage/maps/{name} Storage replaceStorageMapFile
+/*
+	ReplaceStorageMapFile swagger:route PUT /services/haproxy/storage/maps/{name} Storage replaceStorageMapFile
 
-Replace contents of a managed map file on disk
+# Replace contents of a managed map file on disk
 
 Replaces the contents of a managed map file on disk
-
 */
 type ReplaceStorageMapFile struct {
 	Context *middleware.Context

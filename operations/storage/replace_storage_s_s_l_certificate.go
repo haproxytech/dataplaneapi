@@ -44,12 +44,12 @@ func NewReplaceStorageSSLCertificate(ctx *middleware.Context, handler ReplaceSto
 	return &ReplaceStorageSSLCertificate{Context: ctx, Handler: handler}
 }
 
-/* ReplaceStorageSSLCertificate swagger:route PUT /services/haproxy/storage/ssl_certificates/{name} Storage replaceStorageSSLCertificate
+/*
+	ReplaceStorageSSLCertificate swagger:route PUT /services/haproxy/storage/ssl_certificates/{name} Storage replaceStorageSSLCertificate
 
-Replace SSL certificates on disk
+# Replace SSL certificates on disk
 
 Replaces SSL certificate on disk.
-
 */
 type ReplaceStorageSSLCertificate struct {
 	Context *middleware.Context

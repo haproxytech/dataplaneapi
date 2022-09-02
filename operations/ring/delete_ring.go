@@ -44,12 +44,12 @@ func NewDeleteRing(ctx *middleware.Context, handler DeleteRingHandler) *DeleteRi
 	return &DeleteRing{Context: ctx, Handler: handler}
 }
 
-/* DeleteRing swagger:route DELETE /services/haproxy/configuration/rings/{name} Ring deleteRing
+/*
+	DeleteRing swagger:route DELETE /services/haproxy/configuration/rings/{name} Ring deleteRing
 
-Delete a ring
+# Delete a ring
 
 Deletes a ring from the configuration by it's name.
-
 */
 type DeleteRing struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // ReplaceCacheOKCode is the HTTP code returned for type ReplaceCacheOK
 const ReplaceCacheOKCode int = 200
 
-/*ReplaceCacheOK Cache replaced
+/*
+ReplaceCacheOK Cache replaced
 
 swagger:response replaceCacheOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceCacheOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // ReplaceCacheAcceptedCode is the HTTP code returned for type ReplaceCacheAccepted
 const ReplaceCacheAcceptedCode int = 202
 
-/*ReplaceCacheAccepted Configuration change accepted and reload requested
+/*
+ReplaceCacheAccepted Configuration change accepted and reload requested
 
 swagger:response replaceCacheAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceCacheAccepted) WriteResponse(rw http.ResponseWriter, producer ru
 // ReplaceCacheBadRequestCode is the HTTP code returned for type ReplaceCacheBadRequest
 const ReplaceCacheBadRequestCode int = 400
 
-/*ReplaceCacheBadRequest Bad request
+/*
+ReplaceCacheBadRequest Bad request
 
 swagger:response replaceCacheBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceCacheBadRequest) WriteResponse(rw http.ResponseWriter, producer 
 // ReplaceCacheNotFoundCode is the HTTP code returned for type ReplaceCacheNotFound
 const ReplaceCacheNotFoundCode int = 404
 
-/*ReplaceCacheNotFound The specified resource was not found
+/*
+ReplaceCacheNotFound The specified resource was not found
 
 swagger:response replaceCacheNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceCacheNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*ReplaceCacheDefault General Error
+/*
+ReplaceCacheDefault General Error
 
 swagger:response replaceCacheDefault
 */

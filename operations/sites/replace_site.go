@@ -44,12 +44,12 @@ func NewReplaceSite(ctx *middleware.Context, handler ReplaceSiteHandler) *Replac
 	return &ReplaceSite{Context: ctx, Handler: handler}
 }
 
-/* ReplaceSite swagger:route PUT /services/haproxy/sites/{name} Sites replaceSite
+/*
+	ReplaceSite swagger:route PUT /services/haproxy/sites/{name} Sites replaceSite
 
-Replace a site
+# Replace a site
 
 Replaces a site configuration by it's name.
-
 */
 type ReplaceSite struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // DeleteSpoeFileNoContentCode is the HTTP code returned for type DeleteSpoeFileNoContent
 const DeleteSpoeFileNoContentCode int = 204
 
-/*DeleteSpoeFileNoContent SPOE file deleted
+/*
+DeleteSpoeFileNoContent SPOE file deleted
 
 swagger:response deleteSpoeFileNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteSpoeFileNoContent) WriteResponse(rw http.ResponseWriter, producer
 // DeleteSpoeFileNotFoundCode is the HTTP code returned for type DeleteSpoeFileNotFound
 const DeleteSpoeFileNotFoundCode int = 404
 
-/*DeleteSpoeFileNotFound The specified resource was not found
+/*
+DeleteSpoeFileNotFound The specified resource was not found
 
 swagger:response deleteSpoeFileNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteSpoeFileNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*DeleteSpoeFileDefault General Error
+/*
+DeleteSpoeFileDefault General Error
 
 swagger:response deleteSpoeFileDefault
 */

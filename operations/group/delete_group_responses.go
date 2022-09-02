@@ -31,7 +31,8 @@ import (
 // DeleteGroupAcceptedCode is the HTTP code returned for type DeleteGroupAccepted
 const DeleteGroupAcceptedCode int = 202
 
-/*DeleteGroupAccepted Configuration change accepted and reload requested
+/*
+DeleteGroupAccepted Configuration change accepted and reload requested
 
 swagger:response deleteGroupAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteGroupAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // DeleteGroupNoContentCode is the HTTP code returned for type DeleteGroupNoContent
 const DeleteGroupNoContentCode int = 204
 
-/*DeleteGroupNoContent Group deleted
+/*
+DeleteGroupNoContent Group deleted
 
 swagger:response deleteGroupNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteGroupNoContent) WriteResponse(rw http.ResponseWriter, producer ru
 // DeleteGroupNotFoundCode is the HTTP code returned for type DeleteGroupNotFound
 const DeleteGroupNotFoundCode int = 404
 
-/*DeleteGroupNotFound The specified resource was not found
+/*
+DeleteGroupNotFound The specified resource was not found
 
 swagger:response deleteGroupNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteGroupNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*DeleteGroupDefault General Error
+/*
+DeleteGroupDefault General Error
 
 swagger:response deleteGroupDefault
 */

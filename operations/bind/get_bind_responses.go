@@ -31,7 +31,8 @@ import (
 // GetBindOKCode is the HTTP code returned for type GetBindOK
 const GetBindOKCode int = 200
 
-/*GetBindOK Successful operation
+/*
+GetBindOK Successful operation
 
 swagger:response getBindOK
 */
@@ -97,7 +98,8 @@ func (o *GetBindOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 // GetBindNotFoundCode is the HTTP code returned for type GetBindNotFound
 const GetBindNotFoundCode int = 404
 
-/*GetBindNotFound The specified resource already exists
+/*
+GetBindNotFound The specified resource already exists
 
 swagger:response getBindNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetBindNotFound) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetBindDefault General Error
+/*
+GetBindDefault General Error
 
 swagger:response getBindDefault
 */

@@ -44,12 +44,12 @@ func NewEditCluster(ctx *middleware.Context, handler EditClusterHandler) *EditCl
 	return &EditCluster{Context: ctx, Handler: handler}
 }
 
-/* EditCluster swagger:route PUT /cluster Cluster editCluster
+/*
+	EditCluster swagger:route PUT /cluster Cluster editCluster
+
+# Edit cluster settings
 
 Edit cluster settings
-
-Edit cluster settings
-
 */
 type EditCluster struct {
 	Context *middleware.Context

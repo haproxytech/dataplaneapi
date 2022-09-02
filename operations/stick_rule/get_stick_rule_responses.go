@@ -31,7 +31,8 @@ import (
 // GetStickRuleOKCode is the HTTP code returned for type GetStickRuleOK
 const GetStickRuleOKCode int = 200
 
-/*GetStickRuleOK Successful operation
+/*
+GetStickRuleOK Successful operation
 
 swagger:response getStickRuleOK
 */
@@ -97,7 +98,8 @@ func (o *GetStickRuleOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetStickRuleNotFoundCode is the HTTP code returned for type GetStickRuleNotFound
 const GetStickRuleNotFoundCode int = 404
 
-/*GetStickRuleNotFound The specified resource was not found
+/*
+GetStickRuleNotFound The specified resource was not found
 
 swagger:response getStickRuleNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetStickRuleNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetStickRuleDefault General Error
+/*
+GetStickRuleDefault General Error
 
 swagger:response getStickRuleDefault
 */

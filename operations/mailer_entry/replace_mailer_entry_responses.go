@@ -31,7 +31,8 @@ import (
 // ReplaceMailerEntryOKCode is the HTTP code returned for type ReplaceMailerEntryOK
 const ReplaceMailerEntryOKCode int = 200
 
-/*ReplaceMailerEntryOK MailerEntry replaced
+/*
+ReplaceMailerEntryOK MailerEntry replaced
 
 swagger:response replaceMailerEntryOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceMailerEntryOK) WriteResponse(rw http.ResponseWriter, producer ru
 // ReplaceMailerEntryAcceptedCode is the HTTP code returned for type ReplaceMailerEntryAccepted
 const ReplaceMailerEntryAcceptedCode int = 202
 
-/*ReplaceMailerEntryAccepted Configuration change accepted and reload requested
+/*
+ReplaceMailerEntryAccepted Configuration change accepted and reload requested
 
 swagger:response replaceMailerEntryAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceMailerEntryAccepted) WriteResponse(rw http.ResponseWriter, produ
 // ReplaceMailerEntryBadRequestCode is the HTTP code returned for type ReplaceMailerEntryBadRequest
 const ReplaceMailerEntryBadRequestCode int = 400
 
-/*ReplaceMailerEntryBadRequest Bad request
+/*
+ReplaceMailerEntryBadRequest Bad request
 
 swagger:response replaceMailerEntryBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceMailerEntryBadRequest) WriteResponse(rw http.ResponseWriter, pro
 // ReplaceMailerEntryNotFoundCode is the HTTP code returned for type ReplaceMailerEntryNotFound
 const ReplaceMailerEntryNotFoundCode int = 404
 
-/*ReplaceMailerEntryNotFound The specified resource was not found
+/*
+ReplaceMailerEntryNotFound The specified resource was not found
 
 swagger:response replaceMailerEntryNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceMailerEntryNotFound) WriteResponse(rw http.ResponseWriter, produ
 	}
 }
 
-/*ReplaceMailerEntryDefault General Error
+/*
+ReplaceMailerEntryDefault General Error
 
 swagger:response replaceMailerEntryDefault
 */

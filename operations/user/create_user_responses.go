@@ -31,7 +31,8 @@ import (
 // CreateUserCreatedCode is the HTTP code returned for type CreateUserCreated
 const CreateUserCreatedCode int = 201
 
-/*CreateUserCreated User created
+/*
+CreateUserCreated User created
 
 swagger:response createUserCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateUserCreated) WriteResponse(rw http.ResponseWriter, producer runti
 // CreateUserAcceptedCode is the HTTP code returned for type CreateUserAccepted
 const CreateUserAcceptedCode int = 202
 
-/*CreateUserAccepted Configuration change accepted and reload requested
+/*
+CreateUserAccepted Configuration change accepted and reload requested
 
 swagger:response createUserAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateUserAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // CreateUserBadRequestCode is the HTTP code returned for type CreateUserBadRequest
 const CreateUserBadRequestCode int = 400
 
-/*CreateUserBadRequest Bad request
+/*
+CreateUserBadRequest Bad request
 
 swagger:response createUserBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateUserBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateUserConflictCode is the HTTP code returned for type CreateUserConflict
 const CreateUserConflictCode int = 409
 
-/*CreateUserConflict The specified resource already exists
+/*
+CreateUserConflict The specified resource already exists
 
 swagger:response createUserConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateUserConflict) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*CreateUserDefault General Error
+/*
+CreateUserDefault General Error
 
 swagger:response createUserDefault
 */

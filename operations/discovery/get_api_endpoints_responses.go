@@ -31,7 +31,8 @@ import (
 // GetAPIEndpointsOKCode is the HTTP code returned for type GetAPIEndpointsOK
 const GetAPIEndpointsOKCode int = 200
 
-/*GetAPIEndpointsOK Success
+/*
+GetAPIEndpointsOK Success
 
 swagger:response getApiEndpointsOK
 */
@@ -75,7 +76,8 @@ func (o *GetAPIEndpointsOK) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetAPIEndpointsDefault General Error
+/*
+GetAPIEndpointsDefault General Error
 
 swagger:response getApiEndpointsDefault
 */

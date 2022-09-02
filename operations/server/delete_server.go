@@ -44,12 +44,12 @@ func NewDeleteServer(ctx *middleware.Context, handler DeleteServerHandler) *Dele
 	return &DeleteServer{Context: ctx, Handler: handler}
 }
 
-/* DeleteServer swagger:route DELETE /services/haproxy/configuration/servers/{name} Server deleteServer
+/*
+	DeleteServer swagger:route DELETE /services/haproxy/configuration/servers/{name} Server deleteServer
 
-Delete a server
+# Delete a server
 
 Deletes a server configuration by it's name in the specified backend.
-
 */
 type DeleteServer struct {
 	Context *middleware.Context

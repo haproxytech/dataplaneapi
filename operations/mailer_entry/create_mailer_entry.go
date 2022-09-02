@@ -44,12 +44,12 @@ func NewCreateMailerEntry(ctx *middleware.Context, handler CreateMailerEntryHand
 	return &CreateMailerEntry{Context: ctx, Handler: handler}
 }
 
-/* CreateMailerEntry swagger:route POST /services/haproxy/configuration/mailer_entries MailerEntry createMailerEntry
+/*
+	CreateMailerEntry swagger:route POST /services/haproxy/configuration/mailer_entries MailerEntry createMailerEntry
 
 Add a new mailer_entry
 
 Adds a new mailer entry to the specified mailers section in the configuration file.
-
 */
 type CreateMailerEntry struct {
 	Context *middleware.Context

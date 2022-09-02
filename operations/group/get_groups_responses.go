@@ -31,7 +31,8 @@ import (
 // GetGroupsOKCode is the HTTP code returned for type GetGroupsOK
 const GetGroupsOKCode int = 200
 
-/*GetGroupsOK Successful operation
+/*
+GetGroupsOK Successful operation
 
 swagger:response getGroupsOK
 */
@@ -94,7 +95,8 @@ func (o *GetGroupsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	}
 }
 
-/*GetGroupsDefault General Error
+/*
+GetGroupsDefault General Error
 
 swagger:response getGroupsDefault
 */

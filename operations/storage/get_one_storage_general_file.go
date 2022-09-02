@@ -44,12 +44,12 @@ func NewGetOneStorageGeneralFile(ctx *middleware.Context, handler GetOneStorageG
 	return &GetOneStorageGeneralFile{Context: ctx, Handler: handler}
 }
 
-/* GetOneStorageGeneralFile swagger:route GET /services/haproxy/storage/general/{name} Storage getOneStorageGeneralFile
+/*
+	GetOneStorageGeneralFile swagger:route GET /services/haproxy/storage/general/{name} Storage getOneStorageGeneralFile
 
-Return the contents of one managed general use file from disk
+# Return the contents of one managed general use file from disk
 
 Returns the contents of one managed general use file from disk
-
 */
 type GetOneStorageGeneralFile struct {
 	Context *middleware.Context

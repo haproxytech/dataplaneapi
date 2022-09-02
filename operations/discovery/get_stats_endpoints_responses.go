@@ -31,7 +31,8 @@ import (
 // GetStatsEndpointsOKCode is the HTTP code returned for type GetStatsEndpointsOK
 const GetStatsEndpointsOKCode int = 200
 
-/*GetStatsEndpointsOK Success
+/*
+GetStatsEndpointsOK Success
 
 swagger:response getStatsEndpointsOK
 */
@@ -75,7 +76,8 @@ func (o *GetStatsEndpointsOK) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*GetStatsEndpointsDefault General Error
+/*
+GetStatsEndpointsDefault General Error
 
 swagger:response getStatsEndpointsDefault
 */

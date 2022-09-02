@@ -31,7 +31,8 @@ import (
 // CreateTCPCheckCreatedCode is the HTTP code returned for type CreateTCPCheckCreated
 const CreateTCPCheckCreatedCode int = 201
 
-/*CreateTCPCheckCreated TCP check created
+/*
+CreateTCPCheckCreated TCP check created
 
 swagger:response createTcpCheckCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateTCPCheckCreated) WriteResponse(rw http.ResponseWriter, producer r
 // CreateTCPCheckAcceptedCode is the HTTP code returned for type CreateTCPCheckAccepted
 const CreateTCPCheckAcceptedCode int = 202
 
-/*CreateTCPCheckAccepted Configuration change accepted and reload requested
+/*
+CreateTCPCheckAccepted Configuration change accepted and reload requested
 
 swagger:response createTcpCheckAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateTCPCheckAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // CreateTCPCheckBadRequestCode is the HTTP code returned for type CreateTCPCheckBadRequest
 const CreateTCPCheckBadRequestCode int = 400
 
-/*CreateTCPCheckBadRequest Bad request
+/*
+CreateTCPCheckBadRequest Bad request
 
 swagger:response createTcpCheckBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateTCPCheckBadRequest) WriteResponse(rw http.ResponseWriter, produce
 // CreateTCPCheckConflictCode is the HTTP code returned for type CreateTCPCheckConflict
 const CreateTCPCheckConflictCode int = 409
 
-/*CreateTCPCheckConflict The specified resource already exists
+/*
+CreateTCPCheckConflict The specified resource already exists
 
 swagger:response createTcpCheckConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateTCPCheckConflict) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*CreateTCPCheckDefault General Error
+/*
+CreateTCPCheckDefault General Error
 
 swagger:response createTcpCheckDefault
 */

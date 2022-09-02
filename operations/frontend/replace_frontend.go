@@ -44,12 +44,12 @@ func NewReplaceFrontend(ctx *middleware.Context, handler ReplaceFrontendHandler)
 	return &ReplaceFrontend{Context: ctx, Handler: handler}
 }
 
-/* ReplaceFrontend swagger:route PUT /services/haproxy/configuration/frontends/{name} Frontend replaceFrontend
+/*
+	ReplaceFrontend swagger:route PUT /services/haproxy/configuration/frontends/{name} Frontend replaceFrontend
 
-Replace a frontend
+# Replace a frontend
 
 Replaces a frontend configuration by it's name.
-
 */
 type ReplaceFrontend struct {
 	Context *middleware.Context

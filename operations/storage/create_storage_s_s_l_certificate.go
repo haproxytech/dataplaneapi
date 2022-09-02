@@ -44,12 +44,12 @@ func NewCreateStorageSSLCertificate(ctx *middleware.Context, handler CreateStora
 	return &CreateStorageSSLCertificate{Context: ctx, Handler: handler}
 }
 
-/* CreateStorageSSLCertificate swagger:route POST /services/haproxy/storage/ssl_certificates Storage createStorageSSLCertificate
+/*
+	CreateStorageSSLCertificate swagger:route POST /services/haproxy/storage/ssl_certificates Storage createStorageSSLCertificate
 
-Create SSL certificate
+# Create SSL certificate
 
 Creates SSL certificate.
-
 */
 type CreateStorageSSLCertificate struct {
 	Context *middleware.Context

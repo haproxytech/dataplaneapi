@@ -51,12 +51,12 @@ func NewGetSites(ctx *middleware.Context, handler GetSitesHandler) *GetSites {
 	return &GetSites{Context: ctx, Handler: handler}
 }
 
-/* GetSites swagger:route GET /services/haproxy/sites Sites getSites
+/*
+	GetSites swagger:route GET /services/haproxy/sites Sites getSites
 
-Return an array of sites
+# Return an array of sites
 
 Returns an array of all configured sites.
-
 */
 type GetSites struct {
 	Context *middleware.Context

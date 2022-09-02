@@ -44,12 +44,12 @@ func NewEditMailersSection(ctx *middleware.Context, handler EditMailersSectionHa
 	return &EditMailersSection{Context: ctx, Handler: handler}
 }
 
-/* EditMailersSection swagger:route PUT /services/haproxy/configuration/mailers_section/{name} Mailers editMailersSection
+/*
+	EditMailersSection swagger:route PUT /services/haproxy/configuration/mailers_section/{name} Mailers editMailersSection
 
-Modify a Mailers section
+# Modify a Mailers section
 
 Modifies a mailers configuration by it's name.
-
 */
 type EditMailersSection struct {
 	Context *middleware.Context

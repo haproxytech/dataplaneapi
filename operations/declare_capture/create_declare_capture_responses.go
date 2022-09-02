@@ -31,7 +31,8 @@ import (
 // CreateDeclareCaptureCreatedCode is the HTTP code returned for type CreateDeclareCaptureCreated
 const CreateDeclareCaptureCreatedCode int = 201
 
-/*CreateDeclareCaptureCreated Declare capture created
+/*
+CreateDeclareCaptureCreated Declare capture created
 
 swagger:response createDeclareCaptureCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateDeclareCaptureCreated) WriteResponse(rw http.ResponseWriter, prod
 // CreateDeclareCaptureAcceptedCode is the HTTP code returned for type CreateDeclareCaptureAccepted
 const CreateDeclareCaptureAcceptedCode int = 202
 
-/*CreateDeclareCaptureAccepted Configuration change accepted and reload requested
+/*
+CreateDeclareCaptureAccepted Configuration change accepted and reload requested
 
 swagger:response createDeclareCaptureAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateDeclareCaptureAccepted) WriteResponse(rw http.ResponseWriter, pro
 // CreateDeclareCaptureBadRequestCode is the HTTP code returned for type CreateDeclareCaptureBadRequest
 const CreateDeclareCaptureBadRequestCode int = 400
 
-/*CreateDeclareCaptureBadRequest Bad request
+/*
+CreateDeclareCaptureBadRequest Bad request
 
 swagger:response createDeclareCaptureBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateDeclareCaptureBadRequest) WriteResponse(rw http.ResponseWriter, p
 // CreateDeclareCaptureConflictCode is the HTTP code returned for type CreateDeclareCaptureConflict
 const CreateDeclareCaptureConflictCode int = 409
 
-/*CreateDeclareCaptureConflict The specified resource already exists
+/*
+CreateDeclareCaptureConflict The specified resource already exists
 
 swagger:response createDeclareCaptureConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateDeclareCaptureConflict) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*CreateDeclareCaptureDefault General Error
+/*
+CreateDeclareCaptureDefault General Error
 
 swagger:response createDeclareCaptureDefault
 */

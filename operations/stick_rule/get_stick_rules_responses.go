@@ -31,7 +31,8 @@ import (
 // GetStickRulesOKCode is the HTTP code returned for type GetStickRulesOK
 const GetStickRulesOKCode int = 200
 
-/*GetStickRulesOK Successful operation
+/*
+GetStickRulesOK Successful operation
 
 swagger:response getStickRulesOK
 */
@@ -94,7 +95,8 @@ func (o *GetStickRulesOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetStickRulesDefault General Error
+/*
+GetStickRulesDefault General Error
 
 swagger:response getStickRulesDefault
 */

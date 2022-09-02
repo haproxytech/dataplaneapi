@@ -44,12 +44,12 @@ func NewGetOneRuntimeMap(ctx *middleware.Context, handler GetOneRuntimeMapHandle
 	return &GetOneRuntimeMap{Context: ctx, Handler: handler}
 }
 
-/* GetOneRuntimeMap swagger:route GET /services/haproxy/runtime/maps/{name} Maps getOneRuntimeMap
+/*
+	GetOneRuntimeMap swagger:route GET /services/haproxy/runtime/maps/{name} Maps getOneRuntimeMap
 
-Return one runtime map file
+# Return one runtime map file
 
 Returns one runtime map file.
-
 */
 type GetOneRuntimeMap struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewReplaceBackend(ctx *middleware.Context, handler ReplaceBackendHandler) *
 	return &ReplaceBackend{Context: ctx, Handler: handler}
 }
 
-/* ReplaceBackend swagger:route PUT /services/haproxy/configuration/backends/{name} Backend replaceBackend
+/*
+	ReplaceBackend swagger:route PUT /services/haproxy/configuration/backends/{name} Backend replaceBackend
 
-Replace a backend
+# Replace a backend
 
 Replaces a backend configuration by it's name.
-
 */
 type ReplaceBackend struct {
 	Context *middleware.Context

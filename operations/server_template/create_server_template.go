@@ -44,12 +44,12 @@ func NewCreateServerTemplate(ctx *middleware.Context, handler CreateServerTempla
 	return &CreateServerTemplate{Context: ctx, Handler: handler}
 }
 
-/* CreateServerTemplate swagger:route POST /services/haproxy/configuration/server_templates ServerTemplate createServerTemplate
+/*
+	CreateServerTemplate swagger:route POST /services/haproxy/configuration/server_templates ServerTemplate createServerTemplate
 
-Add a new server template
+# Add a new server template
 
 Adds a new server template in the specified backend in the configuration file.
-
 */
 type CreateServerTemplate struct {
 	Context *middleware.Context

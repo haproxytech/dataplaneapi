@@ -31,7 +31,8 @@ import (
 // GetMailerEntriesOKCode is the HTTP code returned for type GetMailerEntriesOK
 const GetMailerEntriesOKCode int = 200
 
-/*GetMailerEntriesOK Successful operation
+/*
+GetMailerEntriesOK Successful operation
 
 swagger:response getMailerEntriesOK
 */
@@ -94,7 +95,8 @@ func (o *GetMailerEntriesOK) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*GetMailerEntriesDefault General Error
+/*
+GetMailerEntriesDefault General Error
 
 swagger:response getMailerEntriesDefault
 */

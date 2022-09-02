@@ -44,12 +44,12 @@ func NewDeleteMailerEntry(ctx *middleware.Context, handler DeleteMailerEntryHand
 	return &DeleteMailerEntry{Context: ctx, Handler: handler}
 }
 
-/* DeleteMailerEntry swagger:route DELETE /services/haproxy/configuration/mailer_entries/{name} MailerEntry deleteMailerEntry
+/*
+	DeleteMailerEntry swagger:route DELETE /services/haproxy/configuration/mailer_entries/{name} MailerEntry deleteMailerEntry
 
 Delete a mailer_entry
 
 Deletes a mailer entry configuration by it's name in the specified mailers section.
-
 */
 type DeleteMailerEntry struct {
 	Context *middleware.Context

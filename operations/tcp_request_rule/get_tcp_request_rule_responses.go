@@ -31,7 +31,8 @@ import (
 // GetTCPRequestRuleOKCode is the HTTP code returned for type GetTCPRequestRuleOK
 const GetTCPRequestRuleOKCode int = 200
 
-/*GetTCPRequestRuleOK Successful operation
+/*
+GetTCPRequestRuleOK Successful operation
 
 swagger:response getTcpRequestRuleOK
 */
@@ -97,7 +98,8 @@ func (o *GetTCPRequestRuleOK) WriteResponse(rw http.ResponseWriter, producer run
 // GetTCPRequestRuleNotFoundCode is the HTTP code returned for type GetTCPRequestRuleNotFound
 const GetTCPRequestRuleNotFoundCode int = 404
 
-/*GetTCPRequestRuleNotFound The specified resource was not found
+/*
+GetTCPRequestRuleNotFound The specified resource was not found
 
 swagger:response getTcpRequestRuleNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetTCPRequestRuleNotFound) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*GetTCPRequestRuleDefault General Error
+/*
+GetTCPRequestRuleDefault General Error
 
 swagger:response getTcpRequestRuleDefault
 */

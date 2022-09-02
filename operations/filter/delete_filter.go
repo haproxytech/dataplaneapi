@@ -44,12 +44,12 @@ func NewDeleteFilter(ctx *middleware.Context, handler DeleteFilterHandler) *Dele
 	return &DeleteFilter{Context: ctx, Handler: handler}
 }
 
-/* DeleteFilter swagger:route DELETE /services/haproxy/configuration/filters/{index} Filter deleteFilter
+/*
+	DeleteFilter swagger:route DELETE /services/haproxy/configuration/filters/{index} Filter deleteFilter
 
-Delete a Filter
+# Delete a Filter
 
 Deletes a Filter configuration by it's index from the specified parent.
-
 */
 type DeleteFilter struct {
 	Context *middleware.Context

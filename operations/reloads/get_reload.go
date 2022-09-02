@@ -44,12 +44,12 @@ func NewGetReload(ctx *middleware.Context, handler GetReloadHandler) *GetReload 
 	return &GetReload{Context: ctx, Handler: handler}
 }
 
-/* GetReload swagger:route GET /services/haproxy/reloads/{id} Reloads getReload
+/*
+	GetReload swagger:route GET /services/haproxy/reloads/{id} Reloads getReload
 
-Return one HAProxy reload status
+# Return one HAProxy reload status
 
 Returns one HAProxy reload status.
-
 */
 type GetReload struct {
 	Context *middleware.Context

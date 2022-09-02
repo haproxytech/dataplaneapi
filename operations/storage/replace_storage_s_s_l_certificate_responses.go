@@ -31,7 +31,8 @@ import (
 // ReplaceStorageSSLCertificateOKCode is the HTTP code returned for type ReplaceStorageSSLCertificateOK
 const ReplaceStorageSSLCertificateOKCode int = 200
 
-/*ReplaceStorageSSLCertificateOK SSL certificate replaced
+/*
+ReplaceStorageSSLCertificateOK SSL certificate replaced
 
 swagger:response replaceStorageSSLCertificateOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceStorageSSLCertificateOK) WriteResponse(rw http.ResponseWriter, p
 // ReplaceStorageSSLCertificateAcceptedCode is the HTTP code returned for type ReplaceStorageSSLCertificateAccepted
 const ReplaceStorageSSLCertificateAcceptedCode int = 202
 
-/*ReplaceStorageSSLCertificateAccepted SSL certificate replaced and reload requested
+/*
+ReplaceStorageSSLCertificateAccepted SSL certificate replaced and reload requested
 
 swagger:response replaceStorageSSLCertificateAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceStorageSSLCertificateAccepted) WriteResponse(rw http.ResponseWri
 // ReplaceStorageSSLCertificateBadRequestCode is the HTTP code returned for type ReplaceStorageSSLCertificateBadRequest
 const ReplaceStorageSSLCertificateBadRequestCode int = 400
 
-/*ReplaceStorageSSLCertificateBadRequest Bad request
+/*
+ReplaceStorageSSLCertificateBadRequest Bad request
 
 swagger:response replaceStorageSSLCertificateBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceStorageSSLCertificateBadRequest) WriteResponse(rw http.ResponseW
 // ReplaceStorageSSLCertificateNotFoundCode is the HTTP code returned for type ReplaceStorageSSLCertificateNotFound
 const ReplaceStorageSSLCertificateNotFoundCode int = 404
 
-/*ReplaceStorageSSLCertificateNotFound The specified resource was not found
+/*
+ReplaceStorageSSLCertificateNotFound The specified resource was not found
 
 swagger:response replaceStorageSSLCertificateNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceStorageSSLCertificateNotFound) WriteResponse(rw http.ResponseWri
 	}
 }
 
-/*ReplaceStorageSSLCertificateDefault General Error
+/*
+ReplaceStorageSSLCertificateDefault General Error
 
 swagger:response replaceStorageSSLCertificateDefault
 */

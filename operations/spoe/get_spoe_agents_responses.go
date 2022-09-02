@@ -31,7 +31,8 @@ import (
 // GetSpoeAgentsOKCode is the HTTP code returned for type GetSpoeAgentsOK
 const GetSpoeAgentsOKCode int = 200
 
-/*GetSpoeAgentsOK Successful operation
+/*
+GetSpoeAgentsOK Successful operation
 
 swagger:response getSpoeAgentsOK
 */
@@ -94,7 +95,8 @@ func (o *GetSpoeAgentsOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetSpoeAgentsDefault General Error
+/*
+GetSpoeAgentsDefault General Error
 
 swagger:response getSpoeAgentsDefault
 */

@@ -44,12 +44,12 @@ func NewGetAllRuntimeMapFiles(ctx *middleware.Context, handler GetAllRuntimeMapF
 	return &GetAllRuntimeMapFiles{Context: ctx, Handler: handler}
 }
 
-/* GetAllRuntimeMapFiles swagger:route GET /services/haproxy/runtime/maps Maps getAllRuntimeMapFiles
+/*
+	GetAllRuntimeMapFiles swagger:route GET /services/haproxy/runtime/maps Maps getAllRuntimeMapFiles
 
-Return runtime map files
+# Return runtime map files
 
 Returns runtime map files.
-
 */
 type GetAllRuntimeMapFiles struct {
 	Context *middleware.Context

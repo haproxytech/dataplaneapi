@@ -31,7 +31,8 @@ import (
 // DeleteStorageGeneralFileNoContentCode is the HTTP code returned for type DeleteStorageGeneralFileNoContent
 const DeleteStorageGeneralFileNoContentCode int = 204
 
-/*DeleteStorageGeneralFileNoContent General use file deleted
+/*
+DeleteStorageGeneralFileNoContent General use file deleted
 
 swagger:response deleteStorageGeneralFileNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteStorageGeneralFileNoContent) WriteResponse(rw http.ResponseWriter
 // DeleteStorageGeneralFileNotFoundCode is the HTTP code returned for type DeleteStorageGeneralFileNotFound
 const DeleteStorageGeneralFileNotFoundCode int = 404
 
-/*DeleteStorageGeneralFileNotFound The specified resource was not found
+/*
+DeleteStorageGeneralFileNotFound The specified resource was not found
 
 swagger:response deleteStorageGeneralFileNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteStorageGeneralFileNotFound) WriteResponse(rw http.ResponseWriter,
 	}
 }
 
-/*DeleteStorageGeneralFileDefault General Error
+/*
+DeleteStorageGeneralFileDefault General Error
 
 swagger:response deleteStorageGeneralFileDefault
 */

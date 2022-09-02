@@ -44,12 +44,12 @@ func NewCreateHTTPRequestRule(ctx *middleware.Context, handler CreateHTTPRequest
 	return &CreateHTTPRequestRule{Context: ctx, Handler: handler}
 }
 
-/* CreateHTTPRequestRule swagger:route POST /services/haproxy/configuration/http_request_rules HTTPRequestRule createHttpRequestRule
+/*
+	CreateHTTPRequestRule swagger:route POST /services/haproxy/configuration/http_request_rules HTTPRequestRule createHttpRequestRule
 
-Add a new HTTP Request Rule
+# Add a new HTTP Request Rule
 
 Adds a new HTTP Request Rule of the specified type in the specified parent.
-
 */
 type CreateHTTPRequestRule struct {
 	Context *middleware.Context

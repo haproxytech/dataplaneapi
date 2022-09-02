@@ -32,7 +32,8 @@ import (
 // GetServerTemplatesOKCode is the HTTP code returned for type GetServerTemplatesOK
 const GetServerTemplatesOKCode int = 200
 
-/*GetServerTemplatesOK Successful operation
+/*
+GetServerTemplatesOK Successful operation
 
 swagger:response getServerTemplatesOK
 */
@@ -95,7 +96,8 @@ func (o *GetServerTemplatesOK) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetServerTemplatesDefault General Error
+/*
+GetServerTemplatesDefault General Error
 
 swagger:response getServerTemplatesDefault
 */

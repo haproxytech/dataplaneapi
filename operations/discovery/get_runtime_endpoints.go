@@ -44,12 +44,12 @@ func NewGetRuntimeEndpoints(ctx *middleware.Context, handler GetRuntimeEndpoints
 	return &GetRuntimeEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetRuntimeEndpoints swagger:route GET /services/haproxy/runtime Discovery getRuntimeEndpoints
+/*
+	GetRuntimeEndpoints swagger:route GET /services/haproxy/runtime Discovery getRuntimeEndpoints
 
-Return list of HAProxy advanced runtime endpoints
+# Return list of HAProxy advanced runtime endpoints
 
 Returns a list of endpoints to be used for advanced runtime settings of HAProxy objects.
-
 */
 type GetRuntimeEndpoints struct {
 	Context *middleware.Context

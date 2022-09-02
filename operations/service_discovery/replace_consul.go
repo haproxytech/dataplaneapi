@@ -44,12 +44,12 @@ func NewReplaceConsul(ctx *middleware.Context, handler ReplaceConsulHandler) *Re
 	return &ReplaceConsul{Context: ctx, Handler: handler}
 }
 
-/* ReplaceConsul swagger:route PUT /service_discovery/consul/{id} ServiceDiscovery replaceConsul
+/*
+	ReplaceConsul swagger:route PUT /service_discovery/consul/{id} ServiceDiscovery replaceConsul
 
-Replace a Consul server
+# Replace a Consul server
 
 Replaces a Consul server configuration by it's id.
-
 */
 type ReplaceConsul struct {
 	Context *middleware.Context

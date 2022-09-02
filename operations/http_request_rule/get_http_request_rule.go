@@ -50,12 +50,12 @@ func NewGetHTTPRequestRule(ctx *middleware.Context, handler GetHTTPRequestRuleHa
 	return &GetHTTPRequestRule{Context: ctx, Handler: handler}
 }
 
-/* GetHTTPRequestRule swagger:route GET /services/haproxy/configuration/http_request_rules/{index} HTTPRequestRule getHttpRequestRule
+/*
+	GetHTTPRequestRule swagger:route GET /services/haproxy/configuration/http_request_rules/{index} HTTPRequestRule getHttpRequestRule
 
-Return one HTTP Request Rule
+# Return one HTTP Request Rule
 
 Returns one HTTP Request Rule configuration by it's index in the specified parent.
-
 */
 type GetHTTPRequestRule struct {
 	Context *middleware.Context

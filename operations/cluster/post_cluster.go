@@ -44,12 +44,12 @@ func NewPostCluster(ctx *middleware.Context, handler PostClusterHandler) *PostCl
 	return &PostCluster{Context: ctx, Handler: handler}
 }
 
-/* PostCluster swagger:route POST /cluster Cluster postCluster
+/*
+	PostCluster swagger:route POST /cluster Cluster postCluster
+
+# Post cluster settings
 
 Post cluster settings
-
-Post cluster settings
-
 */
 type PostCluster struct {
 	Context *middleware.Context

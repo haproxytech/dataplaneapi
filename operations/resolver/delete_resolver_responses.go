@@ -31,7 +31,8 @@ import (
 // DeleteResolverAcceptedCode is the HTTP code returned for type DeleteResolverAccepted
 const DeleteResolverAcceptedCode int = 202
 
-/*DeleteResolverAccepted Configuration change accepted and reload requested
+/*
+DeleteResolverAccepted Configuration change accepted and reload requested
 
 swagger:response deleteResolverAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteResolverAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // DeleteResolverNoContentCode is the HTTP code returned for type DeleteResolverNoContent
 const DeleteResolverNoContentCode int = 204
 
-/*DeleteResolverNoContent Resolver deleted
+/*
+DeleteResolverNoContent Resolver deleted
 
 swagger:response deleteResolverNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteResolverNoContent) WriteResponse(rw http.ResponseWriter, producer
 // DeleteResolverNotFoundCode is the HTTP code returned for type DeleteResolverNotFound
 const DeleteResolverNotFoundCode int = 404
 
-/*DeleteResolverNotFound The specified resource was not found
+/*
+DeleteResolverNotFound The specified resource was not found
 
 swagger:response deleteResolverNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteResolverNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*DeleteResolverDefault General Error
+/*
+DeleteResolverDefault General Error
 
 swagger:response deleteResolverDefault
 */

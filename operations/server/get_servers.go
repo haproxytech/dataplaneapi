@@ -51,12 +51,12 @@ func NewGetServers(ctx *middleware.Context, handler GetServersHandler) *GetServe
 	return &GetServers{Context: ctx, Handler: handler}
 }
 
-/* GetServers swagger:route GET /services/haproxy/configuration/servers Server getServers
+/*
+	GetServers swagger:route GET /services/haproxy/configuration/servers Server getServers
 
-Return an array of servers
+# Return an array of servers
 
 Returns an array of all servers that are configured in specified backend.
-
 */
 type GetServers struct {
 	Context *middleware.Context

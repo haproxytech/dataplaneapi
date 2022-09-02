@@ -51,12 +51,12 @@ func NewGetSpoeMessage(ctx *middleware.Context, handler GetSpoeMessageHandler) *
 	return &GetSpoeMessage{Context: ctx, Handler: handler}
 }
 
-/* GetSpoeMessage swagger:route GET /services/haproxy/spoe/spoe_messages/{name} Spoe getSpoeMessage
+/*
+	GetSpoeMessage swagger:route GET /services/haproxy/spoe/spoe_messages/{name} Spoe getSpoeMessage
 
-Return a spoe message
+# Return a spoe message
 
 Returns one spoe message configuration in SPOE scope.
-
 */
 type GetSpoeMessage struct {
 	Context *middleware.Context

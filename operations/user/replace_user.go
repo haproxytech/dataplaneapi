@@ -44,10 +44,10 @@ func NewReplaceUser(ctx *middleware.Context, handler ReplaceUserHandler) *Replac
 	return &ReplaceUser{Context: ctx, Handler: handler}
 }
 
-/* ReplaceUser swagger:route PUT /services/haproxy/configuration/users/{username} User replaceUser
+/*
+	ReplaceUser swagger:route PUT /services/haproxy/configuration/users/{username} User replaceUser
 
 Replace a user
-
 */
 type ReplaceUser struct {
 	Context *middleware.Context

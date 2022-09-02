@@ -14665,6 +14665,17 @@ func init() {
         "default_server": {
           "$ref": "#/definitions/default_server"
         },
+        "description": {
+          "type": "string",
+          "x-display-name": "Description"
+        },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "dynamic_cookie_key": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -14678,6 +14689,13 @@ func init() {
         },
         "email_alert": {
           "$ref": "#/definitions/email_alert"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "external_check": {
           "type": "string",
@@ -14904,6 +14922,10 @@ func init() {
           },
           "x-display-name": "HTTP connection closing"
         },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "independent_streams": {
           "type": "string",
           "enum": [
@@ -14911,6 +14933,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Independent Streams"
+        },
+        "load_server_state_from_file": {
+          "type": "string",
+          "enum": [
+            "global",
+            "local",
+            "none"
+          ]
         },
         "log_health_checks": {
           "type": "string",
@@ -14984,6 +15014,10 @@ func init() {
         "retries": {
           "type": "integer",
           "x-nullable": true
+        },
+        "server_state_file_name": {
+          "type": "string",
+          "x-display-name": "Server state file"
         },
         "server_timeout": {
           "type": "integer",
@@ -15090,6 +15124,10 @@ func init() {
         "tunnel_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "use_fcgi_app": {
+          "type": "string",
+          "x-display-name": "FastCGI application"
         }
       },
       "additionalProperties": false,
@@ -16286,6 +16324,13 @@ func init() {
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "dontlog_normal": {
           "type": "string",
           "enum": [
@@ -16308,6 +16353,13 @@ func init() {
         },
         "email_alert": {
           "$ref": "#/definitions/email_alert"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "error_files": {
           "type": "array",
@@ -17066,6 +17118,10 @@ func init() {
             "property": "name"
           }
         },
+        "description": {
+          "type": "string",
+          "x-display-name": "Description"
+        },
         "disable_h2_upgrade": {
           "type": "string",
           "enum": [
@@ -17073,6 +17129,13 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
+        },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "dontlog_normal": {
           "type": "string",
@@ -17091,6 +17154,13 @@ func init() {
         },
         "email_alert": {
           "$ref": "#/definitions/email_alert"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "forwardfor": {
           "x-dependency": {
@@ -17200,6 +17270,10 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Httpslog"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
         },
         "idle_close_on_response": {
           "type": "string",
@@ -17565,6 +17639,14 @@ func init() {
         },
         "issuers_chain_path": {
           "type": "string"
+        },
+        "load_server_state_from_file": {
+          "type": "string",
+          "enum": [
+            "global",
+            "local",
+            "none"
+          ]
         },
         "localpeer": {
           "type": "string",
@@ -47597,6 +47679,17 @@ func init() {
         "default_server": {
           "$ref": "#/definitions/default_server"
         },
+        "description": {
+          "type": "string",
+          "x-display-name": "Description"
+        },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "dynamic_cookie_key": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -47610,6 +47703,13 @@ func init() {
         },
         "email_alert": {
           "$ref": "#/definitions/email_alert"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "external_check": {
           "type": "string",
@@ -47836,6 +47936,10 @@ func init() {
           },
           "x-display-name": "HTTP connection closing"
         },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "independent_streams": {
           "type": "string",
           "enum": [
@@ -47843,6 +47947,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Independent Streams"
+        },
+        "load_server_state_from_file": {
+          "type": "string",
+          "enum": [
+            "global",
+            "local",
+            "none"
+          ]
         },
         "log_health_checks": {
           "type": "string",
@@ -47916,6 +48028,10 @@ func init() {
         "retries": {
           "type": "integer",
           "x-nullable": true
+        },
+        "server_state_file_name": {
+          "type": "string",
+          "x-display-name": "Server state file"
         },
         "server_timeout": {
           "type": "integer",
@@ -48022,6 +48138,10 @@ func init() {
         "tunnel_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "use_fcgi_app": {
+          "type": "string",
+          "x-display-name": "FastCGI application"
         }
       },
       "additionalProperties": false,
@@ -49185,6 +49305,13 @@ func init() {
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "dontlog_normal": {
           "type": "string",
           "enum": [
@@ -49207,6 +49334,13 @@ func init() {
         },
         "email_alert": {
           "$ref": "#/definitions/email_alert"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "error_files": {
           "type": "array",
@@ -49965,6 +50099,10 @@ func init() {
             "property": "name"
           }
         },
+        "description": {
+          "type": "string",
+          "x-display-name": "Description"
+        },
         "disable_h2_upgrade": {
           "type": "string",
           "enum": [
@@ -49972,6 +50110,13 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Disable HTTP/2 Upgrade"
+        },
+        "disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "dontlog_normal": {
           "type": "string",
@@ -49990,6 +50135,13 @@ func init() {
         },
         "email_alert": {
           "$ref": "#/definitions/email_alert"
+        },
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "forwardfor": {
           "x-dependency": {
@@ -50099,6 +50251,10 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Httpslog"
+        },
+        "id": {
+          "type": "integer",
+          "x-nullable": true
         },
         "idle_close_on_response": {
           "type": "string",
@@ -50436,6 +50592,14 @@ func init() {
         },
         "issuers_chain_path": {
           "type": "string"
+        },
+        "load_server_state_from_file": {
+          "type": "string",
+          "enum": [
+            "global",
+            "local",
+            "none"
+          ]
         },
         "localpeer": {
           "type": "string",

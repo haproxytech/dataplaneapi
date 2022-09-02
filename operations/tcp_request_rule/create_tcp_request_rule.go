@@ -44,12 +44,12 @@ func NewCreateTCPRequestRule(ctx *middleware.Context, handler CreateTCPRequestRu
 	return &CreateTCPRequestRule{Context: ctx, Handler: handler}
 }
 
-/* CreateTCPRequestRule swagger:route POST /services/haproxy/configuration/tcp_request_rules TCPRequestRule createTcpRequestRule
+/*
+	CreateTCPRequestRule swagger:route POST /services/haproxy/configuration/tcp_request_rules TCPRequestRule createTcpRequestRule
 
-Add a new TCP Request Rule
+# Add a new TCP Request Rule
 
 Adds a new TCP Request Rule of the specified type in the specified parent.
-
 */
 type CreateTCPRequestRule struct {
 	Context *middleware.Context

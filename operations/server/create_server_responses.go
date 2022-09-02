@@ -31,7 +31,8 @@ import (
 // CreateServerCreatedCode is the HTTP code returned for type CreateServerCreated
 const CreateServerCreatedCode int = 201
 
-/*CreateServerCreated Server created
+/*
+CreateServerCreated Server created
 
 swagger:response createServerCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateServerCreated) WriteResponse(rw http.ResponseWriter, producer run
 // CreateServerAcceptedCode is the HTTP code returned for type CreateServerAccepted
 const CreateServerAcceptedCode int = 202
 
-/*CreateServerAccepted Configuration change accepted and reload requested
+/*
+CreateServerAccepted Configuration change accepted and reload requested
 
 swagger:response createServerAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateServerAccepted) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateServerBadRequestCode is the HTTP code returned for type CreateServerBadRequest
 const CreateServerBadRequestCode int = 400
 
-/*CreateServerBadRequest Bad request
+/*
+CreateServerBadRequest Bad request
 
 swagger:response createServerBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateServerBadRequest) WriteResponse(rw http.ResponseWriter, producer 
 // CreateServerConflictCode is the HTTP code returned for type CreateServerConflict
 const CreateServerConflictCode int = 409
 
-/*CreateServerConflict The specified resource already exists
+/*
+CreateServerConflict The specified resource already exists
 
 swagger:response createServerConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateServerConflict) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*CreateServerDefault General Error
+/*
+CreateServerDefault General Error
 
 swagger:response createServerDefault
 */

@@ -31,7 +31,8 @@ import (
 // GetInfoOKCode is the HTTP code returned for type GetInfoOK
 const GetInfoOKCode int = 200
 
-/*GetInfoOK Success
+/*
+GetInfoOK Success
 
 swagger:response getInfoOK
 */
@@ -72,7 +73,8 @@ func (o *GetInfoOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 	}
 }
 
-/*GetInfoDefault General Error
+/*
+GetInfoDefault General Error
 
 swagger:response getInfoDefault
 */

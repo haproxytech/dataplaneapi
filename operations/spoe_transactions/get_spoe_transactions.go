@@ -44,12 +44,12 @@ func NewGetSpoeTransactions(ctx *middleware.Context, handler GetSpoeTransactions
 	return &GetSpoeTransactions{Context: ctx, Handler: handler}
 }
 
-/* GetSpoeTransactions swagger:route GET /services/haproxy/spoe_transactions SpoeTransactions getSpoeTransactions
+/*
+	GetSpoeTransactions swagger:route GET /services/haproxy/spoe_transactions SpoeTransactions getSpoeTransactions
 
 Return list of SPOE configuration transactions.
 
 Returns a list of SPOE configuration transactions. Transactions can be filtered by their status.
-
 */
 type GetSpoeTransactions struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewDeletePeerEntry(ctx *middleware.Context, handler DeletePeerEntryHandler)
 	return &DeletePeerEntry{Context: ctx, Handler: handler}
 }
 
-/* DeletePeerEntry swagger:route DELETE /services/haproxy/configuration/peer_entries/{name} PeerEntry deletePeerEntry
+/*
+	DeletePeerEntry swagger:route DELETE /services/haproxy/configuration/peer_entries/{name} PeerEntry deletePeerEntry
 
 Delete a peer_entry
 
 Deletes a peer entry configuration by it's name in the specified peer section.
-
 */
 type DeletePeerEntry struct {
 	Context *middleware.Context

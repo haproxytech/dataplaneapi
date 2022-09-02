@@ -44,12 +44,12 @@ func NewGetSpoeEndpoints(ctx *middleware.Context, handler GetSpoeEndpointsHandle
 	return &GetSpoeEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetSpoeEndpoints swagger:route GET /services/haproxy/spoe Discovery getSpoeEndpoints
+/*
+	GetSpoeEndpoints swagger:route GET /services/haproxy/spoe Discovery getSpoeEndpoints
 
-Return list of HAProxy SPOE endpoints
+# Return list of HAProxy SPOE endpoints
 
 Returns a list of endpoints to be used for SPOE settings of HAProxy.
-
 */
 type GetSpoeEndpoints struct {
 	Context *middleware.Context

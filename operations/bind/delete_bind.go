@@ -44,12 +44,12 @@ func NewDeleteBind(ctx *middleware.Context, handler DeleteBindHandler) *DeleteBi
 	return &DeleteBind{Context: ctx, Handler: handler}
 }
 
-/* DeleteBind swagger:route DELETE /services/haproxy/configuration/binds/{name} Bind deleteBind
+/*
+	DeleteBind swagger:route DELETE /services/haproxy/configuration/binds/{name} Bind deleteBind
 
-Delete a bind
+# Delete a bind
 
 Deletes a bind configuration by it's name in the specified frontend.
-
 */
 type DeleteBind struct {
 	Context *middleware.Context

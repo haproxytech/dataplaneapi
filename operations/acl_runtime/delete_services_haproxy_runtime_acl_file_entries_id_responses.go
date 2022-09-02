@@ -31,7 +31,8 @@ import (
 // DeleteServicesHaproxyRuntimeACLFileEntriesIDNoContentCode is the HTTP code returned for type DeleteServicesHaproxyRuntimeACLFileEntriesIDNoContent
 const DeleteServicesHaproxyRuntimeACLFileEntriesIDNoContentCode int = 204
 
-/*DeleteServicesHaproxyRuntimeACLFileEntriesIDNoContent Successful operation
+/*
+DeleteServicesHaproxyRuntimeACLFileEntriesIDNoContent Successful operation
 
 swagger:response deleteServicesHaproxyRuntimeAclFileEntriesIdNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDNoContent) WriteResponse(rw
 // DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequestCode is the HTTP code returned for type DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest
 const DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequestCode int = 400
 
-/*DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest Bad request
+/*
+DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest Bad request
 
 swagger:response deleteServicesHaproxyRuntimeAclFileEntriesIdBadRequest
 */
@@ -121,7 +123,8 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WriteResponse(r
 // DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFoundCode is the HTTP code returned for type DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound
 const DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFoundCode int = 404
 
-/*DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound The specified resource was not found
+/*
+DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound The specified resource was not found
 
 swagger:response deleteServicesHaproxyRuntimeAclFileEntriesIdNotFound
 */
@@ -184,7 +187,8 @@ func (o *DeleteServicesHaproxyRuntimeACLFileEntriesIDNotFound) WriteResponse(rw 
 	}
 }
 
-/*DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault General Error
+/*
+DeleteServicesHaproxyRuntimeACLFileEntriesIDDefault General Error
 
 swagger:response deleteServicesHaproxyRuntimeAclFileEntriesIdDefault
 */

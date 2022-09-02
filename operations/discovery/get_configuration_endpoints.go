@@ -44,12 +44,12 @@ func NewGetConfigurationEndpoints(ctx *middleware.Context, handler GetConfigurat
 	return &GetConfigurationEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetConfigurationEndpoints swagger:route GET /services/haproxy/configuration Discovery getConfigurationEndpoints
+/*
+	GetConfigurationEndpoints swagger:route GET /services/haproxy/configuration Discovery getConfigurationEndpoints
 
-Return list of HAProxy advanced configuration endpoints
+# Return list of HAProxy advanced configuration endpoints
 
 Returns a list of endpoints to be used for advanced configuration of HAProxy objects.
-
 */
 type GetConfigurationEndpoints struct {
 	Context *middleware.Context

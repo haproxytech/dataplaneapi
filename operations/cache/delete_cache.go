@@ -44,12 +44,12 @@ func NewDeleteCache(ctx *middleware.Context, handler DeleteCacheHandler) *Delete
 	return &DeleteCache{Context: ctx, Handler: handler}
 }
 
-/* DeleteCache swagger:route DELETE /services/haproxy/configuration/caches/{name} Cache deleteCache
+/*
+	DeleteCache swagger:route DELETE /services/haproxy/configuration/caches/{name} Cache deleteCache
 
-Delete a cache
+# Delete a cache
 
 Deletes a cache from the configuration by it's name.
-
 */
 type DeleteCache struct {
 	Context *middleware.Context

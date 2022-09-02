@@ -31,7 +31,8 @@ import (
 // GetStatsOKCode is the HTTP code returned for type GetStatsOK
 const GetStatsOKCode int = 200
 
-/*GetStatsOK Success
+/*
+GetStatsOK Success
 
 swagger:response getStatsOK
 */
@@ -78,7 +79,8 @@ func (o *GetStatsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 // GetStatsInternalServerErrorCode is the HTTP code returned for type GetStatsInternalServerError
 const GetStatsInternalServerErrorCode int = 500
 
-/*GetStatsInternalServerError Internal Server Error
+/*
+GetStatsInternalServerError Internal Server Error
 
 swagger:response getStatsInternalServerError
 */
@@ -122,7 +124,8 @@ func (o *GetStatsInternalServerError) WriteResponse(rw http.ResponseWriter, prod
 	}
 }
 
-/*GetStatsDefault General Error
+/*
+GetStatsDefault General Error
 
 swagger:response getStatsDefault
 */

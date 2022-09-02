@@ -31,7 +31,8 @@ import (
 // DeleteBindAcceptedCode is the HTTP code returned for type DeleteBindAccepted
 const DeleteBindAcceptedCode int = 202
 
-/*DeleteBindAccepted Configuration change accepted and reload requested
+/*
+DeleteBindAccepted Configuration change accepted and reload requested
 
 swagger:response deleteBindAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteBindAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // DeleteBindNoContentCode is the HTTP code returned for type DeleteBindNoContent
 const DeleteBindNoContentCode int = 204
 
-/*DeleteBindNoContent Bind deleted
+/*
+DeleteBindNoContent Bind deleted
 
 swagger:response deleteBindNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteBindNoContent) WriteResponse(rw http.ResponseWriter, producer run
 // DeleteBindNotFoundCode is the HTTP code returned for type DeleteBindNotFound
 const DeleteBindNotFoundCode int = 404
 
-/*DeleteBindNotFound The specified resource was not found
+/*
+DeleteBindNotFound The specified resource was not found
 
 swagger:response deleteBindNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteBindNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*DeleteBindDefault General Error
+/*
+DeleteBindDefault General Error
 
 swagger:response deleteBindDefault
 */

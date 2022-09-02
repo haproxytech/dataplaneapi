@@ -44,12 +44,12 @@ func NewGetServicesEndpoints(ctx *middleware.Context, handler GetServicesEndpoin
 	return &GetServicesEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetServicesEndpoints swagger:route GET /services Discovery getServicesEndpoints
+/*
+	GetServicesEndpoints swagger:route GET /services Discovery getServicesEndpoints
 
-Return list of service endpoints
+# Return list of service endpoints
 
 Returns a list of API managed services endpoints.
-
 */
 type GetServicesEndpoints struct {
 	Context *middleware.Context

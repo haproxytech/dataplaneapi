@@ -44,12 +44,12 @@ func NewReplaceHTTPCheck(ctx *middleware.Context, handler ReplaceHTTPCheckHandle
 	return &ReplaceHTTPCheck{Context: ctx, Handler: handler}
 }
 
-/* ReplaceHTTPCheck swagger:route PUT /services/haproxy/configuration/http_checks/{index} HTTPCheck replaceHttpCheck
+/*
+	ReplaceHTTPCheck swagger:route PUT /services/haproxy/configuration/http_checks/{index} HTTPCheck replaceHttpCheck
 
-Replace a HTTP check
+# Replace a HTTP check
 
 Replaces a HTTP Check configuration by it's index in the specified parent.
-
 */
 type ReplaceHTTPCheck struct {
 	Context *middleware.Context

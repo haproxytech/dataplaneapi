@@ -44,12 +44,12 @@ func NewCreateServer(ctx *middleware.Context, handler CreateServerHandler) *Crea
 	return &CreateServer{Context: ctx, Handler: handler}
 }
 
-/* CreateServer swagger:route POST /services/haproxy/configuration/servers Server createServer
+/*
+	CreateServer swagger:route POST /services/haproxy/configuration/servers Server createServer
 
-Add a new server
+# Add a new server
 
 Adds a new server in the specified backend in the configuration file.
-
 */
 type CreateServer struct {
 	Context *middleware.Context

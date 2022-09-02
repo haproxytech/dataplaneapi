@@ -50,12 +50,12 @@ func NewGetBackend(ctx *middleware.Context, handler GetBackendHandler) *GetBacke
 	return &GetBackend{Context: ctx, Handler: handler}
 }
 
-/* GetBackend swagger:route GET /services/haproxy/configuration/backends/{name} Backend getBackend
+/*
+	GetBackend swagger:route GET /services/haproxy/configuration/backends/{name} Backend getBackend
 
-Return a backend
+# Return a backend
 
 Returns one backend configuration by it's name.
-
 */
 type GetBackend struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewDeleteSite(ctx *middleware.Context, handler DeleteSiteHandler) *DeleteSi
 	return &DeleteSite{Context: ctx, Handler: handler}
 }
 
-/* DeleteSite swagger:route DELETE /services/haproxy/sites/{name} Sites deleteSite
+/*
+	DeleteSite swagger:route DELETE /services/haproxy/sites/{name} Sites deleteSite
 
-Delete a site
+# Delete a site
 
 Deletes a site from the configuration by it's name.
-
 */
 type DeleteSite struct {
 	Context *middleware.Context

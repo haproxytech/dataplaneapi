@@ -51,12 +51,12 @@ func NewGetHTTPResponseRules(ctx *middleware.Context, handler GetHTTPResponseRul
 	return &GetHTTPResponseRules{Context: ctx, Handler: handler}
 }
 
-/* GetHTTPResponseRules swagger:route GET /services/haproxy/configuration/http_response_rules HTTPResponseRule getHttpResponseRules
+/*
+	GetHTTPResponseRules swagger:route GET /services/haproxy/configuration/http_response_rules HTTPResponseRule getHttpResponseRules
 
-Return an array of all HTTP Response Rules
+# Return an array of all HTTP Response Rules
 
 Returns all HTTP Response Rules that are configured in specified parent.
-
 */
 type GetHTTPResponseRules struct {
 	Context *middleware.Context

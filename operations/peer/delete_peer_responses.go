@@ -31,7 +31,8 @@ import (
 // DeletePeerAcceptedCode is the HTTP code returned for type DeletePeerAccepted
 const DeletePeerAcceptedCode int = 202
 
-/*DeletePeerAccepted Configuration change accepted and reload requested
+/*
+DeletePeerAccepted Configuration change accepted and reload requested
 
 swagger:response deletePeerAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeletePeerAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // DeletePeerNoContentCode is the HTTP code returned for type DeletePeerNoContent
 const DeletePeerNoContentCode int = 204
 
-/*DeletePeerNoContent Peer deleted
+/*
+DeletePeerNoContent Peer deleted
 
 swagger:response deletePeerNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeletePeerNoContent) WriteResponse(rw http.ResponseWriter, producer run
 // DeletePeerNotFoundCode is the HTTP code returned for type DeletePeerNotFound
 const DeletePeerNotFoundCode int = 404
 
-/*DeletePeerNotFound The specified resource was not found
+/*
+DeletePeerNotFound The specified resource was not found
 
 swagger:response deletePeerNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeletePeerNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*DeletePeerDefault General Error
+/*
+DeletePeerDefault General Error
 
 swagger:response deletePeerDefault
 */

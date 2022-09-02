@@ -44,12 +44,12 @@ func NewDeleteServerTemplate(ctx *middleware.Context, handler DeleteServerTempla
 	return &DeleteServerTemplate{Context: ctx, Handler: handler}
 }
 
-/* DeleteServerTemplate swagger:route DELETE /services/haproxy/configuration/server_templates/{prefix} ServerTemplate deleteServerTemplate
+/*
+	DeleteServerTemplate swagger:route DELETE /services/haproxy/configuration/server_templates/{prefix} ServerTemplate deleteServerTemplate
 
-Delete a server template
+# Delete a server template
 
 Deletes a server template configuration by it's prefix in the specified backend.
-
 */
 type DeleteServerTemplate struct {
 	Context *middleware.Context

@@ -50,12 +50,12 @@ func NewGetMailersSection(ctx *middleware.Context, handler GetMailersSectionHand
 	return &GetMailersSection{Context: ctx, Handler: handler}
 }
 
-/* GetMailersSection swagger:route GET /services/haproxy/configuration/mailers_section/{name} Mailers getMailersSection
+/*
+	GetMailersSection swagger:route GET /services/haproxy/configuration/mailers_section/{name} Mailers getMailersSection
 
-Return a Mailers section
+# Return a Mailers section
 
 Returns one mailers configuration by it's name.
-
 */
 type GetMailersSection struct {
 	Context *middleware.Context

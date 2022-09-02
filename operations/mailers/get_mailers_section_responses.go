@@ -31,7 +31,8 @@ import (
 // GetMailersSectionOKCode is the HTTP code returned for type GetMailersSectionOK
 const GetMailersSectionOKCode int = 200
 
-/*GetMailersSectionOK Successful operation
+/*
+GetMailersSectionOK Successful operation
 
 swagger:response getMailersSectionOK
 */
@@ -97,7 +98,8 @@ func (o *GetMailersSectionOK) WriteResponse(rw http.ResponseWriter, producer run
 // GetMailersSectionNotFoundCode is the HTTP code returned for type GetMailersSectionNotFound
 const GetMailersSectionNotFoundCode int = 404
 
-/*GetMailersSectionNotFound The specified resource was not found
+/*
+GetMailersSectionNotFound The specified resource was not found
 
 swagger:response getMailersSectionNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetMailersSectionNotFound) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*GetMailersSectionDefault General Error
+/*
+GetMailersSectionDefault General Error
 
 swagger:response getMailersSectionDefault
 */

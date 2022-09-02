@@ -44,12 +44,12 @@ func NewReplaceMailerEntry(ctx *middleware.Context, handler ReplaceMailerEntryHa
 	return &ReplaceMailerEntry{Context: ctx, Handler: handler}
 }
 
-/* ReplaceMailerEntry swagger:route PUT /services/haproxy/configuration/mailer_entries/{name} MailerEntry replaceMailerEntry
+/*
+	ReplaceMailerEntry swagger:route PUT /services/haproxy/configuration/mailer_entries/{name} MailerEntry replaceMailerEntry
 
 Replace a mailer_entry
 
 Replaces a mailer entry configuration by it's name in the specified mailers section.
-
 */
 type ReplaceMailerEntry struct {
 	Context *middleware.Context

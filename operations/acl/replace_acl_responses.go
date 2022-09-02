@@ -31,7 +31,8 @@ import (
 // ReplaceACLOKCode is the HTTP code returned for type ReplaceACLOK
 const ReplaceACLOKCode int = 200
 
-/*ReplaceACLOK ACL line replaced
+/*
+ReplaceACLOK ACL line replaced
 
 swagger:response replaceAclOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceACLOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 // ReplaceACLAcceptedCode is the HTTP code returned for type ReplaceACLAccepted
 const ReplaceACLAcceptedCode int = 202
 
-/*ReplaceACLAccepted Configuration change accepted and reload requested
+/*
+ReplaceACLAccepted Configuration change accepted and reload requested
 
 swagger:response replaceAclAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceACLAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplaceACLBadRequestCode is the HTTP code returned for type ReplaceACLBadRequest
 const ReplaceACLBadRequestCode int = 400
 
-/*ReplaceACLBadRequest Bad request
+/*
+ReplaceACLBadRequest Bad request
 
 swagger:response replaceAclBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceACLBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 // ReplaceACLNotFoundCode is the HTTP code returned for type ReplaceACLNotFound
 const ReplaceACLNotFoundCode int = 404
 
-/*ReplaceACLNotFound The specified resource was not found
+/*
+ReplaceACLNotFound The specified resource was not found
 
 swagger:response replaceAclNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceACLNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*ReplaceACLDefault General Error
+/*
+ReplaceACLDefault General Error
 
 swagger:response replaceAclDefault
 */

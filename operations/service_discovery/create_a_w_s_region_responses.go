@@ -31,7 +31,8 @@ import (
 // CreateAWSRegionCreatedCode is the HTTP code returned for type CreateAWSRegionCreated
 const CreateAWSRegionCreatedCode int = 201
 
-/*CreateAWSRegionCreated Resource created
+/*
+CreateAWSRegionCreated Resource created
 
 swagger:response createAWSRegionCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateAWSRegionCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreateAWSRegionBadRequestCode is the HTTP code returned for type CreateAWSRegionBadRequest
 const CreateAWSRegionBadRequestCode int = 400
 
-/*CreateAWSRegionBadRequest Bad request
+/*
+CreateAWSRegionBadRequest Bad request
 
 swagger:response createAWSRegionBadRequest
 */
@@ -141,7 +143,8 @@ func (o *CreateAWSRegionBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreateAWSRegionConflictCode is the HTTP code returned for type CreateAWSRegionConflict
 const CreateAWSRegionConflictCode int = 409
 
-/*CreateAWSRegionConflict The specified resource already exists
+/*
+CreateAWSRegionConflict The specified resource already exists
 
 swagger:response createAWSRegionConflict
 */
@@ -204,7 +207,8 @@ func (o *CreateAWSRegionConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreateAWSRegionDefault General Error
+/*
+CreateAWSRegionDefault General Error
 
 swagger:response createAWSRegionDefault
 */
