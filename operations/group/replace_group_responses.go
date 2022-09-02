@@ -31,7 +31,8 @@ import (
 // ReplaceGroupOKCode is the HTTP code returned for type ReplaceGroupOK
 const ReplaceGroupOKCode int = 200
 
-/*ReplaceGroupOK Group replaced
+/*
+ReplaceGroupOK Group replaced
 
 swagger:response replaceGroupOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceGroupOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // ReplaceGroupAcceptedCode is the HTTP code returned for type ReplaceGroupAccepted
 const ReplaceGroupAcceptedCode int = 202
 
-/*ReplaceGroupAccepted Configuration change accepted and reload requested
+/*
+ReplaceGroupAccepted Configuration change accepted and reload requested
 
 swagger:response replaceGroupAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceGroupAccepted) WriteResponse(rw http.ResponseWriter, producer ru
 // ReplaceGroupBadRequestCode is the HTTP code returned for type ReplaceGroupBadRequest
 const ReplaceGroupBadRequestCode int = 400
 
-/*ReplaceGroupBadRequest Bad request
+/*
+ReplaceGroupBadRequest Bad request
 
 swagger:response replaceGroupBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceGroupBadRequest) WriteResponse(rw http.ResponseWriter, producer 
 // ReplaceGroupNotFoundCode is the HTTP code returned for type ReplaceGroupNotFound
 const ReplaceGroupNotFoundCode int = 404
 
-/*ReplaceGroupNotFound The specified resource was not found
+/*
+ReplaceGroupNotFound The specified resource was not found
 
 swagger:response replaceGroupNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceGroupNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*ReplaceGroupDefault General Error
+/*
+ReplaceGroupDefault General Error
 
 swagger:response replaceGroupDefault
 */

@@ -44,12 +44,12 @@ func NewReplaceTCPResponseRule(ctx *middleware.Context, handler ReplaceTCPRespon
 	return &ReplaceTCPResponseRule{Context: ctx, Handler: handler}
 }
 
-/* ReplaceTCPResponseRule swagger:route PUT /services/haproxy/configuration/tcp_response_rules/{index} TCPResponseRule replaceTcpResponseRule
+/*
+	ReplaceTCPResponseRule swagger:route PUT /services/haproxy/configuration/tcp_response_rules/{index} TCPResponseRule replaceTcpResponseRule
 
-Replace a TCP Response Rule
+# Replace a TCP Response Rule
 
 Replaces a TCP Response Rule configuration by it's Index in the specified backend.
-
 */
 type ReplaceTCPResponseRule struct {
 	Context *middleware.Context

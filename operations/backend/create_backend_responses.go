@@ -31,7 +31,8 @@ import (
 // CreateBackendCreatedCode is the HTTP code returned for type CreateBackendCreated
 const CreateBackendCreatedCode int = 201
 
-/*CreateBackendCreated Backend created
+/*
+CreateBackendCreated Backend created
 
 swagger:response createBackendCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateBackendCreated) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateBackendAcceptedCode is the HTTP code returned for type CreateBackendAccepted
 const CreateBackendAcceptedCode int = 202
 
-/*CreateBackendAccepted Configuration change accepted and reload requested
+/*
+CreateBackendAccepted Configuration change accepted and reload requested
 
 swagger:response createBackendAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateBackendAccepted) WriteResponse(rw http.ResponseWriter, producer r
 // CreateBackendBadRequestCode is the HTTP code returned for type CreateBackendBadRequest
 const CreateBackendBadRequestCode int = 400
 
-/*CreateBackendBadRequest Bad request
+/*
+CreateBackendBadRequest Bad request
 
 swagger:response createBackendBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateBackendBadRequest) WriteResponse(rw http.ResponseWriter, producer
 // CreateBackendConflictCode is the HTTP code returned for type CreateBackendConflict
 const CreateBackendConflictCode int = 409
 
-/*CreateBackendConflict The specified resource already exists
+/*
+CreateBackendConflict The specified resource already exists
 
 swagger:response createBackendConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateBackendConflict) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*CreateBackendDefault General Error
+/*
+CreateBackendDefault General Error
 
 swagger:response createBackendDefault
 */

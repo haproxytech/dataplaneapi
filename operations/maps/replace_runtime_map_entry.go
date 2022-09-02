@@ -49,12 +49,12 @@ func NewReplaceRuntimeMapEntry(ctx *middleware.Context, handler ReplaceRuntimeMa
 	return &ReplaceRuntimeMapEntry{Context: ctx, Handler: handler}
 }
 
-/* ReplaceRuntimeMapEntry swagger:route PUT /services/haproxy/runtime/maps_entries/{id} Maps replaceRuntimeMapEntry
+/*
+	ReplaceRuntimeMapEntry swagger:route PUT /services/haproxy/runtime/maps_entries/{id} Maps replaceRuntimeMapEntry
 
-Replace the value corresponding to each id in a map
+# Replace the value corresponding to each id in a map
 
 Replaces the value corresponding to each id in a map.
-
 */
 type ReplaceRuntimeMapEntry struct {
 	Context *middleware.Context

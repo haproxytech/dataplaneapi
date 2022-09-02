@@ -31,7 +31,8 @@ import (
 // GetSiteOKCode is the HTTP code returned for type GetSiteOK
 const GetSiteOKCode int = 200
 
-/*GetSiteOK Successful operation
+/*
+GetSiteOK Successful operation
 
 swagger:response getSiteOK
 */
@@ -97,7 +98,8 @@ func (o *GetSiteOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 // GetSiteNotFoundCode is the HTTP code returned for type GetSiteNotFound
 const GetSiteNotFoundCode int = 404
 
-/*GetSiteNotFound The specified resource was not found
+/*
+GetSiteNotFound The specified resource was not found
 
 swagger:response getSiteNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetSiteNotFound) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetSiteDefault General Error
+/*
+GetSiteDefault General Error
 
 swagger:response getSiteDefault
 */

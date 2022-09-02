@@ -44,12 +44,12 @@ func NewGetAllStorageGeneralFiles(ctx *middleware.Context, handler GetAllStorage
 	return &GetAllStorageGeneralFiles{Context: ctx, Handler: handler}
 }
 
-/* GetAllStorageGeneralFiles swagger:route GET /services/haproxy/storage/general Storage getAllStorageGeneralFiles
+/*
+	GetAllStorageGeneralFiles swagger:route GET /services/haproxy/storage/general Storage getAllStorageGeneralFiles
 
-Return a list of all managed general use files
+# Return a list of all managed general use files
 
 Returns a list of all managed general use files
-
 */
 type GetAllStorageGeneralFiles struct {
 	Context *middleware.Context

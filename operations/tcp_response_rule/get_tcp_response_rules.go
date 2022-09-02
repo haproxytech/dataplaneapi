@@ -51,12 +51,12 @@ func NewGetTCPResponseRules(ctx *middleware.Context, handler GetTCPResponseRules
 	return &GetTCPResponseRules{Context: ctx, Handler: handler}
 }
 
-/* GetTCPResponseRules swagger:route GET /services/haproxy/configuration/tcp_response_rules TCPResponseRule getTcpResponseRules
+/*
+	GetTCPResponseRules swagger:route GET /services/haproxy/configuration/tcp_response_rules TCPResponseRule getTcpResponseRules
 
-Return an array of all TCP Response Rules
+# Return an array of all TCP Response Rules
 
 Returns all TCP Response Rules that are configured in specified backend.
-
 */
 type GetTCPResponseRules struct {
 	Context *middleware.Context

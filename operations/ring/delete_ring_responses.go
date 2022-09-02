@@ -31,7 +31,8 @@ import (
 // DeleteRingAcceptedCode is the HTTP code returned for type DeleteRingAccepted
 const DeleteRingAcceptedCode int = 202
 
-/*DeleteRingAccepted Configuration change accepted and reload requested
+/*
+DeleteRingAccepted Configuration change accepted and reload requested
 
 swagger:response deleteRingAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteRingAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // DeleteRingNoContentCode is the HTTP code returned for type DeleteRingNoContent
 const DeleteRingNoContentCode int = 204
 
-/*DeleteRingNoContent Ring deleted
+/*
+DeleteRingNoContent Ring deleted
 
 swagger:response deleteRingNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteRingNoContent) WriteResponse(rw http.ResponseWriter, producer run
 // DeleteRingNotFoundCode is the HTTP code returned for type DeleteRingNotFound
 const DeleteRingNotFoundCode int = 404
 
-/*DeleteRingNotFound The specified resource was not found
+/*
+DeleteRingNotFound The specified resource was not found
 
 swagger:response deleteRingNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteRingNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*DeleteRingDefault General Error
+/*
+DeleteRingDefault General Error
 
 swagger:response deleteRingDefault
 */

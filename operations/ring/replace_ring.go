@@ -44,12 +44,12 @@ func NewReplaceRing(ctx *middleware.Context, handler ReplaceRingHandler) *Replac
 	return &ReplaceRing{Context: ctx, Handler: handler}
 }
 
-/* ReplaceRing swagger:route PUT /services/haproxy/configuration/rings/{name} Ring replaceRing
+/*
+	ReplaceRing swagger:route PUT /services/haproxy/configuration/rings/{name} Ring replaceRing
 
-Replace a ring
+# Replace a ring
 
 Replaces a ring configuration by it's name.
-
 */
 type ReplaceRing struct {
 	Context *middleware.Context

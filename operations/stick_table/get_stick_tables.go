@@ -44,12 +44,12 @@ func NewGetStickTables(ctx *middleware.Context, handler GetStickTablesHandler) *
 	return &GetStickTables{Context: ctx, Handler: handler}
 }
 
-/* GetStickTables swagger:route GET /services/haproxy/runtime/stick_tables StickTable getStickTables
+/*
+	GetStickTables swagger:route GET /services/haproxy/runtime/stick_tables StickTable getStickTables
 
-Return Stick Tables
+# Return Stick Tables
 
 Returns an array of all stick tables.
-
 */
 type GetStickTables struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewReplaceBind(ctx *middleware.Context, handler ReplaceBindHandler) *Replac
 	return &ReplaceBind{Context: ctx, Handler: handler}
 }
 
-/* ReplaceBind swagger:route PUT /services/haproxy/configuration/binds/{name} Bind replaceBind
+/*
+	ReplaceBind swagger:route PUT /services/haproxy/configuration/binds/{name} Bind replaceBind
 
-Replace a bind
+# Replace a bind
 
 Replaces a bind configuration by it's name in the specified frontend.
-
 */
 type ReplaceBind struct {
 	Context *middleware.Context

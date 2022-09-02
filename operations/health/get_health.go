@@ -44,12 +44,12 @@ func NewGetHealth(ctx *middleware.Context, handler GetHealthHandler) *GetHealth 
 	return &GetHealth{Context: ctx, Handler: handler}
 }
 
-/* GetHealth swagger:route GET /health Health getHealth
+/*
+	GetHealth swagger:route GET /health Health getHealth
+
+# Return managed services health
 
 Return managed services health
-
-Return managed services health
-
 */
 type GetHealth struct {
 	Context *middleware.Context

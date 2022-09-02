@@ -31,7 +31,8 @@ import (
 // DeleteDgramBindAcceptedCode is the HTTP code returned for type DeleteDgramBindAccepted
 const DeleteDgramBindAcceptedCode int = 202
 
-/*DeleteDgramBindAccepted Configuration change accepted and reload requested
+/*
+DeleteDgramBindAccepted Configuration change accepted and reload requested
 
 swagger:response deleteDgramBindAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteDgramBindAccepted) WriteResponse(rw http.ResponseWriter, producer
 // DeleteDgramBindNoContentCode is the HTTP code returned for type DeleteDgramBindNoContent
 const DeleteDgramBindNoContentCode int = 204
 
-/*DeleteDgramBindNoContent Bind deleted
+/*
+DeleteDgramBindNoContent Bind deleted
 
 swagger:response deleteDgramBindNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteDgramBindNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteDgramBindNotFoundCode is the HTTP code returned for type DeleteDgramBindNotFound
 const DeleteDgramBindNotFoundCode int = 404
 
-/*DeleteDgramBindNotFound The specified resource was not found
+/*
+DeleteDgramBindNotFound The specified resource was not found
 
 swagger:response deleteDgramBindNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteDgramBindNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteDgramBindDefault General Error
+/*
+DeleteDgramBindDefault General Error
 
 swagger:response deleteDgramBindDefault
 */

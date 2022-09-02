@@ -31,7 +31,8 @@ import (
 // ReplaceServerOKCode is the HTTP code returned for type ReplaceServerOK
 const ReplaceServerOKCode int = 200
 
-/*ReplaceServerOK Server replaced
+/*
+ReplaceServerOK Server replaced
 
 swagger:response replaceServerOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceServerOK) WriteResponse(rw http.ResponseWriter, producer runtime
 // ReplaceServerAcceptedCode is the HTTP code returned for type ReplaceServerAccepted
 const ReplaceServerAcceptedCode int = 202
 
-/*ReplaceServerAccepted Configuration change accepted and reload requested
+/*
+ReplaceServerAccepted Configuration change accepted and reload requested
 
 swagger:response replaceServerAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceServerAccepted) WriteResponse(rw http.ResponseWriter, producer r
 // ReplaceServerBadRequestCode is the HTTP code returned for type ReplaceServerBadRequest
 const ReplaceServerBadRequestCode int = 400
 
-/*ReplaceServerBadRequest Bad request
+/*
+ReplaceServerBadRequest Bad request
 
 swagger:response replaceServerBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceServerBadRequest) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceServerNotFoundCode is the HTTP code returned for type ReplaceServerNotFound
 const ReplaceServerNotFoundCode int = 404
 
-/*ReplaceServerNotFound The specified resource was not found
+/*
+ReplaceServerNotFound The specified resource was not found
 
 swagger:response replaceServerNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceServerNotFound) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*ReplaceServerDefault General Error
+/*
+ReplaceServerDefault General Error
 
 swagger:response replaceServerDefault
 */

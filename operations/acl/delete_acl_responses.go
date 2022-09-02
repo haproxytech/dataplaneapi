@@ -31,7 +31,8 @@ import (
 // DeleteACLAcceptedCode is the HTTP code returned for type DeleteACLAccepted
 const DeleteACLAcceptedCode int = 202
 
-/*DeleteACLAccepted Configuration change accepted and reload requested
+/*
+DeleteACLAccepted Configuration change accepted and reload requested
 
 swagger:response deleteAclAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteACLAccepted) WriteResponse(rw http.ResponseWriter, producer runti
 // DeleteACLNoContentCode is the HTTP code returned for type DeleteACLNoContent
 const DeleteACLNoContentCode int = 204
 
-/*DeleteACLNoContent ACL line deleted
+/*
+DeleteACLNoContent ACL line deleted
 
 swagger:response deleteAclNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteACLNoContent) WriteResponse(rw http.ResponseWriter, producer runt
 // DeleteACLNotFoundCode is the HTTP code returned for type DeleteACLNotFound
 const DeleteACLNotFoundCode int = 404
 
-/*DeleteACLNotFound The specified resource was not found
+/*
+DeleteACLNotFound The specified resource was not found
 
 swagger:response deleteAclNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteACLNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*DeleteACLDefault General Error
+/*
+DeleteACLDefault General Error
 
 swagger:response deleteAclDefault
 */

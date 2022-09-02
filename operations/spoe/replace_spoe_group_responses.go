@@ -31,7 +31,8 @@ import (
 // ReplaceSpoeGroupOKCode is the HTTP code returned for type ReplaceSpoeGroupOK
 const ReplaceSpoeGroupOKCode int = 200
 
-/*ReplaceSpoeGroupOK Spoe groups replaced
+/*
+ReplaceSpoeGroupOK Spoe groups replaced
 
 swagger:response replaceSpoeGroupOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceSpoeGroupOK) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplaceSpoeGroupBadRequestCode is the HTTP code returned for type ReplaceSpoeGroupBadRequest
 const ReplaceSpoeGroupBadRequestCode int = 400
 
-/*ReplaceSpoeGroupBadRequest Bad request
+/*
+ReplaceSpoeGroupBadRequest Bad request
 
 swagger:response replaceSpoeGroupBadRequest
 */
@@ -141,7 +143,8 @@ func (o *ReplaceSpoeGroupBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // ReplaceSpoeGroupNotFoundCode is the HTTP code returned for type ReplaceSpoeGroupNotFound
 const ReplaceSpoeGroupNotFoundCode int = 404
 
-/*ReplaceSpoeGroupNotFound The specified resource was not found
+/*
+ReplaceSpoeGroupNotFound The specified resource was not found
 
 swagger:response replaceSpoeGroupNotFound
 */
@@ -204,7 +207,8 @@ func (o *ReplaceSpoeGroupNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*ReplaceSpoeGroupDefault General Error
+/*
+ReplaceSpoeGroupDefault General Error
 
 swagger:response replaceSpoeGroupDefault
 */

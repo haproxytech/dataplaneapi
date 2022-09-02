@@ -31,7 +31,8 @@ import (
 // CreateGroupCreatedCode is the HTTP code returned for type CreateGroupCreated
 const CreateGroupCreatedCode int = 201
 
-/*CreateGroupCreated Group created
+/*
+CreateGroupCreated Group created
 
 swagger:response createGroupCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateGroupCreated) WriteResponse(rw http.ResponseWriter, producer runt
 // CreateGroupAcceptedCode is the HTTP code returned for type CreateGroupAccepted
 const CreateGroupAcceptedCode int = 202
 
-/*CreateGroupAccepted Configuration change accepted and reload requested
+/*
+CreateGroupAccepted Configuration change accepted and reload requested
 
 swagger:response createGroupAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateGroupAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // CreateGroupBadRequestCode is the HTTP code returned for type CreateGroupBadRequest
 const CreateGroupBadRequestCode int = 400
 
-/*CreateGroupBadRequest Bad request
+/*
+CreateGroupBadRequest Bad request
 
 swagger:response createGroupBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateGroupBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 // CreateGroupConflictCode is the HTTP code returned for type CreateGroupConflict
 const CreateGroupConflictCode int = 409
 
-/*CreateGroupConflict The specified resource already exists
+/*
+CreateGroupConflict The specified resource already exists
 
 swagger:response createGroupConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateGroupConflict) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*CreateGroupDefault General Error
+/*
+CreateGroupDefault General Error
 
 swagger:response createGroupDefault
 */

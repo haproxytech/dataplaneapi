@@ -44,12 +44,12 @@ func NewGetInfo(ctx *middleware.Context, handler GetInfoHandler) *GetInfo {
 	return &GetInfo{Context: ctx, Handler: handler}
 }
 
-/* GetInfo swagger:route GET /info Information getInfo
+/*
+	GetInfo swagger:route GET /info Information getInfo
+
+# Return API, hardware and OS information
 
 Return API, hardware and OS information
-
-Return API, hardware and OS information
-
 */
 type GetInfo struct {
 	Context *middleware.Context

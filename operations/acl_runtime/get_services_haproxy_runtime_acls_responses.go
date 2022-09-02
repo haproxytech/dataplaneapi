@@ -31,7 +31,8 @@ import (
 // GetServicesHaproxyRuntimeAclsOKCode is the HTTP code returned for type GetServicesHaproxyRuntimeAclsOK
 const GetServicesHaproxyRuntimeAclsOKCode int = 200
 
-/*GetServicesHaproxyRuntimeAclsOK Successful operation
+/*
+GetServicesHaproxyRuntimeAclsOK Successful operation
 
 swagger:response getServicesHaproxyRuntimeAclsOK
 */
@@ -75,7 +76,8 @@ func (o *GetServicesHaproxyRuntimeAclsOK) WriteResponse(rw http.ResponseWriter, 
 	}
 }
 
-/*GetServicesHaproxyRuntimeAclsDefault General Error
+/*
+GetServicesHaproxyRuntimeAclsDefault General Error
 
 swagger:response getServicesHaproxyRuntimeAclsDefault
 */

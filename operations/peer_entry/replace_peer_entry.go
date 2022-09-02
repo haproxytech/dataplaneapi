@@ -44,12 +44,12 @@ func NewReplacePeerEntry(ctx *middleware.Context, handler ReplacePeerEntryHandle
 	return &ReplacePeerEntry{Context: ctx, Handler: handler}
 }
 
-/* ReplacePeerEntry swagger:route PUT /services/haproxy/configuration/peer_entries/{name} PeerEntry replacePeerEntry
+/*
+	ReplacePeerEntry swagger:route PUT /services/haproxy/configuration/peer_entries/{name} PeerEntry replacePeerEntry
 
 Replace a peer_entry
 
 Replaces a peer entry configuration by it's name in the specified peer section.
-
 */
 type ReplacePeerEntry struct {
 	Context *middleware.Context

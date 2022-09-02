@@ -31,7 +31,8 @@ import (
 // GetBackendsOKCode is the HTTP code returned for type GetBackendsOK
 const GetBackendsOKCode int = 200
 
-/*GetBackendsOK Successful operation
+/*
+GetBackendsOK Successful operation
 
 swagger:response getBackendsOK
 */
@@ -94,7 +95,8 @@ func (o *GetBackendsOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 }
 
-/*GetBackendsDefault General Error
+/*
+GetBackendsDefault General Error
 
 swagger:response getBackendsDefault
 */

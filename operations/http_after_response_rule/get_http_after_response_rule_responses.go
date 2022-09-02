@@ -31,7 +31,8 @@ import (
 // GetHTTPAfterResponseRuleOKCode is the HTTP code returned for type GetHTTPAfterResponseRuleOK
 const GetHTTPAfterResponseRuleOKCode int = 200
 
-/*GetHTTPAfterResponseRuleOK Successful operation
+/*
+GetHTTPAfterResponseRuleOK Successful operation
 
 swagger:response getHttpAfterResponseRuleOK
 */
@@ -97,7 +98,8 @@ func (o *GetHTTPAfterResponseRuleOK) WriteResponse(rw http.ResponseWriter, produ
 // GetHTTPAfterResponseRuleNotFoundCode is the HTTP code returned for type GetHTTPAfterResponseRuleNotFound
 const GetHTTPAfterResponseRuleNotFoundCode int = 404
 
-/*GetHTTPAfterResponseRuleNotFound The specified resource was not found
+/*
+GetHTTPAfterResponseRuleNotFound The specified resource was not found
 
 swagger:response getHttpAfterResponseRuleNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetHTTPAfterResponseRuleNotFound) WriteResponse(rw http.ResponseWriter,
 	}
 }
 
-/*GetHTTPAfterResponseRuleDefault General Error
+/*
+GetHTTPAfterResponseRuleDefault General Error
 
 swagger:response getHttpAfterResponseRuleDefault
 */

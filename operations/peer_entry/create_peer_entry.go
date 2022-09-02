@@ -44,12 +44,12 @@ func NewCreatePeerEntry(ctx *middleware.Context, handler CreatePeerEntryHandler)
 	return &CreatePeerEntry{Context: ctx, Handler: handler}
 }
 
-/* CreatePeerEntry swagger:route POST /services/haproxy/configuration/peer_entries PeerEntry createPeerEntry
+/*
+	CreatePeerEntry swagger:route POST /services/haproxy/configuration/peer_entries PeerEntry createPeerEntry
 
 Add a new peer_entry
 
 Adds a new peer entry in the specified peer section in the configuration file.
-
 */
 type CreatePeerEntry struct {
 	Context *middleware.Context

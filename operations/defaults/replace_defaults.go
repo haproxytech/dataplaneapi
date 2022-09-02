@@ -44,12 +44,12 @@ func NewReplaceDefaults(ctx *middleware.Context, handler ReplaceDefaultsHandler)
 	return &ReplaceDefaults{Context: ctx, Handler: handler}
 }
 
-/* ReplaceDefaults swagger:route PUT /services/haproxy/configuration/defaults Defaults replaceDefaults
+/*
+	ReplaceDefaults swagger:route PUT /services/haproxy/configuration/defaults Defaults replaceDefaults
 
-Replace defaults
+# Replace defaults
 
 Replace defaults part of config
-
 */
 type ReplaceDefaults struct {
 	Context *middleware.Context

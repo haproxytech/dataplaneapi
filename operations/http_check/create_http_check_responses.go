@@ -31,7 +31,8 @@ import (
 // CreateHTTPCheckCreatedCode is the HTTP code returned for type CreateHTTPCheckCreated
 const CreateHTTPCheckCreatedCode int = 201
 
-/*CreateHTTPCheckCreated HTTP check created
+/*
+CreateHTTPCheckCreated HTTP check created
 
 swagger:response createHttpCheckCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateHTTPCheckCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreateHTTPCheckAcceptedCode is the HTTP code returned for type CreateHTTPCheckAccepted
 const CreateHTTPCheckAcceptedCode int = 202
 
-/*CreateHTTPCheckAccepted Configuration change accepted and reload requested
+/*
+CreateHTTPCheckAccepted Configuration change accepted and reload requested
 
 swagger:response createHttpCheckAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateHTTPCheckAccepted) WriteResponse(rw http.ResponseWriter, producer
 // CreateHTTPCheckBadRequestCode is the HTTP code returned for type CreateHTTPCheckBadRequest
 const CreateHTTPCheckBadRequestCode int = 400
 
-/*CreateHTTPCheckBadRequest Bad request
+/*
+CreateHTTPCheckBadRequest Bad request
 
 swagger:response createHttpCheckBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateHTTPCheckBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreateHTTPCheckConflictCode is the HTTP code returned for type CreateHTTPCheckConflict
 const CreateHTTPCheckConflictCode int = 409
 
-/*CreateHTTPCheckConflict The specified resource already exists
+/*
+CreateHTTPCheckConflict The specified resource already exists
 
 swagger:response createHttpCheckConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateHTTPCheckConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreateHTTPCheckDefault General Error
+/*
+CreateHTTPCheckDefault General Error
 
 swagger:response createHttpCheckDefault
 */

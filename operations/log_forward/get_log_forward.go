@@ -50,12 +50,12 @@ func NewGetLogForward(ctx *middleware.Context, handler GetLogForwardHandler) *Ge
 	return &GetLogForward{Context: ctx, Handler: handler}
 }
 
-/* GetLogForward swagger:route GET /services/haproxy/configuration/log_forwards/{name} LogForward getLogForward
+/*
+	GetLogForward swagger:route GET /services/haproxy/configuration/log_forwards/{name} LogForward getLogForward
 
-Return a log forward
+# Return a log forward
 
 Returns one log forward configuration by it's name.
-
 */
 type GetLogForward struct {
 	Context *middleware.Context

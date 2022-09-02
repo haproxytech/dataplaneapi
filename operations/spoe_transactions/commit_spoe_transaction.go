@@ -44,12 +44,12 @@ func NewCommitSpoeTransaction(ctx *middleware.Context, handler CommitSpoeTransac
 	return &CommitSpoeTransaction{Context: ctx, Handler: handler}
 }
 
-/* CommitSpoeTransaction swagger:route PUT /services/haproxy/spoe_transactions/{id} SpoeTransactions commitSpoeTransaction
+/*
+	CommitSpoeTransaction swagger:route PUT /services/haproxy/spoe_transactions/{id} SpoeTransactions commitSpoeTransaction
 
-Commit transaction
+# Commit transaction
 
 Commit transaction, execute all operations in transaction and return msg
-
 */
 type CommitSpoeTransaction struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // GetAllSpoeFilesOKCode is the HTTP code returned for type GetAllSpoeFilesOK
 const GetAllSpoeFilesOKCode int = 200
 
-/*GetAllSpoeFilesOK Successful operation
+/*
+GetAllSpoeFilesOK Successful operation
 
 swagger:response getAllSpoeFilesOK
 */
@@ -78,7 +79,8 @@ func (o *GetAllSpoeFilesOK) WriteResponse(rw http.ResponseWriter, producer runti
 // GetAllSpoeFilesNotFoundCode is the HTTP code returned for type GetAllSpoeFilesNotFound
 const GetAllSpoeFilesNotFoundCode int = 404
 
-/*GetAllSpoeFilesNotFound The specified resource was not found
+/*
+GetAllSpoeFilesNotFound The specified resource was not found
 
 swagger:response getAllSpoeFilesNotFound
 */
@@ -141,7 +143,8 @@ func (o *GetAllSpoeFilesNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*GetAllSpoeFilesDefault General Error
+/*
+GetAllSpoeFilesDefault General Error
 
 swagger:response getAllSpoeFilesDefault
 */

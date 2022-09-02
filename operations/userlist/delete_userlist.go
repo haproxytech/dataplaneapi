@@ -44,12 +44,12 @@ func NewDeleteUserlist(ctx *middleware.Context, handler DeleteUserlistHandler) *
 	return &DeleteUserlist{Context: ctx, Handler: handler}
 }
 
-/* DeleteUserlist swagger:route DELETE /services/haproxy/configuration/userlists/{name} Userlist deleteUserlist
+/*
+	DeleteUserlist swagger:route DELETE /services/haproxy/configuration/userlists/{name} Userlist deleteUserlist
 
-Delete a userlist
+# Delete a userlist
 
 Deletes a userlist configuration by it's name.
-
 */
 type DeleteUserlist struct {
 	Context *middleware.Context

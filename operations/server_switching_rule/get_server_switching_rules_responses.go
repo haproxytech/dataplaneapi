@@ -31,7 +31,8 @@ import (
 // GetServerSwitchingRulesOKCode is the HTTP code returned for type GetServerSwitchingRulesOK
 const GetServerSwitchingRulesOKCode int = 200
 
-/*GetServerSwitchingRulesOK Successful operation
+/*
+GetServerSwitchingRulesOK Successful operation
 
 swagger:response getServerSwitchingRulesOK
 */
@@ -94,7 +95,8 @@ func (o *GetServerSwitchingRulesOK) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*GetServerSwitchingRulesDefault General Error
+/*
+GetServerSwitchingRulesDefault General Error
 
 swagger:response getServerSwitchingRulesDefault
 */

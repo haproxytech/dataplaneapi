@@ -31,7 +31,8 @@ import (
 // CreateLogForwardCreatedCode is the HTTP code returned for type CreateLogForwardCreated
 const CreateLogForwardCreatedCode int = 201
 
-/*CreateLogForwardCreated Log Forward created
+/*
+CreateLogForwardCreated Log Forward created
 
 swagger:response createLogForwardCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateLogForwardCreated) WriteResponse(rw http.ResponseWriter, producer
 // CreateLogForwardAcceptedCode is the HTTP code returned for type CreateLogForwardAccepted
 const CreateLogForwardAcceptedCode int = 202
 
-/*CreateLogForwardAccepted Configuration change accepted and reload requested
+/*
+CreateLogForwardAccepted Configuration change accepted and reload requested
 
 swagger:response createLogForwardAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateLogForwardAccepted) WriteResponse(rw http.ResponseWriter, produce
 // CreateLogForwardBadRequestCode is the HTTP code returned for type CreateLogForwardBadRequest
 const CreateLogForwardBadRequestCode int = 400
 
-/*CreateLogForwardBadRequest Bad request
+/*
+CreateLogForwardBadRequest Bad request
 
 swagger:response createLogForwardBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateLogForwardBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // CreateLogForwardConflictCode is the HTTP code returned for type CreateLogForwardConflict
 const CreateLogForwardConflictCode int = 409
 
-/*CreateLogForwardConflict The specified resource already exists
+/*
+CreateLogForwardConflict The specified resource already exists
 
 swagger:response createLogForwardConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateLogForwardConflict) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*CreateLogForwardDefault General Error
+/*
+CreateLogForwardDefault General Error
 
 swagger:response createLogForwardDefault
 */

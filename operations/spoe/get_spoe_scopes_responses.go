@@ -31,7 +31,8 @@ import (
 // GetSpoeScopesOKCode is the HTTP code returned for type GetSpoeScopesOK
 const GetSpoeScopesOKCode int = 200
 
-/*GetSpoeScopesOK Successful operation
+/*
+GetSpoeScopesOK Successful operation
 
 swagger:response getSpoeScopesOK
 */
@@ -94,7 +95,8 @@ func (o *GetSpoeScopesOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetSpoeScopesDefault General Error
+/*
+GetSpoeScopesDefault General Error
 
 swagger:response getSpoeScopesDefault
 */

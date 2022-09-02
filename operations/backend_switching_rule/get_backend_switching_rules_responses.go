@@ -31,7 +31,8 @@ import (
 // GetBackendSwitchingRulesOKCode is the HTTP code returned for type GetBackendSwitchingRulesOK
 const GetBackendSwitchingRulesOKCode int = 200
 
-/*GetBackendSwitchingRulesOK Successful operation
+/*
+GetBackendSwitchingRulesOK Successful operation
 
 swagger:response getBackendSwitchingRulesOK
 */
@@ -94,7 +95,8 @@ func (o *GetBackendSwitchingRulesOK) WriteResponse(rw http.ResponseWriter, produ
 	}
 }
 
-/*GetBackendSwitchingRulesDefault General Error
+/*
+GetBackendSwitchingRulesDefault General Error
 
 swagger:response getBackendSwitchingRulesDefault
 */

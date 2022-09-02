@@ -44,12 +44,12 @@ func NewCreateNameserver(ctx *middleware.Context, handler CreateNameserverHandle
 	return &CreateNameserver{Context: ctx, Handler: handler}
 }
 
-/* CreateNameserver swagger:route POST /services/haproxy/configuration/nameservers Nameserver createNameserver
+/*
+	CreateNameserver swagger:route POST /services/haproxy/configuration/nameservers Nameserver createNameserver
 
-Add a nameserver
+# Add a nameserver
 
 Adds a new nameserver to the resolvers section.
-
 */
 type CreateNameserver struct {
 	Context *middleware.Context

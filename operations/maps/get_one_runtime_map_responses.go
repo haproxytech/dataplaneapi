@@ -31,7 +31,8 @@ import (
 // GetOneRuntimeMapOKCode is the HTTP code returned for type GetOneRuntimeMapOK
 const GetOneRuntimeMapOKCode int = 200
 
-/*GetOneRuntimeMapOK Successful operation
+/*
+GetOneRuntimeMapOK Successful operation
 
 swagger:response getOneRuntimeMapOK
 */
@@ -75,7 +76,8 @@ func (o *GetOneRuntimeMapOK) WriteResponse(rw http.ResponseWriter, producer runt
 // GetOneRuntimeMapNotFoundCode is the HTTP code returned for type GetOneRuntimeMapNotFound
 const GetOneRuntimeMapNotFoundCode int = 404
 
-/*GetOneRuntimeMapNotFound The specified resource was not found
+/*
+GetOneRuntimeMapNotFound The specified resource was not found
 
 swagger:response getOneRuntimeMapNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetOneRuntimeMapNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*GetOneRuntimeMapDefault General Error
+/*
+GetOneRuntimeMapDefault General Error
 
 swagger:response getOneRuntimeMapDefault
 */

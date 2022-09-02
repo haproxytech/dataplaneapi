@@ -31,7 +31,8 @@ import (
 // ReplaceHTTPAfterResponseRuleOKCode is the HTTP code returned for type ReplaceHTTPAfterResponseRuleOK
 const ReplaceHTTPAfterResponseRuleOKCode int = 200
 
-/*ReplaceHTTPAfterResponseRuleOK HTTP After Response Rule replaced
+/*
+ReplaceHTTPAfterResponseRuleOK HTTP After Response Rule replaced
 
 swagger:response replaceHttpAfterResponseRuleOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceHTTPAfterResponseRuleOK) WriteResponse(rw http.ResponseWriter, p
 // ReplaceHTTPAfterResponseRuleAcceptedCode is the HTTP code returned for type ReplaceHTTPAfterResponseRuleAccepted
 const ReplaceHTTPAfterResponseRuleAcceptedCode int = 202
 
-/*ReplaceHTTPAfterResponseRuleAccepted Configuration change accepted and reload requested
+/*
+ReplaceHTTPAfterResponseRuleAccepted Configuration change accepted and reload requested
 
 swagger:response replaceHttpAfterResponseRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceHTTPAfterResponseRuleAccepted) WriteResponse(rw http.ResponseWri
 // ReplaceHTTPAfterResponseRuleBadRequestCode is the HTTP code returned for type ReplaceHTTPAfterResponseRuleBadRequest
 const ReplaceHTTPAfterResponseRuleBadRequestCode int = 400
 
-/*ReplaceHTTPAfterResponseRuleBadRequest Bad request
+/*
+ReplaceHTTPAfterResponseRuleBadRequest Bad request
 
 swagger:response replaceHttpAfterResponseRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceHTTPAfterResponseRuleBadRequest) WriteResponse(rw http.ResponseW
 // ReplaceHTTPAfterResponseRuleNotFoundCode is the HTTP code returned for type ReplaceHTTPAfterResponseRuleNotFound
 const ReplaceHTTPAfterResponseRuleNotFoundCode int = 404
 
-/*ReplaceHTTPAfterResponseRuleNotFound The specified resource was not found
+/*
+ReplaceHTTPAfterResponseRuleNotFound The specified resource was not found
 
 swagger:response replaceHttpAfterResponseRuleNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceHTTPAfterResponseRuleNotFound) WriteResponse(rw http.ResponseWri
 	}
 }
 
-/*ReplaceHTTPAfterResponseRuleDefault General Error
+/*
+ReplaceHTTPAfterResponseRuleDefault General Error
 
 swagger:response replaceHttpAfterResponseRuleDefault
 */

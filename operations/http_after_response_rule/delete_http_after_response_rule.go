@@ -44,12 +44,12 @@ func NewDeleteHTTPAfterResponseRule(ctx *middleware.Context, handler DeleteHTTPA
 	return &DeleteHTTPAfterResponseRule{Context: ctx, Handler: handler}
 }
 
-/* DeleteHTTPAfterResponseRule swagger:route DELETE /services/haproxy/configuration/http_after_response_rules/{index} HTTPAfterResponseRule deleteHttpAfterResponseRule
+/*
+	DeleteHTTPAfterResponseRule swagger:route DELETE /services/haproxy/configuration/http_after_response_rules/{index} HTTPAfterResponseRule deleteHttpAfterResponseRule
 
-Delete a HTTP After Response Rule
+# Delete a HTTP After Response Rule
 
 Deletes a HTTP After Response Rule configuration by it's index from the specified parent.
-
 */
 type DeleteHTTPAfterResponseRule struct {
 	Context *middleware.Context

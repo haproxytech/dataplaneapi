@@ -31,7 +31,8 @@ import (
 // DeleteSpoeScopeNoContentCode is the HTTP code returned for type DeleteSpoeScopeNoContent
 const DeleteSpoeScopeNoContentCode int = 204
 
-/*DeleteSpoeScopeNoContent Spoe scope deleted
+/*
+DeleteSpoeScopeNoContent Spoe scope deleted
 
 swagger:response deleteSpoeScopeNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteSpoeScopeNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteSpoeScopeNotFoundCode is the HTTP code returned for type DeleteSpoeScopeNotFound
 const DeleteSpoeScopeNotFoundCode int = 404
 
-/*DeleteSpoeScopeNotFound The specified resource was not found
+/*
+DeleteSpoeScopeNotFound The specified resource was not found
 
 swagger:response deleteSpoeScopeNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteSpoeScopeNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteSpoeScopeDefault General Error
+/*
+DeleteSpoeScopeDefault General Error
 
 swagger:response deleteSpoeScopeDefault
 */

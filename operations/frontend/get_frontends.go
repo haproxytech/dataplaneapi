@@ -51,12 +51,12 @@ func NewGetFrontends(ctx *middleware.Context, handler GetFrontendsHandler) *GetF
 	return &GetFrontends{Context: ctx, Handler: handler}
 }
 
-/* GetFrontends swagger:route GET /services/haproxy/configuration/frontends Frontend getFrontends
+/*
+	GetFrontends swagger:route GET /services/haproxy/configuration/frontends Frontend getFrontends
 
-Return an array of frontends
+# Return an array of frontends
 
 Returns an array of all configured frontends.
-
 */
 type GetFrontends struct {
 	Context *middleware.Context

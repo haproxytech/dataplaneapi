@@ -51,12 +51,12 @@ func NewGetNameservers(ctx *middleware.Context, handler GetNameserversHandler) *
 	return &GetNameservers{Context: ctx, Handler: handler}
 }
 
-/* GetNameservers swagger:route GET /services/haproxy/configuration/nameservers Nameserver getNameservers
+/*
+	GetNameservers swagger:route GET /services/haproxy/configuration/nameservers Nameserver getNameservers
 
-Return an array of nameservers
+# Return an array of nameservers
 
 Returns an array of all configured nameservers.
-
 */
 type GetNameservers struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewCreateUserlist(ctx *middleware.Context, handler CreateUserlistHandler) *
 	return &CreateUserlist{Context: ctx, Handler: handler}
 }
 
-/* CreateUserlist swagger:route POST /services/haproxy/configuration/userlists Userlist createUserlist
+/*
+	CreateUserlist swagger:route POST /services/haproxy/configuration/userlists Userlist createUserlist
 
-Add a new userlist
+# Add a new userlist
 
 Adds a new userlist to the configuration file.
-
 */
 type CreateUserlist struct {
 	Context *middleware.Context

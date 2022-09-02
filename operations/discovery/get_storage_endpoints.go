@@ -44,12 +44,12 @@ func NewGetStorageEndpoints(ctx *middleware.Context, handler GetStorageEndpoints
 	return &GetStorageEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetStorageEndpoints swagger:route GET /services/haproxy/storage Discovery getStorageEndpoints
+/*
+	GetStorageEndpoints swagger:route GET /services/haproxy/storage Discovery getStorageEndpoints
 
-Return list of HAProxy storage endpoints
+# Return list of HAProxy storage endpoints
 
 Returns a list of endpoints that use HAProxy storage for persistency, e.g. maps, ssl certificates...
-
 */
 type GetStorageEndpoints struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // CreateACLCreatedCode is the HTTP code returned for type CreateACLCreated
 const CreateACLCreatedCode int = 201
 
-/*CreateACLCreated ACL line created
+/*
+CreateACLCreated ACL line created
 
 swagger:response createAclCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateACLCreated) WriteResponse(rw http.ResponseWriter, producer runtim
 // CreateACLAcceptedCode is the HTTP code returned for type CreateACLAccepted
 const CreateACLAcceptedCode int = 202
 
-/*CreateACLAccepted Configuration change accepted and reload requested
+/*
+CreateACLAccepted Configuration change accepted and reload requested
 
 swagger:response createAclAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateACLAccepted) WriteResponse(rw http.ResponseWriter, producer runti
 // CreateACLBadRequestCode is the HTTP code returned for type CreateACLBadRequest
 const CreateACLBadRequestCode int = 400
 
-/*CreateACLBadRequest Bad request
+/*
+CreateACLBadRequest Bad request
 
 swagger:response createAclBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateACLBadRequest) WriteResponse(rw http.ResponseWriter, producer run
 // CreateACLConflictCode is the HTTP code returned for type CreateACLConflict
 const CreateACLConflictCode int = 409
 
-/*CreateACLConflict The specified resource already exists
+/*
+CreateACLConflict The specified resource already exists
 
 swagger:response createAclConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateACLConflict) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*CreateACLDefault General Error
+/*
+CreateACLDefault General Error
 
 swagger:response createAclDefault
 */

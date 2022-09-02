@@ -44,12 +44,12 @@ func NewCreateBackend(ctx *middleware.Context, handler CreateBackendHandler) *Cr
 	return &CreateBackend{Context: ctx, Handler: handler}
 }
 
-/* CreateBackend swagger:route POST /services/haproxy/configuration/backends Backend createBackend
+/*
+	CreateBackend swagger:route POST /services/haproxy/configuration/backends Backend createBackend
 
-Add a backend
+# Add a backend
 
 Adds a new backend to the configuration file.
-
 */
 type CreateBackend struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // DeleteLogForwardAcceptedCode is the HTTP code returned for type DeleteLogForwardAccepted
 const DeleteLogForwardAcceptedCode int = 202
 
-/*DeleteLogForwardAccepted Configuration change accepted and reload requested
+/*
+DeleteLogForwardAccepted Configuration change accepted and reload requested
 
 swagger:response deleteLogForwardAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteLogForwardAccepted) WriteResponse(rw http.ResponseWriter, produce
 // DeleteLogForwardNoContentCode is the HTTP code returned for type DeleteLogForwardNoContent
 const DeleteLogForwardNoContentCode int = 204
 
-/*DeleteLogForwardNoContent Log Forward deleted
+/*
+DeleteLogForwardNoContent Log Forward deleted
 
 swagger:response deleteLogForwardNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteLogForwardNoContent) WriteResponse(rw http.ResponseWriter, produc
 // DeleteLogForwardNotFoundCode is the HTTP code returned for type DeleteLogForwardNotFound
 const DeleteLogForwardNotFoundCode int = 404
 
-/*DeleteLogForwardNotFound The specified resource was not found
+/*
+DeleteLogForwardNotFound The specified resource was not found
 
 swagger:response deleteLogForwardNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteLogForwardNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*DeleteLogForwardDefault General Error
+/*
+DeleteLogForwardDefault General Error
 
 swagger:response deleteLogForwardDefault
 */

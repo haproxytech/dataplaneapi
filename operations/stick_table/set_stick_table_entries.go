@@ -51,12 +51,12 @@ func NewSetStickTableEntries(ctx *middleware.Context, handler SetStickTableEntri
 	return &SetStickTableEntries{Context: ctx, Handler: handler}
 }
 
-/* SetStickTableEntries swagger:route POST /services/haproxy/runtime/stick_table_entries StickTable setStickTableEntries
+/*
+	SetStickTableEntries swagger:route POST /services/haproxy/runtime/stick_table_entries StickTable setStickTableEntries
 
-Set Entry to Stick Table
+# Set Entry to Stick Table
 
 Create or update a stick-table entry in the table.
-
 */
 type SetStickTableEntries struct {
 	Context *middleware.Context

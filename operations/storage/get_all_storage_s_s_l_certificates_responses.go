@@ -31,7 +31,8 @@ import (
 // GetAllStorageSSLCertificatesOKCode is the HTTP code returned for type GetAllStorageSSLCertificatesOK
 const GetAllStorageSSLCertificatesOKCode int = 200
 
-/*GetAllStorageSSLCertificatesOK Successful operation
+/*
+GetAllStorageSSLCertificatesOK Successful operation
 
 swagger:response getAllStorageSSLCertificatesOK
 */
@@ -78,7 +79,8 @@ func (o *GetAllStorageSSLCertificatesOK) WriteResponse(rw http.ResponseWriter, p
 // GetAllStorageSSLCertificatesNotFoundCode is the HTTP code returned for type GetAllStorageSSLCertificatesNotFound
 const GetAllStorageSSLCertificatesNotFoundCode int = 404
 
-/*GetAllStorageSSLCertificatesNotFound The specified resource was not found
+/*
+GetAllStorageSSLCertificatesNotFound The specified resource was not found
 
 swagger:response getAllStorageSSLCertificatesNotFound
 */
@@ -141,7 +143,8 @@ func (o *GetAllStorageSSLCertificatesNotFound) WriteResponse(rw http.ResponseWri
 	}
 }
 
-/*GetAllStorageSSLCertificatesDefault General Error
+/*
+GetAllStorageSSLCertificatesDefault General Error
 
 swagger:response getAllStorageSSLCertificatesDefault
 */

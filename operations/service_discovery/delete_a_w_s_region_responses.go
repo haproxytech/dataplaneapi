@@ -31,7 +31,8 @@ import (
 // DeleteAWSRegionNoContentCode is the HTTP code returned for type DeleteAWSRegionNoContent
 const DeleteAWSRegionNoContentCode int = 204
 
-/*DeleteAWSRegionNoContent Resource deleted
+/*
+DeleteAWSRegionNoContent Resource deleted
 
 swagger:response deleteAWSRegionNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteAWSRegionNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteAWSRegionNotFoundCode is the HTTP code returned for type DeleteAWSRegionNotFound
 const DeleteAWSRegionNotFoundCode int = 404
 
-/*DeleteAWSRegionNotFound The specified resource was not found
+/*
+DeleteAWSRegionNotFound The specified resource was not found
 
 swagger:response deleteAWSRegionNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteAWSRegionNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteAWSRegionDefault General Error
+/*
+DeleteAWSRegionDefault General Error
 
 swagger:response deleteAWSRegionDefault
 */

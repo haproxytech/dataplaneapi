@@ -44,12 +44,12 @@ func NewCommitTransaction(ctx *middleware.Context, handler CommitTransactionHand
 	return &CommitTransaction{Context: ctx, Handler: handler}
 }
 
-/* CommitTransaction swagger:route PUT /services/haproxy/transactions/{id} Transactions commitTransaction
+/*
+	CommitTransaction swagger:route PUT /services/haproxy/transactions/{id} Transactions commitTransaction
 
-Commit transaction
+# Commit transaction
 
 Commit transaction, execute all operations in transaction and return msg
-
 */
 type CommitTransaction struct {
 	Context *middleware.Context

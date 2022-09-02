@@ -31,7 +31,8 @@ import (
 // CreateHTTPAfterResponseRuleCreatedCode is the HTTP code returned for type CreateHTTPAfterResponseRuleCreated
 const CreateHTTPAfterResponseRuleCreatedCode int = 201
 
-/*CreateHTTPAfterResponseRuleCreated HTTP Response Rule created
+/*
+CreateHTTPAfterResponseRuleCreated HTTP Response Rule created
 
 swagger:response createHttpAfterResponseRuleCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateHTTPAfterResponseRuleCreated) WriteResponse(rw http.ResponseWrite
 // CreateHTTPAfterResponseRuleAcceptedCode is the HTTP code returned for type CreateHTTPAfterResponseRuleAccepted
 const CreateHTTPAfterResponseRuleAcceptedCode int = 202
 
-/*CreateHTTPAfterResponseRuleAccepted Configuration change accepted and reload requested
+/*
+CreateHTTPAfterResponseRuleAccepted Configuration change accepted and reload requested
 
 swagger:response createHttpAfterResponseRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateHTTPAfterResponseRuleAccepted) WriteResponse(rw http.ResponseWrit
 // CreateHTTPAfterResponseRuleBadRequestCode is the HTTP code returned for type CreateHTTPAfterResponseRuleBadRequest
 const CreateHTTPAfterResponseRuleBadRequestCode int = 400
 
-/*CreateHTTPAfterResponseRuleBadRequest Bad request
+/*
+CreateHTTPAfterResponseRuleBadRequest Bad request
 
 swagger:response createHttpAfterResponseRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateHTTPAfterResponseRuleBadRequest) WriteResponse(rw http.ResponseWr
 // CreateHTTPAfterResponseRuleConflictCode is the HTTP code returned for type CreateHTTPAfterResponseRuleConflict
 const CreateHTTPAfterResponseRuleConflictCode int = 409
 
-/*CreateHTTPAfterResponseRuleConflict The specified resource already exists
+/*
+CreateHTTPAfterResponseRuleConflict The specified resource already exists
 
 swagger:response createHttpAfterResponseRuleConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateHTTPAfterResponseRuleConflict) WriteResponse(rw http.ResponseWrit
 	}
 }
 
-/*CreateHTTPAfterResponseRuleDefault General Error
+/*
+CreateHTTPAfterResponseRuleDefault General Error
 
 swagger:response createHttpAfterResponseRuleDefault
 */

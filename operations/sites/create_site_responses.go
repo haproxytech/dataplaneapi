@@ -31,7 +31,8 @@ import (
 // CreateSiteCreatedCode is the HTTP code returned for type CreateSiteCreated
 const CreateSiteCreatedCode int = 201
 
-/*CreateSiteCreated Site created
+/*
+CreateSiteCreated Site created
 
 swagger:response createSiteCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateSiteCreated) WriteResponse(rw http.ResponseWriter, producer runti
 // CreateSiteAcceptedCode is the HTTP code returned for type CreateSiteAccepted
 const CreateSiteAcceptedCode int = 202
 
-/*CreateSiteAccepted Configuration change accepted and reload requested
+/*
+CreateSiteAccepted Configuration change accepted and reload requested
 
 swagger:response createSiteAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateSiteAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // CreateSiteBadRequestCode is the HTTP code returned for type CreateSiteBadRequest
 const CreateSiteBadRequestCode int = 400
 
-/*CreateSiteBadRequest Bad request
+/*
+CreateSiteBadRequest Bad request
 
 swagger:response createSiteBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateSiteBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateSiteConflictCode is the HTTP code returned for type CreateSiteConflict
 const CreateSiteConflictCode int = 409
 
-/*CreateSiteConflict The specified resource already exists
+/*
+CreateSiteConflict The specified resource already exists
 
 swagger:response createSiteConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateSiteConflict) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*CreateSiteDefault General Error
+/*
+CreateSiteDefault General Error
 
 swagger:response createSiteDefault
 */

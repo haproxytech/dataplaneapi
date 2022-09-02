@@ -31,7 +31,8 @@ import (
 // CreateRingCreatedCode is the HTTP code returned for type CreateRingCreated
 const CreateRingCreatedCode int = 201
 
-/*CreateRingCreated Ring created
+/*
+CreateRingCreated Ring created
 
 swagger:response createRingCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateRingCreated) WriteResponse(rw http.ResponseWriter, producer runti
 // CreateRingAcceptedCode is the HTTP code returned for type CreateRingAccepted
 const CreateRingAcceptedCode int = 202
 
-/*CreateRingAccepted Configuration change accepted and reload requested
+/*
+CreateRingAccepted Configuration change accepted and reload requested
 
 swagger:response createRingAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateRingAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // CreateRingBadRequestCode is the HTTP code returned for type CreateRingBadRequest
 const CreateRingBadRequestCode int = 400
 
-/*CreateRingBadRequest Bad request
+/*
+CreateRingBadRequest Bad request
 
 swagger:response createRingBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateRingBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateRingConflictCode is the HTTP code returned for type CreateRingConflict
 const CreateRingConflictCode int = 409
 
-/*CreateRingConflict The specified resource already exists
+/*
+CreateRingConflict The specified resource already exists
 
 swagger:response createRingConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateRingConflict) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*CreateRingDefault General Error
+/*
+CreateRingDefault General Error
 
 swagger:response createRingDefault
 */

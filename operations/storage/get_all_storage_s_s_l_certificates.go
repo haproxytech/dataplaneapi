@@ -44,12 +44,12 @@ func NewGetAllStorageSSLCertificates(ctx *middleware.Context, handler GetAllStor
 	return &GetAllStorageSSLCertificates{Context: ctx, Handler: handler}
 }
 
-/* GetAllStorageSSLCertificates swagger:route GET /services/haproxy/storage/ssl_certificates Storage getAllStorageSSLCertificates
+/*
+	GetAllStorageSSLCertificates swagger:route GET /services/haproxy/storage/ssl_certificates Storage getAllStorageSSLCertificates
 
-Return all available SSL certificates on disk
+# Return all available SSL certificates on disk
 
 Returns all available SSL certificates on disk.
-
 */
 type GetAllStorageSSLCertificates struct {
 	Context *middleware.Context

@@ -50,12 +50,12 @@ func NewGetDefaults(ctx *middleware.Context, handler GetDefaultsHandler) *GetDef
 	return &GetDefaults{Context: ctx, Handler: handler}
 }
 
-/* GetDefaults swagger:route GET /services/haproxy/configuration/defaults Defaults getDefaults
+/*
+	GetDefaults swagger:route GET /services/haproxy/configuration/defaults Defaults getDefaults
 
-Return defaults part of configuration
+# Return defaults part of configuration
 
 Returns defaults part of configuration.
-
 */
 type GetDefaults struct {
 	Context *middleware.Context

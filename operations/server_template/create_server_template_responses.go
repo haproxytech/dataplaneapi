@@ -31,7 +31,8 @@ import (
 // CreateServerTemplateCreatedCode is the HTTP code returned for type CreateServerTemplateCreated
 const CreateServerTemplateCreatedCode int = 201
 
-/*CreateServerTemplateCreated Server template created
+/*
+CreateServerTemplateCreated Server template created
 
 swagger:response createServerTemplateCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateServerTemplateCreated) WriteResponse(rw http.ResponseWriter, prod
 // CreateServerTemplateAcceptedCode is the HTTP code returned for type CreateServerTemplateAccepted
 const CreateServerTemplateAcceptedCode int = 202
 
-/*CreateServerTemplateAccepted Configuration change accepted and reload requested
+/*
+CreateServerTemplateAccepted Configuration change accepted and reload requested
 
 swagger:response createServerTemplateAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateServerTemplateAccepted) WriteResponse(rw http.ResponseWriter, pro
 // CreateServerTemplateBadRequestCode is the HTTP code returned for type CreateServerTemplateBadRequest
 const CreateServerTemplateBadRequestCode int = 400
 
-/*CreateServerTemplateBadRequest Bad request
+/*
+CreateServerTemplateBadRequest Bad request
 
 swagger:response createServerTemplateBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateServerTemplateBadRequest) WriteResponse(rw http.ResponseWriter, p
 // CreateServerTemplateConflictCode is the HTTP code returned for type CreateServerTemplateConflict
 const CreateServerTemplateConflictCode int = 409
 
-/*CreateServerTemplateConflict The specified resource already exists
+/*
+CreateServerTemplateConflict The specified resource already exists
 
 swagger:response createServerTemplateConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateServerTemplateConflict) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*CreateServerTemplateDefault General Error
+/*
+CreateServerTemplateDefault General Error
 
 swagger:response createServerTemplateDefault
 */

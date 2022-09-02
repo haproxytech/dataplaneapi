@@ -47,12 +47,12 @@ func NewGetOneSpoeFile(ctx *middleware.Context, handler GetOneSpoeFileHandler) *
 	return &GetOneSpoeFile{Context: ctx, Handler: handler}
 }
 
-/* GetOneSpoeFile swagger:route GET /services/haproxy/spoe/spoe_files/{name} Spoe getOneSpoeFile
+/*
+	GetOneSpoeFile swagger:route GET /services/haproxy/spoe/spoe_files/{name} Spoe getOneSpoeFile
 
-Return one SPOE file
+# Return one SPOE file
 
 Returns one SPOE file.
-
 */
 type GetOneSpoeFile struct {
 	Context *middleware.Context

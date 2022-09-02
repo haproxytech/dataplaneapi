@@ -50,12 +50,12 @@ func NewGetPeerSection(ctx *middleware.Context, handler GetPeerSectionHandler) *
 	return &GetPeerSection{Context: ctx, Handler: handler}
 }
 
-/* GetPeerSection swagger:route GET /services/haproxy/configuration/peer_section/{name} Peer getPeerSection
+/*
+	GetPeerSection swagger:route GET /services/haproxy/configuration/peer_section/{name} Peer getPeerSection
 
-Return a peer
+# Return a peer
 
 Returns one peer configuration by it's name.
-
 */
 type GetPeerSection struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // GetSpoeEndpointsOKCode is the HTTP code returned for type GetSpoeEndpointsOK
 const GetSpoeEndpointsOKCode int = 200
 
-/*GetSpoeEndpointsOK Success
+/*
+GetSpoeEndpointsOK Success
 
 swagger:response getSpoeEndpointsOK
 */
@@ -75,7 +76,8 @@ func (o *GetSpoeEndpointsOK) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*GetSpoeEndpointsDefault General Error
+/*
+GetSpoeEndpointsDefault General Error
 
 swagger:response getSpoeEndpointsDefault
 */

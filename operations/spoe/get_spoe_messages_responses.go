@@ -31,7 +31,8 @@ import (
 // GetSpoeMessagesOKCode is the HTTP code returned for type GetSpoeMessagesOK
 const GetSpoeMessagesOKCode int = 200
 
-/*GetSpoeMessagesOK Successful operation
+/*
+GetSpoeMessagesOK Successful operation
 
 swagger:response getSpoeMessagesOK
 */
@@ -94,7 +95,8 @@ func (o *GetSpoeMessagesOK) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetSpoeMessagesDefault General Error
+/*
+GetSpoeMessagesDefault General Error
 
 swagger:response getSpoeMessagesDefault
 */

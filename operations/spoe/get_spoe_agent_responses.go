@@ -31,7 +31,8 @@ import (
 // GetSpoeAgentOKCode is the HTTP code returned for type GetSpoeAgentOK
 const GetSpoeAgentOKCode int = 200
 
-/*GetSpoeAgentOK Successful operation
+/*
+GetSpoeAgentOK Successful operation
 
 swagger:response getSpoeAgentOK
 */
@@ -97,7 +98,8 @@ func (o *GetSpoeAgentOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetSpoeAgentNotFoundCode is the HTTP code returned for type GetSpoeAgentNotFound
 const GetSpoeAgentNotFoundCode int = 404
 
-/*GetSpoeAgentNotFound The specified resource was not found
+/*
+GetSpoeAgentNotFound The specified resource was not found
 
 swagger:response getSpoeAgentNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetSpoeAgentNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetSpoeAgentDefault General Error
+/*
+GetSpoeAgentDefault General Error
 
 swagger:response getSpoeAgentDefault
 */

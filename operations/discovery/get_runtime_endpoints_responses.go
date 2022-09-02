@@ -31,7 +31,8 @@ import (
 // GetRuntimeEndpointsOKCode is the HTTP code returned for type GetRuntimeEndpointsOK
 const GetRuntimeEndpointsOKCode int = 200
 
-/*GetRuntimeEndpointsOK Success
+/*
+GetRuntimeEndpointsOK Success
 
 swagger:response getRuntimeEndpointsOK
 */
@@ -75,7 +76,8 @@ func (o *GetRuntimeEndpointsOK) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetRuntimeEndpointsDefault General Error
+/*
+GetRuntimeEndpointsDefault General Error
 
 swagger:response getRuntimeEndpointsDefault
 */

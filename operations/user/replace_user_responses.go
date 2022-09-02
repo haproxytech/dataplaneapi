@@ -31,7 +31,8 @@ import (
 // ReplaceUserOKCode is the HTTP code returned for type ReplaceUserOK
 const ReplaceUserOKCode int = 200
 
-/*ReplaceUserOK User replaced
+/*
+ReplaceUserOK User replaced
 
 swagger:response replaceUserOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceUserOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // ReplaceUserAcceptedCode is the HTTP code returned for type ReplaceUserAccepted
 const ReplaceUserAcceptedCode int = 202
 
-/*ReplaceUserAccepted Configuration change accepted and reload requested
+/*
+ReplaceUserAccepted Configuration change accepted and reload requested
 
 swagger:response replaceUserAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceUserAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // ReplaceUserBadRequestCode is the HTTP code returned for type ReplaceUserBadRequest
 const ReplaceUserBadRequestCode int = 400
 
-/*ReplaceUserBadRequest Bad request
+/*
+ReplaceUserBadRequest Bad request
 
 swagger:response replaceUserBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceUserBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 // ReplaceUserNotFoundCode is the HTTP code returned for type ReplaceUserNotFound
 const ReplaceUserNotFoundCode int = 404
 
-/*ReplaceUserNotFound The specified resource was not found
+/*
+ReplaceUserNotFound The specified resource was not found
 
 swagger:response replaceUserNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceUserNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*ReplaceUserDefault General Error
+/*
+ReplaceUserDefault General Error
 
 swagger:response replaceUserDefault
 */

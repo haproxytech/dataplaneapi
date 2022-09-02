@@ -31,7 +31,8 @@ import (
 // GetAllStorageGeneralFilesOKCode is the HTTP code returned for type GetAllStorageGeneralFilesOK
 const GetAllStorageGeneralFilesOKCode int = 200
 
-/*GetAllStorageGeneralFilesOK Successful operation
+/*
+GetAllStorageGeneralFilesOK Successful operation
 
 swagger:response getAllStorageGeneralFilesOK
 */
@@ -78,7 +79,8 @@ func (o *GetAllStorageGeneralFilesOK) WriteResponse(rw http.ResponseWriter, prod
 // GetAllStorageGeneralFilesNotFoundCode is the HTTP code returned for type GetAllStorageGeneralFilesNotFound
 const GetAllStorageGeneralFilesNotFoundCode int = 404
 
-/*GetAllStorageGeneralFilesNotFound The specified resource was not found
+/*
+GetAllStorageGeneralFilesNotFound The specified resource was not found
 
 swagger:response getAllStorageGeneralFilesNotFound
 */
@@ -141,7 +143,8 @@ func (o *GetAllStorageGeneralFilesNotFound) WriteResponse(rw http.ResponseWriter
 	}
 }
 
-/*GetAllStorageGeneralFilesDefault General Error
+/*
+GetAllStorageGeneralFilesDefault General Error
 
 swagger:response getAllStorageGeneralFilesDefault
 */

@@ -44,12 +44,12 @@ func NewGetServicesHaproxyRuntimeAclsID(ctx *middleware.Context, handler GetServ
 	return &GetServicesHaproxyRuntimeAclsID{Context: ctx, Handler: handler}
 }
 
-/* GetServicesHaproxyRuntimeAclsID swagger:route GET /services/haproxy/runtime/acls/{id} ACL Runtime getServicesHaproxyRuntimeAclsId
+/*
+	GetServicesHaproxyRuntimeAclsID swagger:route GET /services/haproxy/runtime/acls/{id} ACL Runtime getServicesHaproxyRuntimeAclsId
 
-Return an ACL file
+# Return an ACL file
 
 Returns an ACL file by id using the runtime socket.
-
 */
 type GetServicesHaproxyRuntimeAclsID struct {
 	Context *middleware.Context

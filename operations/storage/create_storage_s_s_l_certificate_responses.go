@@ -31,7 +31,8 @@ import (
 // CreateStorageSSLCertificateCreatedCode is the HTTP code returned for type CreateStorageSSLCertificateCreated
 const CreateStorageSSLCertificateCreatedCode int = 201
 
-/*CreateStorageSSLCertificateCreated SSL certificate created
+/*
+CreateStorageSSLCertificateCreated SSL certificate created
 
 swagger:response createStorageSSLCertificateCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateStorageSSLCertificateCreated) WriteResponse(rw http.ResponseWrite
 // CreateStorageSSLCertificateBadRequestCode is the HTTP code returned for type CreateStorageSSLCertificateBadRequest
 const CreateStorageSSLCertificateBadRequestCode int = 400
 
-/*CreateStorageSSLCertificateBadRequest Bad request
+/*
+CreateStorageSSLCertificateBadRequest Bad request
 
 swagger:response createStorageSSLCertificateBadRequest
 */
@@ -141,7 +143,8 @@ func (o *CreateStorageSSLCertificateBadRequest) WriteResponse(rw http.ResponseWr
 // CreateStorageSSLCertificateConflictCode is the HTTP code returned for type CreateStorageSSLCertificateConflict
 const CreateStorageSSLCertificateConflictCode int = 409
 
-/*CreateStorageSSLCertificateConflict The specified resource already exists
+/*
+CreateStorageSSLCertificateConflict The specified resource already exists
 
 swagger:response createStorageSSLCertificateConflict
 */
@@ -204,7 +207,8 @@ func (o *CreateStorageSSLCertificateConflict) WriteResponse(rw http.ResponseWrit
 	}
 }
 
-/*CreateStorageSSLCertificateDefault General Error
+/*
+CreateStorageSSLCertificateDefault General Error
 
 swagger:response createStorageSSLCertificateDefault
 */

@@ -51,12 +51,12 @@ func NewGetCaches(ctx *middleware.Context, handler GetCachesHandler) *GetCaches 
 	return &GetCaches{Context: ctx, Handler: handler}
 }
 
-/* GetCaches swagger:route GET /services/haproxy/configuration/caches Cache getCaches
+/*
+	GetCaches swagger:route GET /services/haproxy/configuration/caches Cache getCaches
 
-Return an array of caches
+# Return an array of caches
 
 Returns an array of all configured caches.
-
 */
 type GetCaches struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewReplaceLogForward(ctx *middleware.Context, handler ReplaceLogForwardHand
 	return &ReplaceLogForward{Context: ctx, Handler: handler}
 }
 
-/* ReplaceLogForward swagger:route PUT /services/haproxy/configuration/log_forwards/{name} LogForward replaceLogForward
+/*
+	ReplaceLogForward swagger:route PUT /services/haproxy/configuration/log_forwards/{name} LogForward replaceLogForward
 
-Replace a log forward
+# Replace a log forward
 
 Replaces a log forward configuration by it's name.
-
 */
 type ReplaceLogForward struct {
 	Context *middleware.Context

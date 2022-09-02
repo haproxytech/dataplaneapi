@@ -31,7 +31,8 @@ import (
 // CreatePeerEntryCreatedCode is the HTTP code returned for type CreatePeerEntryCreated
 const CreatePeerEntryCreatedCode int = 201
 
-/*CreatePeerEntryCreated PeerEntry created
+/*
+CreatePeerEntryCreated PeerEntry created
 
 swagger:response createPeerEntryCreated
 */
@@ -75,7 +76,8 @@ func (o *CreatePeerEntryCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreatePeerEntryAcceptedCode is the HTTP code returned for type CreatePeerEntryAccepted
 const CreatePeerEntryAcceptedCode int = 202
 
-/*CreatePeerEntryAccepted Configuration change accepted and reload requested
+/*
+CreatePeerEntryAccepted Configuration change accepted and reload requested
 
 swagger:response createPeerEntryAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreatePeerEntryAccepted) WriteResponse(rw http.ResponseWriter, producer
 // CreatePeerEntryBadRequestCode is the HTTP code returned for type CreatePeerEntryBadRequest
 const CreatePeerEntryBadRequestCode int = 400
 
-/*CreatePeerEntryBadRequest Bad request
+/*
+CreatePeerEntryBadRequest Bad request
 
 swagger:response createPeerEntryBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreatePeerEntryBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreatePeerEntryConflictCode is the HTTP code returned for type CreatePeerEntryConflict
 const CreatePeerEntryConflictCode int = 409
 
-/*CreatePeerEntryConflict The specified resource already exists
+/*
+CreatePeerEntryConflict The specified resource already exists
 
 swagger:response createPeerEntryConflict
 */
@@ -270,7 +274,8 @@ func (o *CreatePeerEntryConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreatePeerEntryDefault General Error
+/*
+CreatePeerEntryDefault General Error
 
 swagger:response createPeerEntryDefault
 */

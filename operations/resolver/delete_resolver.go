@@ -44,12 +44,12 @@ func NewDeleteResolver(ctx *middleware.Context, handler DeleteResolverHandler) *
 	return &DeleteResolver{Context: ctx, Handler: handler}
 }
 
-/* DeleteResolver swagger:route DELETE /services/haproxy/configuration/resolvers/{name} Resolver deleteResolver
+/*
+	DeleteResolver swagger:route DELETE /services/haproxy/configuration/resolvers/{name} Resolver deleteResolver
 
-Delete a resolver
+# Delete a resolver
 
 Deletes a resolver from the configuration by it's name.
-
 */
 type DeleteResolver struct {
 	Context *middleware.Context

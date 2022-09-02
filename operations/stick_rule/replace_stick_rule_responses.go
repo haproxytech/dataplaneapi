@@ -31,7 +31,8 @@ import (
 // ReplaceStickRuleOKCode is the HTTP code returned for type ReplaceStickRuleOK
 const ReplaceStickRuleOKCode int = 200
 
-/*ReplaceStickRuleOK Stick Rule replaced
+/*
+ReplaceStickRuleOK Stick Rule replaced
 
 swagger:response replaceStickRuleOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceStickRuleOK) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplaceStickRuleAcceptedCode is the HTTP code returned for type ReplaceStickRuleAccepted
 const ReplaceStickRuleAcceptedCode int = 202
 
-/*ReplaceStickRuleAccepted Configuration change accepted and reload requested
+/*
+ReplaceStickRuleAccepted Configuration change accepted and reload requested
 
 swagger:response replaceStickRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceStickRuleAccepted) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceStickRuleBadRequestCode is the HTTP code returned for type ReplaceStickRuleBadRequest
 const ReplaceStickRuleBadRequestCode int = 400
 
-/*ReplaceStickRuleBadRequest Bad request
+/*
+ReplaceStickRuleBadRequest Bad request
 
 swagger:response replaceStickRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceStickRuleBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // ReplaceStickRuleNotFoundCode is the HTTP code returned for type ReplaceStickRuleNotFound
 const ReplaceStickRuleNotFoundCode int = 404
 
-/*ReplaceStickRuleNotFound The specified resource was not found
+/*
+ReplaceStickRuleNotFound The specified resource was not found
 
 swagger:response replaceStickRuleNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceStickRuleNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*ReplaceStickRuleDefault General Error
+/*
+ReplaceStickRuleDefault General Error
 
 swagger:response replaceStickRuleDefault
 */

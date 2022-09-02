@@ -44,12 +44,12 @@ func NewReplaceSpoeGroup(ctx *middleware.Context, handler ReplaceSpoeGroupHandle
 	return &ReplaceSpoeGroup{Context: ctx, Handler: handler}
 }
 
-/* ReplaceSpoeGroup swagger:route PUT /services/haproxy/spoe/spoe_groups/{name} Spoe replaceSpoeGroup
+/*
+	ReplaceSpoeGroup swagger:route PUT /services/haproxy/spoe/spoe_groups/{name} Spoe replaceSpoeGroup
 
-Replace a SPOE groups
+# Replace a SPOE groups
 
 Replaces a SPOE groups configuration in one SPOE scope.
-
 */
 type ReplaceSpoeGroup struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewAddMapEntry(ctx *middleware.Context, handler AddMapEntryHandler) *AddMap
 	return &AddMapEntry{Context: ctx, Handler: handler}
 }
 
-/* AddMapEntry swagger:route POST /services/haproxy/runtime/maps_entries Maps addMapEntry
+/*
+	AddMapEntry swagger:route POST /services/haproxy/runtime/maps_entries Maps addMapEntry
 
-Adds an entry into the map file
+# Adds an entry into the map file
 
 Adds an entry into the map file.
-
 */
 type AddMapEntry struct {
 	Context *middleware.Context

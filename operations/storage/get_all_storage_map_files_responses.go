@@ -31,7 +31,8 @@ import (
 // GetAllStorageMapFilesOKCode is the HTTP code returned for type GetAllStorageMapFilesOK
 const GetAllStorageMapFilesOKCode int = 200
 
-/*GetAllStorageMapFilesOK Successful operation
+/*
+GetAllStorageMapFilesOK Successful operation
 
 swagger:response getAllStorageMapFilesOK
 */
@@ -78,7 +79,8 @@ func (o *GetAllStorageMapFilesOK) WriteResponse(rw http.ResponseWriter, producer
 // GetAllStorageMapFilesNotFoundCode is the HTTP code returned for type GetAllStorageMapFilesNotFound
 const GetAllStorageMapFilesNotFoundCode int = 404
 
-/*GetAllStorageMapFilesNotFound The specified resource was not found
+/*
+GetAllStorageMapFilesNotFound The specified resource was not found
 
 swagger:response getAllStorageMapFilesNotFound
 */
@@ -141,7 +143,8 @@ func (o *GetAllStorageMapFilesNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*GetAllStorageMapFilesDefault General Error
+/*
+GetAllStorageMapFilesDefault General Error
 
 swagger:response getAllStorageMapFilesDefault
 */

@@ -31,7 +31,8 @@ import (
 // CreateBindCreatedCode is the HTTP code returned for type CreateBindCreated
 const CreateBindCreatedCode int = 201
 
-/*CreateBindCreated Bind created
+/*
+CreateBindCreated Bind created
 
 swagger:response createBindCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateBindCreated) WriteResponse(rw http.ResponseWriter, producer runti
 // CreateBindAcceptedCode is the HTTP code returned for type CreateBindAccepted
 const CreateBindAcceptedCode int = 202
 
-/*CreateBindAccepted Configuration change accepted and reload requested
+/*
+CreateBindAccepted Configuration change accepted and reload requested
 
 swagger:response createBindAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateBindAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // CreateBindBadRequestCode is the HTTP code returned for type CreateBindBadRequest
 const CreateBindBadRequestCode int = 400
 
-/*CreateBindBadRequest Bad request
+/*
+CreateBindBadRequest Bad request
 
 swagger:response createBindBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateBindBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateBindConflictCode is the HTTP code returned for type CreateBindConflict
 const CreateBindConflictCode int = 409
 
-/*CreateBindConflict The specified resource already exists
+/*
+CreateBindConflict The specified resource already exists
 
 swagger:response createBindConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateBindConflict) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*CreateBindDefault General Error
+/*
+CreateBindDefault General Error
 
 swagger:response createBindDefault
 */

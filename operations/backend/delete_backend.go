@@ -44,12 +44,12 @@ func NewDeleteBackend(ctx *middleware.Context, handler DeleteBackendHandler) *De
 	return &DeleteBackend{Context: ctx, Handler: handler}
 }
 
-/* DeleteBackend swagger:route DELETE /services/haproxy/configuration/backends/{name} Backend deleteBackend
+/*
+	DeleteBackend swagger:route DELETE /services/haproxy/configuration/backends/{name} Backend deleteBackend
 
-Delete a backend
+# Delete a backend
 
 Deletes a backend from the configuration by it's name.
-
 */
 type DeleteBackend struct {
 	Context *middleware.Context

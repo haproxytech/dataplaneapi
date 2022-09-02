@@ -31,7 +31,8 @@ import (
 // ReplaceDgramBindOKCode is the HTTP code returned for type ReplaceDgramBindOK
 const ReplaceDgramBindOKCode int = 200
 
-/*ReplaceDgramBindOK Bind replaced
+/*
+ReplaceDgramBindOK Bind replaced
 
 swagger:response replaceDgramBindOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceDgramBindOK) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplaceDgramBindAcceptedCode is the HTTP code returned for type ReplaceDgramBindAccepted
 const ReplaceDgramBindAcceptedCode int = 202
 
-/*ReplaceDgramBindAccepted Configuration change accepted and reload requested
+/*
+ReplaceDgramBindAccepted Configuration change accepted and reload requested
 
 swagger:response replaceDgramBindAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceDgramBindAccepted) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceDgramBindBadRequestCode is the HTTP code returned for type ReplaceDgramBindBadRequest
 const ReplaceDgramBindBadRequestCode int = 400
 
-/*ReplaceDgramBindBadRequest Bad request
+/*
+ReplaceDgramBindBadRequest Bad request
 
 swagger:response replaceDgramBindBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceDgramBindBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // ReplaceDgramBindNotFoundCode is the HTTP code returned for type ReplaceDgramBindNotFound
 const ReplaceDgramBindNotFoundCode int = 404
 
-/*ReplaceDgramBindNotFound The specified resource was not found
+/*
+ReplaceDgramBindNotFound The specified resource was not found
 
 swagger:response replaceDgramBindNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceDgramBindNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*ReplaceDgramBindDefault General Error
+/*
+ReplaceDgramBindDefault General Error
 
 swagger:response replaceDgramBindDefault
 */

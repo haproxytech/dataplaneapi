@@ -44,12 +44,12 @@ func NewCreateDeclareCapture(ctx *middleware.Context, handler CreateDeclareCaptu
 	return &CreateDeclareCapture{Context: ctx, Handler: handler}
 }
 
-/* CreateDeclareCapture swagger:route POST /services/haproxy/configuration/captures DeclareCapture createDeclareCapture
+/*
+	CreateDeclareCapture swagger:route POST /services/haproxy/configuration/captures DeclareCapture createDeclareCapture
 
-Add a new declare capture
+# Add a new declare capture
 
 Adds a new declare capture in the specified frontend in the configuration file.
-
 */
 type CreateDeclareCapture struct {
 	Context *middleware.Context

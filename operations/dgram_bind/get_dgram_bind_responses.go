@@ -31,7 +31,8 @@ import (
 // GetDgramBindOKCode is the HTTP code returned for type GetDgramBindOK
 const GetDgramBindOKCode int = 200
 
-/*GetDgramBindOK Successful operation
+/*
+GetDgramBindOK Successful operation
 
 swagger:response getDgramBindOK
 */
@@ -97,7 +98,8 @@ func (o *GetDgramBindOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetDgramBindNotFoundCode is the HTTP code returned for type GetDgramBindNotFound
 const GetDgramBindNotFoundCode int = 404
 
-/*GetDgramBindNotFound The specified resource already exists
+/*
+GetDgramBindNotFound The specified resource already exists
 
 swagger:response getDgramBindNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetDgramBindNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetDgramBindDefault General Error
+/*
+GetDgramBindDefault General Error
 
 swagger:response getDgramBindDefault
 */

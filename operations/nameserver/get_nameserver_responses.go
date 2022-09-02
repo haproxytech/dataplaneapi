@@ -31,7 +31,8 @@ import (
 // GetNameserverOKCode is the HTTP code returned for type GetNameserverOK
 const GetNameserverOKCode int = 200
 
-/*GetNameserverOK Successful operation
+/*
+GetNameserverOK Successful operation
 
 swagger:response getNameserverOK
 */
@@ -97,7 +98,8 @@ func (o *GetNameserverOK) WriteResponse(rw http.ResponseWriter, producer runtime
 // GetNameserverNotFoundCode is the HTTP code returned for type GetNameserverNotFound
 const GetNameserverNotFoundCode int = 404
 
-/*GetNameserverNotFound The specified resource was not found
+/*
+GetNameserverNotFound The specified resource was not found
 
 swagger:response getNameserverNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetNameserverNotFound) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetNameserverDefault General Error
+/*
+GetNameserverDefault General Error
 
 swagger:response getNameserverDefault
 */

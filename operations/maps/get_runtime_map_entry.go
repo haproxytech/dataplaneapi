@@ -44,12 +44,12 @@ func NewGetRuntimeMapEntry(ctx *middleware.Context, handler GetRuntimeMapEntryHa
 	return &GetRuntimeMapEntry{Context: ctx, Handler: handler}
 }
 
-/* GetRuntimeMapEntry swagger:route GET /services/haproxy/runtime/maps_entries/{id} Maps getRuntimeMapEntry
+/*
+	GetRuntimeMapEntry swagger:route GET /services/haproxy/runtime/maps_entries/{id} Maps getRuntimeMapEntry
 
-Return one map runtime setting
+# Return one map runtime setting
 
 Returns one map runtime setting by it's id.
-
 */
 type GetRuntimeMapEntry struct {
 	Context *middleware.Context

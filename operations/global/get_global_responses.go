@@ -31,7 +31,8 @@ import (
 // GetGlobalOKCode is the HTTP code returned for type GetGlobalOK
 const GetGlobalOKCode int = 200
 
-/*GetGlobalOK Successful operation
+/*
+GetGlobalOK Successful operation
 
 swagger:response getGlobalOK
 */
@@ -94,7 +95,8 @@ func (o *GetGlobalOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	}
 }
 
-/*GetGlobalDefault General Error
+/*
+GetGlobalDefault General Error
 
 swagger:response getGlobalDefault
 */

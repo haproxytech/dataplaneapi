@@ -44,12 +44,12 @@ func NewReplaceAWSRegion(ctx *middleware.Context, handler ReplaceAWSRegionHandle
 	return &ReplaceAWSRegion{Context: ctx, Handler: handler}
 }
 
-/* ReplaceAWSRegion swagger:route PUT /service_discovery/aws/{id} ServiceDiscovery replaceAWSRegion
+/*
+	ReplaceAWSRegion swagger:route PUT /service_discovery/aws/{id} ServiceDiscovery replaceAWSRegion
 
-Replace an AWS region
+# Replace an AWS region
 
 Replace an AWS region configuration by its id.
-
 */
 type ReplaceAWSRegion struct {
 	Context *middleware.Context

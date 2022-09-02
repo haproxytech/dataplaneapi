@@ -31,7 +31,8 @@ import (
 // GetAclsOKCode is the HTTP code returned for type GetAclsOK
 const GetAclsOKCode int = 200
 
-/*GetAclsOK Successful operation
+/*
+GetAclsOK Successful operation
 
 swagger:response getAclsOK
 */
@@ -94,7 +95,8 @@ func (o *GetAclsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 	}
 }
 
-/*GetAclsDefault General Error
+/*
+GetAclsDefault General Error
 
 swagger:response getAclsDefault
 */

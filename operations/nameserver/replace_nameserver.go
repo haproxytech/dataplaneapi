@@ -44,12 +44,12 @@ func NewReplaceNameserver(ctx *middleware.Context, handler ReplaceNameserverHand
 	return &ReplaceNameserver{Context: ctx, Handler: handler}
 }
 
-/* ReplaceNameserver swagger:route PUT /services/haproxy/configuration/nameservers/{name} Nameserver replaceNameserver
+/*
+	ReplaceNameserver swagger:route PUT /services/haproxy/configuration/nameservers/{name} Nameserver replaceNameserver
 
-Replace a nameserver
+# Replace a nameserver
 
 Replaces a nameserver configuration by it's name.
-
 */
 type ReplaceNameserver struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewDeleteServicesHaproxyRuntimeACLFileEntriesID(ctx *middleware.Context, ha
 	return &DeleteServicesHaproxyRuntimeACLFileEntriesID{Context: ctx, Handler: handler}
 }
 
-/* DeleteServicesHaproxyRuntimeACLFileEntriesID swagger:route DELETE /services/haproxy/runtime/acl_file_entries/{id} ACL Runtime deleteServicesHaproxyRuntimeAclFileEntriesId
+/*
+	DeleteServicesHaproxyRuntimeACLFileEntriesID swagger:route DELETE /services/haproxy/runtime/acl_file_entries/{id} ACL Runtime deleteServicesHaproxyRuntimeAclFileEntriesId
 
-Delete an ACL entry
+# Delete an ACL entry
 
 Deletes the entry from the ACL by its value using the runtime socket.
-
 */
 type DeleteServicesHaproxyRuntimeACLFileEntriesID struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewReplaceTCPCheck(ctx *middleware.Context, handler ReplaceTCPCheckHandler)
 	return &ReplaceTCPCheck{Context: ctx, Handler: handler}
 }
 
-/* ReplaceTCPCheck swagger:route PUT /services/haproxy/configuration/tcp_checks/{index} TCPCheck replaceTcpCheck
+/*
+	ReplaceTCPCheck swagger:route PUT /services/haproxy/configuration/tcp_checks/{index} TCPCheck replaceTcpCheck
 
-Replace a TCP check
+# Replace a TCP check
 
 Replaces a TCP Check configuration by it's index in the specified parent.
-
 */
 type ReplaceTCPCheck struct {
 	Context *middleware.Context

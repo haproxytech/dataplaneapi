@@ -44,12 +44,12 @@ func NewReplaceFilter(ctx *middleware.Context, handler ReplaceFilterHandler) *Re
 	return &ReplaceFilter{Context: ctx, Handler: handler}
 }
 
-/* ReplaceFilter swagger:route PUT /services/haproxy/configuration/filters/{index} Filter replaceFilter
+/*
+	ReplaceFilter swagger:route PUT /services/haproxy/configuration/filters/{index} Filter replaceFilter
 
-Replace a Filter
+# Replace a Filter
 
 Replaces a Filter configuration by it's index in the specified parent.
-
 */
 type ReplaceFilter struct {
 	Context *middleware.Context

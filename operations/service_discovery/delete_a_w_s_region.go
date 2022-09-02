@@ -44,12 +44,12 @@ func NewDeleteAWSRegion(ctx *middleware.Context, handler DeleteAWSRegionHandler)
 	return &DeleteAWSRegion{Context: ctx, Handler: handler}
 }
 
-/* DeleteAWSRegion swagger:route DELETE /service_discovery/aws/{id} ServiceDiscovery deleteAWSRegion
+/*
+	DeleteAWSRegion swagger:route DELETE /service_discovery/aws/{id} ServiceDiscovery deleteAWSRegion
 
-Delete an AWS region
+# Delete an AWS region
 
 Delete an AWS region configuration by it's id.
-
 */
 type DeleteAWSRegion struct {
 	Context *middleware.Context

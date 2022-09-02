@@ -44,12 +44,12 @@ func NewCreateStickRule(ctx *middleware.Context, handler CreateStickRuleHandler)
 	return &CreateStickRule{Context: ctx, Handler: handler}
 }
 
-/* CreateStickRule swagger:route POST /services/haproxy/configuration/stick_rules StickRule createStickRule
+/*
+	CreateStickRule swagger:route POST /services/haproxy/configuration/stick_rules StickRule createStickRule
 
-Add a new Stick Rule
+# Add a new Stick Rule
 
 Adds a new Stick Rule of the specified type in the specified backend.
-
 */
 type CreateStickRule struct {
 	Context *middleware.Context

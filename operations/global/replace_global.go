@@ -44,12 +44,12 @@ func NewReplaceGlobal(ctx *middleware.Context, handler ReplaceGlobalHandler) *Re
 	return &ReplaceGlobal{Context: ctx, Handler: handler}
 }
 
-/* ReplaceGlobal swagger:route PUT /services/haproxy/configuration/global Global replaceGlobal
+/*
+	ReplaceGlobal swagger:route PUT /services/haproxy/configuration/global Global replaceGlobal
 
-Replace global
+# Replace global
 
 Replace global part of config
-
 */
 type ReplaceGlobal struct {
 	Context *middleware.Context

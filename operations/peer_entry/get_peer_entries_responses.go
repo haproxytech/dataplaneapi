@@ -31,7 +31,8 @@ import (
 // GetPeerEntriesOKCode is the HTTP code returned for type GetPeerEntriesOK
 const GetPeerEntriesOKCode int = 200
 
-/*GetPeerEntriesOK Successful operation
+/*
+GetPeerEntriesOK Successful operation
 
 swagger:response getPeerEntriesOK
 */
@@ -94,7 +95,8 @@ func (o *GetPeerEntriesOK) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 }
 
-/*GetPeerEntriesDefault General Error
+/*
+GetPeerEntriesDefault General Error
 
 swagger:response getPeerEntriesDefault
 */

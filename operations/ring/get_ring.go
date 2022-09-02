@@ -50,12 +50,12 @@ func NewGetRing(ctx *middleware.Context, handler GetRingHandler) *GetRing {
 	return &GetRing{Context: ctx, Handler: handler}
 }
 
-/* GetRing swagger:route GET /services/haproxy/configuration/rings/{name} Ring getRing
+/*
+	GetRing swagger:route GET /services/haproxy/configuration/rings/{name} Ring getRing
 
-Return a ring
+# Return a ring
 
 Returns one ring configuration by it's name.
-
 */
 type GetRing struct {
 	Context *middleware.Context

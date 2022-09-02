@@ -44,12 +44,12 @@ func NewReplaceHTTPAfterResponseRule(ctx *middleware.Context, handler ReplaceHTT
 	return &ReplaceHTTPAfterResponseRule{Context: ctx, Handler: handler}
 }
 
-/* ReplaceHTTPAfterResponseRule swagger:route PUT /services/haproxy/configuration/http_after_response_rules/{index} HTTPAfterResponseRule replaceHttpAfterResponseRule
+/*
+	ReplaceHTTPAfterResponseRule swagger:route PUT /services/haproxy/configuration/http_after_response_rules/{index} HTTPAfterResponseRule replaceHttpAfterResponseRule
 
-Replace a HTTP After Response Rule
+# Replace a HTTP After Response Rule
 
 Replaces a HTTP After Response Rule configuration by it's index in the specified parent.
-
 */
 type ReplaceHTTPAfterResponseRule struct {
 	Context *middleware.Context

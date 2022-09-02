@@ -50,12 +50,12 @@ func NewGetTCPCheck(ctx *middleware.Context, handler GetTCPCheckHandler) *GetTCP
 	return &GetTCPCheck{Context: ctx, Handler: handler}
 }
 
-/* GetTCPCheck swagger:route GET /services/haproxy/configuration/tcp_checks/{index} TCPCheck getTcpCheck
+/*
+	GetTCPCheck swagger:route GET /services/haproxy/configuration/tcp_checks/{index} TCPCheck getTcpCheck
 
-Return one TCP check
+# Return one TCP check
 
 Returns one TCP check configuration by it's index in the specified parent.
-
 */
 type GetTCPCheck struct {
 	Context *middleware.Context

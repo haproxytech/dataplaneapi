@@ -31,7 +31,8 @@ import (
 // DeleteFrontendAcceptedCode is the HTTP code returned for type DeleteFrontendAccepted
 const DeleteFrontendAcceptedCode int = 202
 
-/*DeleteFrontendAccepted Configuration change accepted and reload requested
+/*
+DeleteFrontendAccepted Configuration change accepted and reload requested
 
 swagger:response deleteFrontendAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteFrontendAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // DeleteFrontendNoContentCode is the HTTP code returned for type DeleteFrontendNoContent
 const DeleteFrontendNoContentCode int = 204
 
-/*DeleteFrontendNoContent Frontend deleted
+/*
+DeleteFrontendNoContent Frontend deleted
 
 swagger:response deleteFrontendNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteFrontendNoContent) WriteResponse(rw http.ResponseWriter, producer
 // DeleteFrontendNotFoundCode is the HTTP code returned for type DeleteFrontendNotFound
 const DeleteFrontendNotFoundCode int = 404
 
-/*DeleteFrontendNotFound The specified resource was not found
+/*
+DeleteFrontendNotFound The specified resource was not found
 
 swagger:response deleteFrontendNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteFrontendNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*DeleteFrontendDefault General Error
+/*
+DeleteFrontendDefault General Error
 
 swagger:response deleteFrontendDefault
 */

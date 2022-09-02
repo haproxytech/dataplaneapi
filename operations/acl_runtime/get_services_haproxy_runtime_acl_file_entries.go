@@ -44,12 +44,12 @@ func NewGetServicesHaproxyRuntimeACLFileEntries(ctx *middleware.Context, handler
 	return &GetServicesHaproxyRuntimeACLFileEntries{Context: ctx, Handler: handler}
 }
 
-/* GetServicesHaproxyRuntimeACLFileEntries swagger:route GET /services/haproxy/runtime/acl_file_entries ACL Runtime getServicesHaproxyRuntimeAclFileEntries
+/*
+	GetServicesHaproxyRuntimeACLFileEntries swagger:route GET /services/haproxy/runtime/acl_file_entries ACL Runtime getServicesHaproxyRuntimeAclFileEntries
 
-Return an ACL entries
+# Return an ACL entries
 
 Returns an ACL runtime setting using the runtime socket.
-
 */
 type GetServicesHaproxyRuntimeACLFileEntries struct {
 	Context *middleware.Context

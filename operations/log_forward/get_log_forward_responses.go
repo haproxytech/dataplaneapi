@@ -31,7 +31,8 @@ import (
 // GetLogForwardOKCode is the HTTP code returned for type GetLogForwardOK
 const GetLogForwardOKCode int = 200
 
-/*GetLogForwardOK Successful operation
+/*
+GetLogForwardOK Successful operation
 
 swagger:response getLogForwardOK
 */
@@ -97,7 +98,8 @@ func (o *GetLogForwardOK) WriteResponse(rw http.ResponseWriter, producer runtime
 // GetLogForwardNotFoundCode is the HTTP code returned for type GetLogForwardNotFound
 const GetLogForwardNotFoundCode int = 404
 
-/*GetLogForwardNotFound The specified resource was not found
+/*
+GetLogForwardNotFound The specified resource was not found
 
 swagger:response getLogForwardNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetLogForwardNotFound) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetLogForwardDefault General Error
+/*
+GetLogForwardDefault General Error
 
 swagger:response getLogForwardDefault
 */

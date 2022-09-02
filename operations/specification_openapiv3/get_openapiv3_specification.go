@@ -44,12 +44,12 @@ func NewGetOpenapiv3Specification(ctx *middleware.Context, handler GetOpenapiv3S
 	return &GetOpenapiv3Specification{Context: ctx, Handler: handler}
 }
 
-/* GetOpenapiv3Specification swagger:route GET /specification_openapiv3 SpecificationOpenapiv3 getOpenapiv3Specification
+/*
+	GetOpenapiv3Specification swagger:route GET /specification_openapiv3 SpecificationOpenapiv3 getOpenapiv3Specification
 
-Data Plane API v3 Specification
+# Data Plane API v3 Specification
 
 Return Data Plane API OpenAPI v3 specification
-
 */
 type GetOpenapiv3Specification struct {
 	Context *middleware.Context

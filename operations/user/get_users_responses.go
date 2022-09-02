@@ -31,7 +31,8 @@ import (
 // GetUsersOKCode is the HTTP code returned for type GetUsersOK
 const GetUsersOKCode int = 200
 
-/*GetUsersOK Successful operation
+/*
+GetUsersOK Successful operation
 
 swagger:response getUsersOK
 */
@@ -94,7 +95,8 @@ func (o *GetUsersOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 }
 
-/*GetUsersDefault General Error
+/*
+GetUsersDefault General Error
 
 swagger:response getUsersDefault
 */

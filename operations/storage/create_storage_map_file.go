@@ -44,12 +44,12 @@ func NewCreateStorageMapFile(ctx *middleware.Context, handler CreateStorageMapFi
 	return &CreateStorageMapFile{Context: ctx, Handler: handler}
 }
 
-/* CreateStorageMapFile swagger:route POST /services/haproxy/storage/maps Storage createStorageMapFile
+/*
+	CreateStorageMapFile swagger:route POST /services/haproxy/storage/maps Storage createStorageMapFile
 
-Creates a managed storage map file with its entries
+# Creates a managed storage map file with its entries
 
 Creates a managed storage map file with its entries.
-
 */
 type CreateStorageMapFile struct {
 	Context *middleware.Context

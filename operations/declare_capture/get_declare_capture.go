@@ -50,12 +50,12 @@ func NewGetDeclareCapture(ctx *middleware.Context, handler GetDeclareCaptureHand
 	return &GetDeclareCapture{Context: ctx, Handler: handler}
 }
 
-/* GetDeclareCapture swagger:route GET /services/haproxy/configuration/captures/{index} DeclareCapture getDeclareCapture
+/*
+	GetDeclareCapture swagger:route GET /services/haproxy/configuration/captures/{index} DeclareCapture getDeclareCapture
 
-Return one declare capture
+# Return one declare capture
 
 Returns one declare capture configuration by it's index in the specified frontend.
-
 */
 type GetDeclareCapture struct {
 	Context *middleware.Context

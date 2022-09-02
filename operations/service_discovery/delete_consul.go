@@ -44,12 +44,12 @@ func NewDeleteConsul(ctx *middleware.Context, handler DeleteConsulHandler) *Dele
 	return &DeleteConsul{Context: ctx, Handler: handler}
 }
 
-/* DeleteConsul swagger:route DELETE /service_discovery/consul/{id} ServiceDiscovery deleteConsul
+/*
+	DeleteConsul swagger:route DELETE /service_discovery/consul/{id} ServiceDiscovery deleteConsul
 
-Delete a Consul server
+# Delete a Consul server
 
 Deletes a Consul server configuration by it's id.
-
 */
 type DeleteConsul struct {
 	Context *middleware.Context

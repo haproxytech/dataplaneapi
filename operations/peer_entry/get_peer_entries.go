@@ -51,12 +51,12 @@ func NewGetPeerEntries(ctx *middleware.Context, handler GetPeerEntriesHandler) *
 	return &GetPeerEntries{Context: ctx, Handler: handler}
 }
 
-/* GetPeerEntries swagger:route GET /services/haproxy/configuration/peer_entries PeerEntry getPeerEntries
+/*
+	GetPeerEntries swagger:route GET /services/haproxy/configuration/peer_entries PeerEntry getPeerEntries
 
 Return an array of peer_entries
 
 Returns an array of all peer_entries that are configured in specified peer section.
-
 */
 type GetPeerEntries struct {
 	Context *middleware.Context

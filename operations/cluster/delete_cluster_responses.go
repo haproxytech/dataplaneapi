@@ -31,7 +31,8 @@ import (
 // DeleteClusterNoContentCode is the HTTP code returned for type DeleteClusterNoContent
 const DeleteClusterNoContentCode int = 204
 
-/*DeleteClusterNoContent Cluster settings deleted and node moved to single mode
+/*
+DeleteClusterNoContent Cluster settings deleted and node moved to single mode
 
 swagger:response deleteClusterNoContent
 */
@@ -52,7 +53,8 @@ func (o *DeleteClusterNoContent) WriteResponse(rw http.ResponseWriter, producer 
 	rw.WriteHeader(204)
 }
 
-/*DeleteClusterDefault General Error
+/*
+DeleteClusterDefault General Error
 
 swagger:response deleteClusterDefault
 */

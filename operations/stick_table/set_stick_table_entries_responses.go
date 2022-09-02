@@ -31,7 +31,8 @@ import (
 // SetStickTableEntriesNoContentCode is the HTTP code returned for type SetStickTableEntriesNoContent
 const SetStickTableEntriesNoContentCode int = 204
 
-/*SetStickTableEntriesNoContent Successful operation
+/*
+SetStickTableEntriesNoContent Successful operation
 
 swagger:response setStickTableEntriesNoContent
 */
@@ -52,7 +53,8 @@ func (o *SetStickTableEntriesNoContent) WriteResponse(rw http.ResponseWriter, pr
 	rw.WriteHeader(204)
 }
 
-/*SetStickTableEntriesDefault General Error
+/*
+SetStickTableEntriesDefault General Error
 
 swagger:response setStickTableEntriesDefault
 */

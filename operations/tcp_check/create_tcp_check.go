@@ -44,12 +44,12 @@ func NewCreateTCPCheck(ctx *middleware.Context, handler CreateTCPCheckHandler) *
 	return &CreateTCPCheck{Context: ctx, Handler: handler}
 }
 
-/* CreateTCPCheck swagger:route POST /services/haproxy/configuration/tcp_checks TCPCheck createTcpCheck
+/*
+	CreateTCPCheck swagger:route POST /services/haproxy/configuration/tcp_checks TCPCheck createTcpCheck
 
-Add a new TCP check
+# Add a new TCP check
 
 Adds a new TCP check of the specified type in the specified parent.
-
 */
 type CreateTCPCheck struct {
 	Context *middleware.Context

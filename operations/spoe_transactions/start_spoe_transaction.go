@@ -47,12 +47,12 @@ func NewStartSpoeTransaction(ctx *middleware.Context, handler StartSpoeTransacti
 	return &StartSpoeTransaction{Context: ctx, Handler: handler}
 }
 
-/* StartSpoeTransaction swagger:route POST /services/haproxy/spoe_transactions SpoeTransactions startSpoeTransaction
+/*
+	StartSpoeTransaction swagger:route POST /services/haproxy/spoe_transactions SpoeTransactions startSpoeTransaction
 
-Start a new transaction
+# Start a new transaction
 
 Starts a new transaction and returns it's id
-
 */
 type StartSpoeTransaction struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewCreateSite(ctx *middleware.Context, handler CreateSiteHandler) *CreateSi
 	return &CreateSite{Context: ctx, Handler: handler}
 }
 
-/* CreateSite swagger:route POST /services/haproxy/sites Sites createSite
+/*
+	CreateSite swagger:route POST /services/haproxy/sites Sites createSite
 
-Add a site
+# Add a site
 
 Adds a new site to the configuration file.
-
 */
 type CreateSite struct {
 	Context *middleware.Context

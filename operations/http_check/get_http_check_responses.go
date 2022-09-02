@@ -31,7 +31,8 @@ import (
 // GetHTTPCheckOKCode is the HTTP code returned for type GetHTTPCheckOK
 const GetHTTPCheckOKCode int = 200
 
-/*GetHTTPCheckOK Successful operation
+/*
+GetHTTPCheckOK Successful operation
 
 swagger:response getHttpCheckOK
 */
@@ -97,7 +98,8 @@ func (o *GetHTTPCheckOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetHTTPCheckNotFoundCode is the HTTP code returned for type GetHTTPCheckNotFound
 const GetHTTPCheckNotFoundCode int = 404
 
-/*GetHTTPCheckNotFound The specified resource was not found
+/*
+GetHTTPCheckNotFound The specified resource was not found
 
 swagger:response getHttpCheckNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetHTTPCheckNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetHTTPCheckDefault General Error
+/*
+GetHTTPCheckDefault General Error
 
 swagger:response getHttpCheckDefault
 */

@@ -44,12 +44,12 @@ func NewDeleteFrontend(ctx *middleware.Context, handler DeleteFrontendHandler) *
 	return &DeleteFrontend{Context: ctx, Handler: handler}
 }
 
-/* DeleteFrontend swagger:route DELETE /services/haproxy/configuration/frontends/{name} Frontend deleteFrontend
+/*
+	DeleteFrontend swagger:route DELETE /services/haproxy/configuration/frontends/{name} Frontend deleteFrontend
 
-Delete a frontend
+# Delete a frontend
 
 Deletes a frontend from the configuration by it's name.
-
 */
 type DeleteFrontend struct {
 	Context *middleware.Context

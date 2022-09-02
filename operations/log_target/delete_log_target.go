@@ -44,12 +44,12 @@ func NewDeleteLogTarget(ctx *middleware.Context, handler DeleteLogTargetHandler)
 	return &DeleteLogTarget{Context: ctx, Handler: handler}
 }
 
-/* DeleteLogTarget swagger:route DELETE /services/haproxy/configuration/log_targets/{index} LogTarget deleteLogTarget
+/*
+	DeleteLogTarget swagger:route DELETE /services/haproxy/configuration/log_targets/{index} LogTarget deleteLogTarget
 
-Delete a Log Target
+# Delete a Log Target
 
 Deletes a Log Target configuration by it's index from the specified parent.
-
 */
 type DeleteLogTarget struct {
 	Context *middleware.Context

@@ -51,12 +51,12 @@ func NewGetLogTargets(ctx *middleware.Context, handler GetLogTargetsHandler) *Ge
 	return &GetLogTargets{Context: ctx, Handler: handler}
 }
 
-/* GetLogTargets swagger:route GET /services/haproxy/configuration/log_targets LogTarget getLogTargets
+/*
+	GetLogTargets swagger:route GET /services/haproxy/configuration/log_targets LogTarget getLogTargets
 
-Return an array of all Log Targets
+# Return an array of all Log Targets
 
 Returns all Log Targets that are configured in specified parent.
-
 */
 type GetLogTargets struct {
 	Context *middleware.Context

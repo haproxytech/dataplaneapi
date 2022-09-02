@@ -44,12 +44,12 @@ func NewGetStatsEndpoints(ctx *middleware.Context, handler GetStatsEndpointsHand
 	return &GetStatsEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetStatsEndpoints swagger:route GET /services/haproxy/stats Discovery getStatsEndpoints
+/*
+	GetStatsEndpoints swagger:route GET /services/haproxy/stats Discovery getStatsEndpoints
 
-Return list of HAProxy stats endpoints
+# Return list of HAProxy stats endpoints
 
 Returns a list of HAProxy stats endpoints.
-
 */
 type GetStatsEndpoints struct {
 	Context *middleware.Context

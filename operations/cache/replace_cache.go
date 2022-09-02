@@ -44,12 +44,12 @@ func NewReplaceCache(ctx *middleware.Context, handler ReplaceCacheHandler) *Repl
 	return &ReplaceCache{Context: ctx, Handler: handler}
 }
 
-/* ReplaceCache swagger:route PUT /services/haproxy/configuration/caches/{name} Cache replaceCache
+/*
+	ReplaceCache swagger:route PUT /services/haproxy/configuration/caches/{name} Cache replaceCache
 
-Replace a cache
+# Replace a cache
 
 Replaces a cache configuration by it's name.
-
 */
 type ReplaceCache struct {
 	Context *middleware.Context

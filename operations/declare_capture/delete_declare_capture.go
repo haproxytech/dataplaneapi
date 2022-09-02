@@ -44,12 +44,12 @@ func NewDeleteDeclareCapture(ctx *middleware.Context, handler DeleteDeclareCaptu
 	return &DeleteDeclareCapture{Context: ctx, Handler: handler}
 }
 
-/* DeleteDeclareCapture swagger:route DELETE /services/haproxy/configuration/captures/{index} DeclareCapture deleteDeclareCapture
+/*
+	DeleteDeclareCapture swagger:route DELETE /services/haproxy/configuration/captures/{index} DeclareCapture deleteDeclareCapture
 
-Delete a declare capture
+# Delete a declare capture
 
 Deletes a declare capture configuration by it's index in the specified frontend.
-
 */
 type DeleteDeclareCapture struct {
 	Context *middleware.Context

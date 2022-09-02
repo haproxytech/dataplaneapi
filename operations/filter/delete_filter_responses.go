@@ -31,7 +31,8 @@ import (
 // DeleteFilterAcceptedCode is the HTTP code returned for type DeleteFilterAccepted
 const DeleteFilterAcceptedCode int = 202
 
-/*DeleteFilterAccepted Configuration change accepted and reload requested
+/*
+DeleteFilterAccepted Configuration change accepted and reload requested
 
 swagger:response deleteFilterAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteFilterAccepted) WriteResponse(rw http.ResponseWriter, producer ru
 // DeleteFilterNoContentCode is the HTTP code returned for type DeleteFilterNoContent
 const DeleteFilterNoContentCode int = 204
 
-/*DeleteFilterNoContent Filter deleted
+/*
+DeleteFilterNoContent Filter deleted
 
 swagger:response deleteFilterNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteFilterNoContent) WriteResponse(rw http.ResponseWriter, producer r
 // DeleteFilterNotFoundCode is the HTTP code returned for type DeleteFilterNotFound
 const DeleteFilterNotFoundCode int = 404
 
-/*DeleteFilterNotFound The specified resource was not found
+/*
+DeleteFilterNotFound The specified resource was not found
 
 swagger:response deleteFilterNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteFilterNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*DeleteFilterDefault General Error
+/*
+DeleteFilterDefault General Error
 
 swagger:response deleteFilterDefault
 */

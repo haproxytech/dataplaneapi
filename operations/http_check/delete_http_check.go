@@ -44,12 +44,12 @@ func NewDeleteHTTPCheck(ctx *middleware.Context, handler DeleteHTTPCheckHandler)
 	return &DeleteHTTPCheck{Context: ctx, Handler: handler}
 }
 
-/* DeleteHTTPCheck swagger:route DELETE /services/haproxy/configuration/http_checks/{index} HTTPCheck deleteHttpCheck
+/*
+	DeleteHTTPCheck swagger:route DELETE /services/haproxy/configuration/http_checks/{index} HTTPCheck deleteHttpCheck
 
-Delete a HTTP check
+# Delete a HTTP check
 
 Deletes a HTTP check configuration by it's index from the specified parent.
-
 */
 type DeleteHTTPCheck struct {
 	Context *middleware.Context

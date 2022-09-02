@@ -31,7 +31,8 @@ import (
 // InitiateCertificateRefreshOKCode is the HTTP code returned for type InitiateCertificateRefreshOK
 const InitiateCertificateRefreshOKCode int = 200
 
-/*InitiateCertificateRefreshOK refresh activated
+/*
+InitiateCertificateRefreshOK refresh activated
 
 swagger:response initiateCertificateRefreshOK
 */
@@ -55,7 +56,8 @@ func (o *InitiateCertificateRefreshOK) WriteResponse(rw http.ResponseWriter, pro
 // InitiateCertificateRefreshForbiddenCode is the HTTP code returned for type InitiateCertificateRefreshForbidden
 const InitiateCertificateRefreshForbiddenCode int = 403
 
-/*InitiateCertificateRefreshForbidden refresh not possible
+/*
+InitiateCertificateRefreshForbidden refresh not possible
 
 swagger:response initiateCertificateRefreshForbidden
 */
@@ -76,7 +78,8 @@ func (o *InitiateCertificateRefreshForbidden) WriteResponse(rw http.ResponseWrit
 	rw.WriteHeader(403)
 }
 
-/*InitiateCertificateRefreshDefault General Error
+/*
+InitiateCertificateRefreshDefault General Error
 
 swagger:response initiateCertificateRefreshDefault
 */

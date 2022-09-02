@@ -44,12 +44,12 @@ func NewCreateResolver(ctx *middleware.Context, handler CreateResolverHandler) *
 	return &CreateResolver{Context: ctx, Handler: handler}
 }
 
-/* CreateResolver swagger:route POST /services/haproxy/configuration/resolvers Resolver createResolver
+/*
+	CreateResolver swagger:route POST /services/haproxy/configuration/resolvers Resolver createResolver
 
-Add a resolver
+# Add a resolver
 
 Adds a new resolver section to the configuration file.
-
 */
 type CreateResolver struct {
 	Context *middleware.Context

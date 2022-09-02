@@ -44,12 +44,12 @@ func NewCreateACL(ctx *middleware.Context, handler CreateACLHandler) *CreateACL 
 	return &CreateACL{Context: ctx, Handler: handler}
 }
 
-/* CreateACL swagger:route POST /services/haproxy/configuration/acls ACL createAcl
+/*
+	CreateACL swagger:route POST /services/haproxy/configuration/acls ACL createAcl
 
-Add a new ACL line
+# Add a new ACL line
 
 Adds a new ACL line of the specified type in the specified parent.
-
 */
 type CreateACL struct {
 	Context *middleware.Context

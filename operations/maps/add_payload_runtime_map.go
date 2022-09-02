@@ -44,12 +44,12 @@ func NewAddPayloadRuntimeMap(ctx *middleware.Context, handler AddPayloadRuntimeM
 	return &AddPayloadRuntimeMap{Context: ctx, Handler: handler}
 }
 
-/* AddPayloadRuntimeMap swagger:route PUT /services/haproxy/runtime/maps/{name} Maps addPayloadRuntimeMap
+/*
+	AddPayloadRuntimeMap swagger:route PUT /services/haproxy/runtime/maps/{name} Maps addPayloadRuntimeMap
 
-Add a new map payload
+# Add a new map payload
 
 Adds a new map payload.
-
 */
 type AddPayloadRuntimeMap struct {
 	Context *middleware.Context

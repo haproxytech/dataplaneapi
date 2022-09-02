@@ -31,7 +31,8 @@ import (
 // GetReloadOKCode is the HTTP code returned for type GetReloadOK
 const GetReloadOKCode int = 200
 
-/*GetReloadOK Successful operation
+/*
+GetReloadOK Successful operation
 
 swagger:response getReloadOK
 */
@@ -75,7 +76,8 @@ func (o *GetReloadOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 // GetReloadNotFoundCode is the HTTP code returned for type GetReloadNotFound
 const GetReloadNotFoundCode int = 404
 
-/*GetReloadNotFound The specified resource was not found
+/*
+GetReloadNotFound The specified resource was not found
 
 swagger:response getReloadNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetReloadNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetReloadDefault General Error
+/*
+GetReloadDefault General Error
 
 swagger:response getReloadDefault
 */

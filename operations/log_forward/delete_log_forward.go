@@ -44,12 +44,12 @@ func NewDeleteLogForward(ctx *middleware.Context, handler DeleteLogForwardHandle
 	return &DeleteLogForward{Context: ctx, Handler: handler}
 }
 
-/* DeleteLogForward swagger:route DELETE /services/haproxy/configuration/log_forwards/{name} LogForward deleteLogForward
+/*
+	DeleteLogForward swagger:route DELETE /services/haproxy/configuration/log_forwards/{name} LogForward deleteLogForward
 
-Delete a log forward
+# Delete a log forward
 
 Deletes a log forward from the configuration by it's name.
-
 */
 type DeleteLogForward struct {
 	Context *middleware.Context

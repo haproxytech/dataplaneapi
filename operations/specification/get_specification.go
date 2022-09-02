@@ -44,12 +44,12 @@ func NewGetSpecification(ctx *middleware.Context, handler GetSpecificationHandle
 	return &GetSpecification{Context: ctx, Handler: handler}
 }
 
-/* GetSpecification swagger:route GET /specification Specification getSpecification
+/*
+	GetSpecification swagger:route GET /specification Specification getSpecification
 
-Data Plane API Specification
+# Data Plane API Specification
 
 Return Data Plane API OpenAPI specification
-
 */
 type GetSpecification struct {
 	Context *middleware.Context

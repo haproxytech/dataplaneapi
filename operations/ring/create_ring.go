@@ -44,12 +44,12 @@ func NewCreateRing(ctx *middleware.Context, handler CreateRingHandler) *CreateRi
 	return &CreateRing{Context: ctx, Handler: handler}
 }
 
-/* CreateRing swagger:route POST /services/haproxy/configuration/rings Ring createRing
+/*
+	CreateRing swagger:route POST /services/haproxy/configuration/rings Ring createRing
 
-Add a ring
+# Add a ring
 
 Adds a new ring to the configuration file.
-
 */
 type CreateRing struct {
 	Context *middleware.Context

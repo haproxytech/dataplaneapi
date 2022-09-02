@@ -31,7 +31,8 @@ import (
 // ReplaceConsulOKCode is the HTTP code returned for type ReplaceConsulOK
 const ReplaceConsulOKCode int = 200
 
-/*ReplaceConsulOK Consul server replaced
+/*
+ReplaceConsulOK Consul server replaced
 
 swagger:response replaceConsulOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceConsulOK) WriteResponse(rw http.ResponseWriter, producer runtime
 // ReplaceConsulBadRequestCode is the HTTP code returned for type ReplaceConsulBadRequest
 const ReplaceConsulBadRequestCode int = 400
 
-/*ReplaceConsulBadRequest Bad request
+/*
+ReplaceConsulBadRequest Bad request
 
 swagger:response replaceConsulBadRequest
 */
@@ -141,7 +143,8 @@ func (o *ReplaceConsulBadRequest) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceConsulNotFoundCode is the HTTP code returned for type ReplaceConsulNotFound
 const ReplaceConsulNotFoundCode int = 404
 
-/*ReplaceConsulNotFound The specified resource was not found
+/*
+ReplaceConsulNotFound The specified resource was not found
 
 swagger:response replaceConsulNotFound
 */
@@ -204,7 +207,8 @@ func (o *ReplaceConsulNotFound) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*ReplaceConsulDefault General Error
+/*
+ReplaceConsulDefault General Error
 
 swagger:response replaceConsulDefault
 */

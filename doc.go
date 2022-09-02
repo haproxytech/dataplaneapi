@@ -16,24 +16,24 @@
 
 // Package dataplaneapi HAProxy Data Plane API
 //
-//  API for editing and managing haproxy instances. Provides process information, configuration management,
-//  haproxy stats and logs.
+//	API for editing and managing haproxy instances. Provides process information, configuration management,
+//	haproxy stats and logs.
 //
-//  Schemes:
-//    http
-//  Host: localhost
-//  BasePath: /v2
-//  Version: 2.6
-//  Contact: HAProxy Support<support@haproxy.com> https://my.haproxy.com/portal/cust/login
+//	Schemes:
+//	  http
+//	Host: localhost
+//	BasePath: /v2
+//	Version: 2.6
+//	Contact: HAProxy Support<support@haproxy.com> https://my.haproxy.com/portal/cust/login
 //
-//  Consumes:
-//    - application/json
-//    - multipart/form-data
-//    - text/plain
+//	Consumes:
+//	  - application/json
+//	  - multipart/form-data
+//	  - text/plain
 //
-//  Produces:
-//    - application/octet-stream
-//    - application/json
+//	Produces:
+//	  - application/octet-stream
+//	  - application/json
 //
 // swagger:meta
 package dataplaneapi

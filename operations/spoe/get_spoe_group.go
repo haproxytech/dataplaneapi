@@ -51,12 +51,12 @@ func NewGetSpoeGroup(ctx *middleware.Context, handler GetSpoeGroupHandler) *GetS
 	return &GetSpoeGroup{Context: ctx, Handler: handler}
 }
 
-/* GetSpoeGroup swagger:route GET /services/haproxy/spoe/spoe_groups/{name} Spoe getSpoeGroup
+/*
+	GetSpoeGroup swagger:route GET /services/haproxy/spoe/spoe_groups/{name} Spoe getSpoeGroup
 
-Return a SPOE groups
+# Return a SPOE groups
 
 Returns one SPOE groups configuration in one SPOE scope.
-
 */
 type GetSpoeGroup struct {
 	Context *middleware.Context

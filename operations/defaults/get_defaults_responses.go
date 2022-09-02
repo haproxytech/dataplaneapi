@@ -31,7 +31,8 @@ import (
 // GetDefaultsOKCode is the HTTP code returned for type GetDefaultsOK
 const GetDefaultsOKCode int = 200
 
-/*GetDefaultsOK Successful operation
+/*
+GetDefaultsOK Successful operation
 
 swagger:response getDefaultsOK
 */
@@ -94,7 +95,8 @@ func (o *GetDefaultsOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 }
 
-/*GetDefaultsDefault General Error
+/*
+GetDefaultsDefault General Error
 
 swagger:response getDefaultsDefault
 */

@@ -31,7 +31,8 @@ import (
 // GetStickTableEntriesOKCode is the HTTP code returned for type GetStickTableEntriesOK
 const GetStickTableEntriesOKCode int = 200
 
-/*GetStickTableEntriesOK Successful operation
+/*
+GetStickTableEntriesOK Successful operation
 
 swagger:response getStickTableEntriesOK
 */
@@ -75,7 +76,8 @@ func (o *GetStickTableEntriesOK) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*GetStickTableEntriesDefault General Error
+/*
+GetStickTableEntriesDefault General Error
 
 swagger:response getStickTableEntriesDefault
 */

@@ -31,7 +31,8 @@ import (
 // GetUserlistOKCode is the HTTP code returned for type GetUserlistOK
 const GetUserlistOKCode int = 200
 
-/*GetUserlistOK Successful operation
+/*
+GetUserlistOK Successful operation
 
 swagger:response getUserlistOK
 */
@@ -97,7 +98,8 @@ func (o *GetUserlistOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // GetUserlistNotFoundCode is the HTTP code returned for type GetUserlistNotFound
 const GetUserlistNotFoundCode int = 404
 
-/*GetUserlistNotFound The specified resource already exists
+/*
+GetUserlistNotFound The specified resource already exists
 
 swagger:response getUserlistNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetUserlistNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*GetUserlistDefault General Error
+/*
+GetUserlistDefault General Error
 
 swagger:response getUserlistDefault
 */

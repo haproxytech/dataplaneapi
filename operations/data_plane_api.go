@@ -910,7 +910,8 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 	}
 }
 
-/*DataPlaneAPI API for editing and managing haproxy instances. Provides process information, configuration management,
+/*
+DataPlaneAPI API for editing and managing haproxy instances. Provides process information, configuration management,
 haproxy stats and logs.
 */
 type DataPlaneAPI struct {

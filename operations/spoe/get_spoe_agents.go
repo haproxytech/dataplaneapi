@@ -51,12 +51,12 @@ func NewGetSpoeAgents(ctx *middleware.Context, handler GetSpoeAgentsHandler) *Ge
 	return &GetSpoeAgents{Context: ctx, Handler: handler}
 }
 
-/* GetSpoeAgents swagger:route GET /services/haproxy/spoe/spoe_agents Spoe getSpoeAgents
+/*
+	GetSpoeAgents swagger:route GET /services/haproxy/spoe/spoe_agents Spoe getSpoeAgents
 
-Return an array of spoe agents in one scope
+# Return an array of spoe agents in one scope
 
 Returns an array of all configured spoe agents in one scope.
-
 */
 type GetSpoeAgents struct {
 	Context *middleware.Context

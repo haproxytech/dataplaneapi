@@ -44,12 +44,12 @@ func NewCreateCache(ctx *middleware.Context, handler CreateCacheHandler) *Create
 	return &CreateCache{Context: ctx, Handler: handler}
 }
 
-/* CreateCache swagger:route POST /services/haproxy/configuration/caches Cache createCache
+/*
+	CreateCache swagger:route POST /services/haproxy/configuration/caches Cache createCache
 
-Add a cache
+# Add a cache
 
 Adds a new cache section to the configuration file.
-
 */
 type CreateCache struct {
 	Context *middleware.Context

@@ -44,12 +44,12 @@ func NewDeleteTCPCheck(ctx *middleware.Context, handler DeleteTCPCheckHandler) *
 	return &DeleteTCPCheck{Context: ctx, Handler: handler}
 }
 
-/* DeleteTCPCheck swagger:route DELETE /services/haproxy/configuration/tcp_checks/{index} TCPCheck deleteTcpCheck
+/*
+	DeleteTCPCheck swagger:route DELETE /services/haproxy/configuration/tcp_checks/{index} TCPCheck deleteTcpCheck
 
-Delete a TCP check
+# Delete a TCP check
 
 Deletes a TCP check configuration by it's index from the specified parent.
-
 */
 type DeleteTCPCheck struct {
 	Context *middleware.Context

@@ -31,7 +31,8 @@ import (
 // CreateCacheCreatedCode is the HTTP code returned for type CreateCacheCreated
 const CreateCacheCreatedCode int = 201
 
-/*CreateCacheCreated Cache created
+/*
+CreateCacheCreated Cache created
 
 swagger:response createCacheCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateCacheCreated) WriteResponse(rw http.ResponseWriter, producer runt
 // CreateCacheAcceptedCode is the HTTP code returned for type CreateCacheAccepted
 const CreateCacheAcceptedCode int = 202
 
-/*CreateCacheAccepted Configuration change accepted and reload requested
+/*
+CreateCacheAccepted Configuration change accepted and reload requested
 
 swagger:response createCacheAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateCacheAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // CreateCacheBadRequestCode is the HTTP code returned for type CreateCacheBadRequest
 const CreateCacheBadRequestCode int = 400
 
-/*CreateCacheBadRequest Bad request
+/*
+CreateCacheBadRequest Bad request
 
 swagger:response createCacheBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateCacheBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 // CreateCacheConflictCode is the HTTP code returned for type CreateCacheConflict
 const CreateCacheConflictCode int = 409
 
-/*CreateCacheConflict The specified resource already exists
+/*
+CreateCacheConflict The specified resource already exists
 
 swagger:response createCacheConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateCacheConflict) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*CreateCacheDefault General Error
+/*
+CreateCacheDefault General Error
 
 swagger:response createCacheDefault
 */

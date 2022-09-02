@@ -50,12 +50,12 @@ func NewGetGlobal(ctx *middleware.Context, handler GetGlobalHandler) *GetGlobal 
 	return &GetGlobal{Context: ctx, Handler: handler}
 }
 
-/* GetGlobal swagger:route GET /services/haproxy/configuration/global Global getGlobal
+/*
+	GetGlobal swagger:route GET /services/haproxy/configuration/global Global getGlobal
 
-Return a global part of configuration
+# Return a global part of configuration
 
 Returns global part of configuration.
-
 */
 type GetGlobal struct {
 	Context *middleware.Context

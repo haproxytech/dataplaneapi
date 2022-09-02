@@ -31,7 +31,8 @@ import (
 // CreateUserlistCreatedCode is the HTTP code returned for type CreateUserlistCreated
 const CreateUserlistCreatedCode int = 201
 
-/*CreateUserlistCreated Userlist created
+/*
+CreateUserlistCreated Userlist created
 
 swagger:response createUserlistCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateUserlistCreated) WriteResponse(rw http.ResponseWriter, producer r
 // CreateUserlistAcceptedCode is the HTTP code returned for type CreateUserlistAccepted
 const CreateUserlistAcceptedCode int = 202
 
-/*CreateUserlistAccepted Configuration change accepted and reload requested
+/*
+CreateUserlistAccepted Configuration change accepted and reload requested
 
 swagger:response createUserlistAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateUserlistAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // CreateUserlistBadRequestCode is the HTTP code returned for type CreateUserlistBadRequest
 const CreateUserlistBadRequestCode int = 400
 
-/*CreateUserlistBadRequest Bad request
+/*
+CreateUserlistBadRequest Bad request
 
 swagger:response createUserlistBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateUserlistBadRequest) WriteResponse(rw http.ResponseWriter, produce
 // CreateUserlistConflictCode is the HTTP code returned for type CreateUserlistConflict
 const CreateUserlistConflictCode int = 409
 
-/*CreateUserlistConflict The specified resource already exists
+/*
+CreateUserlistConflict The specified resource already exists
 
 swagger:response createUserlistConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateUserlistConflict) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*CreateUserlistDefault General Error
+/*
+CreateUserlistDefault General Error
 
 swagger:response createUserlistDefault
 */

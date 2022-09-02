@@ -31,7 +31,8 @@ import (
 // ReplaceLogForwardOKCode is the HTTP code returned for type ReplaceLogForwardOK
 const ReplaceLogForwardOKCode int = 200
 
-/*ReplaceLogForwardOK Log Forward replaced
+/*
+ReplaceLogForwardOK Log Forward replaced
 
 swagger:response replaceLogForwardOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceLogForwardOK) WriteResponse(rw http.ResponseWriter, producer run
 // ReplaceLogForwardAcceptedCode is the HTTP code returned for type ReplaceLogForwardAccepted
 const ReplaceLogForwardAcceptedCode int = 202
 
-/*ReplaceLogForwardAccepted Configuration change accepted and reload requested
+/*
+ReplaceLogForwardAccepted Configuration change accepted and reload requested
 
 swagger:response replaceLogForwardAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceLogForwardAccepted) WriteResponse(rw http.ResponseWriter, produc
 // ReplaceLogForwardBadRequestCode is the HTTP code returned for type ReplaceLogForwardBadRequest
 const ReplaceLogForwardBadRequestCode int = 400
 
-/*ReplaceLogForwardBadRequest Bad request
+/*
+ReplaceLogForwardBadRequest Bad request
 
 swagger:response replaceLogForwardBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceLogForwardBadRequest) WriteResponse(rw http.ResponseWriter, prod
 // ReplaceLogForwardNotFoundCode is the HTTP code returned for type ReplaceLogForwardNotFound
 const ReplaceLogForwardNotFoundCode int = 404
 
-/*ReplaceLogForwardNotFound The specified resource was not found
+/*
+ReplaceLogForwardNotFound The specified resource was not found
 
 swagger:response replaceLogForwardNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceLogForwardNotFound) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*ReplaceLogForwardDefault General Error
+/*
+ReplaceLogForwardDefault General Error
 
 swagger:response replaceLogForwardDefault
 */

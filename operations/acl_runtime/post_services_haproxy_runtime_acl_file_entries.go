@@ -44,12 +44,12 @@ func NewPostServicesHaproxyRuntimeACLFileEntries(ctx *middleware.Context, handle
 	return &PostServicesHaproxyRuntimeACLFileEntries{Context: ctx, Handler: handler}
 }
 
-/* PostServicesHaproxyRuntimeACLFileEntries swagger:route POST /services/haproxy/runtime/acl_file_entries ACL Runtime postServicesHaproxyRuntimeAclFileEntries
+/*
+	PostServicesHaproxyRuntimeACLFileEntries swagger:route POST /services/haproxy/runtime/acl_file_entries ACL Runtime postServicesHaproxyRuntimeAclFileEntries
 
-Add entry to an ACL file
+# Add entry to an ACL file
 
 Adds an entry into the ACL file using the runtime socket.
-
 */
 type PostServicesHaproxyRuntimeACLFileEntries struct {
 	Context *middleware.Context

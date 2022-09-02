@@ -51,12 +51,12 @@ func NewGetConsuls(ctx *middleware.Context, handler GetConsulsHandler) *GetConsu
 	return &GetConsuls{Context: ctx, Handler: handler}
 }
 
-/* GetConsuls swagger:route GET /service_discovery/consul ServiceDiscovery getConsuls
+/*
+	GetConsuls swagger:route GET /service_discovery/consul ServiceDiscovery getConsuls
 
-Return an array of all configured Consul servers
+# Return an array of all configured Consul servers
 
 Returns all configured Consul servers.
-
 */
 type GetConsuls struct {
 	Context *middleware.Context

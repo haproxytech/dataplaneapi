@@ -50,12 +50,12 @@ func NewGetResolver(ctx *middleware.Context, handler GetResolverHandler) *GetRes
 	return &GetResolver{Context: ctx, Handler: handler}
 }
 
-/* GetResolver swagger:route GET /services/haproxy/configuration/resolvers/{name} Resolver getResolver
+/*
+	GetResolver swagger:route GET /services/haproxy/configuration/resolvers/{name} Resolver getResolver
 
-Return a resolver
+# Return a resolver
 
 Returns one resolver section configuration by it's name.
-
 */
 type GetResolver struct {
 	Context *middleware.Context

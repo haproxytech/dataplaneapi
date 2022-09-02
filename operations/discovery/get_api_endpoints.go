@@ -44,12 +44,12 @@ func NewGetAPIEndpoints(ctx *middleware.Context, handler GetAPIEndpointsHandler)
 	return &GetAPIEndpoints{Context: ctx, Handler: handler}
 }
 
-/* GetAPIEndpoints swagger:route GET / Discovery getApiEndpoints
+/*
+	GetAPIEndpoints swagger:route GET / Discovery getApiEndpoints
 
-Return list of root endpoints
+# Return list of root endpoints
 
 Returns a list of root endpoints.
-
 */
 type GetAPIEndpoints struct {
 	Context *middleware.Context

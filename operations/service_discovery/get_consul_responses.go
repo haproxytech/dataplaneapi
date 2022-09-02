@@ -31,7 +31,8 @@ import (
 // GetConsulOKCode is the HTTP code returned for type GetConsulOK
 const GetConsulOKCode int = 200
 
-/*GetConsulOK Successful operation
+/*
+GetConsulOK Successful operation
 
 swagger:response getConsulOK
 */
@@ -75,7 +76,8 @@ func (o *GetConsulOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 // GetConsulNotFoundCode is the HTTP code returned for type GetConsulNotFound
 const GetConsulNotFoundCode int = 404
 
-/*GetConsulNotFound The specified resource was not found
+/*
+GetConsulNotFound The specified resource was not found
 
 swagger:response getConsulNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetConsulNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetConsulDefault General Error
+/*
+GetConsulDefault General Error
 
 swagger:response getConsulDefault
 */

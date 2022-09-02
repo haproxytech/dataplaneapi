@@ -44,12 +44,12 @@ func NewGetSpoeConfigurationVersion(ctx *middleware.Context, handler GetSpoeConf
 	return &GetSpoeConfigurationVersion{Context: ctx, Handler: handler}
 }
 
-/* GetSpoeConfigurationVersion swagger:route GET /services/haproxy/spoe/version Spoe getSpoeConfigurationVersion
+/*
+	GetSpoeConfigurationVersion swagger:route GET /services/haproxy/spoe/version Spoe getSpoeConfigurationVersion
 
-Return a SPOE configuration version
+# Return a SPOE configuration version
 
 Returns SPOE configuration version.
-
 */
 type GetSpoeConfigurationVersion struct {
 	Context *middleware.Context
