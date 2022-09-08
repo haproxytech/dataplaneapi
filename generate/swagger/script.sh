@@ -115,7 +115,8 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=Group \
     --tags=MailerEntry \
     --tags=Mailers \
-    -r $SPEC_DIR/copyright.txt
+    -r $SPEC_DIR/copyright.txt \
+    --template-dir generate/swagger/templates
 
 echo " ---> removing doc.go"
 rm doc.go || echo "doc.go does not exists"
