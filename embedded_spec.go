@@ -14697,6 +14697,13 @@ func init() {
             "disabled"
           ]
         },
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -17161,6 +17168,13 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
         },
         "forwardfor": {
           "x-dependency": {
@@ -47711,6 +47725,13 @@ func init() {
             "disabled"
           ]
         },
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -50142,6 +50163,13 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
         },
         "forwardfor": {
           "x-dependency": {
