@@ -119,11 +119,6 @@ func (o *ReplaceFilterParams) BindRequest(r *http.Request, route *middleware.Mat
 				res = append(res, err)
 			}
 
-			ctx := validate.WithOperationRequest(r.Context())
-			if err := body.ContextValidate(ctx, route.Formats); err != nil {
-				res = append(res, err)
-			}
-
 			if len(res) == 0 {
 				o.Data = &body
 			}

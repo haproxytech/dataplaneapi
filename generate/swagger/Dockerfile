@@ -5,6 +5,7 @@ WORKDIR /data
 ARG UID
 ARG GID
 COPY script.sh /generate/swagger/script.sh
+COPY templates /generate/swagger/templates
 VOLUME ["/data"]
 
 RUN apk add bash jq && addgroup -g "$GID" -S docker && adduser -u "$UID" -S user -G docker && \
