@@ -178,7 +178,6 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	log.WithFields(logFields, log.DebugLevel, "Reload started")
 	t := time.Now()
 	output, err := execCmd(ra.reloadCmd)
-	log.WithFieldsf(logFields, log.DebugLevel, "Reload finished in %s", time.Since(t))
 	if err != nil {
 		reloadFailedError := err
 		// if failed, return to last known good file and restart and return the original file
@@ -188,7 +187,6 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 		}
 		defer func() {
 			// nolint:errcheck
-			copyFile(ra.configFile+".bck", ra.configFile)
 			os.Remove(ra.configFile + ".bck")
 		}()
 		if err := copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
@@ -201,6 +199,7 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 		log.WithFields(logFields, log.DebugLevel, "HAProxy restarted with last known good config")
 		return output, reloadFailedError
 	}
+	log.WithFieldsf(logFields, log.DebugLevel, "Reload finished in %s", time.Since(t))
 	log.WithFields(logFields, log.DebugLevel, "Reload successful")
 	// if success, replace last known good file
 	// nolint:errcheck
