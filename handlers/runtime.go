@@ -230,6 +230,8 @@ func compareObjects(data, ondisk interface{}) []string {
 			if dataField.String() != ondiskField.String() {
 				diff = append(diff, fName)
 			}
+		case reflect.Struct:
+			diff = append(diff, compareObjects(dataField.Interface(), ondiskField.Interface())...)
 		}
 	}
 	return diff
