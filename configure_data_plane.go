@@ -648,12 +648,21 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		ReloadAgent: ra,
 		Context:     ctx,
 	})
+	// Consul Handlers.
 	api.ServiceDiscoveryCreateConsulHandler = &handlers.CreateConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
 	api.ServiceDiscoveryDeleteConsulHandler = &handlers.DeleteConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
 	api.ServiceDiscoveryGetConsulHandler = &handlers.GetConsulHandlerImpl{Discovery: discovery}
 	api.ServiceDiscoveryGetConsulsHandler = &handlers.GetConsulsHandlerImpl{Discovery: discovery}
 	api.ServiceDiscoveryReplaceConsulHandler = &handlers.ReplaceConsulHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveConsuls}
 
+	// Nomad Handlers.
+	api.ServiceDiscoveryCreateNomadHandler = &handlers.CreateNomadHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveNomads}
+	api.ServiceDiscoveryDeleteNomadHandler = &handlers.DeleteNomadHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveNomads}
+	api.ServiceDiscoveryGetNomadHandler = &handlers.GetNomadHandlerImpl{Discovery: discovery}
+	api.ServiceDiscoveryGetNomadsHandler = &handlers.GetNomadsHandlerImpl{Discovery: discovery}
+	api.ServiceDiscoveryReplaceNomadHandler = &handlers.ReplaceNomadHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveNomads}
+
+	// AWS Handlers.
 	api.ServiceDiscoveryCreateAWSRegionHandler = &handlers.CreateAWSHandlerImpl{Discovery: discovery, PersistCallback: cfg.SaveAWS}
 	api.ServiceDiscoveryGetAWSRegionHandler = &handlers.GetAWSRegionHandlerImpl{Discovery: discovery}
 	api.ServiceDiscoveryGetAWSRegionsHandler = &handlers.GetAWSRegionsHandlerImpl{Discovery: discovery}
@@ -674,6 +683,21 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 	}
 	_ = cfg.SaveConsuls(cfg.ServiceDiscovery.Consuls)
+
+	// Create stored nomad instances.
+	for _, data := range cfg.ServiceDiscovery.Nomads {
+		var errSD error
+		if data.ID == nil || len(*data.ID) == 0 {
+			data.ID = service_discovery.NewServiceDiscoveryUUID()
+		}
+		if errSD = service_discovery.ValidateNomadData(data, true); errSD != nil {
+			log.Fatalf("Error validating Nomad instance: " + errSD.Error())
+		}
+		if errSD = discovery.AddNode("nomad", *data.ID, data); errSD != nil {
+			log.Warning("Error creating nomad instance: " + errSD.Error())
+		}
+	}
+	_ = cfg.SaveNomads(cfg.ServiceDiscovery.Nomads)
 
 	// create stored AWS instances
 	for _, data := range cfg.ServiceDiscovery.AWSRegions {

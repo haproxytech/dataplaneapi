@@ -212,6 +212,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		NameserverCreateNameserverHandler: nameserver.CreateNameserverHandlerFunc(func(params nameserver.CreateNameserverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.CreateNameserver has not yet been implemented")
 		}),
+		ServiceDiscoveryCreateNomadHandler: service_discovery.CreateNomadHandlerFunc(func(params service_discovery.CreateNomadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.CreateNomad has not yet been implemented")
+		}),
 		PeerCreatePeerHandler: peer.CreatePeerHandlerFunc(func(params peer.CreatePeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer.CreatePeer has not yet been implemented")
 		}),
@@ -343,6 +346,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		NameserverDeleteNameserverHandler: nameserver.DeleteNameserverHandlerFunc(func(params nameserver.DeleteNameserverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.DeleteNameserver has not yet been implemented")
+		}),
+		ServiceDiscoveryDeleteNomadHandler: service_discovery.DeleteNomadHandlerFunc(func(params service_discovery.DeleteNomadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.DeleteNomad has not yet been implemented")
 		}),
 		PeerDeletePeerHandler: peer.DeletePeerHandlerFunc(func(params peer.DeletePeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer.DeletePeer has not yet been implemented")
@@ -598,6 +604,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		NameserverGetNameserversHandler: nameserver.GetNameserversHandlerFunc(func(params nameserver.GetNameserversParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.GetNameservers has not yet been implemented")
+		}),
+		ServiceDiscoveryGetNomadHandler: service_discovery.GetNomadHandlerFunc(func(params service_discovery.GetNomadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetNomad has not yet been implemented")
+		}),
+		ServiceDiscoveryGetNomadsHandler: service_discovery.GetNomadsHandlerFunc(func(params service_discovery.GetNomadsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.GetNomads has not yet been implemented")
 		}),
 		MapsGetOneRuntimeMapHandler: maps.GetOneRuntimeMapHandlerFunc(func(params maps.GetOneRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetOneRuntimeMap has not yet been implemented")
@@ -860,6 +872,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		NameserverReplaceNameserverHandler: nameserver.ReplaceNameserverHandlerFunc(func(params nameserver.ReplaceNameserverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation nameserver.ReplaceNameserver has not yet been implemented")
 		}),
+		ServiceDiscoveryReplaceNomadHandler: service_discovery.ReplaceNomadHandlerFunc(func(params service_discovery.ReplaceNomadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation service_discovery.ReplaceNomad has not yet been implemented")
+		}),
 		PeerEntryReplacePeerEntryHandler: peer_entry.ReplacePeerEntryHandlerFunc(func(params peer_entry.ReplacePeerEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer_entry.ReplacePeerEntry has not yet been implemented")
 		}),
@@ -1060,6 +1075,8 @@ type DataPlaneAPI struct {
 	MailersCreateMailersSectionHandler mailers.CreateMailersSectionHandler
 	// NameserverCreateNameserverHandler sets the operation handler for the create nameserver operation
 	NameserverCreateNameserverHandler nameserver.CreateNameserverHandler
+	// ServiceDiscoveryCreateNomadHandler sets the operation handler for the create nomad operation
+	ServiceDiscoveryCreateNomadHandler service_discovery.CreateNomadHandler
 	// PeerCreatePeerHandler sets the operation handler for the create peer operation
 	PeerCreatePeerHandler peer.CreatePeerHandler
 	// PeerEntryCreatePeerEntryHandler sets the operation handler for the create peer entry operation
@@ -1148,6 +1165,8 @@ type DataPlaneAPI struct {
 	MailersDeleteMailersSectionHandler mailers.DeleteMailersSectionHandler
 	// NameserverDeleteNameserverHandler sets the operation handler for the delete nameserver operation
 	NameserverDeleteNameserverHandler nameserver.DeleteNameserverHandler
+	// ServiceDiscoveryDeleteNomadHandler sets the operation handler for the delete nomad operation
+	ServiceDiscoveryDeleteNomadHandler service_discovery.DeleteNomadHandler
 	// PeerDeletePeerHandler sets the operation handler for the delete peer operation
 	PeerDeletePeerHandler peer.DeletePeerHandler
 	// PeerEntryDeletePeerEntryHandler sets the operation handler for the delete peer entry operation
@@ -1318,6 +1337,10 @@ type DataPlaneAPI struct {
 	NameserverGetNameserverHandler nameserver.GetNameserverHandler
 	// NameserverGetNameserversHandler sets the operation handler for the get nameservers operation
 	NameserverGetNameserversHandler nameserver.GetNameserversHandler
+	// ServiceDiscoveryGetNomadHandler sets the operation handler for the get nomad operation
+	ServiceDiscoveryGetNomadHandler service_discovery.GetNomadHandler
+	// ServiceDiscoveryGetNomadsHandler sets the operation handler for the get nomads operation
+	ServiceDiscoveryGetNomadsHandler service_discovery.GetNomadsHandler
 	// MapsGetOneRuntimeMapHandler sets the operation handler for the get one runtime map operation
 	MapsGetOneRuntimeMapHandler maps.GetOneRuntimeMapHandler
 	// SpoeGetOneSpoeFileHandler sets the operation handler for the get one spoe file operation
@@ -1492,6 +1515,8 @@ type DataPlaneAPI struct {
 	MailerEntryReplaceMailerEntryHandler mailer_entry.ReplaceMailerEntryHandler
 	// NameserverReplaceNameserverHandler sets the operation handler for the replace nameserver operation
 	NameserverReplaceNameserverHandler nameserver.ReplaceNameserverHandler
+	// ServiceDiscoveryReplaceNomadHandler sets the operation handler for the replace nomad operation
+	ServiceDiscoveryReplaceNomadHandler service_discovery.ReplaceNomadHandler
 	// PeerEntryReplacePeerEntryHandler sets the operation handler for the replace peer entry operation
 	PeerEntryReplacePeerEntryHandler peer_entry.ReplacePeerEntryHandler
 	// ResolverReplaceResolverHandler sets the operation handler for the replace resolver operation
@@ -1729,6 +1754,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.NameserverCreateNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.CreateNameserverHandler")
 	}
+	if o.ServiceDiscoveryCreateNomadHandler == nil {
+		unregistered = append(unregistered, "service_discovery.CreateNomadHandler")
+	}
 	if o.PeerCreatePeerHandler == nil {
 		unregistered = append(unregistered, "peer.CreatePeerHandler")
 	}
@@ -1860,6 +1888,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.NameserverDeleteNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.DeleteNameserverHandler")
+	}
+	if o.ServiceDiscoveryDeleteNomadHandler == nil {
+		unregistered = append(unregistered, "service_discovery.DeleteNomadHandler")
 	}
 	if o.PeerDeletePeerHandler == nil {
 		unregistered = append(unregistered, "peer.DeletePeerHandler")
@@ -2115,6 +2146,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.NameserverGetNameserversHandler == nil {
 		unregistered = append(unregistered, "nameserver.GetNameserversHandler")
+	}
+	if o.ServiceDiscoveryGetNomadHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetNomadHandler")
+	}
+	if o.ServiceDiscoveryGetNomadsHandler == nil {
+		unregistered = append(unregistered, "service_discovery.GetNomadsHandler")
 	}
 	if o.MapsGetOneRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.GetOneRuntimeMapHandler")
@@ -2376,6 +2413,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.NameserverReplaceNameserverHandler == nil {
 		unregistered = append(unregistered, "nameserver.ReplaceNameserverHandler")
+	}
+	if o.ServiceDiscoveryReplaceNomadHandler == nil {
+		unregistered = append(unregistered, "service_discovery.ReplaceNomadHandler")
 	}
 	if o.PeerEntryReplacePeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.ReplacePeerEntryHandler")
@@ -2686,6 +2726,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/service_discovery/nomad"] = service_discovery.NewCreateNomad(o.context, o.ServiceDiscoveryCreateNomadHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/peer_section"] = peer.NewCreatePeer(o.context, o.PeerCreatePeerHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2859,6 +2903,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewDeleteNameserver(o.context, o.NameserverDeleteNameserverHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/service_discovery/nomad/{id}"] = service_discovery.NewDeleteNomad(o.context, o.ServiceDiscoveryDeleteNomadHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3199,6 +3247,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/nameservers"] = nameserver.NewGetNameservers(o.context, o.NameserverGetNameserversHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/nomad/{id}"] = service_discovery.NewGetNomad(o.context, o.ServiceDiscoveryGetNomadHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/service_discovery/nomad"] = service_discovery.NewGetNomads(o.context, o.ServiceDiscoveryGetNomadsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3547,6 +3603,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/nameservers/{name}"] = nameserver.NewReplaceNameserver(o.context, o.NameserverReplaceNameserverHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/service_discovery/nomad/{id}"] = service_discovery.NewReplaceNomad(o.context, o.ServiceDiscoveryReplaceNomadHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

@@ -61,6 +61,7 @@ func NewServiceDiscoveries(params ServiceDiscoveriesParams) ServiceDiscoveries {
 	//nolint
 	sd.AddService("consul", NewConsulDiscoveryService(params))
 	_ = sd.AddService("aws", NewAWSDiscoveryService(params))
+	_ = sd.AddService("nomad", NewNomadDiscoveryService(params))
 	return sd
 }
 
