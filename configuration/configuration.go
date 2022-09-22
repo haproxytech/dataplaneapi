@@ -239,8 +239,13 @@ func (c *Configuration) Load() error {
 	}
 
 	if c.Name.Load() == "" {
-		rand.Seed(time.Now().UnixNano())
-		c.Name.Store(petname.Generate(2, "_"))
+		hostname, err := os.Hostname()
+		if err != nil {
+			log.Warningf("Error fetching hostname, using petname for dataplaneapi name: %s", err.Error())
+			rand.Seed(time.Now().UnixNano())
+			c.Name.Store(petname.Generate(2, "_"))
+		}
+		c.Name.Store(hostname)
 	}
 
 	return nil
