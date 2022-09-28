@@ -62,8 +62,8 @@ func (c *consulServiceDiscovery) AddNode(id string, params ServiceDiscoveryParam
 		ctx:     c.context,
 		timeout: timeout,
 		discoveryConfig: NewServiceDiscoveryInstance(c.client, c.reloadAgent, discoveryInstanceParams{
-			Allowlist:       cParams.ServiceWhitelist,
-			Denylist:        cParams.ServiceBlacklist,
+			Allowlist:       cParams.ServiceAllowlist,
+			Denylist:        cParams.ServiceDenylist,
 			LogFields:       logFields,
 			ServerSlotsBase: int(*cParams.ServerSlotsBase),
 			SlotsGrowthType: *cParams.ServerSlotsGrowthType,
