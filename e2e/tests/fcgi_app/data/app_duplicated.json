@@ -1,0 +1,5 @@
+{
+  "name": "test_1",
+  "docroot": "/path/to/chroot",
+  "index": "index.php"
+}

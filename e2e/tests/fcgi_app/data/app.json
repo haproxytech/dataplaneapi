@@ -1,0 +1,10 @@
+{
+  "name": "app_created",
+  "docroot": "/path/to/chroot",
+  "index": "index.php",
+  "log_stderrs": [
+    {
+      "global":  true
+    }
+  ]
+}
