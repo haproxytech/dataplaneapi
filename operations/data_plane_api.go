@@ -46,6 +46,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/defaults"
 	"github.com/haproxytech/dataplaneapi/operations/dgram_bind"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
+	"github.com/haproxytech/dataplaneapi/operations/fcgi_app"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
 	"github.com/haproxytech/dataplaneapi/operations/frontend"
 	"github.com/haproxytech/dataplaneapi/operations/global"
@@ -179,6 +180,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DgramBindCreateDgramBindHandler: dgram_bind.CreateDgramBindHandlerFunc(func(params dgram_bind.CreateDgramBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.CreateDgramBind has not yet been implemented")
 		}),
+		FCGIAppCreateFCGIAppHandler: fcgi_app.CreateFCGIAppHandlerFunc(func(params fcgi_app.CreateFCGIAppParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation fcgi_app.CreateFCGIApp has not yet been implemented")
+		}),
 		FilterCreateFilterHandler: filter.CreateFilterHandlerFunc(func(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.CreateFilter has not yet been implemented")
 		}),
@@ -310,6 +314,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DgramBindDeleteDgramBindHandler: dgram_bind.DeleteDgramBindHandlerFunc(func(params dgram_bind.DeleteDgramBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.DeleteDgramBind has not yet been implemented")
+		}),
+		FCGIAppDeleteFCGIAppHandler: fcgi_app.DeleteFCGIAppHandlerFunc(func(params fcgi_app.DeleteFCGIAppParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation fcgi_app.DeleteFCGIApp has not yet been implemented")
 		}),
 		FilterDeleteFilterHandler: filter.DeleteFilterHandlerFunc(func(params filter.DeleteFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.DeleteFilter has not yet been implemented")
@@ -514,6 +521,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DgramBindGetDgramBindsHandler: dgram_bind.GetDgramBindsHandlerFunc(func(params dgram_bind.GetDgramBindsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.GetDgramBinds has not yet been implemented")
+		}),
+		FCGIAppGetFCGIAppHandler: fcgi_app.GetFCGIAppHandlerFunc(func(params fcgi_app.GetFCGIAppParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation fcgi_app.GetFCGIApp has not yet been implemented")
+		}),
+		FCGIAppGetFCGIAppsHandler: fcgi_app.GetFCGIAppsHandlerFunc(func(params fcgi_app.GetFCGIAppsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation fcgi_app.GetFCGIApps has not yet been implemented")
 		}),
 		FilterGetFilterHandler: filter.GetFilterHandlerFunc(func(params filter.GetFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.GetFilter has not yet been implemented")
@@ -830,6 +843,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DgramBindReplaceDgramBindHandler: dgram_bind.ReplaceDgramBindHandlerFunc(func(params dgram_bind.ReplaceDgramBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.ReplaceDgramBind has not yet been implemented")
 		}),
+		FCGIAppReplaceFCGIAppHandler: fcgi_app.ReplaceFCGIAppHandlerFunc(func(params fcgi_app.ReplaceFCGIAppParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation fcgi_app.ReplaceFCGIApp has not yet been implemented")
+		}),
 		FilterReplaceFilterHandler: filter.ReplaceFilterHandlerFunc(func(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.ReplaceFilter has not yet been implemented")
 		}),
@@ -1044,6 +1060,8 @@ type DataPlaneAPI struct {
 	DeclareCaptureCreateDeclareCaptureHandler declare_capture.CreateDeclareCaptureHandler
 	// DgramBindCreateDgramBindHandler sets the operation handler for the create dgram bind operation
 	DgramBindCreateDgramBindHandler dgram_bind.CreateDgramBindHandler
+	// FCGIAppCreateFCGIAppHandler sets the operation handler for the create FCGI app operation
+	FCGIAppCreateFCGIAppHandler fcgi_app.CreateFCGIAppHandler
 	// FilterCreateFilterHandler sets the operation handler for the create filter operation
 	FilterCreateFilterHandler filter.CreateFilterHandler
 	// FrontendCreateFrontendHandler sets the operation handler for the create frontend operation
@@ -1132,6 +1150,8 @@ type DataPlaneAPI struct {
 	DeclareCaptureDeleteDeclareCaptureHandler declare_capture.DeleteDeclareCaptureHandler
 	// DgramBindDeleteDgramBindHandler sets the operation handler for the delete dgram bind operation
 	DgramBindDeleteDgramBindHandler dgram_bind.DeleteDgramBindHandler
+	// FCGIAppDeleteFCGIAppHandler sets the operation handler for the delete FCGI app operation
+	FCGIAppDeleteFCGIAppHandler fcgi_app.DeleteFCGIAppHandler
 	// FilterDeleteFilterHandler sets the operation handler for the delete filter operation
 	FilterDeleteFilterHandler filter.DeleteFilterHandler
 	// FrontendDeleteFrontendHandler sets the operation handler for the delete frontend operation
@@ -1268,6 +1288,10 @@ type DataPlaneAPI struct {
 	DgramBindGetDgramBindHandler dgram_bind.GetDgramBindHandler
 	// DgramBindGetDgramBindsHandler sets the operation handler for the get dgram binds operation
 	DgramBindGetDgramBindsHandler dgram_bind.GetDgramBindsHandler
+	// FCGIAppGetFCGIAppHandler sets the operation handler for the get FCGI app operation
+	FCGIAppGetFCGIAppHandler fcgi_app.GetFCGIAppHandler
+	// FCGIAppGetFCGIAppsHandler sets the operation handler for the get FCGI apps operation
+	FCGIAppGetFCGIAppsHandler fcgi_app.GetFCGIAppsHandler
 	// FilterGetFilterHandler sets the operation handler for the get filter operation
 	FilterGetFilterHandler filter.GetFilterHandler
 	// FilterGetFiltersHandler sets the operation handler for the get filters operation
@@ -1478,6 +1502,8 @@ type DataPlaneAPI struct {
 	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
 	// DgramBindReplaceDgramBindHandler sets the operation handler for the replace dgram bind operation
 	DgramBindReplaceDgramBindHandler dgram_bind.ReplaceDgramBindHandler
+	// FCGIAppReplaceFCGIAppHandler sets the operation handler for the replace FCGI app operation
+	FCGIAppReplaceFCGIAppHandler fcgi_app.ReplaceFCGIAppHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
 	FilterReplaceFilterHandler filter.ReplaceFilterHandler
 	// FrontendReplaceFrontendHandler sets the operation handler for the replace frontend operation
@@ -1706,6 +1732,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DgramBindCreateDgramBindHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.CreateDgramBindHandler")
 	}
+	if o.FCGIAppCreateFCGIAppHandler == nil {
+		unregistered = append(unregistered, "fcgi_app.CreateFCGIAppHandler")
+	}
 	if o.FilterCreateFilterHandler == nil {
 		unregistered = append(unregistered, "filter.CreateFilterHandler")
 	}
@@ -1837,6 +1866,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DgramBindDeleteDgramBindHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.DeleteDgramBindHandler")
+	}
+	if o.FCGIAppDeleteFCGIAppHandler == nil {
+		unregistered = append(unregistered, "fcgi_app.DeleteFCGIAppHandler")
 	}
 	if o.FilterDeleteFilterHandler == nil {
 		unregistered = append(unregistered, "filter.DeleteFilterHandler")
@@ -2041,6 +2073,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DgramBindGetDgramBindsHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.GetDgramBindsHandler")
+	}
+	if o.FCGIAppGetFCGIAppHandler == nil {
+		unregistered = append(unregistered, "fcgi_app.GetFCGIAppHandler")
+	}
+	if o.FCGIAppGetFCGIAppsHandler == nil {
+		unregistered = append(unregistered, "fcgi_app.GetFCGIAppsHandler")
 	}
 	if o.FilterGetFilterHandler == nil {
 		unregistered = append(unregistered, "filter.GetFilterHandler")
@@ -2357,6 +2395,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DgramBindReplaceDgramBindHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.ReplaceDgramBindHandler")
 	}
+	if o.FCGIAppReplaceFCGIAppHandler == nil {
+		unregistered = append(unregistered, "fcgi_app.ReplaceFCGIAppHandler")
+	}
 	if o.FilterReplaceFilterHandler == nil {
 		unregistered = append(unregistered, "filter.ReplaceFilterHandler")
 	}
@@ -2658,6 +2699,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/fcgi_apps"] = fcgi_app.NewCreateFCGIApp(o.context, o.FCGIAppCreateFCGIAppHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2831,6 +2876,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/dgram_binds/{name}"] = dgram_bind.NewDeleteDgramBind(o.context, o.DgramBindDeleteDgramBindHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/fcgi_apps/{name}"] = fcgi_app.NewDeleteFCGIApp(o.context, o.FCGIAppDeleteFCGIAppHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3103,6 +3152,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/dgram_binds"] = dgram_bind.NewGetDgramBinds(o.context, o.DgramBindGetDgramBindsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/fcgi_apps/{name}"] = fcgi_app.NewGetFCGIApp(o.context, o.FCGIAppGetFCGIAppHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/fcgi_apps"] = fcgi_app.NewGetFCGIApps(o.context, o.FCGIAppGetFCGIAppsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3523,6 +3580,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/dgram_binds/{name}"] = dgram_bind.NewReplaceDgramBind(o.context, o.DgramBindReplaceDgramBindHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/fcgi_apps/{name}"] = fcgi_app.NewReplaceFCGIApp(o.context, o.FCGIAppReplaceFCGIAppHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

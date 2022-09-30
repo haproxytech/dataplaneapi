@@ -48900,7 +48900,7 @@ func init() {
       },
       "x-go-name": "Domain"
     },
-    "FcgiLogStderrSample": {
+    "FCGILogStderrSample": {
       "type": "object",
       "title": "Sample",
       "required": [

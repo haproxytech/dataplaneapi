@@ -63,6 +63,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --exclude-main \
     --skip-models \
     -s dataplaneapi \
+    --additional-initialism=FCGI \
     --tags=Discovery \
     --tags=ServiceDiscovery \
     --tags=Information \
@@ -90,6 +91,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=TCPResponseRule \
     --tags=TCPRequestRule \
     --tags=TCPCheck \
+    --tags=FCGIApp \
     --tags=Filter \
     --tags=StickRule \
     --tags=LogTarget \
