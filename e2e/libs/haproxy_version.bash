@@ -15,6 +15,8 @@
 # limitations under the License.
 #
 
+#load '../../libs/debug'
+
 # haproxy_version curls the /runtime/info endpoint to get the current
 # haproxy version and returns it as a string. haproxy must be setup with a
 # valid stats socket for this to work, and it uses deprecated_auth_curl
@@ -26,8 +28,8 @@
 function haproxy_version() {
     read -r SC RES < <(deprecated_auth_curl GET "/v2/services/haproxy/runtime/info")
     V="$(get_json_path "$RES" ".[0].info.version")"
-    debug $RES
-    debug $V
+    #debug $RES
+    #debug $V
     echo "$V"
 }
 

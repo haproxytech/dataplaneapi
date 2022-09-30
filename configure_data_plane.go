@@ -587,6 +587,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.ServerGetRuntimeServerHandler = &handlers.GetRuntimeServerHandlerImpl{Client: client}
 	api.ServerGetRuntimeServersHandler = &handlers.GetRuntimeServersHandlerImpl{Client: client}
 	api.ServerReplaceRuntimeServerHandler = &handlers.ReplaceRuntimeServerHandlerImpl{Client: client}
+	api.ServerAddRuntimeServerHandler = &handlers.AddRuntimeServerHandlerImpl{Client: client}
+	api.ServerDeleteRuntimeServerHandler = &handlers.DeleteRuntimeServerHandlerImpl{Client: client}
 
 	// setup stick table handlers
 	api.StickTableGetStickTablesHandler = &handlers.GetStickTablesHandlerImpl{Client: client}

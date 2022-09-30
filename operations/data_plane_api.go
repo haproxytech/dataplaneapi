@@ -140,6 +140,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		MapsAddPayloadRuntimeMapHandler: maps.AddPayloadRuntimeMapHandlerFunc(func(params maps.AddPayloadRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.AddPayloadRuntimeMap has not yet been implemented")
 		}),
+		ServerAddRuntimeServerHandler: serverops.AddRuntimeServerHandlerFunc(func(params serverops.AddRuntimeServerParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server.AddRuntimeServer has not yet been implemented")
+		}),
 		MapsClearRuntimeMapHandler: maps.ClearRuntimeMapHandlerFunc(func(params maps.ClearRuntimeMapParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.ClearRuntimeMap has not yet been implemented")
 		}),
@@ -358,6 +361,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		MapsDeleteRuntimeMapEntryHandler: maps.DeleteRuntimeMapEntryHandlerFunc(func(params maps.DeleteRuntimeMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.DeleteRuntimeMapEntry has not yet been implemented")
+		}),
+		ServerDeleteRuntimeServerHandler: serverops.DeleteRuntimeServerHandlerFunc(func(params serverops.DeleteRuntimeServerParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server.DeleteRuntimeServer has not yet been implemented")
 		}),
 		ServerDeleteServerHandler: serverops.DeleteServerHandlerFunc(func(params serverops.DeleteServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.DeleteServer has not yet been implemented")
@@ -1012,6 +1018,8 @@ type DataPlaneAPI struct {
 	ACLRuntimeAddPayloadRuntimeACLHandler acl_runtime.AddPayloadRuntimeACLHandler
 	// MapsAddPayloadRuntimeMapHandler sets the operation handler for the add payload runtime map operation
 	MapsAddPayloadRuntimeMapHandler maps.AddPayloadRuntimeMapHandler
+	// ServerAddRuntimeServerHandler sets the operation handler for the add runtime server operation
+	ServerAddRuntimeServerHandler serverops.AddRuntimeServerHandler
 	// MapsClearRuntimeMapHandler sets the operation handler for the clear runtime map operation
 	MapsClearRuntimeMapHandler maps.ClearRuntimeMapHandler
 	// SpoeTransactionsCommitSpoeTransactionHandler sets the operation handler for the commit spoe transaction operation
@@ -1158,6 +1166,8 @@ type DataPlaneAPI struct {
 	RingDeleteRingHandler ring.DeleteRingHandler
 	// MapsDeleteRuntimeMapEntryHandler sets the operation handler for the delete runtime map entry operation
 	MapsDeleteRuntimeMapEntryHandler maps.DeleteRuntimeMapEntryHandler
+	// ServerDeleteRuntimeServerHandler sets the operation handler for the delete runtime server operation
+	ServerDeleteRuntimeServerHandler serverops.DeleteRuntimeServerHandler
 	// ServerDeleteServerHandler sets the operation handler for the delete server operation
 	ServerDeleteServerHandler serverops.DeleteServerHandler
 	// ServerSwitchingRuleDeleteServerSwitchingRuleHandler sets the operation handler for the delete server switching rule operation
@@ -1657,6 +1667,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.MapsAddPayloadRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.AddPayloadRuntimeMapHandler")
 	}
+	if o.ServerAddRuntimeServerHandler == nil {
+		unregistered = append(unregistered, "server.AddRuntimeServerHandler")
+	}
 	if o.MapsClearRuntimeMapHandler == nil {
 		unregistered = append(unregistered, "maps.ClearRuntimeMapHandler")
 	}
@@ -1875,6 +1888,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.MapsDeleteRuntimeMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.DeleteRuntimeMapEntryHandler")
+	}
+	if o.ServerDeleteRuntimeServerHandler == nil {
+		unregistered = append(unregistered, "server.DeleteRuntimeServerHandler")
 	}
 	if o.ServerDeleteServerHandler == nil {
 		unregistered = append(unregistered, "server.DeleteServerHandler")
@@ -2587,6 +2603,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/runtime/maps/{name}"] = maps.NewAddPayloadRuntimeMap(o.context, o.MapsAddPayloadRuntimeMapHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/servers/{name}"] = serverops.NewAddRuntimeServer(o.context, o.ServerAddRuntimeServerHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -2879,6 +2899,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/runtime/maps_entries/{id}"] = maps.NewDeleteRuntimeMapEntry(o.context, o.MapsDeleteRuntimeMapEntryHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/servers/{name}"] = serverops.NewDeleteRuntimeServer(o.context, o.ServerDeleteRuntimeServerHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}

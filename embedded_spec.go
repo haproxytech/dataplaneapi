@@ -11503,6 +11503,96 @@ func init() {
             "$ref": "#/responses/DefaultError"
           }
         }
+      },
+      "post": {
+        "description": "Adds a new server to the specified backend",
+        "tags": [
+          "Server"
+        ],
+        "summary": "Adds a new server to a backend",
+        "operationId": "addRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Server added",
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a server from the specified backend",
+        "tags": [
+          "Server"
+        ],
+        "summary": "Deletes a server from a backend",
+        "operationId": "deleteRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Server deleted"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
       }
     },
     "/services/haproxy/runtime/stick_table_entries": {
@@ -14704,6 +14794,19 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "errorfiles_from_http_errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfiles"
+          },
+          "x-go-name": "ErrorFilesFromHTTPErrors"
+        },
+        "errorloc302": {
+          "$ref": "#/definitions/errorloc"
+        },
+        "errorloc303": {
+          "$ref": "#/definitions/errorloc"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -14744,31 +14847,7 @@ func init() {
           "x-display-name": "H1 Adjust Bogus Server"
         },
         "hash_type": {
-          "type": "object",
-          "properties": {
-            "function": {
-              "type": "string",
-              "enum": [
-                "sdbm",
-                "djb2",
-                "wt6",
-                "crc32"
-              ]
-            },
-            "method": {
-              "type": "string",
-              "enum": [
-                "map-based",
-                "consistent"
-              ]
-            },
-            "modifier": {
-              "type": "string",
-              "enum": [
-                "avalanche"
-              ]
-            }
-          }
+          "$ref": "#/definitions/hash_type"
         },
         "http-buffer-request": {
           "type": "string",
@@ -14893,6 +14972,15 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "http_restrict_req_hdr_names": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "delete",
+            "reject"
+          ],
+          "x-display-name": "Restrict HTTP Request Header Names"
         },
         "http_reuse": {
           "type": "string",
@@ -15022,6 +15110,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "server_fin_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "server_state_file_name": {
           "type": "string",
           "x-display-name": "Server state file"
@@ -15098,6 +15190,10 @@ func init() {
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
+        },
+        "tarpit_timeout": {
+          "type": "integer",
+          "x-nullable": true
         },
         "tcp_smart_connect": {
           "type": "string",
@@ -15243,8 +15339,18 @@ func init() {
             "url_param",
             "hdr",
             "random",
-            "rdp-cookie"
+            "rdp-cookie",
+            "hash"
           ]
+        },
+        "hash_expression": {
+          "type": "string",
+          "x-dependency": {
+            "algorithm": {
+              "value": "hash"
+            }
+          },
+          "x-display-name": "Hash Expression"
         },
         "hdr_name": {
           "type": "string",
@@ -16092,6 +16198,20 @@ func init() {
         "name"
       ],
       "properties": {
+        "attr": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            },
+            "x-go-name": "Attr"
+          },
+          "x-go-name": "Attrs"
+        },
         "domain": {
           "type": "array",
           "items": {
@@ -16375,6 +16495,22 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "error_log_format": {
+          "type": "string"
+        },
+        "errorfiles_from_http_errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfiles"
+          },
+          "x-go-name": "ErrorFilesFromHTTPErrors"
+        },
+        "errorloc302": {
+          "$ref": "#/definitions/errorloc"
+        },
+        "errorloc303": {
+          "$ref": "#/definitions/errorloc"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -16411,6 +16547,9 @@ func init() {
             "disabled"
           ],
           "x-display-name": "H1 Adjust Bogus Server"
+        },
+        "hash_type": {
+          "$ref": "#/definitions/hash_type"
         },
         "http-buffer-request": {
           "type": "string",
@@ -16469,6 +16608,15 @@ func init() {
         "http_request_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "http_restrict_req_hdr_names": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "delete",
+            "reject"
+          ],
+          "x-display-name": "Restrict HTTP Request Header Names"
         },
         "http_reuse": {
           "type": "string",
@@ -16693,6 +16841,10 @@ func init() {
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
+        "tarpit_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "tcp_smart_accept": {
           "type": "string",
           "enum": [
@@ -16894,12 +17046,18 @@ func init() {
           "enum": [
             200,
             400,
+            401,
             403,
+            404,
             405,
+            407,
             408,
+            410,
+            413,
             425,
             429,
             500,
+            501,
             502,
             503,
             504
@@ -16910,6 +17068,73 @@ func init() {
         }
       },
       "x-display-name": "Error File"
+    },
+    "errorfiles": {
+      "type": "object",
+      "properties": {
+        "codes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "enum": [
+              200,
+              400,
+              401,
+              403,
+              404,
+              405,
+              407,
+              408,
+              410,
+              413,
+              425,
+              429,
+              500,
+              501,
+              502,
+              503,
+              504
+            ]
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "errorloc": {
+      "type": "object",
+      "required": [
+        "url",
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "enum": [
+            200,
+            400,
+            401,
+            403,
+            404,
+            405,
+            407,
+            408,
+            410,
+            413,
+            425,
+            429,
+            500,
+            501,
+            502,
+            503,
+            504
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      }
     },
     "filter": {
       "description": "HAProxy filters",
@@ -17075,6 +17300,10 @@ func init() {
           },
           "x-display-name": "CLF Log"
         },
+        "client_fin_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -17176,6 +17405,22 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "error_log_format": {
+          "type": "string"
+        },
+        "errorfiles_from_http_errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfiles"
+          },
+          "x-go-name": "ErrorFilesFromHTTPErrors"
+        },
+        "errorloc302": {
+          "$ref": "#/definitions/errorloc"
+        },
+        "errorloc303": {
+          "$ref": "#/definitions/errorloc"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -17259,6 +17504,15 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "http_restrict_req_hdr_names": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "delete",
+            "reject"
+          ],
+          "x-display-name": "Restrict HTTP Request Header Names"
         },
         "http_use_proxy_header": {
           "type": "string",
@@ -17408,6 +17662,10 @@ func init() {
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
         },
+        "tarpit_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "tcp_smart_accept": {
           "type": "string",
           "enum": [
@@ -17501,6 +17759,11 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "anonkey": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "x-nullable": true
+        },
         "busy_polling": {
           "type": "boolean"
         },
@@ -18216,6 +18479,10 @@ func init() {
               "x-display-name": "Pattern Lookup Cache Size",
               "x-nullable": true
             },
+            "peers_max_updates_at_once": {
+              "type": "integer",
+              "x-display-name": "Maximum number of stick-table updates at once"
+            },
             "pipesize": {
               "type": "integer",
               "x-display-name": "Pipe Buffer Size"
@@ -18420,6 +18687,33 @@ func init() {
       "title": "Groups",
       "items": {
         "$ref": "#/definitions/group"
+      }
+    },
+    "hash_type": {
+      "type": "object",
+      "properties": {
+        "function": {
+          "type": "string",
+          "enum": [
+            "sdbm",
+            "djb2",
+            "wt6",
+            "crc32"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "map-based",
+            "consistent"
+          ]
+        },
+        "modifier": {
+          "type": "string",
+          "enum": [
+            "avalanche"
+          ]
+        }
       }
     },
     "health": {
@@ -19045,6 +19339,33 @@ func init() {
             }
           },
           "x-display-name": "Authentication Realm"
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "cache_name": {
           "type": "string",
@@ -19803,7 +20124,8 @@ func init() {
             "unset-var",
             "use-service",
             "wait-for-body",
-            "wait-for-handshake"
+            "wait-for-handshake",
+            "set-bandwidth-limit"
           ],
           "x-nullable": false
         },
@@ -19950,6 +20272,33 @@ func init() {
             }
           },
           "x-display-name": "ACK Key Format"
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "cache_name": {
           "type": "string",
@@ -20503,7 +20852,8 @@ func init() {
             "track-sc1",
             "track-sc2",
             "unset-var",
-            "wait-for-body"
+            "wait-for-body",
+            "set-bandwidth-limit"
           ],
           "x-nullable": false
         },
@@ -22360,6 +22710,490 @@ func init() {
       "title": "Rings",
       "items": {
         "$ref": "#/definitions/ring"
+      }
+    },
+    "runtime_add_server": {
+      "description": "Settable properties when adding a new server using HAProxy's runtime.",
+      "type": "object",
+      "title": "Runtime Add Server",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check_alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Protocols"
+        },
+        "check_proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Name"
+        },
+        "check_via_socks4": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ciphers": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ciphersuites": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "crl_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "error_limit": {
+          "type": "integer",
+          "x-display-name": "Healthcheck error limit",
+          "x-nullable": true
+        },
+        "fall": {
+          "type": "integer",
+          "x-display-name": "Nr. of consecutive failed checks",
+          "x-nullable": true
+        },
+        "fastinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "force_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maintenance": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Concurrent Connections",
+          "x-nullable": true
+        },
+        "maxqueue": {
+          "type": "integer",
+          "x-display-name": "Max Number of Connections",
+          "x-nullable": true
+        },
+        "minconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "no_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "npn": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "observe": {
+          "type": "string",
+          "enum": [
+            "layer4",
+            "layer7"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
+        "pool_low_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_purge_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
+        },
+        "rise": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl_cn": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "source": {
+          "type": "string"
+        },
+        "ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ssl_cafile": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          },
+          "x-display-name": "SSL CA File"
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_reuse": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tfo": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "track": {
+          "type": "string"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verifyhost": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            },
+            "verify": {
+              "value": "required"
+            }
+          }
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
+        }
       }
     },
     "runtime_server": {
@@ -24464,7 +25298,15 @@ func init() {
             "track-sc2",
             "unset-var",
             "use-service",
-            "lua"
+            "lua",
+            "set-bandwidth-limit",
+            "set-src-port",
+            "set-mark",
+            "set-tos",
+            "set-var-fmt",
+            "set-log-level",
+            "set-nice",
+            "switch-mode"
           ],
           "x-dependency": {
             "type": {
@@ -24477,6 +25319,42 @@ func init() {
             }
           },
           "x-nullable": false
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "capture_len": {
           "type": "integer",
@@ -24563,7 +25441,8 @@ func init() {
                 "set-src",
                 "set-priority",
                 "set-dst",
-                "set-dst-port"
+                "set-dst-port",
+                "set-src-port"
               ]
             },
             "type": {
@@ -24598,6 +25477,29 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug",
+            "silent"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-log-level"
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
         "lua_action": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -24629,6 +25531,39 @@ func init() {
             }
           },
           "x-display-name": "Lua action params"
+        },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-mark"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-nice"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
         },
         "priority_type": {
           "type": "string",
@@ -24767,6 +25702,19 @@ func init() {
           },
           "x-display-name": "Group name"
         },
+        "switch_mode_proto": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "switch-mode"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Switch Mode Proto"
+        },
         "timeout": {
           "type": "integer",
           "x-dependency": {
@@ -24776,6 +25724,23 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-tos"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Tos Value"
         },
         "track_key": {
           "type": "string",
@@ -24829,6 +25794,22 @@ func init() {
           ],
           "x-nullable": false
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-var-fmt"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -24837,12 +25818,14 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
-                "unset-var"
+                "unset-var",
+                "set-var-fmt"
               ]
             },
             "type": {
               "value": [
                 "session",
+                "connection",
                 "content"
               ]
             }
@@ -24857,12 +25840,14 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
-                "unset-var"
+                "unset-var",
+                "set-var-fmt"
               ]
             },
             "type": {
               "value": [
                 "session",
+                "connection",
                 "content"
               ]
             }
@@ -24900,7 +25885,19 @@ func init() {
           "enum": [
             "accept",
             "reject",
-            "lua"
+            "lua",
+            "set-bandwidth-limit",
+            "close",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "send-spoe-group",
+            "set-log-level",
+            "set-mark",
+            "set-nice",
+            "set-tos",
+            "silent-drop",
+            "unset-var"
           ],
           "x-dependency": {
             "type": {
@@ -24909,6 +25906,42 @@ func init() {
             }
           },
           "x-nullable": false
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "cond": {
           "type": "string",
@@ -24940,9 +25973,48 @@ func init() {
             "property": "acl_name"
           }
         },
+        "expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-src-port",
+                "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug",
+            "silent"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-log-level"
+            },
+            "type": {
+              "value": "content"
+            }
+          }
         },
         "lua_action": {
           "type": "string",
@@ -24970,6 +26042,94 @@ func init() {
           },
           "x-display-name": "Lua action params"
         },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-mark"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-nice"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
+        },
+        "spoe_engine": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "SPOE Engine"
+        },
+        "spoe_group": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "SPOE Group"
+        },
         "timeout": {
           "type": "integer",
           "x-dependency": {
@@ -24980,6 +26140,20 @@ func init() {
           },
           "x-nullable": true
         },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-tos"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Tos Value"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -24987,6 +26161,33 @@ func init() {
             "inspect-delay"
           ],
           "x-nullable": false
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "unset-var"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "unset-var"
+            },
+            "type": {
+              "value": "content"
+            }
+          }
         }
       },
       "additionalProperties": false,
@@ -42241,6 +43442,159 @@ func init() {
             }
           }
         }
+      },
+      "post": {
+        "description": "Adds a new server to the specified backend",
+        "tags": [
+          "Server"
+        ],
+        "summary": "Adds a new server to a backend",
+        "operationId": "addRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Server added",
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a server from the specified backend",
+        "tags": [
+          "Server"
+        ],
+        "summary": "Deletes a server from a backend",
+        "operationId": "deleteRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Server name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Server deleted"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
       }
     },
     "/services/haproxy/runtime/stick_table_entries": {
@@ -46478,33 +47832,6 @@ func init() {
     }
   },
   "definitions": {
-    "BackendHashType": {
-      "type": "object",
-      "properties": {
-        "function": {
-          "type": "string",
-          "enum": [
-            "sdbm",
-            "djb2",
-            "wt6",
-            "crc32"
-          ]
-        },
-        "method": {
-          "type": "string",
-          "enum": [
-            "map-based",
-            "consistent"
-          ]
-        },
-        "modifier": {
-          "type": "string",
-          "enum": [
-            "avalanche"
-          ]
-        }
-      }
-    },
     "ClusterSettingsCluster": {
       "type": "object",
       "title": "Cluster controller information",
@@ -46573,6 +47900,16 @@ func init() {
         }
       },
       "x-go-name": "ClusterLogTarget"
+    },
+    "CookieAttrItems0": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-name": "Attr"
     },
     "CookieDomainItems0": {
       "type": "object",
@@ -46966,6 +48303,10 @@ func init() {
           "type": "integer",
           "x-display-name": "Pattern Lookup Cache Size",
           "x-nullable": true
+        },
+        "peers_max_updates_at_once": {
+          "type": "integer",
+          "x-display-name": "Maximum number of stick-table updates at once"
         },
         "pipesize": {
           "type": "integer",
@@ -47732,6 +49073,19 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "errorfiles_from_http_errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfiles"
+          },
+          "x-go-name": "ErrorFilesFromHTTPErrors"
+        },
+        "errorloc302": {
+          "$ref": "#/definitions/errorloc"
+        },
+        "errorloc303": {
+          "$ref": "#/definitions/errorloc"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -47772,31 +49126,7 @@ func init() {
           "x-display-name": "H1 Adjust Bogus Server"
         },
         "hash_type": {
-          "type": "object",
-          "properties": {
-            "function": {
-              "type": "string",
-              "enum": [
-                "sdbm",
-                "djb2",
-                "wt6",
-                "crc32"
-              ]
-            },
-            "method": {
-              "type": "string",
-              "enum": [
-                "map-based",
-                "consistent"
-              ]
-            },
-            "modifier": {
-              "type": "string",
-              "enum": [
-                "avalanche"
-              ]
-            }
-          }
+          "$ref": "#/definitions/hash_type"
         },
         "http-buffer-request": {
           "type": "string",
@@ -47921,6 +49251,15 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "http_restrict_req_hdr_names": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "delete",
+            "reject"
+          ],
+          "x-display-name": "Restrict HTTP Request Header Names"
         },
         "http_reuse": {
           "type": "string",
@@ -48050,6 +49389,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "server_fin_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "server_state_file_name": {
           "type": "string",
           "x-display-name": "Server state file"
@@ -48126,6 +49469,10 @@ func init() {
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
+        },
+        "tarpit_timeout": {
+          "type": "integer",
+          "x-nullable": true
         },
         "tcp_smart_connect": {
           "type": "string",
@@ -48271,8 +49618,18 @@ func init() {
             "url_param",
             "hdr",
             "random",
-            "rdp-cookie"
+            "rdp-cookie",
+            "hash"
           ]
+        },
+        "hash_expression": {
+          "type": "string",
+          "x-dependency": {
+            "algorithm": {
+              "value": "hash"
+            }
+          },
+          "x-display-name": "Hash Expression"
         },
         "hdr_name": {
           "type": "string",
@@ -49094,6 +50451,13 @@ func init() {
         "name"
       ],
       "properties": {
+        "attr": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CookieAttrItems0"
+          },
+          "x-go-name": "Attrs"
+        },
         "domain": {
           "type": "array",
           "items": {
@@ -49370,6 +50734,22 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "error_log_format": {
+          "type": "string"
+        },
+        "errorfiles_from_http_errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfiles"
+          },
+          "x-go-name": "ErrorFilesFromHTTPErrors"
+        },
+        "errorloc302": {
+          "$ref": "#/definitions/errorloc"
+        },
+        "errorloc303": {
+          "$ref": "#/definitions/errorloc"
+        },
         "external_check": {
           "type": "string",
           "enum": [
@@ -49406,6 +50786,9 @@ func init() {
             "disabled"
           ],
           "x-display-name": "H1 Adjust Bogus Server"
+        },
+        "hash_type": {
+          "$ref": "#/definitions/hash_type"
         },
         "http-buffer-request": {
           "type": "string",
@@ -49464,6 +50847,15 @@ func init() {
         "http_request_timeout": {
           "type": "integer",
           "x-nullable": true
+        },
+        "http_restrict_req_hdr_names": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "delete",
+            "reject"
+          ],
+          "x-display-name": "Restrict HTTP Request Header Names"
         },
         "http_reuse": {
           "type": "string",
@@ -49688,6 +51080,10 @@ func init() {
         "stats_options": {
           "$ref": "#/definitions/stats_options"
         },
+        "tarpit_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "tcp_smart_accept": {
           "type": "string",
           "enum": [
@@ -49889,12 +51285,18 @@ func init() {
           "enum": [
             200,
             400,
+            401,
             403,
+            404,
             405,
+            407,
             408,
+            410,
+            413,
             425,
             429,
             500,
+            501,
             502,
             503,
             504
@@ -49905,6 +51307,73 @@ func init() {
         }
       },
       "x-display-name": "Error File"
+    },
+    "errorfiles": {
+      "type": "object",
+      "properties": {
+        "codes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "enum": [
+              200,
+              400,
+              401,
+              403,
+              404,
+              405,
+              407,
+              408,
+              410,
+              413,
+              425,
+              429,
+              500,
+              501,
+              502,
+              503,
+              504
+            ]
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "errorloc": {
+      "type": "object",
+      "required": [
+        "url",
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "enum": [
+            200,
+            400,
+            401,
+            403,
+            404,
+            405,
+            407,
+            408,
+            410,
+            413,
+            425,
+            429,
+            500,
+            501,
+            502,
+            503,
+            504
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      }
     },
     "filter": {
       "description": "HAProxy filters",
@@ -50070,6 +51539,10 @@ func init() {
           },
           "x-display-name": "CLF Log"
         },
+        "client_fin_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "client_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -50171,6 +51644,22 @@ func init() {
           },
           "x-go-name": "ErrorFiles"
         },
+        "error_log_format": {
+          "type": "string"
+        },
+        "errorfiles_from_http_errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfiles"
+          },
+          "x-go-name": "ErrorFilesFromHTTPErrors"
+        },
+        "errorloc302": {
+          "$ref": "#/definitions/errorloc"
+        },
+        "errorloc303": {
+          "$ref": "#/definitions/errorloc"
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -50254,6 +51743,15 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "http_restrict_req_hdr_names": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "delete",
+            "reject"
+          ],
+          "x-display-name": "Restrict HTTP Request Header Names"
         },
         "http_use_proxy_header": {
           "type": "string",
@@ -50403,6 +51901,10 @@ func init() {
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
         },
+        "tarpit_timeout": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "tcp_smart_accept": {
           "type": "string",
           "enum": [
@@ -50496,6 +51998,12 @@ func init() {
       "type": "object",
       "title": "Global",
       "properties": {
+        "anonkey": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "x-nullable": true
+        },
         "busy_polling": {
           "type": "boolean"
         },
@@ -51052,6 +52560,10 @@ func init() {
               "x-display-name": "Pattern Lookup Cache Size",
               "x-nullable": true
             },
+            "peers_max_updates_at_once": {
+              "type": "integer",
+              "x-display-name": "Maximum number of stick-table updates at once"
+            },
             "pipesize": {
               "type": "integer",
               "x-display-name": "Pipe Buffer Size"
@@ -51256,6 +52768,33 @@ func init() {
       "title": "Groups",
       "items": {
         "$ref": "#/definitions/group"
+      }
+    },
+    "hash_type": {
+      "type": "object",
+      "properties": {
+        "function": {
+          "type": "string",
+          "enum": [
+            "sdbm",
+            "djb2",
+            "wt6",
+            "crc32"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "map-based",
+            "consistent"
+          ]
+        },
+        "modifier": {
+          "type": "string",
+          "enum": [
+            "avalanche"
+          ]
+        }
       }
     },
     "health": {
@@ -51881,6 +53420,33 @@ func init() {
             }
           },
           "x-display-name": "Authentication Realm"
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "cache_name": {
           "type": "string",
@@ -52639,7 +54205,8 @@ func init() {
             "unset-var",
             "use-service",
             "wait-for-body",
-            "wait-for-handshake"
+            "wait-for-handshake",
+            "set-bandwidth-limit"
           ],
           "x-nullable": false
         },
@@ -52786,6 +54353,33 @@ func init() {
             }
           },
           "x-display-name": "ACK Key Format"
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "set-bandwidth-limit"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "cache_name": {
           "type": "string",
@@ -53339,7 +54933,8 @@ func init() {
             "track-sc1",
             "track-sc2",
             "unset-var",
-            "wait-for-body"
+            "wait-for-body",
+            "set-bandwidth-limit"
           ],
           "x-nullable": false
         },
@@ -55197,6 +56792,490 @@ func init() {
       "title": "Rings",
       "items": {
         "$ref": "#/definitions/ring"
+      }
+    },
+    "runtime_add_server": {
+      "description": "Settable properties when adding a new server using HAProxy's runtime.",
+      "type": "object",
+      "title": "Runtime Add Server",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "agent-addr": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "agent-check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "agent-port": {
+              "required": true
+            }
+          }
+        },
+        "agent-inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "agent-port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "agent-send": {
+          "type": "string"
+        },
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "ALPN Protocols"
+        },
+        "backup": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check-sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "check-ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "check_alpn": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Protocols"
+        },
+        "check_proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Name"
+        },
+        "check_via_socks4": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ciphers": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ciphersuites": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "crl_file": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "downinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "error_limit": {
+          "type": "integer",
+          "x-display-name": "Healthcheck error limit",
+          "x-nullable": true
+        },
+        "fall": {
+          "type": "integer",
+          "x-display-name": "Nr. of consecutive failed checks",
+          "x-nullable": true
+        },
+        "fastinter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "force_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "force_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "health_check_port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "inter": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "maintenance": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Concurrent Connections",
+          "x-nullable": true
+        },
+        "maxqueue": {
+          "type": "integer",
+          "x-display-name": "Max Number of Connections",
+          "x-nullable": true
+        },
+        "minconn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "no_sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "no_tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "npn": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "observe": {
+          "type": "string",
+          "enum": [
+            "layer4",
+            "layer7"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "on-error": {
+          "type": "string",
+          "enum": [
+            "fastinter",
+            "fail-check",
+            "sudden-death",
+            "mark-down"
+          ]
+        },
+        "on-marked-down": {
+          "type": "string",
+          "enum": [
+            "shutdown-sessions"
+          ]
+        },
+        "on-marked-up": {
+          "type": "string",
+          "enum": [
+            "shutdown-backup-sessions"
+          ]
+        },
+        "pool_low_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_max_conn": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "pool_purge_delay": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true,
+          "readOnly": true
+        },
+        "proto": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "proxy-v2-options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ssl",
+              "cert-cn",
+              "ssl-cipher",
+              "cert-sig",
+              "cert-key",
+              "authority",
+              "crc32c",
+              "unique-id"
+            ]
+          }
+        },
+        "rise": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "send-proxy": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send-proxy-v2": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "send_proxy_v2_ssl_cn": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "slowstart": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sni": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "source": {
+          "type": "string"
+        },
+        "ssl": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "ssl_cafile": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          },
+          "x-display-name": "SSL CA File"
+        },
+        "ssl_certificate": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_reuse": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tfo": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tls_tickets": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "track": {
+          "type": "string"
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            }
+          }
+        },
+        "verifyhost": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": "enabled"
+            },
+            "verify": {
+              "value": "required"
+            }
+          }
+        },
+        "weight": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "ws": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "h1",
+            "h2"
+          ],
+          "x-display-name": "Relaying websocket stream protocol"
+        }
       }
     },
     "runtime_server": {
@@ -57196,7 +59275,15 @@ func init() {
             "track-sc2",
             "unset-var",
             "use-service",
-            "lua"
+            "lua",
+            "set-bandwidth-limit",
+            "set-src-port",
+            "set-mark",
+            "set-tos",
+            "set-var-fmt",
+            "set-log-level",
+            "set-nice",
+            "switch-mode"
           ],
           "x-dependency": {
             "type": {
@@ -57209,6 +59296,42 @@ func init() {
             }
           },
           "x-nullable": false
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "capture_len": {
           "type": "integer",
@@ -57295,7 +59418,8 @@ func init() {
                 "set-src",
                 "set-priority",
                 "set-dst",
-                "set-dst-port"
+                "set-dst-port",
+                "set-src-port"
               ]
             },
             "type": {
@@ -57330,6 +59454,29 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug",
+            "silent"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-log-level"
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
         "lua_action": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -57361,6 +59508,39 @@ func init() {
             }
           },
           "x-display-name": "Lua action params"
+        },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-mark"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-nice"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
         },
         "priority_type": {
           "type": "string",
@@ -57499,6 +59679,19 @@ func init() {
           },
           "x-display-name": "Group name"
         },
+        "switch_mode_proto": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "switch-mode"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Switch Mode Proto"
+        },
         "timeout": {
           "type": "integer",
           "x-dependency": {
@@ -57508,6 +59701,23 @@ func init() {
             }
           },
           "x-nullable": true
+        },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-tos"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Tos Value"
         },
         "track_key": {
           "type": "string",
@@ -57561,6 +59771,22 @@ func init() {
           ],
           "x-nullable": false
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-var-fmt"
+            },
+            "type": {
+              "value": [
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -57569,12 +59795,14 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
-                "unset-var"
+                "unset-var",
+                "set-var-fmt"
               ]
             },
             "type": {
               "value": [
                 "session",
+                "connection",
                 "content"
               ]
             }
@@ -57589,12 +59817,14 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
-                "unset-var"
+                "unset-var",
+                "set-var-fmt"
               ]
             },
             "type": {
               "value": [
                 "session",
+                "connection",
                 "content"
               ]
             }
@@ -57632,7 +59862,19 @@ func init() {
           "enum": [
             "accept",
             "reject",
-            "lua"
+            "lua",
+            "set-bandwidth-limit",
+            "close",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
+            "send-spoe-group",
+            "set-log-level",
+            "set-mark",
+            "set-nice",
+            "set-tos",
+            "silent-drop",
+            "unset-var"
           ],
           "x-dependency": {
             "type": {
@@ -57641,6 +59883,42 @@ func init() {
             }
           },
           "x-nullable": false
+        },
+        "bandwidth_limit_limit": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
+        "bandwidth_limit_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Bandwidth limit name"
+        },
+        "bandwidth_limit_period": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "value": "set-bandwidth-limit"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
         },
         "cond": {
           "type": "string",
@@ -57672,9 +59950,48 @@ func init() {
             "property": "acl_name"
           }
         },
+        "expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "set-src-port",
+                "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Standard HAProxy expression"
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug",
+            "silent"
+          ],
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-log-level"
+            },
+            "type": {
+              "value": "content"
+            }
+          }
         },
         "lua_action": {
           "type": "string",
@@ -57702,6 +60019,94 @@ func init() {
           },
           "x-display-name": "Lua action params"
         },
+        "mark_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-mark"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Mark Value"
+        },
+        "nice_value": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": -1024,
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-nice"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Nice Value",
+          "x-nullable": false
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
+        },
+        "spoe_engine": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "SPOE Engine"
+        },
+        "spoe_group": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "send-spoe-group"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "SPOE Group"
+        },
         "timeout": {
           "type": "integer",
           "x-dependency": {
@@ -57712,6 +60117,20 @@ func init() {
           },
           "x-nullable": true
         },
+        "tos_value": {
+          "type": "string",
+          "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-tos"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Tos Value"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -57719,6 +60138,33 @@ func init() {
             "inspect-delay"
           ],
           "x-nullable": false
+        },
+        "var_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "unset-var"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
+        "var_scope": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "action": {
+              "value": "unset-var"
+            },
+            "type": {
+              "value": "content"
+            }
+          }
         }
       },
       "additionalProperties": false,

@@ -1,0 +1,6 @@
+{
+  "address": "10.11.12.13",
+  "port": 8088,
+  "check": "disabled",
+  "maxconn": 100
+}

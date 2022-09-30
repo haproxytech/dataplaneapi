@@ -23,6 +23,7 @@ import (
 	"github.com/haproxytech/client-native/v4/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server"
 )
@@ -106,14 +107,44 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 		e := misc.HandleError(err)
 		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
 	}
+
+	// Try to create the new server dynamically. This is only possible if no `default_server`
+	// was defined in the current backend or in the `defaults` section.
+	useRuntime := false
+	var ras *models.RuntimeAddServer
+	_, defaults, err := configuration.GetDefaultsConfiguration(t)
+	if err != nil {
+		e := misc.HandleError(err)
+		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+	}
+	_, backend, err := configuration.GetBackend(pName, t)
+	if err != nil {
+		e := misc.HandleError(err)
+		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+	}
+	runtime, err := h.Client.Runtime()
+	if err == nil && defaults.DefaultServer == nil && backend.DefaultServer == nil {
+		// Also make sure the server attributes are supported by the runtime API.
+		err = misc.ConvertStruct(params.Data, ras)
+		useRuntime = err == nil
+	}
+
 	if params.TransactionID == nil {
 		if *params.ForceReload {
-			err := h.ReloadAgent.ForceReload()
+			err = h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
 				return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
 			}
 			return server.NewCreateServerCreated().WithPayload(params.Data)
+		}
+		if useRuntime {
+			err = runtime.AddServer(pName, params.Data.Name, SerializeRuntimeAddServer(ras))
+			if err == nil {
+				// No need to reload.
+				return server.NewCreateServerCreated().WithPayload(params.Data)
+			}
+			log.Warning("failed to add server through runtime:", err)
 		}
 		rID := h.ReloadAgent.Reload()
 		return server.NewCreateServerAccepted().WithReloadID(rID).WithPayload(params.Data)
