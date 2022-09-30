@@ -730,7 +730,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "fcgi-app"
             ],
             "type": "string",
             "description": "Parent type",
@@ -2911,6 +2912,264 @@ func init() {
           },
           "204": {
             "description": "Bind deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/fcgi_apps": {
+      "get": {
+        "description": "Returns an array of all configured FCGI applications.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Return an array of FCGI apps",
+        "operationId": "getFCGIApps",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/fcgiApps"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new FCGI application to the configuration file.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Add an FCGI app",
+        "operationId": "createFCGIApp",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Application created",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/fcgi_apps/{name}": {
+      "get": {
+        "description": "Returns one FCGI application configuration by its name.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Return a FCGI app",
+        "operationId": "getFCGIApp",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Application name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/fcgiApp"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a FCGI application configuration by its name.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Replace a FCGI app",
+        "operationId": "replaceFCGIApp",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Application name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application replaced",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an FCGI application from the configuration by its name.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Delete an FCGI app",
+        "operationId": "deleteFCGIApp",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Application name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Application deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -17136,6 +17395,206 @@ func init() {
         }
       }
     },
+    "fcgiApp": {
+      "description": "HAProxy FastCGI application configuration",
+      "type": "object",
+      "title": "FCGI application",
+      "required": [
+        "name",
+        "docroot"
+      ],
+      "properties": {
+        "docroot": {
+          "description": "Defines the document root on the remote host. The parameter serves to build the default value of FastCGI parameters SCRIPT_FILENAME and PATH_TRANSLATED. It is a mandatory setting.",
+          "type": "string"
+        },
+        "get_values": {
+          "description": "Enables or disables the retrieval of variables related to connection management.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "index": {
+          "description": "Defines the script name to append after a URI that ends with a slash (\"/\") to set the default value for the FastCGI parameter SCRIPT_NAME. It is an optional setting.",
+          "type": "string"
+        },
+        "keep_conn": {
+          "description": "Tells the FastCGI application whether or not to keep the connection open after it sends a response. If disabled, the FastCGI application closes the connection after responding to this request.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "log_stderrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/fcgiLogStderr"
+          }
+        },
+        "max_reqs": {
+          "description": "Defines the maximum number of concurrent requests this application can accept. If the FastCGI application retrieves the variable FCGI_MAX_REQS during connection establishment, it can override this option. Furthermore, if the application does not do multiplexing, it will ignore this option.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "mpxs_conns": {
+          "description": "Enables or disables the support of connection multiplexing. If the FastCGI application retrieves the variable FCGI_MPXS_CONNS during connection establishment, it can override this option.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "name": {
+          "description": "Declares a FastCGI application",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "pass_headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/fcgiPassHeader"
+          }
+        },
+        "path_info": {
+          "description": "Defines a regular expression to extract the script-name and the path-info from the URI.\nThus, \u003cregex\u003e must have two captures: the first to capture the script name, and the second to capture the path- info.\nIf not defined, it does not perform matching on the URI, and does not fill the FastCGI parameters PATH_INFO and PATH_TRANSLATED.",
+          "type": "string"
+        },
+        "set_params": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/fcgiSetParam"
+          }
+        }
+      }
+    },
+    "fcgiApps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/fcgiApp"
+      }
+    },
+    "fcgiLogStderr": {
+      "description": "Enables logging of STDERR messages that the FastCGI application reports.\nIt is an optional setting. By default, HAProxy Enterprise ignores STDERR messages.",
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "facility": {
+          "type": "string",
+          "title": "Facility"
+        },
+        "format": {
+          "type": "string",
+          "title": "Format"
+        },
+        "global": {
+          "type": "boolean",
+          "title": "Global"
+        },
+        "len": {
+          "type": "integer",
+          "title": "Length"
+        },
+        "level": {
+          "type": "string",
+          "title": "Level",
+          "x-dependency": {
+            "facility": {
+              "required": true
+            }
+          }
+        },
+        "minlevel": {
+          "type": "string",
+          "title": "Minimum level",
+          "x-dependency": {
+            "facility": {
+              "required": true
+            }
+          }
+        },
+        "sample": {
+          "type": "object",
+          "title": "Sample",
+          "required": [
+            "ranges",
+            "size"
+          ],
+          "properties": {
+            "ranges": {
+              "type": "string",
+              "title": "Range"
+            },
+            "size": {
+              "type": "integer",
+              "title": "Size"
+            }
+          }
+        }
+      }
+    },
+    "fcgiPassHeader": {
+      "description": "Specifies the name of a request header to pass to the FastCGI application.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.\nMost request headers are already available to the FastCGI application with the prefix \"HTTP\".\nThus, you only need this directive to pass headers that are purposefully omitted.\nCurrently, the headers \"Authorization\", \"Proxy-Authorization\", and hop-by-hop headers are omitted.\nNote that the headers \"Content-type\" and \"Content-length\" never pass to the FastCGI application because they are already converted into parameters.",
+      "type": "object",
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "fcgiSetParam": {
+      "description": "Sets a FastCGI parameter to pass to this application.\nIts value, defined by \u003cformat\u003e can take a formatted string, the same as the log directive.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.",
+      "type": "object",
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "format": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
     "filter": {
       "description": "HAProxy filters",
       "type": "object",
@@ -17145,6 +17604,31 @@ func init() {
         "type"
       ],
       "properties": {
+        "app_name": {
+          "description": "Name of the fcgi-app section this filter will use.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "fcgi-app"
+            }
+          }
+        },
+        "bandwidth_limit_name": {
+          "description": "Filter name that will be used by 'set-bandwidth-limit' actions to reference a specific bandwidth limitation filter",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
         "cache_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -17155,9 +17639,80 @@ func init() {
             }
           }
         },
+        "default_limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
+        "default_period": {
+          "description": "The default time period used to evaluate the bandwidth limitation rate.\nIt can be specified for per-stream bandwidth limitation filters only.\nIt follows the HAProxy time format and is expressed in milliseconds.",
+          "type": "integer",
+          "x-dependency": {
+            "default_limit": {
+              "required": true
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "key": {
+          "description": "A sample expression rule.\nIt describes what elements will be analyzed, extracted, combined, and used to select which table entry to update the counters.\nIt must be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "limit": {
+              "required": true
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
+        "limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
+        "min_size": {
+          "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
         },
         "spoe_config": {
           "type": "string",
@@ -17175,6 +17730,22 @@ func init() {
           "x-dependency": {
             "type": {
               "value": "spoe"
+            }
+          }
+        },
+        "table": {
+          "description": "An optional table to be used instead of the default one, which is the stick-table declared in the current proxy.\nIt can be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "limit": {
+              "required": true
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
             }
           }
         },
@@ -17219,7 +17790,10 @@ func init() {
             "trace",
             "compression",
             "spoe",
-            "cache"
+            "cache",
+            "fcgi-app",
+            "bwlim-in",
+            "bwlim-out"
           ],
           "x-nullable": false
         }
@@ -26443,6 +27017,9 @@ func init() {
       "name": "Discovery"
     },
     {
+      "name": "FCGIApp"
+    },
+    {
       "name": "Filter"
     },
     {
@@ -27588,7 +28165,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "backend"
+              "backend",
+              "fcgi-app"
             ],
             "type": "string",
             "description": "Parent type",
@@ -30795,6 +31373,407 @@ func init() {
           },
           "204": {
             "description": "Bind deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/fcgi_apps": {
+      "get": {
+        "description": "Returns an array of all configured FCGI applications.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Return an array of FCGI apps",
+        "operationId": "getFCGIApps",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/fcgiApps"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new FCGI application to the configuration file.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Add an FCGI app",
+        "operationId": "createFCGIApp",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Application created",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/fcgi_apps/{name}": {
+      "get": {
+        "description": "Returns one FCGI application configuration by its name.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Return a FCGI app",
+        "operationId": "getFCGIApp",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Application name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/fcgiApp"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a FCGI application configuration by its name.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Replace a FCGI app",
+        "operationId": "replaceFCGIApp",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Application name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application replaced",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/fcgiApp"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an FCGI application from the configuration by its name.",
+        "tags": [
+          "FCGIApp"
+        ],
+        "summary": "Delete an FCGI app",
+        "operationId": "deleteFCGIApp",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Application name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Application deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -47921,6 +48900,24 @@ func init() {
       },
       "x-go-name": "Domain"
     },
+    "FcgiLogStderrSample": {
+      "type": "object",
+      "title": "Sample",
+      "required": [
+        "ranges",
+        "size"
+      ],
+      "properties": {
+        "ranges": {
+          "type": "string",
+          "title": "Range"
+        },
+        "size": {
+          "type": "integer",
+          "title": "Size"
+        }
+      }
+    },
     "GlobalCPUMapsItems0": {
       "type": "object",
       "required": [
@@ -51375,6 +52372,206 @@ func init() {
         }
       }
     },
+    "fcgiApp": {
+      "description": "HAProxy FastCGI application configuration",
+      "type": "object",
+      "title": "FCGI application",
+      "required": [
+        "name",
+        "docroot"
+      ],
+      "properties": {
+        "docroot": {
+          "description": "Defines the document root on the remote host. The parameter serves to build the default value of FastCGI parameters SCRIPT_FILENAME and PATH_TRANSLATED. It is a mandatory setting.",
+          "type": "string"
+        },
+        "get_values": {
+          "description": "Enables or disables the retrieval of variables related to connection management.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "index": {
+          "description": "Defines the script name to append after a URI that ends with a slash (\"/\") to set the default value for the FastCGI parameter SCRIPT_NAME. It is an optional setting.",
+          "type": "string"
+        },
+        "keep_conn": {
+          "description": "Tells the FastCGI application whether or not to keep the connection open after it sends a response. If disabled, the FastCGI application closes the connection after responding to this request.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "log_stderrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/fcgiLogStderr"
+          }
+        },
+        "max_reqs": {
+          "description": "Defines the maximum number of concurrent requests this application can accept. If the FastCGI application retrieves the variable FCGI_MAX_REQS during connection establishment, it can override this option. Furthermore, if the application does not do multiplexing, it will ignore this option.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "mpxs_conns": {
+          "description": "Enables or disables the support of connection multiplexing. If the FastCGI application retrieves the variable FCGI_MPXS_CONNS during connection establishment, it can override this option.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "name": {
+          "description": "Declares a FastCGI application",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "pass_headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/fcgiPassHeader"
+          }
+        },
+        "path_info": {
+          "description": "Defines a regular expression to extract the script-name and the path-info from the URI.\nThus, \u003cregex\u003e must have two captures: the first to capture the script name, and the second to capture the path- info.\nIf not defined, it does not perform matching on the URI, and does not fill the FastCGI parameters PATH_INFO and PATH_TRANSLATED.",
+          "type": "string"
+        },
+        "set_params": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/fcgiSetParam"
+          }
+        }
+      }
+    },
+    "fcgiApps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/fcgiApp"
+      }
+    },
+    "fcgiLogStderr": {
+      "description": "Enables logging of STDERR messages that the FastCGI application reports.\nIt is an optional setting. By default, HAProxy Enterprise ignores STDERR messages.",
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "facility": {
+          "type": "string",
+          "title": "Facility"
+        },
+        "format": {
+          "type": "string",
+          "title": "Format"
+        },
+        "global": {
+          "type": "boolean",
+          "title": "Global"
+        },
+        "len": {
+          "type": "integer",
+          "title": "Length"
+        },
+        "level": {
+          "type": "string",
+          "title": "Level",
+          "x-dependency": {
+            "facility": {
+              "required": true
+            }
+          }
+        },
+        "minlevel": {
+          "type": "string",
+          "title": "Minimum level",
+          "x-dependency": {
+            "facility": {
+              "required": true
+            }
+          }
+        },
+        "sample": {
+          "type": "object",
+          "title": "Sample",
+          "required": [
+            "ranges",
+            "size"
+          ],
+          "properties": {
+            "ranges": {
+              "type": "string",
+              "title": "Range"
+            },
+            "size": {
+              "type": "integer",
+              "title": "Size"
+            }
+          }
+        }
+      }
+    },
+    "fcgiPassHeader": {
+      "description": "Specifies the name of a request header to pass to the FastCGI application.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.\nMost request headers are already available to the FastCGI application with the prefix \"HTTP\".\nThus, you only need this directive to pass headers that are purposefully omitted.\nCurrently, the headers \"Authorization\", \"Proxy-Authorization\", and hop-by-hop headers are omitted.\nNote that the headers \"Content-type\" and \"Content-length\" never pass to the FastCGI application because they are already converted into parameters.",
+      "type": "object",
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "fcgiSetParam": {
+      "description": "Sets a FastCGI parameter to pass to this application.\nIts value, defined by \u003cformat\u003e can take a formatted string, the same as the log directive.\nOptionally, you can follow it with an ACL-based condition, in which case the FastCGI application evaluates it only if the condition is true.",
+      "type": "object",
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        },
+        "format": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
     "filter": {
       "description": "HAProxy filters",
       "type": "object",
@@ -51384,6 +52581,31 @@ func init() {
         "type"
       ],
       "properties": {
+        "app_name": {
+          "description": "Name of the fcgi-app section this filter will use.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "fcgi-app"
+            }
+          }
+        },
+        "bandwidth_limit_name": {
+          "description": "Filter name that will be used by 'set-bandwidth-limit' actions to reference a specific bandwidth limitation filter",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
         "cache_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -51394,9 +52616,80 @@ func init() {
             }
           }
         },
+        "default_limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
+        "default_period": {
+          "description": "The default time period used to evaluate the bandwidth limitation rate.\nIt can be specified for per-stream bandwidth limitation filters only.\nIt follows the HAProxy time format and is expressed in milliseconds.",
+          "type": "integer",
+          "x-dependency": {
+            "default_limit": {
+              "required": true
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
         "index": {
           "type": "integer",
           "x-nullable": true
+        },
+        "key": {
+          "description": "A sample expression rule.\nIt describes what elements will be analyzed, extracted, combined, and used to select which table entry to update the counters.\nIt must be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "limit": {
+              "required": true
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
+        "limit": {
+          "description": "The max number of bytes that can be forwarded over the period.\nThe value must be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
+        },
+        "min_size": {
+          "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
+            }
+          }
         },
         "spoe_config": {
           "type": "string",
@@ -51414,6 +52707,22 @@ func init() {
           "x-dependency": {
             "type": {
               "value": "spoe"
+            }
+          }
+        },
+        "table": {
+          "description": "An optional table to be used instead of the default one, which is the stick-table declared in the current proxy.\nIt can be specified for shared bandwidth limitation filters only.",
+          "type": "string",
+          "x-dependency": {
+            "limit": {
+              "required": true
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "bwlim-in",
+                "bwlim-out"
+              ]
             }
           }
         },
@@ -51458,7 +52767,10 @@ func init() {
             "trace",
             "compression",
             "spoe",
-            "cache"
+            "cache",
+            "fcgi-app",
+            "bwlim-in",
+            "bwlim-out"
           ],
           "x-nullable": false
         }
@@ -60418,6 +61730,9 @@ func init() {
     {
       "description": "API autodiscover endpoints",
       "name": "Discovery"
+    },
+    {
+      "name": "FCGIApp"
     },
     {
       "name": "Filter"

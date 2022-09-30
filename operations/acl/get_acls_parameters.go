@@ -170,7 +170,7 @@ func (o *GetAclsParams) bindParentType(rawData []string, hasKey bool, formats st
 // validateParentType carries on validations for parameter ParentType
 func (o *GetAclsParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.EnumCase("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend"}, true); err != nil {
+	if err := validate.EnumCase("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend", "fcgi-app"}, true); err != nil {
 		return err
 	}
 
