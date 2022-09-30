@@ -26,6 +26,7 @@ require (
 	github.com/haproxytech/config-parser/v4 v4.0.0-rc4.0.20220823131539-deece35aeef7
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/hashicorp/hcl v1.0.0
+	github.com/hashicorp/nomad/api v0.0.0-20220913021043-79e177dada7b
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
@@ -58,8 +59,10 @@ require (
 	github.com/go-openapi/jsonreference v0.20.0 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
-	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
+	github.com/hashicorp/cronexpr v1.1.1 // indirect
+	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-hclog v0.12.0 // indirect
 	github.com/hashicorp/go-immutable-radix v1.0.0 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
@@ -88,3 +91,5 @@ require (
 	go.mongodb.org/mongo-driver v1.10.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+// replace github.com/haproxytech/client-native/v4 => ../client-native

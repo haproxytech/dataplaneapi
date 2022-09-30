@@ -78,6 +78,31 @@ func ValidateConsulData(data *models.Consul, useValidation bool) error {
 	return nil
 }
 
+func ValidateNomadData(data *models.Nomad, useValidation bool) error {
+	if useValidation {
+		validationErr := data.Validate(strfmt.Default)
+		if validationErr != nil {
+			return validationErr
+		}
+	}
+	if data.ID == nil || *data.ID == "" {
+		return errors.New("missing ID")
+	}
+	if _, err := uuid.Parse(*data.ID); err != nil {
+		return err
+	}
+	if data.ServerSlotsBase == nil || *data.ServerSlotsBase < minimumServerSlotsBase {
+		data.ServerSlotsBase = misc.Int64P(minimumServerSlotsBase)
+	}
+	if data.ServerSlotsGrowthType == nil {
+		data.ServerSlotsGrowthType = misc.StringP(models.ConsulServerSlotsGrowthTypeLinear)
+	}
+	if *data.ServerSlotsGrowthType == models.ConsulServerSlotsGrowthTypeLinear && (data.ServerSlotsGrowthIncrement == 0 || data.ServerSlotsGrowthIncrement < minimumServerSlotsBase) {
+		data.ServerSlotsGrowthIncrement = minimumServerSlotsBase
+	}
+	return nil
+}
+
 func NewServiceDiscoveryUUID() *string {
 	id := uuid.New().String()
 	return &id

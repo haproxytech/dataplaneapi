@@ -639,6 +639,178 @@ func init() {
         }
       }
     },
+    "/service_discovery/nomad": {
+      "get": {
+        "description": "Returns all configured Nomad servers.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an array of all configured Nomad servers",
+        "operationId": "getNomads",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/nomads"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Nomad server.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Add a new Nomad server",
+        "operationId": "createNomad",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Nomad created",
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/service_discovery/nomad/{id}": {
+      "get": {
+        "description": "Returns one Nomad server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return one Nomad server",
+        "operationId": "getNomad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nomad server id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/nomad"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Nomad server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Replace a Nomad server",
+        "operationId": "replaceNomad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nomad Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nomad server replaced",
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Nomad server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Delete a Nomad server",
+        "operationId": "deleteNomad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nomad server Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Nomad server deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services": {
       "get": {
         "description": "Returns a list of API managed services endpoints.",
@@ -21820,6 +21992,102 @@ func init() {
         }
       }
     },
+    "nomad": {
+      "description": "Nomad server configuration",
+      "type": "object",
+      "title": "Nomad server",
+      "required": [
+        "address",
+        "port",
+        "enabled",
+        "retry_timeout"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "allowlist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "denylist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Auto generated ID.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "retry_timeout": {
+          "description": "Duration in seconds in-between data pulling requests to the nomad server",
+          "type": "integer",
+          "minimum": 1
+        },
+        "secret_id": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "server_slots_base": {
+          "type": "integer",
+          "default": 10
+        },
+        "server_slots_growth_increment": {
+          "type": "integer"
+        },
+        "server_slots_growth_type": {
+          "type": "string",
+          "default": "exponential",
+          "enum": [
+            "linear",
+            "exponential"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "address": "127.0.0.1",
+        "enabled": true,
+        "id": "0",
+        "port": 4646,
+        "retry_timeout": "10a",
+        "service_allowlist": null,
+        "service_denylist": null
+      }
+    },
+    "nomads": {
+      "description": "Nomads array",
+      "type": "array",
+      "title": "Nomads",
+      "items": {
+        "$ref": "#/definitions/nomad"
+      }
+    },
     "peer_entries": {
       "description": "HAProxy peer entries array",
       "type": "array",
@@ -26241,6 +26509,277 @@ func init() {
         "responses": {
           "204": {
             "description": "Consul server deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_discovery/nomad": {
+      "get": {
+        "description": "Returns all configured Nomad servers.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return an array of all configured Nomad servers",
+        "operationId": "getNomads",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/nomads"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new Nomad server.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Add a new Nomad server",
+        "operationId": "createNomad",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Nomad created",
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_discovery/nomad/{id}": {
+      "get": {
+        "description": "Returns one Nomad server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Return one Nomad server",
+        "operationId": "getNomad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nomad server id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/nomad"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a Nomad server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Replace a Nomad server",
+        "operationId": "replaceNomad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nomad Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nomad server replaced",
+            "schema": {
+              "$ref": "#/definitions/nomad"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Nomad server configuration by it's id.",
+        "tags": [
+          "ServiceDiscovery"
+        ],
+        "summary": "Delete a Nomad server",
+        "operationId": "deleteNomad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Nomad server Index",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Nomad server deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -54655,6 +55194,102 @@ func init() {
             "$ref": "#/definitions/native_stat"
           }
         }
+      }
+    },
+    "nomad": {
+      "description": "Nomad server configuration",
+      "type": "object",
+      "title": "Nomad server",
+      "required": [
+        "address",
+        "port",
+        "enabled",
+        "retry_timeout"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "allowlist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "denylist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Auto generated ID.",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "retry_timeout": {
+          "description": "Duration in seconds in-between data pulling requests to the nomad server",
+          "type": "integer",
+          "minimum": 1
+        },
+        "secret_id": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "server_slots_base": {
+          "type": "integer",
+          "default": 10
+        },
+        "server_slots_growth_increment": {
+          "type": "integer"
+        },
+        "server_slots_growth_type": {
+          "type": "string",
+          "default": "exponential",
+          "enum": [
+            "linear",
+            "exponential"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "address": "127.0.0.1",
+        "enabled": true,
+        "id": "0",
+        "port": 4646,
+        "retry_timeout": "10a",
+        "service_allowlist": [],
+        "service_denylist": []
+      }
+    },
+    "nomads": {
+      "description": "Nomads array",
+      "type": "array",
+      "title": "Nomads",
+      "items": {
+        "$ref": "#/definitions/nomad"
       }
     },
     "peer_entries": {

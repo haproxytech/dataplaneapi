@@ -129,6 +129,8 @@ type NotifyConfiguration struct {
 type ServiceDiscovery struct {
 	consulMu   sync.Mutex
 	Consuls    []*models.Consul `yaml:"consuls" group:"service_discovery" save:"true"`
+	nomadMu    sync.Mutex
+	Nomads     []*models.Nomad `yaml:"nomads" group:"service_discovery" save:"true"`
 	awsMu      sync.Mutex
 	AWSRegions []*models.AwsRegion `yaml:"aws-regions" group:"service_discovery" save:"true"`
 }
@@ -278,11 +280,15 @@ func (c *Configuration) Save() error {
 		cfg := c.storage.Get()
 		cfg.ServiceDiscovery.Consuls = nil
 	}
+	if len(c.ServiceDiscovery.Nomads) == 0 {
+		cfg := c.storage.Get()
+		cfg.ServiceDiscovery.Nomads = nil
+	}
 	if len(c.ServiceDiscovery.AWSRegions) == 0 {
 		cfg := c.storage.Get()
 		cfg.ServiceDiscovery.AWSRegions = nil
 	}
-	if cfg.ServiceDiscovery.Consuls == nil && cfg.ServiceDiscovery.AWSRegions == nil {
+	if cfg.ServiceDiscovery.Consuls == nil && cfg.ServiceDiscovery.AWSRegions == nil && cfg.ServiceDiscovery.Nomads == nil {
 		cfg := c.storage.Get()
 		cfg.ServiceDiscovery = nil
 	}
@@ -319,6 +325,13 @@ func (c *Configuration) SaveConsuls(consuls []*models.Consul) error {
 	c.ServiceDiscovery.consulMu.Lock()
 	c.ServiceDiscovery.Consuls = consuls
 	c.ServiceDiscovery.consulMu.Unlock()
+	return c.Save()
+}
+
+func (c *Configuration) SaveNomads(nomads []*models.Nomad) error {
+	c.ServiceDiscovery.nomadMu.Lock()
+	c.ServiceDiscovery.Nomads = nomads
+	c.ServiceDiscovery.nomadMu.Unlock()
 	return c.Save()
 }
 
