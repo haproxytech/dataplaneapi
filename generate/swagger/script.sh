@@ -105,6 +105,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=Cluster \
     --tags=Peer \
     --tags=PeerEntry \
+    --tags=ProcessManager \
     --tags=Resolver \
     --tags=Spoe \
     --tags=SpoeTransactions \

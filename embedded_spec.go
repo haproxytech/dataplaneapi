@@ -7860,6 +7860,264 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/programs": {
+      "get": {
+        "description": "Returns an array of all configured programs in the process-manager configuration file.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Return an array of programs",
+        "operationId": "getPrograms",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/programs"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new program to the process-manager configuration file.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Add a program",
+        "operationId": "createProgram",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Program created",
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/program"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/programs/{name}": {
+      "get": {
+        "description": "Returns one program by its name from the process-manager configuration file.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Return a program",
+        "operationId": "getProgram",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Program name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/program"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a program from the process-manager configuration by its name.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Replace a program",
+        "operationId": "replaceProgram",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Program name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Program replaced",
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/program"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a program from the process-manager configuration file by its name.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Delete a program",
+        "operationId": "deleteProgram",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Program name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Program deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/raw": {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
@@ -23572,6 +23830,56 @@ func init() {
         "$ref": "#/definitions/process_info"
       }
     },
+    "program": {
+      "description": "HAProxy program configuration",
+      "type": "object",
+      "title": "Program",
+      "required": [
+        "name",
+        "command"
+      ],
+      "properties": {
+        "command": {
+          "description": "The command to be run, with flags and options.",
+          "type": "string"
+        },
+        "group": {
+          "description": "The group to run the command as, if different than the HAProxy group.",
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "start-on-reload": {
+          "description": "HAProxy stops and recreates child programs at reload.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "user": {
+          "description": "The user to run the command as, if different than the HAProxy user.",
+          "type": "string"
+        }
+      },
+      "example": {
+        "command": "spoa-mirror --runtime 0 --mirror-url http://test.local",
+        "group": "mygroupname",
+        "name": "mirror",
+        "start-on-reload": "enabled",
+        "user": "myusername"
+      }
+    },
+    "programs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/program"
+      }
+    },
     "redispatch": {
       "type": "object",
       "required": [
@@ -27553,6 +27861,9 @@ func init() {
     },
     {
       "name": "PeerEntry"
+    },
+    {
+      "name": "ProcessManager"
     },
     {
       "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",
@@ -39091,6 +39402,407 @@ func init() {
           },
           "204": {
             "description": "Peer deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/programs": {
+      "get": {
+        "description": "Returns an array of all configured programs in the process-manager configuration file.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Return an array of programs",
+        "operationId": "getPrograms",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/programs"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new program to the process-manager configuration file.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Add a program",
+        "operationId": "createProgram",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Program created",
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/program"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/programs/{name}": {
+      "get": {
+        "description": "Returns one program by its name from the process-manager configuration file.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Return a program",
+        "operationId": "getProgram",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Program name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/program"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a program from the process-manager configuration by its name.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Replace a program",
+        "operationId": "replaceProgram",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Program name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Program replaced",
+            "schema": {
+              "$ref": "#/definitions/program"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/program"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a program from the process-manager configuration file by its name.",
+        "tags": [
+          "ProcessManager"
+        ],
+        "summary": "Delete a program",
+        "operationId": "deleteProgram",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Program name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Program deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -59023,6 +59735,56 @@ func init() {
         "$ref": "#/definitions/process_info"
       }
     },
+    "program": {
+      "description": "HAProxy program configuration",
+      "type": "object",
+      "title": "Program",
+      "required": [
+        "name",
+        "command"
+      ],
+      "properties": {
+        "command": {
+          "description": "The command to be run, with flags and options.",
+          "type": "string"
+        },
+        "group": {
+          "description": "The group to run the command as, if different than the HAProxy group.",
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$",
+          "x-nullable": false,
+          "readOnly": true
+        },
+        "start-on-reload": {
+          "description": "HAProxy stops and recreates child programs at reload.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "user": {
+          "description": "The user to run the command as, if different than the HAProxy user.",
+          "type": "string"
+        }
+      },
+      "example": {
+        "command": "spoa-mirror --runtime 0 --mirror-url http://test.local",
+        "group": "mygroupname",
+        "name": "mirror",
+        "start-on-reload": "enabled",
+        "user": "myusername"
+      }
+    },
+    "programs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/program"
+      }
+    },
     "redispatch": {
       "type": "object",
       "required": [
@@ -62899,6 +63661,9 @@ func init() {
     },
     {
       "name": "PeerEntry"
+    },
+    {
+      "name": "ProcessManager"
     },
     {
       "description": "Checking reload success. To avoid constant reloading we reload in intervals that are configurable when\nwith reload-delay option. When a change to configuration is made and force_reload url query string\nparameter is false we issue a request for reload, and return the reload ID in response header. You can\nthen use reloads endpoints to check the status of that reload ID. If force_reload is true, we override all\nof this and reload immediately.\n",

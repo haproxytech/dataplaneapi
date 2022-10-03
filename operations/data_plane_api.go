@@ -66,6 +66,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/nameserver"
 	"github.com/haproxytech/dataplaneapi/operations/peer"
 	"github.com/haproxytech/dataplaneapi/operations/peer_entry"
+	"github.com/haproxytech/dataplaneapi/operations/process_manager"
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/ring"
@@ -229,6 +230,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		PeerEntryCreatePeerEntryHandler: peer_entry.CreatePeerEntryHandlerFunc(func(params peer_entry.CreatePeerEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer_entry.CreatePeerEntry has not yet been implemented")
 		}),
+		ProcessManagerCreateProgramHandler: process_manager.CreateProgramHandlerFunc(func(params process_manager.CreateProgramParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation process_manager.CreateProgram has not yet been implemented")
+		}),
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.CreateResolver has not yet been implemented")
 		}),
@@ -366,6 +370,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		PeerEntryDeletePeerEntryHandler: peer_entry.DeletePeerEntryHandlerFunc(func(params peer_entry.DeletePeerEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer_entry.DeletePeerEntry has not yet been implemented")
+		}),
+		ProcessManagerDeleteProgramHandler: process_manager.DeleteProgramHandlerFunc(func(params process_manager.DeleteProgramParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation process_manager.DeleteProgram has not yet been implemented")
 		}),
 		ResolverDeleteResolverHandler: resolver.DeleteResolverHandlerFunc(func(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.DeleteResolver has not yet been implemented")
@@ -661,6 +668,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		PeerGetPeerSectionsHandler: peer.GetPeerSectionsHandlerFunc(func(params peer.GetPeerSectionsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer.GetPeerSections has not yet been implemented")
 		}),
+		ProcessManagerGetProgramHandler: process_manager.GetProgramHandlerFunc(func(params process_manager.GetProgramParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation process_manager.GetProgram has not yet been implemented")
+		}),
+		ProcessManagerGetProgramsHandler: process_manager.GetProgramsHandlerFunc(func(params process_manager.GetProgramsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation process_manager.GetPrograms has not yet been implemented")
+		}),
 		ReloadsGetReloadHandler: reloads.GetReloadHandlerFunc(func(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation reloads.GetReload has not yet been implemented")
 		}),
@@ -901,6 +914,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		PeerEntryReplacePeerEntryHandler: peer_entry.ReplacePeerEntryHandlerFunc(func(params peer_entry.ReplacePeerEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer_entry.ReplacePeerEntry has not yet been implemented")
 		}),
+		ProcessManagerReplaceProgramHandler: process_manager.ReplaceProgramHandlerFunc(func(params process_manager.ReplaceProgramParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation process_manager.ReplaceProgram has not yet been implemented")
+		}),
 		ResolverReplaceResolverHandler: resolver.ReplaceResolverHandlerFunc(func(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.ReplaceResolver has not yet been implemented")
 		}),
@@ -1108,6 +1124,8 @@ type DataPlaneAPI struct {
 	PeerCreatePeerHandler peer.CreatePeerHandler
 	// PeerEntryCreatePeerEntryHandler sets the operation handler for the create peer entry operation
 	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
+	// ProcessManagerCreateProgramHandler sets the operation handler for the create program operation
+	ProcessManagerCreateProgramHandler process_manager.CreateProgramHandler
 	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
 	// RingCreateRingHandler sets the operation handler for the create ring operation
@@ -1200,6 +1218,8 @@ type DataPlaneAPI struct {
 	PeerDeletePeerHandler peer.DeletePeerHandler
 	// PeerEntryDeletePeerEntryHandler sets the operation handler for the delete peer entry operation
 	PeerEntryDeletePeerEntryHandler peer_entry.DeletePeerEntryHandler
+	// ProcessManagerDeleteProgramHandler sets the operation handler for the delete program operation
+	ProcessManagerDeleteProgramHandler process_manager.DeleteProgramHandler
 	// ResolverDeleteResolverHandler sets the operation handler for the delete resolver operation
 	ResolverDeleteResolverHandler resolver.DeleteResolverHandler
 	// RingDeleteRingHandler sets the operation handler for the delete ring operation
@@ -1396,6 +1416,10 @@ type DataPlaneAPI struct {
 	PeerGetPeerSectionHandler peer.GetPeerSectionHandler
 	// PeerGetPeerSectionsHandler sets the operation handler for the get peer sections operation
 	PeerGetPeerSectionsHandler peer.GetPeerSectionsHandler
+	// ProcessManagerGetProgramHandler sets the operation handler for the get program operation
+	ProcessManagerGetProgramHandler process_manager.GetProgramHandler
+	// ProcessManagerGetProgramsHandler sets the operation handler for the get programs operation
+	ProcessManagerGetProgramsHandler process_manager.GetProgramsHandler
 	// ReloadsGetReloadHandler sets the operation handler for the get reload operation
 	ReloadsGetReloadHandler reloads.GetReloadHandler
 	// ReloadsGetReloadsHandler sets the operation handler for the get reloads operation
@@ -1556,6 +1580,8 @@ type DataPlaneAPI struct {
 	NameserverReplaceNameserverHandler nameserver.ReplaceNameserverHandler
 	// PeerEntryReplacePeerEntryHandler sets the operation handler for the replace peer entry operation
 	PeerEntryReplacePeerEntryHandler peer_entry.ReplacePeerEntryHandler
+	// ProcessManagerReplaceProgramHandler sets the operation handler for the replace program operation
+	ProcessManagerReplaceProgramHandler process_manager.ReplaceProgramHandler
 	// ResolverReplaceResolverHandler sets the operation handler for the replace resolver operation
 	ResolverReplaceResolverHandler resolver.ReplaceResolverHandler
 	// RingReplaceRingHandler sets the operation handler for the replace ring operation
@@ -1806,6 +1832,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.PeerEntryCreatePeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.CreatePeerEntryHandler")
 	}
+	if o.ProcessManagerCreateProgramHandler == nil {
+		unregistered = append(unregistered, "process_manager.CreateProgramHandler")
+	}
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
 	}
@@ -1943,6 +1972,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.PeerEntryDeletePeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.DeletePeerEntryHandler")
+	}
+	if o.ProcessManagerDeleteProgramHandler == nil {
+		unregistered = append(unregistered, "process_manager.DeleteProgramHandler")
 	}
 	if o.ResolverDeleteResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.DeleteResolverHandler")
@@ -2238,6 +2270,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.PeerGetPeerSectionsHandler == nil {
 		unregistered = append(unregistered, "peer.GetPeerSectionsHandler")
 	}
+	if o.ProcessManagerGetProgramHandler == nil {
+		unregistered = append(unregistered, "process_manager.GetProgramHandler")
+	}
+	if o.ProcessManagerGetProgramsHandler == nil {
+		unregistered = append(unregistered, "process_manager.GetProgramsHandler")
+	}
 	if o.ReloadsGetReloadHandler == nil {
 		unregistered = append(unregistered, "reloads.GetReloadHandler")
 	}
@@ -2477,6 +2515,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.PeerEntryReplacePeerEntryHandler == nil {
 		unregistered = append(unregistered, "peer_entry.ReplacePeerEntryHandler")
+	}
+	if o.ProcessManagerReplaceProgramHandler == nil {
+		unregistered = append(unregistered, "process_manager.ReplaceProgramHandler")
 	}
 	if o.ResolverReplaceResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.ReplaceResolverHandler")
@@ -2804,6 +2845,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/programs"] = process_manager.NewCreateProgram(o.context, o.ProcessManagerCreateProgramHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/resolvers"] = resolver.NewCreateResolver(o.context, o.ResolverCreateResolverHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2985,6 +3030,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewDeletePeerEntry(o.context, o.PeerEntryDeletePeerEntryHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/programs/{name}"] = process_manager.NewDeleteProgram(o.context, o.ProcessManagerDeleteProgramHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3380,6 +3429,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/programs/{name}"] = process_manager.NewGetProgram(o.context, o.ProcessManagerGetProgramHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/programs"] = process_manager.NewGetPrograms(o.context, o.ProcessManagerGetProgramsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/reloads/{id}"] = reloads.NewGetReload(o.context, o.ReloadsGetReloadHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -3697,6 +3754,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/peer_entries/{name}"] = peer_entry.NewReplacePeerEntry(o.context, o.PeerEntryReplacePeerEntryHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/programs/{name}"] = process_manager.NewReplaceProgram(o.context, o.ProcessManagerReplaceProgramHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

@@ -568,6 +568,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.CacheGetCachesHandler = &handlers.GetCachesHandlerImpl{Client: client}
 	api.CacheReplaceCacheHandler = &handlers.ReplaceCacheHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup program handlers
+	api.ProcessManagerCreateProgramHandler = &handlers.CreateProgramHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ProcessManagerDeleteProgramHandler = &handlers.DeleteProgramHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ProcessManagerGetProgramHandler = &handlers.GetProgramHandlerImpl{Client: client}
+	api.ProcessManagerGetProgramsHandler = &handlers.GetProgramsHandlerImpl{Client: client}
+	api.ProcessManagerReplaceProgramHandler = &handlers.ReplaceProgramHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup fcgi handlers
 	api.FCGIAppCreateFCGIAppHandler = &handlers.CreateFCGIAppHandlerImpl{Client: client, ReloadAgent: ra}
 	api.FCGIAppDeleteFCGIAppHandler = &handlers.DeleteFCGIAppHandlerImpl{Client: client, ReloadAgent: ra}

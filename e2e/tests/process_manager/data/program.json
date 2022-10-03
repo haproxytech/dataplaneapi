@@ -1,0 +1,6 @@
+{
+  "name": "mirror",
+  "command": "spoa-mirror --runtime 0 --mirror-url http://test.local",
+  "user": "nobody",
+  "group": "nobody"
+}
