@@ -443,6 +443,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.HTTPResponseRuleGetHTTPResponseRulesHandler = &handlers.GetHTTPResponseRulesHandlerImpl{Client: client}
 	api.HTTPResponseRuleReplaceHTTPResponseRuleHandler = &handlers.ReplaceHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup http error rule handlers
+	api.HTTPErrorRuleCreateHTTPErrorRuleHandler = &handlers.CreateHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleDeleteHTTPErrorRuleHandler = &handlers.DeleteHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleGetHTTPErrorRuleHandler = &handlers.GetHTTPErrorRuleHandlerImpl{Client: client}
+	api.HTTPErrorRuleGetHTTPErrorRulesHandler = &handlers.GetHTTPErrorRulesHandlerImpl{Client: client}
+	api.HTTPErrorRuleReplaceHTTPErrorRuleHandler = &handlers.ReplaceHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup tcp content rule handlers
 	api.TCPRequestRuleCreateTCPRequestRuleHandler = &handlers.CreateTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
 	api.TCPRequestRuleDeleteTCPRequestRuleHandler = &handlers.DeleteTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}

@@ -1,0 +1,18 @@
+{
+  "index": 0,
+  "type": "status",
+  "status": 429,
+  "return_content_type": "application/json",
+	"return_content_format": "string",
+  "return_content": "\"My content\"",
+  "return_hdrs": [
+    {
+      "name": "Additional-Header",
+      "fmt": "value1"
+    },
+    {
+      "name": "Some-Header",
+      "fmt": "value"
+    }
+  ]
+}

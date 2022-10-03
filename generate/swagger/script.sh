@@ -86,6 +86,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=HTTPRequestRule \
     --tags=HTTPResponseRule \
     --tags=HTTPAfterResponseRule \
+    --tags=HTTPErrorRule \
     --tags=BackendSwitchingRule \
     --tags=ServerSwitchingRule \
     --tags=TCPResponseRule \

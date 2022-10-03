@@ -4863,6 +4863,354 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/http_error_rules": {
+      "get": {
+        "description": "Returns all HTTP Error Rules that are configured in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Return an array of all HTTP Error Rules",
+        "operationId": "getHTTPErrorRules",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_error_rules"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP Error Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Add a new HTTP Error Rule",
+        "operationId": "createHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Error Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_error_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP Error Rule configuration by its index in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Return one HTTP Error Rule",
+        "operationId": "getHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Error Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_error_rule"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Error Rule configuration by its index in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Replace a HTTP Error Rule",
+        "operationId": "replaceHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Error Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP Error Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP Error Rule configuration by its index from the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Delete a HTTP Error Rule",
+        "operationId": "deleteHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Error Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP Error Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/http_request_rules": {
       "get": {
         "description": "Returns all HTTP Request Rules that are configured in specified parent.",
@@ -19861,6 +20209,134 @@ func init() {
         "$ref": "#/definitions/http_check"
       }
     },
+    "http_error_rule": {
+      "description": "HAProxy HTTP error rule configuration (corresponds to http-error directives)",
+      "type": "object",
+      "title": "HTTP Error Rule",
+      "required": [
+        "index",
+        "type",
+        "status"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "return_content": {
+          "type": "string",
+          "x-dependency": {
+            "return_content_format": {
+              "required": true,
+              "value": [
+                "errofile",
+                "errorfiles",
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          }
+        },
+        "return_content_format": {
+          "type": "string",
+          "enum": [
+            "default-errorfile",
+            "errorfile",
+            "errorfiles",
+            "file",
+            "lf-file",
+            "string",
+            "lf-string"
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "status"
+            }
+          }
+        },
+        "return_content_type": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "status"
+            }
+          },
+          "x-display-name": "Return content type",
+          "x-nullable": true
+        },
+        "return_hdrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/return_header"
+          },
+          "x-dependency": {
+            "return_content_format": {
+              "value": [
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          },
+          "x-go-name": "ReturnHeaders"
+        },
+        "status": {
+          "type": "integer",
+          "enum": [
+            200,
+            400,
+            401,
+            403,
+            404,
+            405,
+            407,
+            408,
+            410,
+            413,
+            425,
+            429,
+            500,
+            501,
+            502,
+            503,
+            504
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "status"
+            }
+          },
+          "x-nullable": false
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "status"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "hdr_format": "%T",
+        "hdr_name": "X-Haproxy-Current-Date",
+        "index": 0,
+        "status": 425,
+        "type": "status"
+      }
+    },
+    "http_error_rules": {
+      "description": "HAProxy HTTP error rules array (corresponds to http-error directives)",
+      "type": "array",
+      "title": "HTTP Error Rules Array",
+      "items": {
+        "$ref": "#/definitions/http_error_rule"
+      }
+    },
     "http_request_rule": {
       "description": "HAProxy HTTP request rule configuration (corresponds to http-request directives)",
       "type": "object",
@@ -27041,6 +27517,9 @@ func init() {
     },
     {
       "name": "HTTPCheck"
+    },
+    {
+      "name": "HTTPErrorRule"
     },
     {
       "name": "HTTPRequestRule"
@@ -34224,6 +34703,497 @@ func init() {
           },
           "204": {
             "description": "HTTP check deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_error_rules": {
+      "get": {
+        "description": "Returns all HTTP Error Rules that are configured in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Return an array of all HTTP Error Rules",
+        "operationId": "getHTTPErrorRules",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_error_rules"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new HTTP Error Rule of the specified type in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Add a new HTTP Error Rule",
+        "operationId": "createHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Error Rule created",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_error_rules/{index}": {
+      "get": {
+        "description": "Returns one HTTP Error Rule configuration by its index in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Return one HTTP Error Rule",
+        "operationId": "getHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Error Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_error_rule"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a HTTP Error Rule configuration by its index in the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Replace a HTTP Error Rule",
+        "operationId": "replaceHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Error Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP Error Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_error_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a HTTP Error Rule configuration by its index from the specified parent.",
+        "tags": [
+          "HTTPErrorRule"
+        ],
+        "summary": "Delete a HTTP Error Rule",
+        "operationId": "deleteHTTPErrorRule",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "HTTP Error Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "frontend",
+              "backend",
+              "defaults"
+            ],
+            "type": "string",
+            "description": "Parent type",
+            "name": "parent_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "HTTP Error Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -54689,6 +55659,134 @@ func init() {
         "$ref": "#/definitions/http_check"
       }
     },
+    "http_error_rule": {
+      "description": "HAProxy HTTP error rule configuration (corresponds to http-error directives)",
+      "type": "object",
+      "title": "HTTP Error Rule",
+      "required": [
+        "index",
+        "type",
+        "status"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "return_content": {
+          "type": "string",
+          "x-dependency": {
+            "return_content_format": {
+              "required": true,
+              "value": [
+                "errofile",
+                "errorfiles",
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          }
+        },
+        "return_content_format": {
+          "type": "string",
+          "enum": [
+            "default-errorfile",
+            "errorfile",
+            "errorfiles",
+            "file",
+            "lf-file",
+            "string",
+            "lf-string"
+          ],
+          "x-dependency": {
+            "type": {
+              "value": "status"
+            }
+          }
+        },
+        "return_content_type": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "value": "status"
+            }
+          },
+          "x-display-name": "Return content type",
+          "x-nullable": true
+        },
+        "return_hdrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/return_header"
+          },
+          "x-dependency": {
+            "return_content_format": {
+              "value": [
+                "file",
+                "lf-file",
+                "string",
+                "lf-string"
+              ]
+            }
+          },
+          "x-go-name": "ReturnHeaders"
+        },
+        "status": {
+          "type": "integer",
+          "enum": [
+            200,
+            400,
+            401,
+            403,
+            404,
+            405,
+            407,
+            408,
+            410,
+            413,
+            425,
+            429,
+            500,
+            501,
+            502,
+            503,
+            504
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "status"
+            }
+          },
+          "x-nullable": false
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "status"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "hdr_format": "%T",
+        "hdr_name": "X-Haproxy-Current-Date",
+        "index": 0,
+        "status": 425,
+        "type": "status"
+      }
+    },
+    "http_error_rules": {
+      "description": "HAProxy HTTP error rules array (corresponds to http-error directives)",
+      "type": "array",
+      "title": "HTTP Error Rules Array",
+      "items": {
+        "$ref": "#/definitions/http_error_rule"
+      }
+    },
     "http_request_rule": {
       "description": "HAProxy HTTP request rule configuration (corresponds to http-request directives)",
       "type": "object",
@@ -61765,6 +62863,9 @@ func init() {
     },
     {
       "name": "HTTPCheck"
+    },
+    {
+      "name": "HTTPErrorRule"
     },
     {
       "name": "HTTPRequestRule"
