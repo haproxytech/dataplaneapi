@@ -16,6 +16,7 @@
 package handlers
 
 import (
+	"strings"
 	"sync"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -84,8 +85,13 @@ func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransact
 		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	err = configuration.DeleteTransaction(params.ID)
+
 	if err != nil {
 		e := misc.HandleError(err)
+		if strings.HasSuffix(*e.Message, "does not exist") {
+			e.Code = misc.Int64P(404)
+			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
+		}
 		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	return transactions.NewDeleteTransactionNoContent()
@@ -101,6 +107,10 @@ func (h *GetTransactionHandlerImpl) Handle(params transactions.GetTransactionPar
 	t, err := configuration.GetTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
+		if strings.HasSuffix(*e.Message, "does not exist") {
+			e.Code = misc.Int64P(404)
+			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
+		}
 		return transactions.NewGetTransactionsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return transactions.NewGetTransactionOK().WithPayload(t)
@@ -144,6 +154,10 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 
 	if transaction, err = configuration.GetTransaction(params.ID); err != nil {
 		e := misc.HandleError(err)
+		if strings.HasSuffix(*e.Message, "does not exist") {
+			e.Code = misc.Int64P(404)
+			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
+		}
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	switch transaction.Status {
@@ -157,6 +171,10 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 	t, err = configuration.CommitTransaction(params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
+		if strings.HasSuffix(*e.Message, "does not exist") {
+			e.Code = misc.Int64P(404)
+			return transactions.NewDeleteTransactionNotFound().WithPayload(e)
+		}
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 
