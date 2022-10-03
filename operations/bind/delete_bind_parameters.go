@@ -237,7 +237,7 @@ func (o *DeleteBindParams) bindParentType(rawData []string, hasKey bool, formats
 // validateParentType carries on validations for parameter ParentType
 func (o *DeleteBindParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}, true); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward", "peers"}, true); err != nil {
 		return err
 	}
 

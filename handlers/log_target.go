@@ -75,7 +75,7 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 	}
 
 	pName := ""
-	if params.ParentType == "frontend" || params.ParentType == "backend" {
+	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" {
 		if params.ParentName == nil {
 			msg := "parent_name in query is required"
 			c := misc.ErrHTTPBadRequest
@@ -137,7 +137,7 @@ func (h *DeleteLogTargetHandlerImpl) Handle(params log_target.DeleteLogTargetPar
 	}
 
 	pName := ""
-	if params.ParentType == "frontend" || params.ParentType == "backend" {
+	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" {
 		if params.ParentName == nil {
 			msg := "parent_name in query is required"
 			c := misc.ErrHTTPBadRequest
@@ -184,7 +184,7 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 		t = *params.TransactionID
 	}
 	pName := ""
-	if params.ParentType == "frontend" || params.ParentType == "backend" {
+	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" {
 		if params.ParentName == nil {
 			msg := "parent_name in query is required"
 			c := misc.ErrHTTPBadRequest
@@ -218,7 +218,7 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 		t = *params.TransactionID
 	}
 	pName := ""
-	if params.ParentType == "frontend" || params.ParentType == "backend" {
+	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" {
 		if params.ParentName == nil {
 			msg := "parent_name in query is required"
 			c := misc.ErrHTTPBadRequest
@@ -269,7 +269,7 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 	pName := ""
-	if params.ParentType == "frontend" || params.ParentType == "backend" {
+	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" {
 		if params.ParentName == nil {
 			msg := "parent_name in query is required"
 			c := misc.ErrHTTPBadRequest

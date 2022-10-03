@@ -1641,7 +1641,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -1704,7 +1705,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -1791,7 +1793,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -1861,7 +1864,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -1946,7 +1950,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -5833,7 +5838,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -5894,7 +5900,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -5979,7 +5986,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -6047,7 +6055,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -6130,7 +6139,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -8760,7 +8770,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -8823,7 +8834,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -8910,7 +8922,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -8980,7 +8993,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -9065,7 +9079,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -15019,11 +15034,7 @@ func init() {
           "x-display-name": "Description"
         },
         "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "dynamic_cookie_key": {
           "type": "string",
@@ -15040,11 +15051,7 @@ func init() {
           "$ref": "#/definitions/email_alert"
         },
         "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "error_files": {
           "type": "array",
@@ -16526,6 +16533,16 @@ func init() {
         }
       }
     },
+    "default_bind": {
+      "description": "HAProxy default bind configuration",
+      "type": "object",
+      "title": "Default Bind",
+      "allOf": [
+        {
+          "$ref": "#/definitions/bind_params"
+        }
+      ]
+    },
     "default_server": {
       "type": "object",
       "title": "Default Server",
@@ -16711,11 +16728,7 @@ func init() {
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
         "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "dontlog_normal": {
           "type": "string",
@@ -16741,11 +16754,7 @@ func init() {
           "$ref": "#/definitions/email_alert"
         },
         "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "error_files": {
           "type": "array",
@@ -17941,11 +17950,7 @@ func init() {
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
         "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "dontlog_normal": {
           "type": "string",
@@ -17966,11 +17971,7 @@ func init() {
           "$ref": "#/definitions/email_alert"
         },
         "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "error_files": {
           "type": "array",
@@ -22787,10 +22788,25 @@ func init() {
         "name"
       ],
       "properties": {
+        "default_bind": {
+          "$ref": "#/definitions/default_bind"
+        },
+        "default_server": {
+          "$ref": "#/definitions/default_server"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "stick_table": {
+          "$ref": "#/definitions/config_stick_table"
         }
       },
       "additionalProperties": false
@@ -29505,7 +29521,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -29581,7 +29598,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -29707,7 +29725,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -29799,7 +29818,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -29923,7 +29943,8 @@ func init() {
           {
             "enum": [
               "frontend",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -35642,7 +35663,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -35716,7 +35738,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -35840,7 +35863,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -35930,7 +35954,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -36052,7 +36077,8 @@ func init() {
               "backend",
               "defaults",
               "global",
-              "log_forward"
+              "log_forward",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -40003,7 +40029,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -40079,7 +40106,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -40205,7 +40233,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -40297,7 +40326,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -40421,7 +40451,8 @@ func init() {
           {
             "enum": [
               "backend",
-              "ring"
+              "ring",
+              "peers"
             ],
             "type": "string",
             "description": "Parent type",
@@ -50036,11 +50067,7 @@ func init() {
           "x-display-name": "Description"
         },
         "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "dynamic_cookie_key": {
           "type": "string",
@@ -50057,11 +50084,7 @@ func init() {
           "$ref": "#/definitions/email_alert"
         },
         "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "error_files": {
           "type": "array",
@@ -51503,6 +51526,16 @@ func init() {
         }
       }
     },
+    "default_bind": {
+      "description": "HAProxy default bind configuration",
+      "type": "object",
+      "title": "Default Bind",
+      "allOf": [
+        {
+          "$ref": "#/definitions/bind_params"
+        }
+      ]
+    },
     "default_server": {
       "type": "object",
       "title": "Default Server",
@@ -51688,11 +51721,7 @@ func init() {
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
         "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "dontlog_normal": {
           "type": "string",
@@ -51718,11 +51747,7 @@ func init() {
           "$ref": "#/definitions/email_alert"
         },
         "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "error_files": {
           "type": "array",
@@ -52918,11 +52943,7 @@ func init() {
           "x-display-name": "Disable HTTP/2 Upgrade"
         },
         "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "dontlog_normal": {
           "type": "string",
@@ -52943,11 +52964,7 @@ func init() {
           "$ref": "#/definitions/email_alert"
         },
         "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
         },
         "error_files": {
           "type": "array",
@@ -57607,10 +57624,25 @@ func init() {
         "name"
       ],
       "properties": {
+        "default_bind": {
+          "$ref": "#/definitions/default_bind"
+        },
+        "default_server": {
+          "$ref": "#/definitions/default_server"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "stick_table": {
+          "$ref": "#/definitions/config_stick_table"
         }
       },
       "additionalProperties": false

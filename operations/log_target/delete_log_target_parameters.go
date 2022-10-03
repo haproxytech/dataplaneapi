@@ -219,7 +219,7 @@ func (o *DeleteLogTargetParams) bindParentType(rawData []string, hasKey bool, fo
 // validateParentType carries on validations for parameter ParentType
 func (o *DeleteLogTargetParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.EnumCase("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend", "defaults", "global", "log_forward"}, true); err != nil {
+	if err := validate.EnumCase("parent_type", "query", o.ParentType, []interface{}{"frontend", "backend", "defaults", "global", "log_forward", "peers"}, true); err != nil {
 		return err
 	}
 

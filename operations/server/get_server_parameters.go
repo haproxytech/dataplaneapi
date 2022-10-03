@@ -186,7 +186,7 @@ func (o *GetServerParams) bindParentType(rawData []string, hasKey bool, formats 
 // validateParentType carries on validations for parameter ParentType
 func (o *GetServerParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"backend", "ring"}, true); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"backend", "ring", "peers"}, true); err != nil {
 		return err
 	}
 

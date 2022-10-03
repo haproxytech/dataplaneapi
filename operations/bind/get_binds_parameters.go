@@ -162,7 +162,7 @@ func (o *GetBindsParams) bindParentType(rawData []string, hasKey bool, formats s
 // validateParentType carries on validations for parameter ParentType
 func (o *GetBindsParams) validateParentType(formats strfmt.Registry) error {
 
-	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward"}, true); err != nil {
+	if err := validate.EnumCase("parent_type", "query", *o.ParentType, []interface{}{"frontend", "log_forward", "peers"}, true); err != nil {
 		return err
 	}
 
