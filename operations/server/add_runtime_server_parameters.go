@@ -60,11 +60,6 @@ type AddRuntimeServerParams struct {
 	  In: body
 	*/
 	Data *models.RuntimeAddServer
-	/*Server name
-	  Required: true
-	  In: path
-	*/
-	Name string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -105,11 +100,6 @@ func (o *AddRuntimeServerParams) BindRequest(r *http.Request, route *middleware.
 	} else {
 		res = append(res, errors.Required("data", "body", ""))
 	}
-
-	rName, rhkName, _ := route.Params.GetOK("name")
-	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
-		res = append(res, err)
-	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -133,20 +123,6 @@ func (o *AddRuntimeServerParams) bindBackend(rawData []string, hasKey bool, form
 		return err
 	}
 	o.Backend = raw
-
-	return nil
-}
-
-// bindName binds and validates parameter Name from path.
-func (o *AddRuntimeServerParams) bindName(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-	// Parameter is provided by construction from the route
-	o.Name = raw
 
 	return nil
 }

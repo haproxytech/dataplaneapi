@@ -2647,7 +2647,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/runtime/servers/{name}"] = serverops.NewAddRuntimeServer(o.context, o.ServerAddRuntimeServerHandler)
+	o.handlers["POST"]["/services/haproxy/runtime/servers"] = serverops.NewAddRuntimeServer(o.context, o.ServerAddRuntimeServerHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}

@@ -24,13 +24,10 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
-	"strings"
 )
 
 // AddRuntimeServerURL generates an URL for the add runtime server operation
 type AddRuntimeServerURL struct {
-	Name string
-
 	Backend string
 
 	_basePath string
@@ -57,14 +54,7 @@ func (o *AddRuntimeServerURL) SetBasePath(bp string) {
 func (o *AddRuntimeServerURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/servers/{name}"
-
-	name := o.Name
-	if name != "" {
-		_path = strings.Replace(_path, "{name}", name, -1)
-	} else {
-		return nil, errors.New("name is required on AddRuntimeServerURL")
-	}
+	var _path = "/services/haproxy/runtime/servers"
 
 	_basePath := o._basePath
 	if _basePath == "" {

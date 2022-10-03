@@ -11688,6 +11688,51 @@ func init() {
             "$ref": "#/responses/DefaultError"
           }
         }
+      },
+      "post": {
+        "description": "Adds a new server to the specified backend",
+        "tags": [
+          "Server"
+        ],
+        "summary": "Adds a new server to a backend",
+        "operationId": "addRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Server added",
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
       }
     },
     "/services/haproxy/runtime/servers/{name}": {
@@ -11772,58 +11817,6 @@ func init() {
           },
           "404": {
             "$ref": "#/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/responses/DefaultError"
-          }
-        }
-      },
-      "post": {
-        "description": "Adds a new server to the specified backend",
-        "tags": [
-          "Server"
-        ],
-        "summary": "Adds a new server to a backend",
-        "operationId": "addRuntimeServer",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Server name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent backend name",
-            "name": "backend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/runtime_add_server"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Server added",
-            "schema": {
-              "$ref": "#/definitions/runtime_add_server"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          },
-          "409": {
-            "$ref": "#/responses/AlreadyExists"
           },
           "default": {
             "$ref": "#/responses/DefaultError"
@@ -44318,6 +44311,87 @@ func init() {
             }
           }
         }
+      },
+      "post": {
+        "description": "Adds a new server to the specified backend",
+        "tags": [
+          "Server"
+        ],
+        "summary": "Adds a new server to a backend",
+        "operationId": "addRuntimeServer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent backend name",
+            "name": "backend",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Server added",
+            "schema": {
+              "$ref": "#/definitions/runtime_add_server"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
       }
     },
     "/services/haproxy/runtime/servers/{name}": {
@@ -44429,94 +44503,6 @@ func init() {
           },
           "404": {
             "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "default": {
-            "description": "General Error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Adds a new server to the specified backend",
-        "tags": [
-          "Server"
-        ],
-        "summary": "Adds a new server to a backend",
-        "operationId": "addRuntimeServer",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Server name",
-            "name": "name",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Parent backend name",
-            "name": "backend",
-            "in": "query",
-            "required": true
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/runtime_add_server"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Server added",
-            "schema": {
-              "$ref": "#/definitions/runtime_add_server"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "404": {
-            "description": "The specified resource was not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            },
-            "headers": {
-              "Configuration-Version": {
-                "type": "string",
-                "description": "Configuration file version"
-              }
-            }
-          },
-          "409": {
-            "description": "The specified resource already exists",
             "schema": {
               "$ref": "#/definitions/error"
             },

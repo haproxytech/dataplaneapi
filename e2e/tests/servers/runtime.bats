@@ -48,7 +48,7 @@ load 'utils/_helpers'
 @test "servers: Add a server via runtime" {
   haproxy_version_ge 2.6 || skip "requires HAProxy 2.6+"
 
-  resource_post "$_RUNTIME_SERVER_BASE_PATH/rt_server" "data/runtime_add_server.json" "backend=test_backend"
+  resource_post "$_RUNTIME_SERVER_BASE_PATH" "data/runtime_add_server.json" "backend=test_backend"
   assert_equal "$SC" 201
   assert_equal "$(get_json_path "$BODY" '.name')" "rt_server"
 
@@ -62,28 +62,24 @@ load 'utils/_helpers'
 @test "servers: Add an existing server via runtime" {
   haproxy_version_ge 2.6 || skip "requires HAProxy 2.6+"
 
-  resource_post "$_RUNTIME_SERVER_BASE_PATH/rt_server" "data/runtime_add_server.json" "backend=test_backend"
+  resource_post "$_RUNTIME_SERVER_BASE_PATH" "data/runtime_add_server.json" "backend=test_backend"
   assert_equal "$SC" 201
 
-  resource_post "$_RUNTIME_SERVER_BASE_PATH/rt_server" "data/runtime_add_server.json" "backend=test_backend"
-  assert_equal "$SC" 409
-
-  # exists in configuration
-  resource_post "$_RUNTIME_SERVER_BASE_PATH/server_ipv6" "data/runtime_add_server.json" "backend=test_backend"
+  resource_post "$_RUNTIME_SERVER_BASE_PATH" "data/runtime_add_server.json" "backend=test_backend"
   assert_equal "$SC" 409
 }
 
 @test "servers: Add a server to a wrong backend via runtime" {
   haproxy_version_ge 2.6 || skip "requires HAProxy 2.6+"
 
-  resource_post "$_RUNTIME_SERVER_BASE_PATH/rt_server" "data/runtime_add_server.json" "backend=does_not_exist"
+  resource_post "$_RUNTIME_SERVER_BASE_PATH" "data/runtime_add_server.json" "backend=does_not_exist"
   assert_equal "$SC" 404
 }
 
 @test "servers: Delete a server via runtime" {
   haproxy_version_ge 2.6 || skip "requires HAProxy 2.6+"
 
-  resource_post "$_RUNTIME_SERVER_BASE_PATH/rt_server" "data/runtime_add_server.json" "backend=test_backend"
+  resource_post "$_RUNTIME_SERVER_BASE_PATH" "data/runtime_add_server.json" "backend=test_backend"
   assert_equal "$SC" 201
 
   resource_delete "$_RUNTIME_SERVER_BASE_PATH/rt_server" "backend=test_backend"

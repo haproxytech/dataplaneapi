@@ -157,7 +157,13 @@ func (h *AddRuntimeServerHandlerImpl) Handle(params server.AddRuntimeServerParam
 		return server.NewAddRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = runtime.AddServer(params.Backend, params.Name, SerializeRuntimeAddServer(params.Data))
+	if params.Data.Name == "" {
+		code := int64(400)
+		msg := "the new server must have a name"
+		return server.NewAddRuntimeServerBadRequest().WithPayload(&models.Error{Code: &code, Message: &msg})
+	}
+
+	err = runtime.AddServer(params.Backend, params.Data.Name, SerializeRuntimeAddServer(params.Data))
 	if err != nil {
 		msg := err.Error()
 		switch {
@@ -173,7 +179,6 @@ func (h *AddRuntimeServerHandlerImpl) Handle(params server.AddRuntimeServerParam
 		}
 	}
 
-	params.Data.Name = params.Name
 	return server.NewAddRuntimeServerCreated().WithPayload(params.Data)
 }
 
