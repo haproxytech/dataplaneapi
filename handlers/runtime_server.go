@@ -51,6 +51,11 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 
 	rs, err := rn.GetServerState(params.Backend, params.Name)
 	if err != nil {
+		if isNotFoundError(err) {
+			code := int64(404)
+			msg := err.Error()
+			return server.NewGetRuntimeServerNotFound().WithPayload(&models.Error{Code: &code, Message: &msg})
+		}
 		e := misc.HandleError(err)
 		return server.NewGetRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 	}
