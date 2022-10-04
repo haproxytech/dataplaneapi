@@ -284,6 +284,8 @@ func SerializeRuntimeAddServer(srv *models.RuntimeAddServer) string {
 		push("check")
 	case srv.CheckAlpn != "":
 		pushq("check-alpn", srv.CheckAlpn)
+	case srv.HealthCheckAddress != "":
+		pushq("addr", srv.HealthCheckAddress)
 	case srv.HealthCheckPort != nil:
 		pushi("port", srv.HealthCheckPort)
 	case srv.CheckProto != "":

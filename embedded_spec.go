@@ -17149,37 +17149,7 @@ func init() {
         {
           "$ref": "#/definitions/server_params"
         }
-      ],
-      "properties": {
-        "ca_file": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": true
-            }
-          }
-        },
-        "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        }
-      }
+      ]
     },
     "defaults": {
       "description": "HAProxy defaults configuration",
@@ -24253,6 +24223,10 @@ func init() {
             "disabled"
           ]
         },
+        "health_check_address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "health_check_port": {
           "type": "integer",
           "maximum": 65535,
@@ -24835,6 +24809,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "health_check_address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "health_check_port": {
           "type": "integer",
@@ -53211,37 +53189,7 @@ func init() {
         {
           "$ref": "#/definitions/server_params"
         }
-      ],
-      "properties": {
-        "ca_file": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": true
-            }
-          }
-        },
-        "disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "enabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        }
-      }
+      ]
     },
     "defaults": {
       "description": "HAProxy defaults configuration",
@@ -60158,6 +60106,10 @@ func init() {
             "disabled"
           ]
         },
+        "health_check_address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "health_check_port": {
           "type": "integer",
           "maximum": 65535,
@@ -60740,6 +60692,10 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "health_check_address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "health_check_port": {
           "type": "integer",
