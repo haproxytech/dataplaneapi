@@ -55,6 +55,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_after_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_check"
 	"github.com/haproxytech/dataplaneapi/operations/http_error_rule"
+	"github.com/haproxytech/dataplaneapi/operations/http_errors"
 	"github.com/haproxytech/dataplaneapi/operations/http_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
@@ -203,6 +204,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPErrorRuleCreateHTTPErrorRuleHandler: http_error_rule.CreateHTTPErrorRuleHandlerFunc(func(params http_error_rule.CreateHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.CreateHTTPErrorRule has not yet been implemented")
 		}),
+		HTTPErrorsCreateHTTPErrorsSectionHandler: http_errors.CreateHTTPErrorsSectionHandlerFunc(func(params http_errors.CreateHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_errors.CreateHTTPErrorsSection has not yet been implemented")
+		}),
 		HTTPRequestRuleCreateHTTPRequestRuleHandler: http_request_rule.CreateHTTPRequestRuleHandlerFunc(func(params http_request_rule.CreateHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.CreateHTTPRequestRule has not yet been implemented")
 		}),
@@ -343,6 +347,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPErrorRuleDeleteHTTPErrorRuleHandler: http_error_rule.DeleteHTTPErrorRuleHandlerFunc(func(params http_error_rule.DeleteHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.DeleteHTTPErrorRule has not yet been implemented")
+		}),
+		HTTPErrorsDeleteHTTPErrorsSectionHandler: http_errors.DeleteHTTPErrorsSectionHandlerFunc(func(params http_errors.DeleteHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_errors.DeleteHTTPErrorsSection has not yet been implemented")
 		}),
 		HTTPRequestRuleDeleteHTTPRequestRuleHandler: http_request_rule.DeleteHTTPRequestRuleHandlerFunc(func(params http_request_rule.DeleteHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.DeleteHTTPRequestRule has not yet been implemented")
@@ -583,6 +590,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		HTTPErrorRuleGetHTTPErrorRulesHandler: http_error_rule.GetHTTPErrorRulesHandlerFunc(func(params http_error_rule.GetHTTPErrorRulesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.GetHTTPErrorRules has not yet been implemented")
+		}),
+		HTTPErrorsGetHTTPErrorsSectionHandler: http_errors.GetHTTPErrorsSectionHandlerFunc(func(params http_errors.GetHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_errors.GetHTTPErrorsSection has not yet been implemented")
+		}),
+		HTTPErrorsGetHTTPErrorsSectionsHandler: http_errors.GetHTTPErrorsSectionsHandlerFunc(func(params http_errors.GetHTTPErrorsSectionsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_errors.GetHTTPErrorsSections has not yet been implemented")
 		}),
 		HTTPRequestRuleGetHTTPRequestRuleHandler: http_request_rule.GetHTTPRequestRuleHandlerFunc(func(params http_request_rule.GetHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.GetHTTPRequestRule has not yet been implemented")
@@ -893,6 +906,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPErrorRuleReplaceHTTPErrorRuleHandler: http_error_rule.ReplaceHTTPErrorRuleHandlerFunc(func(params http_error_rule.ReplaceHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.ReplaceHTTPErrorRule has not yet been implemented")
 		}),
+		HTTPErrorsReplaceHTTPErrorsSectionHandler: http_errors.ReplaceHTTPErrorsSectionHandlerFunc(func(params http_errors.ReplaceHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_errors.ReplaceHTTPErrorsSection has not yet been implemented")
+		}),
 		HTTPRequestRuleReplaceHTTPRequestRuleHandler: http_request_rule.ReplaceHTTPRequestRuleHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.ReplaceHTTPRequestRule has not yet been implemented")
 		}),
@@ -1106,6 +1122,8 @@ type DataPlaneAPI struct {
 	HTTPCheckCreateHTTPCheckHandler http_check.CreateHTTPCheckHandler
 	// HTTPErrorRuleCreateHTTPErrorRuleHandler sets the operation handler for the create HTTP error rule operation
 	HTTPErrorRuleCreateHTTPErrorRuleHandler http_error_rule.CreateHTTPErrorRuleHandler
+	// HTTPErrorsCreateHTTPErrorsSectionHandler sets the operation handler for the create HTTP errors section operation
+	HTTPErrorsCreateHTTPErrorsSectionHandler http_errors.CreateHTTPErrorsSectionHandler
 	// HTTPRequestRuleCreateHTTPRequestRuleHandler sets the operation handler for the create HTTP request rule operation
 	HTTPRequestRuleCreateHTTPRequestRuleHandler http_request_rule.CreateHTTPRequestRuleHandler
 	// HTTPResponseRuleCreateHTTPResponseRuleHandler sets the operation handler for the create HTTP response rule operation
@@ -1200,6 +1218,8 @@ type DataPlaneAPI struct {
 	HTTPCheckDeleteHTTPCheckHandler http_check.DeleteHTTPCheckHandler
 	// HTTPErrorRuleDeleteHTTPErrorRuleHandler sets the operation handler for the delete HTTP error rule operation
 	HTTPErrorRuleDeleteHTTPErrorRuleHandler http_error_rule.DeleteHTTPErrorRuleHandler
+	// HTTPErrorsDeleteHTTPErrorsSectionHandler sets the operation handler for the delete HTTP errors section operation
+	HTTPErrorsDeleteHTTPErrorsSectionHandler http_errors.DeleteHTTPErrorsSectionHandler
 	// HTTPRequestRuleDeleteHTTPRequestRuleHandler sets the operation handler for the delete HTTP request rule operation
 	HTTPRequestRuleDeleteHTTPRequestRuleHandler http_request_rule.DeleteHTTPRequestRuleHandler
 	// HTTPResponseRuleDeleteHTTPResponseRuleHandler sets the operation handler for the delete HTTP response rule operation
@@ -1360,6 +1380,10 @@ type DataPlaneAPI struct {
 	HTTPErrorRuleGetHTTPErrorRuleHandler http_error_rule.GetHTTPErrorRuleHandler
 	// HTTPErrorRuleGetHTTPErrorRulesHandler sets the operation handler for the get HTTP error rules operation
 	HTTPErrorRuleGetHTTPErrorRulesHandler http_error_rule.GetHTTPErrorRulesHandler
+	// HTTPErrorsGetHTTPErrorsSectionHandler sets the operation handler for the get HTTP errors section operation
+	HTTPErrorsGetHTTPErrorsSectionHandler http_errors.GetHTTPErrorsSectionHandler
+	// HTTPErrorsGetHTTPErrorsSectionsHandler sets the operation handler for the get HTTP errors sections operation
+	HTTPErrorsGetHTTPErrorsSectionsHandler http_errors.GetHTTPErrorsSectionsHandler
 	// HTTPRequestRuleGetHTTPRequestRuleHandler sets the operation handler for the get HTTP request rule operation
 	HTTPRequestRuleGetHTTPRequestRuleHandler http_request_rule.GetHTTPRequestRuleHandler
 	// HTTPRequestRuleGetHTTPRequestRulesHandler sets the operation handler for the get HTTP request rules operation
@@ -1566,6 +1590,8 @@ type DataPlaneAPI struct {
 	HTTPCheckReplaceHTTPCheckHandler http_check.ReplaceHTTPCheckHandler
 	// HTTPErrorRuleReplaceHTTPErrorRuleHandler sets the operation handler for the replace HTTP error rule operation
 	HTTPErrorRuleReplaceHTTPErrorRuleHandler http_error_rule.ReplaceHTTPErrorRuleHandler
+	// HTTPErrorsReplaceHTTPErrorsSectionHandler sets the operation handler for the replace HTTP errors section operation
+	HTTPErrorsReplaceHTTPErrorsSectionHandler http_errors.ReplaceHTTPErrorsSectionHandler
 	// HTTPRequestRuleReplaceHTTPRequestRuleHandler sets the operation handler for the replace HTTP request rule operation
 	HTTPRequestRuleReplaceHTTPRequestRuleHandler http_request_rule.ReplaceHTTPRequestRuleHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleHandler sets the operation handler for the replace HTTP response rule operation
@@ -1805,6 +1831,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPErrorRuleCreateHTTPErrorRuleHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.CreateHTTPErrorRuleHandler")
 	}
+	if o.HTTPErrorsCreateHTTPErrorsSectionHandler == nil {
+		unregistered = append(unregistered, "http_errors.CreateHTTPErrorsSectionHandler")
+	}
 	if o.HTTPRequestRuleCreateHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.CreateHTTPRequestRuleHandler")
 	}
@@ -1945,6 +1974,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPErrorRuleDeleteHTTPErrorRuleHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.DeleteHTTPErrorRuleHandler")
+	}
+	if o.HTTPErrorsDeleteHTTPErrorsSectionHandler == nil {
+		unregistered = append(unregistered, "http_errors.DeleteHTTPErrorsSectionHandler")
 	}
 	if o.HTTPRequestRuleDeleteHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.DeleteHTTPRequestRuleHandler")
@@ -2185,6 +2217,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPErrorRuleGetHTTPErrorRulesHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.GetHTTPErrorRulesHandler")
+	}
+	if o.HTTPErrorsGetHTTPErrorsSectionHandler == nil {
+		unregistered = append(unregistered, "http_errors.GetHTTPErrorsSectionHandler")
+	}
+	if o.HTTPErrorsGetHTTPErrorsSectionsHandler == nil {
+		unregistered = append(unregistered, "http_errors.GetHTTPErrorsSectionsHandler")
 	}
 	if o.HTTPRequestRuleGetHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.GetHTTPRequestRuleHandler")
@@ -2494,6 +2532,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.HTTPErrorRuleReplaceHTTPErrorRuleHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.ReplaceHTTPErrorRuleHandler")
+	}
+	if o.HTTPErrorsReplaceHTTPErrorsSectionHandler == nil {
+		unregistered = append(unregistered, "http_errors.ReplaceHTTPErrorsSectionHandler")
 	}
 	if o.HTTPRequestRuleReplaceHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleHandler")
@@ -2809,6 +2850,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/http_errors_sections"] = http_errors.NewCreateHTTPErrorsSection(o.context, o.HTTPErrorsCreateHTTPErrorsSectionHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/http_request_rules"] = http_request_rule.NewCreateHTTPRequestRule(o.context, o.HTTPRequestRuleCreateHTTPRequestRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -2994,6 +3039,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/http_error_rules/{index}"] = http_error_rule.NewDeleteHTTPErrorRule(o.context, o.HTTPErrorRuleDeleteHTTPErrorRuleHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/http_errors_sections/{name}"] = http_errors.NewDeleteHTTPErrorsSection(o.context, o.HTTPErrorsDeleteHTTPErrorsSectionHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3314,6 +3363,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/http_error_rules"] = http_error_rule.NewGetHTTPErrorRules(o.context, o.HTTPErrorRuleGetHTTPErrorRulesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/http_errors_sections/{name}"] = http_errors.NewGetHTTPErrorsSection(o.context, o.HTTPErrorsGetHTTPErrorsSectionHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/http_errors_sections"] = http_errors.NewGetHTTPErrorsSections(o.context, o.HTTPErrorsGetHTTPErrorsSectionsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3726,6 +3783,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_error_rules/{index}"] = http_error_rule.NewReplaceHTTPErrorRule(o.context, o.HTTPErrorRuleReplaceHTTPErrorRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/http_errors_sections/{name}"] = http_errors.NewReplaceHTTPErrorsSection(o.context, o.HTTPErrorsReplaceHTTPErrorsSectionHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

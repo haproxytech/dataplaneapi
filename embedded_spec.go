@@ -5211,6 +5211,264 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/http_errors_sections": {
+      "get": {
+        "description": "Returns an array of all configured http-error sections.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Return an array of http-error sections",
+        "operationId": "getHTTPErrorsSections",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_errors_sections"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new http-error section to the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Add a new http-error section",
+        "operationId": "createHTTPErrorsSection",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "http-error section created",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_errors_sections/{name}": {
+      "get": {
+        "description": "Returns one http-error section with a given name from the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Return a http-error section",
+        "operationId": "getHTTPErrorsSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http-error section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_errors_section"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a http-error section with a given name in the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Replace a http-error section",
+        "operationId": "replaceHTTPErrorsSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http-error section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "http-error section updated",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a http-error section with a given name from the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Delete a http-error section",
+        "operationId": "deleteHTTPErrorsSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http-error section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "http-error section deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/http_request_rules": {
       "get": {
         "description": "Returns all HTTP Request Rules that are configured in specified parent.",
@@ -15454,14 +15712,16 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/awsFilters"
-          }
+          },
+          "x-omitempty": true
         },
         "denylist": {
           "description": "Specify the AWS filters used to filter the EC2 instances to ignore",
           "type": "array",
           "items": {
             "$ref": "#/definitions/awsFilters"
-          }
+          },
+          "x-omitempty": true
         },
         "description": {
           "type": "string"
@@ -15657,14 +15917,16 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfile"
           },
-          "x-go-name": "ErrorFiles"
+          "x-go-name": "ErrorFiles",
+          "x-omitempty": true
         },
         "errorfiles_from_http_errors": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/errorfiles"
           },
-          "x-go-name": "ErrorFilesFromHTTPErrors"
+          "x-go-name": "ErrorFilesFromHTTPErrors",
+          "x-omitempty": true
         },
         "errorloc302": {
           "$ref": "#/definitions/errorloc"
@@ -15690,6 +15952,32 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
         },
+        "force_persist": {
+          "type": "object",
+          "required": [
+            "cond",
+            "cond_test"
+          ],
+          "properties": {
+            "cond": {
+              "type": "string",
+              "enum": [
+                "if",
+                "unless"
+              ],
+              "x-display-name": "Condition"
+            },
+            "cond_test": {
+              "type": "string",
+              "x-dependency": {
+                "cond": {
+                  "required": true
+                }
+              },
+              "x-display-name": "Condition Test"
+            }
+          }
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -15697,6 +15985,10 @@ func init() {
             }
           },
           "$ref": "#/definitions/forwardfor"
+        },
+        "fullconn": {
+          "type": "integer",
+          "x-nullable": true
         },
         "h1_case_adjust_bogus_server": {
           "type": "string",
@@ -15861,6 +16153,11 @@ func init() {
             }
           }
         },
+        "http_send_name_header": {
+          "type": "string",
+          "x-display-name": "The header string to use to send the server name",
+          "x-nullable": true
+        },
         "httpchk_params": {
           "x-dependency": {
             "mode": {
@@ -15885,6 +16182,32 @@ func init() {
         "id": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ignore_persist": {
+          "type": "object",
+          "required": [
+            "cond",
+            "cond_test"
+          ],
+          "properties": {
+            "cond": {
+              "type": "string",
+              "enum": [
+                "if",
+                "unless"
+              ],
+              "x-display-name": "Condition"
+            },
+            "cond_test": {
+              "type": "string",
+              "x-dependency": {
+                "cond": {
+                  "required": true
+                }
+              },
+              "x-display-name": "Condition Test"
+            }
+          }
         },
         "independent_streams": {
           "type": "string",
@@ -15913,6 +16236,11 @@ func init() {
         "log_tag": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "max_keep_alive_queue": {
+          "type": "integer",
+          "x-display-name": "Maximum keep alive queue",
+          "x-nullable": true
         },
         "mode": {
           "type": "string",
@@ -15953,6 +16281,9 @@ func init() {
           ],
           "x-display-name": "Persist"
         },
+        "persist_rule": {
+          "$ref": "#/definitions/persist_rule"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
         },
@@ -15974,6 +16305,10 @@ func init() {
         "retries": {
           "type": "integer",
           "x-nullable": true
+        },
+        "retry_on": {
+          "type": "string",
+          "x-display-name": "Retry on"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -16848,7 +17183,8 @@ func init() {
                 },
                 "x-go-name": "ClusterLogTarget"
               },
-              "x-go-name": "ClusterLogTargets"
+              "x-go-name": "ClusterLogTargets",
+              "x-omitempty": true
             },
             "name": {
               "type": "string",
@@ -16894,7 +17230,8 @@ func init() {
               "deflate",
               "raw-deflate"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "offload": {
           "type": "boolean"
@@ -16903,7 +17240,8 @@ func init() {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -17011,7 +17349,8 @@ func init() {
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "service-whitelist": {
           "description": "deprecated, use service_allowlist",
@@ -17019,21 +17358,24 @@ func init() {
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "service_allowlist": {
           "type": "array",
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "service_denylist": {
           "type": "array",
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "token": {
           "type": "string",
@@ -17075,7 +17417,8 @@ func init() {
             },
             "x-go-name": "Attr"
           },
-          "x-go-name": "Attrs"
+          "x-go-name": "Attrs",
+          "x-omitempty": true
         },
         "domain": {
           "type": "array",
@@ -17089,7 +17432,8 @@ func init() {
             },
             "x-go-name": "Domain"
           },
-          "x-go-name": "Domains"
+          "x-go-name": "Domains",
+          "x-omitempty": true
         },
         "dynamic": {
           "type": "boolean"
@@ -17330,7 +17674,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfile"
           },
-          "x-go-name": "ErrorFiles"
+          "x-go-name": "ErrorFiles",
+          "x-omitempty": true
         },
         "error_log_format": {
           "type": "string"
@@ -17340,7 +17685,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfiles"
           },
-          "x-go-name": "ErrorFilesFromHTTPErrors"
+          "x-go-name": "ErrorFilesFromHTTPErrors",
+          "x-omitempty": true
         },
         "errorloc302": {
           "$ref": "#/definitions/errorloc"
@@ -17368,6 +17714,10 @@ func init() {
         },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
+        },
+        "fullconn": {
+          "type": "integer",
+          "x-nullable": true
         },
         "h1_case_adjust_bogus_client": {
           "type": "string",
@@ -17464,6 +17814,11 @@ func init() {
             "safe"
           ]
         },
+        "http_send_name_header": {
+          "type": "string",
+          "x-display-name": "Add the server name to a request",
+          "x-nullable": true
+        },
         "http_use_proxy_header": {
           "type": "string",
           "enum": [
@@ -17545,6 +17900,11 @@ func init() {
           ],
           "x-display-name": "Log ASAP"
         },
+        "max_keep_alive_queue": {
+          "type": "integer",
+          "x-display-name": "Maximum server queue size for maintaining keep-alive connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -17587,6 +17947,9 @@ func init() {
           ],
           "x-display-name": "Persist"
         },
+        "persist_rule": {
+          "$ref": "#/definitions/persist_rule"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
         },
@@ -17608,6 +17971,10 @@ func init() {
         "retries": {
           "type": "integer",
           "x-nullable": true
+        },
+        "retry_on": {
+          "type": "string",
+          "x-display-name": "Specify when to attempt to automatically retry a failed request"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -17932,7 +18299,8 @@ func init() {
               503,
               504
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "name": {
           "type": "string"
@@ -18010,7 +18378,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/fcgiLogStderr"
-          }
+          },
+          "x-omitempty": true
         },
         "max_reqs": {
           "description": "Defines the maximum number of concurrent requests this application can accept. If the FastCGI application retrieves the variable FCGI_MAX_REQS during connection establishment, it can override this option. Furthermore, if the application does not do multiplexing, it will ignore this option.",
@@ -18037,7 +18406,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/fcgiPassHeader"
-          }
+          },
+          "x-omitempty": true
         },
         "path_info": {
           "description": "Defines a regular expression to extract the script-name and the path-info from the URI.\nThus, \u003cregex\u003e must have two captures: the first to capture the script name, and the second to capture the path- info.\nIf not defined, it does not perform matching on the URI, and does not fill the FastCGI parameters PATH_INFO and PATH_TRANSLATED.",
@@ -18047,7 +18417,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/fcgiSetParam"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -18547,7 +18918,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfile"
           },
-          "x-go-name": "ErrorFiles"
+          "x-go-name": "ErrorFiles",
+          "x-omitempty": true
         },
         "error_log_format": {
           "type": "string"
@@ -18557,7 +18929,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfiles"
           },
-          "x-go-name": "ErrorFilesFromHTTPErrors"
+          "x-go-name": "ErrorFilesFromHTTPErrors",
+          "x-omitempty": true
         },
         "errorloc302": {
           "$ref": "#/definitions/errorloc"
@@ -18941,7 +19314,8 @@ func init() {
             "x-go-name": "CPUMap"
           },
           "x-display-name": "CPU Maps",
-          "x-go-name": "CPUMaps"
+          "x-go-name": "CPUMaps",
+          "x-omitempty": true
         },
         "crt_base": {
           "type": "string",
@@ -19039,7 +19413,8 @@ func init() {
             },
             "x-go-name": "H1CaseAdjust"
           },
-          "x-go-name": "H1CaseAdjusts"
+          "x-go-name": "H1CaseAdjusts",
+          "x-omitempty": true
         },
         "h1_case_adjust_file": {
           "type": "string"
@@ -19111,7 +19486,8 @@ func init() {
               }
             },
             "x-go-name": "LuaLoad"
-          }
+          },
+          "x-omitempty": true
         },
         "lua_prepend_path": {
           "type": "array",
@@ -19134,7 +19510,8 @@ func init() {
               }
             },
             "x-go-name": "LuaPrependPath"
-          }
+          },
+          "x-omitempty": true
         },
         "master-worker": {
           "type": "boolean",
@@ -19252,7 +19629,8 @@ func init() {
             "x-go-name": "PresetEnv"
           },
           "x-display-name": "Preset environment variables",
-          "x-go-name": "PresetEnvs"
+          "x-go-name": "PresetEnvs",
+          "x-omitempty": true
         },
         "profiling_tasks": {
           "type": "string",
@@ -19291,7 +19669,8 @@ func init() {
             "x-go-name": "RuntimeAPI"
           },
           "x-display-name": "Runtime APIs",
-          "x-go-name": "RuntimeAPIs"
+          "x-go-name": "RuntimeAPIs",
+          "x-omitempty": true
         },
         "server_state_base": {
           "type": "string",
@@ -19327,7 +19706,8 @@ func init() {
             "x-go-name": "SetVar"
           },
           "x-display-name": "Set variables",
-          "x-go-name": "SetVars"
+          "x-go-name": "SetVars",
+          "x-omitempty": true
         },
         "set_var_fmt": {
           "type": "array",
@@ -19350,7 +19730,8 @@ func init() {
             "x-go-name": "SetVarFmt"
           },
           "x-display-name": "Set variable formats",
-          "x-go-name": "SetVarFmts"
+          "x-go-name": "SetVarFmts",
+          "x-omitempty": true
         },
         "setenv": {
           "type": "array",
@@ -19373,7 +19754,8 @@ func init() {
             "x-go-name": "SetEnv"
           },
           "x-display-name": "Set environment variables",
-          "x-go-name": "SetEnvs"
+          "x-go-name": "SetEnvs",
+          "x-omitempty": true
         },
         "spread_checks": {
           "type": "integer",
@@ -19431,7 +19813,8 @@ func init() {
             "x-go-name": "SslEngine"
           },
           "x-display-name": "SSL Engines",
-          "x-go-name": "SslEngines"
+          "x-go-name": "SslEngines",
+          "x-omitempty": true
         },
         "ssl_load_extra_files": {
           "type": "string",
@@ -19490,7 +19873,8 @@ func init() {
             "x-go-name": "ThreadGroup"
           },
           "x-display-name": "Thread Groups",
-          "x-go-name": "ThreadGroupLines"
+          "x-go-name": "ThreadGroupLines",
+          "x-omitempty": true
         },
         "thread_groups": {
           "type": "integer",
@@ -20167,7 +20551,8 @@ func init() {
               "value": "send"
             }
           },
-          "x-go-name": "CheckHeaders"
+          "x-go-name": "CheckHeaders",
+          "x-omitempty": true
         },
         "index": {
           "type": "integer",
@@ -20509,7 +20894,8 @@ func init() {
               ]
             }
           },
-          "x-go-name": "ReturnHeaders"
+          "x-go-name": "ReturnHeaders",
+          "x-omitempty": true
         },
         "status": {
           "type": "integer",
@@ -20563,6 +20949,51 @@ func init() {
       "title": "HTTP Error Rules Array",
       "items": {
         "$ref": "#/definitions/http_error_rule"
+      }
+    },
+    "http_errors_section": {
+      "description": "A globally declared group of HTTP errors",
+      "type": "object",
+      "title": "http-errors section",
+      "required": [
+        "name",
+        "error_files"
+      ],
+      "properties": {
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "error_files": [
+          {
+            "code": 400,
+            "name": "/etc/haproxy/errorfiles/site1/400.http"
+          },
+          {
+            "code": 404,
+            "name": "/etc/haproxy/errorfiles/site1/404.http"
+          }
+        ],
+        "name": "website-1"
+      }
+    },
+    "http_errors_sections": {
+      "description": "An array of HAProxy http-error sections",
+      "type": "array",
+      "title": "http-errors sections",
+      "items": {
+        "$ref": "#/definitions/http_errors_section"
       }
     },
     "http_request_rule": {
@@ -21151,7 +21582,8 @@ func init() {
               ]
             }
           },
-          "x-go-name": "ReturnHeaders"
+          "x-go-name": "ReturnHeaders",
+          "x-omitempty": true
         },
         "return_status_code": {
           "type": "integer",
@@ -21914,7 +22346,8 @@ func init() {
               ]
             }
           },
-          "x-go-name": "ReturnHeaders"
+          "x-go-name": "ReturnHeaders",
+          "x-omitempty": true
         },
         "return_status_code": {
           "type": "integer",
@@ -23421,7 +23854,8 @@ func init() {
       "title": "Stats Array",
       "items": {
         "$ref": "#/definitions/native_stats_collection"
-      }
+      },
+      "x-omitempty": true
     },
     "native_stats_collection": {
       "description": "Stats from one runtime API",
@@ -23438,7 +23872,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/native_stat"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -23514,6 +23949,30 @@ func init() {
       "title": "Peer_Section",
       "items": {
         "$ref": "#/definitions/peer_section"
+      }
+    },
+    "persist_rule": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "rdp_cookie_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "rdp-cookie"
+            }
+          },
+          "x-display-name": "Rdp Cookie Name"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "rdp-cookie"
+          ]
+        }
       }
     },
     "pgsql_check_params": {
@@ -23798,7 +24257,8 @@ func init() {
       "title": "HAProxy Information",
       "items": {
         "$ref": "#/definitions/process_info"
-      }
+      },
+      "x-omitempty": true
     },
     "program": {
       "description": "HAProxy program configuration",
@@ -24379,7 +24839,8 @@ func init() {
               "crc32c",
               "unique-id"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "rise": {
           "type": "integer",
@@ -24977,7 +25438,8 @@ func init() {
               "crc32c",
               "unique-id"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "redir": {
           "type": "string",
@@ -25378,7 +25840,8 @@ func init() {
                 "type": "array",
                 "items": {
                   "$ref": "#/definitions/server"
-                }
+                },
+                "x-omitempty": true
               },
               "use_as": {
                 "type": "string",
@@ -25390,7 +25853,8 @@ func init() {
               }
             },
             "x-go-name": "SiteFarm"
-          }
+          },
+          "x-omitempty": true
         },
         "name": {
           "type": "string",
@@ -25420,7 +25884,8 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/bind"
-              }
+              },
+              "x-omitempty": true
             },
             "maxconn": {
               "type": "integer",
@@ -25624,7 +26089,8 @@ func init() {
       "title": "SPOE files",
       "items": {
         "type": "string"
-      }
+      },
+      "x-omitempty": true
     },
     "spoe_group": {
       "description": "SPOE group section configuration",
@@ -25807,7 +26273,8 @@ func init() {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -25925,7 +26392,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/stats_auth"
           },
-          "x-display-name": "Stats Auths"
+          "x-display-name": "Stats Auths",
+          "x-omitempty": true
         },
         "stats_enable": {
           "type": "boolean",
@@ -25940,7 +26408,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/stats_http_request"
           },
-          "x-display-name": "Stats HTTP Requests"
+          "x-display-name": "Stats HTTP Requests",
+          "x-omitempty": true
         },
         "stats_maxconn": {
           "type": "integer",
@@ -26109,7 +26578,8 @@ func init() {
               }
             },
             "x-go-name": "StickTableField"
-          }
+          },
+          "x-omitempty": true
         },
         "name": {
           "type": "string"
@@ -27806,6 +28276,9 @@ func init() {
     },
     {
       "name": "HTTPErrorRule"
+    },
+    {
+      "name": "HTTPErrors"
     },
     {
       "name": "HTTPRequestRule"
@@ -35483,6 +35956,407 @@ func init() {
           },
           "204": {
             "description": "HTTP Error Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_errors_sections": {
+      "get": {
+        "description": "Returns an array of all configured http-error sections.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Return an array of http-error sections",
+        "operationId": "getHTTPErrorsSections",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_errors_sections"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new http-error section to the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Add a new http-error section",
+        "operationId": "createHTTPErrorsSection",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "http-error section created",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/http_errors_sections/{name}": {
+      "get": {
+        "description": "Returns one http-error section with a given name from the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Return a http-error section",
+        "operationId": "getHTTPErrorsSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http-error section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/http_errors_section"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a http-error section with a given name in the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Replace a http-error section",
+        "operationId": "replaceHTTPErrorsSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http-error section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "http-error section updated",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/http_errors_section"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a http-error section with a given name from the configuration.",
+        "tags": [
+          "HTTPErrors"
+        ],
+        "summary": "Delete a http-error section",
+        "operationId": "deleteHTTPErrorsSection",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "http-error section name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "http-error section deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -50488,6 +51362,58 @@ func init() {
     }
   },
   "definitions": {
+    "BackendForcePersist": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      }
+    },
+    "BackendIgnorePersist": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      }
+    },
     "ClusterSettingsCluster": {
       "type": "object",
       "title": "Cluster controller information",
@@ -50513,7 +51439,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/ClusterSettingsClusterLogTargetsItems0"
           },
-          "x-go-name": "ClusterLogTargets"
+          "x-go-name": "ClusterLogTargets",
+          "x-omitempty": true
         },
         "name": {
           "type": "string",
@@ -51275,7 +52202,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/server"
-          }
+          },
+          "x-omitempty": true
         },
         "use_as": {
           "type": "string",
@@ -51311,7 +52239,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/bind"
-          }
+          },
+          "x-omitempty": true
         },
         "maxconn": {
           "type": "integer",
@@ -51534,14 +52463,16 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/awsFilters"
-          }
+          },
+          "x-omitempty": true
         },
         "denylist": {
           "description": "Specify the AWS filters used to filter the EC2 instances to ignore",
           "type": "array",
           "items": {
             "$ref": "#/definitions/awsFilters"
-          }
+          },
+          "x-omitempty": true
         },
         "description": {
           "type": "string"
@@ -51737,14 +52668,16 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfile"
           },
-          "x-go-name": "ErrorFiles"
+          "x-go-name": "ErrorFiles",
+          "x-omitempty": true
         },
         "errorfiles_from_http_errors": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/errorfiles"
           },
-          "x-go-name": "ErrorFilesFromHTTPErrors"
+          "x-go-name": "ErrorFilesFromHTTPErrors",
+          "x-omitempty": true
         },
         "errorloc302": {
           "$ref": "#/definitions/errorloc"
@@ -51770,6 +52703,32 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "External Check Path"
         },
+        "force_persist": {
+          "type": "object",
+          "required": [
+            "cond",
+            "cond_test"
+          ],
+          "properties": {
+            "cond": {
+              "type": "string",
+              "enum": [
+                "if",
+                "unless"
+              ],
+              "x-display-name": "Condition"
+            },
+            "cond_test": {
+              "type": "string",
+              "x-dependency": {
+                "cond": {
+                  "required": true
+                }
+              },
+              "x-display-name": "Condition Test"
+            }
+          }
+        },
         "forwardfor": {
           "x-dependency": {
             "mode": {
@@ -51777,6 +52736,10 @@ func init() {
             }
           },
           "$ref": "#/definitions/forwardfor"
+        },
+        "fullconn": {
+          "type": "integer",
+          "x-nullable": true
         },
         "h1_case_adjust_bogus_server": {
           "type": "string",
@@ -51941,6 +52904,11 @@ func init() {
             }
           }
         },
+        "http_send_name_header": {
+          "type": "string",
+          "x-display-name": "The header string to use to send the server name",
+          "x-nullable": true
+        },
         "httpchk_params": {
           "x-dependency": {
             "mode": {
@@ -51965,6 +52933,32 @@ func init() {
         "id": {
           "type": "integer",
           "x-nullable": true
+        },
+        "ignore_persist": {
+          "type": "object",
+          "required": [
+            "cond",
+            "cond_test"
+          ],
+          "properties": {
+            "cond": {
+              "type": "string",
+              "enum": [
+                "if",
+                "unless"
+              ],
+              "x-display-name": "Condition"
+            },
+            "cond_test": {
+              "type": "string",
+              "x-dependency": {
+                "cond": {
+                  "required": true
+                }
+              },
+              "x-display-name": "Condition Test"
+            }
+          }
         },
         "independent_streams": {
           "type": "string",
@@ -51993,6 +52987,11 @@ func init() {
         "log_tag": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "max_keep_alive_queue": {
+          "type": "integer",
+          "x-display-name": "Maximum keep alive queue",
+          "x-nullable": true
         },
         "mode": {
           "type": "string",
@@ -52033,6 +53032,9 @@ func init() {
           ],
           "x-display-name": "Persist"
         },
+        "persist_rule": {
+          "$ref": "#/definitions/persist_rule"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
         },
@@ -52054,6 +53056,10 @@ func init() {
         "retries": {
           "type": "integer",
           "x-nullable": true
+        },
+        "retry_on": {
+          "type": "string",
+          "x-display-name": "Retry on"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -52902,7 +53908,8 @@ func init() {
               "items": {
                 "$ref": "#/definitions/ClusterSettingsClusterLogTargetsItems0"
               },
-              "x-go-name": "ClusterLogTargets"
+              "x-go-name": "ClusterLogTargets",
+              "x-omitempty": true
             },
             "name": {
               "type": "string",
@@ -52948,7 +53955,8 @@ func init() {
               "deflate",
               "raw-deflate"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "offload": {
           "type": "boolean"
@@ -52957,7 +53965,8 @@ func init() {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -53065,7 +54074,8 @@ func init() {
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "service-whitelist": {
           "description": "deprecated, use service_allowlist",
@@ -53073,21 +54083,24 @@ func init() {
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "service_allowlist": {
           "type": "array",
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "service_denylist": {
           "type": "array",
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "x-omitempty": true
         },
         "token": {
           "type": "string",
@@ -53122,14 +54135,16 @@ func init() {
           "items": {
             "$ref": "#/definitions/CookieAttrItems0"
           },
-          "x-go-name": "Attrs"
+          "x-go-name": "Attrs",
+          "x-omitempty": true
         },
         "domain": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/CookieDomainItems0"
           },
-          "x-go-name": "Domains"
+          "x-go-name": "Domains",
+          "x-omitempty": true
         },
         "dynamic": {
           "type": "boolean"
@@ -53370,7 +54385,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfile"
           },
-          "x-go-name": "ErrorFiles"
+          "x-go-name": "ErrorFiles",
+          "x-omitempty": true
         },
         "error_log_format": {
           "type": "string"
@@ -53380,7 +54396,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfiles"
           },
-          "x-go-name": "ErrorFilesFromHTTPErrors"
+          "x-go-name": "ErrorFilesFromHTTPErrors",
+          "x-omitempty": true
         },
         "errorloc302": {
           "$ref": "#/definitions/errorloc"
@@ -53408,6 +54425,10 @@ func init() {
         },
         "forwardfor": {
           "$ref": "#/definitions/forwardfor"
+        },
+        "fullconn": {
+          "type": "integer",
+          "x-nullable": true
         },
         "h1_case_adjust_bogus_client": {
           "type": "string",
@@ -53504,6 +54525,11 @@ func init() {
             "safe"
           ]
         },
+        "http_send_name_header": {
+          "type": "string",
+          "x-display-name": "Add the server name to a request",
+          "x-nullable": true
+        },
         "http_use_proxy_header": {
           "type": "string",
           "enum": [
@@ -53585,6 +54611,11 @@ func init() {
           ],
           "x-display-name": "Log ASAP"
         },
+        "max_keep_alive_queue": {
+          "type": "integer",
+          "x-display-name": "Maximum server queue size for maintaining keep-alive connections",
+          "x-nullable": true
+        },
         "maxconn": {
           "type": "integer",
           "x-display-name": "Max Connections",
@@ -53627,6 +54658,9 @@ func init() {
           ],
           "x-display-name": "Persist"
         },
+        "persist_rule": {
+          "$ref": "#/definitions/persist_rule"
+        },
         "pgsql_check_params": {
           "$ref": "#/definitions/pgsql_check_params"
         },
@@ -53648,6 +54682,10 @@ func init() {
         "retries": {
           "type": "integer",
           "x-nullable": true
+        },
+        "retry_on": {
+          "type": "string",
+          "x-display-name": "Specify when to attempt to automatically retry a failed request"
         },
         "server_fin_timeout": {
           "type": "integer",
@@ -53972,7 +55010,8 @@ func init() {
               503,
               504
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "name": {
           "type": "string"
@@ -54050,7 +55089,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/fcgiLogStderr"
-          }
+          },
+          "x-omitempty": true
         },
         "max_reqs": {
           "description": "Defines the maximum number of concurrent requests this application can accept. If the FastCGI application retrieves the variable FCGI_MAX_REQS during connection establishment, it can override this option. Furthermore, if the application does not do multiplexing, it will ignore this option.",
@@ -54077,7 +55117,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/fcgiPassHeader"
-          }
+          },
+          "x-omitempty": true
         },
         "path_info": {
           "description": "Defines a regular expression to extract the script-name and the path-info from the URI.\nThus, \u003cregex\u003e must have two captures: the first to capture the script name, and the second to capture the path- info.\nIf not defined, it does not perform matching on the URI, and does not fill the FastCGI parameters PATH_INFO and PATH_TRANSLATED.",
@@ -54087,7 +55128,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/fcgiSetParam"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -54587,7 +55629,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfile"
           },
-          "x-go-name": "ErrorFiles"
+          "x-go-name": "ErrorFiles",
+          "x-omitempty": true
         },
         "error_log_format": {
           "type": "string"
@@ -54597,7 +55640,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/errorfiles"
           },
-          "x-go-name": "ErrorFilesFromHTTPErrors"
+          "x-go-name": "ErrorFilesFromHTTPErrors",
+          "x-omitempty": true
         },
         "errorloc302": {
           "$ref": "#/definitions/errorloc"
@@ -54967,7 +56011,8 @@ func init() {
             "$ref": "#/definitions/GlobalCPUMapsItems0"
           },
           "x-display-name": "CPU Maps",
-          "x-go-name": "CPUMaps"
+          "x-go-name": "CPUMaps",
+          "x-omitempty": true
         },
         "crt_base": {
           "type": "string",
@@ -55052,7 +56097,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/GlobalH1CaseAdjustItems0"
           },
-          "x-go-name": "H1CaseAdjusts"
+          "x-go-name": "H1CaseAdjusts",
+          "x-omitempty": true
         },
         "h1_case_adjust_file": {
           "type": "string"
@@ -55114,13 +56160,15 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/GlobalLuaLoadsItems0"
-          }
+          },
+          "x-omitempty": true
         },
         "lua_prepend_path": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/GlobalLuaPrependPathItems0"
-          }
+          },
+          "x-omitempty": true
         },
         "master-worker": {
           "type": "boolean",
@@ -55223,7 +56271,8 @@ func init() {
             "$ref": "#/definitions/GlobalPresetenvItems0"
           },
           "x-display-name": "Preset environment variables",
-          "x-go-name": "PresetEnvs"
+          "x-go-name": "PresetEnvs",
+          "x-omitempty": true
         },
         "profiling_tasks": {
           "type": "string",
@@ -55247,7 +56296,8 @@ func init() {
             "$ref": "#/definitions/GlobalRuntimeApisItems0"
           },
           "x-display-name": "Runtime APIs",
-          "x-go-name": "RuntimeAPIs"
+          "x-go-name": "RuntimeAPIs",
+          "x-omitempty": true
         },
         "server_state_base": {
           "type": "string",
@@ -55268,7 +56318,8 @@ func init() {
             "$ref": "#/definitions/GlobalSetVarItems0"
           },
           "x-display-name": "Set variables",
-          "x-go-name": "SetVars"
+          "x-go-name": "SetVars",
+          "x-omitempty": true
         },
         "set_var_fmt": {
           "type": "array",
@@ -55276,7 +56327,8 @@ func init() {
             "$ref": "#/definitions/GlobalSetVarFmtItems0"
           },
           "x-display-name": "Set variable formats",
-          "x-go-name": "SetVarFmts"
+          "x-go-name": "SetVarFmts",
+          "x-omitempty": true
         },
         "setenv": {
           "type": "array",
@@ -55284,7 +56336,8 @@ func init() {
             "$ref": "#/definitions/GlobalSetenvItems0"
           },
           "x-display-name": "Set environment variables",
-          "x-go-name": "SetEnvs"
+          "x-go-name": "SetEnvs",
+          "x-omitempty": true
         },
         "spread_checks": {
           "type": "integer",
@@ -55327,7 +56380,8 @@ func init() {
             "$ref": "#/definitions/GlobalSslEnginesItems0"
           },
           "x-display-name": "SSL Engines",
-          "x-go-name": "SslEngines"
+          "x-go-name": "SslEngines",
+          "x-omitempty": true
         },
         "ssl_load_extra_files": {
           "type": "string",
@@ -55371,7 +56425,8 @@ func init() {
             "$ref": "#/definitions/GlobalThreadGroupLinesItems0"
           },
           "x-display-name": "Thread Groups",
-          "x-go-name": "ThreadGroupLines"
+          "x-go-name": "ThreadGroupLines",
+          "x-omitempty": true
         },
         "thread_groups": {
           "type": "integer",
@@ -56049,7 +57104,8 @@ func init() {
               "value": "send"
             }
           },
-          "x-go-name": "CheckHeaders"
+          "x-go-name": "CheckHeaders",
+          "x-omitempty": true
         },
         "index": {
           "type": "integer",
@@ -56391,7 +57447,8 @@ func init() {
               ]
             }
           },
-          "x-go-name": "ReturnHeaders"
+          "x-go-name": "ReturnHeaders",
+          "x-omitempty": true
         },
         "status": {
           "type": "integer",
@@ -56445,6 +57502,51 @@ func init() {
       "title": "HTTP Error Rules Array",
       "items": {
         "$ref": "#/definitions/http_error_rule"
+      }
+    },
+    "http_errors_section": {
+      "description": "A globally declared group of HTTP errors",
+      "type": "object",
+      "title": "http-errors section",
+      "required": [
+        "name",
+        "error_files"
+      ],
+      "properties": {
+        "error_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errorfile"
+          },
+          "x-go-name": "ErrorFiles"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "error_files": [
+          {
+            "code": 400,
+            "name": "/etc/haproxy/errorfiles/site1/400.http"
+          },
+          {
+            "code": 404,
+            "name": "/etc/haproxy/errorfiles/site1/404.http"
+          }
+        ],
+        "name": "website-1"
+      }
+    },
+    "http_errors_sections": {
+      "description": "An array of HAProxy http-error sections",
+      "type": "array",
+      "title": "http-errors sections",
+      "items": {
+        "$ref": "#/definitions/http_errors_section"
       }
     },
     "http_request_rule": {
@@ -57033,7 +58135,8 @@ func init() {
               ]
             }
           },
-          "x-go-name": "ReturnHeaders"
+          "x-go-name": "ReturnHeaders",
+          "x-omitempty": true
         },
         "return_status_code": {
           "type": "integer",
@@ -57796,7 +58899,8 @@ func init() {
               ]
             }
           },
-          "x-go-name": "ReturnHeaders"
+          "x-go-name": "ReturnHeaders",
+          "x-omitempty": true
         },
         "return_status_code": {
           "type": "integer",
@@ -59304,7 +60408,8 @@ func init() {
       "title": "Stats Array",
       "items": {
         "$ref": "#/definitions/native_stats_collection"
-      }
+      },
+      "x-omitempty": true
     },
     "native_stats_collection": {
       "description": "Stats from one runtime API",
@@ -59321,7 +60426,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/native_stat"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -59397,6 +60503,30 @@ func init() {
       "title": "Peer_Section",
       "items": {
         "$ref": "#/definitions/peer_section"
+      }
+    },
+    "persist_rule": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "rdp_cookie_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "rdp-cookie"
+            }
+          },
+          "x-display-name": "Rdp Cookie Name"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "rdp-cookie"
+          ]
+        }
       }
     },
     "pgsql_check_params": {
@@ -59681,7 +60811,8 @@ func init() {
       "title": "HAProxy Information",
       "items": {
         "$ref": "#/definitions/process_info"
-      }
+      },
+      "x-omitempty": true
     },
     "program": {
       "description": "HAProxy program configuration",
@@ -60262,7 +61393,8 @@ func init() {
               "crc32c",
               "unique-id"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "rise": {
           "type": "integer",
@@ -60860,7 +61992,8 @@ func init() {
               "crc32c",
               "unique-id"
             ]
-          }
+          },
+          "x-omitempty": true
         },
         "redir": {
           "type": "string",
@@ -61210,7 +62343,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/SiteFarmsItems0"
-          }
+          },
+          "x-omitempty": true
         },
         "name": {
           "type": "string",
@@ -61240,7 +62374,8 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/bind"
-              }
+              },
+              "x-omitempty": true
             },
             "maxconn": {
               "type": "integer",
@@ -61444,7 +62579,8 @@ func init() {
       "title": "SPOE files",
       "items": {
         "type": "string"
-      }
+      },
+      "x-omitempty": true
     },
     "spoe_group": {
       "description": "SPOE group section configuration",
@@ -61627,7 +62763,8 @@ func init() {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "x-omitempty": true
         }
       }
     },
@@ -61745,7 +62882,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/stats_auth"
           },
-          "x-display-name": "Stats Auths"
+          "x-display-name": "Stats Auths",
+          "x-omitempty": true
         },
         "stats_enable": {
           "type": "boolean",
@@ -61760,7 +62898,8 @@ func init() {
           "items": {
             "$ref": "#/definitions/stats_http_request"
           },
-          "x-display-name": "Stats HTTP Requests"
+          "x-display-name": "Stats HTTP Requests",
+          "x-omitempty": true
         },
         "stats_maxconn": {
           "type": "integer",
@@ -61887,7 +63026,8 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/StickTableFieldsItems0"
-          }
+          },
+          "x-omitempty": true
         },
         "name": {
           "type": "string"
@@ -63584,6 +64724,9 @@ func init() {
     },
     {
       "name": "HTTPErrorRule"
+    },
+    {
+      "name": "HTTPErrors"
     },
     {
       "name": "HTTPRequestRule"

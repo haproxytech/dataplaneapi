@@ -1,0 +1,13 @@
+{
+  "name": "i_am_not_there",
+  "error_files": [
+    {
+      "code": 500,
+      "file": "/dev/null"
+    },
+    {
+      "code": 502,
+      "file": "/dev/null"
+    }
+  ]
+}

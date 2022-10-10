@@ -1,0 +1,12 @@
+{
+  "error_files": [
+    {
+      "code": 400,
+      "file": "/dev/null"
+    },
+    {
+      "code": 404,
+      "file": "/dev/null"
+    }
+  ]
+}

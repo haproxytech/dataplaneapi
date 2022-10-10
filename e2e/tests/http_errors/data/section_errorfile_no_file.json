@@ -1,0 +1,12 @@
+{
+  "name": "website-3",
+  "error_files": [
+    {
+      "code": 500
+    },
+    {
+      "code": 502,
+      "file": "/dev/null"
+    }
+  ]
+}
