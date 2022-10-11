@@ -43,6 +43,12 @@ if [ ! -z $PREWIPE ] && [ "$PREWIPE" == "y" ]; then
    cleanup ${DOCKER_CONTAINER_NAME}
 fi
 
+# Custom configuration to run tests with the master socket.
+if [ $HAPROXY_VERSION = 2.7 ]; then
+  HAPROXY_FLAGS="-W -db -S /var/lib/haproxy/master -f /usr/local/etc/haproxy/haproxy.cfg"
+  VARIANT="-master-socket"
+fi
+
 if [ ! -z $(docker ps -q -f name=${DOCKER_CONTAINER_NAME}) ]; then
     echo ">>> Skipping provisioning the e2e environment, ${DOCKER_CONTAINER_NAME} already present"
 else
@@ -52,9 +58,9 @@ else
       --detach \
       --name ${DOCKER_CONTAINER_NAME} \
       --publish "${E2E_PORT}":8080 \
-      "${DOCKER_BASE_IMAGE}" > /dev/null 2>&1
+      "${DOCKER_BASE_IMAGE}" $HAPROXY_FLAGS > /dev/null 2>&1
     docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
-    docker cp "${E2E_DIR}/fixtures/dataplaneapi.hcl" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.hcl
+    docker cp "${E2E_DIR}/fixtures/dataplaneapi${VARIANT}.hcl" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.hcl
     docker cp "${E2E_DIR}/fixtures/haproxy.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg
     docker cp "${E2E_DIR}/fixtures/userlist.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/userlist.cfg
     docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.hcl"

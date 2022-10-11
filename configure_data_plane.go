@@ -39,6 +39,7 @@ import (
 	client_native "github.com/haproxytech/client-native/v4"
 	"github.com/haproxytech/client-native/v4/models"
 	"github.com/haproxytech/client-native/v4/options"
+	cn_runtime "github.com/haproxytech/client-native/v4/runtime"
 	"github.com/haproxytech/client-native/v4/spoe"
 	"github.com/haproxytech/client-native/v4/storage"
 	"github.com/haproxytech/dataplaneapi/log"
@@ -208,14 +209,16 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// Initialize reload agent
 	raParams := haproxy.ReloadAgentParams{
-		Delay:      haproxyOptions.ReloadDelay,
-		ReloadCmd:  haproxyOptions.ReloadCmd,
-		RestartCmd: haproxyOptions.RestartCmd,
-		StatusCmd:  haproxyOptions.StatusCmd,
-		ConfigFile: haproxyOptions.ConfigFile,
-		BackupDir:  haproxyOptions.BackupsDir,
-		Retention:  haproxyOptions.ReloadRetention,
-		Ctx:        ctx,
+		Delay:           haproxyOptions.ReloadDelay,
+		ReloadCmd:       haproxyOptions.ReloadCmd,
+		UseMasterSocket: canUseMasterSocketReload(&haproxyOptions, client),
+		RestartCmd:      haproxyOptions.RestartCmd,
+		StatusCmd:       haproxyOptions.StatusCmd,
+		ConfigFile:      haproxyOptions.ConfigFile,
+		BackupDir:       haproxyOptions.BackupsDir,
+		Retention:       haproxyOptions.ReloadRetention,
+		Client:          client,
+		Ctx:             ctx,
 	}
 
 	ra, e := haproxy.NewReloadAgent(raParams)
@@ -901,6 +904,26 @@ func serverShutdown() {
 	if cfg.HAProxy.UpdateMapFiles {
 		cfg.MapSync.Stop()
 	}
+}
+
+// Determine if we can reload HAProxy's configuration using the master socket 'reload' command.
+// This requires at least HAProxy 2.7 configured in master/worker mode, with a master socket.
+func canUseMasterSocketReload(conf *dataplaneapi_config.HAProxyConfiguration, client client_native.HAProxyClient) bool {
+	useMasterSocket := conf.MasterWorkerMode && conf.MasterRuntime != "" && misc.IsUnixSocketAddr(conf.MasterRuntime)
+	if !useMasterSocket {
+		return false
+	}
+
+	rt, err := client.Runtime()
+	if err != nil {
+		return false
+	}
+	currVersion, err := rt.GetVersion()
+	if err != nil {
+		return false
+	}
+
+	return cn_runtime.IsBiggerOrEqual(&cn_runtime.HAProxyVersion{Major: 2, Minor: 7}, &currVersion)
 }
 
 func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, mWorker bool) client_native.HAProxyClient {

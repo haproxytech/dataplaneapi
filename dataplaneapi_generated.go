@@ -74,36 +74,36 @@ func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) {
 			server.WriteTimeout = d
 		}
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSHost != nil && !misc.HasOSArg("", "tls-host", "TLS_HOST") {
-		server.TLSHost = *configStorage.Dataplaneapi.Tls.TLSHost
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSHost != nil && !misc.HasOSArg("", "tls-host", "TLS_HOST") {
+		server.TLSHost = *configStorage.Dataplaneapi.TLS.TLSHost
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSPort != nil && !misc.HasOSArg("", "tls-port", "TLS_PORT") {
-		server.TLSPort = *configStorage.Dataplaneapi.Tls.TLSPort
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSPort != nil && !misc.HasOSArg("", "tls-port", "TLS_PORT") {
+		server.TLSPort = *configStorage.Dataplaneapi.TLS.TLSPort
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSCertificate != nil && !misc.HasOSArg("", "tls-certificate", "TLS_CERTIFICATE") {
-		server.TLSCertificate = *configStorage.Dataplaneapi.Tls.TLSCertificate
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSCertificate != nil && !misc.HasOSArg("", "tls-certificate", "TLS_CERTIFICATE") {
+		server.TLSCertificate = *configStorage.Dataplaneapi.TLS.TLSCertificate
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSCertificateKey != nil && !misc.HasOSArg("", "tls-key", "TLS_PRIVATE_KEY") {
-		server.TLSCertificateKey = *configStorage.Dataplaneapi.Tls.TLSCertificateKey
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSCertificateKey != nil && !misc.HasOSArg("", "tls-key", "TLS_PRIVATE_KEY") {
+		server.TLSCertificateKey = *configStorage.Dataplaneapi.TLS.TLSCertificateKey
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSCACertificate != nil && !misc.HasOSArg("", "tls-ca", "TLS_CA_CERTIFICATE") {
-		server.TLSCACertificate = *configStorage.Dataplaneapi.Tls.TLSCACertificate
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSCACertificate != nil && !misc.HasOSArg("", "tls-ca", "TLS_CA_CERTIFICATE") {
+		server.TLSCACertificate = *configStorage.Dataplaneapi.TLS.TLSCACertificate
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSListenLimit != nil && !misc.HasOSArg("", "tls-listen-limit", "") {
-		server.TLSListenLimit = *configStorage.Dataplaneapi.Tls.TLSListenLimit
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSListenLimit != nil && !misc.HasOSArg("", "tls-listen-limit", "") {
+		server.TLSListenLimit = *configStorage.Dataplaneapi.TLS.TLSListenLimit
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSKeepAlive != nil && !misc.HasOSArg("", "tls-keep-alive", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.Tls.TLSKeepAlive); err != nil {
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSKeepAlive != nil && !misc.HasOSArg("", "tls-keep-alive", "") {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSKeepAlive); err != nil {
 			server.TLSKeepAlive = d
 		}
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSReadTimeout != nil && !misc.HasOSArg("", "tls-read-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.Tls.TLSReadTimeout); err != nil {
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSReadTimeout != nil && !misc.HasOSArg("", "tls-read-timeout", "") {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSReadTimeout); err != nil {
 			server.TLSReadTimeout = d
 		}
 	}
-	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.Tls != nil && configStorage.Dataplaneapi.Tls.TLSWriteTimeout != nil && !misc.HasOSArg("", "tls-write-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.Tls.TLSWriteTimeout); err != nil {
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSWriteTimeout != nil && !misc.HasOSArg("", "tls-write-timeout", "") {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSWriteTimeout); err != nil {
 			server.TLSWriteTimeout = d
 		}
 	}

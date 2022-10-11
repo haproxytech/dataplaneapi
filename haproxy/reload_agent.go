@@ -29,8 +29,10 @@ import (
 	"time"
 
 	"github.com/google/renameio"
+	client_native "github.com/haproxytech/client-native/v4"
 	"github.com/haproxytech/client-native/v4/misc"
 	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v4/runtime"
 	"github.com/haproxytech/dataplaneapi/log"
 )
 
@@ -61,32 +63,37 @@ type reloadCache struct {
 }
 
 type ReloadAgentParams struct {
-	Delay      int
-	ReloadCmd  string
-	RestartCmd string
-	StatusCmd  string
-	ConfigFile string
-	BackupDir  string
-	Retention  int
-	Ctx        context.Context
+	Delay           int
+	ReloadCmd       string
+	UseMasterSocket bool
+	RestartCmd      string
+	StatusCmd       string
+	ConfigFile      string
+	BackupDir       string
+	Retention       int
+	Client          client_native.HAProxyClient
+	Ctx             context.Context
 }
 
 // ReloadAgent handles all reloads, scheduled or forced
 type ReloadAgent struct {
-	delay         int
-	reloadCmd     string
-	restartCmd    string
-	statusCmd     string
-	configFile    string
-	lkgConfigFile string
-	done          <-chan struct{}
-	cache         reloadCache
+	delay           int
+	reloadCmd       string
+	useMasterSocket bool
+	restartCmd      string
+	statusCmd       string
+	configFile      string
+	lkgConfigFile   string
+	done            <-chan struct{}
+	cache           reloadCache
+	runtime         runtime.Runtime
 }
 
 func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 	ra := &ReloadAgent{}
 
 	ra.reloadCmd = params.ReloadCmd
+	ra.useMasterSocket = params.UseMasterSocket
 	ra.restartCmd = params.RestartCmd
 	ra.statusCmd = params.StatusCmd
 	ra.configFile = params.ConfigFile
@@ -95,6 +102,14 @@ func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {
 		params.Ctx = context.Background()
 	}
 	ra.done = params.Ctx.Done()
+
+	if ra.useMasterSocket {
+		rt, err := params.Client.Runtime()
+		if err != nil {
+			return nil, err
+		}
+		ra.runtime = rt
+	}
 
 	params.Delay *= 1000 // delay is defined in seconds - internally in miliseconds
 	d := os.Getenv("CI_DATAPLANE_RELOAD_DELAY_OVERRIDE")
@@ -181,27 +196,30 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	logFields := map[string]interface{}{logFieldReloadID: id}
 	// try the reload
 	log.WithFields(logFields, log.DebugLevel, "Reload started")
+	var output string
+	var err error
 	t := time.Now()
-	output, err := execCmd(ra.reloadCmd)
+
+	if ra.useMasterSocket {
+		output, err = ra.runtime.Reload()
+	} else {
+		output, err = execCmd(ra.reloadCmd)
+	}
 	if err != nil {
 		reloadFailedError := err
-		// if failed, return to last known good file and restart and return the original file
-		log.WithFields(logFields, log.InfoLevel, "Reload failed, restarting with last known good config...")
+		// If failed, return to last known good file.
+		log.WithFields(logFields, log.InfoLevel, "Reload failed, reverting the last working config...")
 		if err := copyFile(ra.configFile, ra.configFile+".bck"); err != nil {
-			return fmt.Sprintf("Reload failed: %s, failed to backup original config file for restart.", output), err
+			return fmt.Sprintf("Reload failed: %s. Failed to backup the current config file.", output), err
 		}
 		defer func() {
 			// nolint:errcheck
 			os.Remove(ra.configFile + ".bck")
 		}()
 		if err := copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
-			return fmt.Sprintf("Reload failed: %s, failed to revert to last known good config file", output), err
+			return fmt.Sprintf("Reload failed: %s. Failed to revert to the last working config file.", output), err
 		}
-		if err := ra.restartHAProxy(); err != nil {
-			log.WithFieldsf(logFields, log.WarnLevel, "Restart failed, please check the reason and restart manually: %s", err)
-			return fmt.Sprintf("Reload failed: %s, failed to restart HAProxy, please check and start manually", output), err
-		}
-		log.WithFields(logFields, log.DebugLevel, "HAProxy restarted with last known good config")
+
 		return output, reloadFailedError
 	}
 	log.WithFieldsf(logFields, log.DebugLevel, "Reload finished in %s", time.Since(t))

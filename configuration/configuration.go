@@ -41,7 +41,9 @@ type HAProxyConfiguration struct {
 	ReloadCmd            string `short:"r" long:"reload-cmd" description:"Reload command" group:"reload"`
 	RestartCmd           string `short:"s" long:"restart-cmd" description:"Restart command" group:"reload"`
 	StatusCmd            string `long:"status-cmd" description:"Status command" group:"reload"`
+	ServiceName          string `long:"service" description:"Name of the HAProxy service" group:"reload"`
 	ReloadRetention      int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1" group:"reload"`
+	ReloadStrategy       string `long:"reload-strategy" description:"Either systemd, s6 or custom" default:"custom" group:"reload"`
 	TransactionDir       string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy" group:"transaction"`
 	BackupsNumber        int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0" group:"transaction"`
 	BackupsDir           string `long:"backups-dir" description:"Path to directory in which to place backup files" group:"transaction"`
@@ -239,13 +241,17 @@ func (c *Configuration) Load() error {
 	}
 
 	if c.Name.Load() == "" {
-		hostname, err := os.Hostname()
-		if err != nil {
-			log.Warningf("Error fetching hostname, using petname for dataplaneapi name: %s", err.Error())
+		hostname, nameErr := os.Hostname()
+		if nameErr != nil {
+			log.Warningf("Error fetching hostname, using petname for dataplaneapi name: %s", nameErr.Error())
 			rand.Seed(time.Now().UnixNano())
 			c.Name.Store(petname.Generate(2, "_"))
 		}
 		c.Name.Store(hostname)
+	}
+
+	if err = validateReloadConfiguration(&c.HAProxy); err != nil {
+		return err
 	}
 
 	return nil

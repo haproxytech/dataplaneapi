@@ -77,7 +77,9 @@ haproxy {
     reload_cmd = "systemctl reload haproxy"
     restart_cmd = "systemctl restart haproxy"
     status_cmd = "systemctl status haproxy"
+    service_name = "haproxy.service"
     reload_retention = 1
+    strategy = "custom"
     validate_cmd = "null"
   }
 }

@@ -115,7 +115,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	err = cfg.Load()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("configuration error:", err)
 		os.Exit(1)
 	}
 
@@ -143,7 +143,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 
 	configuration.HandlePIDFile(cfg.HAProxy)
 
-	if cfg.Mode.Load() == "cluster" {
+	if cfg.Mode.Load() == configuration.ModeCluster {
 		if cfg.Cluster.CertificateFetched.Load() {
 			log.Info("HAProxy Data Plane API in cluster mode")
 			server.TLSCertificate = flags.Filename(path.Join(cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", cfg.Name.Load())))
@@ -182,6 +182,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 	log.Infof("HAProxy Data Plane API %s %s%s", GitTag, GitCommit, GitDirty)
 	log.Infof("Build from: %s", GitRepo)
 	log.Infof("Build date: %s", BuildTime)
+	log.Infof("Reload strategy: %s", cfg.HAProxy.ReloadStrategy)
 
 	err = cfg.Save()
 	if err != nil {

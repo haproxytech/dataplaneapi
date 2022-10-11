@@ -22,6 +22,7 @@ haproxy {
   haproxy_bin = "/usr/local/sbin/haproxy"
 
   reload {
+    strategy    = "custom"
     reload_cmd  = "kill -SIGUSR2 1"
     restart_cmd = "kill -SIGUSR2 1"
   }
