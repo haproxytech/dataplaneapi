@@ -24,26 +24,19 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "transactions: Outdated transactions cannot be committed" {
-	# creating 5 transactions
-	for _ in {1..5}; do
-	  resource_post "$_TRANSACTIONS_BASE_PATH" ""
-	  assert_equal "$SC" 201
-	done
+	resource_post "$_TRANSACTIONS_BASE_PATH" ""
+	assert_equal "$SC" 201
+	local first_id; first_id=$(get_json_path "${BODY}" ".id")
 
-	# retrieving the first one
-	resource_get "$_TRANSACTIONS_BASE_PATH"
-	local id; id=$(get_json_path "${BODY}" ".[0].id")
+	resource_post "$_TRANSACTIONS_BASE_PATH" ""
+	assert_equal "$SC" 201
+	local second_id; second_id=$(get_json_path "${BODY}" ".id")
 
-	# commit it, must succeed
-	resource_put "$_TRANSACTIONS_BASE_PATH/$id" ""
+	# commit first one, must succeed
+	resource_put "$_TRANSACTIONS_BASE_PATH/$first_id" ""
  	assert_equal "$SC" 202
 
-	# retrieve other transactions
-	resource_get "$_TRANSACTIONS_BASE_PATH"
-  	assert_equal "$SC" 200
-	# iterate over them, should fail with 406 status code
-	for tx in $(echo "${BODY}" | jq -r '.[].id'); do
-		resource_put "$_TRANSACTIONS_BASE_PATH/${tx}" ""
-		assert_equal "$SC" 406
-	done
+	# try to commit second one, must be outdated
+	resource_put "$_TRANSACTIONS_BASE_PATH/$second_id" ""
+	assert_equal "$SC" 406
 }
