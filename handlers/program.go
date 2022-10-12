@@ -25,7 +25,7 @@ import (
 
 type DeleteProgramHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (d DeleteProgramHandlerImpl) Handle(params process_manager.DeleteProgramParams, _ interface{}) middleware.Responder {
@@ -80,7 +80,7 @@ func (d DeleteProgramHandlerImpl) Handle(params process_manager.DeleteProgramPar
 
 type CreateProgramHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (c CreateProgramHandlerImpl) Handle(params process_manager.CreateProgramParams, _ interface{}) middleware.Responder {
@@ -191,7 +191,7 @@ func (g GetProgramsHandlerImpl) Handle(params process_manager.GetProgramsParams,
 
 type ReplaceProgramHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (r ReplaceProgramHandlerImpl) Handle(params process_manager.ReplaceProgramParams, _ interface{}) middleware.Responder {

@@ -26,7 +26,7 @@ import (
 
 type CreateFCGIAppHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ interface{}) middleware.Responder {
@@ -79,7 +79,7 @@ func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ 
 }
 
 type DeleteFCGIAppHandlerImpl struct {
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 	Client      client_native.HAProxyClient
 }
 
@@ -191,7 +191,7 @@ func (g GetFCGIAppsHandlerImpl) Handle(params fcgi_app.GetFCGIAppsParams, _ inte
 
 type ReplaceFCGIAppHandlerImpl struct {
 	Client      client_native.HAProxyClient
-	ReloadAgent *haproxy.ReloadAgent
+	ReloadAgent haproxy.IReloadAgent
 }
 
 func (r ReplaceFCGIAppHandlerImpl) Handle(params fcgi_app.ReplaceFCGIAppParams, _ interface{}) middleware.Responder {
