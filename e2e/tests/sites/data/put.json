@@ -8,14 +8,12 @@
       "name": "tcp_backend",
       "servers": [
         {
-          "proxy-v2-options": null,
           "weight": 30,
           "address": "127.0.1.1",
           "name": "tcp_server_01",
           "port": 4567
         },
         {
-          "proxy-v2-options": null,
           "weight": 70,
           "address": "127.0.1.2",
           "name": "tcp_server_02",

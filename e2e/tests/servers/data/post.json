@@ -3,6 +3,5 @@
   "check": "enabled",
   "name": "test_server",
   "port": 8080,
-  "proxy-v2-options": null,
   "weight": 80
 }
