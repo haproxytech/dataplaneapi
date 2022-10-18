@@ -16325,6 +16325,9 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "source": {
+          "$ref": "#/definitions/source"
+        },
         "splice_auto": {
           "type": "string",
           "enum": [
@@ -17994,6 +17997,9 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Socket Stats"
+        },
+        "source": {
+          "$ref": "#/definitions/source"
         },
         "splice_auto": {
           "type": "string",
@@ -25964,6 +25970,58 @@ func init() {
         },
         "hello": {
           "type": "string"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "address_second": {
+          "type": "string"
+        },
+        "hdr": {
+          "type": "string",
+          "x-dependency": {
+            "usesrc": {
+              "value": "hdr_ip"
+            }
+          }
+        },
+        "interface": {
+          "type": "string"
+        },
+        "occ": {
+          "type": "string",
+          "x-dependency": {
+            "usesrc": {
+              "value": "hdr_ip"
+            }
+          }
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "port_second": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "usesrc": {
+          "type": "string",
+          "enum": [
+            "address",
+            "client",
+            "clientip",
+            "hdr_ip"
+          ]
         }
       }
     },
@@ -53076,6 +53134,9 @@ func init() {
         "smtpchk_params": {
           "$ref": "#/definitions/smtpchk_params"
         },
+        "source": {
+          "$ref": "#/definitions/source"
+        },
         "splice_auto": {
           "type": "string",
           "enum": [
@@ -54705,6 +54766,9 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Socket Stats"
+        },
+        "source": {
+          "$ref": "#/definitions/source"
         },
         "splice_auto": {
           "type": "string",
@@ -62454,6 +62518,58 @@ func init() {
         },
         "hello": {
           "type": "string"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "address_second": {
+          "type": "string"
+        },
+        "hdr": {
+          "type": "string",
+          "x-dependency": {
+            "usesrc": {
+              "value": "hdr_ip"
+            }
+          }
+        },
+        "interface": {
+          "type": "string"
+        },
+        "occ": {
+          "type": "string",
+          "x-dependency": {
+            "usesrc": {
+              "value": "hdr_ip"
+            }
+          }
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "port_second": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "usesrc": {
+          "type": "string",
+          "enum": [
+            "address",
+            "client",
+            "clientip",
+            "hdr_ip"
+          ]
         }
       }
     },
