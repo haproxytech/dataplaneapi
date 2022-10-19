@@ -26,42 +26,42 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-// ReplaceDefaultsHandlerFunc turns a function with the right signature into a replace defaults handler
-type ReplaceDefaultsHandlerFunc func(ReplaceDefaultsParams, interface{}) middleware.Responder
+// ReplaceDefaultsSectionHandlerFunc turns a function with the right signature into a replace defaults section handler
+type ReplaceDefaultsSectionHandlerFunc func(ReplaceDefaultsSectionParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn ReplaceDefaultsHandlerFunc) Handle(params ReplaceDefaultsParams, principal interface{}) middleware.Responder {
+func (fn ReplaceDefaultsSectionHandlerFunc) Handle(params ReplaceDefaultsSectionParams, principal interface{}) middleware.Responder {
 	return fn(params, principal)
 }
 
-// ReplaceDefaultsHandler interface for that can handle valid replace defaults params
-type ReplaceDefaultsHandler interface {
-	Handle(ReplaceDefaultsParams, interface{}) middleware.Responder
+// ReplaceDefaultsSectionHandler interface for that can handle valid replace defaults section params
+type ReplaceDefaultsSectionHandler interface {
+	Handle(ReplaceDefaultsSectionParams, interface{}) middleware.Responder
 }
 
-// NewReplaceDefaults creates a new http.Handler for the replace defaults operation
-func NewReplaceDefaults(ctx *middleware.Context, handler ReplaceDefaultsHandler) *ReplaceDefaults {
-	return &ReplaceDefaults{Context: ctx, Handler: handler}
+// NewReplaceDefaultsSection creates a new http.Handler for the replace defaults section operation
+func NewReplaceDefaultsSection(ctx *middleware.Context, handler ReplaceDefaultsSectionHandler) *ReplaceDefaultsSection {
+	return &ReplaceDefaultsSection{Context: ctx, Handler: handler}
 }
 
 /*
-	ReplaceDefaults swagger:route PUT /services/haproxy/configuration/defaults Defaults replaceDefaults
+	ReplaceDefaultsSection swagger:route PUT /services/haproxy/configuration/named_defaults/{name} Defaults replaceDefaultsSection
 
-# Replace defaults
+# Replace a defatults section
 
-Replace defaults part of config, this has been deprecated, use named_defaults instead.
+Replaces a defatults section configuration by it's name.
 */
-type ReplaceDefaults struct {
+type ReplaceDefaultsSection struct {
 	Context *middleware.Context
-	Handler ReplaceDefaultsHandler
+	Handler ReplaceDefaultsSectionHandler
 }
 
-func (o *ReplaceDefaults) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *ReplaceDefaultsSection) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		*r = *rCtx
 	}
-	var Params = NewReplaceDefaultsParams()
+	var Params = NewReplaceDefaultsSectionParams()
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)

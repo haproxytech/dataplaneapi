@@ -26,42 +26,42 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-// ReplaceDefaultsHandlerFunc turns a function with the right signature into a replace defaults handler
-type ReplaceDefaultsHandlerFunc func(ReplaceDefaultsParams, interface{}) middleware.Responder
+// CreateDefaultsSectionHandlerFunc turns a function with the right signature into a create defaults section handler
+type CreateDefaultsSectionHandlerFunc func(CreateDefaultsSectionParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn ReplaceDefaultsHandlerFunc) Handle(params ReplaceDefaultsParams, principal interface{}) middleware.Responder {
+func (fn CreateDefaultsSectionHandlerFunc) Handle(params CreateDefaultsSectionParams, principal interface{}) middleware.Responder {
 	return fn(params, principal)
 }
 
-// ReplaceDefaultsHandler interface for that can handle valid replace defaults params
-type ReplaceDefaultsHandler interface {
-	Handle(ReplaceDefaultsParams, interface{}) middleware.Responder
+// CreateDefaultsSectionHandler interface for that can handle valid create defaults section params
+type CreateDefaultsSectionHandler interface {
+	Handle(CreateDefaultsSectionParams, interface{}) middleware.Responder
 }
 
-// NewReplaceDefaults creates a new http.Handler for the replace defaults operation
-func NewReplaceDefaults(ctx *middleware.Context, handler ReplaceDefaultsHandler) *ReplaceDefaults {
-	return &ReplaceDefaults{Context: ctx, Handler: handler}
+// NewCreateDefaultsSection creates a new http.Handler for the create defaults section operation
+func NewCreateDefaultsSection(ctx *middleware.Context, handler CreateDefaultsSectionHandler) *CreateDefaultsSection {
+	return &CreateDefaultsSection{Context: ctx, Handler: handler}
 }
 
 /*
-	ReplaceDefaults swagger:route PUT /services/haproxy/configuration/defaults Defaults replaceDefaults
+	CreateDefaultsSection swagger:route POST /services/haproxy/configuration/named_defaults Defaults createDefaultsSection
 
-# Replace defaults
+# Add a defaults section
 
-Replace defaults part of config, this has been deprecated, use named_defaults instead.
+Adds a new defaults section to the configuration file.
 */
-type ReplaceDefaults struct {
+type CreateDefaultsSection struct {
 	Context *middleware.Context
-	Handler ReplaceDefaultsHandler
+	Handler CreateDefaultsSectionHandler
 }
 
-func (o *ReplaceDefaults) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *CreateDefaultsSection) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		*r = *rCtx
 	}
-	var Params = NewReplaceDefaultsParams()
+	var Params = NewCreateDefaultsSectionParams()
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)

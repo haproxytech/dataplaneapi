@@ -32,42 +32,42 @@ import (
 	"github.com/haproxytech/client-native/v4/models"
 )
 
-// GetDefaultsHandlerFunc turns a function with the right signature into a get defaults handler
-type GetDefaultsHandlerFunc func(GetDefaultsParams, interface{}) middleware.Responder
+// GetDefaultsSectionHandlerFunc turns a function with the right signature into a get defaults section handler
+type GetDefaultsSectionHandlerFunc func(GetDefaultsSectionParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn GetDefaultsHandlerFunc) Handle(params GetDefaultsParams, principal interface{}) middleware.Responder {
+func (fn GetDefaultsSectionHandlerFunc) Handle(params GetDefaultsSectionParams, principal interface{}) middleware.Responder {
 	return fn(params, principal)
 }
 
-// GetDefaultsHandler interface for that can handle valid get defaults params
-type GetDefaultsHandler interface {
-	Handle(GetDefaultsParams, interface{}) middleware.Responder
+// GetDefaultsSectionHandler interface for that can handle valid get defaults section params
+type GetDefaultsSectionHandler interface {
+	Handle(GetDefaultsSectionParams, interface{}) middleware.Responder
 }
 
-// NewGetDefaults creates a new http.Handler for the get defaults operation
-func NewGetDefaults(ctx *middleware.Context, handler GetDefaultsHandler) *GetDefaults {
-	return &GetDefaults{Context: ctx, Handler: handler}
+// NewGetDefaultsSection creates a new http.Handler for the get defaults section operation
+func NewGetDefaultsSection(ctx *middleware.Context, handler GetDefaultsSectionHandler) *GetDefaultsSection {
+	return &GetDefaultsSection{Context: ctx, Handler: handler}
 }
 
 /*
-	GetDefaults swagger:route GET /services/haproxy/configuration/defaults Defaults getDefaults
+	GetDefaultsSection swagger:route GET /services/haproxy/configuration/named_defaults/{name} Defaults getDefaultsSection
 
-# Return defaults part of configuration
+# Return a defautls section
 
-Returns defaults part of configuration, this has been deprecated, use named_defaults instead.
+Returns one defautls section configuration by it's name.
 */
-type GetDefaults struct {
+type GetDefaultsSection struct {
 	Context *middleware.Context
-	Handler GetDefaultsHandler
+	Handler GetDefaultsSectionHandler
 }
 
-func (o *GetDefaults) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *GetDefaultsSection) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		*r = *rCtx
 	}
-	var Params = NewGetDefaultsParams()
+	var Params = NewGetDefaultsSectionParams()
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -91,10 +91,10 @@ func (o *GetDefaults) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetDefaultsOKBody get defaults o k body
+// GetDefaultsSectionOKBody get defaults section o k body
 //
-// swagger:model GetDefaultsOKBody
-type GetDefaultsOKBody struct {
+// swagger:model GetDefaultsSectionOKBody
+type GetDefaultsSectionOKBody struct {
 
 	// version
 	Version int64 `json:"_version,omitempty"`
@@ -103,8 +103,8 @@ type GetDefaultsOKBody struct {
 	Data *models.Defaults `json:"data,omitempty"`
 }
 
-// Validate validates this get defaults o k body
-func (o *GetDefaultsOKBody) Validate(formats strfmt.Registry) error {
+// Validate validates this get defaults section o k body
+func (o *GetDefaultsSectionOKBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateData(formats); err != nil {
@@ -117,7 +117,7 @@ func (o *GetDefaultsOKBody) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (o *GetDefaultsOKBody) validateData(formats strfmt.Registry) error {
+func (o *GetDefaultsSectionOKBody) validateData(formats strfmt.Registry) error {
 	if swag.IsZero(o.Data) { // not required
 		return nil
 	}
@@ -125,9 +125,9 @@ func (o *GetDefaultsOKBody) validateData(formats strfmt.Registry) error {
 	if o.Data != nil {
 		if err := o.Data.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("getDefaultsOK" + "." + "data")
+				return ve.ValidateName("getDefaultsSectionOK" + "." + "data")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("getDefaultsOK" + "." + "data")
+				return ce.ValidateName("getDefaultsSectionOK" + "." + "data")
 			}
 			return err
 		}
@@ -136,8 +136,8 @@ func (o *GetDefaultsOKBody) validateData(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validate this get defaults o k body based on the context it is used
-func (o *GetDefaultsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this get defaults section o k body based on the context it is used
+func (o *GetDefaultsSectionOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidateData(ctx, formats); err != nil {
@@ -150,14 +150,14 @@ func (o *GetDefaultsOKBody) ContextValidate(ctx context.Context, formats strfmt.
 	return nil
 }
 
-func (o *GetDefaultsOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+func (o *GetDefaultsSectionOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Data != nil {
 		if err := o.Data.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("getDefaultsOK" + "." + "data")
+				return ve.ValidateName("getDefaultsSectionOK" + "." + "data")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("getDefaultsOK" + "." + "data")
+				return ce.ValidateName("getDefaultsSectionOK" + "." + "data")
 			}
 			return err
 		}
@@ -167,7 +167,7 @@ func (o *GetDefaultsOKBody) contextValidateData(ctx context.Context, formats str
 }
 
 // MarshalBinary interface implementation
-func (o *GetDefaultsOKBody) MarshalBinary() ([]byte, error) {
+func (o *GetDefaultsSectionOKBody) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -175,8 +175,8 @@ func (o *GetDefaultsOKBody) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetDefaultsOKBody) UnmarshalBinary(b []byte) error {
-	var res GetDefaultsOKBody
+func (o *GetDefaultsSectionOKBody) UnmarshalBinary(b []byte) error {
+	var res GetDefaultsSectionOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

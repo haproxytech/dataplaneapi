@@ -180,6 +180,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DeclareCaptureCreateDeclareCaptureHandler: declare_capture.CreateDeclareCaptureHandlerFunc(func(params declare_capture.CreateDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.CreateDeclareCapture has not yet been implemented")
 		}),
+		DefaultsCreateDefaultsSectionHandler: defaults.CreateDefaultsSectionHandlerFunc(func(params defaults.CreateDefaultsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation defaults.CreateDefaultsSection has not yet been implemented")
+		}),
 		DgramBindCreateDgramBindHandler: dgram_bind.CreateDgramBindHandlerFunc(func(params dgram_bind.CreateDgramBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.CreateDgramBind has not yet been implemented")
 		}),
@@ -323,6 +326,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DeclareCaptureDeleteDeclareCaptureHandler: declare_capture.DeleteDeclareCaptureHandlerFunc(func(params declare_capture.DeleteDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.DeleteDeclareCapture has not yet been implemented")
+		}),
+		DefaultsDeleteDefaultsSectionHandler: defaults.DeleteDefaultsSectionHandlerFunc(func(params defaults.DeleteDefaultsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation defaults.DeleteDefaultsSection has not yet been implemented")
 		}),
 		DgramBindDeleteDgramBindHandler: dgram_bind.DeleteDgramBindHandlerFunc(func(params dgram_bind.DeleteDgramBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.DeleteDgramBind has not yet been implemented")
@@ -536,6 +542,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.GetDefaults has not yet been implemented")
+		}),
+		DefaultsGetDefaultsSectionHandler: defaults.GetDefaultsSectionHandlerFunc(func(params defaults.GetDefaultsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation defaults.GetDefaultsSection has not yet been implemented")
+		}),
+		DefaultsGetDefaultsSectionsHandler: defaults.GetDefaultsSectionsHandlerFunc(func(params defaults.GetDefaultsSectionsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation defaults.GetDefaultsSections has not yet been implemented")
 		}),
 		DgramBindGetDgramBindHandler: dgram_bind.GetDgramBindHandlerFunc(func(params dgram_bind.GetDgramBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.GetDgramBind has not yet been implemented")
@@ -879,6 +891,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.ReplaceDefaults has not yet been implemented")
 		}),
+		DefaultsReplaceDefaultsSectionHandler: defaults.ReplaceDefaultsSectionHandlerFunc(func(params defaults.ReplaceDefaultsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation defaults.ReplaceDefaultsSection has not yet been implemented")
+		}),
 		DgramBindReplaceDgramBindHandler: dgram_bind.ReplaceDgramBindHandlerFunc(func(params dgram_bind.ReplaceDgramBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation dgram_bind.ReplaceDgramBind has not yet been implemented")
 		}),
@@ -1106,6 +1121,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
 	// DeclareCaptureCreateDeclareCaptureHandler sets the operation handler for the create declare capture operation
 	DeclareCaptureCreateDeclareCaptureHandler declare_capture.CreateDeclareCaptureHandler
+	// DefaultsCreateDefaultsSectionHandler sets the operation handler for the create defaults section operation
+	DefaultsCreateDefaultsSectionHandler defaults.CreateDefaultsSectionHandler
 	// DgramBindCreateDgramBindHandler sets the operation handler for the create dgram bind operation
 	DgramBindCreateDgramBindHandler dgram_bind.CreateDgramBindHandler
 	// FCGIAppCreateFCGIAppHandler sets the operation handler for the create FCGI app operation
@@ -1202,6 +1219,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
 	// DeclareCaptureDeleteDeclareCaptureHandler sets the operation handler for the delete declare capture operation
 	DeclareCaptureDeleteDeclareCaptureHandler declare_capture.DeleteDeclareCaptureHandler
+	// DefaultsDeleteDefaultsSectionHandler sets the operation handler for the delete defaults section operation
+	DefaultsDeleteDefaultsSectionHandler defaults.DeleteDefaultsSectionHandler
 	// DgramBindDeleteDgramBindHandler sets the operation handler for the delete dgram bind operation
 	DgramBindDeleteDgramBindHandler dgram_bind.DeleteDgramBindHandler
 	// FCGIAppDeleteFCGIAppHandler sets the operation handler for the delete FCGI app operation
@@ -1344,6 +1363,10 @@ type DataPlaneAPI struct {
 	DeclareCaptureGetDeclareCapturesHandler declare_capture.GetDeclareCapturesHandler
 	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
 	DefaultsGetDefaultsHandler defaults.GetDefaultsHandler
+	// DefaultsGetDefaultsSectionHandler sets the operation handler for the get defaults section operation
+	DefaultsGetDefaultsSectionHandler defaults.GetDefaultsSectionHandler
+	// DefaultsGetDefaultsSectionsHandler sets the operation handler for the get defaults sections operation
+	DefaultsGetDefaultsSectionsHandler defaults.GetDefaultsSectionsHandler
 	// DgramBindGetDgramBindHandler sets the operation handler for the get dgram bind operation
 	DgramBindGetDgramBindHandler dgram_bind.GetDgramBindHandler
 	// DgramBindGetDgramBindsHandler sets the operation handler for the get dgram binds operation
@@ -1572,6 +1595,8 @@ type DataPlaneAPI struct {
 	DeclareCaptureReplaceDeclareCaptureHandler declare_capture.ReplaceDeclareCaptureHandler
 	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
 	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
+	// DefaultsReplaceDefaultsSectionHandler sets the operation handler for the replace defaults section operation
+	DefaultsReplaceDefaultsSectionHandler defaults.ReplaceDefaultsSectionHandler
 	// DgramBindReplaceDgramBindHandler sets the operation handler for the replace dgram bind operation
 	DgramBindReplaceDgramBindHandler dgram_bind.ReplaceDgramBindHandler
 	// FCGIAppReplaceFCGIAppHandler sets the operation handler for the replace FCGI app operation
@@ -1807,6 +1832,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DeclareCaptureCreateDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.CreateDeclareCaptureHandler")
 	}
+	if o.DefaultsCreateDefaultsSectionHandler == nil {
+		unregistered = append(unregistered, "defaults.CreateDefaultsSectionHandler")
+	}
 	if o.DgramBindCreateDgramBindHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.CreateDgramBindHandler")
 	}
@@ -1950,6 +1978,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DeclareCaptureDeleteDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.DeleteDeclareCaptureHandler")
+	}
+	if o.DefaultsDeleteDefaultsSectionHandler == nil {
+		unregistered = append(unregistered, "defaults.DeleteDefaultsSectionHandler")
 	}
 	if o.DgramBindDeleteDgramBindHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.DeleteDgramBindHandler")
@@ -2163,6 +2194,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.DefaultsGetDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
+	}
+	if o.DefaultsGetDefaultsSectionHandler == nil {
+		unregistered = append(unregistered, "defaults.GetDefaultsSectionHandler")
+	}
+	if o.DefaultsGetDefaultsSectionsHandler == nil {
+		unregistered = append(unregistered, "defaults.GetDefaultsSectionsHandler")
 	}
 	if o.DgramBindGetDgramBindHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.GetDgramBindHandler")
@@ -2506,6 +2543,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DefaultsReplaceDefaultsHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
 	}
+	if o.DefaultsReplaceDefaultsSectionHandler == nil {
+		unregistered = append(unregistered, "defaults.ReplaceDefaultsSectionHandler")
+	}
 	if o.DgramBindReplaceDgramBindHandler == nil {
 		unregistered = append(unregistered, "dgram_bind.ReplaceDgramBindHandler")
 	}
@@ -2818,6 +2858,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/named_defaults"] = defaults.NewCreateDefaultsSection(o.context, o.DefaultsCreateDefaultsSectionHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/dgram_binds"] = dgram_bind.NewCreateDgramBind(o.context, o.DgramBindCreateDgramBindHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -3007,6 +3051,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/captures/{index}"] = declare_capture.NewDeleteDeclareCapture(o.context, o.DeclareCaptureDeleteDeclareCaptureHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/named_defaults/{name}"] = defaults.NewDeleteDefaultsSection(o.context, o.DefaultsDeleteDefaultsSectionHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3291,6 +3339,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/defaults"] = defaults.NewGetDefaults(o.context, o.DefaultsGetDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/named_defaults/{name}"] = defaults.NewGetDefaultsSection(o.context, o.DefaultsGetDefaultsSectionHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/named_defaults"] = defaults.NewGetDefaultsSections(o.context, o.DefaultsGetDefaultsSectionsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3747,6 +3803,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/defaults"] = defaults.NewReplaceDefaults(o.context, o.DefaultsReplaceDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/named_defaults/{name}"] = defaults.NewReplaceDefaultsSection(o.context, o.DefaultsReplaceDefaultsSectionHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
