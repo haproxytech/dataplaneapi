@@ -1,0 +1,5 @@
+{
+    "client_timeout": 25000,
+    "server_timeout": 25000,
+    "mode": "tcp"
+}

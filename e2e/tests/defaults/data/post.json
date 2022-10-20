@@ -1,0 +1,6 @@
+{
+    "name": "created",
+    "client_timeout": 20000,
+    "server_timeout": 20000,
+    "mode": "http"
+}
