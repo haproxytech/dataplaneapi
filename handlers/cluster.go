@@ -18,6 +18,7 @@ package handlers
 import (
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 
 	log "github.com/sirupsen/logrus"
@@ -51,6 +52,7 @@ type ClusterInitiateCertificateRefreshHandlerImpl struct {
 type DeleteClusterHandlerImpl struct {
 	Client      client_native.HAProxyClient
 	Config      *configuration.Configuration
+	Users       *configuration.Users
 	ReloadAgent haproxy.IReloadAgent
 }
 
@@ -160,6 +162,16 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 	log.Warningf("received instructions from %s to switch to standalone mode", params.HTTPRequest.RemoteAddr)
 	// Only do when dataplane is in cluster mode, if not, do nothing and return 204
 	if h.Config.Mode.Load() == configuration.ModeCluster {
+		log.Warning("clearing cluster users")
+		for _, u := range h.Users.GetUsers() {
+			// remove all users for cluster communication
+			if strings.HasPrefix(u.Name, "dpapi-c-") {
+				errRU := h.Users.RemoveUser(u)
+				if errRU != nil {
+					log.Error(errRU.Error())
+				}
+			}
+		}
 		// If we don't want to keep the haproxy configuration, set it to dummy config
 		if params.Configuration == nil || *params.Configuration != "keep" {
 			log.Warning("clearing configuration as requested")

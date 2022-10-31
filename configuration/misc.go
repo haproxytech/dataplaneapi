@@ -84,3 +84,7 @@ func CheckIfStorageDirIsOK(storageDir string, config *Configuration) error {
 	config.Cluster.CertificateDir.Store(path.Join(storageDir, "certs-cluster"))
 	return nil
 }
+
+func removeFromSlice[T any](slice []T, s int) []T {
+	return append(slice[:s], slice[s+1:]...)
+}

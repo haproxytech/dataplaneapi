@@ -27,12 +27,13 @@ import (
 	"github.com/haproxytech/config-parser/v4/common"
 	"github.com/haproxytech/config-parser/v4/options"
 	"github.com/haproxytech/config-parser/v4/types"
-	"github.com/haproxytech/dataplaneapi/log"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 )
 
 var usersStore *Users
+
+var syncUserStore sync.Once
 
 type Users struct {
 	mu    sync.Mutex
@@ -40,12 +41,9 @@ type Users struct {
 }
 
 func GetUsersStore() *Users {
-	if usersStore == nil {
+	syncUserStore.Do(func() {
 		usersStore = &Users{}
-		if err := usersStore.Init(); err != nil {
-			log.Fatalf("Error initiating users: %s", err.Error())
-		}
-	}
+	})
 	return usersStore
 }
 
@@ -75,14 +73,20 @@ func (u *Users) setUser(data common.ParserData, file string) error {
 func (u *Users) Init() error {
 	configuration := Get()
 	u.users = []types.User{}
+	mode := configuration.Mode.Load()
 	if len(configuration.Users) > 0 {
 		for _, user := range configuration.Users {
-			u.users = append(u.users, types.User{
-				Name:       user.Name,
-				IsInsecure: user.Insecure,
-				Password:   user.Password,
-			})
+			if mode != ModeCluster || strings.HasPrefix(user.Name, "dpapi-c-") {
+				u.users = append(u.users, types.User{
+					Name:       user.Name,
+					IsInsecure: user.Insecure,
+					Password:   user.Password,
+				})
+			}
 		}
+		return nil
+	}
+	if mode == ModeCluster {
 		return nil
 	}
 	if configuration.HAProxy.UserListFile != "" {
@@ -107,6 +111,24 @@ func (u *Users) AddUser(user types.User) error {
 		Insecure: &user.IsInsecure,
 		Password: &user.Password,
 	})
+	return Get().Save()
+}
+
+func (u *Users) RemoveUser(user types.User) error {
+	storage := Get().GetStorageData()
+	for i, v := range u.users {
+		if v.Name == user.Name {
+			u.users = removeFromSlice(u.users, i)
+			break
+		}
+	}
+	if storage.Dataplaneapi != nil {
+		for i, u := range storage.Dataplaneapi.User {
+			if u.Name == user.Name {
+				storage.Dataplaneapi.User = removeFromSlice(storage.Dataplaneapi.User, i)
+			}
+		}
+	}
 	return Get().Save()
 }
 

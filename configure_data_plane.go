@@ -189,6 +189,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	client := configureNativeClient(clientCtx, haproxyOptions, mWorker)
 
 	users := dataplaneapi_config.GetUsersStore()
+	// this is not part of GetUsersStore(),
+	// in case of reload we need to reread users
+	// mode might have changed from single to cluster one
+	if err := users.Init(); err != nil {
+		log.Fatalf("Error initiating users: %s", err.Error())
+	}
 
 	// Handle reload signals
 	sigs := make(chan os.Signal, 1)
@@ -658,7 +664,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	// setup cluster handlers
 	api.ClusterGetClusterHandler = &handlers.GetClusterHandlerImpl{Config: cfg}
 	api.ClusterPostClusterHandler = &handlers.CreateClusterHandlerImpl{Client: client, Config: cfg, ReloadAgent: ra}
-	api.ClusterDeleteClusterHandler = &handlers.DeleteClusterHandlerImpl{Client: client, Config: cfg, ReloadAgent: ra}
+	api.ClusterDeleteClusterHandler = &handlers.DeleteClusterHandlerImpl{Client: client, Config: cfg, Users: dataplaneapi_config.GetUsersStore(), ReloadAgent: ra}
 	api.ClusterEditClusterHandler = &handlers.EditClusterHandlerImpl{Config: cfg}
 	api.ClusterInitiateCertificateRefreshHandler = &handlers.ClusterInitiateCertificateRefreshHandlerImpl{Config: cfg}
 
