@@ -16424,6 +16424,9 @@ func init() {
         },
         "httpchk_params": {
           "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            },
             "mode": {
               "value": "http"
             }
@@ -16514,6 +16517,11 @@ func init() {
           ]
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -16549,6 +16557,11 @@ func init() {
           "$ref": "#/definitions/persist_rule"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -16587,6 +16600,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "source": {
@@ -18099,6 +18117,11 @@ func init() {
           "x-display-name": "HTTP Use Proxy Header"
         },
         "httpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            }
+          },
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
@@ -18192,6 +18215,11 @@ func init() {
           "$ref": "#/definitions/monitor_uri"
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -18226,6 +18254,11 @@ func init() {
           "$ref": "#/definitions/persist_rule"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -18260,6 +18293,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "socket_stats": {
@@ -19889,7 +19927,11 @@ func init() {
           "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
         "numa_cpu_mapping": {
-          "type": "boolean"
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "pidfile": {
           "type": "string",
@@ -24199,6 +24241,9 @@ func init() {
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
+        },
+        "shard": {
+          "type": "integer"
         }
       }
     },
@@ -24226,6 +24271,10 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "shards": {
+          "description": "In some configurations, one would like to distribute the stick-table contents\nto some peers in place of sending all the stick-table contents to each peer\ndeclared in the \"peers\" section. In such cases, \"shards\" specifies the\nnumber of peer involved in this stick-table contents distribution.",
+          "type": "integer"
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
@@ -25799,6 +25848,9 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "shard": {
+          "type": "integer"
         },
         "slowstart": {
           "type": "integer",
@@ -53660,6 +53712,9 @@ func init() {
         },
         "httpchk_params": {
           "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            },
             "mode": {
               "value": "http"
             }
@@ -53750,6 +53805,11 @@ func init() {
           ]
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -53785,6 +53845,11 @@ func init() {
           "$ref": "#/definitions/persist_rule"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -53823,6 +53888,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "source": {
@@ -55295,6 +55365,11 @@ func init() {
           "x-display-name": "HTTP Use Proxy Header"
         },
         "httpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            }
+          },
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
@@ -55388,6 +55463,11 @@ func init() {
           "$ref": "#/definitions/monitor_uri"
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -55422,6 +55502,11 @@ func init() {
           "$ref": "#/definitions/persist_rule"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -55456,6 +55541,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "socket_stats": {
@@ -57031,7 +57121,11 @@ func init() {
           "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
         "numa_cpu_mapping": {
-          "type": "boolean"
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "pidfile": {
           "type": "string",
@@ -61238,6 +61332,9 @@ func init() {
           "maximum": 65535,
           "minimum": 1,
           "x-nullable": true
+        },
+        "shard": {
+          "type": "integer"
         }
       }
     },
@@ -61265,6 +61362,10 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
           "x-nullable": false
+        },
+        "shards": {
+          "description": "In some configurations, one would like to distribute the stick-table contents\nto some peers in place of sending all the stick-table contents to each peer\ndeclared in the \"peers\" section. In such cases, \"shards\" specifies the\nnumber of peer involved in this stick-table contents distribution.",
+          "type": "integer"
         },
         "stick_table": {
           "$ref": "#/definitions/config_stick_table"
@@ -62838,6 +62939,9 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "shard": {
+          "type": "integer"
         },
         "slowstart": {
           "type": "integer",
