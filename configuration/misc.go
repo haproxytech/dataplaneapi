@@ -21,8 +21,11 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strconv"
 	"syscall"
+	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/haproxytech/client-native/v4/misc"
 	"github.com/haproxytech/client-native/v4/storage"
 	jsoniter "github.com/json-iterator/go"
@@ -39,6 +42,25 @@ func DecodeBootstrapKey(key string) (map[string]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("%s - %w", key, err)
 	}
+
+	var keySummary string
+	if len(key) > 10 {
+		keySummary = key[:4] + "..." + key[len(key)-5:]
+	} else {
+		keySummary = key
+	}
+
+	if expiryUnixTS, ok := decodedKey["expiring-time"]; ok {
+		tUnix, ok2 := strconv.ParseInt(expiryUnixTS, 10, 64)
+		if ok2 != nil {
+			return nil, fmt.Errorf("bootstrap key %s error, decoding expiry to int: %s", keySummary, expiryUnixTS)
+		}
+		expiryTime := time.Unix(tUnix, 0)
+		if expiryTime.Before(time.Now()) {
+			return nil, fmt.Errorf("refusing to use expired bootstrap key: %s expired on: %s", keySummary, strfmt.DateTime(expiryTime))
+		}
+	}
+
 	return decodedKey, nil
 }
 
