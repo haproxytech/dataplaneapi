@@ -30,7 +30,7 @@ load 'utils/_helpers'
 
 @test "groups: Add a group to a non existing user list" {
   resource_post "$_GROUPS_BASE_PATH" "data/post.json" "userlist=fake&=force_reload=true"
-  assert_equal "$SC" 400
+  assert_equal "$SC" 404
 }
 
 @test "groups: Add a malformed group" {
