@@ -23,15 +23,10 @@ import (
 	"strings"
 
 	clientnative "github.com/haproxytech/client-native/v3"
+	"github.com/haproxytech/client-native/v3/configuration"
 	"github.com/haproxytech/client-native/v3/models"
 	"github.com/haproxytech/dataplaneapi/log"
 )
-
-var configVersion string
-
-func ConfigVersion() string {
-	return configVersion
-}
 
 // Adapter is just a wrapper over http handler function
 type Adapter func(http.Handler) http.Handler
@@ -125,6 +120,32 @@ func ApacheLogMiddleware(logger *log.ACLLogger) Adapter {
 	}
 }
 
+type serverWriter struct {
+	w             http.ResponseWriter
+	client        configuration.Configuration
+	transactionID string
+	wroteHeader   bool
+}
+
+func (s serverWriter) WriteHeader(code int) {
+	if !s.wroteHeader {
+		version, err := fetchConfgVersion(s.client, s.transactionID)
+		if err == nil {
+			s.w.Header().Set("Configuration-Version", version)
+		}
+		s.wroteHeader = true //nolint:staticcheck
+	}
+	s.w.WriteHeader(code)
+}
+
+func (s serverWriter) Write(b []byte) (int, error) {
+	return s.w.Write(b)
+}
+
+func (s serverWriter) Header() http.Header {
+	return s.w.Header()
+}
+
 func ConfigVersionMiddleware(client clientnative.HAProxyClient) Adapter {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -134,20 +155,30 @@ func ConfigVersionMiddleware(client clientnative.HAProxyClient) Adapter {
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusNotImplemented)
 			}
-			var v int64
-			if tID == "" {
-				v, err = configuration.GetConfigurationVersion("")
-			} else {
-				tr, _ := configuration.GetTransaction(tID)
-				if tr != nil && tr.Status == models.TransactionStatusInProgress {
-					v, err = configuration.GetConfigurationVersion(tr.ID)
-				}
+			sw := serverWriter{
+				w:             w,
+				client:        configuration,
+				transactionID: tID,
+				wroteHeader:   false,
 			}
-			if err == nil {
-				configVersion = strconv.FormatInt(v, 10)
-				w.Header().Add("Configuration-Version", configVersion)
-			}
-			h.ServeHTTP(w, r)
+			h.ServeHTTP(sw, r)
 		})
 	}
+}
+
+func fetchConfgVersion(client configuration.Configuration, transactionID string) (string, error) {
+	var v int64
+	var err error
+	if transactionID == "" {
+		v, err = client.GetConfigurationVersion("")
+	} else {
+		tr, _ := client.GetTransaction(transactionID)
+		if tr != nil && tr.Status == models.TransactionStatusInProgress {
+			v, err = client.GetConfigurationVersion(tr.ID)
+		}
+	}
+	if err == nil {
+		return strconv.FormatInt(v, 10), nil
+	}
+	return "", err
 }
