@@ -16538,12 +16538,7 @@ func init() {
           "x-display-name": "Nolinger"
         },
         "originalto": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Originalto"
+          "$ref": "#/definitions/originalto"
         },
         "persist": {
           "type": "string",
@@ -18235,12 +18230,7 @@ func init() {
           "x-display-name": "Nolinger"
         },
         "originalto": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Originalto"
+          "$ref": "#/definitions/originalto"
         },
         "persist": {
           "type": "string",
@@ -19462,12 +19452,7 @@ func init() {
           "x-display-name": "Nolinger"
         },
         "originalto": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Originalto"
+          "$ref": "#/definitions/originalto"
         },
         "socket_stats": {
           "type": "string",
@@ -19655,6 +19640,33 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "default_path": {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-dependency": {
+                "type": {
+                  "value": "origin"
+                }
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "current",
+                "config",
+                "parent",
+                "origin"
+              ],
+              "x-nullable": false
+            }
+          }
         },
         "description": {
           "type": "string",
@@ -19885,7 +19897,9 @@ func init() {
           "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
         "mworker_max_reloads": {
-          "type": "integer"
+          "type": "integer",
+          "x-display-name": "The number of times a worker can survive a reload",
+          "x-nullable": true
         },
         "nbproc": {
           "type": "integer",
@@ -23603,7 +23617,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L7OK",
@@ -23684,7 +23698,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L6OK",
@@ -24208,6 +24222,29 @@ func init() {
           "x-omitempty": true
         }
       }
+    },
+    "originalto": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ]
+        },
+        "except": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "header": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-display-name": "OriginalTo"
     },
     "peer_entries": {
       "description": "HAProxy peer entries array",
@@ -52337,6 +52374,33 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
+    "GlobalDefaultPath": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "origin"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "current",
+            "config",
+            "parent",
+            "origin"
+          ],
+          "x-nullable": false
+        }
+      }
+    },
     "GlobalDeviceAtlasOptions": {
       "type": "object",
       "properties": {
@@ -53826,12 +53890,7 @@ func init() {
           "x-display-name": "Nolinger"
         },
         "originalto": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Originalto"
+          "$ref": "#/definitions/originalto"
         },
         "persist": {
           "type": "string",
@@ -55483,12 +55542,7 @@ func init() {
           "x-display-name": "Nolinger"
         },
         "originalto": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Originalto"
+          "$ref": "#/definitions/originalto"
         },
         "persist": {
           "type": "string",
@@ -56710,12 +56764,7 @@ func init() {
           "x-display-name": "Nolinger"
         },
         "originalto": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Originalto"
+          "$ref": "#/definitions/originalto"
         },
         "socket_stats": {
           "type": "string",
@@ -56889,6 +56938,33 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "default_path": {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-dependency": {
+                "type": {
+                  "value": "origin"
+                }
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "current",
+                "config",
+                "parent",
+                "origin"
+              ],
+              "x-nullable": false
+            }
+          }
         },
         "description": {
           "type": "string",
@@ -57079,7 +57155,10 @@ func init() {
           "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
         "mworker_max_reloads": {
-          "type": "integer"
+          "type": "integer",
+          "minimum": 0,
+          "x-display-name": "The number of times a worker can survive a reload",
+          "x-nullable": true
         },
         "nbproc": {
           "type": "integer",
@@ -60694,7 +60773,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L7OK",
@@ -60775,7 +60854,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L6OK",
@@ -61299,6 +61378,29 @@ func init() {
           "x-omitempty": true
         }
       }
+    },
+    "originalto": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "string",
+          "enum": [
+            "enabled"
+          ]
+        },
+        "except": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "header": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-display-name": "OriginalTo"
     },
     "peer_entries": {
       "description": "HAProxy peer entries array",

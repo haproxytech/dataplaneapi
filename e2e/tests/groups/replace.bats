@@ -42,4 +42,3 @@ load 'utils/_helpers'
     resource_put "$_GROUPS_BASE_PATH/1000" "data/replace.json" "userlist=fake&force_reload=true"
     assert_equal "$SC" 404
 }
-
