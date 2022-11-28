@@ -134,12 +134,14 @@ func ConfigVersionMiddleware(client clientnative.HAProxyClient) Adapter {
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusNotImplemented)
 			}
-			tr, _ := configuration.GetTransaction(tID)
 			var v int64
-			if tr != nil && tr.Status == models.TransactionStatusInProgress {
-				v, err = configuration.GetConfigurationVersion(tr.ID)
-			} else {
+			if tID == "" {
 				v, err = configuration.GetConfigurationVersion("")
+			} else {
+				tr, _ := configuration.GetTransaction(tID)
+				if tr != nil && tr.Status == models.TransactionStatusInProgress {
+					v, err = configuration.GetConfigurationVersion(tr.ID)
+				}
 			}
 			if err == nil {
 				configVersion = strconv.FormatInt(v, 10)
