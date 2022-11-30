@@ -2,7 +2,7 @@
 before:
   hooks:
     - go mod download
-    - go mod tidy -compat=1.17
+    - go mod tidy -compat=1.19
     - make clean
     - mkdir build/
 builds:

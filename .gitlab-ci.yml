@@ -10,7 +10,7 @@ variables:
 diff:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/docker:stable-go1.17
+    name: $CI_REGISTRY_GO/docker:stable-go1.19
     entrypoint: [ "" ]
   services:
     - name: $CI_REGISTRY_GO/docker:20.10.5-dind
@@ -62,7 +62,7 @@ build:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:1.17
+    name: $CI_REGISTRY_GO/golang:1.19
     entrypoint: [ "" ]
   tags:
     - go
