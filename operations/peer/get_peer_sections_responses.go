@@ -31,7 +31,8 @@ import (
 // GetPeerSectionsOKCode is the HTTP code returned for type GetPeerSectionsOK
 const GetPeerSectionsOKCode int = 200
 
-/*GetPeerSectionsOK Successful operation
+/*
+GetPeerSectionsOK Successful operation
 
 swagger:response getPeerSectionsOK
 */
@@ -94,7 +95,8 @@ func (o *GetPeerSectionsOK) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetPeerSectionsDefault General Error
+/*
+GetPeerSectionsDefault General Error
 
 swagger:response getPeerSectionsDefault
 */

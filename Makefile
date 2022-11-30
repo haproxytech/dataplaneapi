@@ -6,7 +6,7 @@ GIT_TAG_COMMIT=$(shell git rev-parse --short ${GIT_LAST_TAG})
 GIT_MODIFIED1=$(shell git diff "${GIT_HEAD_COMMIT}" "${GIT_TAG_COMMIT}" --quiet || echo .dev)
 GIT_MODIFIED2=$(shell git diff --quiet || echo .dirty)
 GIT_MODIFIED=${GIT_MODIFIED1}${GIT_MODIFIED2}
-SWAGGER_VERSION=v0.23.0
+SWAGGER_VERSION=v0.30.2
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
 

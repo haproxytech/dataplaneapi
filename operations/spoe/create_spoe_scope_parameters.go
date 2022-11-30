@@ -35,7 +35,8 @@ import (
 )
 
 // NewCreateSpoeScopeParams creates a new CreateSpoeScopeParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewCreateSpoeScopeParams() CreateSpoeScopeParams {
 
 	return CreateSpoeScopeParams{}
@@ -86,7 +87,7 @@ func (o *CreateSpoeScopeParams) BindRequest(r *http.Request, route *middleware.M
 		var body models.SpoeScope
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -96,13 +97,19 @@ func (o *CreateSpoeScopeParams) BindRequest(r *http.Request, route *middleware.M
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qSpoe, qhkSpoe, _ := qs.GetOK("spoe")
 	if err := o.bindSpoe(qSpoe, qhkSpoe, route.Formats); err != nil {
 		res = append(res, err)
@@ -117,7 +124,6 @@ func (o *CreateSpoeScopeParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -127,7 +133,7 @@ func (o *CreateSpoeScopeParams) BindRequest(r *http.Request, route *middleware.M
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *CreateSpoeScopeParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -136,10 +142,10 @@ func (o *CreateSpoeScopeParams) bindSpoe(rawData []string, hasKey bool, formats 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -154,10 +160,10 @@ func (o *CreateSpoeScopeParams) bindTransactionID(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -172,6 +178,7 @@ func (o *CreateSpoeScopeParams) bindVersion(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

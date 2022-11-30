@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetServicesEndpointsParams creates a new GetServicesEndpointsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetServicesEndpointsParams() GetServicesEndpointsParams {
 
 	return GetServicesEndpointsParams{}

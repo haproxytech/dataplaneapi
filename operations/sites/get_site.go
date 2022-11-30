@@ -21,6 +21,7 @@ package sites
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -49,12 +50,12 @@ func NewGetSite(ctx *middleware.Context, handler GetSiteHandler) *GetSite {
 	return &GetSite{Context: ctx, Handler: handler}
 }
 
-/*GetSite swagger:route GET /services/haproxy/sites/{name} Sites getSite
+/*
+	GetSite swagger:route GET /services/haproxy/sites/{name} Sites getSite
 
-Return a site
+# Return a site
 
 Returns one site configuration by it's name.
-
 */
 type GetSite struct {
 	Context *middleware.Context
@@ -64,21 +65,20 @@ type GetSite struct {
 func (o *GetSite) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetSiteParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -87,7 +87,6 @@ func (o *GetSite) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -119,7 +118,6 @@ func (o *GetSiteOKBody) Validate(formats strfmt.Registry) error {
 }
 
 func (o *GetSiteOKBody) validateData(formats strfmt.Registry) error {
-
 	if swag.IsZero(o.Data) { // not required
 		return nil
 	}
@@ -128,6 +126,38 @@ func (o *GetSiteOKBody) validateData(formats strfmt.Registry) error {
 		if err := o.Data.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getSiteOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getSiteOK" + "." + "data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get site o k body based on the context it is used
+func (o *GetSiteOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetSiteOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Data != nil {
+		if err := o.Data.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getSiteOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getSiteOK" + "." + "data")
 			}
 			return err
 		}

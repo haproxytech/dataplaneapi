@@ -31,7 +31,8 @@ import (
 // DeleteServerSwitchingRuleAcceptedCode is the HTTP code returned for type DeleteServerSwitchingRuleAccepted
 const DeleteServerSwitchingRuleAcceptedCode int = 202
 
-/*DeleteServerSwitchingRuleAccepted Configuration change accepted and reload requested
+/*
+DeleteServerSwitchingRuleAccepted Configuration change accepted and reload requested
 
 swagger:response deleteServerSwitchingRuleAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteServerSwitchingRuleAccepted) WriteResponse(rw http.ResponseWriter
 // DeleteServerSwitchingRuleNoContentCode is the HTTP code returned for type DeleteServerSwitchingRuleNoContent
 const DeleteServerSwitchingRuleNoContentCode int = 204
 
-/*DeleteServerSwitchingRuleNoContent Server Switching Rule deleted
+/*
+DeleteServerSwitchingRuleNoContent Server Switching Rule deleted
 
 swagger:response deleteServerSwitchingRuleNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteServerSwitchingRuleNoContent) WriteResponse(rw http.ResponseWrite
 // DeleteServerSwitchingRuleNotFoundCode is the HTTP code returned for type DeleteServerSwitchingRuleNotFound
 const DeleteServerSwitchingRuleNotFoundCode int = 404
 
-/*DeleteServerSwitchingRuleNotFound The specified resource was not found
+/*
+DeleteServerSwitchingRuleNotFound The specified resource was not found
 
 swagger:response deleteServerSwitchingRuleNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteServerSwitchingRuleNotFound) WriteResponse(rw http.ResponseWriter
 	}
 }
 
-/*DeleteServerSwitchingRuleDefault General Error
+/*
+DeleteServerSwitchingRuleDefault General Error
 
 swagger:response deleteServerSwitchingRuleDefault
 */

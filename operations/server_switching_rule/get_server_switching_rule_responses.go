@@ -31,7 +31,8 @@ import (
 // GetServerSwitchingRuleOKCode is the HTTP code returned for type GetServerSwitchingRuleOK
 const GetServerSwitchingRuleOKCode int = 200
 
-/*GetServerSwitchingRuleOK Successful operation
+/*
+GetServerSwitchingRuleOK Successful operation
 
 swagger:response getServerSwitchingRuleOK
 */
@@ -97,7 +98,8 @@ func (o *GetServerSwitchingRuleOK) WriteResponse(rw http.ResponseWriter, produce
 // GetServerSwitchingRuleNotFoundCode is the HTTP code returned for type GetServerSwitchingRuleNotFound
 const GetServerSwitchingRuleNotFoundCode int = 404
 
-/*GetServerSwitchingRuleNotFound The specified resource was not found
+/*
+GetServerSwitchingRuleNotFound The specified resource was not found
 
 swagger:response getServerSwitchingRuleNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetServerSwitchingRuleNotFound) WriteResponse(rw http.ResponseWriter, p
 	}
 }
 
-/*GetServerSwitchingRuleDefault General Error
+/*
+GetServerSwitchingRuleDefault General Error
 
 swagger:response getServerSwitchingRuleDefault
 */

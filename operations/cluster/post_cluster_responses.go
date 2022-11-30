@@ -31,7 +31,8 @@ import (
 // PostClusterOKCode is the HTTP code returned for type PostClusterOK
 const PostClusterOKCode int = 200
 
-/*PostClusterOK Cluster settings changed
+/*
+PostClusterOK Cluster settings changed
 
 swagger:response postClusterOK
 */
@@ -75,7 +76,8 @@ func (o *PostClusterOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // PostClusterBadRequestCode is the HTTP code returned for type PostClusterBadRequest
 const PostClusterBadRequestCode int = 400
 
-/*PostClusterBadRequest Bad request
+/*
+PostClusterBadRequest Bad request
 
 swagger:response postClusterBadRequest
 */
@@ -138,7 +140,8 @@ func (o *PostClusterBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*PostClusterDefault General Error
+/*
+PostClusterDefault General Error
 
 swagger:response postClusterDefault
 */

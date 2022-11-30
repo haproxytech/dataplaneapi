@@ -31,7 +31,8 @@ import (
 // StartSpoeTransactionCreatedCode is the HTTP code returned for type StartSpoeTransactionCreated
 const StartSpoeTransactionCreatedCode int = 201
 
-/*StartSpoeTransactionCreated Transaction started
+/*
+StartSpoeTransactionCreated Transaction started
 
 swagger:response startSpoeTransactionCreated
 */
@@ -75,7 +76,8 @@ func (o *StartSpoeTransactionCreated) WriteResponse(rw http.ResponseWriter, prod
 // StartSpoeTransactionTooManyRequestsCode is the HTTP code returned for type StartSpoeTransactionTooManyRequests
 const StartSpoeTransactionTooManyRequestsCode int = 429
 
-/*StartSpoeTransactionTooManyRequests Too many open transactions
+/*
+StartSpoeTransactionTooManyRequests Too many open transactions
 
 swagger:response startSpoeTransactionTooManyRequests
 */
@@ -116,7 +118,8 @@ func (o *StartSpoeTransactionTooManyRequests) WriteResponse(rw http.ResponseWrit
 	}
 }
 
-/*StartSpoeTransactionDefault General Error
+/*
+StartSpoeTransactionDefault General Error
 
 swagger:response startSpoeTransactionDefault
 */

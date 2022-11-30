@@ -29,7 +29,8 @@ import (
 )
 
 // NewGetAWSRegionParams creates a new GetAWSRegionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetAWSRegionParams() GetAWSRegionParams {
 
 	return GetAWSRegionParams{}
@@ -64,7 +65,6 @@ func (o *GetAWSRegionParams) BindRequest(r *http.Request, route *middleware.Matc
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *GetAWSRegionParams) bindID(rawData []string, hasKey bool, formats strfm
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil

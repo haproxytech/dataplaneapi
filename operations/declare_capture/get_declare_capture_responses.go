@@ -31,7 +31,8 @@ import (
 // GetDeclareCaptureOKCode is the HTTP code returned for type GetDeclareCaptureOK
 const GetDeclareCaptureOKCode int = 200
 
-/*GetDeclareCaptureOK Successful operation
+/*
+GetDeclareCaptureOK Successful operation
 
 swagger:response getDeclareCaptureOK
 */
@@ -97,7 +98,8 @@ func (o *GetDeclareCaptureOK) WriteResponse(rw http.ResponseWriter, producer run
 // GetDeclareCaptureNotFoundCode is the HTTP code returned for type GetDeclareCaptureNotFound
 const GetDeclareCaptureNotFoundCode int = 404
 
-/*GetDeclareCaptureNotFound The specified resource already exists
+/*
+GetDeclareCaptureNotFound The specified resource already exists
 
 swagger:response getDeclareCaptureNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetDeclareCaptureNotFound) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*GetDeclareCaptureDefault General Error
+/*
+GetDeclareCaptureDefault General Error
 
 swagger:response getDeclareCaptureDefault
 */

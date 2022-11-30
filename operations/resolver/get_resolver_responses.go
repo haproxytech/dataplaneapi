@@ -31,7 +31,8 @@ import (
 // GetResolverOKCode is the HTTP code returned for type GetResolverOK
 const GetResolverOKCode int = 200
 
-/*GetResolverOK Successful operation
+/*
+GetResolverOK Successful operation
 
 swagger:response getResolverOK
 */
@@ -97,7 +98,8 @@ func (o *GetResolverOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // GetResolverNotFoundCode is the HTTP code returned for type GetResolverNotFound
 const GetResolverNotFoundCode int = 404
 
-/*GetResolverNotFound The specified resource was not found
+/*
+GetResolverNotFound The specified resource was not found
 
 swagger:response getResolverNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetResolverNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*GetResolverDefault General Error
+/*
+GetResolverDefault General Error
 
 swagger:response getResolverDefault
 */

@@ -21,6 +21,7 @@ package service_discovery
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -49,12 +50,12 @@ func NewGetConsul(ctx *middleware.Context, handler GetConsulHandler) *GetConsul 
 	return &GetConsul{Context: ctx, Handler: handler}
 }
 
-/*GetConsul swagger:route GET /service_discovery/consul/{id} ServiceDiscovery getConsul
+/*
+	GetConsul swagger:route GET /service_discovery/consul/{id} ServiceDiscovery getConsul
 
-Return one Consul server
+# Return one Consul server
 
 Returns one Consul server configuration by it's id.
-
 */
 type GetConsul struct {
 	Context *middleware.Context
@@ -64,21 +65,20 @@ type GetConsul struct {
 func (o *GetConsul) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetConsulParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -87,7 +87,6 @@ func (o *GetConsul) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -116,7 +115,6 @@ func (o *GetConsulOKBody) Validate(formats strfmt.Registry) error {
 }
 
 func (o *GetConsulOKBody) validateData(formats strfmt.Registry) error {
-
 	if swag.IsZero(o.Data) { // not required
 		return nil
 	}
@@ -125,6 +123,38 @@ func (o *GetConsulOKBody) validateData(formats strfmt.Registry) error {
 		if err := o.Data.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getConsulOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getConsulOK" + "." + "data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get consul o k body based on the context it is used
+func (o *GetConsulOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetConsulOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Data != nil {
+		if err := o.Data.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getConsulOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getConsulOK" + "." + "data")
 			}
 			return err
 		}

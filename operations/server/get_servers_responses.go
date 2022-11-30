@@ -31,7 +31,8 @@ import (
 // GetServersOKCode is the HTTP code returned for type GetServersOK
 const GetServersOKCode int = 200
 
-/*GetServersOK Successful operation
+/*
+GetServersOK Successful operation
 
 swagger:response getServersOK
 */
@@ -94,7 +95,8 @@ func (o *GetServersOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 }
 
-/*GetServersDefault General Error
+/*
+GetServersDefault General Error
 
 swagger:response getServersDefault
 */

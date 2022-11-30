@@ -31,7 +31,8 @@ import (
 // AddMapEntryCreatedCode is the HTTP code returned for type AddMapEntryCreated
 const AddMapEntryCreatedCode int = 201
 
-/*AddMapEntryCreated Map entry created
+/*
+AddMapEntryCreated Map entry created
 
 swagger:response addMapEntryCreated
 */
@@ -75,7 +76,8 @@ func (o *AddMapEntryCreated) WriteResponse(rw http.ResponseWriter, producer runt
 // AddMapEntryBadRequestCode is the HTTP code returned for type AddMapEntryBadRequest
 const AddMapEntryBadRequestCode int = 400
 
-/*AddMapEntryBadRequest Bad request
+/*
+AddMapEntryBadRequest Bad request
 
 swagger:response addMapEntryBadRequest
 */
@@ -141,7 +143,8 @@ func (o *AddMapEntryBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 // AddMapEntryConflictCode is the HTTP code returned for type AddMapEntryConflict
 const AddMapEntryConflictCode int = 409
 
-/*AddMapEntryConflict The specified resource already exists
+/*
+AddMapEntryConflict The specified resource already exists
 
 swagger:response addMapEntryConflict
 */
@@ -204,7 +207,8 @@ func (o *AddMapEntryConflict) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*AddMapEntryDefault General Error
+/*
+AddMapEntryDefault General Error
 
 swagger:response addMapEntryDefault
 */

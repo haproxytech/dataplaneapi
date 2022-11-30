@@ -31,7 +31,8 @@ import (
 // GetCacheOKCode is the HTTP code returned for type GetCacheOK
 const GetCacheOKCode int = 200
 
-/*GetCacheOK Successful operation
+/*
+GetCacheOK Successful operation
 
 swagger:response getCacheOK
 */
@@ -97,7 +98,8 @@ func (o *GetCacheOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 // GetCacheNotFoundCode is the HTTP code returned for type GetCacheNotFound
 const GetCacheNotFoundCode int = 404
 
-/*GetCacheNotFound The specified resource was not found
+/*
+GetCacheNotFound The specified resource was not found
 
 swagger:response getCacheNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetCacheNotFound) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 }
 
-/*GetCacheDefault General Error
+/*
+GetCacheDefault General Error
 
 swagger:response getCacheDefault
 */

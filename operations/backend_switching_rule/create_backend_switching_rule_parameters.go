@@ -99,7 +99,7 @@ func (o *CreateBackendSwitchingRuleParams) BindRequest(r *http.Request, route *m
 		var body models.BackendSwitchingRule
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -109,13 +109,19 @@ func (o *CreateBackendSwitchingRuleParams) BindRequest(r *http.Request, route *m
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -135,7 +141,6 @@ func (o *CreateBackendSwitchingRuleParams) BindRequest(r *http.Request, route *m
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -151,6 +156,7 @@ func (o *CreateBackendSwitchingRuleParams) bindForceReload(rawData []string, has
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewCreateBackendSwitchingRuleParams()
 		return nil
@@ -168,7 +174,7 @@ func (o *CreateBackendSwitchingRuleParams) bindForceReload(rawData []string, has
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *CreateBackendSwitchingRuleParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -177,10 +183,10 @@ func (o *CreateBackendSwitchingRuleParams) bindFrontend(rawData []string, hasKey
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("frontend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Frontend = raw
 
 	return nil
@@ -195,10 +201,10 @@ func (o *CreateBackendSwitchingRuleParams) bindTransactionID(rawData []string, h
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -213,6 +219,7 @@ func (o *CreateBackendSwitchingRuleParams) bindVersion(rawData []string, hasKey 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

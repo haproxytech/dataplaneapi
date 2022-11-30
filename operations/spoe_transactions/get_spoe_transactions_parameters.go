@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetSpoeTransactionsParams creates a new GetSpoeTransactionsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetSpoeTransactionsParams() GetSpoeTransactionsParams {
 
 	return GetSpoeTransactionsParams{}
@@ -77,7 +78,6 @@ func (o *GetSpoeTransactionsParams) BindRequest(r *http.Request, route *middlewa
 	if err := o.bindStatus(qStatus, qhkStatus, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -87,7 +87,7 @@ func (o *GetSpoeTransactionsParams) BindRequest(r *http.Request, route *middlewa
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *GetSpoeTransactionsParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -96,10 +96,10 @@ func (o *GetSpoeTransactionsParams) bindSpoe(rawData []string, hasKey bool, form
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -114,10 +114,10 @@ func (o *GetSpoeTransactionsParams) bindStatus(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Status = &raw
 
 	if err := o.validateStatus(formats); err != nil {
@@ -130,7 +130,7 @@ func (o *GetSpoeTransactionsParams) bindStatus(rawData []string, hasKey bool, fo
 // validateStatus carries on validations for parameter Status
 func (o *GetSpoeTransactionsParams) validateStatus(formats strfmt.Registry) error {
 
-	if err := validate.Enum("status", "query", *o.Status, []interface{}{"failed", "in_progress"}); err != nil {
+	if err := validate.EnumCase("status", "query", *o.Status, []interface{}{"failed", "in_progress"}, true); err != nil {
 		return err
 	}
 

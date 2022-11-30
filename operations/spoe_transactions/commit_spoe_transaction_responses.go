@@ -31,7 +31,8 @@ import (
 // CommitSpoeTransactionOKCode is the HTTP code returned for type CommitSpoeTransactionOK
 const CommitSpoeTransactionOKCode int = 200
 
-/*CommitSpoeTransactionOK Transaction successfully committed
+/*
+CommitSpoeTransactionOK Transaction successfully committed
 
 swagger:response commitSpoeTransactionOK
 */
@@ -75,7 +76,8 @@ func (o *CommitSpoeTransactionOK) WriteResponse(rw http.ResponseWriter, producer
 // CommitSpoeTransactionAcceptedCode is the HTTP code returned for type CommitSpoeTransactionAccepted
 const CommitSpoeTransactionAcceptedCode int = 202
 
-/*CommitSpoeTransactionAccepted Configuration change accepted and reload requested
+/*
+CommitSpoeTransactionAccepted Configuration change accepted and reload requested
 
 swagger:response commitSpoeTransactionAccepted
 */
@@ -141,7 +143,8 @@ func (o *CommitSpoeTransactionAccepted) WriteResponse(rw http.ResponseWriter, pr
 // CommitSpoeTransactionBadRequestCode is the HTTP code returned for type CommitSpoeTransactionBadRequest
 const CommitSpoeTransactionBadRequestCode int = 400
 
-/*CommitSpoeTransactionBadRequest Bad request
+/*
+CommitSpoeTransactionBadRequest Bad request
 
 swagger:response commitSpoeTransactionBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CommitSpoeTransactionBadRequest) WriteResponse(rw http.ResponseWriter, 
 // CommitSpoeTransactionNotFoundCode is the HTTP code returned for type CommitSpoeTransactionNotFound
 const CommitSpoeTransactionNotFoundCode int = 404
 
-/*CommitSpoeTransactionNotFound The specified resource was not found
+/*
+CommitSpoeTransactionNotFound The specified resource was not found
 
 swagger:response commitSpoeTransactionNotFound
 */
@@ -270,7 +274,8 @@ func (o *CommitSpoeTransactionNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*CommitSpoeTransactionDefault General Error
+/*
+CommitSpoeTransactionDefault General Error
 
 swagger:response commitSpoeTransactionDefault
 */

@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetBackendSwitchingRulesParams creates a new GetBackendSwitchingRulesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetBackendSwitchingRulesParams() GetBackendSwitchingRulesParams {
 
 	return GetBackendSwitchingRulesParams{}
@@ -77,7 +78,6 @@ func (o *GetBackendSwitchingRulesParams) BindRequest(r *http.Request, route *mid
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -87,7 +87,7 @@ func (o *GetBackendSwitchingRulesParams) BindRequest(r *http.Request, route *mid
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *GetBackendSwitchingRulesParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -96,10 +96,10 @@ func (o *GetBackendSwitchingRulesParams) bindFrontend(rawData []string, hasKey b
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("frontend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Frontend = raw
 
 	return nil
@@ -114,10 +114,10 @@ func (o *GetBackendSwitchingRulesParams) bindTransactionID(rawData []string, has
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

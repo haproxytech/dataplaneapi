@@ -31,7 +31,8 @@ import (
 // GetSpecificationOKCode is the HTTP code returned for type GetSpecificationOK
 const GetSpecificationOKCode int = 200
 
-/*GetSpecificationOK Success
+/*
+GetSpecificationOK Success
 
 swagger:response getSpecificationOK
 */
@@ -70,7 +71,8 @@ func (o *GetSpecificationOK) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*GetSpecificationDefault General Error
+/*
+GetSpecificationDefault General Error
 
 swagger:response getSpecificationDefault
 */

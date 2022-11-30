@@ -31,7 +31,8 @@ import (
 // GetHTTPRequestRulesOKCode is the HTTP code returned for type GetHTTPRequestRulesOK
 const GetHTTPRequestRulesOKCode int = 200
 
-/*GetHTTPRequestRulesOK Successful operation
+/*
+GetHTTPRequestRulesOK Successful operation
 
 swagger:response getHttpRequestRulesOK
 */
@@ -94,7 +95,8 @@ func (o *GetHTTPRequestRulesOK) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetHTTPRequestRulesDefault General Error
+/*
+GetHTTPRequestRulesDefault General Error
 
 swagger:response getHttpRequestRulesDefault
 */

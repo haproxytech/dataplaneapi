@@ -31,7 +31,8 @@ import (
 // ReplaceBindOKCode is the HTTP code returned for type ReplaceBindOK
 const ReplaceBindOKCode int = 200
 
-/*ReplaceBindOK Bind replaced
+/*
+ReplaceBindOK Bind replaced
 
 swagger:response replaceBindOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceBindOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // ReplaceBindAcceptedCode is the HTTP code returned for type ReplaceBindAccepted
 const ReplaceBindAcceptedCode int = 202
 
-/*ReplaceBindAccepted Configuration change accepted and reload requested
+/*
+ReplaceBindAccepted Configuration change accepted and reload requested
 
 swagger:response replaceBindAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceBindAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // ReplaceBindBadRequestCode is the HTTP code returned for type ReplaceBindBadRequest
 const ReplaceBindBadRequestCode int = 400
 
-/*ReplaceBindBadRequest Bad request
+/*
+ReplaceBindBadRequest Bad request
 
 swagger:response replaceBindBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceBindBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 // ReplaceBindNotFoundCode is the HTTP code returned for type ReplaceBindNotFound
 const ReplaceBindNotFoundCode int = 404
 
-/*ReplaceBindNotFound The specified resource was not found
+/*
+ReplaceBindNotFound The specified resource was not found
 
 swagger:response replaceBindNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceBindNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*ReplaceBindDefault General Error
+/*
+ReplaceBindDefault General Error
 
 swagger:response replaceBindDefault
 */

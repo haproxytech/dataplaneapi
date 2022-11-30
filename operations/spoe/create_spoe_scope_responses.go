@@ -31,7 +31,8 @@ import (
 // CreateSpoeScopeCreatedCode is the HTTP code returned for type CreateSpoeScopeCreated
 const CreateSpoeScopeCreatedCode int = 201
 
-/*CreateSpoeScopeCreated Spoe scope created
+/*
+CreateSpoeScopeCreated Spoe scope created
 
 swagger:response createSpoeScopeCreated
 */
@@ -73,7 +74,8 @@ func (o *CreateSpoeScopeCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreateSpoeScopeBadRequestCode is the HTTP code returned for type CreateSpoeScopeBadRequest
 const CreateSpoeScopeBadRequestCode int = 400
 
-/*CreateSpoeScopeBadRequest Bad request
+/*
+CreateSpoeScopeBadRequest Bad request
 
 swagger:response createSpoeScopeBadRequest
 */
@@ -139,7 +141,8 @@ func (o *CreateSpoeScopeBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreateSpoeScopeConflictCode is the HTTP code returned for type CreateSpoeScopeConflict
 const CreateSpoeScopeConflictCode int = 409
 
-/*CreateSpoeScopeConflict The specified resource already exists
+/*
+CreateSpoeScopeConflict The specified resource already exists
 
 swagger:response createSpoeScopeConflict
 */
@@ -202,7 +205,8 @@ func (o *CreateSpoeScopeConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreateSpoeScopeDefault General Error
+/*
+CreateSpoeScopeDefault General Error
 
 swagger:response createSpoeScopeDefault
 */

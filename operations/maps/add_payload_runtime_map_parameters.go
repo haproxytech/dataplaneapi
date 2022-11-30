@@ -29,6 +29,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v3/models"
 )
@@ -90,7 +91,7 @@ func (o *AddPayloadRuntimeMapParams) BindRequest(r *http.Request, route *middlew
 		var body models.MapEntries
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -100,13 +101,19 @@ func (o *AddPayloadRuntimeMapParams) BindRequest(r *http.Request, route *middlew
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceSync, qhkForceSync, _ := qs.GetOK("force_sync")
 	if err := o.bindForceSync(qForceSync, qhkForceSync, route.Formats); err != nil {
 		res = append(res, err)
@@ -116,7 +123,6 @@ func (o *AddPayloadRuntimeMapParams) BindRequest(r *http.Request, route *middlew
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -132,6 +138,7 @@ func (o *AddPayloadRuntimeMapParams) bindForceSync(rawData []string, hasKey bool
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewAddPayloadRuntimeMapParams()
 		return nil
@@ -155,7 +162,6 @@ func (o *AddPayloadRuntimeMapParams) bindName(rawData []string, hasKey bool, for
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil

@@ -31,7 +31,8 @@ import (
 // DeleteDeclareCaptureAcceptedCode is the HTTP code returned for type DeleteDeclareCaptureAccepted
 const DeleteDeclareCaptureAcceptedCode int = 202
 
-/*DeleteDeclareCaptureAccepted Configuration change accepted and reload requested
+/*
+DeleteDeclareCaptureAccepted Configuration change accepted and reload requested
 
 swagger:response deleteDeclareCaptureAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteDeclareCaptureAccepted) WriteResponse(rw http.ResponseWriter, pro
 // DeleteDeclareCaptureNoContentCode is the HTTP code returned for type DeleteDeclareCaptureNoContent
 const DeleteDeclareCaptureNoContentCode int = 204
 
-/*DeleteDeclareCaptureNoContent Declare Capture deleted
+/*
+DeleteDeclareCaptureNoContent Declare Capture deleted
 
 swagger:response deleteDeclareCaptureNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteDeclareCaptureNoContent) WriteResponse(rw http.ResponseWriter, pr
 // DeleteDeclareCaptureNotFoundCode is the HTTP code returned for type DeleteDeclareCaptureNotFound
 const DeleteDeclareCaptureNotFoundCode int = 404
 
-/*DeleteDeclareCaptureNotFound The specified resource was not found
+/*
+DeleteDeclareCaptureNotFound The specified resource was not found
 
 swagger:response deleteDeclareCaptureNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteDeclareCaptureNotFound) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*DeleteDeclareCaptureDefault General Error
+/*
+DeleteDeclareCaptureDefault General Error
 
 swagger:response deleteDeclareCaptureDefault
 */

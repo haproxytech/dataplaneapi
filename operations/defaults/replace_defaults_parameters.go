@@ -29,6 +29,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v3/models"
 )
@@ -93,7 +94,7 @@ func (o *ReplaceDefaultsParams) BindRequest(r *http.Request, route *middleware.M
 		var body models.Defaults
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -103,13 +104,19 @@ func (o *ReplaceDefaultsParams) BindRequest(r *http.Request, route *middleware.M
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -124,7 +131,6 @@ func (o *ReplaceDefaultsParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -140,6 +146,7 @@ func (o *ReplaceDefaultsParams) bindForceReload(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplaceDefaultsParams()
 		return nil
@@ -163,10 +170,10 @@ func (o *ReplaceDefaultsParams) bindTransactionID(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -181,6 +188,7 @@ func (o *ReplaceDefaultsParams) bindVersion(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

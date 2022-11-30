@@ -31,7 +31,8 @@ import (
 // ReplaceStorageGeneralFileAcceptedCode is the HTTP code returned for type ReplaceStorageGeneralFileAccepted
 const ReplaceStorageGeneralFileAcceptedCode int = 202
 
-/*ReplaceStorageGeneralFileAccepted Configuration change accepted and reload requested
+/*
+ReplaceStorageGeneralFileAccepted Configuration change accepted and reload requested
 
 swagger:response replaceStorageGeneralFileAccepted
 */
@@ -77,7 +78,8 @@ func (o *ReplaceStorageGeneralFileAccepted) WriteResponse(rw http.ResponseWriter
 // ReplaceStorageGeneralFileNoContentCode is the HTTP code returned for type ReplaceStorageGeneralFileNoContent
 const ReplaceStorageGeneralFileNoContentCode int = 204
 
-/*ReplaceStorageGeneralFileNoContent General use file replaced
+/*
+ReplaceStorageGeneralFileNoContent General use file replaced
 
 swagger:response replaceStorageGeneralFileNoContent
 */
@@ -101,7 +103,8 @@ func (o *ReplaceStorageGeneralFileNoContent) WriteResponse(rw http.ResponseWrite
 // ReplaceStorageGeneralFileBadRequestCode is the HTTP code returned for type ReplaceStorageGeneralFileBadRequest
 const ReplaceStorageGeneralFileBadRequestCode int = 400
 
-/*ReplaceStorageGeneralFileBadRequest Bad request
+/*
+ReplaceStorageGeneralFileBadRequest Bad request
 
 swagger:response replaceStorageGeneralFileBadRequest
 */
@@ -167,7 +170,8 @@ func (o *ReplaceStorageGeneralFileBadRequest) WriteResponse(rw http.ResponseWrit
 // ReplaceStorageGeneralFileNotFoundCode is the HTTP code returned for type ReplaceStorageGeneralFileNotFound
 const ReplaceStorageGeneralFileNotFoundCode int = 404
 
-/*ReplaceStorageGeneralFileNotFound The specified resource was not found
+/*
+ReplaceStorageGeneralFileNotFound The specified resource was not found
 
 swagger:response replaceStorageGeneralFileNotFound
 */
@@ -230,7 +234,8 @@ func (o *ReplaceStorageGeneralFileNotFound) WriteResponse(rw http.ResponseWriter
 	}
 }
 
-/*ReplaceStorageGeneralFileDefault General Error
+/*
+ReplaceStorageGeneralFileDefault General Error
 
 swagger:response replaceStorageGeneralFileDefault
 */

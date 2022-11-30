@@ -31,7 +31,8 @@ import (
 // PostHAProxyConfigurationCreatedCode is the HTTP code returned for type PostHAProxyConfigurationCreated
 const PostHAProxyConfigurationCreatedCode int = 201
 
-/*PostHAProxyConfigurationCreated New HAProxy configuration pushed
+/*
+PostHAProxyConfigurationCreated New HAProxy configuration pushed
 
 swagger:response postHAProxyConfigurationCreated
 */
@@ -73,7 +74,8 @@ func (o *PostHAProxyConfigurationCreated) WriteResponse(rw http.ResponseWriter, 
 // PostHAProxyConfigurationAcceptedCode is the HTTP code returned for type PostHAProxyConfigurationAccepted
 const PostHAProxyConfigurationAcceptedCode int = 202
 
-/*PostHAProxyConfigurationAccepted Configuration change accepted and reload requested
+/*
+PostHAProxyConfigurationAccepted Configuration change accepted and reload requested
 
 swagger:response postHAProxyConfigurationAccepted
 */
@@ -137,7 +139,8 @@ func (o *PostHAProxyConfigurationAccepted) WriteResponse(rw http.ResponseWriter,
 // PostHAProxyConfigurationBadRequestCode is the HTTP code returned for type PostHAProxyConfigurationBadRequest
 const PostHAProxyConfigurationBadRequestCode int = 400
 
-/*PostHAProxyConfigurationBadRequest Bad request
+/*
+PostHAProxyConfigurationBadRequest Bad request
 
 swagger:response postHAProxyConfigurationBadRequest
 */
@@ -200,7 +203,8 @@ func (o *PostHAProxyConfigurationBadRequest) WriteResponse(rw http.ResponseWrite
 	}
 }
 
-/*PostHAProxyConfigurationDefault General Error
+/*
+PostHAProxyConfigurationDefault General Error
 
 swagger:response postHAProxyConfigurationDefault
 */

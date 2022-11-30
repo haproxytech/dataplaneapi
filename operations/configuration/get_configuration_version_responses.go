@@ -31,7 +31,8 @@ import (
 // GetConfigurationVersionOKCode is the HTTP code returned for type GetConfigurationVersionOK
 const GetConfigurationVersionOKCode int = 200
 
-/*GetConfigurationVersionOK Configuration version
+/*
+GetConfigurationVersionOK Configuration version
 
 swagger:response getConfigurationVersionOK
 */
@@ -73,7 +74,8 @@ func (o *GetConfigurationVersionOK) WriteResponse(rw http.ResponseWriter, produc
 // GetConfigurationVersionNotFoundCode is the HTTP code returned for type GetConfigurationVersionNotFound
 const GetConfigurationVersionNotFoundCode int = 404
 
-/*GetConfigurationVersionNotFound The specified resource was not found
+/*
+GetConfigurationVersionNotFound The specified resource was not found
 
 swagger:response getConfigurationVersionNotFound
 */
@@ -136,7 +138,8 @@ func (o *GetConfigurationVersionNotFound) WriteResponse(rw http.ResponseWriter, 
 	}
 }
 
-/*GetConfigurationVersionDefault General Error
+/*
+GetConfigurationVersionDefault General Error
 
 swagger:response getConfigurationVersionDefault
 */

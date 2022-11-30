@@ -31,7 +31,8 @@ import (
 // CreateConsulCreatedCode is the HTTP code returned for type CreateConsulCreated
 const CreateConsulCreatedCode int = 201
 
-/*CreateConsulCreated Consul created
+/*
+CreateConsulCreated Consul created
 
 swagger:response createConsulCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateConsulCreated) WriteResponse(rw http.ResponseWriter, producer run
 // CreateConsulBadRequestCode is the HTTP code returned for type CreateConsulBadRequest
 const CreateConsulBadRequestCode int = 400
 
-/*CreateConsulBadRequest Bad request
+/*
+CreateConsulBadRequest Bad request
 
 swagger:response createConsulBadRequest
 */
@@ -141,7 +143,8 @@ func (o *CreateConsulBadRequest) WriteResponse(rw http.ResponseWriter, producer 
 // CreateConsulConflictCode is the HTTP code returned for type CreateConsulConflict
 const CreateConsulConflictCode int = 409
 
-/*CreateConsulConflict The specified resource already exists
+/*
+CreateConsulConflict The specified resource already exists
 
 swagger:response createConsulConflict
 */
@@ -204,7 +207,8 @@ func (o *CreateConsulConflict) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*CreateConsulDefault General Error
+/*
+CreateConsulDefault General Error
 
 swagger:response createConsulDefault
 */

@@ -34,7 +34,8 @@ import (
 )
 
 // NewReplaceRuntimeServerParams creates a new ReplaceRuntimeServerParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewReplaceRuntimeServerParams() ReplaceRuntimeServerParams {
 
 	return ReplaceRuntimeServerParams{}
@@ -87,7 +88,7 @@ func (o *ReplaceRuntimeServerParams) BindRequest(r *http.Request, route *middlew
 		var body models.RuntimeServer
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -97,18 +98,23 @@ func (o *ReplaceRuntimeServerParams) BindRequest(r *http.Request, route *middlew
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -118,7 +124,7 @@ func (o *ReplaceRuntimeServerParams) BindRequest(r *http.Request, route *middlew
 // bindBackend binds and validates parameter Backend from query.
 func (o *ReplaceRuntimeServerParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -127,10 +133,10 @@ func (o *ReplaceRuntimeServerParams) bindBackend(rawData []string, hasKey bool, 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -145,7 +151,6 @@ func (o *ReplaceRuntimeServerParams) bindName(rawData []string, hasKey bool, for
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil

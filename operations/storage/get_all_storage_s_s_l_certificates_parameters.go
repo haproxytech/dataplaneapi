@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetAllStorageSSLCertificatesParams creates a new GetAllStorageSSLCertificatesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetAllStorageSSLCertificatesParams() GetAllStorageSSLCertificatesParams {
 
 	return GetAllStorageSSLCertificatesParams{}

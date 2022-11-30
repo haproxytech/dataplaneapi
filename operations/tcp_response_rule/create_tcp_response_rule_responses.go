@@ -31,7 +31,8 @@ import (
 // CreateTCPResponseRuleCreatedCode is the HTTP code returned for type CreateTCPResponseRuleCreated
 const CreateTCPResponseRuleCreatedCode int = 201
 
-/*CreateTCPResponseRuleCreated TCP Response Rule created
+/*
+CreateTCPResponseRuleCreated TCP Response Rule created
 
 swagger:response createTcpResponseRuleCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateTCPResponseRuleCreated) WriteResponse(rw http.ResponseWriter, pro
 // CreateTCPResponseRuleAcceptedCode is the HTTP code returned for type CreateTCPResponseRuleAccepted
 const CreateTCPResponseRuleAcceptedCode int = 202
 
-/*CreateTCPResponseRuleAccepted Configuration change accepted and reload requested
+/*
+CreateTCPResponseRuleAccepted Configuration change accepted and reload requested
 
 swagger:response createTcpResponseRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateTCPResponseRuleAccepted) WriteResponse(rw http.ResponseWriter, pr
 // CreateTCPResponseRuleBadRequestCode is the HTTP code returned for type CreateTCPResponseRuleBadRequest
 const CreateTCPResponseRuleBadRequestCode int = 400
 
-/*CreateTCPResponseRuleBadRequest Bad request
+/*
+CreateTCPResponseRuleBadRequest Bad request
 
 swagger:response createTcpResponseRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateTCPResponseRuleBadRequest) WriteResponse(rw http.ResponseWriter, 
 // CreateTCPResponseRuleConflictCode is the HTTP code returned for type CreateTCPResponseRuleConflict
 const CreateTCPResponseRuleConflictCode int = 409
 
-/*CreateTCPResponseRuleConflict The specified resource already exists
+/*
+CreateTCPResponseRuleConflict The specified resource already exists
 
 swagger:response createTcpResponseRuleConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateTCPResponseRuleConflict) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*CreateTCPResponseRuleDefault General Error
+/*
+CreateTCPResponseRuleDefault General Error
 
 swagger:response createTcpResponseRuleDefault
 */

@@ -31,7 +31,8 @@ import (
 // GetSpoeConfigurationVersionOKCode is the HTTP code returned for type GetSpoeConfigurationVersionOK
 const GetSpoeConfigurationVersionOKCode int = 200
 
-/*GetSpoeConfigurationVersionOK SPOE configuration version
+/*
+GetSpoeConfigurationVersionOK SPOE configuration version
 
 swagger:response getSpoeConfigurationVersionOK
 */
@@ -73,7 +74,8 @@ func (o *GetSpoeConfigurationVersionOK) WriteResponse(rw http.ResponseWriter, pr
 // GetSpoeConfigurationVersionNotFoundCode is the HTTP code returned for type GetSpoeConfigurationVersionNotFound
 const GetSpoeConfigurationVersionNotFoundCode int = 404
 
-/*GetSpoeConfigurationVersionNotFound The specified resource was not found
+/*
+GetSpoeConfigurationVersionNotFound The specified resource was not found
 
 swagger:response getSpoeConfigurationVersionNotFound
 */
@@ -136,7 +138,8 @@ func (o *GetSpoeConfigurationVersionNotFound) WriteResponse(rw http.ResponseWrit
 	}
 }
 
-/*GetSpoeConfigurationVersionDefault General Error
+/*
+GetSpoeConfigurationVersionDefault General Error
 
 swagger:response getSpoeConfigurationVersionDefault
 */

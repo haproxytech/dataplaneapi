@@ -31,7 +31,8 @@ import (
 // CreateNameserverCreatedCode is the HTTP code returned for type CreateNameserverCreated
 const CreateNameserverCreatedCode int = 201
 
-/*CreateNameserverCreated Nameserver created
+/*
+CreateNameserverCreated Nameserver created
 
 swagger:response createNameserverCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateNameserverCreated) WriteResponse(rw http.ResponseWriter, producer
 // CreateNameserverAcceptedCode is the HTTP code returned for type CreateNameserverAccepted
 const CreateNameserverAcceptedCode int = 202
 
-/*CreateNameserverAccepted Configuration change accepted and reload requested
+/*
+CreateNameserverAccepted Configuration change accepted and reload requested
 
 swagger:response createNameserverAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateNameserverAccepted) WriteResponse(rw http.ResponseWriter, produce
 // CreateNameserverBadRequestCode is the HTTP code returned for type CreateNameserverBadRequest
 const CreateNameserverBadRequestCode int = 400
 
-/*CreateNameserverBadRequest Bad request
+/*
+CreateNameserverBadRequest Bad request
 
 swagger:response createNameserverBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateNameserverBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // CreateNameserverConflictCode is the HTTP code returned for type CreateNameserverConflict
 const CreateNameserverConflictCode int = 409
 
-/*CreateNameserverConflict The specified resource already exists
+/*
+CreateNameserverConflict The specified resource already exists
 
 swagger:response createNameserverConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateNameserverConflict) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*CreateNameserverDefault General Error
+/*
+CreateNameserverDefault General Error
 
 swagger:response createNameserverDefault
 */

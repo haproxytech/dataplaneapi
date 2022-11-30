@@ -31,7 +31,8 @@ import (
 // DeleteLogTargetAcceptedCode is the HTTP code returned for type DeleteLogTargetAccepted
 const DeleteLogTargetAcceptedCode int = 202
 
-/*DeleteLogTargetAccepted Configuration change accepted and reload requested
+/*
+DeleteLogTargetAccepted Configuration change accepted and reload requested
 
 swagger:response deleteLogTargetAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteLogTargetAccepted) WriteResponse(rw http.ResponseWriter, producer
 // DeleteLogTargetNoContentCode is the HTTP code returned for type DeleteLogTargetNoContent
 const DeleteLogTargetNoContentCode int = 204
 
-/*DeleteLogTargetNoContent Log Target deleted
+/*
+DeleteLogTargetNoContent Log Target deleted
 
 swagger:response deleteLogTargetNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteLogTargetNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteLogTargetNotFoundCode is the HTTP code returned for type DeleteLogTargetNotFound
 const DeleteLogTargetNotFoundCode int = 404
 
-/*DeleteLogTargetNotFound The specified resource was not found
+/*
+DeleteLogTargetNotFound The specified resource was not found
 
 swagger:response deleteLogTargetNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteLogTargetNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteLogTargetDefault General Error
+/*
+DeleteLogTargetDefault General Error
 
 swagger:response deleteLogTargetDefault
 */

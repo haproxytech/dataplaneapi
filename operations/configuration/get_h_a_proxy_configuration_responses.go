@@ -31,7 +31,8 @@ import (
 // GetHAProxyConfigurationOKCode is the HTTP code returned for type GetHAProxyConfigurationOK
 const GetHAProxyConfigurationOKCode int = 200
 
-/*GetHAProxyConfigurationOK Operation successful
+/*
+GetHAProxyConfigurationOK Operation successful
 
 swagger:response getHAProxyConfigurationOK
 */
@@ -94,7 +95,8 @@ func (o *GetHAProxyConfigurationOK) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*GetHAProxyConfigurationDefault General Error
+/*
+GetHAProxyConfigurationDefault General Error
 
 swagger:response getHAProxyConfigurationDefault
 */

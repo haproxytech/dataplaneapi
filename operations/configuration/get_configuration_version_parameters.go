@@ -30,7 +30,8 @@ import (
 )
 
 // NewGetConfigurationVersionParams creates a new GetConfigurationVersionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetConfigurationVersionParams() GetConfigurationVersionParams {
 
 	return GetConfigurationVersionParams{}
@@ -66,7 +67,6 @@ func (o *GetConfigurationVersionParams) BindRequest(r *http.Request, route *midd
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -82,10 +82,10 @@ func (o *GetConfigurationVersionParams) bindTransactionID(rawData []string, hasK
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

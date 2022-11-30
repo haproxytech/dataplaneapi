@@ -31,7 +31,8 @@ import (
 // GetAllRuntimeMapFilesOKCode is the HTTP code returned for type GetAllRuntimeMapFilesOK
 const GetAllRuntimeMapFilesOKCode int = 200
 
-/*GetAllRuntimeMapFilesOK Successful operation
+/*
+GetAllRuntimeMapFilesOK Successful operation
 
 swagger:response getAllRuntimeMapFilesOK
 */
@@ -78,7 +79,8 @@ func (o *GetAllRuntimeMapFilesOK) WriteResponse(rw http.ResponseWriter, producer
 // GetAllRuntimeMapFilesNotFoundCode is the HTTP code returned for type GetAllRuntimeMapFilesNotFound
 const GetAllRuntimeMapFilesNotFoundCode int = 404
 
-/*GetAllRuntimeMapFilesNotFound The specified resource was not found
+/*
+GetAllRuntimeMapFilesNotFound The specified resource was not found
 
 swagger:response getAllRuntimeMapFilesNotFound
 */
@@ -141,7 +143,8 @@ func (o *GetAllRuntimeMapFilesNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*GetAllRuntimeMapFilesDefault General Error
+/*
+GetAllRuntimeMapFilesDefault General Error
 
 swagger:response getAllRuntimeMapFilesDefault
 */

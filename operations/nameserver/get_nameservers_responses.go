@@ -31,7 +31,8 @@ import (
 // GetNameserversOKCode is the HTTP code returned for type GetNameserversOK
 const GetNameserversOKCode int = 200
 
-/*GetNameserversOK Successful operation
+/*
+GetNameserversOK Successful operation
 
 swagger:response getNameserversOK
 */
@@ -94,7 +95,8 @@ func (o *GetNameserversOK) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 }
 
-/*GetNameserversDefault General Error
+/*
+GetNameserversDefault General Error
 
 swagger:response getNameserversDefault
 */

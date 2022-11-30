@@ -31,7 +31,8 @@ import (
 // ReplaceRuntimeServerOKCode is the HTTP code returned for type ReplaceRuntimeServerOK
 const ReplaceRuntimeServerOKCode int = 200
 
-/*ReplaceRuntimeServerOK Server transient settings replaced
+/*
+ReplaceRuntimeServerOK Server transient settings replaced
 
 swagger:response replaceRuntimeServerOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceRuntimeServerOK) WriteResponse(rw http.ResponseWriter, producer 
 // ReplaceRuntimeServerBadRequestCode is the HTTP code returned for type ReplaceRuntimeServerBadRequest
 const ReplaceRuntimeServerBadRequestCode int = 400
 
-/*ReplaceRuntimeServerBadRequest Bad request
+/*
+ReplaceRuntimeServerBadRequest Bad request
 
 swagger:response replaceRuntimeServerBadRequest
 */
@@ -141,7 +143,8 @@ func (o *ReplaceRuntimeServerBadRequest) WriteResponse(rw http.ResponseWriter, p
 // ReplaceRuntimeServerNotFoundCode is the HTTP code returned for type ReplaceRuntimeServerNotFound
 const ReplaceRuntimeServerNotFoundCode int = 404
 
-/*ReplaceRuntimeServerNotFound The specified resource was not found
+/*
+ReplaceRuntimeServerNotFound The specified resource was not found
 
 swagger:response replaceRuntimeServerNotFound
 */
@@ -204,7 +207,8 @@ func (o *ReplaceRuntimeServerNotFound) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*ReplaceRuntimeServerDefault General Error
+/*
+ReplaceRuntimeServerDefault General Error
 
 swagger:response replaceRuntimeServerDefault
 */

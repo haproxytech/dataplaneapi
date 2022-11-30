@@ -31,7 +31,8 @@ import (
 // PostServicesHaproxyRuntimeACLFileEntriesCreatedCode is the HTTP code returned for type PostServicesHaproxyRuntimeACLFileEntriesCreated
 const PostServicesHaproxyRuntimeACLFileEntriesCreatedCode int = 201
 
-/*PostServicesHaproxyRuntimeACLFileEntriesCreated ACL entry created
+/*
+PostServicesHaproxyRuntimeACLFileEntriesCreated ACL entry created
 
 swagger:response postServicesHaproxyRuntimeAclFileEntriesCreated
 */
@@ -75,7 +76,8 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesCreated) WriteResponse(rw http.
 // PostServicesHaproxyRuntimeACLFileEntriesBadRequestCode is the HTTP code returned for type PostServicesHaproxyRuntimeACLFileEntriesBadRequest
 const PostServicesHaproxyRuntimeACLFileEntriesBadRequestCode int = 400
 
-/*PostServicesHaproxyRuntimeACLFileEntriesBadRequest Bad request
+/*
+PostServicesHaproxyRuntimeACLFileEntriesBadRequest Bad request
 
 swagger:response postServicesHaproxyRuntimeAclFileEntriesBadRequest
 */
@@ -141,7 +143,8 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesBadRequest) WriteResponse(rw ht
 // PostServicesHaproxyRuntimeACLFileEntriesConflictCode is the HTTP code returned for type PostServicesHaproxyRuntimeACLFileEntriesConflict
 const PostServicesHaproxyRuntimeACLFileEntriesConflictCode int = 409
 
-/*PostServicesHaproxyRuntimeACLFileEntriesConflict The specified resource already exists
+/*
+PostServicesHaproxyRuntimeACLFileEntriesConflict The specified resource already exists
 
 swagger:response postServicesHaproxyRuntimeAclFileEntriesConflict
 */
@@ -204,7 +207,8 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesConflict) WriteResponse(rw http
 	}
 }
 
-/*PostServicesHaproxyRuntimeACLFileEntriesDefault General Error
+/*
+PostServicesHaproxyRuntimeACLFileEntriesDefault General Error
 
 swagger:response postServicesHaproxyRuntimeAclFileEntriesDefault
 */

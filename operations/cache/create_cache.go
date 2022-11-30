@@ -44,12 +44,12 @@ func NewCreateCache(ctx *middleware.Context, handler CreateCacheHandler) *Create
 	return &CreateCache{Context: ctx, Handler: handler}
 }
 
-/*CreateCache swagger:route POST /services/haproxy/configuration/caches Cache createCache
+/*
+	CreateCache swagger:route POST /services/haproxy/configuration/caches Cache createCache
 
-Add a cache
+# Add a cache
 
 Adds a new cache section to the configuration file.
-
 */
 type CreateCache struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type CreateCache struct {
 func (o *CreateCache) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewCreateCacheParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *CreateCache) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

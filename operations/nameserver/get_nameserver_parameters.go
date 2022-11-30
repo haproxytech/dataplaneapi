@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetNameserverParams creates a new GetNameserverParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetNameserverParams() GetNameserverParams {
 
 	return GetNameserverParams{}
@@ -87,7 +88,6 @@ func (o *GetNameserverParams) BindRequest(r *http.Request, route *middleware.Mat
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -103,7 +103,6 @@ func (o *GetNameserverParams) bindName(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -112,7 +111,7 @@ func (o *GetNameserverParams) bindName(rawData []string, hasKey bool, formats st
 // bindResolver binds and validates parameter Resolver from query.
 func (o *GetNameserverParams) bindResolver(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("resolver", "query")
+		return errors.Required("resolver", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -121,10 +120,10 @@ func (o *GetNameserverParams) bindResolver(rawData []string, hasKey bool, format
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("resolver", "query", raw); err != nil {
 		return err
 	}
-
 	o.Resolver = raw
 
 	return nil
@@ -139,10 +138,10 @@ func (o *GetNameserverParams) bindTransactionID(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

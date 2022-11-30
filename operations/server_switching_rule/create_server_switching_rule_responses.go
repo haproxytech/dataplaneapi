@@ -31,7 +31,8 @@ import (
 // CreateServerSwitchingRuleCreatedCode is the HTTP code returned for type CreateServerSwitchingRuleCreated
 const CreateServerSwitchingRuleCreatedCode int = 201
 
-/*CreateServerSwitchingRuleCreated Server Switching Rule created
+/*
+CreateServerSwitchingRuleCreated Server Switching Rule created
 
 swagger:response createServerSwitchingRuleCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateServerSwitchingRuleCreated) WriteResponse(rw http.ResponseWriter,
 // CreateServerSwitchingRuleAcceptedCode is the HTTP code returned for type CreateServerSwitchingRuleAccepted
 const CreateServerSwitchingRuleAcceptedCode int = 202
 
-/*CreateServerSwitchingRuleAccepted Configuration change accepted and reload requested
+/*
+CreateServerSwitchingRuleAccepted Configuration change accepted and reload requested
 
 swagger:response createServerSwitchingRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateServerSwitchingRuleAccepted) WriteResponse(rw http.ResponseWriter
 // CreateServerSwitchingRuleBadRequestCode is the HTTP code returned for type CreateServerSwitchingRuleBadRequest
 const CreateServerSwitchingRuleBadRequestCode int = 400
 
-/*CreateServerSwitchingRuleBadRequest Bad request
+/*
+CreateServerSwitchingRuleBadRequest Bad request
 
 swagger:response createServerSwitchingRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateServerSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWrit
 // CreateServerSwitchingRuleConflictCode is the HTTP code returned for type CreateServerSwitchingRuleConflict
 const CreateServerSwitchingRuleConflictCode int = 409
 
-/*CreateServerSwitchingRuleConflict The specified resource already exists
+/*
+CreateServerSwitchingRuleConflict The specified resource already exists
 
 swagger:response createServerSwitchingRuleConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateServerSwitchingRuleConflict) WriteResponse(rw http.ResponseWriter
 	}
 }
 
-/*CreateServerSwitchingRuleDefault General Error
+/*
+CreateServerSwitchingRuleDefault General Error
 
 swagger:response createServerSwitchingRuleDefault
 */

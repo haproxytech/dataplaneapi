@@ -44,12 +44,12 @@ func NewReplaceHTTPResponseRule(ctx *middleware.Context, handler ReplaceHTTPResp
 	return &ReplaceHTTPResponseRule{Context: ctx, Handler: handler}
 }
 
-/*ReplaceHTTPResponseRule swagger:route PUT /services/haproxy/configuration/http_response_rules/{index} HTTPResponseRule replaceHttpResponseRule
+/*
+	ReplaceHTTPResponseRule swagger:route PUT /services/haproxy/configuration/http_response_rules/{index} HTTPResponseRule replaceHttpResponseRule
 
-Replace a HTTP Response Rule
+# Replace a HTTP Response Rule
 
 Replaces a HTTP Response Rule configuration by it's index in the specified parent.
-
 */
 type ReplaceHTTPResponseRule struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type ReplaceHTTPResponseRule struct {
 func (o *ReplaceHTTPResponseRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceHTTPResponseRuleParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *ReplaceHTTPResponseRule) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

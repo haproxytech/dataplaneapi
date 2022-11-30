@@ -27,12 +27,14 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v3/models"
 )
 
 // NewCreateConsulParams creates a new CreateConsulParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewCreateConsulParams() CreateConsulParams {
 
 	return CreateConsulParams{}
@@ -68,7 +70,7 @@ func (o *CreateConsulParams) BindRequest(r *http.Request, route *middleware.Matc
 		var body models.Consul
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -78,12 +80,17 @@ func (o *CreateConsulParams) BindRequest(r *http.Request, route *middleware.Matc
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

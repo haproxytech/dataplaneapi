@@ -31,7 +31,8 @@ import (
 // GetPeerSectionOKCode is the HTTP code returned for type GetPeerSectionOK
 const GetPeerSectionOKCode int = 200
 
-/*GetPeerSectionOK Successful operation
+/*
+GetPeerSectionOK Successful operation
 
 swagger:response getPeerSectionOK
 */
@@ -97,7 +98,8 @@ func (o *GetPeerSectionOK) WriteResponse(rw http.ResponseWriter, producer runtim
 // GetPeerSectionNotFoundCode is the HTTP code returned for type GetPeerSectionNotFound
 const GetPeerSectionNotFoundCode int = 404
 
-/*GetPeerSectionNotFound The specified resource was not found
+/*
+GetPeerSectionNotFound The specified resource was not found
 
 swagger:response getPeerSectionNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetPeerSectionNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*GetPeerSectionDefault General Error
+/*
+GetPeerSectionDefault General Error
 
 swagger:response getPeerSectionDefault
 */

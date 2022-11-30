@@ -31,7 +31,8 @@ import (
 // CreateStorageMapFileCreatedCode is the HTTP code returned for type CreateStorageMapFileCreated
 const CreateStorageMapFileCreatedCode int = 201
 
-/*CreateStorageMapFileCreated Map file created with its entries
+/*
+CreateStorageMapFileCreated Map file created with its entries
 
 swagger:response createStorageMapFileCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateStorageMapFileCreated) WriteResponse(rw http.ResponseWriter, prod
 // CreateStorageMapFileBadRequestCode is the HTTP code returned for type CreateStorageMapFileBadRequest
 const CreateStorageMapFileBadRequestCode int = 400
 
-/*CreateStorageMapFileBadRequest Bad request
+/*
+CreateStorageMapFileBadRequest Bad request
 
 swagger:response createStorageMapFileBadRequest
 */
@@ -141,7 +143,8 @@ func (o *CreateStorageMapFileBadRequest) WriteResponse(rw http.ResponseWriter, p
 // CreateStorageMapFileConflictCode is the HTTP code returned for type CreateStorageMapFileConflict
 const CreateStorageMapFileConflictCode int = 409
 
-/*CreateStorageMapFileConflict The specified resource already exists
+/*
+CreateStorageMapFileConflict The specified resource already exists
 
 swagger:response createStorageMapFileConflict
 */
@@ -204,7 +207,8 @@ func (o *CreateStorageMapFileConflict) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*CreateStorageMapFileDefault General Error
+/*
+CreateStorageMapFileDefault General Error
 
 swagger:response createStorageMapFileDefault
 */

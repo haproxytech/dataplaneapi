@@ -44,12 +44,12 @@ func NewGetStickTables(ctx *middleware.Context, handler GetStickTablesHandler) *
 	return &GetStickTables{Context: ctx, Handler: handler}
 }
 
-/*GetStickTables swagger:route GET /services/haproxy/runtime/stick_tables StickTable getStickTables
+/*
+	GetStickTables swagger:route GET /services/haproxy/runtime/stick_tables StickTable getStickTables
 
-Return Stick Tables
+# Return Stick Tables
 
 Returns an array of all stick tables.
-
 */
 type GetStickTables struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type GetStickTables struct {
 func (o *GetStickTables) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetStickTablesParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *GetStickTables) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

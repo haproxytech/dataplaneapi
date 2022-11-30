@@ -31,7 +31,8 @@ import (
 // GetAWSRegionOKCode is the HTTP code returned for type GetAWSRegionOK
 const GetAWSRegionOKCode int = 200
 
-/*GetAWSRegionOK Successful operation
+/*
+GetAWSRegionOK Successful operation
 
 swagger:response getAWSRegionOK
 */
@@ -75,7 +76,8 @@ func (o *GetAWSRegionOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetAWSRegionNotFoundCode is the HTTP code returned for type GetAWSRegionNotFound
 const GetAWSRegionNotFoundCode int = 404
 
-/*GetAWSRegionNotFound The specified resource was not found
+/*
+GetAWSRegionNotFound The specified resource was not found
 
 swagger:response getAWSRegionNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetAWSRegionNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetAWSRegionDefault General Error
+/*
+GetAWSRegionDefault General Error
 
 swagger:response getAWSRegionDefault
 */

@@ -31,7 +31,8 @@ import (
 // GetDeclareCapturesOKCode is the HTTP code returned for type GetDeclareCapturesOK
 const GetDeclareCapturesOKCode int = 200
 
-/*GetDeclareCapturesOK Successful operation
+/*
+GetDeclareCapturesOK Successful operation
 
 swagger:response getDeclareCapturesOK
 */
@@ -94,7 +95,8 @@ func (o *GetDeclareCapturesOK) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetDeclareCapturesDefault General Error
+/*
+GetDeclareCapturesDefault General Error
 
 swagger:response getDeclareCapturesDefault
 */

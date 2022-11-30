@@ -31,7 +31,8 @@ import (
 // DeleteRuntimeMapEntryNoContentCode is the HTTP code returned for type DeleteRuntimeMapEntryNoContent
 const DeleteRuntimeMapEntryNoContentCode int = 204
 
-/*DeleteRuntimeMapEntryNoContent Map key/value deleted
+/*
+DeleteRuntimeMapEntryNoContent Map key/value deleted
 
 swagger:response deleteRuntimeMapEntryNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteRuntimeMapEntryNoContent) WriteResponse(rw http.ResponseWriter, p
 // DeleteRuntimeMapEntryNotFoundCode is the HTTP code returned for type DeleteRuntimeMapEntryNotFound
 const DeleteRuntimeMapEntryNotFoundCode int = 404
 
-/*DeleteRuntimeMapEntryNotFound The specified resource was not found
+/*
+DeleteRuntimeMapEntryNotFound The specified resource was not found
 
 swagger:response deleteRuntimeMapEntryNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteRuntimeMapEntryNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*DeleteRuntimeMapEntryDefault General Error
+/*
+DeleteRuntimeMapEntryDefault General Error
 
 swagger:response deleteRuntimeMapEntryDefault
 */

@@ -31,7 +31,8 @@ import (
 // ReplaceBackendSwitchingRuleOKCode is the HTTP code returned for type ReplaceBackendSwitchingRuleOK
 const ReplaceBackendSwitchingRuleOKCode int = 200
 
-/*ReplaceBackendSwitchingRuleOK Backend Switching Rule replaced
+/*
+ReplaceBackendSwitchingRuleOK Backend Switching Rule replaced
 
 swagger:response replaceBackendSwitchingRuleOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceBackendSwitchingRuleOK) WriteResponse(rw http.ResponseWriter, pr
 // ReplaceBackendSwitchingRuleAcceptedCode is the HTTP code returned for type ReplaceBackendSwitchingRuleAccepted
 const ReplaceBackendSwitchingRuleAcceptedCode int = 202
 
-/*ReplaceBackendSwitchingRuleAccepted Configuration change accepted and reload requested
+/*
+ReplaceBackendSwitchingRuleAccepted Configuration change accepted and reload requested
 
 swagger:response replaceBackendSwitchingRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceBackendSwitchingRuleAccepted) WriteResponse(rw http.ResponseWrit
 // ReplaceBackendSwitchingRuleBadRequestCode is the HTTP code returned for type ReplaceBackendSwitchingRuleBadRequest
 const ReplaceBackendSwitchingRuleBadRequestCode int = 400
 
-/*ReplaceBackendSwitchingRuleBadRequest Bad request
+/*
+ReplaceBackendSwitchingRuleBadRequest Bad request
 
 swagger:response replaceBackendSwitchingRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceBackendSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWr
 // ReplaceBackendSwitchingRuleNotFoundCode is the HTTP code returned for type ReplaceBackendSwitchingRuleNotFound
 const ReplaceBackendSwitchingRuleNotFoundCode int = 404
 
-/*ReplaceBackendSwitchingRuleNotFound The specified resource was not found
+/*
+ReplaceBackendSwitchingRuleNotFound The specified resource was not found
 
 swagger:response replaceBackendSwitchingRuleNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceBackendSwitchingRuleNotFound) WriteResponse(rw http.ResponseWrit
 	}
 }
 
-/*ReplaceBackendSwitchingRuleDefault General Error
+/*
+ReplaceBackendSwitchingRuleDefault General Error
 
 swagger:response replaceBackendSwitchingRuleDefault
 */

@@ -32,7 +32,8 @@ import (
 // GetServerTemplateOKCode is the HTTP code returned for type GetServerTemplateOK
 const GetServerTemplateOKCode int = 200
 
-/*GetServerTemplateOK Successful operation
+/*
+GetServerTemplateOK Successful operation
 
 swagger:response getServerTemplateOK
 */
@@ -98,7 +99,8 @@ func (o *GetServerTemplateOK) WriteResponse(rw http.ResponseWriter, producer run
 // GetServerTemplateNotFoundCode is the HTTP code returned for type GetServerTemplateNotFound
 const GetServerTemplateNotFoundCode int = 404
 
-/*GetServerTemplateNotFound The specified resource was not found
+/*
+GetServerTemplateNotFound The specified resource was not found
 
 swagger:response getServerTemplateNotFound
 */
@@ -161,7 +163,8 @@ func (o *GetServerTemplateNotFound) WriteResponse(rw http.ResponseWriter, produc
 	}
 }
 
-/*GetServerTemplateDefault General Error
+/*
+GetServerTemplateDefault General Error
 
 swagger:response getServerTemplateDefault
 */

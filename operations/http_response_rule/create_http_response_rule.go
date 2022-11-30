@@ -44,12 +44,12 @@ func NewCreateHTTPResponseRule(ctx *middleware.Context, handler CreateHTTPRespon
 	return &CreateHTTPResponseRule{Context: ctx, Handler: handler}
 }
 
-/*CreateHTTPResponseRule swagger:route POST /services/haproxy/configuration/http_response_rules HTTPResponseRule createHttpResponseRule
+/*
+	CreateHTTPResponseRule swagger:route POST /services/haproxy/configuration/http_response_rules HTTPResponseRule createHttpResponseRule
 
-Add a new HTTP Response Rule
+# Add a new HTTP Response Rule
 
 Adds a new HTTP Response Rule of the specified type in the specified parent.
-
 */
 type CreateHTTPResponseRule struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type CreateHTTPResponseRule struct {
 func (o *CreateHTTPResponseRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewCreateHTTPResponseRuleParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *CreateHTTPResponseRule) ServeHTTP(rw http.ResponseWriter, r *http.Reque
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

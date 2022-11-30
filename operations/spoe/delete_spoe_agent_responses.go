@@ -31,7 +31,8 @@ import (
 // DeleteSpoeAgentNoContentCode is the HTTP code returned for type DeleteSpoeAgentNoContent
 const DeleteSpoeAgentNoContentCode int = 204
 
-/*DeleteSpoeAgentNoContent Spoe agent deleted
+/*
+DeleteSpoeAgentNoContent Spoe agent deleted
 
 swagger:response deleteSpoeAgentNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteSpoeAgentNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteSpoeAgentNotFoundCode is the HTTP code returned for type DeleteSpoeAgentNotFound
 const DeleteSpoeAgentNotFoundCode int = 404
 
-/*DeleteSpoeAgentNotFound The specified resource was not found
+/*
+DeleteSpoeAgentNotFound The specified resource was not found
 
 swagger:response deleteSpoeAgentNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteSpoeAgentNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteSpoeAgentDefault General Error
+/*
+DeleteSpoeAgentDefault General Error
 
 swagger:response deleteSpoeAgentDefault
 */

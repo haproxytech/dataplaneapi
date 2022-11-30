@@ -31,7 +31,8 @@ import (
 // DeleteHTTPCheckAcceptedCode is the HTTP code returned for type DeleteHTTPCheckAccepted
 const DeleteHTTPCheckAcceptedCode int = 202
 
-/*DeleteHTTPCheckAccepted Configuration change accepted and reload requested
+/*
+DeleteHTTPCheckAccepted Configuration change accepted and reload requested
 
 swagger:response deleteHttpCheckAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteHTTPCheckAccepted) WriteResponse(rw http.ResponseWriter, producer
 // DeleteHTTPCheckNoContentCode is the HTTP code returned for type DeleteHTTPCheckNoContent
 const DeleteHTTPCheckNoContentCode int = 204
 
-/*DeleteHTTPCheckNoContent HTTP check deleted
+/*
+DeleteHTTPCheckNoContent HTTP check deleted
 
 swagger:response deleteHttpCheckNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteHTTPCheckNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteHTTPCheckNotFoundCode is the HTTP code returned for type DeleteHTTPCheckNotFound
 const DeleteHTTPCheckNotFoundCode int = 404
 
-/*DeleteHTTPCheckNotFound The specified resource was not found
+/*
+DeleteHTTPCheckNotFound The specified resource was not found
 
 swagger:response deleteHttpCheckNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteHTTPCheckNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteHTTPCheckDefault General Error
+/*
+DeleteHTTPCheckDefault General Error
 
 swagger:response deleteHttpCheckDefault
 */

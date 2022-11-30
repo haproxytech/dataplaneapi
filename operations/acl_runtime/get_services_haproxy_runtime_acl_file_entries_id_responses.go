@@ -31,7 +31,8 @@ import (
 // GetServicesHaproxyRuntimeACLFileEntriesIDOKCode is the HTTP code returned for type GetServicesHaproxyRuntimeACLFileEntriesIDOK
 const GetServicesHaproxyRuntimeACLFileEntriesIDOKCode int = 200
 
-/*GetServicesHaproxyRuntimeACLFileEntriesIDOK Successful operation
+/*
+GetServicesHaproxyRuntimeACLFileEntriesIDOK Successful operation
 
 swagger:response getServicesHaproxyRuntimeAclFileEntriesIdOK
 */
@@ -75,7 +76,8 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesIDOK) WriteResponse(rw http.Resp
 // GetServicesHaproxyRuntimeACLFileEntriesIDBadRequestCode is the HTTP code returned for type GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest
 const GetServicesHaproxyRuntimeACLFileEntriesIDBadRequestCode int = 400
 
-/*GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest Bad request
+/*
+GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest Bad request
 
 swagger:response getServicesHaproxyRuntimeAclFileEntriesIdBadRequest
 */
@@ -141,7 +143,8 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesIDBadRequest) WriteResponse(rw h
 // GetServicesHaproxyRuntimeACLFileEntriesIDNotFoundCode is the HTTP code returned for type GetServicesHaproxyRuntimeACLFileEntriesIDNotFound
 const GetServicesHaproxyRuntimeACLFileEntriesIDNotFoundCode int = 404
 
-/*GetServicesHaproxyRuntimeACLFileEntriesIDNotFound The specified resource was not found
+/*
+GetServicesHaproxyRuntimeACLFileEntriesIDNotFound The specified resource was not found
 
 swagger:response getServicesHaproxyRuntimeAclFileEntriesIdNotFound
 */
@@ -204,7 +207,8 @@ func (o *GetServicesHaproxyRuntimeACLFileEntriesIDNotFound) WriteResponse(rw htt
 	}
 }
 
-/*GetServicesHaproxyRuntimeACLFileEntriesIDDefault General Error
+/*
+GetServicesHaproxyRuntimeACLFileEntriesIDDefault General Error
 
 swagger:response getServicesHaproxyRuntimeAclFileEntriesIdDefault
 */

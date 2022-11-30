@@ -31,7 +31,8 @@ import (
 // ReplaceSpoeMessageOKCode is the HTTP code returned for type ReplaceSpoeMessageOK
 const ReplaceSpoeMessageOKCode int = 200
 
-/*ReplaceSpoeMessageOK Spoe message replaced
+/*
+ReplaceSpoeMessageOK Spoe message replaced
 
 swagger:response replaceSpoeMessageOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceSpoeMessageOK) WriteResponse(rw http.ResponseWriter, producer ru
 // ReplaceSpoeMessageBadRequestCode is the HTTP code returned for type ReplaceSpoeMessageBadRequest
 const ReplaceSpoeMessageBadRequestCode int = 400
 
-/*ReplaceSpoeMessageBadRequest Bad request
+/*
+ReplaceSpoeMessageBadRequest Bad request
 
 swagger:response replaceSpoeMessageBadRequest
 */
@@ -141,7 +143,8 @@ func (o *ReplaceSpoeMessageBadRequest) WriteResponse(rw http.ResponseWriter, pro
 // ReplaceSpoeMessageNotFoundCode is the HTTP code returned for type ReplaceSpoeMessageNotFound
 const ReplaceSpoeMessageNotFoundCode int = 404
 
-/*ReplaceSpoeMessageNotFound The specified resource was not found
+/*
+ReplaceSpoeMessageNotFound The specified resource was not found
 
 swagger:response replaceSpoeMessageNotFound
 */
@@ -204,7 +207,8 @@ func (o *ReplaceSpoeMessageNotFound) WriteResponse(rw http.ResponseWriter, produ
 	}
 }
 
-/*ReplaceSpoeMessageDefault General Error
+/*
+ReplaceSpoeMessageDefault General Error
 
 swagger:response replaceSpoeMessageDefault
 */

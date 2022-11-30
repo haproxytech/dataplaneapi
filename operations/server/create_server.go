@@ -44,12 +44,12 @@ func NewCreateServer(ctx *middleware.Context, handler CreateServerHandler) *Crea
 	return &CreateServer{Context: ctx, Handler: handler}
 }
 
-/*CreateServer swagger:route POST /services/haproxy/configuration/servers Server createServer
+/*
+	CreateServer swagger:route POST /services/haproxy/configuration/servers Server createServer
 
-Add a new server
+# Add a new server
 
 Adds a new server in the specified backend in the configuration file.
-
 */
 type CreateServer struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type CreateServer struct {
 func (o *CreateServer) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewCreateServerParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *CreateServer) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

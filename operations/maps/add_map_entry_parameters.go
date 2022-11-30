@@ -91,7 +91,7 @@ func (o *AddMapEntryParams) BindRequest(r *http.Request, route *middleware.Match
 		var body models.MapEntry
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -101,13 +101,19 @@ func (o *AddMapEntryParams) BindRequest(r *http.Request, route *middleware.Match
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceSync, qhkForceSync, _ := qs.GetOK("force_sync")
 	if err := o.bindForceSync(qForceSync, qhkForceSync, route.Formats); err != nil {
 		res = append(res, err)
@@ -117,7 +123,6 @@ func (o *AddMapEntryParams) BindRequest(r *http.Request, route *middleware.Match
 	if err := o.bindMap(qMap, qhkMap, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -133,6 +138,7 @@ func (o *AddMapEntryParams) bindForceSync(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewAddMapEntryParams()
 		return nil
@@ -150,7 +156,7 @@ func (o *AddMapEntryParams) bindForceSync(rawData []string, hasKey bool, formats
 // bindMap binds and validates parameter Map from query.
 func (o *AddMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("map", "query")
+		return errors.Required("map", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -159,10 +165,10 @@ func (o *AddMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfm
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("map", "query", raw); err != nil {
 		return err
 	}
-
 	o.Map = raw
 
 	return nil

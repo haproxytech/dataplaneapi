@@ -31,7 +31,8 @@ import (
 // ReplaceFilterOKCode is the HTTP code returned for type ReplaceFilterOK
 const ReplaceFilterOKCode int = 200
 
-/*ReplaceFilterOK Filter replaced
+/*
+ReplaceFilterOK Filter replaced
 
 swagger:response replaceFilterOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceFilterOK) WriteResponse(rw http.ResponseWriter, producer runtime
 // ReplaceFilterAcceptedCode is the HTTP code returned for type ReplaceFilterAccepted
 const ReplaceFilterAcceptedCode int = 202
 
-/*ReplaceFilterAccepted Configuration change accepted and reload requested
+/*
+ReplaceFilterAccepted Configuration change accepted and reload requested
 
 swagger:response replaceFilterAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceFilterAccepted) WriteResponse(rw http.ResponseWriter, producer r
 // ReplaceFilterBadRequestCode is the HTTP code returned for type ReplaceFilterBadRequest
 const ReplaceFilterBadRequestCode int = 400
 
-/*ReplaceFilterBadRequest Bad request
+/*
+ReplaceFilterBadRequest Bad request
 
 swagger:response replaceFilterBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceFilterBadRequest) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceFilterNotFoundCode is the HTTP code returned for type ReplaceFilterNotFound
 const ReplaceFilterNotFoundCode int = 404
 
-/*ReplaceFilterNotFound The specified resource was not found
+/*
+ReplaceFilterNotFound The specified resource was not found
 
 swagger:response replaceFilterNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceFilterNotFound) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*ReplaceFilterDefault General Error
+/*
+ReplaceFilterDefault General Error
 
 swagger:response replaceFilterDefault
 */

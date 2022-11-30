@@ -31,7 +31,8 @@ import (
 // GetResolversOKCode is the HTTP code returned for type GetResolversOK
 const GetResolversOKCode int = 200
 
-/*GetResolversOK Successful operation
+/*
+GetResolversOK Successful operation
 
 swagger:response getResolversOK
 */
@@ -94,7 +95,8 @@ func (o *GetResolversOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	}
 }
 
-/*GetResolversDefault General Error
+/*
+GetResolversDefault General Error
 
 swagger:response getResolversDefault
 */

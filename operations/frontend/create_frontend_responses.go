@@ -31,7 +31,8 @@ import (
 // CreateFrontendCreatedCode is the HTTP code returned for type CreateFrontendCreated
 const CreateFrontendCreatedCode int = 201
 
-/*CreateFrontendCreated Frontend created
+/*
+CreateFrontendCreated Frontend created
 
 swagger:response createFrontendCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateFrontendCreated) WriteResponse(rw http.ResponseWriter, producer r
 // CreateFrontendAcceptedCode is the HTTP code returned for type CreateFrontendAccepted
 const CreateFrontendAcceptedCode int = 202
 
-/*CreateFrontendAccepted Configuration change accepted and reload requested
+/*
+CreateFrontendAccepted Configuration change accepted and reload requested
 
 swagger:response createFrontendAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateFrontendAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // CreateFrontendBadRequestCode is the HTTP code returned for type CreateFrontendBadRequest
 const CreateFrontendBadRequestCode int = 400
 
-/*CreateFrontendBadRequest Bad request
+/*
+CreateFrontendBadRequest Bad request
 
 swagger:response createFrontendBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateFrontendBadRequest) WriteResponse(rw http.ResponseWriter, produce
 // CreateFrontendConflictCode is the HTTP code returned for type CreateFrontendConflict
 const CreateFrontendConflictCode int = 409
 
-/*CreateFrontendConflict The specified resource already exists
+/*
+CreateFrontendConflict The specified resource already exists
 
 swagger:response createFrontendConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateFrontendConflict) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*CreateFrontendDefault General Error
+/*
+CreateFrontendDefault General Error
 
 swagger:response createFrontendDefault
 */

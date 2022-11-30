@@ -12102,6 +12102,9 @@ func init() {
         },
         "httpchk_params": {
           "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            },
             "mode": {
               "value": "http"
             }
@@ -12120,6 +12123,11 @@ func init() {
           ]
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -12128,6 +12136,11 @@ func init() {
           "x-nullable": false
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "queue_timeout": {
@@ -12146,6 +12159,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
@@ -13945,6 +13963,11 @@ func init() {
           ]
         },
         "httpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            }
+          },
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
@@ -14001,9 +14024,19 @@ func init() {
           "$ref": "#/definitions/monitor_uri"
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "queue_timeout": {
@@ -14026,6 +14059,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
@@ -17480,7 +17518,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L7OK",
@@ -17561,7 +17599,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L6OK",
@@ -40203,6 +40241,9 @@ func init() {
         },
         "httpchk_params": {
           "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            },
             "mode": {
               "value": "http"
             }
@@ -40221,6 +40262,11 @@ func init() {
           ]
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -40229,6 +40275,11 @@ func init() {
           "x-nullable": false
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "queue_timeout": {
@@ -40247,6 +40298,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
@@ -42013,6 +42069,11 @@ func init() {
           ]
         },
         "httpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            }
+          },
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
@@ -42069,9 +42130,19 @@ func init() {
           "$ref": "#/definitions/monitor_uri"
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "queue_timeout": {
@@ -42094,6 +42165,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "stats_options": {
@@ -45479,7 +45555,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L7OK",
@@ -45560,7 +45636,7 @@ func init() {
             "UNK",
             "INI",
             "SOCKERR",
-            "L40K",
+            "L4OK",
             "L4TOUT",
             "L4CON",
             "L6OK",

@@ -44,12 +44,12 @@ func NewGetAllStorageSSLCertificates(ctx *middleware.Context, handler GetAllStor
 	return &GetAllStorageSSLCertificates{Context: ctx, Handler: handler}
 }
 
-/*GetAllStorageSSLCertificates swagger:route GET /services/haproxy/storage/ssl_certificates Storage getAllStorageSSLCertificates
+/*
+	GetAllStorageSSLCertificates swagger:route GET /services/haproxy/storage/ssl_certificates Storage getAllStorageSSLCertificates
 
-Return all available SSL certificates on disk
+# Return all available SSL certificates on disk
 
 Returns all available SSL certificates on disk.
-
 */
 type GetAllStorageSSLCertificates struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type GetAllStorageSSLCertificates struct {
 func (o *GetAllStorageSSLCertificates) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetAllStorageSSLCertificatesParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *GetAllStorageSSLCertificates) ServeHTTP(rw http.ResponseWriter, r *http
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

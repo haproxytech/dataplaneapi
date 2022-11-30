@@ -31,7 +31,8 @@ import (
 // CreatePeerCreatedCode is the HTTP code returned for type CreatePeerCreated
 const CreatePeerCreatedCode int = 201
 
-/*CreatePeerCreated Peer created
+/*
+CreatePeerCreated Peer created
 
 swagger:response createPeerCreated
 */
@@ -75,7 +76,8 @@ func (o *CreatePeerCreated) WriteResponse(rw http.ResponseWriter, producer runti
 // CreatePeerAcceptedCode is the HTTP code returned for type CreatePeerAccepted
 const CreatePeerAcceptedCode int = 202
 
-/*CreatePeerAccepted Configuration change accepted and reload requested
+/*
+CreatePeerAccepted Configuration change accepted and reload requested
 
 swagger:response createPeerAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreatePeerAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // CreatePeerBadRequestCode is the HTTP code returned for type CreatePeerBadRequest
 const CreatePeerBadRequestCode int = 400
 
-/*CreatePeerBadRequest Bad request
+/*
+CreatePeerBadRequest Bad request
 
 swagger:response createPeerBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreatePeerBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 // CreatePeerConflictCode is the HTTP code returned for type CreatePeerConflict
 const CreatePeerConflictCode int = 409
 
-/*CreatePeerConflict The specified resource already exists
+/*
+CreatePeerConflict The specified resource already exists
 
 swagger:response createPeerConflict
 */
@@ -270,7 +274,8 @@ func (o *CreatePeerConflict) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*CreatePeerDefault General Error
+/*
+CreatePeerDefault General Error
 
 swagger:response createPeerDefault
 */

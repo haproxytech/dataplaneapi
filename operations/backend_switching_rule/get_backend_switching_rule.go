@@ -21,6 +21,7 @@ package backend_switching_rule
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -49,12 +50,12 @@ func NewGetBackendSwitchingRule(ctx *middleware.Context, handler GetBackendSwitc
 	return &GetBackendSwitchingRule{Context: ctx, Handler: handler}
 }
 
-/*GetBackendSwitchingRule swagger:route GET /services/haproxy/configuration/backend_switching_rules/{index} BackendSwitchingRule getBackendSwitchingRule
+/*
+	GetBackendSwitchingRule swagger:route GET /services/haproxy/configuration/backend_switching_rules/{index} BackendSwitchingRule getBackendSwitchingRule
 
-Return one Backend Switching Rule
+# Return one Backend Switching Rule
 
 Returns one Backend Switching Rule configuration by it's index in the specified frontend.
-
 */
 type GetBackendSwitchingRule struct {
 	Context *middleware.Context
@@ -64,21 +65,20 @@ type GetBackendSwitchingRule struct {
 func (o *GetBackendSwitchingRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetBackendSwitchingRuleParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -87,7 +87,6 @@ func (o *GetBackendSwitchingRule) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -119,7 +118,6 @@ func (o *GetBackendSwitchingRuleOKBody) Validate(formats strfmt.Registry) error 
 }
 
 func (o *GetBackendSwitchingRuleOKBody) validateData(formats strfmt.Registry) error {
-
 	if swag.IsZero(o.Data) { // not required
 		return nil
 	}
@@ -128,6 +126,38 @@ func (o *GetBackendSwitchingRuleOKBody) validateData(formats strfmt.Registry) er
 		if err := o.Data.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getBackendSwitchingRuleOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getBackendSwitchingRuleOK" + "." + "data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get backend switching rule o k body based on the context it is used
+func (o *GetBackendSwitchingRuleOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetBackendSwitchingRuleOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Data != nil {
+		if err := o.Data.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getBackendSwitchingRuleOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getBackendSwitchingRuleOK" + "." + "data")
 			}
 			return err
 		}

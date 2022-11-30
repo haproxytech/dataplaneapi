@@ -44,12 +44,12 @@ func NewDeleteSpoeGroup(ctx *middleware.Context, handler DeleteSpoeGroupHandler)
 	return &DeleteSpoeGroup{Context: ctx, Handler: handler}
 }
 
-/*DeleteSpoeGroup swagger:route DELETE /services/haproxy/spoe/spoe_groups/{name} Spoe deleteSpoeGroup
+/*
+	DeleteSpoeGroup swagger:route DELETE /services/haproxy/spoe/spoe_groups/{name} Spoe deleteSpoeGroup
 
-Delete a SPOE groups
+# Delete a SPOE groups
 
 Deletes a SPOE groups from the one SPOE scope.
-
 */
 type DeleteSpoeGroup struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteSpoeGroup struct {
 func (o *DeleteSpoeGroup) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteSpoeGroupParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteSpoeGroup) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

@@ -31,7 +31,8 @@ import (
 // ReplaceAWSRegionOKCode is the HTTP code returned for type ReplaceAWSRegionOK
 const ReplaceAWSRegionOKCode int = 200
 
-/*ReplaceAWSRegionOK Resource updated
+/*
+ReplaceAWSRegionOK Resource updated
 
 swagger:response replaceAWSRegionOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceAWSRegionOK) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplaceAWSRegionBadRequestCode is the HTTP code returned for type ReplaceAWSRegionBadRequest
 const ReplaceAWSRegionBadRequestCode int = 400
 
-/*ReplaceAWSRegionBadRequest Bad request
+/*
+ReplaceAWSRegionBadRequest Bad request
 
 swagger:response replaceAWSRegionBadRequest
 */
@@ -141,7 +143,8 @@ func (o *ReplaceAWSRegionBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // ReplaceAWSRegionNotFoundCode is the HTTP code returned for type ReplaceAWSRegionNotFound
 const ReplaceAWSRegionNotFoundCode int = 404
 
-/*ReplaceAWSRegionNotFound The specified resource was not found
+/*
+ReplaceAWSRegionNotFound The specified resource was not found
 
 swagger:response replaceAWSRegionNotFound
 */
@@ -204,7 +207,8 @@ func (o *ReplaceAWSRegionNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*ReplaceAWSRegionDefault General Error
+/*
+ReplaceAWSRegionDefault General Error
 
 swagger:response replaceAWSRegionDefault
 */

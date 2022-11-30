@@ -44,12 +44,12 @@ func NewReplaceSpoeAgent(ctx *middleware.Context, handler ReplaceSpoeAgentHandle
 	return &ReplaceSpoeAgent{Context: ctx, Handler: handler}
 }
 
-/*ReplaceSpoeAgent swagger:route PUT /services/haproxy/spoe/spoe_agents/{name} Spoe replaceSpoeAgent
+/*
+	ReplaceSpoeAgent swagger:route PUT /services/haproxy/spoe/spoe_agents/{name} Spoe replaceSpoeAgent
 
-Replace a SPOE agent
+# Replace a SPOE agent
 
 Replaces a SPOE agent configuration in one SPOE scope.
-
 */
 type ReplaceSpoeAgent struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type ReplaceSpoeAgent struct {
 func (o *ReplaceSpoeAgent) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceSpoeAgentParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *ReplaceSpoeAgent) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

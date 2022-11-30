@@ -21,12 +21,14 @@ package spoe
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v3/models"
 )
@@ -49,12 +51,12 @@ func NewGetSpoeScope(ctx *middleware.Context, handler GetSpoeScopeHandler) *GetS
 	return &GetSpoeScope{Context: ctx, Handler: handler}
 }
 
-/*GetSpoeScope swagger:route GET /services/haproxy/spoe/spoe_scopes/{name} Spoe getSpoeScope
+/*
+	GetSpoeScope swagger:route GET /services/haproxy/spoe/spoe_scopes/{name} Spoe getSpoeScope
 
-Return one SPOE scope
+# Return one SPOE scope
 
 Returns one SPOE scope in one SPOE file.
-
 */
 type GetSpoeScope struct {
 	Context *middleware.Context
@@ -64,21 +66,20 @@ type GetSpoeScope struct {
 func (o *GetSpoeScope) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetSpoeScopeParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -87,7 +88,6 @@ func (o *GetSpoeScope) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -102,7 +102,7 @@ type GetSpoeScopeOKBody struct {
 
 	// data
 	// Required: true
-	Data models.SpoeScope `json:"data"`
+	Data *models.SpoeScope `json:"data"`
 }
 
 // Validate validates this get spoe scope o k body
@@ -121,11 +121,53 @@ func (o *GetSpoeScopeOKBody) Validate(formats strfmt.Registry) error {
 
 func (o *GetSpoeScopeOKBody) validateData(formats strfmt.Registry) error {
 
-	if err := o.Data.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("getSpoeScopeOK" + "." + "data")
-		}
+	if err := validate.Required("getSpoeScopeOK"+"."+"data", "body", o.Data); err != nil {
 		return err
+	}
+
+	if err := validate.Required("getSpoeScopeOK"+"."+"data", "body", o.Data); err != nil {
+		return err
+	}
+
+	if o.Data != nil {
+		if err := o.Data.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getSpoeScopeOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getSpoeScopeOK" + "." + "data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get spoe scope o k body based on the context it is used
+func (o *GetSpoeScopeOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetSpoeScopeOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Data != nil {
+		if err := o.Data.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getSpoeScopeOK" + "." + "data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getSpoeScopeOK" + "." + "data")
+			}
+			return err
+		}
 	}
 
 	return nil

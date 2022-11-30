@@ -31,7 +31,8 @@ import (
 // GetAWSRegionsOKCode is the HTTP code returned for type GetAWSRegionsOK
 const GetAWSRegionsOKCode int = 200
 
-/*GetAWSRegionsOK Successful operation
+/*
+GetAWSRegionsOK Successful operation
 
 swagger:response getAWSRegionsOK
 */
@@ -72,7 +73,8 @@ func (o *GetAWSRegionsOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetAWSRegionsDefault General Error
+/*
+GetAWSRegionsDefault General Error
 
 swagger:response getAWSRegionsDefault
 */

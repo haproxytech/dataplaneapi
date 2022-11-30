@@ -31,7 +31,8 @@ import (
 // EditClusterOKCode is the HTTP code returned for type EditClusterOK
 const EditClusterOKCode int = 200
 
-/*EditClusterOK Cluster settings changed
+/*
+EditClusterOK Cluster settings changed
 
 swagger:response editClusterOK
 */
@@ -75,7 +76,8 @@ func (o *EditClusterOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // EditClusterBadRequestCode is the HTTP code returned for type EditClusterBadRequest
 const EditClusterBadRequestCode int = 400
 
-/*EditClusterBadRequest Bad request
+/*
+EditClusterBadRequest Bad request
 
 swagger:response editClusterBadRequest
 */
@@ -138,7 +140,8 @@ func (o *EditClusterBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*EditClusterDefault General Error
+/*
+EditClusterDefault General Error
 
 swagger:response editClusterDefault
 */

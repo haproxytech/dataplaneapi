@@ -31,7 +31,8 @@ import (
 // GetHTTPChecksOKCode is the HTTP code returned for type GetHTTPChecksOK
 const GetHTTPChecksOKCode int = 200
 
-/*GetHTTPChecksOK Successful operation
+/*
+GetHTTPChecksOK Successful operation
 
 swagger:response getHttpChecksOK
 */
@@ -94,7 +95,8 @@ func (o *GetHTTPChecksOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-/*GetHTTPChecksDefault General Error
+/*
+GetHTTPChecksDefault General Error
 
 swagger:response getHttpChecksDefault
 */

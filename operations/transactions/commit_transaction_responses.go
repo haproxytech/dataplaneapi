@@ -31,7 +31,8 @@ import (
 // CommitTransactionOKCode is the HTTP code returned for type CommitTransactionOK
 const CommitTransactionOKCode int = 200
 
-/*CommitTransactionOK Transaction successfully committed
+/*
+CommitTransactionOK Transaction successfully committed
 
 swagger:response commitTransactionOK
 */
@@ -75,7 +76,8 @@ func (o *CommitTransactionOK) WriteResponse(rw http.ResponseWriter, producer run
 // CommitTransactionAcceptedCode is the HTTP code returned for type CommitTransactionAccepted
 const CommitTransactionAcceptedCode int = 202
 
-/*CommitTransactionAccepted Configuration change accepted and reload requested
+/*
+CommitTransactionAccepted Configuration change accepted and reload requested
 
 swagger:response commitTransactionAccepted
 */
@@ -141,7 +143,8 @@ func (o *CommitTransactionAccepted) WriteResponse(rw http.ResponseWriter, produc
 // CommitTransactionBadRequestCode is the HTTP code returned for type CommitTransactionBadRequest
 const CommitTransactionBadRequestCode int = 400
 
-/*CommitTransactionBadRequest Bad request
+/*
+CommitTransactionBadRequest Bad request
 
 swagger:response commitTransactionBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CommitTransactionBadRequest) WriteResponse(rw http.ResponseWriter, prod
 // CommitTransactionNotFoundCode is the HTTP code returned for type CommitTransactionNotFound
 const CommitTransactionNotFoundCode int = 404
 
-/*CommitTransactionNotFound The specified resource was not found
+/*
+CommitTransactionNotFound The specified resource was not found
 
 swagger:response commitTransactionNotFound
 */
@@ -273,7 +277,8 @@ func (o *CommitTransactionNotFound) WriteResponse(rw http.ResponseWriter, produc
 // CommitTransactionNotAcceptableCode is the HTTP code returned for type CommitTransactionNotAcceptable
 const CommitTransactionNotAcceptableCode int = 406
 
-/*CommitTransactionNotAcceptable The specified resource cannot be handled
+/*
+CommitTransactionNotAcceptable The specified resource cannot be handled
 
 swagger:response commitTransactionNotAcceptable
 */
@@ -336,7 +341,8 @@ func (o *CommitTransactionNotAcceptable) WriteResponse(rw http.ResponseWriter, p
 	}
 }
 
-/*CommitTransactionDefault General Error
+/*
+CommitTransactionDefault General Error
 
 swagger:response commitTransactionDefault
 */

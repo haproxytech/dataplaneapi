@@ -31,7 +31,8 @@ import (
 // CreateBackendSwitchingRuleCreatedCode is the HTTP code returned for type CreateBackendSwitchingRuleCreated
 const CreateBackendSwitchingRuleCreatedCode int = 201
 
-/*CreateBackendSwitchingRuleCreated Backend Switching Rule created
+/*
+CreateBackendSwitchingRuleCreated Backend Switching Rule created
 
 swagger:response createBackendSwitchingRuleCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateBackendSwitchingRuleCreated) WriteResponse(rw http.ResponseWriter
 // CreateBackendSwitchingRuleAcceptedCode is the HTTP code returned for type CreateBackendSwitchingRuleAccepted
 const CreateBackendSwitchingRuleAcceptedCode int = 202
 
-/*CreateBackendSwitchingRuleAccepted Configuration change accepted and reload requested
+/*
+CreateBackendSwitchingRuleAccepted Configuration change accepted and reload requested
 
 swagger:response createBackendSwitchingRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateBackendSwitchingRuleAccepted) WriteResponse(rw http.ResponseWrite
 // CreateBackendSwitchingRuleBadRequestCode is the HTTP code returned for type CreateBackendSwitchingRuleBadRequest
 const CreateBackendSwitchingRuleBadRequestCode int = 400
 
-/*CreateBackendSwitchingRuleBadRequest Bad request
+/*
+CreateBackendSwitchingRuleBadRequest Bad request
 
 swagger:response createBackendSwitchingRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateBackendSwitchingRuleBadRequest) WriteResponse(rw http.ResponseWri
 // CreateBackendSwitchingRuleConflictCode is the HTTP code returned for type CreateBackendSwitchingRuleConflict
 const CreateBackendSwitchingRuleConflictCode int = 409
 
-/*CreateBackendSwitchingRuleConflict The specified resource already exists
+/*
+CreateBackendSwitchingRuleConflict The specified resource already exists
 
 swagger:response createBackendSwitchingRuleConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateBackendSwitchingRuleConflict) WriteResponse(rw http.ResponseWrite
 	}
 }
 
-/*CreateBackendSwitchingRuleDefault General Error
+/*
+CreateBackendSwitchingRuleDefault General Error
 
 swagger:response createBackendSwitchingRuleDefault
 */

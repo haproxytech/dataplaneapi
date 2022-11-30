@@ -44,12 +44,12 @@ func NewReplaceBind(ctx *middleware.Context, handler ReplaceBindHandler) *Replac
 	return &ReplaceBind{Context: ctx, Handler: handler}
 }
 
-/*ReplaceBind swagger:route PUT /services/haproxy/configuration/binds/{name} Bind replaceBind
+/*
+	ReplaceBind swagger:route PUT /services/haproxy/configuration/binds/{name} Bind replaceBind
 
-Replace a bind
+# Replace a bind
 
 Replaces a bind configuration by it's name in the specified frontend.
-
 */
 type ReplaceBind struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type ReplaceBind struct {
 func (o *ReplaceBind) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceBindParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *ReplaceBind) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

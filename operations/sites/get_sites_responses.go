@@ -31,7 +31,8 @@ import (
 // GetSitesOKCode is the HTTP code returned for type GetSitesOK
 const GetSitesOKCode int = 200
 
-/*GetSitesOK Successful operation
+/*
+GetSitesOK Successful operation
 
 swagger:response getSitesOK
 */
@@ -94,7 +95,8 @@ func (o *GetSitesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 }
 
-/*GetSitesDefault General Error
+/*
+GetSitesDefault General Error
 
 swagger:response getSitesDefault
 */

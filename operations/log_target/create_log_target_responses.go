@@ -31,7 +31,8 @@ import (
 // CreateLogTargetCreatedCode is the HTTP code returned for type CreateLogTargetCreated
 const CreateLogTargetCreatedCode int = 201
 
-/*CreateLogTargetCreated Log Target created
+/*
+CreateLogTargetCreated Log Target created
 
 swagger:response createLogTargetCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateLogTargetCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreateLogTargetAcceptedCode is the HTTP code returned for type CreateLogTargetAccepted
 const CreateLogTargetAcceptedCode int = 202
 
-/*CreateLogTargetAccepted Configuration change accepted and reload requested
+/*
+CreateLogTargetAccepted Configuration change accepted and reload requested
 
 swagger:response createLogTargetAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateLogTargetAccepted) WriteResponse(rw http.ResponseWriter, producer
 // CreateLogTargetBadRequestCode is the HTTP code returned for type CreateLogTargetBadRequest
 const CreateLogTargetBadRequestCode int = 400
 
-/*CreateLogTargetBadRequest Bad request
+/*
+CreateLogTargetBadRequest Bad request
 
 swagger:response createLogTargetBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateLogTargetBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreateLogTargetConflictCode is the HTTP code returned for type CreateLogTargetConflict
 const CreateLogTargetConflictCode int = 409
 
-/*CreateLogTargetConflict The specified resource already exists
+/*
+CreateLogTargetConflict The specified resource already exists
 
 swagger:response createLogTargetConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateLogTargetConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreateLogTargetDefault General Error
+/*
+CreateLogTargetDefault General Error
 
 swagger:response createLogTargetDefault
 */

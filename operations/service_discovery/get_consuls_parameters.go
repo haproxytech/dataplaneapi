@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetConsulsParams creates a new GetConsulsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetConsulsParams() GetConsulsParams {
 
 	return GetConsulsParams{}

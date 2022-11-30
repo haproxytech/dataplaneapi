@@ -661,7 +661,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	// setup OpenAPI v3 specification handler
 	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
-		v2 := openapi2.Swagger{}
+		v2 := openapi2.T{}
 		err = v2.UnmarshalJSON(SwaggerJSON)
 		if err != nil {
 			e := misc.HandleError(err)
@@ -675,8 +675,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 			v2.Host = cfg.RuntimeData.Host
 		}
 
-		var v3 *openapi3.Swagger
-		v3, err = openapi2conv.ToV3Swagger(&v2)
+		var v3 *openapi3.T
+		v3, err = openapi2conv.ToV3(&v2)
 		if err != nil {
 			e := misc.HandleError(err)
 			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)

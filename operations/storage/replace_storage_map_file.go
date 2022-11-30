@@ -44,12 +44,12 @@ func NewReplaceStorageMapFile(ctx *middleware.Context, handler ReplaceStorageMap
 	return &ReplaceStorageMapFile{Context: ctx, Handler: handler}
 }
 
-/*ReplaceStorageMapFile swagger:route PUT /services/haproxy/storage/maps/{name} Storage replaceStorageMapFile
+/*
+	ReplaceStorageMapFile swagger:route PUT /services/haproxy/storage/maps/{name} Storage replaceStorageMapFile
 
-Replace contents of a managed map file on disk
+# Replace contents of a managed map file on disk
 
 Replaces the contents of a managed map file on disk
-
 */
 type ReplaceStorageMapFile struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type ReplaceStorageMapFile struct {
 func (o *ReplaceStorageMapFile) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewReplaceStorageMapFileParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *ReplaceStorageMapFile) ServeHTTP(rw http.ResponseWriter, r *http.Reques
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

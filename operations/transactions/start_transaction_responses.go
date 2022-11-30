@@ -31,7 +31,8 @@ import (
 // StartTransactionCreatedCode is the HTTP code returned for type StartTransactionCreated
 const StartTransactionCreatedCode int = 201
 
-/*StartTransactionCreated Transaction started
+/*
+StartTransactionCreated Transaction started
 
 swagger:response startTransactionCreated
 */
@@ -75,7 +76,8 @@ func (o *StartTransactionCreated) WriteResponse(rw http.ResponseWriter, producer
 // StartTransactionTooManyRequestsCode is the HTTP code returned for type StartTransactionTooManyRequests
 const StartTransactionTooManyRequestsCode int = 429
 
-/*StartTransactionTooManyRequests Too many open transactions
+/*
+StartTransactionTooManyRequests Too many open transactions
 
 swagger:response startTransactionTooManyRequests
 */
@@ -116,7 +118,8 @@ func (o *StartTransactionTooManyRequests) WriteResponse(rw http.ResponseWriter, 
 	}
 }
 
-/*StartTransactionDefault General Error
+/*
+StartTransactionDefault General Error
 
 swagger:response startTransactionDefault
 */

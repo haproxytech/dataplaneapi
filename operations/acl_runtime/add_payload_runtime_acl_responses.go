@@ -31,7 +31,8 @@ import (
 // AddPayloadRuntimeACLCreatedCode is the HTTP code returned for type AddPayloadRuntimeACLCreated
 const AddPayloadRuntimeACLCreatedCode int = 201
 
-/*AddPayloadRuntimeACLCreated ACL payload added
+/*
+AddPayloadRuntimeACLCreated ACL payload added
 
 swagger:response addPayloadRuntimeAclCreated
 */
@@ -78,7 +79,8 @@ func (o *AddPayloadRuntimeACLCreated) WriteResponse(rw http.ResponseWriter, prod
 // AddPayloadRuntimeACLBadRequestCode is the HTTP code returned for type AddPayloadRuntimeACLBadRequest
 const AddPayloadRuntimeACLBadRequestCode int = 400
 
-/*AddPayloadRuntimeACLBadRequest Bad request
+/*
+AddPayloadRuntimeACLBadRequest Bad request
 
 swagger:response addPayloadRuntimeAclBadRequest
 */
@@ -141,7 +143,8 @@ func (o *AddPayloadRuntimeACLBadRequest) WriteResponse(rw http.ResponseWriter, p
 	}
 }
 
-/*AddPayloadRuntimeACLDefault General Error
+/*
+AddPayloadRuntimeACLDefault General Error
 
 swagger:response addPayloadRuntimeAclDefault
 */

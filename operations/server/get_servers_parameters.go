@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetServersParams creates a new GetServersParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetServersParams() GetServersParams {
 
 	return GetServersParams{}
@@ -77,7 +78,6 @@ func (o *GetServersParams) BindRequest(r *http.Request, route *middleware.Matche
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -87,7 +87,7 @@ func (o *GetServersParams) BindRequest(r *http.Request, route *middleware.Matche
 // bindBackend binds and validates parameter Backend from query.
 func (o *GetServersParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -96,10 +96,10 @@ func (o *GetServersParams) bindBackend(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -114,10 +114,10 @@ func (o *GetServersParams) bindTransactionID(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

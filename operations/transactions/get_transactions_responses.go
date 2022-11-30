@@ -31,7 +31,8 @@ import (
 // GetTransactionsOKCode is the HTTP code returned for type GetTransactionsOK
 const GetTransactionsOKCode int = 200
 
-/*GetTransactionsOK Success
+/*
+GetTransactionsOK Success
 
 swagger:response getTransactionsOK
 */
@@ -75,7 +76,8 @@ func (o *GetTransactionsOK) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetTransactionsDefault General Error
+/*
+GetTransactionsDefault General Error
 
 swagger:response getTransactionsDefault
 */

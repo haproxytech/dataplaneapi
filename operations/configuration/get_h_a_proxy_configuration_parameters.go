@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetHAProxyConfigurationParams creates a new GetHAProxyConfigurationParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetHAProxyConfigurationParams() GetHAProxyConfigurationParams {
 
 	return GetHAProxyConfigurationParams{}
@@ -76,7 +77,6 @@ func (o *GetHAProxyConfigurationParams) BindRequest(r *http.Request, route *midd
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -92,10 +92,10 @@ func (o *GetHAProxyConfigurationParams) bindTransactionID(rawData []string, hasK
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -110,6 +110,7 @@ func (o *GetHAProxyConfigurationParams) bindVersion(rawData []string, hasKey boo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

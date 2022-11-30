@@ -115,7 +115,6 @@ func (o *DeleteDeclareCaptureParams) BindRequest(r *http.Request, route *middlew
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -131,6 +130,7 @@ func (o *DeleteDeclareCaptureParams) bindForceReload(rawData []string, hasKey bo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewDeleteDeclareCaptureParams()
 		return nil
@@ -148,7 +148,7 @@ func (o *DeleteDeclareCaptureParams) bindForceReload(rawData []string, hasKey bo
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *DeleteDeclareCaptureParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -157,10 +157,10 @@ func (o *DeleteDeclareCaptureParams) bindFrontend(rawData []string, hasKey bool,
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("frontend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Frontend = raw
 
 	return nil
@@ -194,10 +194,10 @@ func (o *DeleteDeclareCaptureParams) bindTransactionID(rawData []string, hasKey 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -212,6 +212,7 @@ func (o *DeleteDeclareCaptureParams) bindVersion(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

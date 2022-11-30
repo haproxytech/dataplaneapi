@@ -31,7 +31,8 @@ import (
 // GetSpoeTransactionOKCode is the HTTP code returned for type GetSpoeTransactionOK
 const GetSpoeTransactionOKCode int = 200
 
-/*GetSpoeTransactionOK Successful operation
+/*
+GetSpoeTransactionOK Successful operation
 
 swagger:response getSpoeTransactionOK
 */
@@ -75,7 +76,8 @@ func (o *GetSpoeTransactionOK) WriteResponse(rw http.ResponseWriter, producer ru
 // GetSpoeTransactionNotFoundCode is the HTTP code returned for type GetSpoeTransactionNotFound
 const GetSpoeTransactionNotFoundCode int = 404
 
-/*GetSpoeTransactionNotFound The specified resource was not found
+/*
+GetSpoeTransactionNotFound The specified resource was not found
 
 swagger:response getSpoeTransactionNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetSpoeTransactionNotFound) WriteResponse(rw http.ResponseWriter, produ
 	}
 }
 
-/*GetSpoeTransactionDefault General Error
+/*
+GetSpoeTransactionDefault General Error
 
 swagger:response getSpoeTransactionDefault
 */

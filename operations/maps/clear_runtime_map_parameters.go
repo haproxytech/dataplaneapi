@@ -95,7 +95,6 @@ func (o *ClearRuntimeMapParams) BindRequest(r *http.Request, route *middleware.M
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -111,6 +110,7 @@ func (o *ClearRuntimeMapParams) bindForceDelete(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -133,6 +133,7 @@ func (o *ClearRuntimeMapParams) bindForceSync(rawData []string, hasKey bool, for
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewClearRuntimeMapParams()
 		return nil
@@ -156,7 +157,6 @@ func (o *ClearRuntimeMapParams) bindName(rawData []string, hasKey bool, formats 
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil

@@ -44,12 +44,12 @@ func NewPostServicesHaproxyRuntimeACLFileEntries(ctx *middleware.Context, handle
 	return &PostServicesHaproxyRuntimeACLFileEntries{Context: ctx, Handler: handler}
 }
 
-/*PostServicesHaproxyRuntimeACLFileEntries swagger:route POST /services/haproxy/runtime/acl_file_entries ACL Runtime postServicesHaproxyRuntimeAclFileEntries
+/*
+	PostServicesHaproxyRuntimeACLFileEntries swagger:route POST /services/haproxy/runtime/acl_file_entries ACL Runtime postServicesHaproxyRuntimeAclFileEntries
 
-Add entry to an ACL file
+# Add entry to an ACL file
 
 Adds an entry into the ACL file using the runtime socket.
-
 */
 type PostServicesHaproxyRuntimeACLFileEntries struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type PostServicesHaproxyRuntimeACLFileEntries struct {
 func (o *PostServicesHaproxyRuntimeACLFileEntries) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewPostServicesHaproxyRuntimeACLFileEntriesParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *PostServicesHaproxyRuntimeACLFileEntries) ServeHTTP(rw http.ResponseWri
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetBindParams creates a new GetBindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetBindParams() GetBindParams {
 
 	return GetBindParams{}
@@ -87,7 +88,6 @@ func (o *GetBindParams) BindRequest(r *http.Request, route *middleware.MatchedRo
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -97,7 +97,7 @@ func (o *GetBindParams) BindRequest(r *http.Request, route *middleware.MatchedRo
 // bindFrontend binds and validates parameter Frontend from query.
 func (o *GetBindParams) bindFrontend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("frontend", "query")
+		return errors.Required("frontend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -106,10 +106,10 @@ func (o *GetBindParams) bindFrontend(rawData []string, hasKey bool, formats strf
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("frontend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Frontend = raw
 
 	return nil
@@ -124,7 +124,6 @@ func (o *GetBindParams) bindName(rawData []string, hasKey bool, formats strfmt.R
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -139,10 +138,10 @@ func (o *GetBindParams) bindTransactionID(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

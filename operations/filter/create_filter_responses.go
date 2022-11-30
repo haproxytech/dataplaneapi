@@ -31,7 +31,8 @@ import (
 // CreateFilterCreatedCode is the HTTP code returned for type CreateFilterCreated
 const CreateFilterCreatedCode int = 201
 
-/*CreateFilterCreated Filter created
+/*
+CreateFilterCreated Filter created
 
 swagger:response createFilterCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateFilterCreated) WriteResponse(rw http.ResponseWriter, producer run
 // CreateFilterAcceptedCode is the HTTP code returned for type CreateFilterAccepted
 const CreateFilterAcceptedCode int = 202
 
-/*CreateFilterAccepted Configuration change accepted and reload requested
+/*
+CreateFilterAccepted Configuration change accepted and reload requested
 
 swagger:response createFilterAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateFilterAccepted) WriteResponse(rw http.ResponseWriter, producer ru
 // CreateFilterBadRequestCode is the HTTP code returned for type CreateFilterBadRequest
 const CreateFilterBadRequestCode int = 400
 
-/*CreateFilterBadRequest Bad request
+/*
+CreateFilterBadRequest Bad request
 
 swagger:response createFilterBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateFilterBadRequest) WriteResponse(rw http.ResponseWriter, producer 
 // CreateFilterConflictCode is the HTTP code returned for type CreateFilterConflict
 const CreateFilterConflictCode int = 409
 
-/*CreateFilterConflict The specified resource already exists
+/*
+CreateFilterConflict The specified resource already exists
 
 swagger:response createFilterConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateFilterConflict) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*CreateFilterDefault General Error
+/*
+CreateFilterDefault General Error
 
 swagger:response createFilterDefault
 */

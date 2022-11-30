@@ -31,7 +31,8 @@ import (
 // AddPayloadRuntimeMapCreatedCode is the HTTP code returned for type AddPayloadRuntimeMapCreated
 const AddPayloadRuntimeMapCreatedCode int = 201
 
-/*AddPayloadRuntimeMapCreated Map payload added
+/*
+AddPayloadRuntimeMapCreated Map payload added
 
 swagger:response addPayloadRuntimeMapCreated
 */
@@ -78,7 +79,8 @@ func (o *AddPayloadRuntimeMapCreated) WriteResponse(rw http.ResponseWriter, prod
 // AddPayloadRuntimeMapBadRequestCode is the HTTP code returned for type AddPayloadRuntimeMapBadRequest
 const AddPayloadRuntimeMapBadRequestCode int = 400
 
-/*AddPayloadRuntimeMapBadRequest Bad request
+/*
+AddPayloadRuntimeMapBadRequest Bad request
 
 swagger:response addPayloadRuntimeMapBadRequest
 */
@@ -141,7 +143,8 @@ func (o *AddPayloadRuntimeMapBadRequest) WriteResponse(rw http.ResponseWriter, p
 	}
 }
 
-/*AddPayloadRuntimeMapDefault General Error
+/*
+AddPayloadRuntimeMapDefault General Error
 
 swagger:response addPayloadRuntimeMapDefault
 */

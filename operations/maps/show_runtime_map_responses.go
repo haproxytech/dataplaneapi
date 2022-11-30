@@ -31,7 +31,8 @@ import (
 // ShowRuntimeMapOKCode is the HTTP code returned for type ShowRuntimeMapOK
 const ShowRuntimeMapOKCode int = 200
 
-/*ShowRuntimeMapOK Successful operation
+/*
+ShowRuntimeMapOK Successful operation
 
 swagger:response showRuntimeMapOK
 */
@@ -78,7 +79,8 @@ func (o *ShowRuntimeMapOK) WriteResponse(rw http.ResponseWriter, producer runtim
 // ShowRuntimeMapNotFoundCode is the HTTP code returned for type ShowRuntimeMapNotFound
 const ShowRuntimeMapNotFoundCode int = 404
 
-/*ShowRuntimeMapNotFound The specified resource was not found
+/*
+ShowRuntimeMapNotFound The specified resource was not found
 
 swagger:response showRuntimeMapNotFound
 */
@@ -141,7 +143,8 @@ func (o *ShowRuntimeMapNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*ShowRuntimeMapDefault General Error
+/*
+ShowRuntimeMapDefault General Error
 
 swagger:response showRuntimeMapDefault
 */

@@ -31,7 +31,8 @@ import (
 // ReplaceDeclareCaptureOKCode is the HTTP code returned for type ReplaceDeclareCaptureOK
 const ReplaceDeclareCaptureOKCode int = 200
 
-/*ReplaceDeclareCaptureOK Declare Capture replaced
+/*
+ReplaceDeclareCaptureOK Declare Capture replaced
 
 swagger:response replaceDeclareCaptureOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceDeclareCaptureOK) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceDeclareCaptureAcceptedCode is the HTTP code returned for type ReplaceDeclareCaptureAccepted
 const ReplaceDeclareCaptureAcceptedCode int = 202
 
-/*ReplaceDeclareCaptureAccepted Configuration change accepted and reload requested
+/*
+ReplaceDeclareCaptureAccepted Configuration change accepted and reload requested
 
 swagger:response replaceDeclareCaptureAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceDeclareCaptureAccepted) WriteResponse(rw http.ResponseWriter, pr
 // ReplaceDeclareCaptureBadRequestCode is the HTTP code returned for type ReplaceDeclareCaptureBadRequest
 const ReplaceDeclareCaptureBadRequestCode int = 400
 
-/*ReplaceDeclareCaptureBadRequest Bad request
+/*
+ReplaceDeclareCaptureBadRequest Bad request
 
 swagger:response replaceDeclareCaptureBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceDeclareCaptureBadRequest) WriteResponse(rw http.ResponseWriter, 
 // ReplaceDeclareCaptureNotFoundCode is the HTTP code returned for type ReplaceDeclareCaptureNotFound
 const ReplaceDeclareCaptureNotFoundCode int = 404
 
-/*ReplaceDeclareCaptureNotFound The specified resource was not found
+/*
+ReplaceDeclareCaptureNotFound The specified resource was not found
 
 swagger:response replaceDeclareCaptureNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceDeclareCaptureNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*ReplaceDeclareCaptureDefault General Error
+/*
+ReplaceDeclareCaptureDefault General Error
 
 swagger:response replaceDeclareCaptureDefault
 */

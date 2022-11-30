@@ -31,7 +31,8 @@ import (
 // CreateSpoeGroupCreatedCode is the HTTP code returned for type CreateSpoeGroupCreated
 const CreateSpoeGroupCreatedCode int = 201
 
-/*CreateSpoeGroupCreated Spoe groups created
+/*
+CreateSpoeGroupCreated Spoe groups created
 
 swagger:response createSpoeGroupCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateSpoeGroupCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreateSpoeGroupBadRequestCode is the HTTP code returned for type CreateSpoeGroupBadRequest
 const CreateSpoeGroupBadRequestCode int = 400
 
-/*CreateSpoeGroupBadRequest Bad request
+/*
+CreateSpoeGroupBadRequest Bad request
 
 swagger:response createSpoeGroupBadRequest
 */
@@ -141,7 +143,8 @@ func (o *CreateSpoeGroupBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreateSpoeGroupConflictCode is the HTTP code returned for type CreateSpoeGroupConflict
 const CreateSpoeGroupConflictCode int = 409
 
-/*CreateSpoeGroupConflict The specified resource already exists
+/*
+CreateSpoeGroupConflict The specified resource already exists
 
 swagger:response createSpoeGroupConflict
 */
@@ -204,7 +207,8 @@ func (o *CreateSpoeGroupConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreateSpoeGroupDefault General Error
+/*
+CreateSpoeGroupDefault General Error
 
 swagger:response createSpoeGroupDefault
 */

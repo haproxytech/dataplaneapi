@@ -44,12 +44,12 @@ func NewDeleteTransaction(ctx *middleware.Context, handler DeleteTransactionHand
 	return &DeleteTransaction{Context: ctx, Handler: handler}
 }
 
-/*DeleteTransaction swagger:route DELETE /services/haproxy/transactions/{id} Transactions deleteTransaction
+/*
+	DeleteTransaction swagger:route DELETE /services/haproxy/transactions/{id} Transactions deleteTransaction
 
-Delete a transaction
+# Delete a transaction
 
 Deletes a transaction.
-
 */
 type DeleteTransaction struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteTransaction struct {
 func (o *DeleteTransaction) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteTransactionParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteTransaction) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

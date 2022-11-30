@@ -31,7 +31,8 @@ import (
 // CreateStorageGeneralFileCreatedCode is the HTTP code returned for type CreateStorageGeneralFileCreated
 const CreateStorageGeneralFileCreatedCode int = 201
 
-/*CreateStorageGeneralFileCreated General use file created with its contents
+/*
+CreateStorageGeneralFileCreated General use file created with its contents
 
 swagger:response createStorageGeneralFileCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateStorageGeneralFileCreated) WriteResponse(rw http.ResponseWriter, 
 // CreateStorageGeneralFileBadRequestCode is the HTTP code returned for type CreateStorageGeneralFileBadRequest
 const CreateStorageGeneralFileBadRequestCode int = 400
 
-/*CreateStorageGeneralFileBadRequest Bad request
+/*
+CreateStorageGeneralFileBadRequest Bad request
 
 swagger:response createStorageGeneralFileBadRequest
 */
@@ -141,7 +143,8 @@ func (o *CreateStorageGeneralFileBadRequest) WriteResponse(rw http.ResponseWrite
 // CreateStorageGeneralFileConflictCode is the HTTP code returned for type CreateStorageGeneralFileConflict
 const CreateStorageGeneralFileConflictCode int = 409
 
-/*CreateStorageGeneralFileConflict The specified resource already exists
+/*
+CreateStorageGeneralFileConflict The specified resource already exists
 
 swagger:response createStorageGeneralFileConflict
 */
@@ -204,7 +207,8 @@ func (o *CreateStorageGeneralFileConflict) WriteResponse(rw http.ResponseWriter,
 	}
 }
 
-/*CreateStorageGeneralFileDefault General Error
+/*
+CreateStorageGeneralFileDefault General Error
 
 swagger:response createStorageGeneralFileDefault
 */

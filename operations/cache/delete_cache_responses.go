@@ -31,7 +31,8 @@ import (
 // DeleteCacheAcceptedCode is the HTTP code returned for type DeleteCacheAccepted
 const DeleteCacheAcceptedCode int = 202
 
-/*DeleteCacheAccepted Configuration change accepted and reload requested
+/*
+DeleteCacheAccepted Configuration change accepted and reload requested
 
 swagger:response deleteCacheAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteCacheAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // DeleteCacheNoContentCode is the HTTP code returned for type DeleteCacheNoContent
 const DeleteCacheNoContentCode int = 204
 
-/*DeleteCacheNoContent Cache deleted
+/*
+DeleteCacheNoContent Cache deleted
 
 swagger:response deleteCacheNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteCacheNoContent) WriteResponse(rw http.ResponseWriter, producer ru
 // DeleteCacheNotFoundCode is the HTTP code returned for type DeleteCacheNotFound
 const DeleteCacheNotFoundCode int = 404
 
-/*DeleteCacheNotFound The specified resource was not found
+/*
+DeleteCacheNotFound The specified resource was not found
 
 swagger:response deleteCacheNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteCacheNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*DeleteCacheDefault General Error
+/*
+DeleteCacheDefault General Error
 
 swagger:response deleteCacheDefault
 */

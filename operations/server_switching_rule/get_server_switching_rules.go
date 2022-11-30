@@ -21,6 +21,7 @@ package server_switching_rule
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -50,12 +51,12 @@ func NewGetServerSwitchingRules(ctx *middleware.Context, handler GetServerSwitch
 	return &GetServerSwitchingRules{Context: ctx, Handler: handler}
 }
 
-/*GetServerSwitchingRules swagger:route GET /services/haproxy/configuration/server_switching_rules ServerSwitchingRule getServerSwitchingRules
+/*
+	GetServerSwitchingRules swagger:route GET /services/haproxy/configuration/server_switching_rules ServerSwitchingRule getServerSwitchingRules
 
-Return an array of all Server Switching Rules
+# Return an array of all Server Switching Rules
 
 Returns all Backend Switching Rules that are configured in specified backend.
-
 */
 type GetServerSwitchingRules struct {
 	Context *middleware.Context
@@ -65,21 +66,20 @@ type GetServerSwitchingRules struct {
 func (o *GetServerSwitchingRules) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetServerSwitchingRulesParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -88,7 +88,6 @@ func (o *GetServerSwitchingRules) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -129,6 +128,36 @@ func (o *GetServerSwitchingRulesOKBody) validateData(formats strfmt.Registry) er
 	if err := o.Data.Validate(formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("getServerSwitchingRulesOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getServerSwitchingRulesOK" + "." + "data")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get server switching rules o k body based on the context it is used
+func (o *GetServerSwitchingRulesOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetServerSwitchingRulesOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := o.Data.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("getServerSwitchingRulesOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getServerSwitchingRulesOK" + "." + "data")
 		}
 		return err
 	}

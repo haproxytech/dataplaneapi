@@ -31,7 +31,8 @@ import (
 // DeleteTCPResponseRuleAcceptedCode is the HTTP code returned for type DeleteTCPResponseRuleAccepted
 const DeleteTCPResponseRuleAcceptedCode int = 202
 
-/*DeleteTCPResponseRuleAccepted Configuration change accepted and reload requested
+/*
+DeleteTCPResponseRuleAccepted Configuration change accepted and reload requested
 
 swagger:response deleteTcpResponseRuleAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteTCPResponseRuleAccepted) WriteResponse(rw http.ResponseWriter, pr
 // DeleteTCPResponseRuleNoContentCode is the HTTP code returned for type DeleteTCPResponseRuleNoContent
 const DeleteTCPResponseRuleNoContentCode int = 204
 
-/*DeleteTCPResponseRuleNoContent TCP Response Rule deleted
+/*
+DeleteTCPResponseRuleNoContent TCP Response Rule deleted
 
 swagger:response deleteTcpResponseRuleNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteTCPResponseRuleNoContent) WriteResponse(rw http.ResponseWriter, p
 // DeleteTCPResponseRuleNotFoundCode is the HTTP code returned for type DeleteTCPResponseRuleNotFound
 const DeleteTCPResponseRuleNotFoundCode int = 404
 
-/*DeleteTCPResponseRuleNotFound The specified resource was not found
+/*
+DeleteTCPResponseRuleNotFound The specified resource was not found
 
 swagger:response deleteTcpResponseRuleNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteTCPResponseRuleNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*DeleteTCPResponseRuleDefault General Error
+/*
+DeleteTCPResponseRuleDefault General Error
 
 swagger:response deleteTcpResponseRuleDefault
 */

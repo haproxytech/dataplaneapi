@@ -44,12 +44,12 @@ func NewDeletePeer(ctx *middleware.Context, handler DeletePeerHandler) *DeletePe
 	return &DeletePeer{Context: ctx, Handler: handler}
 }
 
-/*DeletePeer swagger:route DELETE /services/haproxy/configuration/peer_section/{name} Peer deletePeer
+/*
+	DeletePeer swagger:route DELETE /services/haproxy/configuration/peer_section/{name} Peer deletePeer
 
-Delete a peer
+# Delete a peer
 
 Deletes a peer from the configuration by it's name.
-
 */
 type DeletePeer struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeletePeer struct {
 func (o *DeletePeer) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeletePeerParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeletePeer) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

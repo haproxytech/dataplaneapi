@@ -25,13 +25,13 @@ import (
 )
 
 func TestConvOpenAPIV2ToV3(t *testing.T) {
-	var v2 openapi2.Swagger
+	var v2 openapi2.T
 	err := v2.UnmarshalJSON(SwaggerJSON)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	_, err = openapi2conv.ToV3Swagger(&v2)
+	_, err = openapi2conv.ToV3(&v2)
 	if err != nil {
 		t.Error(err)
 		return

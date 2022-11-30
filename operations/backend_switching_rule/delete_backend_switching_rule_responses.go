@@ -31,7 +31,8 @@ import (
 // DeleteBackendSwitchingRuleAcceptedCode is the HTTP code returned for type DeleteBackendSwitchingRuleAccepted
 const DeleteBackendSwitchingRuleAcceptedCode int = 202
 
-/*DeleteBackendSwitchingRuleAccepted Configuration change accepted and reload requested
+/*
+DeleteBackendSwitchingRuleAccepted Configuration change accepted and reload requested
 
 swagger:response deleteBackendSwitchingRuleAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteBackendSwitchingRuleAccepted) WriteResponse(rw http.ResponseWrite
 // DeleteBackendSwitchingRuleNoContentCode is the HTTP code returned for type DeleteBackendSwitchingRuleNoContent
 const DeleteBackendSwitchingRuleNoContentCode int = 204
 
-/*DeleteBackendSwitchingRuleNoContent Backend Switching Rule deleted
+/*
+DeleteBackendSwitchingRuleNoContent Backend Switching Rule deleted
 
 swagger:response deleteBackendSwitchingRuleNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteBackendSwitchingRuleNoContent) WriteResponse(rw http.ResponseWrit
 // DeleteBackendSwitchingRuleNotFoundCode is the HTTP code returned for type DeleteBackendSwitchingRuleNotFound
 const DeleteBackendSwitchingRuleNotFoundCode int = 404
 
-/*DeleteBackendSwitchingRuleNotFound The specified resource was not found
+/*
+DeleteBackendSwitchingRuleNotFound The specified resource was not found
 
 swagger:response deleteBackendSwitchingRuleNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteBackendSwitchingRuleNotFound) WriteResponse(rw http.ResponseWrite
 	}
 }
 
-/*DeleteBackendSwitchingRuleDefault General Error
+/*
+DeleteBackendSwitchingRuleDefault General Error
 
 swagger:response deleteBackendSwitchingRuleDefault
 */

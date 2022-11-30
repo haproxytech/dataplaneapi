@@ -104,7 +104,7 @@ func (o *ReplacePeerEntryParams) BindRequest(r *http.Request, route *middleware.
 		var body models.PeerEntry
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -114,13 +114,19 @@ func (o *ReplacePeerEntryParams) BindRequest(r *http.Request, route *middleware.
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -145,7 +151,6 @@ func (o *ReplacePeerEntryParams) BindRequest(r *http.Request, route *middleware.
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -161,6 +166,7 @@ func (o *ReplacePeerEntryParams) bindForceReload(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplacePeerEntryParams()
 		return nil
@@ -184,7 +190,6 @@ func (o *ReplacePeerEntryParams) bindName(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -193,7 +198,7 @@ func (o *ReplacePeerEntryParams) bindName(rawData []string, hasKey bool, formats
 // bindPeerSection binds and validates parameter PeerSection from query.
 func (o *ReplacePeerEntryParams) bindPeerSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("peer_section", "query")
+		return errors.Required("peer_section", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -202,10 +207,10 @@ func (o *ReplacePeerEntryParams) bindPeerSection(rawData []string, hasKey bool, 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("peer_section", "query", raw); err != nil {
 		return err
 	}
-
 	o.PeerSection = raw
 
 	return nil
@@ -220,10 +225,10 @@ func (o *ReplacePeerEntryParams) bindTransactionID(rawData []string, hasKey bool
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -238,6 +243,7 @@ func (o *ReplacePeerEntryParams) bindVersion(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

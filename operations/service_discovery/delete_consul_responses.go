@@ -31,7 +31,8 @@ import (
 // DeleteConsulNoContentCode is the HTTP code returned for type DeleteConsulNoContent
 const DeleteConsulNoContentCode int = 204
 
-/*DeleteConsulNoContent Consul server deleted
+/*
+DeleteConsulNoContent Consul server deleted
 
 swagger:response deleteConsulNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteConsulNoContent) WriteResponse(rw http.ResponseWriter, producer r
 // DeleteConsulNotFoundCode is the HTTP code returned for type DeleteConsulNotFound
 const DeleteConsulNotFoundCode int = 404
 
-/*DeleteConsulNotFound The specified resource was not found
+/*
+DeleteConsulNotFound The specified resource was not found
 
 swagger:response deleteConsulNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteConsulNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*DeleteConsulDefault General Error
+/*
+DeleteConsulDefault General Error
 
 swagger:response deleteConsulDefault
 */

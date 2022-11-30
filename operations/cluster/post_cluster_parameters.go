@@ -35,7 +35,8 @@ import (
 )
 
 // NewPostClusterParams creates a new PostClusterParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewPostClusterParams() PostClusterParams {
 
 	return PostClusterParams{}
@@ -106,7 +107,7 @@ func (o *PostClusterParams) BindRequest(r *http.Request, route *middleware.Match
 		var body models.ClusterSettings
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -116,18 +117,23 @@ func (o *PostClusterParams) BindRequest(r *http.Request, route *middleware.Match
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qVersion, qhkVersion, _ := qs.GetOK("version")
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -143,10 +149,10 @@ func (o *PostClusterParams) bindAdvertisedAddress(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.AdvertisedAddress = &raw
 
 	return nil
@@ -161,6 +167,7 @@ func (o *PostClusterParams) bindAdvertisedPort(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -181,11 +188,11 @@ func (o *PostClusterParams) bindAdvertisedPort(rawData []string, hasKey bool, fo
 // validateAdvertisedPort carries on validations for parameter AdvertisedPort
 func (o *PostClusterParams) validateAdvertisedPort(formats strfmt.Registry) error {
 
-	if err := validate.MinimumInt("advertised_port", "query", int64(*o.AdvertisedPort), 1, false); err != nil {
+	if err := validate.MinimumInt("advertised_port", "query", *o.AdvertisedPort, 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("advertised_port", "query", int64(*o.AdvertisedPort), 65535, false); err != nil {
+	if err := validate.MaximumInt("advertised_port", "query", *o.AdvertisedPort, 65535, false); err != nil {
 		return err
 	}
 
@@ -201,10 +208,10 @@ func (o *PostClusterParams) bindConfiguration(rawData []string, hasKey bool, for
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Configuration = &raw
 
 	if err := o.validateConfiguration(formats); err != nil {
@@ -217,7 +224,7 @@ func (o *PostClusterParams) bindConfiguration(rawData []string, hasKey bool, for
 // validateConfiguration carries on validations for parameter Configuration
 func (o *PostClusterParams) validateConfiguration(formats strfmt.Registry) error {
 
-	if err := validate.Enum("configuration", "query", *o.Configuration, []interface{}{"keep"}); err != nil {
+	if err := validate.EnumCase("configuration", "query", *o.Configuration, []interface{}{"keep"}, true); err != nil {
 		return err
 	}
 
@@ -233,6 +240,7 @@ func (o *PostClusterParams) bindVersion(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

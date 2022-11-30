@@ -31,7 +31,8 @@ import (
 // GetRuntimeServerOKCode is the HTTP code returned for type GetRuntimeServerOK
 const GetRuntimeServerOKCode int = 200
 
-/*GetRuntimeServerOK Successful operation
+/*
+GetRuntimeServerOK Successful operation
 
 swagger:response getRuntimeServerOK
 */
@@ -75,7 +76,8 @@ func (o *GetRuntimeServerOK) WriteResponse(rw http.ResponseWriter, producer runt
 // GetRuntimeServerNotFoundCode is the HTTP code returned for type GetRuntimeServerNotFound
 const GetRuntimeServerNotFoundCode int = 404
 
-/*GetRuntimeServerNotFound The specified resource was not found
+/*
+GetRuntimeServerNotFound The specified resource was not found
 
 swagger:response getRuntimeServerNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetRuntimeServerNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*GetRuntimeServerDefault General Error
+/*
+GetRuntimeServerDefault General Error
 
 swagger:response getRuntimeServerDefault
 */

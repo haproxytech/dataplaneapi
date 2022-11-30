@@ -29,6 +29,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v3/models"
 )
@@ -98,7 +99,7 @@ func (o *ReplaceCacheParams) BindRequest(r *http.Request, route *middleware.Matc
 		var body models.Cache
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -108,13 +109,19 @@ func (o *ReplaceCacheParams) BindRequest(r *http.Request, route *middleware.Matc
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -134,7 +141,6 @@ func (o *ReplaceCacheParams) BindRequest(r *http.Request, route *middleware.Matc
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -150,6 +156,7 @@ func (o *ReplaceCacheParams) bindForceReload(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplaceCacheParams()
 		return nil
@@ -173,7 +180,6 @@ func (o *ReplaceCacheParams) bindName(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -188,10 +194,10 @@ func (o *ReplaceCacheParams) bindTransactionID(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -206,6 +212,7 @@ func (o *ReplaceCacheParams) bindVersion(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

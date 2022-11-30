@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetPeerEntriesParams creates a new GetPeerEntriesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetPeerEntriesParams() GetPeerEntriesParams {
 
 	return GetPeerEntriesParams{}
@@ -77,7 +78,6 @@ func (o *GetPeerEntriesParams) BindRequest(r *http.Request, route *middleware.Ma
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -87,7 +87,7 @@ func (o *GetPeerEntriesParams) BindRequest(r *http.Request, route *middleware.Ma
 // bindPeerSection binds and validates parameter PeerSection from query.
 func (o *GetPeerEntriesParams) bindPeerSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("peer_section", "query")
+		return errors.Required("peer_section", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -96,10 +96,10 @@ func (o *GetPeerEntriesParams) bindPeerSection(rawData []string, hasKey bool, fo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("peer_section", "query", raw); err != nil {
 		return err
 	}
-
 	o.PeerSection = raw
 
 	return nil
@@ -114,10 +114,10 @@ func (o *GetPeerEntriesParams) bindTransactionID(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

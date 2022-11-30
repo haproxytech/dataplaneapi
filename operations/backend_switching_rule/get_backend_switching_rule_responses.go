@@ -31,7 +31,8 @@ import (
 // GetBackendSwitchingRuleOKCode is the HTTP code returned for type GetBackendSwitchingRuleOK
 const GetBackendSwitchingRuleOKCode int = 200
 
-/*GetBackendSwitchingRuleOK Successful operation
+/*
+GetBackendSwitchingRuleOK Successful operation
 
 swagger:response getBackendSwitchingRuleOK
 */
@@ -97,7 +98,8 @@ func (o *GetBackendSwitchingRuleOK) WriteResponse(rw http.ResponseWriter, produc
 // GetBackendSwitchingRuleNotFoundCode is the HTTP code returned for type GetBackendSwitchingRuleNotFound
 const GetBackendSwitchingRuleNotFoundCode int = 404
 
-/*GetBackendSwitchingRuleNotFound The specified resource was not found
+/*
+GetBackendSwitchingRuleNotFound The specified resource was not found
 
 swagger:response getBackendSwitchingRuleNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetBackendSwitchingRuleNotFound) WriteResponse(rw http.ResponseWriter, 
 	}
 }
 
-/*GetBackendSwitchingRuleDefault General Error
+/*
+GetBackendSwitchingRuleDefault General Error
 
 swagger:response getBackendSwitchingRuleDefault
 */

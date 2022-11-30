@@ -31,7 +31,8 @@ import (
 // GetHaproxyEndpointsOKCode is the HTTP code returned for type GetHaproxyEndpointsOK
 const GetHaproxyEndpointsOKCode int = 200
 
-/*GetHaproxyEndpointsOK Success
+/*
+GetHaproxyEndpointsOK Success
 
 swagger:response getHaproxyEndpointsOK
 */
@@ -75,7 +76,8 @@ func (o *GetHaproxyEndpointsOK) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetHaproxyEndpointsDefault General Error
+/*
+GetHaproxyEndpointsDefault General Error
 
 swagger:response getHaproxyEndpointsDefault
 */

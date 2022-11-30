@@ -31,7 +31,8 @@ import (
 // GetSpoeScopeOKCode is the HTTP code returned for type GetSpoeScopeOK
 const GetSpoeScopeOKCode int = 200
 
-/*GetSpoeScopeOK Successful operation
+/*
+GetSpoeScopeOK Successful operation
 
 swagger:response getSpoeScopeOK
 */
@@ -97,7 +98,8 @@ func (o *GetSpoeScopeOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetSpoeScopeNotFoundCode is the HTTP code returned for type GetSpoeScopeNotFound
 const GetSpoeScopeNotFoundCode int = 404
 
-/*GetSpoeScopeNotFound The specified resource was not found
+/*
+GetSpoeScopeNotFound The specified resource was not found
 
 swagger:response getSpoeScopeNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetSpoeScopeNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetSpoeScopeDefault General Error
+/*
+GetSpoeScopeDefault General Error
 
 swagger:response getSpoeScopeDefault
 */

@@ -31,7 +31,8 @@ import (
 // ReplaceRuntimeMapEntryOKCode is the HTTP code returned for type ReplaceRuntimeMapEntryOK
 const ReplaceRuntimeMapEntryOKCode int = 200
 
-/*ReplaceRuntimeMapEntryOK Map value replaced
+/*
+ReplaceRuntimeMapEntryOK Map value replaced
 
 swagger:response replaceRuntimeMapEntryOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceRuntimeMapEntryOK) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceRuntimeMapEntryBadRequestCode is the HTTP code returned for type ReplaceRuntimeMapEntryBadRequest
 const ReplaceRuntimeMapEntryBadRequestCode int = 400
 
-/*ReplaceRuntimeMapEntryBadRequest Bad request
+/*
+ReplaceRuntimeMapEntryBadRequest Bad request
 
 swagger:response replaceRuntimeMapEntryBadRequest
 */
@@ -141,7 +143,8 @@ func (o *ReplaceRuntimeMapEntryBadRequest) WriteResponse(rw http.ResponseWriter,
 // ReplaceRuntimeMapEntryNotFoundCode is the HTTP code returned for type ReplaceRuntimeMapEntryNotFound
 const ReplaceRuntimeMapEntryNotFoundCode int = 404
 
-/*ReplaceRuntimeMapEntryNotFound The specified resource was not found
+/*
+ReplaceRuntimeMapEntryNotFound The specified resource was not found
 
 swagger:response replaceRuntimeMapEntryNotFound
 */
@@ -204,7 +207,8 @@ func (o *ReplaceRuntimeMapEntryNotFound) WriteResponse(rw http.ResponseWriter, p
 	}
 }
 
-/*ReplaceRuntimeMapEntryDefault General Error
+/*
+ReplaceRuntimeMapEntryDefault General Error
 
 swagger:response replaceRuntimeMapEntryDefault
 */

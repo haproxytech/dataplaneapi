@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetReloadsParams creates a new GetReloadsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetReloadsParams() GetReloadsParams {
 
 	return GetReloadsParams{}

@@ -31,7 +31,8 @@ import (
 // DeleteServerTemplateAcceptedCode is the HTTP code returned for type DeleteServerTemplateAccepted
 const DeleteServerTemplateAcceptedCode int = 202
 
-/*DeleteServerTemplateAccepted Configuration change accepted and reload requested
+/*
+DeleteServerTemplateAccepted Configuration change accepted and reload requested
 
 swagger:response deleteServerTemplateAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteServerTemplateAccepted) WriteResponse(rw http.ResponseWriter, pro
 // DeleteServerTemplateNoContentCode is the HTTP code returned for type DeleteServerTemplateNoContent
 const DeleteServerTemplateNoContentCode int = 204
 
-/*DeleteServerTemplateNoContent Server template deleted
+/*
+DeleteServerTemplateNoContent Server template deleted
 
 swagger:response deleteServerTemplateNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteServerTemplateNoContent) WriteResponse(rw http.ResponseWriter, pr
 // DeleteServerTemplateNotFoundCode is the HTTP code returned for type DeleteServerTemplateNotFound
 const DeleteServerTemplateNotFoundCode int = 404
 
-/*DeleteServerTemplateNotFound The specified resource was not found
+/*
+DeleteServerTemplateNotFound The specified resource was not found
 
 swagger:response deleteServerTemplateNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteServerTemplateNotFound) WriteResponse(rw http.ResponseWriter, pro
 	}
 }
 
-/*DeleteServerTemplateDefault General Error
+/*
+DeleteServerTemplateDefault General Error
 
 swagger:response deleteServerTemplateDefault
 */

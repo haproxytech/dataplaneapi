@@ -44,12 +44,12 @@ func NewDeleteServerTemplate(ctx *middleware.Context, handler DeleteServerTempla
 	return &DeleteServerTemplate{Context: ctx, Handler: handler}
 }
 
-/*DeleteServerTemplate swagger:route DELETE /services/haproxy/configuration/server_templates/{prefix} ServerTemplate deleteServerTemplate
+/*
+	DeleteServerTemplate swagger:route DELETE /services/haproxy/configuration/server_templates/{prefix} ServerTemplate deleteServerTemplate
 
-Delete a server template
+# Delete a server template
 
 Deletes a server template configuration by it's prefix in the specified backend.
-
 */
 type DeleteServerTemplate struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteServerTemplate struct {
 func (o *DeleteServerTemplate) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteServerTemplateParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteServerTemplate) ServeHTTP(rw http.ResponseWriter, r *http.Request
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

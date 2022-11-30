@@ -31,7 +31,8 @@ import (
 // ReplaceResolverOKCode is the HTTP code returned for type ReplaceResolverOK
 const ReplaceResolverOKCode int = 200
 
-/*ReplaceResolverOK Resolver replaced
+/*
+ReplaceResolverOK Resolver replaced
 
 swagger:response replaceResolverOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceResolverOK) WriteResponse(rw http.ResponseWriter, producer runti
 // ReplaceResolverAcceptedCode is the HTTP code returned for type ReplaceResolverAccepted
 const ReplaceResolverAcceptedCode int = 202
 
-/*ReplaceResolverAccepted Configuration change accepted and reload requested
+/*
+ReplaceResolverAccepted Configuration change accepted and reload requested
 
 swagger:response replaceResolverAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceResolverAccepted) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceResolverBadRequestCode is the HTTP code returned for type ReplaceResolverBadRequest
 const ReplaceResolverBadRequestCode int = 400
 
-/*ReplaceResolverBadRequest Bad request
+/*
+ReplaceResolverBadRequest Bad request
 
 swagger:response replaceResolverBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceResolverBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // ReplaceResolverNotFoundCode is the HTTP code returned for type ReplaceResolverNotFound
 const ReplaceResolverNotFoundCode int = 404
 
-/*ReplaceResolverNotFound The specified resource was not found
+/*
+ReplaceResolverNotFound The specified resource was not found
 
 swagger:response replaceResolverNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceResolverNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*ReplaceResolverDefault General Error
+/*
+ReplaceResolverDefault General Error
 
 swagger:response replaceResolverDefault
 */

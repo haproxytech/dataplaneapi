@@ -44,12 +44,12 @@ func NewDeleteStickRule(ctx *middleware.Context, handler DeleteStickRuleHandler)
 	return &DeleteStickRule{Context: ctx, Handler: handler}
 }
 
-/*DeleteStickRule swagger:route DELETE /services/haproxy/configuration/stick_rules/{index} StickRule deleteStickRule
+/*
+	DeleteStickRule swagger:route DELETE /services/haproxy/configuration/stick_rules/{index} StickRule deleteStickRule
 
-Delete a Stick Rule
+# Delete a Stick Rule
 
 Deletes a Stick Rule configuration by it's index from the specified backend.
-
 */
 type DeleteStickRule struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteStickRule struct {
 func (o *DeleteStickRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteStickRuleParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteStickRule) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

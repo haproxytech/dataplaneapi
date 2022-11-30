@@ -31,7 +31,8 @@ import (
 // ReplaceLogTargetOKCode is the HTTP code returned for type ReplaceLogTargetOK
 const ReplaceLogTargetOKCode int = 200
 
-/*ReplaceLogTargetOK Log Target replaced
+/*
+ReplaceLogTargetOK Log Target replaced
 
 swagger:response replaceLogTargetOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceLogTargetOK) WriteResponse(rw http.ResponseWriter, producer runt
 // ReplaceLogTargetAcceptedCode is the HTTP code returned for type ReplaceLogTargetAccepted
 const ReplaceLogTargetAcceptedCode int = 202
 
-/*ReplaceLogTargetAccepted Configuration change accepted and reload requested
+/*
+ReplaceLogTargetAccepted Configuration change accepted and reload requested
 
 swagger:response replaceLogTargetAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceLogTargetAccepted) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceLogTargetBadRequestCode is the HTTP code returned for type ReplaceLogTargetBadRequest
 const ReplaceLogTargetBadRequestCode int = 400
 
-/*ReplaceLogTargetBadRequest Bad request
+/*
+ReplaceLogTargetBadRequest Bad request
 
 swagger:response replaceLogTargetBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceLogTargetBadRequest) WriteResponse(rw http.ResponseWriter, produ
 // ReplaceLogTargetNotFoundCode is the HTTP code returned for type ReplaceLogTargetNotFound
 const ReplaceLogTargetNotFoundCode int = 404
 
-/*ReplaceLogTargetNotFound The specified resource was not found
+/*
+ReplaceLogTargetNotFound The specified resource was not found
 
 swagger:response replaceLogTargetNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceLogTargetNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*ReplaceLogTargetDefault General Error
+/*
+ReplaceLogTargetDefault General Error
 
 swagger:response replaceLogTargetDefault
 */

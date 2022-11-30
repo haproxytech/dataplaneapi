@@ -31,7 +31,8 @@ import (
 // ReplaceStorageMapFileAcceptedCode is the HTTP code returned for type ReplaceStorageMapFileAccepted
 const ReplaceStorageMapFileAcceptedCode int = 202
 
-/*ReplaceStorageMapFileAccepted Configuration change accepted and reload requested
+/*
+ReplaceStorageMapFileAccepted Configuration change accepted and reload requested
 
 swagger:response replaceStorageMapFileAccepted
 */
@@ -77,7 +78,8 @@ func (o *ReplaceStorageMapFileAccepted) WriteResponse(rw http.ResponseWriter, pr
 // ReplaceStorageMapFileNoContentCode is the HTTP code returned for type ReplaceStorageMapFileNoContent
 const ReplaceStorageMapFileNoContentCode int = 204
 
-/*ReplaceStorageMapFileNoContent Map file replaced
+/*
+ReplaceStorageMapFileNoContent Map file replaced
 
 swagger:response replaceStorageMapFileNoContent
 */
@@ -101,7 +103,8 @@ func (o *ReplaceStorageMapFileNoContent) WriteResponse(rw http.ResponseWriter, p
 // ReplaceStorageMapFileBadRequestCode is the HTTP code returned for type ReplaceStorageMapFileBadRequest
 const ReplaceStorageMapFileBadRequestCode int = 400
 
-/*ReplaceStorageMapFileBadRequest Bad request
+/*
+ReplaceStorageMapFileBadRequest Bad request
 
 swagger:response replaceStorageMapFileBadRequest
 */
@@ -167,7 +170,8 @@ func (o *ReplaceStorageMapFileBadRequest) WriteResponse(rw http.ResponseWriter, 
 // ReplaceStorageMapFileNotFoundCode is the HTTP code returned for type ReplaceStorageMapFileNotFound
 const ReplaceStorageMapFileNotFoundCode int = 404
 
-/*ReplaceStorageMapFileNotFound The specified resource was not found
+/*
+ReplaceStorageMapFileNotFound The specified resource was not found
 
 swagger:response replaceStorageMapFileNotFound
 */
@@ -230,7 +234,8 @@ func (o *ReplaceStorageMapFileNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*ReplaceStorageMapFileDefault General Error
+/*
+ReplaceStorageMapFileDefault General Error
 
 swagger:response replaceStorageMapFileDefault
 */

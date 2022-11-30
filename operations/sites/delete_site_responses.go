@@ -31,7 +31,8 @@ import (
 // DeleteSiteAcceptedCode is the HTTP code returned for type DeleteSiteAccepted
 const DeleteSiteAcceptedCode int = 202
 
-/*DeleteSiteAccepted Configuration change accepted and reload requested
+/*
+DeleteSiteAccepted Configuration change accepted and reload requested
 
 swagger:response deleteSiteAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteSiteAccepted) WriteResponse(rw http.ResponseWriter, producer runt
 // DeleteSiteNoContentCode is the HTTP code returned for type DeleteSiteNoContent
 const DeleteSiteNoContentCode int = 204
 
-/*DeleteSiteNoContent Site deleted
+/*
+DeleteSiteNoContent Site deleted
 
 swagger:response deleteSiteNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteSiteNoContent) WriteResponse(rw http.ResponseWriter, producer run
 // DeleteSiteNotFoundCode is the HTTP code returned for type DeleteSiteNotFound
 const DeleteSiteNotFoundCode int = 404
 
-/*DeleteSiteNotFound The specified resource was not found
+/*
+DeleteSiteNotFound The specified resource was not found
 
 swagger:response deleteSiteNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteSiteNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
-/*DeleteSiteDefault General Error
+/*
+DeleteSiteDefault General Error
 
 swagger:response deleteSiteDefault
 */

@@ -32,7 +32,8 @@ import (
 )
 
 // NewStartSpoeTransactionParams creates a new StartSpoeTransactionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewStartSpoeTransactionParams() StartSpoeTransactionParams {
 
 	return StartSpoeTransactionParams{}
@@ -79,7 +80,6 @@ func (o *StartSpoeTransactionParams) BindRequest(r *http.Request, route *middlew
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -89,7 +89,7 @@ func (o *StartSpoeTransactionParams) BindRequest(r *http.Request, route *middlew
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *StartSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -98,10 +98,10 @@ func (o *StartSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, for
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -110,7 +110,7 @@ func (o *StartSpoeTransactionParams) bindSpoe(rawData []string, hasKey bool, for
 // bindVersion binds and validates parameter Version from query.
 func (o *StartSpoeTransactionParams) bindVersion(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("version", "query")
+		return errors.Required("version", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -119,6 +119,7 @@ func (o *StartSpoeTransactionParams) bindVersion(rawData []string, hasKey bool, 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("version", "query", raw); err != nil {
 		return err
 	}

@@ -21,6 +21,7 @@ package configuration
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -48,12 +49,12 @@ func NewGetHAProxyConfiguration(ctx *middleware.Context, handler GetHAProxyConfi
 	return &GetHAProxyConfiguration{Context: ctx, Handler: handler}
 }
 
-/*GetHAProxyConfiguration swagger:route GET /services/haproxy/configuration/raw Configuration getHAProxyConfiguration
+/*
+	GetHAProxyConfiguration swagger:route GET /services/haproxy/configuration/raw Configuration getHAProxyConfiguration
 
-Return HAProxy configuration
+# Return HAProxy configuration
 
 Returns HAProxy configuration file in plain text
-
 */
 type GetHAProxyConfiguration struct {
 	Context *middleware.Context
@@ -63,21 +64,20 @@ type GetHAProxyConfiguration struct {
 func (o *GetHAProxyConfiguration) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetHAProxyConfigurationParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -86,7 +86,6 @@ func (o *GetHAProxyConfiguration) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -124,6 +123,11 @@ func (o *GetHAProxyConfigurationOKBody) validateData(formats strfmt.Registry) er
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this get h a proxy configuration o k body based on context it is used
+func (o *GetHAProxyConfigurationOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

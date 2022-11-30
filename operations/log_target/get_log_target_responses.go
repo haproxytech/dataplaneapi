@@ -31,7 +31,8 @@ import (
 // GetLogTargetOKCode is the HTTP code returned for type GetLogTargetOK
 const GetLogTargetOKCode int = 200
 
-/*GetLogTargetOK Successful operation
+/*
+GetLogTargetOK Successful operation
 
 swagger:response getLogTargetOK
 */
@@ -97,7 +98,8 @@ func (o *GetLogTargetOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetLogTargetNotFoundCode is the HTTP code returned for type GetLogTargetNotFound
 const GetLogTargetNotFoundCode int = 404
 
-/*GetLogTargetNotFound The specified resource was not found
+/*
+GetLogTargetNotFound The specified resource was not found
 
 swagger:response getLogTargetNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetLogTargetNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetLogTargetDefault General Error
+/*
+GetLogTargetDefault General Error
 
 swagger:response getLogTargetDefault
 */

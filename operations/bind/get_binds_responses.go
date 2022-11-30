@@ -31,7 +31,8 @@ import (
 // GetBindsOKCode is the HTTP code returned for type GetBindsOK
 const GetBindsOKCode int = 200
 
-/*GetBindsOK Successful operation
+/*
+GetBindsOK Successful operation
 
 swagger:response getBindsOK
 */
@@ -94,7 +95,8 @@ func (o *GetBindsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 }
 
-/*GetBindsDefault General Error
+/*
+GetBindsDefault General Error
 
 swagger:response getBindsDefault
 */

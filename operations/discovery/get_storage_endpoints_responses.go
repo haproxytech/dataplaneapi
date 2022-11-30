@@ -31,7 +31,8 @@ import (
 // GetStorageEndpointsOKCode is the HTTP code returned for type GetStorageEndpointsOK
 const GetStorageEndpointsOKCode int = 200
 
-/*GetStorageEndpointsOK Success
+/*
+GetStorageEndpointsOK Success
 
 swagger:response getStorageEndpointsOK
 */
@@ -75,7 +76,8 @@ func (o *GetStorageEndpointsOK) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetStorageEndpointsDefault General Error
+/*
+GetStorageEndpointsDefault General Error
 
 swagger:response getStorageEndpointsDefault
 */

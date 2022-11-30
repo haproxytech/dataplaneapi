@@ -29,7 +29,8 @@ import (
 )
 
 // NewDeleteStorageGeneralFileParams creates a new DeleteStorageGeneralFileParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewDeleteStorageGeneralFileParams() DeleteStorageGeneralFileParams {
 
 	return DeleteStorageGeneralFileParams{}
@@ -64,7 +65,6 @@ func (o *DeleteStorageGeneralFileParams) BindRequest(r *http.Request, route *mid
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -80,7 +80,6 @@ func (o *DeleteStorageGeneralFileParams) bindName(rawData []string, hasKey bool,
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil

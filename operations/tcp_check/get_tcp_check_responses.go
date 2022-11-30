@@ -31,7 +31,8 @@ import (
 // GetTCPCheckOKCode is the HTTP code returned for type GetTCPCheckOK
 const GetTCPCheckOKCode int = 200
 
-/*GetTCPCheckOK Successful operation
+/*
+GetTCPCheckOK Successful operation
 
 swagger:response getTcpCheckOK
 */
@@ -97,7 +98,8 @@ func (o *GetTCPCheckOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // GetTCPCheckNotFoundCode is the HTTP code returned for type GetTCPCheckNotFound
 const GetTCPCheckNotFoundCode int = 404
 
-/*GetTCPCheckNotFound The specified resource was not found
+/*
+GetTCPCheckNotFound The specified resource was not found
 
 swagger:response getTcpCheckNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetTCPCheckNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*GetTCPCheckDefault General Error
+/*
+GetTCPCheckDefault General Error
 
 swagger:response getTcpCheckDefault
 */

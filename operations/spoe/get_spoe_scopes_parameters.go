@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetSpoeScopesParams creates a new GetSpoeScopesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetSpoeScopesParams() GetSpoeScopesParams {
 
 	return GetSpoeScopesParams{}
@@ -77,7 +78,6 @@ func (o *GetSpoeScopesParams) BindRequest(r *http.Request, route *middleware.Mat
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -87,7 +87,7 @@ func (o *GetSpoeScopesParams) BindRequest(r *http.Request, route *middleware.Mat
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *GetSpoeScopesParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -96,10 +96,10 @@ func (o *GetSpoeScopesParams) bindSpoe(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -114,10 +114,10 @@ func (o *GetSpoeScopesParams) bindTransactionID(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

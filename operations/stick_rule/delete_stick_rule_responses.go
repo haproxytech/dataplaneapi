@@ -31,7 +31,8 @@ import (
 // DeleteStickRuleAcceptedCode is the HTTP code returned for type DeleteStickRuleAccepted
 const DeleteStickRuleAcceptedCode int = 202
 
-/*DeleteStickRuleAccepted Configuration change accepted and reload requested
+/*
+DeleteStickRuleAccepted Configuration change accepted and reload requested
 
 swagger:response deleteStickRuleAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteStickRuleAccepted) WriteResponse(rw http.ResponseWriter, producer
 // DeleteStickRuleNoContentCode is the HTTP code returned for type DeleteStickRuleNoContent
 const DeleteStickRuleNoContentCode int = 204
 
-/*DeleteStickRuleNoContent Stick Rule deleted
+/*
+DeleteStickRuleNoContent Stick Rule deleted
 
 swagger:response deleteStickRuleNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteStickRuleNoContent) WriteResponse(rw http.ResponseWriter, produce
 // DeleteStickRuleNotFoundCode is the HTTP code returned for type DeleteStickRuleNotFound
 const DeleteStickRuleNotFoundCode int = 404
 
-/*DeleteStickRuleNotFound The specified resource was not found
+/*
+DeleteStickRuleNotFound The specified resource was not found
 
 swagger:response deleteStickRuleNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteStickRuleNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*DeleteStickRuleDefault General Error
+/*
+DeleteStickRuleDefault General Error
 
 swagger:response deleteStickRuleDefault
 */

@@ -31,7 +31,8 @@ import (
 // ReplaceSiteOKCode is the HTTP code returned for type ReplaceSiteOK
 const ReplaceSiteOKCode int = 200
 
-/*ReplaceSiteOK Site replaced
+/*
+ReplaceSiteOK Site replaced
 
 swagger:response replaceSiteOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceSiteOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 // ReplaceSiteAcceptedCode is the HTTP code returned for type ReplaceSiteAccepted
 const ReplaceSiteAcceptedCode int = 202
 
-/*ReplaceSiteAccepted Configuration change accepted and reload requested
+/*
+ReplaceSiteAccepted Configuration change accepted and reload requested
 
 swagger:response replaceSiteAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceSiteAccepted) WriteResponse(rw http.ResponseWriter, producer run
 // ReplaceSiteBadRequestCode is the HTTP code returned for type ReplaceSiteBadRequest
 const ReplaceSiteBadRequestCode int = 400
 
-/*ReplaceSiteBadRequest Bad request
+/*
+ReplaceSiteBadRequest Bad request
 
 swagger:response replaceSiteBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceSiteBadRequest) WriteResponse(rw http.ResponseWriter, producer r
 // ReplaceSiteNotFoundCode is the HTTP code returned for type ReplaceSiteNotFound
 const ReplaceSiteNotFoundCode int = 404
 
-/*ReplaceSiteNotFound The specified resource was not found
+/*
+ReplaceSiteNotFound The specified resource was not found
 
 swagger:response replaceSiteNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceSiteNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	}
 }
 
-/*ReplaceSiteDefault General Error
+/*
+ReplaceSiteDefault General Error
 
 swagger:response replaceSiteDefault
 */

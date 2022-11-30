@@ -31,7 +31,8 @@ import (
 // ReplaceServerTemplateOKCode is the HTTP code returned for type ReplaceServerTemplateOK
 const ReplaceServerTemplateOKCode int = 200
 
-/*ReplaceServerTemplateOK Server template replaced
+/*
+ReplaceServerTemplateOK Server template replaced
 
 swagger:response replaceServerTemplateOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceServerTemplateOK) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceServerTemplateAcceptedCode is the HTTP code returned for type ReplaceServerTemplateAccepted
 const ReplaceServerTemplateAcceptedCode int = 202
 
-/*ReplaceServerTemplateAccepted Configuration change accepted and reload requested
+/*
+ReplaceServerTemplateAccepted Configuration change accepted and reload requested
 
 swagger:response replaceServerTemplateAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceServerTemplateAccepted) WriteResponse(rw http.ResponseWriter, pr
 // ReplaceServerTemplateBadRequestCode is the HTTP code returned for type ReplaceServerTemplateBadRequest
 const ReplaceServerTemplateBadRequestCode int = 400
 
-/*ReplaceServerTemplateBadRequest Bad request
+/*
+ReplaceServerTemplateBadRequest Bad request
 
 swagger:response replaceServerTemplateBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceServerTemplateBadRequest) WriteResponse(rw http.ResponseWriter, 
 // ReplaceServerTemplateNotFoundCode is the HTTP code returned for type ReplaceServerTemplateNotFound
 const ReplaceServerTemplateNotFoundCode int = 404
 
-/*ReplaceServerTemplateNotFound The specified resource was not found
+/*
+ReplaceServerTemplateNotFound The specified resource was not found
 
 swagger:response replaceServerTemplateNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceServerTemplateNotFound) WriteResponse(rw http.ResponseWriter, pr
 	}
 }
 
-/*ReplaceServerTemplateDefault General Error
+/*
+ReplaceServerTemplateDefault General Error
 
 swagger:response replaceServerTemplateDefault
 */

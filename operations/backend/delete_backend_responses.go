@@ -31,7 +31,8 @@ import (
 // DeleteBackendAcceptedCode is the HTTP code returned for type DeleteBackendAccepted
 const DeleteBackendAcceptedCode int = 202
 
-/*DeleteBackendAccepted Configuration change accepted and reload requested
+/*
+DeleteBackendAccepted Configuration change accepted and reload requested
 
 swagger:response deleteBackendAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteBackendAccepted) WriteResponse(rw http.ResponseWriter, producer r
 // DeleteBackendNoContentCode is the HTTP code returned for type DeleteBackendNoContent
 const DeleteBackendNoContentCode int = 204
 
-/*DeleteBackendNoContent Backend deleted
+/*
+DeleteBackendNoContent Backend deleted
 
 swagger:response deleteBackendNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteBackendNoContent) WriteResponse(rw http.ResponseWriter, producer 
 // DeleteBackendNotFoundCode is the HTTP code returned for type DeleteBackendNotFound
 const DeleteBackendNotFoundCode int = 404
 
-/*DeleteBackendNotFound The specified resource was not found
+/*
+DeleteBackendNotFound The specified resource was not found
 
 swagger:response deleteBackendNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteBackendNotFound) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*DeleteBackendDefault General Error
+/*
+DeleteBackendDefault General Error
 
 swagger:response deleteBackendDefault
 */

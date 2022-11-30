@@ -21,6 +21,7 @@ package tcp_check
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -50,12 +51,12 @@ func NewGetTCPChecks(ctx *middleware.Context, handler GetTCPChecksHandler) *GetT
 	return &GetTCPChecks{Context: ctx, Handler: handler}
 }
 
-/*GetTCPChecks swagger:route GET /services/haproxy/configuration/tcp_checks TCPCheck getTcpChecks
+/*
+	GetTCPChecks swagger:route GET /services/haproxy/configuration/tcp_checks TCPCheck getTcpChecks
 
-Return an array of TCP checks
+# Return an array of TCP checks
 
 Returns all TCP checks that are configured in specified parent.
-
 */
 type GetTCPChecks struct {
 	Context *middleware.Context
@@ -65,21 +66,20 @@ type GetTCPChecks struct {
 func (o *GetTCPChecks) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetTCPChecksParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -88,7 +88,6 @@ func (o *GetTCPChecks) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -129,6 +128,36 @@ func (o *GetTCPChecksOKBody) validateData(formats strfmt.Registry) error {
 	if err := o.Data.Validate(formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("getTcpChecksOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getTcpChecksOK" + "." + "data")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get TCP checks o k body based on the context it is used
+func (o *GetTCPChecksOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetTCPChecksOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := o.Data.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("getTcpChecksOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getTcpChecksOK" + "." + "data")
 		}
 		return err
 	}

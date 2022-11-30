@@ -30,7 +30,8 @@ import (
 )
 
 // NewGetPeerSectionParams creates a new GetPeerSectionParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetPeerSectionParams() GetPeerSectionParams {
 
 	return GetPeerSectionParams{}
@@ -76,7 +77,6 @@ func (o *GetPeerSectionParams) BindRequest(r *http.Request, route *middleware.Ma
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -92,7 +92,6 @@ func (o *GetPeerSectionParams) bindName(rawData []string, hasKey bool, formats s
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -107,10 +106,10 @@ func (o *GetPeerSectionParams) bindTransactionID(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

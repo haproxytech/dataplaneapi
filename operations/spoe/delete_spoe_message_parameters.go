@@ -32,7 +32,8 @@ import (
 )
 
 // NewDeleteSpoeMessageParams creates a new DeleteSpoeMessageParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewDeleteSpoeMessageParams() DeleteSpoeMessageParams {
 
 	return DeleteSpoeMessageParams{}
@@ -107,7 +108,6 @@ func (o *DeleteSpoeMessageParams) BindRequest(r *http.Request, route *middleware
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -123,7 +123,6 @@ func (o *DeleteSpoeMessageParams) bindName(rawData []string, hasKey bool, format
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -132,7 +131,7 @@ func (o *DeleteSpoeMessageParams) bindName(rawData []string, hasKey bool, format
 // bindScope binds and validates parameter Scope from query.
 func (o *DeleteSpoeMessageParams) bindScope(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("scope", "query")
+		return errors.Required("scope", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -141,10 +140,10 @@ func (o *DeleteSpoeMessageParams) bindScope(rawData []string, hasKey bool, forma
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("scope", "query", raw); err != nil {
 		return err
 	}
-
 	o.Scope = raw
 
 	return nil
@@ -153,7 +152,7 @@ func (o *DeleteSpoeMessageParams) bindScope(rawData []string, hasKey bool, forma
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *DeleteSpoeMessageParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -162,10 +161,10 @@ func (o *DeleteSpoeMessageParams) bindSpoe(rawData []string, hasKey bool, format
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -180,10 +179,10 @@ func (o *DeleteSpoeMessageParams) bindTransactionID(rawData []string, hasKey boo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -198,6 +197,7 @@ func (o *DeleteSpoeMessageParams) bindVersion(rawData []string, hasKey bool, for
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

@@ -31,7 +31,8 @@ import (
 // ClearRuntimeMapNoContentCode is the HTTP code returned for type ClearRuntimeMapNoContent
 const ClearRuntimeMapNoContentCode int = 204
 
-/*ClearRuntimeMapNoContent All map entries deleted
+/*
+ClearRuntimeMapNoContent All map entries deleted
 
 swagger:response clearRuntimeMapNoContent
 */
@@ -55,7 +56,8 @@ func (o *ClearRuntimeMapNoContent) WriteResponse(rw http.ResponseWriter, produce
 // ClearRuntimeMapNotFoundCode is the HTTP code returned for type ClearRuntimeMapNotFound
 const ClearRuntimeMapNotFoundCode int = 404
 
-/*ClearRuntimeMapNotFound The specified resource was not found
+/*
+ClearRuntimeMapNotFound The specified resource was not found
 
 swagger:response clearRuntimeMapNotFound
 */
@@ -118,7 +120,8 @@ func (o *ClearRuntimeMapNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*ClearRuntimeMapDefault General Error
+/*
+ClearRuntimeMapDefault General Error
 
 swagger:response clearRuntimeMapDefault
 */

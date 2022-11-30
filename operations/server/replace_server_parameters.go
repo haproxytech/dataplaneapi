@@ -109,7 +109,7 @@ func (o *ReplaceServerParams) BindRequest(r *http.Request, route *middleware.Mat
 		var body models.Server
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -119,13 +119,19 @@ func (o *ReplaceServerParams) BindRequest(r *http.Request, route *middleware.Mat
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
+
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
 		res = append(res, err)
@@ -145,7 +151,6 @@ func (o *ReplaceServerParams) BindRequest(r *http.Request, route *middleware.Mat
 	if err := o.bindVersion(qVersion, qhkVersion, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -155,7 +160,7 @@ func (o *ReplaceServerParams) BindRequest(r *http.Request, route *middleware.Mat
 // bindBackend binds and validates parameter Backend from query.
 func (o *ReplaceServerParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("backend", "query")
+		return errors.Required("backend", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -164,10 +169,10 @@ func (o *ReplaceServerParams) bindBackend(rawData []string, hasKey bool, formats
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("backend", "query", raw); err != nil {
 		return err
 	}
-
 	o.Backend = raw
 
 	return nil
@@ -182,6 +187,7 @@ func (o *ReplaceServerParams) bindForceReload(rawData []string, hasKey bool, for
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		// Default values have been previously initialized by NewReplaceServerParams()
 		return nil
@@ -205,7 +211,6 @@ func (o *ReplaceServerParams) bindName(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -220,10 +225,10 @@ func (o *ReplaceServerParams) bindTransactionID(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil
@@ -238,6 +243,7 @@ func (o *ReplaceServerParams) bindVersion(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}

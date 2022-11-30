@@ -31,7 +31,8 @@ import (
 // GetStickTableOKCode is the HTTP code returned for type GetStickTableOK
 const GetStickTableOKCode int = 200
 
-/*GetStickTableOK Successful operation
+/*
+GetStickTableOK Successful operation
 
 swagger:response getStickTableOK
 */
@@ -75,7 +76,8 @@ func (o *GetStickTableOK) WriteResponse(rw http.ResponseWriter, producer runtime
 // GetStickTableNotFoundCode is the HTTP code returned for type GetStickTableNotFound
 const GetStickTableNotFoundCode int = 404
 
-/*GetStickTableNotFound The specified resource was not found
+/*
+GetStickTableNotFound The specified resource was not found
 
 swagger:response getStickTableNotFound
 */
@@ -138,7 +140,8 @@ func (o *GetStickTableNotFound) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetStickTableDefault General Error
+/*
+GetStickTableDefault General Error
 
 swagger:response getStickTableDefault
 */

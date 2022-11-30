@@ -31,7 +31,8 @@ import (
 // DeleteNameserverAcceptedCode is the HTTP code returned for type DeleteNameserverAccepted
 const DeleteNameserverAcceptedCode int = 202
 
-/*DeleteNameserverAccepted Configuration change accepted and reload requested
+/*
+DeleteNameserverAccepted Configuration change accepted and reload requested
 
 swagger:response deleteNameserverAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteNameserverAccepted) WriteResponse(rw http.ResponseWriter, produce
 // DeleteNameserverNoContentCode is the HTTP code returned for type DeleteNameserverNoContent
 const DeleteNameserverNoContentCode int = 204
 
-/*DeleteNameserverNoContent Nameserver deleted
+/*
+DeleteNameserverNoContent Nameserver deleted
 
 swagger:response deleteNameserverNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteNameserverNoContent) WriteResponse(rw http.ResponseWriter, produc
 // DeleteNameserverNotFoundCode is the HTTP code returned for type DeleteNameserverNotFound
 const DeleteNameserverNotFoundCode int = 404
 
-/*DeleteNameserverNotFound The specified resource was not found
+/*
+DeleteNameserverNotFound The specified resource was not found
 
 swagger:response deleteNameserverNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteNameserverNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*DeleteNameserverDefault General Error
+/*
+DeleteNameserverDefault General Error
 
 swagger:response deleteNameserverDefault
 */

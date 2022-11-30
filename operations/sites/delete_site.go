@@ -44,12 +44,12 @@ func NewDeleteSite(ctx *middleware.Context, handler DeleteSiteHandler) *DeleteSi
 	return &DeleteSite{Context: ctx, Handler: handler}
 }
 
-/*DeleteSite swagger:route DELETE /services/haproxy/sites/{name} Sites deleteSite
+/*
+	DeleteSite swagger:route DELETE /services/haproxy/sites/{name} Sites deleteSite
 
-Delete a site
+# Delete a site
 
 Deletes a site from the configuration by it's name.
-
 */
 type DeleteSite struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteSite struct {
 func (o *DeleteSite) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteSiteParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteSite) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

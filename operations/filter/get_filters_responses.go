@@ -31,7 +31,8 @@ import (
 // GetFiltersOKCode is the HTTP code returned for type GetFiltersOK
 const GetFiltersOKCode int = 200
 
-/*GetFiltersOK Successful operation
+/*
+GetFiltersOK Successful operation
 
 swagger:response getFiltersOK
 */
@@ -94,7 +95,8 @@ func (o *GetFiltersOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 }
 
-/*GetFiltersDefault General Error
+/*
+GetFiltersDefault General Error
 
 swagger:response getFiltersDefault
 */

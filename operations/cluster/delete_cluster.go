@@ -44,12 +44,12 @@ func NewDeleteCluster(ctx *middleware.Context, handler DeleteClusterHandler) *De
 	return &DeleteCluster{Context: ctx, Handler: handler}
 }
 
-/*DeleteCluster swagger:route DELETE /cluster Cluster deleteCluster
+/*
+	DeleteCluster swagger:route DELETE /cluster Cluster deleteCluster
 
-Delete cluster settings
+# Delete cluster settings
 
 Delete cluster settings and move the node back to single mode
-
 */
 type DeleteCluster struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteCluster struct {
 func (o *DeleteCluster) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteClusterParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteCluster) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

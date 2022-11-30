@@ -31,7 +31,8 @@ import (
 // GetSpoeGroupOKCode is the HTTP code returned for type GetSpoeGroupOK
 const GetSpoeGroupOKCode int = 200
 
-/*GetSpoeGroupOK Successful operation
+/*
+GetSpoeGroupOK Successful operation
 
 swagger:response getSpoeGroupOK
 */
@@ -97,7 +98,8 @@ func (o *GetSpoeGroupOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 // GetSpoeGroupNotFoundCode is the HTTP code returned for type GetSpoeGroupNotFound
 const GetSpoeGroupNotFoundCode int = 404
 
-/*GetSpoeGroupNotFound The specified resource was not found
+/*
+GetSpoeGroupNotFound The specified resource was not found
 
 swagger:response getSpoeGroupNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetSpoeGroupNotFound) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 }
 
-/*GetSpoeGroupDefault General Error
+/*
+GetSpoeGroupDefault General Error
 
 swagger:response getSpoeGroupDefault
 */

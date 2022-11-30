@@ -31,7 +31,8 @@ import (
 // GetSpoeTransactionsOKCode is the HTTP code returned for type GetSpoeTransactionsOK
 const GetSpoeTransactionsOKCode int = 200
 
-/*GetSpoeTransactionsOK Success
+/*
+GetSpoeTransactionsOK Success
 
 swagger:response getSpoeTransactionsOK
 */
@@ -75,7 +76,8 @@ func (o *GetSpoeTransactionsOK) WriteResponse(rw http.ResponseWriter, producer r
 	}
 }
 
-/*GetSpoeTransactionsDefault General Error
+/*
+GetSpoeTransactionsDefault General Error
 
 swagger:response getSpoeTransactionsDefault
 */

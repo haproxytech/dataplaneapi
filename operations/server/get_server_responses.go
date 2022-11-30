@@ -31,7 +31,8 @@ import (
 // GetServerOKCode is the HTTP code returned for type GetServerOK
 const GetServerOKCode int = 200
 
-/*GetServerOK Successful operation
+/*
+GetServerOK Successful operation
 
 swagger:response getServerOK
 */
@@ -97,7 +98,8 @@ func (o *GetServerOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 // GetServerNotFoundCode is the HTTP code returned for type GetServerNotFound
 const GetServerNotFoundCode int = 404
 
-/*GetServerNotFound The specified resource was not found
+/*
+GetServerNotFound The specified resource was not found
 
 swagger:response getServerNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetServerNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetServerDefault General Error
+/*
+GetServerDefault General Error
 
 swagger:response getServerDefault
 */

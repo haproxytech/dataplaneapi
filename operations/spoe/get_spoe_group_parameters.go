@@ -31,7 +31,8 @@ import (
 )
 
 // NewGetSpoeGroupParams creates a new GetSpoeGroupParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetSpoeGroupParams() GetSpoeGroupParams {
 
 	return GetSpoeGroupParams{}
@@ -97,7 +98,6 @@ func (o *GetSpoeGroupParams) BindRequest(r *http.Request, route *middleware.Matc
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -113,7 +113,6 @@ func (o *GetSpoeGroupParams) bindName(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.Name = raw
 
 	return nil
@@ -122,7 +121,7 @@ func (o *GetSpoeGroupParams) bindName(rawData []string, hasKey bool, formats str
 // bindScope binds and validates parameter Scope from query.
 func (o *GetSpoeGroupParams) bindScope(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("scope", "query")
+		return errors.Required("scope", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -131,10 +130,10 @@ func (o *GetSpoeGroupParams) bindScope(rawData []string, hasKey bool, formats st
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("scope", "query", raw); err != nil {
 		return err
 	}
-
 	o.Scope = raw
 
 	return nil
@@ -143,7 +142,7 @@ func (o *GetSpoeGroupParams) bindScope(rawData []string, hasKey bool, formats st
 // bindSpoe binds and validates parameter Spoe from query.
 func (o *GetSpoeGroupParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("spoe", "query")
+		return errors.Required("spoe", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -152,10 +151,10 @@ func (o *GetSpoeGroupParams) bindSpoe(rawData []string, hasKey bool, formats str
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("spoe", "query", raw); err != nil {
 		return err
 	}
-
 	o.Spoe = raw
 
 	return nil
@@ -170,10 +169,10 @@ func (o *GetSpoeGroupParams) bindTransactionID(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.TransactionID = &raw
 
 	return nil

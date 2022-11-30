@@ -28,7 +28,8 @@ import (
 )
 
 // NewGetServicesHaproxyRuntimeAclsParams creates a new GetServicesHaproxyRuntimeAclsParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetServicesHaproxyRuntimeAclsParams() GetServicesHaproxyRuntimeAclsParams {
 
 	return GetServicesHaproxyRuntimeAclsParams{}

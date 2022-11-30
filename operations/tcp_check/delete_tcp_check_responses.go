@@ -31,7 +31,8 @@ import (
 // DeleteTCPCheckAcceptedCode is the HTTP code returned for type DeleteTCPCheckAccepted
 const DeleteTCPCheckAcceptedCode int = 202
 
-/*DeleteTCPCheckAccepted Configuration change accepted and reload requested
+/*
+DeleteTCPCheckAccepted Configuration change accepted and reload requested
 
 swagger:response deleteTcpCheckAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteTCPCheckAccepted) WriteResponse(rw http.ResponseWriter, producer 
 // DeleteTCPCheckNoContentCode is the HTTP code returned for type DeleteTCPCheckNoContent
 const DeleteTCPCheckNoContentCode int = 204
 
-/*DeleteTCPCheckNoContent TCP check deleted
+/*
+DeleteTCPCheckNoContent TCP check deleted
 
 swagger:response deleteTcpCheckNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteTCPCheckNoContent) WriteResponse(rw http.ResponseWriter, producer
 // DeleteTCPCheckNotFoundCode is the HTTP code returned for type DeleteTCPCheckNotFound
 const DeleteTCPCheckNotFoundCode int = 404
 
-/*DeleteTCPCheckNotFound The specified resource was not found
+/*
+DeleteTCPCheckNotFound The specified resource was not found
 
 swagger:response deleteTcpCheckNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteTCPCheckNotFound) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
-/*DeleteTCPCheckDefault General Error
+/*
+DeleteTCPCheckDefault General Error
 
 swagger:response deleteTcpCheckDefault
 */

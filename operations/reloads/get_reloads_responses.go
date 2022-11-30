@@ -31,7 +31,8 @@ import (
 // GetReloadsOKCode is the HTTP code returned for type GetReloadsOK
 const GetReloadsOKCode int = 200
 
-/*GetReloadsOK Success
+/*
+GetReloadsOK Success
 
 swagger:response getReloadsOK
 */
@@ -75,7 +76,8 @@ func (o *GetReloadsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 }
 
-/*GetReloadsDefault General Error
+/*
+GetReloadsDefault General Error
 
 swagger:response getReloadsDefault
 */

@@ -31,7 +31,8 @@ import (
 // ReplaceTCPCheckOKCode is the HTTP code returned for type ReplaceTCPCheckOK
 const ReplaceTCPCheckOKCode int = 200
 
-/*ReplaceTCPCheckOK TCP check replaced
+/*
+ReplaceTCPCheckOK TCP check replaced
 
 swagger:response replaceTcpCheckOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceTCPCheckOK) WriteResponse(rw http.ResponseWriter, producer runti
 // ReplaceTCPCheckAcceptedCode is the HTTP code returned for type ReplaceTCPCheckAccepted
 const ReplaceTCPCheckAcceptedCode int = 202
 
-/*ReplaceTCPCheckAccepted Configuration change accepted and reload requested
+/*
+ReplaceTCPCheckAccepted Configuration change accepted and reload requested
 
 swagger:response replaceTcpCheckAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceTCPCheckAccepted) WriteResponse(rw http.ResponseWriter, producer
 // ReplaceTCPCheckBadRequestCode is the HTTP code returned for type ReplaceTCPCheckBadRequest
 const ReplaceTCPCheckBadRequestCode int = 400
 
-/*ReplaceTCPCheckBadRequest Bad request
+/*
+ReplaceTCPCheckBadRequest Bad request
 
 swagger:response replaceTcpCheckBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceTCPCheckBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // ReplaceTCPCheckNotFoundCode is the HTTP code returned for type ReplaceTCPCheckNotFound
 const ReplaceTCPCheckNotFoundCode int = 404
 
-/*ReplaceTCPCheckNotFound The specified resource was not found
+/*
+ReplaceTCPCheckNotFound The specified resource was not found
 
 swagger:response replaceTcpCheckNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceTCPCheckNotFound) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*ReplaceTCPCheckDefault General Error
+/*
+ReplaceTCPCheckDefault General Error
 
 swagger:response replaceTcpCheckDefault
 */

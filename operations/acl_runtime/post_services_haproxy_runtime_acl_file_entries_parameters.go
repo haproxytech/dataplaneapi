@@ -34,7 +34,8 @@ import (
 )
 
 // NewPostServicesHaproxyRuntimeACLFileEntriesParams creates a new PostServicesHaproxyRuntimeACLFileEntriesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewPostServicesHaproxyRuntimeACLFileEntriesParams() PostServicesHaproxyRuntimeACLFileEntriesParams {
 
 	return PostServicesHaproxyRuntimeACLFileEntriesParams{}
@@ -82,7 +83,7 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesParams) BindRequest(r *http.Req
 		var body models.ACLFileEntry
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("data", "body"))
+				res = append(res, errors.Required("data", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
@@ -92,12 +93,17 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesParams) BindRequest(r *http.Req
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Data = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("data", "body"))
+		res = append(res, errors.Required("data", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
@@ -108,7 +114,7 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesParams) BindRequest(r *http.Req
 // bindACLID binds and validates parameter ACLID from query.
 func (o *PostServicesHaproxyRuntimeACLFileEntriesParams) bindACLID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("acl_id", "query")
+		return errors.Required("acl_id", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -117,10 +123,10 @@ func (o *PostServicesHaproxyRuntimeACLFileEntriesParams) bindACLID(rawData []str
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("acl_id", "query", raw); err != nil {
 		return err
 	}
-
 	o.ACLID = raw
 
 	return nil

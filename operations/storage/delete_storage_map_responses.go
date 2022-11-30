@@ -31,7 +31,8 @@ import (
 // DeleteStorageMapNoContentCode is the HTTP code returned for type DeleteStorageMapNoContent
 const DeleteStorageMapNoContentCode int = 204
 
-/*DeleteStorageMapNoContent Map file deleted
+/*
+DeleteStorageMapNoContent Map file deleted
 
 swagger:response deleteStorageMapNoContent
 */
@@ -55,7 +56,8 @@ func (o *DeleteStorageMapNoContent) WriteResponse(rw http.ResponseWriter, produc
 // DeleteStorageMapNotFoundCode is the HTTP code returned for type DeleteStorageMapNotFound
 const DeleteStorageMapNotFoundCode int = 404
 
-/*DeleteStorageMapNotFound The specified resource was not found
+/*
+DeleteStorageMapNotFound The specified resource was not found
 
 swagger:response deleteStorageMapNotFound
 */
@@ -118,7 +120,8 @@ func (o *DeleteStorageMapNotFound) WriteResponse(rw http.ResponseWriter, produce
 	}
 }
 
-/*DeleteStorageMapDefault General Error
+/*
+DeleteStorageMapDefault General Error
 
 swagger:response deleteStorageMapDefault
 */

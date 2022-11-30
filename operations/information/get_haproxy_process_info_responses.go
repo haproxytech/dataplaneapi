@@ -31,7 +31,8 @@ import (
 // GetHaproxyProcessInfoOKCode is the HTTP code returned for type GetHaproxyProcessInfoOK
 const GetHaproxyProcessInfoOKCode int = 200
 
-/*GetHaproxyProcessInfoOK Success
+/*
+GetHaproxyProcessInfoOK Success
 
 swagger:response getHaproxyProcessInfoOK
 */
@@ -75,7 +76,8 @@ func (o *GetHaproxyProcessInfoOK) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*GetHaproxyProcessInfoDefault General Error
+/*
+GetHaproxyProcessInfoDefault General Error
 
 swagger:response getHaproxyProcessInfoDefault
 */

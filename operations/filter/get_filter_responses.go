@@ -31,7 +31,8 @@ import (
 // GetFilterOKCode is the HTTP code returned for type GetFilterOK
 const GetFilterOKCode int = 200
 
-/*GetFilterOK Successful operation
+/*
+GetFilterOK Successful operation
 
 swagger:response getFilterOK
 */
@@ -97,7 +98,8 @@ func (o *GetFilterOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 // GetFilterNotFoundCode is the HTTP code returned for type GetFilterNotFound
 const GetFilterNotFoundCode int = 404
 
-/*GetFilterNotFound The specified resource was not found
+/*
+GetFilterNotFound The specified resource was not found
 
 swagger:response getFilterNotFound
 */
@@ -160,7 +162,8 @@ func (o *GetFilterNotFound) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 }
 
-/*GetFilterDefault General Error
+/*
+GetFilterDefault General Error
 
 swagger:response getFilterDefault
 */

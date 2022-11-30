@@ -44,12 +44,12 @@ func NewDeleteHTTPCheck(ctx *middleware.Context, handler DeleteHTTPCheckHandler)
 	return &DeleteHTTPCheck{Context: ctx, Handler: handler}
 }
 
-/*DeleteHTTPCheck swagger:route DELETE /services/haproxy/configuration/http_checks/{index} HTTPCheck deleteHttpCheck
+/*
+	DeleteHTTPCheck swagger:route DELETE /services/haproxy/configuration/http_checks/{index} HTTPCheck deleteHttpCheck
 
-Delete a HTTP check
+# Delete a HTTP check
 
 Deletes a HTTP check configuration by it's index from the specified parent.
-
 */
 type DeleteHTTPCheck struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteHTTPCheck struct {
 func (o *DeleteHTTPCheck) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteHTTPCheckParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteHTTPCheck) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

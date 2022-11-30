@@ -44,12 +44,12 @@ func NewDeleteFilter(ctx *middleware.Context, handler DeleteFilterHandler) *Dele
 	return &DeleteFilter{Context: ctx, Handler: handler}
 }
 
-/*DeleteFilter swagger:route DELETE /services/haproxy/configuration/filters/{index} Filter deleteFilter
+/*
+	DeleteFilter swagger:route DELETE /services/haproxy/configuration/filters/{index} Filter deleteFilter
 
-Delete a Filter
+# Delete a Filter
 
 Deletes a Filter configuration by it's index from the specified parent.
-
 */
 type DeleteFilter struct {
 	Context *middleware.Context
@@ -59,21 +59,20 @@ type DeleteFilter struct {
 func (o *DeleteFilter) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewDeleteFilterParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -82,7 +81,6 @@ func (o *DeleteFilter) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

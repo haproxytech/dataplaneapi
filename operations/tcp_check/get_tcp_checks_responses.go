@@ -31,7 +31,8 @@ import (
 // GetTCPChecksOKCode is the HTTP code returned for type GetTCPChecksOK
 const GetTCPChecksOKCode int = 200
 
-/*GetTCPChecksOK Successful operation
+/*
+GetTCPChecksOK Successful operation
 
 swagger:response getTcpChecksOK
 */
@@ -94,7 +95,8 @@ func (o *GetTCPChecksOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	}
 }
 
-/*GetTCPChecksDefault General Error
+/*
+GetTCPChecksDefault General Error
 
 swagger:response getTcpChecksDefault
 */

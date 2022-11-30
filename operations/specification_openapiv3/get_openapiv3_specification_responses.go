@@ -31,7 +31,8 @@ import (
 // GetOpenapiv3SpecificationOKCode is the HTTP code returned for type GetOpenapiv3SpecificationOK
 const GetOpenapiv3SpecificationOKCode int = 200
 
-/*GetOpenapiv3SpecificationOK Success
+/*
+GetOpenapiv3SpecificationOK Success
 
 swagger:response getOpenapiv3SpecificationOK
 */
@@ -70,7 +71,8 @@ func (o *GetOpenapiv3SpecificationOK) WriteResponse(rw http.ResponseWriter, prod
 	}
 }
 
-/*GetOpenapiv3SpecificationDefault General Error
+/*
+GetOpenapiv3SpecificationDefault General Error
 
 swagger:response getOpenapiv3SpecificationDefault
 */

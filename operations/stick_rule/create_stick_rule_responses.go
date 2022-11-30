@@ -31,7 +31,8 @@ import (
 // CreateStickRuleCreatedCode is the HTTP code returned for type CreateStickRuleCreated
 const CreateStickRuleCreatedCode int = 201
 
-/*CreateStickRuleCreated Stick Rule created
+/*
+CreateStickRuleCreated Stick Rule created
 
 swagger:response createStickRuleCreated
 */
@@ -75,7 +76,8 @@ func (o *CreateStickRuleCreated) WriteResponse(rw http.ResponseWriter, producer 
 // CreateStickRuleAcceptedCode is the HTTP code returned for type CreateStickRuleAccepted
 const CreateStickRuleAcceptedCode int = 202
 
-/*CreateStickRuleAccepted Configuration change accepted and reload requested
+/*
+CreateStickRuleAccepted Configuration change accepted and reload requested
 
 swagger:response createStickRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *CreateStickRuleAccepted) WriteResponse(rw http.ResponseWriter, producer
 // CreateStickRuleBadRequestCode is the HTTP code returned for type CreateStickRuleBadRequest
 const CreateStickRuleBadRequestCode int = 400
 
-/*CreateStickRuleBadRequest Bad request
+/*
+CreateStickRuleBadRequest Bad request
 
 swagger:response createStickRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *CreateStickRuleBadRequest) WriteResponse(rw http.ResponseWriter, produc
 // CreateStickRuleConflictCode is the HTTP code returned for type CreateStickRuleConflict
 const CreateStickRuleConflictCode int = 409
 
-/*CreateStickRuleConflict The specified resource already exists
+/*
+CreateStickRuleConflict The specified resource already exists
 
 swagger:response createStickRuleConflict
 */
@@ -270,7 +274,8 @@ func (o *CreateStickRuleConflict) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
-/*CreateStickRuleDefault General Error
+/*
+CreateStickRuleDefault General Error
 
 swagger:response createStickRuleDefault
 */

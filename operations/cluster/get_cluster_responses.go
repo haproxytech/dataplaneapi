@@ -31,7 +31,8 @@ import (
 // GetClusterOKCode is the HTTP code returned for type GetClusterOK
 const GetClusterOKCode int = 200
 
-/*GetClusterOK Success
+/*
+GetClusterOK Success
 
 swagger:response getClusterOK
 */
@@ -72,7 +73,8 @@ func (o *GetClusterOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 }
 
-/*GetClusterDefault General Error
+/*
+GetClusterDefault General Error
 
 swagger:response getClusterDefault
 */

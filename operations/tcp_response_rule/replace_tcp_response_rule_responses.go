@@ -31,7 +31,8 @@ import (
 // ReplaceTCPResponseRuleOKCode is the HTTP code returned for type ReplaceTCPResponseRuleOK
 const ReplaceTCPResponseRuleOKCode int = 200
 
-/*ReplaceTCPResponseRuleOK TCP Response Rule replaced
+/*
+ReplaceTCPResponseRuleOK TCP Response Rule replaced
 
 swagger:response replaceTcpResponseRuleOK
 */
@@ -75,7 +76,8 @@ func (o *ReplaceTCPResponseRuleOK) WriteResponse(rw http.ResponseWriter, produce
 // ReplaceTCPResponseRuleAcceptedCode is the HTTP code returned for type ReplaceTCPResponseRuleAccepted
 const ReplaceTCPResponseRuleAcceptedCode int = 202
 
-/*ReplaceTCPResponseRuleAccepted Configuration change accepted and reload requested
+/*
+ReplaceTCPResponseRuleAccepted Configuration change accepted and reload requested
 
 swagger:response replaceTcpResponseRuleAccepted
 */
@@ -141,7 +143,8 @@ func (o *ReplaceTCPResponseRuleAccepted) WriteResponse(rw http.ResponseWriter, p
 // ReplaceTCPResponseRuleBadRequestCode is the HTTP code returned for type ReplaceTCPResponseRuleBadRequest
 const ReplaceTCPResponseRuleBadRequestCode int = 400
 
-/*ReplaceTCPResponseRuleBadRequest Bad request
+/*
+ReplaceTCPResponseRuleBadRequest Bad request
 
 swagger:response replaceTcpResponseRuleBadRequest
 */
@@ -207,7 +210,8 @@ func (o *ReplaceTCPResponseRuleBadRequest) WriteResponse(rw http.ResponseWriter,
 // ReplaceTCPResponseRuleNotFoundCode is the HTTP code returned for type ReplaceTCPResponseRuleNotFound
 const ReplaceTCPResponseRuleNotFoundCode int = 404
 
-/*ReplaceTCPResponseRuleNotFound The specified resource was not found
+/*
+ReplaceTCPResponseRuleNotFound The specified resource was not found
 
 swagger:response replaceTcpResponseRuleNotFound
 */
@@ -270,7 +274,8 @@ func (o *ReplaceTCPResponseRuleNotFound) WriteResponse(rw http.ResponseWriter, p
 	}
 }
 
-/*ReplaceTCPResponseRuleDefault General Error
+/*
+ReplaceTCPResponseRuleDefault General Error
 
 swagger:response replaceTcpResponseRuleDefault
 */

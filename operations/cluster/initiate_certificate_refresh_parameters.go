@@ -28,7 +28,8 @@ import (
 )
 
 // NewInitiateCertificateRefreshParams creates a new InitiateCertificateRefreshParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewInitiateCertificateRefreshParams() InitiateCertificateRefreshParams {
 
 	return InitiateCertificateRefreshParams{}

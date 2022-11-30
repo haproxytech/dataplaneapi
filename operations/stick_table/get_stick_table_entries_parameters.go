@@ -32,7 +32,8 @@ import (
 )
 
 // NewGetStickTableEntriesParams creates a new GetStickTableEntriesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGetStickTableEntriesParams() GetStickTableEntriesParams {
 
 	return GetStickTableEntriesParams{}
@@ -115,7 +116,6 @@ func (o *GetStickTableEntriesParams) BindRequest(r *http.Request, route *middlew
 	if err := o.bindStickTable(qStickTable, qhkStickTable, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -131,6 +131,7 @@ func (o *GetStickTableEntriesParams) bindCount(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -153,10 +154,10 @@ func (o *GetStickTableEntriesParams) bindFilter(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Filter = &raw
 
 	return nil
@@ -171,10 +172,10 @@ func (o *GetStickTableEntriesParams) bindKey(rawData []string, hasKey bool, form
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Key = &raw
 
 	return nil
@@ -189,6 +190,7 @@ func (o *GetStickTableEntriesParams) bindOffset(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -205,7 +207,7 @@ func (o *GetStickTableEntriesParams) bindOffset(rawData []string, hasKey bool, f
 // bindProcess binds and validates parameter Process from query.
 func (o *GetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("process", "query")
+		return errors.Required("process", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -214,6 +216,7 @@ func (o *GetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, 
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("process", "query", raw); err != nil {
 		return err
 	}
@@ -230,7 +233,7 @@ func (o *GetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, 
 // bindStickTable binds and validates parameter StickTable from query.
 func (o *GetStickTableEntriesParams) bindStickTable(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("stick_table", "query")
+		return errors.Required("stick_table", "query", rawData)
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -239,10 +242,10 @@ func (o *GetStickTableEntriesParams) bindStickTable(rawData []string, hasKey boo
 
 	// Required: true
 	// AllowEmptyValue: false
+
 	if err := validate.RequiredString("stick_table", "query", raw); err != nil {
 		return err
 	}
-
 	o.StickTable = raw
 
 	return nil

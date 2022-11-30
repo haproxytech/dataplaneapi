@@ -21,6 +21,7 @@ package spoe
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -50,12 +51,12 @@ func NewGetSpoeScopes(ctx *middleware.Context, handler GetSpoeScopesHandler) *Ge
 	return &GetSpoeScopes{Context: ctx, Handler: handler}
 }
 
-/*GetSpoeScopes swagger:route GET /services/haproxy/spoe/spoe_scopes Spoe getSpoeScopes
+/*
+	GetSpoeScopes swagger:route GET /services/haproxy/spoe/spoe_scopes Spoe getSpoeScopes
 
-Return an array of spoe scopes
+# Return an array of spoe scopes
 
 Returns an array of all configured spoe scopes.
-
 */
 type GetSpoeScopes struct {
 	Context *middleware.Context
@@ -65,21 +66,20 @@ type GetSpoeScopes struct {
 func (o *GetSpoeScopes) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetSpoeScopesParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -88,7 +88,6 @@ func (o *GetSpoeScopes) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -129,6 +128,36 @@ func (o *GetSpoeScopesOKBody) validateData(formats strfmt.Registry) error {
 	if err := o.Data.Validate(formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("getSpoeScopesOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getSpoeScopesOK" + "." + "data")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get spoe scopes o k body based on the context it is used
+func (o *GetSpoeScopesOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetSpoeScopesOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := o.Data.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("getSpoeScopesOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getSpoeScopesOK" + "." + "data")
 		}
 		return err
 	}

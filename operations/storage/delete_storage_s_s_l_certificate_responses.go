@@ -31,7 +31,8 @@ import (
 // DeleteStorageSSLCertificateAcceptedCode is the HTTP code returned for type DeleteStorageSSLCertificateAccepted
 const DeleteStorageSSLCertificateAcceptedCode int = 202
 
-/*DeleteStorageSSLCertificateAccepted SSL certificate deleted and reload requested
+/*
+DeleteStorageSSLCertificateAccepted SSL certificate deleted and reload requested
 
 swagger:response deleteStorageSSLCertificateAccepted
 */
@@ -77,7 +78,8 @@ func (o *DeleteStorageSSLCertificateAccepted) WriteResponse(rw http.ResponseWrit
 // DeleteStorageSSLCertificateNoContentCode is the HTTP code returned for type DeleteStorageSSLCertificateNoContent
 const DeleteStorageSSLCertificateNoContentCode int = 204
 
-/*DeleteStorageSSLCertificateNoContent SSL certificate deleted
+/*
+DeleteStorageSSLCertificateNoContent SSL certificate deleted
 
 swagger:response deleteStorageSSLCertificateNoContent
 */
@@ -101,7 +103,8 @@ func (o *DeleteStorageSSLCertificateNoContent) WriteResponse(rw http.ResponseWri
 // DeleteStorageSSLCertificateNotFoundCode is the HTTP code returned for type DeleteStorageSSLCertificateNotFound
 const DeleteStorageSSLCertificateNotFoundCode int = 404
 
-/*DeleteStorageSSLCertificateNotFound The specified resource was not found
+/*
+DeleteStorageSSLCertificateNotFound The specified resource was not found
 
 swagger:response deleteStorageSSLCertificateNotFound
 */
@@ -164,7 +167,8 @@ func (o *DeleteStorageSSLCertificateNotFound) WriteResponse(rw http.ResponseWrit
 	}
 }
 
-/*DeleteStorageSSLCertificateDefault General Error
+/*
+DeleteStorageSSLCertificateDefault General Error
 
 swagger:response deleteStorageSSLCertificateDefault
 */

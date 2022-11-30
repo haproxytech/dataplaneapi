@@ -21,6 +21,7 @@ package filter
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -50,12 +51,12 @@ func NewGetFilters(ctx *middleware.Context, handler GetFiltersHandler) *GetFilte
 	return &GetFilters{Context: ctx, Handler: handler}
 }
 
-/*GetFilters swagger:route GET /services/haproxy/configuration/filters Filter getFilters
+/*
+	GetFilters swagger:route GET /services/haproxy/configuration/filters Filter getFilters
 
-Return an array of all Filters
+# Return an array of all Filters
 
 Returns all Filters that are configured in specified parent.
-
 */
 type GetFilters struct {
 	Context *middleware.Context
@@ -65,21 +66,20 @@ type GetFilters struct {
 func (o *GetFilters) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewGetFiltersParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 	if aCtx != nil {
-		r = aCtx
+		*r = *aCtx
 	}
 	var principal interface{}
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(interface{}) // this is really a interface{}, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -88,7 +88,6 @@ func (o *GetFilters) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -129,6 +128,36 @@ func (o *GetFiltersOKBody) validateData(formats strfmt.Registry) error {
 	if err := o.Data.Validate(formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("getFiltersOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getFiltersOK" + "." + "data")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get filters o k body based on the context it is used
+func (o *GetFiltersOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetFiltersOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := o.Data.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("getFiltersOK" + "." + "data")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("getFiltersOK" + "." + "data")
 		}
 		return err
 	}
