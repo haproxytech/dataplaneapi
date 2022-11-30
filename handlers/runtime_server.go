@@ -17,9 +17,11 @@ package handlers
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v4"
+	native_errors "github.com/haproxytech/client-native/v4/errors"
 	"github.com/haproxytech/client-native/v4/models"
 
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -138,4 +140,10 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 	}
 
 	return server.NewReplaceRuntimeServerOK().WithPayload(rs)
+}
+
+func isNotFoundError(err error) bool {
+	msg := err.Error()
+	return strings.Contains(msg, "No such backend") ||
+		strings.Contains(msg, native_errors.ErrNotFound.Error())
 }
