@@ -14331,6 +14331,9 @@ func init() {
         },
         "httpchk_params": {
           "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            },
             "mode": {
               "value": "http"
             }
@@ -14378,6 +14381,11 @@ func init() {
           ]
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -14405,6 +14413,11 @@ func init() {
           "x-display-name": "Persist"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -14431,6 +14444,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "splice_auto": {
@@ -15867,6 +15885,11 @@ func init() {
           "x-display-name": "HTTP Use Proxy Header"
         },
         "httpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            }
+          },
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
@@ -15955,6 +15978,11 @@ func init() {
           "$ref": "#/definitions/monitor_uri"
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "nolinger": {
@@ -15977,6 +16005,11 @@ func init() {
           "x-display-name": "Persist"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -16007,6 +16040,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "socket_stats": {
@@ -16841,33 +16879,6 @@ func init() {
             "disabled"
           ]
         },
-        "default_path": {
-          "type": "object",
-          "required": [
-            "type"
-          ],
-          "properties": {
-            "path": {
-              "type": "string",
-              "pattern": "^[^\\s]+$",
-              "x-dependency": {
-                "type": {
-                  "value": "origin"
-                }
-              }
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "current",
-                "config",
-                "parent",
-                "origin"
-              ],
-              "x-nullable": false
-            }
-          }
-        },
         "description": {
           "type": "string",
           "x-display-name": "Text that describes the instance"
@@ -17130,7 +17141,11 @@ func init() {
           "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
         "numa_cpu_mapping": {
-          "type": "boolean"
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "pidfile": {
           "type": "string",
@@ -45032,33 +45047,6 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
-    "GlobalDefaultPath": {
-      "type": "object",
-      "required": [
-        "type"
-      ],
-      "properties": {
-        "path": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "origin"
-            }
-          }
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "current",
-            "config",
-            "parent",
-            "origin"
-          ],
-          "x-nullable": false
-        }
-      }
-    },
     "GlobalDeviceAtlasOptions": {
       "type": "object",
       "properties": {
@@ -46367,6 +46355,9 @@ func init() {
         },
         "httpchk_params": {
           "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            },
             "mode": {
               "value": "http"
             }
@@ -46414,6 +46405,11 @@ func init() {
           ]
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "name": {
@@ -46441,6 +46437,11 @@ func init() {
           "x-display-name": "Persist"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -46467,6 +46468,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "splice_auto": {
@@ -47870,6 +47876,11 @@ func init() {
           "x-display-name": "HTTP Use Proxy Header"
         },
         "httpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "httpchk"
+            }
+          },
           "$ref": "#/definitions/httpchk_params"
         },
         "httplog": {
@@ -47958,6 +47969,11 @@ func init() {
           "$ref": "#/definitions/monitor_uri"
         },
         "mysql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "mysql-check"
+            }
+          },
           "$ref": "#/definitions/mysql_check_params"
         },
         "nolinger": {
@@ -47980,6 +47996,11 @@ func init() {
           "x-display-name": "Persist"
         },
         "pgsql_check_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "pgsql-check"
+            }
+          },
           "$ref": "#/definitions/pgsql_check_params"
         },
         "prefer_last_server": {
@@ -48010,6 +48031,11 @@ func init() {
           "x-nullable": true
         },
         "smtpchk_params": {
+          "x-dependency": {
+            "adv_check": {
+              "value": "smtpchk"
+            }
+          },
           "$ref": "#/definitions/smtpchk_params"
         },
         "socket_stats": {
@@ -48829,33 +48855,6 @@ func init() {
             "disabled"
           ]
         },
-        "default_path": {
-          "type": "object",
-          "required": [
-            "type"
-          ],
-          "properties": {
-            "path": {
-              "type": "string",
-              "pattern": "^[^\\s]+$",
-              "x-dependency": {
-                "type": {
-                  "value": "origin"
-                }
-              }
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "current",
-                "config",
-                "parent",
-                "origin"
-              ],
-              "x-nullable": false
-            }
-          }
-        },
         "description": {
           "type": "string",
           "x-display-name": "Text that describes the instance"
@@ -49079,7 +49078,11 @@ func init() {
           "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
         "numa_cpu_mapping": {
-          "type": "boolean"
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "pidfile": {
           "type": "string",
