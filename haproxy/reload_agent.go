@@ -232,10 +232,7 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 
 func (ra *ReloadAgent) restartHAProxy() error {
 	_, err := execCmd(ra.restartCmd)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func execCmd(cmd string) (string, error) {

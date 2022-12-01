@@ -62,11 +62,7 @@ func (s *StorageYML) SaveAs(filename string) error {
 		return err
 	}
 
-	err = renameio.WriteFile(filename, data, 0644)
-	if err != nil {
-		return err
-	}
-	return nil
+	return renameio.WriteFile(filename, data, 0644)
 }
 
 func (s *StorageYML) Save() error {

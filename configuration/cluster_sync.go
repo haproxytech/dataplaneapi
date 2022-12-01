@@ -448,11 +448,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	if err != nil {
 		return err
 	}
-	err = c.cfg.Save()
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.cfg.Save()
 }
 
 // checkCertificate checks if we have received valid certificate or we just got CSR back
