@@ -16,7 +16,9 @@
 package configuration
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"strings"
 	"sync"
@@ -134,7 +136,7 @@ func (u *Users) RemoveUser(user types.User) error {
 
 func (u *Users) getUsersFromUsersListSection(filename, userlistSection string) error {
 	// if file doesn't exists
-	if _, err := os.Stat(filename); os.IsNotExist(err) {
+	if _, err := os.Stat(filename); errors.Is(err, fs.ErrNotExist) {
 		return fmt.Errorf("cannot read %s, file does not exist", filename)
 	}
 	p, errP := parser.New(options.Path(filename))
