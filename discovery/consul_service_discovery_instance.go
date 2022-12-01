@@ -18,6 +18,8 @@ package discovery
 import (
 	"context"
 	"fmt"
+	"net"
+	"strconv"
 	"time"
 
 	"github.com/haproxytech/client-native/v4/configuration"
@@ -73,7 +75,7 @@ func (c *consulInstance) start() error {
 }
 
 func (c *consulInstance) setAPIClient() error {
-	address := fmt.Sprintf("%s:%d", *c.params.Address, *c.params.Port)
+	address := net.JoinHostPort(*c.params.Address, strconv.FormatInt(*c.params.Port, 10))
 	consulConfig := api.DefaultConfig()
 	consulConfig.Address = address
 	consulConfig.Token = c.params.Token
