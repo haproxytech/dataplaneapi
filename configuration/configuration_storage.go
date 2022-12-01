@@ -529,6 +529,12 @@ func copyConfigurationToStorage(cfg *Configuration) {
 	}
 	cfgStorage.ServiceDiscovery.AWSRegions = &cfg.ServiceDiscovery.AWSRegions
 
+	if cfgStorage.Haproxy == nil {
+		cfgStorage.Haproxy = &configTypeHaproxy{
+			Reload: &configTypeReload{},
+		}
+	}
+
 	cfgStorage.Haproxy.Reload.ReloadStrategy = &cfg.HAProxy.ReloadStrategy
 
 	if cfgStorage.LogTargets == nil {
