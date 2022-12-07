@@ -51,7 +51,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.6"
+    "version": "2.7"
   },
   "basePath": "/v2",
   "paths": {
@@ -28818,7 +28818,7 @@ func init() {
   ],
   "externalDocs": {
     "description": "HAProxy Documentation",
-    "url": "https://cbonte.github.io/haproxy-dconv/"
+    "url": "https://docs.haproxy.org/"
   }
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
@@ -28840,7 +28840,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.6"
+    "version": "2.7"
   },
   "basePath": "/v2",
   "paths": {
@@ -65868,7 +65868,7 @@ func init() {
   ],
   "externalDocs": {
     "description": "HAProxy Documentation",
-    "url": "https://cbonte.github.io/haproxy-dconv/"
+    "url": "https://docs.haproxy.org/"
   }
 }`))
 }
