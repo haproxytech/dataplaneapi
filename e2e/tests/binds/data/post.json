@@ -1,7 +1,7 @@
 {
   "address": "127.0.0.1",
   "name": "test_bind",
-  "port": 80,
+  "port": 10000,
   "defer_accept": true,
   "allow_0rtt": true
 }

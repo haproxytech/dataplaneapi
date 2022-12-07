@@ -24,13 +24,13 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "process-manager: Replace one program" {
-  resource_put "$_PROGRAMS_BASE_PATH/dataplaneapi" "data/program_duplicated.json" "force_reload=true"
+  resource_put "$_PROGRAMS_BASE_PATH/echo" "data/program_duplicated.json" "force_reload=true"
   assert_equal "$SC" 200
 
-  resource_get "$_PROGRAMS_BASE_PATH/dataplaneapi"
+  resource_get "$_PROGRAMS_BASE_PATH/echo"
   assert_equal "$SC" 200
-  assert_equal "dataplaneapi" "$(get_json_path "$BODY" ".data.name")"
-  assert_equal "/usr/local/bin/dataplaneapi -f /path/to/file.cfg" "$(get_json_path "$BODY" ".data.command")"
+  assert_equal "echo" "$(get_json_path "$BODY" ".data.name")"
+  assert_equal "echo \"Hello Universe\"" "$(get_json_path "$BODY" ".data.command")"
 }
 
 @test "process-manager: Fail replacing program that doesn't exist" {
