@@ -27,9 +27,9 @@ load 'utils/_helpers'
   resource_post "$_PROGRAMS_BASE_PATH" "data/program.json" "force_reload=true"
   assert_equal "$SC" 201
 
-  resource_get "$_PROGRAMS_BASE_PATH/mirror"
+  resource_get "$_PROGRAMS_BASE_PATH/test"
   assert_equal "$SC" 200
-  assert_equal "mirror" "$(get_json_path "$BODY" ".data.name")"
+  assert_equal "test" "$(get_json_path "$BODY" ".data.name")"
   assert_equal "nobody" "$(get_json_path "$BODY" ".data.user")"
   assert_equal "nobody" "$(get_json_path "$BODY" ".data.group")"
 }

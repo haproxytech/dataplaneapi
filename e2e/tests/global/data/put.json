@@ -1,18 +1,12 @@
 {
-    "cpu_maps": null,
     "runtime_apis": [
       {
-        "address": "/var/run/haproxy/admin.sock",
-        "level": "admin",
-        "mode": "660",
-				"allow_0rtt": true,
-        "name": "runtime_api_1"
+        "address": "/var/lib/haproxy/stats",
+        "level": "admin"
       }
     ],
     "daemon": "enabled",
-    "lua_loads": null,
-    "lua_prepend_path": null,
     "master-worker": true,
     "maxconn": 5000,
-    "pidfile": "/var/run/haproxy/haproxy.pid"
+    "pidfile": "/var/run/haproxy.pid"
   }

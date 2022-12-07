@@ -31,10 +31,7 @@ load 'utils/_helpers'
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" '.data.maxconn')" "5000"
 	assert_equal "$(get_json_path "$BODY" '.data.daemon')" "enabled"
-	assert_equal "$(get_json_path "$BODY" '.data.pidfile')" "/var/run/haproxy/haproxy.pid"
-	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].address')" "/var/run/haproxy/admin.sock"
+	assert_equal "$(get_json_path "$BODY" '.data.pidfile')" "/var/run/haproxy.pid"
+	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].address')" "/var/lib/haproxy/stats"
 	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].level')" "admin"
-	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].mode')" "660"
-	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].allow_0rtt')" "true"
-	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].name')" "runtime_api_1"
 }
