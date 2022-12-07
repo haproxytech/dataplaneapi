@@ -62,7 +62,7 @@ $ E2E_PORT=8081 make e2e
 
 #### HAProxy version
 
-By default, test suite is running against HAProxy 2.6 release: this can be
+By default, test suite is running against HAProxy 2.7 release: this can be
 configured using the environment variable `HAPROXY_VERSION`.
 
 ```bash
