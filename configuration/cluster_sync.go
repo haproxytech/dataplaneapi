@@ -36,8 +36,9 @@ import (
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v4"
 	"github.com/haproxytech/config-parser/v4/types"
-	"github.com/haproxytech/dataplaneapi/log"
 	jsoniter "github.com/json-iterator/go"
+
+	"github.com/haproxytech/dataplaneapi/log"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -225,6 +226,10 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			if errStorageDir != err {
 				log.Error(errStorageDir)
 				continue
+			}
+			// Init NOTICE file to inform user that the cluster storage folder is programmatically managed by Fusion API
+			if errStorageInit := InitStorageNoticeFile(data["storage-dir"]); errStorageInit != nil {
+				log.Warningf("unable to create notice file, %s: skipping it", errStorageInit.Error())
 			}
 			url := fmt.Sprintf("%s://%s", data["schema"], data["address"])
 			c.cfg.Cluster.URL.Store(url)

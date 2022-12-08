@@ -130,7 +130,10 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 			log.Warningf("configured storage dir incompatible with cluster configuration: %s", errStorageDir)
 			return h.err409(errStorageDir, nil)
 		}
-
+		// Init NOTICE file to inform user that the cluster storage folder is programmatically managed by Fusion API
+		if errStorageInit := configuration.InitStorageNoticeFile(key["storage-dir"]); errStorageInit != nil {
+			log.Warningf("unable to create notice file, %s: skipping it", errStorageInit.Error())
+		}
 		// enforcing API advertising options
 		if a := params.AdvertisedAddress; a != nil {
 			h.Config.APIOptions.APIAddress = *a
@@ -176,18 +179,18 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 		if params.Configuration == nil || *params.Configuration != "keep" {
 			log.Warning("clearing configuration as requested")
 
-			configuration, err := h.Client.Configuration()
+			conf, err := h.Client.Configuration()
 			if err != nil {
 				return h.err500(err, nil)
 			}
-			version, errVersion := configuration.GetVersion("")
+			version, errVersion := conf.GetVersion("")
 			if errVersion != nil || version < 1 {
 				// silently fallback to 1
 				version = 1
 			}
 
 			config := fmt.Sprintf(DummyConfig, time.Now().Format("01-02-2006 15:04:05 MST"), h.Config.Name.Load())
-			if err = configuration.PostRawConfiguration(&config, version, true); err != nil {
+			if err = conf.PostRawConfiguration(&config, version, true); err != nil {
 				return h.err500(err, nil)
 			}
 
@@ -195,6 +198,13 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 			err = h.ReloadAgent.Restart()
 			if err != nil {
 				return h.err500(err, nil)
+			}
+			// Deleting the storage directory used by Fusion:
+			// avoiding at all entering any nil pointer dereference.
+			if storageData := h.Config.GetStorageData(); storageData != nil && storageData.Cluster != nil && storageData.Cluster.StorageDir != nil {
+				if storageErr := configuration.RemoveStorageFolder(*storageData.Cluster.StorageDir); storageErr != nil {
+					log.Warningf("failed to clean-up the cluster storage directory: %s", storageErr.Error())
+				}
 			}
 		}
 		h.Config.Cluster.BootstrapKey.Store("")

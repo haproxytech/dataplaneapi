@@ -23,10 +23,12 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
 	"github.com/go-openapi/strfmt"
+	"github.com/google/renameio"
 	"github.com/haproxytech/client-native/v4/misc"
 	"github.com/haproxytech/client-native/v4/storage"
 	jsoniter "github.com/json-iterator/go"
@@ -80,6 +82,20 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+func RemoveStorageFolder(storageDir string) error {
+	return os.RemoveAll(storageDir)
+}
+
+func InitStorageNoticeFile(storageDir string) error {
+	content := strings.Builder{}
+
+	_, _ = fmt.Fprintf(&content, "# *********************************************************************************\n")
+	_, _ = fmt.Fprintf(&content, "# NOTE: This storage folder contains files managed by HAProxy Fusion Control Plane:\n")
+	_, _ = fmt.Fprintf(&content, "#       manual edits may cause issues and misconfigurations.\n")
+
+	return renameio.WriteFile(path.Join(storageDir, "NOTICE"), []byte(content.String()), os.ModePerm)
 }
 
 func CheckIfStorageDirIsOK(storageDir string, config *Configuration) error {
