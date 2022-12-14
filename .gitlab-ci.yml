@@ -17,9 +17,9 @@ diff:
       alias: docker
   tags:
     - go
-  only:
-    - merge_requests
-    - branches
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
   script:
     #- apk add make curl bash jq
     - SWAGGER_VERSION=$(curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $2}')
@@ -41,9 +41,9 @@ golangci-lint:
   script:
     - golangci-lint cache clean && go clean -modcache -cache -i
     - golangci-lint run --timeout 5m --color always --max-issues-per-linter 0 --max-same-issues 0
-  only:
-    - merge_requests
-    - branches
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
 lint-commit-msg:
   stage: lint
   image:
@@ -53,8 +53,8 @@ lint-commit-msg:
     - go
   script:
     - /check
-  only:
-    - merge_requests
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 build:
   stage: build
@@ -70,9 +70,9 @@ build:
     - go env
     - go mod verify
     - make build
-  only:
-    - merge_requests
-    - branches
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
 
 .e2e:
   stage: e2e
@@ -95,9 +95,9 @@ build:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY_GO
   script:
     - bash -x ./e2e/run.bash
-  only:
-    - merge_requests
-    - branches
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
 
 HAProxy_2_1:
   extends: .e2e
