@@ -18,15 +18,17 @@ package discovery
 import (
 	"context"
 	"fmt"
+	"io"
 	"net"
+	"net/http"
+	"net/url"
 	"strconv"
 	"time"
 
 	"github.com/haproxytech/client-native/v4/configuration"
 	"github.com/haproxytech/client-native/v4/models"
 	"github.com/haproxytech/dataplaneapi/log"
-
-	"github.com/hashicorp/consul/api"
+	jsoniter "github.com/json-iterator/go"
 )
 
 type consulService struct {
@@ -54,7 +56,7 @@ func (c *consulService) GetServers() []configuration.ServiceServer {
 
 type consulInstance struct {
 	params          *models.Consul
-	api             *api.Client
+	httpClient      *http.Client
 	discoveryConfig *ServiceDiscoveryInstance
 	prevIndexes     map[string]uint64
 	timeout         time.Duration
@@ -75,15 +77,9 @@ func (c *consulInstance) start() error {
 }
 
 func (c *consulInstance) setAPIClient() error {
-	address := net.JoinHostPort(*c.params.Address, strconv.FormatInt(*c.params.Port, 10))
-	consulConfig := api.DefaultConfig()
-	consulConfig.Address = address
-	consulConfig.Token = c.params.Token
-	cc, err := api.NewClient(consulConfig)
-	if err != nil {
-		return err
+	c.httpClient = &http.Client{
+		Timeout: time.Minute,
 	}
-	c.api = cc
 	return nil
 }
 
@@ -131,18 +127,18 @@ func (c *consulInstance) watch() {
 
 func (c *consulInstance) stop() {
 	c.logDebug("discovery job stopping")
-	c.api = nil
+	c.httpClient = nil
 	c.prevEnabled = false
 	close(c.update)
 }
 
 func (c *consulInstance) updateServices() error {
 	services := make([]ServiceInstance, 0)
-	params := &api.QueryOptions{}
+	params := &queryParams{}
 	if c.params.Namespace != "" {
 		params.Namespace = c.params.Namespace
 	}
-	cServices, _, err := c.api.Catalog().Services(params)
+	cServices, _, err := c.queryCatalogServices(params)
 	if err != nil {
 		return err
 	}
@@ -151,7 +147,7 @@ func (c *consulInstance) updateServices() error {
 		if se == "consul" {
 			continue
 		}
-		nodes, meta, err := c.api.Health().Service(se, "", false, &api.QueryOptions{})
+		nodes, meta, err := c.queryHealthService(se, &queryParams{})
 		if err != nil {
 			continue
 		}
@@ -167,7 +163,7 @@ func (c *consulInstance) updateServices() error {
 	return c.discoveryConfig.UpdateServices(services)
 }
 
-func (c *consulInstance) convertToServers(nodes []*api.ServiceEntry) []configuration.ServiceServer {
+func (c *consulInstance) convertToServers(nodes []*serviceEntry) []configuration.ServiceServer {
 	servers := make([]configuration.ServiceServer, 0)
 	for _, node := range nodes {
 		if node.Service.Address != "" {
@@ -235,4 +231,103 @@ func (c *consulInstance) logDebug(message string) {
 
 func (c *consulInstance) logErrorf(format string, args ...interface{}) {
 	log.WithFieldsf(c.logFields, log.ErrorLevel, format, args...)
+}
+
+func (c *consulInstance) queryCatalogServices(params *queryParams) (map[string][]string, *queryMetadata, error) {
+	nodes := map[string][]string{}
+	meta, err := c.doConsulQuery(http.MethodGet, "/v1/catalog/services", params, &nodes)
+	if err != nil {
+		return nil, nil, err
+	}
+	return nodes, meta, nil
+}
+
+func (c *consulInstance) queryHealthService(se string, params *queryParams) ([]*serviceEntry, *queryMetadata, error) {
+	services := []*serviceEntry{}
+	path, err := url.JoinPath("/v1/health/service/", se)
+	if err != nil {
+		return nil, nil, err
+	}
+	meta, err := c.doConsulQuery(http.MethodGet, path, params, &services)
+	if err != nil {
+		return nil, nil, err
+	}
+	return services, meta, nil
+}
+
+func (c *consulInstance) doConsulQuery(method string, path string, params *queryParams, resp interface{}) (*queryMetadata, error) {
+	fullPath, err := url.JoinPath(
+		"http://",
+		net.JoinHostPort(*c.params.Address, strconv.FormatInt(*c.params.Port, 10)),
+		path,
+	)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(method, fullPath, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	// Global Consul parameters.
+	if c.params.Token != "" {
+		req.Header.Add("X-Consul-Token", c.params.Token)
+	}
+
+	// Request's parameters.
+	if params.Namespace != "" {
+		req.Header.Add("ns", c.params.Namespace)
+	}
+
+	httpResp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	raw, err := io.ReadAll(httpResp.Body)
+	if err != nil {
+		return nil, err
+	}
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
+	err = json.Unmarshal(raw, resp)
+	if err != nil {
+		return nil, err
+	}
+
+	meta, err := extractMetadata(httpResp)
+	if err != nil {
+		return nil, err
+	}
+
+	return meta, nil
+}
+
+type serviceEntry struct {
+	Node *struct {
+		Address string
+	}
+	Service *struct {
+		Address string
+		Port    int
+	}
+}
+
+type queryParams struct {
+	Namespace string
+}
+
+type queryMetadata struct {
+	LastIndex uint64
+}
+
+func extractMetadata(resp *http.Response) (*queryMetadata, error) {
+	meta := queryMetadata{}
+	indexStr := resp.Header.Get("X-Consul-Index")
+	if indexStr != "" {
+		lastIndex, err := strconv.ParseUint(indexStr, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		meta.LastIndex = lastIndex
+	}
+	return &meta, nil
 }
