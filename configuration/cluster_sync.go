@@ -26,7 +26,7 @@ import (
 	"encoding/asn1"
 	"encoding/pem"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"path"
 	"strconv"
@@ -161,7 +161,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
@@ -371,7 +371,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
@@ -390,7 +390,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 			return errCfg
 		}
 		// write id to file
-		errFID := ioutil.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0o644) // nolint:gosec
+		errFID := renameio.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0o644) // nolint:gosec
 		if errFID != nil {
 			return errFID
 		}
@@ -519,7 +519,7 @@ func (c *ClusterSync) fetchCert() {
 					c.activateFetchCert(err)
 					break
 				}
-				body, err := ioutil.ReadAll(resp.Body)
+				body, err := io.ReadAll(resp.Body)
 				resp.Body.Close()
 				if err != nil {
 					c.activateFetchCert(err)

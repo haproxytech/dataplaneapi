@@ -19,7 +19,7 @@ import (
 	"context"
 	"crypto/md5"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -97,7 +97,7 @@ func (w *ConfigWatcher) checkFlags(event fsnotify.Event) bool {
 }
 
 func (w *ConfigWatcher) invalidHash() bool {
-	content, err := ioutil.ReadFile(w.configFile)
+	content, err := os.ReadFile(w.configFile)
 	if err != nil {
 		log.Warningf("Watcher: error reading config file: %s", err.Error())
 		return false

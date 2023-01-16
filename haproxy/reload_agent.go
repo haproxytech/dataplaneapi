@@ -19,7 +19,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -524,7 +524,7 @@ func copyFile(src, dest string) error {
 	}
 	defer srcContent.Close()
 
-	data, err := ioutil.ReadAll(srcContent)
+	data, err := io.ReadAll(srcContent)
 	if err != nil {
 		return err
 	}

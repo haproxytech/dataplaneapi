@@ -18,9 +18,10 @@ package configuration
 import (
 	"bytes"
 	"encoding/gob"
-	"io/ioutil"
+	"os"
 	"strings"
 
+	"github.com/google/renameio"
 	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/hashicorp/hcl"
 	"github.com/rodaine/hclencoder"
@@ -36,7 +37,7 @@ func (s *StorageHCL) Load(filename string) error {
 	cfg := &StorageDataplaneAPIConfiguration{}
 	var hclFile []byte
 	var err error
-	hclFile, err = ioutil.ReadFile(filename)
+	hclFile, err = os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
@@ -102,7 +103,7 @@ func (s *StorageHCL) SaveAs(filename string) error {
 		return err
 	}
 
-	return ioutil.WriteFile(filename, hcl, 0644) //nolint:gosec
+	return renameio.WriteFile(filename, hcl, 0o644) //nolint:gosec
 }
 
 func (s *StorageHCL) Save() error {

@@ -34,12 +34,11 @@ golangci-lint:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/lint:1.46.2
+    name: $CI_REGISTRY_GO/lint:1.50.0
     entrypoint: [""]
   tags:
     - go
   script:
-    - golangci-lint cache clean && go clean -modcache -cache -i
     - golangci-lint run --timeout 5m --color always --max-issues-per-linter 0 --max-same-issues 0
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
