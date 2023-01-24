@@ -5,12 +5,23 @@ on:
       - master
 jobs:
   golangci-lint:
-    name: runner / golangci-lint
+    name: golangci-lint
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
-      - name: golangci-lint
-        uses: reviewdog/action-golangci-lint@v1
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
         with:
-          github_token: ${{ secrets.github_token }}
+          go-version: 1.19
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Lint
+        run: |
+          make lint
