@@ -4,6 +4,28 @@ on:
     branches:
       - master
 jobs:
+  gofumpt:
+    name: gofumpt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: tidy
+        run: make gofumpt
+      - name: changes
+        run: test -z "$(git diff 2> /dev/null)" || exit "Go code not formatted, issue \`make gofumpt\` and commit the result"
   golangci-lint:
     name: golangci-lint
     runs-on: ubuntu-latest

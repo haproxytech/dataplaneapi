@@ -27,7 +27,6 @@ diff:
     - make generate-native
     - test -z "$(git diff 2> /dev/null)" || exit "Specification is not generated, issue \`make generate\` and commit the result"
     - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Specification generation created untracked files, cannot proceed"
-
 golangci-lint:
   stage: lint
   artifacts:
@@ -43,6 +42,19 @@ golangci-lint:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
+gofumpt:
+  stage: lint
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
+  image:
+    name: $CI_REGISTRY_GO/golang:1.19
+    entrypoint: [""]
+  tags:
+    - go
+  script:
+    - make gofumpt
+    - test -z "$(git diff 2> /dev/null)" || exit 'Go code not formatted, issue \`make gofumpt\` and commit the result'
 lint-commit-msg:
   stage: lint
   image:
