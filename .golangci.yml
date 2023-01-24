@@ -5,6 +5,8 @@ linters-settings:
     min-confidence: 0
   gocyclo:
     min-complexity: 42
+  cyclop:
+    max-complexity: 42
   maligned:
     suggest-new: true
   dupl:
@@ -56,6 +58,20 @@ linters:
     - rowserrcheck #rowserrcheck is disabled because of generics
     - sqlclosecheck #rowserrcheck is disabled because of generics
     - wastedassign #rowserrcheck is disabled because of generics
+    - ireturn
+    - tagliatelle
+    - noctx
+    - errorlint
+    - contextcheck
+    - godox
+    - containedctx
+    - unused
+    - unparam
+    - prealloc
+    - forbidigo
+    - errcheck
+    - gocritic
+
 
 issues:
   exclude-rules:
@@ -65,6 +81,9 @@ issues:
     - linters:
         - gosec
       text: "G[501]"
+    - linters:
+        - gosec
+      text: "G[404]"
 
 run:
   skip-dirs:

@@ -300,17 +300,17 @@ func getClusterSettings(cfg *configuration.Configuration) *models.ClusterSetting
 	return settings
 }
 
-func clusterLogTargetsChanged(old []*models.ClusterLogTarget, new []*models.ClusterLogTarget) bool {
-	if len(old) == len(new) {
+func clusterLogTargetsChanged(oldCLT []*models.ClusterLogTarget, newCLT []*models.ClusterLogTarget) bool {
+	if len(oldCLT) == len(newCLT) {
 		eqCtr := 0
-		for _, oldT := range old {
-			for _, newT := range new {
+		for _, oldT := range oldCLT {
+			for _, newT := range newCLT {
 				if reflect.DeepEqual(oldT, newT) {
 					eqCtr++
 				}
 			}
 		}
-		return !(eqCtr == len(old))
+		return !(eqCtr == len(oldCLT))
 	}
 	return true
 }

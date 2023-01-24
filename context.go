@@ -26,7 +26,7 @@ var (
 )
 
 type CtxHandler struct {
-	ctx    context.Context
+	ctx    context.Context //nolint:containedctx
 	rwx    sync.RWMutex
 	cancel context.CancelFunc
 }

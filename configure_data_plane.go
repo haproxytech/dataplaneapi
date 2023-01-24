@@ -109,7 +109,7 @@ func configureFlags(api *operations.DataPlaneAPI) {
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, syslogOptionsGroup)
 }
 
-func configureAPI(api *operations.DataPlaneAPI) http.Handler {
+func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,maintidx
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
 
@@ -149,7 +149,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 		for f, ok := range m {
 			if !ok {
-				// nolint:gocritic
 				log.Fatalf("The %s file is not declared in the HAPROXY_CFGFILES environment variable, cannot start.", f)
 			}
 		}
@@ -229,7 +228,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 
 	ra, e := haproxy.NewReloadAgent(raParams)
 	if e != nil {
-		// nolint:gocritic
 		log.Fatalf("Cannot initialize reload agent: %v", e)
 	}
 
@@ -1002,7 +1000,6 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 }
 
 func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.Signal, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
-	//nolint:gosimple
 	for {
 		select {
 		case sig := <-sigs:

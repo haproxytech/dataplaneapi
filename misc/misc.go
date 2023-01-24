@@ -93,7 +93,7 @@ func HandleError(err error) *models.Error {
 		httpCode := ErrHTTPBadRequest
 		msg := t.Error()
 		return &models.Error{Code: &httpCode, Message: &msg}
-	case *rate.TransactionLimitReachedErr:
+	case *rate.TransactionLimitReachedError:
 		httpCode := ErrHTTPRateLimit
 		msg := t.Error()
 		return &models.Error{Code: &httpCode, Message: &msg}
@@ -303,7 +303,7 @@ func CreateClusterUser() (types.User, string, error) {
 
 // ConvertStruct tries to convert a struct from one type to another.
 func ConvertStruct[T1 any, T2 any](from T1, to T2) error {
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	js, err := json.Marshal(from)
 	if err != nil {
 		return err

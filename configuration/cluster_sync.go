@@ -147,7 +147,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	bytesRepresentation, _ := json.Marshal(nodeData)
 
-	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(bytesRepresentation))
+	req, err := http.NewRequest(http.MethodPatch, url, bytes.NewBuffer(bytesRepresentation))
 	if err != nil {
 		return fmt.Errorf("error creating new POST request for cluster comunication")
 	}
@@ -165,7 +165,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 	if err != nil {
 		return err
 	}
-	if resp.StatusCode != 202 {
+	if resp.StatusCode != http.StatusAccepted {
 		return fmt.Errorf("status code not proper [%d] %s", resp.StatusCode, string(body))
 	}
 	var responseData Node
@@ -390,7 +390,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 			return errCfg
 		}
 		// write id to file
-		errFID := renameio.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0o644) // nolint:gosec
+		errFID := renameio.WriteFile(c.cfg.HAProxy.NodeIDFile, []byte(responseData.ID), 0o644)
 		if errFID != nil {
 			return errFID
 		}
@@ -506,7 +506,7 @@ func (c *ClusterSync) fetchCert() {
 				apiNodesPath := c.cfg.Cluster.APINodesPath.Load()
 				id := c.cfg.Cluster.ID.Load()
 				url = fmt.Sprintf("%s:%d/%s", url, port, strings.TrimLeft(path.Join(apiBasePath, apiNodesPath, id), "/"))
-				req, err := http.NewRequest("GET", url, nil)
+				req, err := http.NewRequest(http.MethodGet, url, nil)
 				if err != nil {
 					c.activateFetchCert(err)
 					break
@@ -525,7 +525,7 @@ func (c *ClusterSync) fetchCert() {
 					c.activateFetchCert(err)
 					break
 				}
-				if resp.StatusCode != 200 {
+				if resp.StatusCode != http.StatusOK {
 					c.activateFetchCert(fmt.Errorf("status code not proper [%d] %s", resp.StatusCode, string(body)))
 					break
 				}
@@ -610,7 +610,6 @@ func createHTTPClient() *http.Client {
 		Transport: &http.Transport{
 			MaxIdleConnsPerHost: 20,
 			TLSClientConfig: &tls.Config{
-				//nolint
 				InsecureSkipVerify: true, // this is deliberate, might only have self signed certificate
 			},
 		},

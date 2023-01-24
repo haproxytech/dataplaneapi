@@ -107,7 +107,6 @@ func (w *ConfigWatcher) invalidHash() bool {
 	if len(parts) != 2 || parts[0] != "# _md5hash" {
 		return true
 	}
-	//nolint:gosec
 	bHash := md5.Sum([]byte(strings.Join(lines[1:], "\n")))
 	hash := fmt.Sprintf("%x", bHash)
 	return parts[1] != hash

@@ -103,7 +103,6 @@ func RecoverMiddleware(logger *log.Logger) func(h http.Handler) http.Handler {
 					if strings.HasPrefix(ct, "application/json") {
 						w.Header().Set("Content-Type", "application/json")
 					}
-					// nolint:errcheck
 					w.Write(errMsg)
 				}
 			}()

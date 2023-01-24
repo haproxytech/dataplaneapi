@@ -169,7 +169,7 @@ type StorageDataplaneAPIConfiguration struct {
 	LogTargets             *dpapilog.Targets           `yaml:"log_targets,omitempty" hcl:"log_targets,omitempty"`
 }
 
-func copyToConfiguration(cfg *Configuration) {
+func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	cfgStorage := cfg.storage.Get()
 	if cfgStorage.Name != nil {
 		cfg.Name.Store(*cfgStorage.Name)

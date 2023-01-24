@@ -145,7 +145,7 @@ func (u *Users) getUsersFromUsersListSection(filename, userlistSection string) e
 	}
 	data, err := p.Get(parser.UserList, userlistSection, "user")
 	if err != nil {
-		return fmt.Errorf("no users configured in %v, error: %s", filename, err.Error())
+		return fmt.Errorf("no users configured in %v, error: %w", filename, err)
 	}
 
 	return u.setUser(data, cfg.HAProxy.UserListFile)

@@ -103,7 +103,7 @@ func (s *StorageHCL) SaveAs(filename string) error {
 		return err
 	}
 
-	return renameio.WriteFile(filename, hcl, 0o644) //nolint:gosec
+	return renameio.WriteFile(filename, hcl, 0o644)
 }
 
 func (s *StorageHCL) Save() error {
