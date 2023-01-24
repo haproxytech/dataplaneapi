@@ -235,7 +235,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		log.Fatalf("Error running HAProxy Data Plane API: %s", err.Error())
 	}
 
-	defer server.Shutdown() // nolint:errcheck
+	defer server.Shutdown() //nolint:errcheck
 
 	return reload
 }

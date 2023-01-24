@@ -193,7 +193,7 @@ func isNotFoundError(err error) bool {
 		strings.Contains(msg, native_errors.ErrNotFound.Error())
 }
 
-// Deletes a server from a backend immediatly, without waiting for connections to drain.
+// Deletes a server from a backend immediately, without waiting for connections to drain.
 func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServerParams, principal interface{}) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
@@ -236,7 +236,7 @@ func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServe
 // SerializeRuntimeAddServer returns a string in the HAProxy config format, suitable
 // for the "add server" operation over the control socket.
 // Not all the Server attributes are available in this case.
-func SerializeRuntimeAddServer(srv *models.RuntimeAddServer) string {
+func SerializeRuntimeAddServer(srv *models.RuntimeAddServer) string { //nolint:cyclop,maintidx
 	b := &strings.Builder{}
 
 	push := func(s string) {

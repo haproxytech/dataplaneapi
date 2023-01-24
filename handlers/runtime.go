@@ -237,9 +237,9 @@ func compareObjects(data, ondisk interface{}) []string {
 	return diff
 }
 
-// this returns true if only changable fields have been changed
-func compareChanged(changed, changable []string) bool {
-	if len(changed) > len(changable) {
+// this returns true if only changeable fields have been changed
+func compareChanged(changed, changeable []string) bool {
+	if len(changed) > len(changeable) {
 		return false
 	}
 
@@ -248,7 +248,7 @@ func compareChanged(changed, changable []string) bool {
 		diff[elem] = true
 	}
 
-	for _, elem := range changable {
+	for _, elem := range changeable {
 		delete(diff, elem)
 	}
 

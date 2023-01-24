@@ -148,7 +148,6 @@ func ConfigureRuntimeClient(ctx context.Context, confClient configuration.Config
 				return runtimeClient
 			}
 			log.Warningf("Error setting up runtime client with sockets: %v : %s", sockets, err.Error())
-
 		}
 		if err != nil {
 			log.Warning("Runtime API not configured, not using it: " + err.Error())

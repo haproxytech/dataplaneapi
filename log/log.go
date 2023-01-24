@@ -3,7 +3,7 @@ package log
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"path/filepath"
 
@@ -298,7 +298,7 @@ func Fatalf(format string, args ...interface{}) {
 	}
 }
 
-func Fatalln(format string, args ...interface{}) {
+func Fatalln(format string, args ...interface{}) { //nolint:goprintffuncname
 	if appLogger != nil {
 		appLogger.Fatalln(args...)
 	}
@@ -336,14 +336,13 @@ func configureLogger(logger *logrus.Logger, target Target) {
 		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
 			Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
-		//nolint:govet
 		logFile, err := os.OpenFile(target.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0o666)
 		if err != nil {
 			Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
 		logger.SetOutput(logFile)
 	case "syslog":
-		logger.SetOutput(ioutil.Discard)
+		logger.SetOutput(io.Discard)
 		hook, err := NewRFC5424Hook(target)
 		if err != nil {
 			Warningf("Error configuring Syslog logging: %s", err.Error())

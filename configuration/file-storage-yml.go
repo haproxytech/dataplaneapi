@@ -16,7 +16,7 @@
 package configuration
 
 import (
-	"io/ioutil"
+	"os"
 
 	"github.com/google/renameio"
 	"gopkg.in/yaml.v2"
@@ -32,7 +32,7 @@ func (s *StorageYML) Load(filename string) error {
 	cfg := &StorageDataplaneAPIConfiguration{}
 	var err error
 
-	yamlFile, err := ioutil.ReadFile(filename)
+	yamlFile, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}

@@ -16,7 +16,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -117,7 +116,7 @@ type ParseData struct {
 
 func readServerData(filePath string, pd *ParseData, structName string, attName string, groupName string, isList bool) {
 	typeStruct := fmt.Sprintf("type %s struct {", structName)
-	dat, err := ioutil.ReadFile(filePath)
+	dat, err := os.ReadFile(filePath)
 	if err != nil {
 		log.Panic(err)
 	}

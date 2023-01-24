@@ -19,7 +19,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -182,8 +182,7 @@ func (ra *ReloadAgent) handleReloads() {
 		select {
 		case <-ticker.C:
 			if next := ra.cache.getNext(); next != "" {
-				// nolint:errcheck
-				ra.handleReload(next)
+				ra.handleReload(next) //nolint:errcheck
 			}
 		case <-ra.done:
 			ticker.Stop()
@@ -213,7 +212,6 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 			return fmt.Sprintf("Reload failed: %s. Failed to backup the current config file.", output), err
 		}
 		defer func() {
-			// nolint:errcheck
 			os.Remove(ra.configFile + ".bck")
 		}()
 		if err := copyFile(ra.lkgConfigFile, ra.configFile); err != nil {
@@ -225,8 +223,7 @@ func (ra *ReloadAgent) reloadHAProxy(id string) (string, error) {
 	log.WithFieldsf(logFields, log.DebugLevel, "Reload finished in %s", time.Since(t))
 	log.WithFields(logFields, log.DebugLevel, "Reload successful")
 	// if success, replace last known good file
-	// nolint:errcheck
-	copyFile(ra.configFile, ra.lkgConfigFile)
+	copyFile(ra.configFile, ra.lkgConfigFile) //nolint:errcheck
 	return output, nil
 }
 
@@ -285,7 +282,7 @@ func (ra *ReloadAgent) ForceReload() error {
 	return nil
 }
 
-// Reload schedules a reload, callback is called only if reload is successfull
+// Reload schedules a reload, callback is called only if reload is successful
 func (ra *ReloadAgent) ReloadWithCallback(callback func()) string {
 	next := ra.cache.getNext()
 	if next == "" {
@@ -298,7 +295,7 @@ func (ra *ReloadAgent) ReloadWithCallback(callback func()) string {
 	return next
 }
 
-// ForceReload calls reload directly, callback is called only if reload is successfull
+// ForceReload calls reload directly, callback is called only if reload is successful
 func (ra *ReloadAgent) ForceReloadWithCallback(callback func()) error {
 	next := ra.cache.getNext()
 	if next != "" {
@@ -487,7 +484,7 @@ func (ra *ReloadAgent) status() (bool, error) {
 	resp, err := execCmd(ra.statusCmd)
 	if err != nil {
 		log.Debugf("haproxy status check failed: %s", resp)
-		return false, nil
+		return false, nil //nolint:nilerr
 	}
 	log.Debugf("haproxy status check successful: %s", resp)
 	return true, nil
@@ -529,7 +526,7 @@ func copyFile(src, dest string) error {
 	}
 	defer srcContent.Close()
 
-	data, err := ioutil.ReadAll(srcContent)
+	data, err := io.ReadAll(srcContent)
 	if err != nil {
 		return err
 	}

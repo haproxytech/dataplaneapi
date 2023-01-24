@@ -93,7 +93,7 @@ func HandleError(err error) *models.Error {
 		httpCode := ErrHTTPBadRequest
 		msg := t.Error()
 		return &models.Error{Code: &httpCode, Message: &msg}
-	case *rate.TransactionLimitReachedErr:
+	case *rate.TransactionLimitReachedError:
 		httpCode := ErrHTTPRateLimit
 		msg := t.Error()
 		return &models.Error{Code: &httpCode, Message: &msg}

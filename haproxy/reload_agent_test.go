@@ -17,7 +17,6 @@ package haproxy
 
 import (
 	"context"
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -27,7 +26,7 @@ import (
 
 func TestReloadAgentDoesntMissReloads(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
-	f, err := ioutil.TempFile("", "config.cfg")
+	f, err := os.CreateTemp("", "config.cfg")
 	assert.Nil(t, err)
 	assert.NotNil(t, f)
 	t.Cleanup(func() {

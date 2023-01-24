@@ -65,7 +65,7 @@ import (
 	_ "github.com/GehirnInc/crypt/sha512_crypt"
 )
 
-// go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
+//go:generate swagger generate server --target ../../../../../../github.com/haproxytech --name controller --spec ../../../../../../../../haproxy-api/haproxy-open-api-spec/build/haproxy_spec.yaml --server-package controller --tags Stats --tags Information --tags Configuration --tags Discovery --tags Frontend --tags Backend --tags Bind --tags Server --tags TCPRequestRule --tags HTTPRequestRule --tags HTTPResponseRule --tags Acl --tags BackendSwitchingRule --tags ServerSwitchingRule --tags TCPResponseRule --skip-models --exclude-main
 
 var (
 	Version               string
@@ -109,7 +109,7 @@ func configureFlags(api *operations.DataPlaneAPI) {
 	api.CommandLineOptionsGroups = append(api.CommandLineOptionsGroups, syslogOptionsGroup)
 }
 
-func configureAPI(api *operations.DataPlaneAPI) http.Handler {
+func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,maintidx
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
 
@@ -149,7 +149,6 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 		}
 		for f, ok := range m {
 			if !ok {
-				// nolint:gocritic
 				log.Fatalf("The %s file is not declared in the HAPROXY_CFGFILES environment variable, cannot start.", f)
 			}
 		}
@@ -881,7 +880,7 @@ func configureReloadAgent(ctx context.Context, haproxyOptions dataplaneapi_confi
 
 	ra, e := haproxy.NewReloadAgent(raParams)
 	if e != nil {
-		// nolint:gocritic
+		//nolint:gocritic
 		log.Fatalf("Cannot initialize reload agent: %v", e)
 	}
 	return ra
@@ -1015,7 +1014,6 @@ func configureNativeClient(cyx context.Context, haproxyOptions dataplaneapi_conf
 }
 
 func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.Signal, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
-	//nolint:gosimple
 	for {
 		select {
 		case sig := <-sigs:

@@ -50,7 +50,7 @@ func (ms *MapSync) SyncAll(client client_native.HAProxyClient) {
 	haproxyOptions := Get().HAProxy
 
 	d := time.Duration(haproxyOptions.UpdateMapFilesPeriod)
-	ticker := time.NewTicker(d * time.Second)
+	ticker := time.NewTicker(d * time.Second) //nolint:durationcheck
 
 	for {
 		select {
@@ -145,9 +145,8 @@ func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 	}
 
 	for i := 0; i < maxRandom; i++ {
-		rand.Seed(time.Now().UTC().UnixNano())
 		// There's no need for strong number generation, here, just need for performance
-		r := rand.Intn(max) // nolint:gosec
+		r := rand.Intn(max)
 		if len(index) > 0 {
 			r = index[0]
 		}
@@ -174,7 +173,7 @@ func equal(a, b models.MapEntries) bool {
 }
 
 // dumpRuntimeEntries dumps runtime entries into map file
-// Returns true,nil if succeed, otherwise retuns false,error
+// Returns true,nil if succeed, otherwise returns false,error
 func dumpRuntimeEntries(file string, me models.MapEntries) (bool, error) {
 	f, err := os.OpenFile(file, os.O_APPEND|os.O_WRONLY|os.O_TRUNC, 0o600)
 	if err != nil {

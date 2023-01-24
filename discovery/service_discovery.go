@@ -58,7 +58,6 @@ func NewServiceDiscoveries(params ServiceDiscoveriesParams) ServiceDiscoveries {
 	sd := &serviceDiscoveryImpl{
 		services: NewInstanceStore(),
 	}
-	//nolint
 	sd.AddService("consul", NewConsulDiscoveryService(params))
 	_ = sd.AddService("aws", NewAWSDiscoveryService(params))
 	return sd

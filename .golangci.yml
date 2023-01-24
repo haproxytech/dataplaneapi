@@ -4,7 +4,9 @@ linters-settings:
   golint:
     min-confidence: 0
   gocyclo:
-    min-complexity: 25
+    min-complexity: 42
+  cyclop:
+    max-complexity: 42
   maligned:
     suggest-new: true
   dupl:
@@ -72,6 +74,7 @@ linters:
     - tagalign
     - depguard
 
+
 issues:
   exclude:
     # bugs of typecheck linter
@@ -85,6 +88,9 @@ issues:
     - linters:
         - gosec
       text: "G[501]"
+    - linters:
+        - gosec
+      text: "G[404]"
 
 run:
   skip-dirs:

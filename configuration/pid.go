@@ -17,7 +17,6 @@ package configuration
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strconv"
 
@@ -31,7 +30,7 @@ func HandlePIDFile(haproxyOptions HAProxyConfiguration) {
 	}
 
 	if fileExists(haproxyOptions.PIDFile) {
-		data, err := ioutil.ReadFile(haproxyOptions.PIDFile)
+		data, err := os.ReadFile(haproxyOptions.PIDFile)
 		if err != nil {
 			log.Fatalf("error while reading PID file content: %v", err)
 		}

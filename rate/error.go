@@ -17,13 +17,13 @@ package rate
 import "fmt"
 
 func NewTransactionLimitReachedError(limit uint64) error {
-	return &TransactionLimitReachedErr{limit: limit}
+	return &TransactionLimitReachedError{limit: limit}
 }
 
-type TransactionLimitReachedErr struct {
+type TransactionLimitReachedError struct {
 	limit uint64
 }
 
-func (l TransactionLimitReachedErr) Error() string {
+func (l TransactionLimitReachedError) Error() string {
 	return fmt.Sprintf("cannot start a new transaction, reached the maximum amount of %d active transactions available", l.limit)
 }
