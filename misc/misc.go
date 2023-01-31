@@ -191,8 +191,25 @@ func ParseTimeout(tOut string) *int64 {
 	return nil
 }
 
+func GetHTTPStatusFromConfErr(err *configuration.ConfError) int {
+	switch err.Code() {
+	case configuration.ErrObjectDoesNotExist:
+		return http.StatusNotFound
+	case configuration.ErrObjectAlreadyExists:
+		return http.StatusConflict
+	case configuration.ErrNoParentSpecified:
+		return http.StatusBadRequest
+	default:
+		return http.StatusInternalServerError
+	}
+}
+
 func GetHTTPStatusFromErr(err error) int {
+	confError := &configuration.ConfError{}
+
 	switch {
+	case errors.As(err, &confError):
+		return GetHTTPStatusFromConfErr(confError)
 	case errors.Is(err, client_errors.ErrAlreadyExists):
 		return http.StatusConflict
 	case errors.Is(err, client_errors.ErrNotFound):
