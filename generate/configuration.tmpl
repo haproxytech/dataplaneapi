@@ -29,29 +29,25 @@ import (
 		type configType{{ .Name | Capitalize }} struct {
 		{{- range .Attributes}}
 			{{- if eq .Type "AtomicString"}}
-				{{ .Name }} *string `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{ .Name }} *string `yaml:"{{ .FileName }},omitempty"`
 			{{- else if eq .Type "AtomicInt"}}
-				{{ .Name }} *int    `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{ .Name }} *int    `yaml:"{{ .FileName }},omitempty"`
 			{{- else if eq .Type "AtomicBool"}}
-				{{ .Name }} *bool   `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{ .Name }} *bool   `yaml:"{{ .FileName }},omitempty"`
 			{{- else if eq .Type "time.Duration" }}
-				{{ .Name }} *string   `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{ .Name }} *string   `yaml:"{{ .FileName }},omitempty"`
 			{{- else if eq .Type "flagext.ByteSize" }}
-				{{ .Name }} *string   `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
+				{{ .Name }} *string   `yaml:"{{ .FileName }},omitempty"`
 			{{- else }}
-				{{- if .IsHCLKey}}
-						{{ .Name }} {{ .Type }}  `yaml:"{{ .FileName }}" hcl:"{{ .FileName }},key"`
-					{{- else }}
-						{{ .Name }} *{{ .Type }}  `yaml:"{{ .FileName }},omitempty" hcl:"{{ .FileName }},omitempty"`
-				{{- end}}
+				{{ .Name }} *{{ .Type }}  `yaml:"{{ .FileName }},omitempty"`
 			{{- end}}
 		{{- end}}
 		{{- range $.Groups}}
 			{{- if eq $MainGroup.Name .Parent }}
 				{{- if .IsList }}
-					{{ .Name | Capitalize }} []configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty" hcl:"{{ .Name }},omitempty"`
+					{{ .Name | Capitalize }} []configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty"`
 				{{- else}}
-					{{ .Name | Capitalize }} *configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty" hcl:"{{ .Name }},omitempty"`
+					{{ .Name | Capitalize }} *configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty"`
 				{{- end}}
 			{{- end}}
 		{{- end}}
@@ -60,22 +56,22 @@ import (
 {{- end}}
 
 type StorageDataplaneAPIConfiguration struct {
-	Version          *int                        `yaml:"config_version,omitempty" hcl:"config_version,omitempty"`
+	Version          *int                        `yaml:"config_version,omitempty"`
 {{- range .Groups}}
   {{- if ne .Name ""}}
     {{- if eq .Parent ""}}
-      {{ .Name | Capitalize }} *configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty" hcl:"{{ .Name }},omitempty"`
+      {{ .Name | Capitalize }} *configType{{ .Name | Capitalize }} `yaml:"{{ .Name }},omitempty"`
     {{- end}}
   {{- else}}
     {{- range .Attributes}}
 	  {{- if eq .Type "AtomicString"}}
-        {{ .Name }} *string  `yaml:"{{ .SpecName }},omitempty" hcl:"{{ .SpecName }},omitempty"`
+        {{ .Name }} *string  `yaml:"{{ .SpecName }},omitempty"`
 	  {{- else if eq .Type "AtomicInt"}}
-        {{ .Name }} *int   `yaml:"{{ .SpecName }},omitempty" hcl:"{{ .SpecName }},omitempty"`
+        {{ .Name }} *int   `yaml:"{{ .SpecName }},omitempty"`
 	  {{- else if eq .Type "AtomicBool"}}
-        {{ .Name }} *bool  `yaml:"{{ .SpecName }},omitempty" hcl:"{{ .SpecName }},omitempty"`
+        {{ .Name }} *bool  `yaml:"{{ .SpecName }},omitempty"`
 	  {{- else if eq .Type "int"}}
-        {{ .Name }} *int  `yaml:"{{ .SpecName }},omitempty" hcl:"{{ .SpecName }},omitempty"`
+        {{ .Name }} *int  `yaml:"{{ .SpecName }},omitempty"`
 	  {{- else}}
 	  err {{ .Type }} is not supported
 	  {{- end}}
@@ -92,18 +88,11 @@ func copyToConfiguration(cfg *Configuration) {
 			cfg.{{ .AttName }} = []{{ .OriginalGroup }}{}
 			for _, item := range cfgStorage.{{ $group.Parent | Capitalize }}.{{ .Name | Capitalize}} {
 				item{{ $group.OriginalGroup }} := {{ .OriginalGroup }}{
-					{{- range .Attributes}}
-						{{- if .IsHCLKey }}
-							{{ .Name }}: item.{{ .Name }},
-						{{- end}}
-					{{- end}}
 				}
 				{{- range .Attributes}}
-					{{- if not .IsHCLKey }}
-						if item.{{ .Name }} != nil {
-							item{{ $group.OriginalGroup }}.{{ .Name }}= *item.{{ .Name }}
-						}
-					{{- end}}
+					if item.{{ .Name }} != nil {
+						item{{ $group.OriginalGroup }}.{{ .Name }}= *item.{{ .Name }}
+					}
 				{{- end}}
 				cfg.{{ .AttName }} = append(cfg.{{ .AttName }}, item{{ $group.OriginalGroup }})
 			}

@@ -27,16 +27,16 @@ setup() {
   run dpa_docker_exec 'adduser -u 1500 testuiduser'
   #assert_success ignore error since we do not plan to insert password, user will be created
 
-  run docker cp "${BATS_TEST_DIRNAME}/dataplaneapi.hcl" "${DOCKER_CONTAINER_NAME}:/home/testuiduser/dataplaneapi.hcl"
+  run docker cp "${BATS_TEST_DIRNAME}/dataplaneapi.yaml" "${DOCKER_CONTAINER_NAME}:/home/testuiduser/dataplaneapi.yaml"
   assert_success
 
-  run dpa_docker_exec 'chown testuiduser /home/testuiduser/dataplaneapi.hcl'
+  run dpa_docker_exec 'chown testuiduser /home/testuiduser/dataplaneapi.yaml'
   assert_success
 
   run dpa_docker_exec 'cp /etc/haproxy/haproxy.cfg /home/testuiduser/haproxy.cfg'
   assert_success
 
-  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /home/testuiduser/dataplaneapi.hcl"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /home/testuiduser/dataplaneapi.yaml"
   assert_success
   until dpa_curl GET "/info"; do
       sleep 0.1
@@ -45,7 +45,7 @@ setup() {
 
 # teardown returns original configuration to dataplane
 teardown() {
-  run docker cp "${E2E_DIR}/fixtures/dataplaneapi.hcl" "${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi.hcl"
+  run docker cp "${E2E_DIR}/fixtures/dataplaneapi.yaml" "${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi.yaml"
   assert_success
 
   run dpa_docker_exec 'kill -SIGUSR2 1'
@@ -54,7 +54,7 @@ teardown() {
   run dpa_docker_exec 'pkill -9 dataplaneapi'
   assert_success
 
-  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.hcl"
+  run docker exec -d ${DOCKER_CONTAINER_NAME} /bin/sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /usr/local/bin/dataplaneapi.yaml"
   assert_success
   until dpa_curl GET "/info"; do
       sleep 0.1

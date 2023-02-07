@@ -21,30 +21,6 @@ By default, all instances in the selected AWS region will be considered.
 
 Selection of specific instances can be achieved using the `allowlist` functionality, specifying the desired EC2 filter to consider according to the [AWS documentation](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html#options).
 
-```hcl
-service_discovery {
-  aws_regions = [
-    {
-      Description                = "Allowlist example"
-      Allowlist = [
-        {
-          Key   = "tag-key"
-          Value = "Must:Have:This:Tag:Key"
-        },
-      ]
-      Enabled                    = false
-      ID                         = "96b14c57-b011-42e5-8d01-b58feba07319"
-      Name                       = "john.doe"
-      Region                     = "us-east-1"
-      RetryTimeout               = 10
-      ServerSlotsBase            = 10
-      ServerSlotsGrowthIncrement = 10
-      ServerSlotsGrowthType      = "exponential"
-    },
-  ]
-}
-```
-
 ```yaml
   aws_regions:
   - description: "Allowlist example"
@@ -62,36 +38,6 @@ service_discovery {
 ```
 
 As `allowlist`, the `denylist` option allows to filter out specific instances matching the desired filters.
-
-```hcl
-service_discovery {
-  aws_regions = [
-    {
-      Description                = "Denylist example"
-      Allowlist = [
-        {
-          Key   = "tag-key"
-          Value = "Must:Have:This:Tag:Key"
-        },
-      ]
-      Denylist = [
-        {
-          Key   = "tag:Environment"
-          Value = "Development"
-        },
-      ]
-      Enabled                    = false
-      ID                         = "96b14c57-b011-42e5-8d01-b58feba07319"
-      Name                       = "john.doe"
-      Region                     = "us-east-1"
-      RetryTimeout               = 10
-      ServerSlotsBase            = 10
-      ServerSlotsGrowthIncrement = 10
-      ServerSlotsGrowthType      = "exponential"
-    },
-  ]
-}
-```
 
 ```yaml
   aws_regions:
@@ -115,26 +61,6 @@ service_discovery {
 ## Authorization
 
 Data Plane API needs the plain AWS credentials to interact with it.
-
-```hcl
-service_discovery {
-  aws_regions = [
-    {
-      Description                = "Credentials example"
-      SecretAccessKey            = "************************************soLl"
-      AccessKeyID                = "****************L7GT"
-      Enabled                    = false
-      ID                         = "96b14c57-b011-42e5-8d01-b58feba07319"
-      Name                       = "john.doe"
-      Region                     = "us-east-1"
-      RetryTimeout               = 10
-      ServerSlotsBase            = 10
-      ServerSlotsGrowthIncrement = 10
-      ServerSlotsGrowthType      = "exponential"
-    },
-  ]
-}
-```
 
 ```yaml
   aws_regions:
@@ -163,7 +89,7 @@ Upon a Service discovery, Data Plane API will create the corresponding `backend`
 
 ## Instances IP address
 
-Using the HCL `IPV4Address` option (or the JSON `ipv4_address` one) you can specify which kind of IP address Data Plane API has to consider for the backend `server`.
+Using the JSON `ipv4_address` option you can specify which kind of IP address Data Plane API has to consider for the backend `server`.
 
 Available values can be `private` (for the private one, reachable inside the AWS VPC) or `public`.
 
@@ -171,7 +97,7 @@ Available values can be `private` (for the private one, reachable inside the AWS
 
 ## Retry timeout
 
-With the HCL `RetryTimeout` option (`retry_timeout` in the JSON counterpart) you can specify the interval of time elapsing between the reconciliation and the following.
+With the JSON `retry_timeout` option you can specify the interval of time elapsing between the reconciliation and the following.
 
 Unit is expressed in __seconds__.
 
@@ -189,22 +115,6 @@ Unit is expressed in __seconds__.
   "secret_access_key": "****************soLl",
   "ipv4_address": "private",
   "retry_timeout": 60
-}
-```
-
-```hcl
-service_discovery {
-  aws_regions = [
-    {
-      AccessKeyID     = "****************L7GT"
-      Enabled         = true
-      Name            = "my-service-discovery"
-      Region          = "us-east-1"
-      SecretAccessKey = "****************soLl"
-      IPV4Address     = "private"
-      RetryTimeout    = 60
-    },
-  ]
 }
 ```
 
@@ -249,22 +159,6 @@ The `backend` name pattern is built with the following format:
   "secret_access_key": "****************soLl",
   "ipv4_address": "private",
   "retry_timeout": 60
-}
-```
-
-```hcl
-service_discovery {
-  aws_regions = [
-    {
-      AccessKeyID     = "****************L7GT"
-      Enabled         = false
-      Name            = "my-service-discovery"
-      Region          = "us-east-1"
-      SecretAccessKey = "****************soLl"
-      IPV4Address     = "private"
-      RetryTimeout    = 60
-    },
-  ]
 }
 ```
 

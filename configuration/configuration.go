@@ -51,7 +51,7 @@ type HAProxyConfiguration struct {
 	BackupsDir           string `long:"backups-dir" description:"Path to directory in which to place backup files" group:"transaction"`
 	MapsDir              string `short:"p" long:"maps-dir" description:"Path to directory of map files managed by dataplane" default:"/etc/haproxy/maps" group:"resources"`
 	SpoeTransactionDir   string `long:"spoe-transaction-dir" description:"Path to the SPOE transaction directory" default:"/tmp/spoe-haproxy" group:"resources"`
-	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"/etc/haproxy/dataplaneapi.hcl" yaml:"-"`
+	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"/etc/haproxy/dataplaneapi.yaml" yaml:"-"`
 	ConfigFile           string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg" group:"haproxy"`
 	Userlist             string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller" group:"userlist"`
 	MasterRuntime        string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket" group:"haproxy"`
@@ -72,14 +72,14 @@ type HAProxyConfiguration struct {
 }
 
 type User struct {
-	Name     string `long:"name" description:"User name" group:"user" hcl:"name,key" example:"admin"`
+	Name     string `long:"name" description:"User name" group:"user" example:"admin"`
 	Password string `long:"password" description:"password" group:"user" example:"adminpwd"`
 	Insecure bool   `long:"insecure" description:"insecure password" group:"user" example:"true"`
 }
 
 type APIConfiguration struct {
-	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised" hcl:"address" example:"10.2.3.4" save:"true"`
-	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised" hcl:"port" example:"80" save:"true"`
+	APIAddress string `long:"api-address" description:"Advertised API address" group:"advertised" yaml:"address" example:"10.2.3.4" save:"true"`
+	APIPort    int64  `long:"api-port" description:"Advertised API port" group:"advertised" yaml:"port" example:"80" save:"true"`
 }
 
 type ClusterConfiguration struct {
@@ -156,7 +156,7 @@ type Configuration struct {
 	ServiceDiscovery       ServiceDiscovery     `yaml:"-"`
 	Users                  []User               `yaml:"-"`
 	APIOptions             APIConfiguration     `yaml:"-"`
-	LogTargets             log.Targets          `yaml:"log_targets,omitempty" hcl:"log_targets" group:"log"`
+	LogTargets             log.Targets          `yaml:"log_targets,omitempty" group:"log"`
 	HAProxy                HAProxyConfiguration `yaml:"-"`
 	mutex                  sync.Mutex
 }
@@ -214,15 +214,11 @@ func (c *Configuration) Load() error {
 		switch ext {
 		case ".yml", ".yaml":
 			c.storage = &StorageYML{}
-		case ".hcl":
-			c.storage = &StorageHCL{}
 		default:
 			if err = (&StorageYML{}).Load(c.HAProxy.DataplaneConfig); err == nil {
 				c.storage = &StorageYML{}
-
 				break
 			}
-			c.storage = &StorageHCL{}
 		}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
 			if errors.Is(err, fs.ErrNotExist) {

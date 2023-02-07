@@ -23,7 +23,7 @@ git clone https://github.com/haproxytech/dataplaneapi.git
 make build
 ```
 
-3\. You can find the built binary in /build directory.
+3\. You can find the built binary in /build directory. TEST
 
 ## Running the Data Plane API
 Basic usage:
@@ -72,7 +72,7 @@ HAProxy options:
       --backups-dir=                                  Path to directory in which to place backup files
   -m, --master-runtime=                               Path to the master Runtime API socket
   -i, --show-system-info                              Show system info on info endpoint
-  -f=                                                 Path to the dataplane configuration file (default: /etc/haproxy/dataplaneapi.hcl)
+  -f=                                                 Path to the dataplane configuration file (default: /etc/haproxy/dataplaneapi.yaml)
       --userlist-file=                                Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file
       --fid=                                          Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster
   -p, --maps-dir=                                     Path to directory of map files managed by dataplane (default: /etc/haproxy/maps)

@@ -60,10 +60,10 @@ else
       --publish "${E2E_PORT}":8080 \
       "${DOCKER_BASE_IMAGE}" $HAPROXY_FLAGS > /dev/null 2>&1
     docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
-    docker cp "${E2E_DIR}/fixtures/dataplaneapi${VARIANT}.hcl" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.hcl
+    docker cp "${E2E_DIR}/fixtures/dataplaneapi${VARIANT}.yaml" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.yaml
     docker cp "${E2E_DIR}/fixtures/haproxy.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg
     docker cp "${E2E_DIR}/fixtures/userlist.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/userlist.cfg
-    docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.hcl"
+    docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.yaml"
 fi
 
 echo '>>> Waiting dataplane API to be up and running'

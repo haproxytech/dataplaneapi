@@ -93,7 +93,6 @@ type Attribute struct {
 	SpecName   string
 	Example    string
 	Deprecated bool
-	IsHCLKey   bool
 	Save       bool
 }
 
@@ -152,9 +151,6 @@ func readServerData(filePath string, pd *ParseData, structName string, attName s
 			for i, g := range pd.Groups {
 				if g.Name == res.Group {
 					found = true
-					if res.IsHCLKey {
-						g.HasACLKey = true
-					}
 					g.Attributes = append(g.Attributes, res)
 					if g.MaxSize < len(res.Name) {
 						g.MaxSize = len(res.Name)
@@ -176,7 +172,6 @@ func readServerData(filePath string, pd *ParseData, structName string, attName s
 					MaxTypeSize:   len(res.Type),
 					Attributes:    []Attribute{res},
 					IsList:        isList,
-					HasACLKey:     res.IsHCLKey,
 				})
 			}
 		}
@@ -219,9 +214,6 @@ func stripAtomic(str string) string {
 }
 
 func isListItem(att Attribute) string {
-	if att.IsHCLKey {
-		return "- "
-	}
 	return "  "
 }
 
@@ -397,23 +389,6 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	// create configuration example hcl
-	templatePath = path.Join(dir, "generate", "configuration-example-hcl.tmpl")
-	tmpl, err = template.New("configuration-example-hcl.tmpl").Funcs(funcMap).ParseFiles(templatePath)
-	if err != nil {
-		log.Panic(err)
-	}
-	tmpl = tmpl.Funcs(funcMap)
-	filePath = path.Join(dir, "configuration/examples/example-full.hcl")
-	f, err = os.Create(filePath)
-	if err != nil {
-		log.Panic(err)
-	}
-	defer f.Close()
-	err = tmpl.Execute(f, pd)
-	if err != nil {
-		log.Panic(err)
-	}
 }
 
 func splitBy(c rune) bool {
@@ -430,7 +405,6 @@ func processLine(line string) (Attribute, error) {
 	var specName string
 	var save bool
 	var deprecated bool
-	var isHCLKey bool
 	var example string
 	for _, part := range parts[2:] {
 		if strings.Contains(part, "long:") {
@@ -463,9 +437,6 @@ func processLine(line string) (Attribute, error) {
 		if strings.Contains(part, `deprecated:"true"`) {
 			deprecated = true
 		}
-		if strings.HasPrefix(part, `hcl:"`) && strings.Contains(part, `,key"`) {
-			isHCLKey = true
-		}
 		if strings.Contains(part, `yaml:"-"`) {
 			return Attribute{}, errors.New("ignore this attribute")
 		} else if strings.Contains(part, `yaml:"`) {
@@ -494,7 +465,6 @@ func processLine(line string) (Attribute, error) {
 		SpecName:   specName,
 		Save:       save,
 		Deprecated: deprecated,
-		IsHCLKey:   isHCLKey,
 		Example:    example,
 	}, nil
 }

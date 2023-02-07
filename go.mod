@@ -24,12 +24,10 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/haproxytech/client-native/v4 v4.0.1-0.20230509111137-23ddc280e0ba
 	github.com/haproxytech/config-parser/v4 v4.1.1-0.20230509072715-b48ea7c948bf
-	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
-	github.com/rodaine/hclencoder v0.0.1
 	github.com/rs/cors v1.9.0
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sirupsen/logrus v1.9.0
