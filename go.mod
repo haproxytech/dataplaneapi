@@ -19,11 +19,11 @@ require (
 	github.com/go-openapi/spec v0.20.7
 	github.com/go-openapi/strfmt v0.21.3
 	github.com/go-openapi/swag v0.22.3
-	github.com/go-openapi/validate v0.22.0
+	github.com/go-openapi/validate v0.22.1
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.3.0
-	github.com/haproxytech/client-native/v4 v4.0.1-0.20221207130035-88da8ddc27e8
-	github.com/haproxytech/config-parser/v4 v4.1.0
+	github.com/haproxytech/client-native/v4 v4.0.1-0.20230308121936-d0e45bd84b92
+	github.com/haproxytech/config-parser/v4 v4.1.1-0.20230308114929-b7f6fa2190e1
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
