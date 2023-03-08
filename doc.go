@@ -21,6 +21,7 @@
 //
 //	Schemes:
 //	  http
+//	  https
 //	Host: localhost
 //	BasePath: /v2
 //	Version: 2.7

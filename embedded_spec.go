@@ -40,7 +40,8 @@ func init() {
     "application/json"
   ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "swagger": "2.0",
   "info": {
@@ -16950,21 +16951,25 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "example": "127.0.0.1"
         },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true
+          "x-nullable": true,
+          "example": 80
         },
         "port-range-end": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true
+          "x-nullable": true,
+          "example": 81
         }
-      }
+      },
+      "additionalProperties": false
     },
     "bind_params": {
       "type": "object",
@@ -17125,10 +17130,12 @@ func init() {
             "user",
             "operator",
             "admin"
-          ]
+          ],
+          "example": "user"
         },
         "maxconn": {
-          "type": "integer"
+          "type": "integer",
+          "example": 1234
         },
         "mode": {
           "type": "string"
@@ -17142,10 +17149,12 @@ func init() {
           "x-nullable": false
         },
         "namespace": {
-          "type": "string"
+          "type": "string",
+          "example": "app"
         },
         "nice": {
-          "type": "integer"
+          "type": "integer",
+          "example": 1
         },
         "no_ca_names": {
           "type": "boolean",
@@ -17217,6 +17226,16 @@ func init() {
           "type": "string",
           "x-display-name": "Protocol name"
         },
+        "quic-cc-algo": {
+          "type": "string",
+          "enum": [
+            "cubic",
+            "newreno"
+          ]
+        },
+        "quic-force-retry": {
+          "type": "boolean"
+        },
         "severity_output": {
           "type": "string",
           "enum": [
@@ -17224,7 +17243,8 @@ func init() {
             "number",
             "string"
           ],
-          "x-display-name": "Format"
+          "x-display-name": "Format",
+          "example": "none"
         },
         "ssl": {
           "type": "boolean"
@@ -17312,15 +17332,11 @@ func init() {
             "ssl": {
               "value": "enabled"
             }
-          }
+          },
+          "example": "none"
         }
       },
-      "additionalProperties": false,
-      "example": {
-        "address": "127.0.0.1",
-        "name": "http",
-        "port": 80
-      }
+      "additionalProperties": false
     },
     "binds": {
       "description": "HAProxy frontend binds array (corresponds to bind directives)",
@@ -18713,8 +18729,7 @@ func init() {
           "description": "Declares a FastCGI application",
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": false,
-          "readOnly": true
+          "x-nullable": false
         },
         "pass_headers": {
           "type": "array",
@@ -19606,6 +19621,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Chroot"
         },
+        "cluster_secret": {
+          "type": "string",
+          "x-display-name": "Cluster Secret"
+        },
         "cpu_maps": {
           "type": "array",
           "items": {
@@ -19908,6 +19927,10 @@ func init() {
         "nbthread": {
           "type": "integer",
           "x-display-name": "Number of Threads"
+        },
+        "no-quic": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the QUIC protocol"
         },
         "node": {
           "type": "string"
@@ -20368,6 +20391,39 @@ func init() {
             "pool_low_fd_ratio": {
               "type": "integer",
               "x-display-name": "Max Used Low FD Ratio"
+            },
+            "quic_frontend_conn_tc_buffers_limit": {
+              "type": "integer",
+              "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
+              "x-nullable": true
+            },
+            "quic_frontend_max_idle_timeout": {
+              "type": "integer",
+              "x-display-name": "QUIC Frontend Max Idle Timeout",
+              "x-nullable": true
+            },
+            "quic_frontend_max_streams_bidi": {
+              "type": "integer",
+              "x-display-name": "QUIC Max Number of Bidirectional Streams",
+              "x-nullable": true
+            },
+            "quic_max_frame_loss": {
+              "type": "integer",
+              "x-display-name": "QUIC Max Limit for Frame Loss",
+              "x-nullable": true
+            },
+            "quic_retry_threshold": {
+              "type": "integer",
+              "x-display-name": "QUIC Retry Threshold",
+              "x-nullable": true
+            },
+            "quic_socket_owner": {
+              "type": "string",
+              "enum": [
+                "listener",
+                "connection"
+              ],
+              "x-display-name": "QUIC Socket Owner"
             },
             "rcvbuf_client": {
               "type": "integer",
@@ -21282,8 +21338,6 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
-        "hdr_format": "%T",
-        "hdr_name": "X-Haproxy-Current-Date",
         "index": 0,
         "status": 425,
         "type": "status"
@@ -24656,8 +24710,7 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false,
-          "readOnly": true
+          "x-nullable": false
         },
         "start-on-reload": {
           "description": "HAProxy stops and recreates child programs at reload.",
@@ -25472,10 +25525,8 @@ func init() {
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
-        "check": "enabled",
         "name": "www",
-        "port": 8080,
-        "weight": 80
+        "port": 8080
       }
     },
     "server_params": {
@@ -26294,14 +26345,12 @@ func init() {
               {
                 "address": "127.0.1.1",
                 "name": "www_server",
-                "port": 4567,
-                "weight": 30
+                "port": 4567
               },
               {
                 "address": "127.0.1.2",
                 "name": "www_server_new",
-                "port": 4567,
-                "weight": 70
+                "port": 4567
               }
             ],
             "use_as": "default"
@@ -26310,18 +26359,6 @@ func init() {
         "name": "test_site",
         "service": {
           "http_connection_mode": "httpclose",
-          "listeners": [
-            {
-              "address": "127.0.0.1",
-              "name": "test_listener",
-              "port": 80
-            },
-            {
-              "address": "127.0.0.1",
-              "name": "test_listener_2",
-              "port": 8080
-            }
-          ],
           "maxconn": 2000,
           "mode": "http"
         }
@@ -28829,7 +28866,8 @@ func init() {
     "application/json"
   ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "swagger": "2.0",
   "info": {
@@ -52782,6 +52820,39 @@ func init() {
           "type": "integer",
           "x-display-name": "Max Used Low FD Ratio"
         },
+        "quic_frontend_conn_tc_buffers_limit": {
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
+          "x-nullable": true
+        },
+        "quic_frontend_max_idle_timeout": {
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Max Idle Timeout",
+          "x-nullable": true
+        },
+        "quic_frontend_max_streams_bidi": {
+          "type": "integer",
+          "x-display-name": "QUIC Max Number of Bidirectional Streams",
+          "x-nullable": true
+        },
+        "quic_max_frame_loss": {
+          "type": "integer",
+          "x-display-name": "QUIC Max Limit for Frame Loss",
+          "x-nullable": true
+        },
+        "quic_retry_threshold": {
+          "type": "integer",
+          "x-display-name": "QUIC Retry Threshold",
+          "x-nullable": true
+        },
+        "quic_socket_owner": {
+          "type": "string",
+          "enum": [
+            "listener",
+            "connection"
+          ],
+          "x-display-name": "QUIC Socket Owner"
+        },
         "rcvbuf_client": {
           "type": "integer",
           "x-display-name": "Receive Buffer Client Size",
@@ -54302,21 +54373,25 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^[^\\s]+$",
+          "example": "127.0.0.1"
         },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true
+          "x-nullable": true,
+          "example": 80
         },
         "port-range-end": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true
+          "x-nullable": true,
+          "example": 81
         }
-      }
+      },
+      "additionalProperties": false
     },
     "bind_params": {
       "type": "object",
@@ -54477,10 +54552,12 @@ func init() {
             "user",
             "operator",
             "admin"
-          ]
+          ],
+          "example": "user"
         },
         "maxconn": {
-          "type": "integer"
+          "type": "integer",
+          "example": 1234
         },
         "mode": {
           "type": "string"
@@ -54494,10 +54571,12 @@ func init() {
           "x-nullable": false
         },
         "namespace": {
-          "type": "string"
+          "type": "string",
+          "example": "app"
         },
         "nice": {
-          "type": "integer"
+          "type": "integer",
+          "example": 1
         },
         "no_ca_names": {
           "type": "boolean",
@@ -54569,6 +54648,16 @@ func init() {
           "type": "string",
           "x-display-name": "Protocol name"
         },
+        "quic-cc-algo": {
+          "type": "string",
+          "enum": [
+            "cubic",
+            "newreno"
+          ]
+        },
+        "quic-force-retry": {
+          "type": "boolean"
+        },
         "severity_output": {
           "type": "string",
           "enum": [
@@ -54576,7 +54665,8 @@ func init() {
             "number",
             "string"
           ],
-          "x-display-name": "Format"
+          "x-display-name": "Format",
+          "example": "none"
         },
         "ssl": {
           "type": "boolean"
@@ -54664,15 +54754,11 @@ func init() {
             "ssl": {
               "value": "enabled"
             }
-          }
+          },
+          "example": "none"
         }
       },
-      "additionalProperties": false,
-      "example": {
-        "address": "127.0.0.1",
-        "name": "http",
-        "port": 80
-      }
+      "additionalProperties": false
     },
     "binds": {
       "description": "HAProxy frontend binds array (corresponds to bind directives)",
@@ -56025,8 +56111,7 @@ func init() {
           "description": "Declares a FastCGI application",
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": false,
-          "readOnly": true
+          "x-nullable": false
         },
         "pass_headers": {
           "type": "array",
@@ -56919,6 +57004,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Chroot"
         },
+        "cluster_secret": {
+          "type": "string",
+          "x-display-name": "Cluster Secret"
+        },
         "cpu_maps": {
           "type": "array",
           "items": {
@@ -57167,6 +57256,10 @@ func init() {
         "nbthread": {
           "type": "integer",
           "x-display-name": "Number of Threads"
+        },
+        "no-quic": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the QUIC protocol"
         },
         "node": {
           "type": "string"
@@ -57523,6 +57616,39 @@ func init() {
             "pool_low_fd_ratio": {
               "type": "integer",
               "x-display-name": "Max Used Low FD Ratio"
+            },
+            "quic_frontend_conn_tc_buffers_limit": {
+              "type": "integer",
+              "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
+              "x-nullable": true
+            },
+            "quic_frontend_max_idle_timeout": {
+              "type": "integer",
+              "x-display-name": "QUIC Frontend Max Idle Timeout",
+              "x-nullable": true
+            },
+            "quic_frontend_max_streams_bidi": {
+              "type": "integer",
+              "x-display-name": "QUIC Max Number of Bidirectional Streams",
+              "x-nullable": true
+            },
+            "quic_max_frame_loss": {
+              "type": "integer",
+              "x-display-name": "QUIC Max Limit for Frame Loss",
+              "x-nullable": true
+            },
+            "quic_retry_threshold": {
+              "type": "integer",
+              "x-display-name": "QUIC Retry Threshold",
+              "x-nullable": true
+            },
+            "quic_socket_owner": {
+              "type": "string",
+              "enum": [
+                "listener",
+                "connection"
+              ],
+              "x-display-name": "QUIC Socket Owner"
             },
             "rcvbuf_client": {
               "type": "integer",
@@ -58437,8 +58563,6 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
-        "hdr_format": "%T",
-        "hdr_name": "X-Haproxy-Current-Date",
         "index": 0,
         "status": 425,
         "type": "status"
@@ -61812,8 +61936,7 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false,
-          "readOnly": true
+          "x-nullable": false
         },
         "start-on-reload": {
           "description": "HAProxy stops and recreates child programs at reload.",
@@ -62628,10 +62751,8 @@ func init() {
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
-        "check": "enabled",
         "name": "www",
-        "port": 8080,
-        "weight": 80
+        "port": 8080
       }
     },
     "server_params": {
@@ -63386,14 +63507,12 @@ func init() {
               {
                 "address": "127.0.1.1",
                 "name": "www_server",
-                "port": 4567,
-                "weight": 30
+                "port": 4567
               },
               {
                 "address": "127.0.1.2",
                 "name": "www_server_new",
-                "port": 4567,
-                "weight": 70
+                "port": 4567
               }
             ],
             "use_as": "default"
@@ -63402,18 +63521,6 @@ func init() {
         "name": "test_site",
         "service": {
           "http_connection_mode": "httpclose",
-          "listeners": [
-            {
-              "address": "127.0.0.1",
-              "name": "test_listener",
-              "port": 80
-            },
-            {
-              "address": "127.0.0.1",
-              "name": "test_listener_2",
-              "port": 8080
-            }
-          ],
           "maxconn": 2000,
           "mode": "http"
         }
