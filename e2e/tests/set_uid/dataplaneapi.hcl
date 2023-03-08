@@ -4,6 +4,7 @@ dataplaneapi {
   host = "0.0.0.0"
   port = 8080
   uid = 1500
+  scheme = ["http"]
 
   userlist {
     userlist_file = "/etc/haproxy/userlist.cfg"
