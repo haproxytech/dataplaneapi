@@ -3,6 +3,7 @@ name = "famous_condor"
 dataplaneapi {
   host = "0.0.0.0"
   port = 8080
+  scheme = ["http"]
 
   userlist {
     userlist_file = "/etc/haproxy/userlist.cfg"
