@@ -80,32 +80,32 @@ var itemDefaults = map[string]interface{}{
 }
 
 type Attribute struct {
-	Name       string
-	AttName    string
+	Default    string
+	Group      string
 	Type       string
 	Long       string
 	FileName   string
 	Short      string
-	Default    string
+	AttName    string
 	ENV        string
-	Group      string
+	Name       string
 	StructName string
 	SpecName   string
-	Save       bool
+	Example    string
 	Deprecated bool
 	IsHCLKey   bool
-	Example    string
+	Save       bool
 }
 
 type ParseGroup struct {
 	OriginalGroup string
 	Name          string
 	AttName       string
-	MaxSize       int
-	MaxTypeSize   int
 	Parent        string
 	Elements      []string
 	Attributes    []Attribute
+	MaxSize       int
+	MaxTypeSize   int
 	HasACLKey     bool
 	IsList        bool
 }

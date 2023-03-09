@@ -39,20 +39,22 @@ const (
 )
 
 type awsInstance struct {
-	params          *models.AwsRegion
-	timeout         time.Duration
 	ctx             context.Context
+	params          *models.AwsRegion
 	update          chan struct{}
 	state           map[string]map[string]time.Time
 	discoveryConfig *ServiceDiscoveryInstance
 	logFields       map[string]interface{}
+	timeout         time.Duration
 }
 
 type awsService struct {
-	name                       string
-	region, instanceName, ipv4 string
-	instances                  map[string]types.Instance
-	changed                    bool
+	instances    map[string]types.Instance
+	name         string
+	region       string
+	instanceName string
+	ipv4         string
+	changed      bool
 }
 
 func (a awsService) GetName() string {

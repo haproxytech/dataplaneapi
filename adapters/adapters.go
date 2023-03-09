@@ -33,8 +33,8 @@ type Adapter func(http.Handler) http.Handler
 
 type frame struct {
 	File string
-	Line int
 	Name string
+	Line int
 }
 
 type stack []frame

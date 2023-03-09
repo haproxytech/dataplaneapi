@@ -23,8 +23,8 @@ import (
 )
 
 type StorageYML struct {
-	filename string
 	cfg      *StorageDataplaneAPIConfiguration
+	filename string
 }
 
 func (s *StorageYML) Load(filename string) error {

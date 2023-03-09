@@ -64,9 +64,9 @@ func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyP
 
 // GetInfoHandlerImpl implementation of the GetInfoHandler interface
 type GetInfoHandlerImpl struct {
-	SystemInfo bool
 	BuildTime  string
 	Version    string
+	SystemInfo bool
 }
 
 // Handle executing the request and returning a response

@@ -28,17 +28,17 @@ import (
 )
 
 type ConfigWatcherParams struct {
-	FilePath string
-	Callback func()
-	Version  string
 	Ctx      context.Context
+	Callback func()
+	FilePath string
+	Version  string
 }
 
 type ConfigWatcher struct {
-	configFile string
 	callback   func()
 	done       <-chan struct{}
 	wa         *fsnotify.Watcher
+	configFile string
 }
 
 func NewConfigWatcher(params ConfigWatcherParams) (*ConfigWatcher, error) {

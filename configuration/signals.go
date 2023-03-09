@@ -26,8 +26,8 @@ import (
 )
 
 type ChanNotify struct {
-	mu          sync.RWMutex
 	subscribers map[string]chan struct{}
+	mu          sync.RWMutex
 }
 
 func NewChanNotify() *ChanNotify {

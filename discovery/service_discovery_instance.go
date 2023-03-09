@@ -42,21 +42,21 @@ type confService struct {
 }
 
 type discoveryInstanceParams struct {
+	LogFields       map[string]interface{}
+	SlotsGrowthType string
 	Allowlist       []string
 	Denylist        []string
 	ServerSlotsBase int
-	SlotsGrowthType string
 	SlotsIncrement  int
-	LogFields       map[string]interface{}
 }
 
 // ServiceDiscoveryInstance manages and updates all services of a single service discovery.
 type ServiceDiscoveryInstance struct {
-	services      map[string]*confService
 	client        configuration.Configuration
 	reloadAgent   haproxy.IReloadAgent
-	params        discoveryInstanceParams
+	services      map[string]*confService
 	transactionID string
+	params        discoveryInstanceParams
 }
 
 // NewServiceDiscoveryInstance creates a new ServiceDiscoveryInstance.
