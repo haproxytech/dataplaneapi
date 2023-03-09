@@ -54,39 +54,39 @@ type IReloadAgent interface {
 type reloadCache struct {
 	failedReloads map[string]*models.Reload
 	lastSuccess   *models.Reload
+	callbacks     map[string]func()
 	next          string
 	current       string
 	index         int64
 	retention     int
 	mu            sync.RWMutex
-	callbacks     map[string]func()
 }
 
 type ReloadAgentParams struct {
-	Delay           int
+	Client          client_native.HAProxyClient
+	Ctx             context.Context
 	ReloadCmd       string
-	UseMasterSocket bool
 	RestartCmd      string
 	StatusCmd       string
 	ConfigFile      string
 	BackupDir       string
+	Delay           int
 	Retention       int
-	Client          client_native.HAProxyClient
-	Ctx             context.Context
+	UseMasterSocket bool
 }
 
 // ReloadAgent handles all reloads, scheduled or forced
 type ReloadAgent struct {
-	delay           int
+	runtime         runtime.Runtime
+	done            <-chan struct{}
 	reloadCmd       string
-	useMasterSocket bool
 	restartCmd      string
 	statusCmd       string
 	configFile      string
 	lkgConfigFile   string
-	done            <-chan struct{}
 	cache           reloadCache
-	runtime         runtime.Runtime
+	delay           int
+	useMasterSocket bool
 }
 
 func NewReloadAgent(params ReloadAgentParams) (*ReloadAgent, error) {

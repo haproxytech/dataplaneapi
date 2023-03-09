@@ -64,7 +64,7 @@ func (h *StorageCreateStorageGeneralFileHandlerImpl) Handle(params storage.Creat
 	return storage.NewCreateStorageGeneralFileCreated().WithPayload(me)
 }
 
-//  StorageGetAllStorageGeneralFilesHandlerImpl implementation of the StorageGetAllStorageGeneralFilesHandler interface
+// StorageGetAllStorageGeneralFilesHandlerImpl implementation of the StorageGetAllStorageGeneralFilesHandler interface
 type StorageGetAllStorageGeneralFilesHandlerImpl struct {
 	Client client_native.HAProxyClient
 }

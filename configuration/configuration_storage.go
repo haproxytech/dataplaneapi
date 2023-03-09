@@ -24,28 +24,28 @@ import (
 )
 
 type configTypeDataplaneapi struct {
-	EnabledListeners *[]string              `yaml:"scheme,omitempty" hcl:"scheme,omitempty"`
-	CleanupTimeout   *string                `yaml:"cleanup_timeout,omitempty" hcl:"cleanup_timeout,omitempty"`
+	WriteTimeout     *string                `yaml:"write_timeout,omitempty" hcl:"write_timeout,omitempty"`
 	GracefulTimeout  *string                `yaml:"graceful_timeout,omitempty" hcl:"graceful_timeout,omitempty"`
+	ShowSystemInfo   *bool                  `yaml:"show_system_info,omitempty" hcl:"show_system_info,omitempty"`
 	MaxHeaderSize    *string                `yaml:"max_header_size,omitempty" hcl:"max_header_size,omitempty"`
 	SocketPath       *flags.Filename        `yaml:"socket_path,omitempty" hcl:"socket_path,omitempty"`
 	Host             *string                `yaml:"host,omitempty" hcl:"host,omitempty"`
 	Port             *int                   `yaml:"port,omitempty" hcl:"port,omitempty"`
 	ListenLimit      *int                   `yaml:"listen_limit,omitempty" hcl:"listen_limit,omitempty"`
-	KeepAlive        *string                `yaml:"keep_alive,omitempty" hcl:"keep_alive,omitempty"`
-	ReadTimeout      *string                `yaml:"read_timeout,omitempty" hcl:"read_timeout,omitempty"`
-	WriteTimeout     *string                `yaml:"write_timeout,omitempty" hcl:"write_timeout,omitempty"`
-	ShowSystemInfo   *bool                  `yaml:"show_system_info,omitempty" hcl:"show_system_info,omitempty"`
 	DisableInotify   *bool                  `yaml:"disable_inotify,omitempty" hcl:"disable_inotify,omitempty"`
+	ReadTimeout      *string                `yaml:"read_timeout,omitempty" hcl:"read_timeout,omitempty"`
+	Advertised       *configTypeAdvertised  `yaml:"advertised,omitempty" hcl:"advertised,omitempty"`
+	CleanupTimeout   *string                `yaml:"cleanup_timeout,omitempty" hcl:"cleanup_timeout,omitempty"`
+	KeepAlive        *string                `yaml:"keep_alive,omitempty" hcl:"keep_alive,omitempty"`
 	PIDFile          *string                `yaml:"pid_file,omitempty" hcl:"pid_file,omitempty"`
 	UID              *int                   `yaml:"uid,omitempty" hcl:"uid,omitempty"`
 	GID              *int                   `yaml:"gid,omitempty" hcl:"gid,omitempty"`
 	TLS              *configTypeTLS         `yaml:"tls,omitempty" hcl:"tls,omitempty"`
-	User             []configTypeUser       `yaml:"user,omitempty" hcl:"user,omitempty"`
+	EnabledListeners *[]string              `yaml:"scheme,omitempty" hcl:"scheme,omitempty"`
 	Userlist         *configTypeUserlist    `yaml:"userlist,omitempty" hcl:"userlist,omitempty"`
 	Transaction      *configTypeTransaction `yaml:"transaction,omitempty" hcl:"transaction,omitempty"`
 	Resources        *configTypeResources   `yaml:"resources,omitempty" hcl:"resources,omitempty"`
-	Advertised       *configTypeAdvertised  `yaml:"advertised,omitempty" hcl:"advertised,omitempty"`
+	User             []configTypeUser       `yaml:"user,omitempty" hcl:"user,omitempty"`
 }
 
 type configTypeTLS struct {
@@ -61,9 +61,9 @@ type configTypeTLS struct {
 }
 
 type configTypeUser struct {
-	Name     string  `yaml:"name" hcl:"name,key"`
 	Insecure *bool   `yaml:"insecure,omitempty" hcl:"insecure,omitempty"`
 	Password *string `yaml:"password,omitempty" hcl:"password,omitempty"`
+	Name     string  `yaml:"name" hcl:"name,key"`
 }
 
 type configTypeHaproxy struct {
@@ -109,23 +109,23 @@ type configTypeResources struct {
 }
 
 type configTypeCluster struct {
-	ClusterTLSCertDir  *string                    `yaml:"cluster_tls_dir,omitempty" hcl:"cluster_tls_dir,omitempty"`
-	ID                 *string                    `yaml:"id,omitempty" hcl:"id,omitempty"`
-	BootstrapKey       *string                    `yaml:"bootstrap_key,omitempty" hcl:"bootstrap_key,omitempty"`
-	ActiveBootstrapKey *string                    `yaml:"active_bootstrap_key,omitempty" hcl:"active_bootstrap_key,omitempty"`
+	APINodesPath       *string                    `yaml:"api_nodes_path,omitempty" hcl:"api_nodes_path,omitempty"`
 	Token              *string                    `yaml:"token,omitempty" hcl:"token,omitempty"`
+	ClusterTLSCertDir  *string                    `yaml:"cluster_tls_dir,omitempty" hcl:"cluster_tls_dir,omitempty"`
+	ActiveBootstrapKey *string                    `yaml:"active_bootstrap_key,omitempty" hcl:"active_bootstrap_key,omitempty"`
+	APIRegisterPath    *string                    `yaml:"api_register_path,omitempty" hcl:"api_register_path,omitempty"`
 	URL                *string                    `yaml:"url,omitempty" hcl:"url,omitempty"`
 	Port               *int                       `yaml:"port,omitempty" hcl:"port,omitempty"`
-	APIBasePath        *string                    `yaml:"api_base_path,omitempty" hcl:"api_base_path,omitempty"`
-	APINodesPath       *string                    `yaml:"api_nodes_path,omitempty" hcl:"api_nodes_path,omitempty"`
-	APIRegisterPath    *string                    `yaml:"api_register_path,omitempty" hcl:"api_register_path,omitempty"`
 	StorageDir         *string                    `yaml:"storage_dir,omitempty" hcl:"storage_dir,omitempty"`
+	BootstrapKey       *string                    `yaml:"bootstrap_key,omitempty" hcl:"bootstrap_key,omitempty"`
+	ID                 *string                    `yaml:"id,omitempty" hcl:"id,omitempty"`
+	APIBasePath        *string                    `yaml:"api_base_path,omitempty" hcl:"api_base_path,omitempty"`
 	CertificateDir     *string                    `yaml:"cert_path,omitempty" hcl:"cert_path,omitempty"`
 	CertificateFetched *bool                      `yaml:"cert_fetched,omitempty" hcl:"cert_fetched,omitempty"`
 	Name               *string                    `yaml:"name,omitempty" hcl:"name,omitempty"`
 	Description        *string                    `yaml:"description,omitempty" hcl:"description,omitempty"`
-	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" hcl:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
 	ClusterID          *string                    `yaml:"cluster_id,omitempty" hcl:"cluster_id,omitempty" group:"cluster" save:"true"`
+	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" hcl:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
 }
 
 type configTypeAdvertised struct {

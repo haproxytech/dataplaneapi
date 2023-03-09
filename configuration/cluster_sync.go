@@ -47,6 +47,7 @@ const DataplaneAPIType = "community"
 
 // Node is structure required for connection to cluster
 type Node struct {
+	Facts       map[string]string `json:"facts"`
 	Address     string            `json:"address"`
 	APIBasePath string            `json:"api_base_path"`
 	APIPassword string            `json:"api_password"`
@@ -55,10 +56,9 @@ type Node struct {
 	Description string            `json:"description,omitempty"`
 	ID          string            `json:"id,omitempty"`
 	Name        string            `json:"name"`
-	Port        int64             `json:"port,omitempty"`
 	Status      string            `json:"status"`
 	Type        string            `json:"type"`
-	Facts       map[string]string `json:"facts"`
+	Port        int64             `json:"port,omitempty"`
 }
 
 // ClusterSync fetches certificates for joining cluster

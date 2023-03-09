@@ -30,10 +30,10 @@ import (
 )
 
 type consulService struct {
-	name    string
-	changed bool
 	params  *models.Consul
+	name    string
 	servers []configuration.ServiceServer
+	changed bool
 }
 
 func (c *consulService) GetName() string {
@@ -53,15 +53,15 @@ func (c *consulService) GetServers() []configuration.ServiceServer {
 }
 
 type consulInstance struct {
+	ctx             context.Context
 	params          *models.Consul
 	api             *api.Client
 	discoveryConfig *ServiceDiscoveryInstance
 	prevIndexes     map[string]uint64
-	timeout         time.Duration
-	prevEnabled     bool
-	ctx             context.Context
 	update          chan struct{}
 	logFields       map[string]interface{}
+	timeout         time.Duration
+	prevEnabled     bool
 }
 
 func (c *consulInstance) start() error {

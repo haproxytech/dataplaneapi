@@ -38,8 +38,8 @@ var usersStore *Users
 var syncUserStore sync.Once
 
 type Users struct {
-	mu    sync.Mutex
 	users []types.User
+	mu    sync.Mutex
 }
 
 func GetUsersStore() *Users {

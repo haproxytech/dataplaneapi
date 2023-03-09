@@ -27,8 +27,8 @@ var (
 
 type CtxHandler struct {
 	ctx    context.Context
-	rwx    sync.RWMutex
 	cancel context.CancelFunc
+	rwx    sync.RWMutex
 }
 
 func (ch *CtxHandler) Init() {

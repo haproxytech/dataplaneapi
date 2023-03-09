@@ -29,8 +29,8 @@ import (
 // CreateConsulHandlerImpl implementation of the CreateConsulHandler interface using client-native client
 type CreateConsulHandlerImpl struct {
 	Discovery       sc.ServiceDiscoveries
-	UseValidation   bool
 	PersistCallback func([]*models.Consul) error
+	UseValidation   bool
 }
 
 // DeleteConsulHandlerImpl implementation of the DeleteConsulHandler interface using client-native client
@@ -52,8 +52,8 @@ type GetConsulsHandlerImpl struct {
 // ReplaceConsulHandlerImpl implementation of the ReplaceConsulHandler interface using client-native client
 type ReplaceConsulHandlerImpl struct {
 	Discovery       sc.ServiceDiscoveries
-	UseValidation   bool
 	PersistCallback func([]*models.Consul) error
+	UseValidation   bool
 }
 
 // Handle executing the request and returning a response

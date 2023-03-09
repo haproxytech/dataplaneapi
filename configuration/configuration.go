@@ -36,45 +36,45 @@ import (
 var cfg *Configuration
 
 type HAProxyConfiguration struct {
-	ConfigFile           string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg" group:"haproxy"`
-	Userlist             string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller" group:"userlist"`
+	SpoeDir              string `long:"spoe-dir" description:"Path to SPOE directory." default:"/etc/haproxy/spoe" group:"resources"`
+	ServiceName          string `long:"service" description:"Name of the HAProxy service" group:"reload"`
 	HAProxy              string `short:"b" long:"haproxy-bin" description:"Path to the haproxy binary file" default:"haproxy" group:"haproxy"`
-	ReloadDelay          int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5" group:"reload"`
+	UserListFile         string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file" group:"userlist"`
 	ReloadCmd            string `short:"r" long:"reload-cmd" description:"Reload command" group:"reload"`
 	RestartCmd           string `short:"s" long:"restart-cmd" description:"Restart command" group:"reload"`
 	StatusCmd            string `long:"status-cmd" description:"Status command" group:"reload"`
-	ServiceName          string `long:"service" description:"Name of the HAProxy service" group:"reload"`
-	ReloadRetention      int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1" group:"reload"`
+	NodeIDFile           string `long:"fid" description:"Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster" group:"haproxy"`
+	PIDFile              string `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi" example:"/tmp/dataplane.pid"`
 	ReloadStrategy       string `long:"reload-strategy" description:"Either systemd, s6 or custom" default:"custom" group:"reload"`
 	TransactionDir       string `short:"t" long:"transaction-dir" description:"Path to the transaction directory" default:"/tmp/haproxy" group:"transaction"`
-	BackupsNumber        int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0" group:"transaction"`
+	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check" group:"reload"`
 	BackupsDir           string `long:"backups-dir" description:"Path to directory in which to place backup files" group:"transaction"`
-	MasterRuntime        string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket" group:"haproxy"`
-	ShowSystemInfo       bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint" group:"dataplaneapi"`
-	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"/etc/haproxy/dataplaneapi.hcl" yaml:"-"`
-	UserListFile         string `long:"userlist-file" description:"Path to the dataplaneapi userlist file. By default userlist is read from HAProxy conf. When specified userlist would be read from this file" group:"userlist"`
-	NodeIDFile           string `long:"fid" description:"Path to file that will dataplaneapi use to write its id (not a pid) that was given to him after joining a cluster" group:"haproxy"`
 	MapsDir              string `short:"p" long:"maps-dir" description:"Path to directory of map files managed by dataplane" default:"/etc/haproxy/maps" group:"resources"`
+	SpoeTransactionDir   string `long:"spoe-transaction-dir" description:"Path to the SPOE transaction directory" default:"/tmp/spoe-haproxy" group:"resources"`
+	DataplaneConfig      string `short:"f" description:"Path to the dataplane configuration file" default:"/etc/haproxy/dataplaneapi.hcl" yaml:"-"`
+	ConfigFile           string `short:"c" long:"config-file" description:"Path to the haproxy configuration file" default:"/etc/haproxy/haproxy.cfg" group:"haproxy"`
+	Userlist             string `short:"u" long:"userlist" description:"Userlist in HAProxy configuration to use for API Basic Authentication" default:"controller" group:"userlist"`
+	MasterRuntime        string `short:"m" long:"master-runtime" description:"Path to the master Runtime API socket" group:"haproxy"`
 	SSLCertsDir          string `long:"ssl-certs-dir" description:"Path to SSL certificates directory" default:"/etc/haproxy/ssl" group:"resources"`
 	GeneralStorageDir    string `long:"general-storage-dir" description:"Path to general storage directory" default:"/etc/haproxy/general" group:"resources"`
-	UpdateMapFiles       bool   `long:"update-map-files" description:"Flag used for syncing map files with runtime maps values" group:"resources"`
-	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10" group:"resources"`
 	ClusterTLSCertDir    string `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file" group:"cluster"`
-	SpoeDir              string `long:"spoe-dir" description:"Path to SPOE directory." default:"/etc/haproxy/spoe" group:"resources"`
-	SpoeTransactionDir   string `long:"spoe-transaction-dir" description:"Path to the SPOE transaction directory" default:"/tmp/spoe-haproxy" group:"resources"`
-	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy" group:"haproxy"`
+	UpdateMapFilesPeriod int64  `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10" group:"resources"`
+	ReloadDelay          int    `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5" group:"reload"`
 	MaxOpenTransactions  int64  `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20" group:"transaction"`
-	ValidateCmd          string `long:"validate-cmd" description:"Executes a custom command to perform the HAProxy configuration check" group:"reload"`
-	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher watcher for the configuration file" group:"dataplaneapi"`
-	PIDFile              string `long:"pid-file" description:"Path to file that will dataplaneapi use to write its pid" group:"dataplaneapi" example:"/tmp/dataplane.pid"`
+	BackupsNumber        int    `short:"n" long:"backups-number" description:"Number of backup configuration files you want to keep, stored in the config dir with version number suffix" default:"0" group:"transaction"`
+	ReloadRetention      int    `long:"reload-retention" description:"Reload retention in days, every older reload id will be deleted" default:"1" group:"reload"`
 	UID                  int    `long:"uid" description:"User id value to set on start" group:"dataplaneapi" example:"1000"`
 	GID                  int    `long:"gid" description:"Group id value to set on start" group:"dataplaneapi" example:"1000"`
+	UpdateMapFiles       bool   `long:"update-map-files" description:"Flag used for syncing map files with runtime maps values" group:"resources"`
+	ShowSystemInfo       bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint" group:"dataplaneapi"`
+	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy" group:"haproxy"`
+	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher for the configuration file" group:"dataplaneapi"`
 }
 
 type User struct {
 	Name     string `long:"name" description:"User name" group:"user" hcl:"name,key" example:"admin"`
-	Insecure bool   `long:"insecure" description:"insecure password" group:"user" example:"true"`
 	Password string `long:"password" description:"password" group:"user" example:"adminpwd"`
+	Insecure bool   `long:"insecure" description:"insecure password" group:"user" example:"true"`
 }
 
 type APIConfiguration struct {
@@ -83,22 +83,22 @@ type APIConfiguration struct {
 }
 
 type ClusterConfiguration struct {
-	ID                 AtomicString               `yaml:"id,omitempty" group:"cluster" save:"true"`
-	BootstrapKey       AtomicString               `yaml:"bootstrap_key,omitempty" group:"cluster" save:"true"`
+	APIRegisterPath    AtomicString               `yaml:"api_register_path,omitempty" group:"cluster" save:"true"`
+	APIBasePath        AtomicString               `yaml:"api_base_path,omitempty" group:"cluster" save:"true"`
 	ActiveBootstrapKey AtomicString               `yaml:"active_bootstrap_key,omitempty" group:"cluster" save:"true"`
 	Token              AtomicString               `yaml:"token,omitempty" group:"cluster" save:"true"`
-	URL                AtomicString               `yaml:"url,omitempty" group:"cluster" save:"true"`
+	ID                 AtomicString               `yaml:"id,omitempty" group:"cluster" save:"true"`
 	Port               AtomicInt                  `yaml:"port,omitempty" group:"cluster" save:"true"`
-	APIBasePath        AtomicString               `yaml:"api_base_path,omitempty" group:"cluster" save:"true"`
+	BootstrapKey       AtomicString               `yaml:"bootstrap_key,omitempty" group:"cluster" save:"true"`
 	APINodesPath       AtomicString               `yaml:"api_nodes_path,omitempty" group:"cluster" save:"true"`
-	APIRegisterPath    AtomicString               `yaml:"api_register_path,omitempty" group:"cluster" save:"true"`
+	URL                AtomicString               `yaml:"url,omitempty" group:"cluster" save:"true"`
 	StorageDir         AtomicString               `yaml:"storage_dir,omitempty" group:"cluster" save:"true"`
 	CertificateDir     AtomicString               `yaml:"cert_path,omitempty" group:"cluster" save:"true"`
 	CertificateFetched AtomicBool                 `yaml:"cert_fetched,omitempty" group:"cluster" save:"true" example:"false"`
 	Name               AtomicString               `yaml:"name,omitempty" group:"cluster" save:"true"`
 	Description        AtomicString               `yaml:"description,omitempty" group:"cluster" save:"true"`
-	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
 	ClusterID          AtomicString               `yaml:"cluster_id,omitempty" group:"cluster" save:"true"`
+	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
 }
 
 func (c *ClusterConfiguration) Clear() {
@@ -118,8 +118,8 @@ func (c *ClusterConfiguration) Clear() {
 
 type RuntimeData struct {
 	Host        string
-	Port        int
 	APIBasePath string
+	Port        int
 }
 
 type NotifyConfiguration struct {
@@ -131,34 +131,34 @@ type NotifyConfiguration struct {
 }
 
 type ServiceDiscovery struct {
-	consulMu   sync.Mutex
-	Consuls    []*models.Consul `yaml:"consuls" group:"service_discovery" save:"true"`
-	awsMu      sync.Mutex
+	Consuls    []*models.Consul    `yaml:"consuls" group:"service_discovery" save:"true"`
 	AWSRegions []*models.AwsRegion `yaml:"aws-regions" group:"service_discovery" save:"true"`
+	consulMu   sync.Mutex
+	awsMu      sync.Mutex
 }
 
 //nolint:staticcheck
 type Configuration struct {
-	Name                   AtomicString         `yaml:"name" example:"famous_condor"`
-	storage                Storage              `yaml:"-"`
-	HAProxy                HAProxyConfiguration `yaml:"-"`
-	Logging                log.LoggingOptions   `yaml:"-"`
-	LogTargets             log.Targets          `yaml:"log_targets,omitempty" hcl:"log_targets" group:"log"`
-	Syslog                 log.SyslogOptions    `yaml:"-"`
-	APIOptions             APIConfiguration     `yaml:"-"`
 	Cluster                ClusterConfiguration `yaml:"-"`
-	RuntimeData            RuntimeData          `yaml:"-"`
 	Notify                 NotifyConfiguration  `yaml:"-"`
+	Mode                   AtomicString         `yaml:"mode" default:"single"`
+	storage                Storage              `yaml:"-"`
+	Name                   AtomicString         `yaml:"name" example:"famous_condor"`
+	Cmdline                AtomicString         `yaml:"-"`
+	Status                 AtomicString         `yaml:"status,omitempty"`
+	DeprecatedBootstrapKey AtomicString         `yaml:"bootstrap_key,omitempty" deprecated:"true"`
+	reloadSignal           chan os.Signal
+	shutdownSignal         chan os.Signal
+	MapSync                *MapSync             `yaml:"-"`
+	Syslog                 log.SyslogOptions    `yaml:"-"`
+	Logging                log.LoggingOptions   `yaml:"-"`
+	RuntimeData            RuntimeData          `yaml:"-"`
 	ServiceDiscovery       ServiceDiscovery     `yaml:"-"`
 	Users                  []User               `yaml:"-"`
-	Mode                   AtomicString         `yaml:"mode" default:"single"`
-	DeprecatedBootstrapKey AtomicString         `yaml:"bootstrap_key,omitempty" deprecated:"true"` // deprecated - use Cluster.BootstrapKey
-	Status                 AtomicString         `yaml:"status,omitempty"`
-	Cmdline                AtomicString         `yaml:"-"`
-	MapSync                *MapSync             `yaml:"-"`
+	APIOptions             APIConfiguration     `yaml:"-"`
+	LogTargets             log.Targets          `yaml:"log_targets,omitempty" hcl:"log_targets" group:"log"`
+	HAProxy                HAProxyConfiguration `yaml:"-"`
 	mutex                  sync.Mutex
-	shutdownSignal         chan os.Signal
-	reloadSignal           chan os.Signal
 }
 
 var cfgInitOnce sync.Once

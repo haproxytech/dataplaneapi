@@ -27,8 +27,8 @@ import (
 )
 
 type StorageHCL struct {
-	filename string
 	cfg      *StorageDataplaneAPIConfiguration
+	filename string
 }
 
 func (s *StorageHCL) Load(filename string) error {

@@ -1,0 +1,29 @@
+dataplaneapi:
+  host: 0.0.0.0
+  port: 9555
+  user:
+  - name: admin
+    insecure: true
+    password: adminpwd
+  resources:
+    maps_dir: /etc/hapee-2.6/maps
+    ssl_certs_dir: /etc/hapee-2.6/ssl
+    general_storage_dir: /etc/hapee-2.6/general
+    spoe_dir: /etc/hapee-2.6/spoe
+  advertised:
+    api_address: 10.254.0.11
+    api_port: 9555
+haproxy:
+  config_file: /etc/hapee-2.6/hapee-lb.cfg
+  haproxy_bin: /opt/hapee-2.6/sbin/hapee-lb
+  reload:
+    reload_delay: 5
+    service_name: /var/run/s6/services/haproxy
+    reload_strategy: s6
+log_targets:
+- log_to: stdout
+  log_level: info
+  log_format: text
+  log_types:
+  - access
+  - app

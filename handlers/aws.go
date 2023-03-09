@@ -29,8 +29,8 @@ import (
 // CreateConsulHandlerImpl implementation of the CreateConsulHandler interface using client-native client
 type CreateAWSHandlerImpl struct {
 	Discovery       sc.ServiceDiscoveries
-	UseValidation   bool
 	PersistCallback func([]*models.AwsRegion) error
+	UseValidation   bool
 }
 
 func (c CreateAWSHandlerImpl) Handle(params service_discovery.CreateAWSRegionParams, i interface{}) middleware.Responder {
@@ -105,8 +105,8 @@ func (g GetAWSRegionsHandlerImpl) Handle(params service_discovery.GetAWSRegionsP
 
 type ReplaceAWSRegionHandlerImpl struct {
 	Discovery       sc.ServiceDiscoveries
-	UseValidation   bool
 	PersistCallback func([]*models.AwsRegion) error
+	UseValidation   bool
 }
 
 func (r ReplaceAWSRegionHandlerImpl) Handle(params service_discovery.ReplaceAWSRegionParams, i interface{}) middleware.Responder {
