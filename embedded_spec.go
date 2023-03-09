@@ -40,8 +40,7 @@ func init() {
     "application/json"
   ],
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "swagger": "2.0",
   "info": {
@@ -16951,25 +16950,21 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "example": "127.0.0.1"
+          "pattern": "^[^\\s]+$"
         },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true,
-          "example": 80
+          "x-nullable": true
         },
         "port-range-end": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true,
-          "example": 81
+          "x-nullable": true
         }
-      },
-      "additionalProperties": false
+      }
     },
     "bind_params": {
       "type": "object",
@@ -17130,12 +17125,10 @@ func init() {
             "user",
             "operator",
             "admin"
-          ],
-          "example": "user"
+          ]
         },
         "maxconn": {
-          "type": "integer",
-          "example": 1234
+          "type": "integer"
         },
         "mode": {
           "type": "string"
@@ -17149,12 +17142,10 @@ func init() {
           "x-nullable": false
         },
         "namespace": {
-          "type": "string",
-          "example": "app"
+          "type": "string"
         },
         "nice": {
-          "type": "integer",
-          "example": 1
+          "type": "integer"
         },
         "no_ca_names": {
           "type": "boolean",
@@ -17243,8 +17234,7 @@ func init() {
             "number",
             "string"
           ],
-          "x-display-name": "Format",
-          "example": "none"
+          "x-display-name": "Format"
         },
         "ssl": {
           "type": "boolean"
@@ -17336,7 +17326,12 @@ func init() {
           "example": "none"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "example": {
+        "address": "127.0.0.1",
+        "name": "http",
+        "port": 80
+      }
     },
     "binds": {
       "description": "HAProxy frontend binds array (corresponds to bind directives)",
@@ -18729,7 +18724,8 @@ func init() {
           "description": "Declares a FastCGI application",
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": false
+          "x-nullable": false,
+          "readOnly": true
         },
         "pass_headers": {
           "type": "array",
@@ -21338,6 +21334,8 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
+        "hdr_format": "%T",
+        "hdr_name": "X-Haproxy-Current-Date",
         "index": 0,
         "status": 425,
         "type": "status"
@@ -24710,7 +24708,8 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false
+          "x-nullable": false,
+          "readOnly": true
         },
         "start-on-reload": {
           "description": "HAProxy stops and recreates child programs at reload.",
@@ -25525,8 +25524,10 @@ func init() {
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
+        "check": "enabled",
         "name": "www",
-        "port": 8080
+        "port": 8080,
+        "weight": 80
       }
     },
     "server_params": {
@@ -26345,12 +26346,14 @@ func init() {
               {
                 "address": "127.0.1.1",
                 "name": "www_server",
-                "port": 4567
+                "port": 4567,
+                "weight": 30
               },
               {
                 "address": "127.0.1.2",
                 "name": "www_server_new",
-                "port": 4567
+                "port": 4567,
+                "weight": 70
               }
             ],
             "use_as": "default"
@@ -26359,6 +26362,18 @@ func init() {
         "name": "test_site",
         "service": {
           "http_connection_mode": "httpclose",
+          "listeners": [
+            {
+              "address": "127.0.0.1",
+              "name": "test_listener",
+              "port": 80
+            },
+            {
+              "address": "127.0.0.1",
+              "name": "test_listener_2",
+              "port": 8080
+            }
+          ],
           "maxconn": 2000,
           "mode": "http"
         }
@@ -28866,8 +28881,7 @@ func init() {
     "application/json"
   ],
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "swagger": "2.0",
   "info": {
@@ -54373,25 +54387,21 @@ func init() {
       "properties": {
         "address": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
-          "example": "127.0.0.1"
+          "pattern": "^[^\\s]+$"
         },
         "port": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true,
-          "example": 80
+          "x-nullable": true
         },
         "port-range-end": {
           "type": "integer",
           "maximum": 65535,
           "minimum": 1,
-          "x-nullable": true,
-          "example": 81
+          "x-nullable": true
         }
-      },
-      "additionalProperties": false
+      }
     },
     "bind_params": {
       "type": "object",
@@ -54552,12 +54562,10 @@ func init() {
             "user",
             "operator",
             "admin"
-          ],
-          "example": "user"
+          ]
         },
         "maxconn": {
-          "type": "integer",
-          "example": 1234
+          "type": "integer"
         },
         "mode": {
           "type": "string"
@@ -54571,12 +54579,10 @@ func init() {
           "x-nullable": false
         },
         "namespace": {
-          "type": "string",
-          "example": "app"
+          "type": "string"
         },
         "nice": {
-          "type": "integer",
-          "example": 1
+          "type": "integer"
         },
         "no_ca_names": {
           "type": "boolean",
@@ -54665,8 +54671,7 @@ func init() {
             "number",
             "string"
           ],
-          "x-display-name": "Format",
-          "example": "none"
+          "x-display-name": "Format"
         },
         "ssl": {
           "type": "boolean"
@@ -54758,7 +54763,12 @@ func init() {
           "example": "none"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "example": {
+        "address": "127.0.0.1",
+        "name": "http",
+        "port": 80
+      }
     },
     "binds": {
       "description": "HAProxy frontend binds array (corresponds to bind directives)",
@@ -56111,7 +56121,8 @@ func init() {
           "description": "Declares a FastCGI application",
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": false
+          "x-nullable": false,
+          "readOnly": true
         },
         "pass_headers": {
           "type": "array",
@@ -58563,6 +58574,8 @@ func init() {
       },
       "additionalProperties": false,
       "example": {
+        "hdr_format": "%T",
+        "hdr_name": "X-Haproxy-Current-Date",
         "index": 0,
         "status": 425,
         "type": "status"
@@ -61936,7 +61949,8 @@ func init() {
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
-          "x-nullable": false
+          "x-nullable": false,
+          "readOnly": true
         },
         "start-on-reload": {
           "description": "HAProxy stops and recreates child programs at reload.",
@@ -62751,8 +62765,10 @@ func init() {
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
+        "check": "enabled",
         "name": "www",
-        "port": 8080
+        "port": 8080,
+        "weight": 80
       }
     },
     "server_params": {
@@ -63507,12 +63523,14 @@ func init() {
               {
                 "address": "127.0.1.1",
                 "name": "www_server",
-                "port": 4567
+                "port": 4567,
+                "weight": 30
               },
               {
                 "address": "127.0.1.2",
                 "name": "www_server_new",
-                "port": 4567
+                "port": 4567,
+                "weight": 70
               }
             ],
             "use_as": "default"
@@ -63521,6 +63539,18 @@ func init() {
         "name": "test_site",
         "service": {
           "http_connection_mode": "httpclose",
+          "listeners": [
+            {
+              "address": "127.0.0.1",
+              "name": "test_listener",
+              "port": 80
+            },
+            {
+              "address": "127.0.0.1",
+              "name": "test_listener_2",
+              "port": 8080
+            }
+          ],
           "maxconn": 2000,
           "mode": "http"
         }
