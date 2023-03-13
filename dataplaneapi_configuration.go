@@ -35,7 +35,7 @@ func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) { //
 			configStorage.Dataplaneapi.EnabledListeners = &[]string{"http"}
 		}
 	}
-	if configStorage.Dataplaneapi.EnabledListeners != nil && !misc.HasOSArg("", "scheme", "") {
+	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.EnabledListeners != nil && !misc.HasOSArg("", "scheme", "") {
 		server.EnabledListeners = *configStorage.Dataplaneapi.EnabledListeners
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.CleanupTimeout != nil && !misc.HasOSArg("", "cleanup-timeout", "") {
