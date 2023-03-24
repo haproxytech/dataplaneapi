@@ -8,7 +8,8 @@ COPY script.sh /generate/swagger/script.sh
 COPY templates /generate/swagger/templates
 VOLUME ["/data"]
 
-RUN apk add bash jq && addgroup -g "$GID" -S docker && adduser -u "$UID" -S user -G docker && \
+RUN apk add bash jq && sed -i "s/999/99/" /etc/group &&  \
+    addgroup -g "$GID" -S docker && adduser -u "$UID" -S user -G docker && \
     chmod +x /generate/swagger/script.sh && \
     chown -R "${UID}:${GID}" /data
 

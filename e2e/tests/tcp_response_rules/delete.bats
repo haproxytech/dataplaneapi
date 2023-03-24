@@ -29,6 +29,11 @@ load 'utils/_helpers'
 	resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 204
 
+    if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+        resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+        assert_equal "$SC" 204
+    fi
+
 	resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
 	assert_equal "$SC" 404
 }

@@ -30,7 +30,11 @@ load 'utils/_helpers'
 
 	resource_get "$_RES_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-	assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
+	if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+	    assert_equal "$(get_json_path "$BODY" ".data | length")" 11
+    else
+        assert_equal "$(get_json_path "$BODY" ".data | length")" 2
+    fi
 	assert_equal "$(get_json_path "$BODY" ".data[0].type")" "add-header"
 	assert_equal "$(get_json_path "$BODY" ".data[0].hdr_name")" "X-Add-Frontend"
 	assert_equal "$(get_json_path "$BODY" ".data[0].cond")" "unless"
@@ -39,6 +43,46 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".data[1].hdr_name")" "X-Del-Frontend"
 	assert_equal "$(get_json_path "$BODY" ".data[1].cond")" "if"
 	assert_equal "$(get_json_path "$BODY" ".data[1].cond_test")" "{ src 10.1.0.0/16 }"
+	if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+        assert_equal "$(get_json_path "$BODY" ".data[2].type")" "set-map"
+        assert_equal "$(get_json_path "$BODY" ".data[2].map_file")" "map.lst"
+        assert_equal "$(get_json_path "$BODY" ".data[2].map_keyfmt")" "%[src]"
+        assert_equal "$(get_json_path "$BODY" ".data[2].map_valuefmt")" "%[res.hdr(X-Value)]"
+        assert_equal "$(get_json_path "$BODY" ".data[3].type")" "del-map"
+        assert_equal "$(get_json_path "$BODY" ".data[3].map_file")" "map.lst"
+        assert_equal "$(get_json_path "$BODY" ".data[3].map_keyfmt")" "%[src]"
+        assert_equal "$(get_json_path "$BODY" ".data[3].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[3].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".data[4].type")" "del-acl"
+        assert_equal "$(get_json_path "$BODY" ".data[4].acl_file")" "map.lst"
+        assert_equal "$(get_json_path "$BODY" ".data[4].acl_keyfmt")" "%[src]"
+        assert_equal "$(get_json_path "$BODY" ".data[4].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[4].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".data[5].type")" "sc-inc-gpc"
+        assert_equal "$(get_json_path "$BODY" ".data[5].sc_id")" "1"
+        assert_equal "$(get_json_path "$BODY" ".data[5].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[5].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".data[6].type")" "sc-inc-gpc0"
+        assert_equal "$(get_json_path "$BODY" ".data[6].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[6].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".data[7].type")" "sc-inc-gpc1"
+        assert_equal "$(get_json_path "$BODY" ".data[7].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[7].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".data[8].type")" "sc-set-gpt0"
+        assert_equal "$(get_json_path "$BODY" ".data[8].sc_id")" "1"
+        assert_equal "$(get_json_path "$BODY" ".data[8].sc_expr")" "hdr(Host),lower"
+        assert_equal "$(get_json_path "$BODY" ".data[8].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[8].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".data[9].type")" "sc-set-gpt0"
+        assert_equal "$(get_json_path "$BODY" ".data[9].sc_id")" "1"
+        assert_equal "$(get_json_path "$BODY" ".data[9].sc_int")" "20"
+        assert_equal "$(get_json_path "$BODY" ".data[9].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[9].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".data[10].type")" "set-log-level"
+        assert_equal "$(get_json_path "$BODY" ".data[10].log_level")" "silent"
+        assert_equal "$(get_json_path "$BODY" ".data[10].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".data[10].cond_test")" "FALSE"
+    fi
 }
 
 @test "http_after_response_rules: Return one HTTP After Response Rule from backend" {

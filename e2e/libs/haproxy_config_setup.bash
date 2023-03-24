@@ -30,7 +30,9 @@ setup() {
   fi
 
   # replace the default haproxy config file
-  if [ -f "${BATS_TEST_DIRNAME}/data/haproxy.cfg" ]; then
+  if [ $HAPROXY_VERSION = 2.8 ] && [ -f "${BATS_TEST_DIRNAME}/data/haproxy_${HAPROXY_VERSION}.cfg" ]; then
+      run docker cp "${BATS_TEST_DIRNAME}/data/haproxy_${HAPROXY_VERSION}.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+  elif [ -f "${BATS_TEST_DIRNAME}/data/haproxy.cfg" ]; then
       run docker cp "${BATS_TEST_DIRNAME}/data/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   else
       run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"

@@ -20501,6 +20501,21 @@ func init() {
               "x-display-name": "SSL Maximum Size",
               "x-nullable": true
             },
+            "ssl_ocsp_update_max_delay": {
+              "type": "integer",
+              "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
+              "x-nullable": true
+            },
+            "ssl_ocsp_update_min_delay": {
+              "type": "integer",
+              "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
+              "x-nullable": true
+            },
+            "stick_counters": {
+              "type": "integer",
+              "x-display-name": "Number of stick-counters",
+              "x-nullable": true
+            },
             "vars_global_max_size": {
               "type": "integer",
               "x-display-name": "Variables Global Max Size",
@@ -20668,6 +20683,31 @@ func init() {
         "type"
       ],
       "properties": {
+        "acl_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "del-acl"
+              ]
+            }
+          }
+        },
+        "acl_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACK Key Format"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -20749,6 +20789,108 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug",
+            "silent"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-log-level"
+            }
+          }
+        },
+        "map_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          }
+        },
+        "map_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          },
+          "x-display-name": "Map Key Format"
+        },
+        "map_valuefmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-map"
+            }
+          },
+          "x-display-name": "Map Value Format"
+        },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc",
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-inc-gpc"
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
+        },
         "status": {
           "type": "integer",
           "maximum": 999,
@@ -20787,10 +20929,18 @@ func init() {
           "enum": [
             "add-header",
             "allow",
+            "del-acl",
             "del-header",
+            "del-map",
             "replace-header",
             "replace-value",
+            "sc-inc-gpc",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
             "set-header",
+            "set-log-level",
+            "set-map",
             "set-status",
             "set-var",
             "strict-mode",
@@ -22002,7 +22152,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Expression Value"
@@ -22013,9 +22166,23 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
               ]
             }
           }
@@ -22025,7 +22192,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Integer Value",
@@ -22196,6 +22366,8 @@ func init() {
             "replace-uri",
             "replace-value",
             "return",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -22766,7 +22938,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Expression Value"
@@ -22777,9 +22952,23 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
               ]
             }
           }
@@ -22789,7 +22978,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Integer Value",
@@ -22938,6 +23130,8 @@ func init() {
             "replace-header",
             "replace-value",
             "return",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -27566,6 +27760,8 @@ func init() {
             "expect-netscaler-cip",
             "expect-proxy",
             "reject",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -27918,12 +28114,32 @@ func init() {
           },
           "x-display-name": "Variable name"
         },
+        "sc_idx": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": null
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Sticky counter Index"
+        },
         "sc_inc_id": {
           "type": "string",
           "x-dependency": {
             "action": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
@@ -27939,6 +28155,20 @@ func init() {
             }
           },
           "x-display-name": "Sticky counter ID"
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
         },
         "service_name": {
           "type": "string",
@@ -28171,6 +28401,8 @@ func init() {
             "lua",
             "set-bandwidth-limit",
             "close",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -28355,15 +28587,48 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
         "sc_id": {
           "type": "integer",
           "x-dependency": {
             "action": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
               ]
             },
             "type": {
@@ -28376,7 +28641,10 @@ func init() {
           "x-dependency": {
             "action": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
+              ]
             },
             "type": {
               "value": "content"
@@ -52929,6 +53197,21 @@ func init() {
           "x-display-name": "SSL Maximum Size",
           "x-nullable": true
         },
+        "ssl_ocsp_update_max_delay": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
+          "x-nullable": true
+        },
+        "ssl_ocsp_update_min_delay": {
+          "type": "integer",
+          "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
+          "x-nullable": true
+        },
+        "stick_counters": {
+          "type": "integer",
+          "x-display-name": "Number of stick-counters",
+          "x-nullable": true
+        },
         "vars_global_max_size": {
           "type": "integer",
           "x-display-name": "Variables Global Max Size",
@@ -57726,6 +58009,21 @@ func init() {
               "x-display-name": "SSL Maximum Size",
               "x-nullable": true
             },
+            "ssl_ocsp_update_max_delay": {
+              "type": "integer",
+              "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
+              "x-nullable": true
+            },
+            "ssl_ocsp_update_min_delay": {
+              "type": "integer",
+              "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
+              "x-nullable": true
+            },
+            "stick_counters": {
+              "type": "integer",
+              "x-display-name": "Number of stick-counters",
+              "x-nullable": true
+            },
             "vars_global_max_size": {
               "type": "integer",
               "x-display-name": "Variables Global Max Size",
@@ -57893,6 +58191,31 @@ func init() {
         "type"
       ],
       "properties": {
+        "acl_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "del-acl"
+              ]
+            }
+          }
+        },
+        "acl_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "del-acl"
+              ]
+            }
+          },
+          "x-display-name": "ACK Key Format"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -57974,6 +58297,108 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "emerg",
+            "alert",
+            "crit",
+            "err",
+            "warning",
+            "notice",
+            "info",
+            "debug",
+            "silent"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-log-level"
+            }
+          }
+        },
+        "map_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          }
+        },
+        "map_keyfmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "set-map",
+                "del-map"
+              ]
+            }
+          },
+          "x-display-name": "Map Key Format"
+        },
+        "map_valuefmt": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-map"
+            }
+          },
+          "x-display-name": "Map Value Format"
+        },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
+        "sc_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-inc-gpc",
+                "sc-inc-gpc0",
+                "sc-inc-gpc1",
+                "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-inc-gpc"
+            }
+          }
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "sc-set-gpt0"
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
+        },
         "status": {
           "type": "integer",
           "maximum": 999,
@@ -58012,10 +58437,18 @@ func init() {
           "enum": [
             "add-header",
             "allow",
+            "del-acl",
             "del-header",
+            "del-map",
             "replace-header",
             "replace-value",
+            "sc-inc-gpc",
+            "sc-inc-gpc0",
+            "sc-inc-gpc1",
+            "sc-set-gpt0",
             "set-header",
+            "set-log-level",
+            "set-map",
             "set-status",
             "set-var",
             "strict-mode",
@@ -59227,7 +59660,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Expression Value"
@@ -59238,9 +59674,23 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
               ]
             }
           }
@@ -59250,7 +59700,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Integer Value",
@@ -59421,6 +59874,8 @@ func init() {
             "replace-uri",
             "replace-value",
             "return",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -59991,7 +60446,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Expression Value"
@@ -60002,9 +60460,23 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
+              ]
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
               ]
             }
           }
@@ -60014,7 +60486,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Integer Value",
@@ -60163,6 +60638,8 @@ func init() {
             "replace-header",
             "replace-value",
             "return",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -64686,6 +65163,8 @@ func init() {
             "expect-netscaler-cip",
             "expect-proxy",
             "reject",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -65038,12 +65517,32 @@ func init() {
           },
           "x-display-name": "Variable name"
         },
+        "sc_idx": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": []
+            },
+            "type": {
+              "required": true,
+              "value": [
+                "connection",
+                "content",
+                "session"
+              ]
+            }
+          },
+          "x-display-name": "Sticky counter Index"
+        },
         "sc_inc_id": {
           "type": "string",
           "x-dependency": {
             "action": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
@@ -65059,6 +65558,20 @@ func init() {
             }
           },
           "x-display-name": "Sticky counter ID"
+        },
+        "sc_int": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
+            }
+          },
+          "x-display-name": "ScSet Integer Value",
+          "x-nullable": true
         },
         "service_name": {
           "type": "string",
@@ -65291,6 +65804,8 @@ func init() {
             "lua",
             "set-bandwidth-limit",
             "close",
+            "sc-add-gpc",
+            "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
             "sc-set-gpt0",
@@ -65475,15 +65990,48 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
+        "sc_expr": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "ScSet Expression Value"
+        },
         "sc_id": {
           "type": "integer",
           "x-dependency": {
             "action": {
               "required": true,
               "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
                 "sc-set-gpt0"
+              ]
+            },
+            "type": {
+              "value": "content"
+            }
+          }
+        },
+        "sc_idx": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
               ]
             },
             "type": {
@@ -65496,7 +66044,10 @@ func init() {
           "x-dependency": {
             "action": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
+              ]
             },
             "type": {
               "value": "content"

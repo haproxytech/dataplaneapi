@@ -27,14 +27,21 @@ load 'utils/_helpers'
   #
   # Deleting first
   #
-  resource_delete "$_REQ_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    resource_delete "$_REQ_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 204
-	#
+  #
   # Deleting second
   #
 	resource_delete "$_REQ_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 204
-	#
+  #
+  if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+      # Deleting third
+      #
+        resource_delete "$_REQ_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+        assert_equal "$SC" 204
+      #
+  fi
   # Not found
   #
   resource_delete "$_REQ_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"

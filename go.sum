@@ -131,10 +131,10 @@ github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
-github.com/haproxytech/client-native/v4 v4.0.1-0.20230308121936-d0e45bd84b92 h1:9MGr/OZ48UPTeKctP1YY0S6YmprRzbb32k0g+KawRQY=
-github.com/haproxytech/client-native/v4 v4.0.1-0.20230308121936-d0e45bd84b92/go.mod h1:C04idRRchv4kPI1Bh5EkOn+9UXoS7QtMWQVUr7APNhg=
-github.com/haproxytech/config-parser/v4 v4.1.1-0.20230308114929-b7f6fa2190e1 h1:qnHJR/8+bSdxTK7IlE7xWXNTJoCSqP7dy79s9iNLxgA=
-github.com/haproxytech/config-parser/v4 v4.1.1-0.20230308114929-b7f6fa2190e1/go.mod h1:ATW/is/Ni9HK2F5Y1IhS5cutgy/w/abVgwRLaoqlcmo=
+github.com/haproxytech/client-native/v4 v4.0.1-0.20230327132034-ce7b07121ce1 h1:UJFsa6gx4pH2nSvdijuRrisX/J5Jlk1qT/foyi0+FZQ=
+github.com/haproxytech/client-native/v4 v4.0.1-0.20230327132034-ce7b07121ce1/go.mod h1:jD5RNvC81D3t45c489/uhyMJzZi5FgRlXI0l8BUC370=
+github.com/haproxytech/config-parser/v4 v4.1.1-0.20230323005458-ade5d7ce668f h1:xYqVabNdwLs210sqVKio01tj6n8ZoeZmqgalHvkRyb8=
+github.com/haproxytech/config-parser/v4 v4.1.1-0.20230323005458-ade5d7ce668f/go.mod h1:jAm9BC3F7BUveSA2lcQUkUe9tj75N0CmKRNeRvM97uo=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
 github.com/haproxytech/go-logger v1.1.0/go.mod h1:OekUd8HCb7ubxMplzHUPBTHNxZmddOWfOjWclZsqIeM=
 github.com/hashicorp/hcl v1.0.0 h1:0Anlzjpi4vEasTeNFn2mLJgTSwt0+6sfsiTG8qcWGx4=
@@ -213,7 +213,8 @@ github.com/rodaine/hclencoder v0.0.1/go.mod h1:XKt85p0Ifyt0pr1KVeB3eL+dUFAKa+IA6
 github.com/rogpeppe/go-internal v1.1.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.2.2/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
-github.com/rogpeppe/go-internal v1.6.1 h1:/FiVV8dS/e+YqF2JvO3yXRFbBLTIuSDkuC7aBOAvL+k=
+github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZVejAe8=
+github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
 github.com/rs/cors v1.8.3 h1:O+qNyWn7Z+F9M0ILBHgMVPuB1xTOucVd5gtaYyXBpRo=
 github.com/rs/cors v1.8.3/go.mod h1:XyqrcTp5zjWr1wsJ8PIRZssZ8b/WMcMf71DJnit4EMU=
 github.com/shirou/gopsutil v3.21.11+incompatible h1:+1+c1VGhc88SSonWP6foOcLhvnKlUeu/erjjvaPEYiI=
@@ -266,6 +267,8 @@ golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACk
 golang.org/x/crypto v0.0.0-20190422162423-af44ce270edf/go.mod h1:WFFai1msRO1wXaEeE5yQxYXgSfI8pQAWXbQop6sCtWE=
 golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
 golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
+golang.org/x/exp v0.0.0-20230315142452-642cacee5cc0 h1:pVgRXcIictcr+lBQIFeiwuwtDIs4eL21OuM9nyAADmo=
+golang.org/x/exp v0.0.0-20230315142452-642cacee5cc0/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
 golang.org/x/net v0.0.0-20190311183353-d8887717615a/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
 golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
 golang.org/x/net v0.0.0-20210421230115-4e50805a0758/go.mod h1:72T/g9IO56b78aLF+1Kcs5dz7/ng1VjMUvfKvpfy+jM=
