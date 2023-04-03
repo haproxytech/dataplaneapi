@@ -26068,7 +26068,7 @@ func init() {
         },
         "resolve-net": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
+          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$",
           "x-dependency": {
             "resolvers": {
               "required": true
@@ -26089,7 +26089,7 @@ func init() {
         },
         "resolve_opts": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
+          "pattern": "^(allow-dup-ip|ignore-weight|prevent-dup-ip)(,(allow-dup-ip|ignore-weight|prevent-dup-ip))*$"
         },
         "resolvers": {
           "type": "string",
@@ -63577,7 +63577,7 @@ func init() {
         },
         "resolve-net": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
+          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$",
           "x-dependency": {
             "resolvers": {
               "required": true
@@ -63598,7 +63598,7 @@ func init() {
         },
         "resolve_opts": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
+          "pattern": "^(allow-dup-ip|ignore-weight|prevent-dup-ip)(,(allow-dup-ip|ignore-weight|prevent-dup-ip))*$"
         },
         "resolvers": {
           "type": "string",
