@@ -1,4 +1,4 @@
-DATAPLANEAPI_PATH?=${PWD}
+DATAPLANEAPI_PATH?=$(shell pwd)
 GIT_REPO?=$(shell git config --get remote.origin.url)
 GIT_HEAD_COMMIT=$(shell git rev-parse --short HEAD)
 GIT_LAST_TAG=$(shell git describe --abbrev=0 --tags)
@@ -34,7 +34,7 @@ generate:
 		--build-arg UID=$(shell id -u) \
 		--build-arg GID=$(shell id -g) \
 		-t dataplaneapi-swagger-gen .
-	docker run --rm -v "$(PWD)":/data dataplaneapi-swagger-gen
+	docker run --rm -v "$(shell pwd)":/data dataplaneapi-swagger-gen
 	generate/post_swagger.sh
 
 .PHONY: generate-native
