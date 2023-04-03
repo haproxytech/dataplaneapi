@@ -1,5 +1,7 @@
 {
   "check": "enabled",
+  "resolve-net": "10.0.0.0/8",
+  "resolve_opts": "allow-dup-ip",
   "weight": 10,
   "address": "10.1.1.2",
   "name": "server_01",

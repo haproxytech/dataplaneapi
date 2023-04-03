@@ -3,5 +3,7 @@
   "check": "enabled",
   "name": "test_server",
   "port": 8080,
-  "weight": 80
+  "weight": 80,
+  "resolve-net": "10.0.0.0/8,10.200.200.0/12",
+  "resolve_opts": "allow-dup-ip,ignore-weight"
 }

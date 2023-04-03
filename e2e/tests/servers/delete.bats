@@ -24,7 +24,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "servers: Delete a server" {
-  for name in "server_01" "server_02" "server_03"; do
+  for name in "server_01" "server_02" "server_03" "server_04"; do
     resource_delete "$_SERVER_BASE_PATH/$name" "backend=test_backend&force_reload=true"
 	  assert_equal "$SC" 204
   done

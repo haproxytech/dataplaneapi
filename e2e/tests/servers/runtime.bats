@@ -28,7 +28,7 @@ load 'utils/_helpers'
   resource_get "$_RUNTIME_SERVER_BASE_PATH" "backend=test_backend"
 	assert_equal "$SC" 200
 
-	for name in "server_01" "server_02" "server_03"; do
+	for name in "server_01" "server_02" "server_03" "server_04"; do
   	assert_equal "$(get_json_path "$BODY" ".[] | select(.name | contains(\"$name\") ).name")" "$name"
   done
 }
