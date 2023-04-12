@@ -10537,6 +10537,299 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/tables": {
+      "get": {
+        "description": "Returns an array of all tables that are configured in specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Return an array of tables",
+        "operationId": "getTables",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/tables"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new table in the specified peer section in the configuration file.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Add a new table",
+        "operationId": "createTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Table created",
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/table"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/tables/{name}": {
+      "get": {
+        "description": "Returns one table configuration by it's name in the specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Return one table",
+        "operationId": "getTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/table"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a table configuration by it's name in the specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Replace a table",
+        "operationId": "replaceTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Table replaced",
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/table"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a table configuration by it's name in the specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Delete a table",
+        "operationId": "deleteTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Table deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/tcp_checks": {
       "get": {
         "description": "Returns all TCP checks that are configured in specified parent.",
@@ -20852,7 +21145,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Expression Value"
@@ -20863,6 +21159,7 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "sc-add-gpc",
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
@@ -20876,7 +21173,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-inc-gpc"
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
+              ]
             }
           }
         },
@@ -20885,7 +21185,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Integer Value",
@@ -20934,6 +21237,7 @@ func init() {
             "del-map",
             "replace-header",
             "replace-value",
+            "sc-add-gpc",
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
@@ -24560,9 +24864,6 @@ func init() {
         "shards": {
           "description": "In some configurations, one would like to distribute the stick-table contents\nto some peers in place of sending all the stick-table contents to each peer\ndeclared in the \"peers\" section. In such cases, \"shards\" specifies the\nnumber of peer involved in this stick-table contents distribution.",
           "type": "integer"
-        },
-        "stick_table": {
-          "$ref": "#/definitions/config_stick_table"
         }
       },
       "additionalProperties": false
@@ -26068,24 +26369,14 @@ func init() {
         },
         "resolve-net": {
           "type": "string",
-          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$"
         },
         "resolve-prefer": {
           "type": "string",
           "enum": [
             "ipv4",
             "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          ]
         },
         "resolve_opts": {
           "type": "string",
@@ -27381,6 +27672,53 @@ func init() {
       "title": "Stick Tables Array",
       "items": {
         "$ref": "#/definitions/stick_table"
+      }
+    },
+    "table": {
+      "type": "object",
+      "properties": {
+        "expire": {
+          "type": "string",
+          "pattern": "^\\d+(ms|s|m|h|d)?$",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "no_purge": {
+          "type": "boolean",
+          "x-display-name": "No Purge"
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^\\d+(k|K|m|M|g|G)?$"
+        },
+        "store": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ip",
+            "integer",
+            "string",
+            "binary"
+          ]
+        },
+        "type_len": {
+          "type": "integer",
+          "x-display-name": "Type",
+          "x-nullable": true
+        }
+      }
+    },
+    "tables": {
+      "description": "HAProxy table array",
+      "type": "array",
+      "title": "Tables",
+      "items": {
+        "$ref": "#/definitions/table"
       }
     },
     "tcp_check": {
@@ -29112,6 +29450,9 @@ func init() {
     },
     {
       "name": "TCPResponseRule"
+    },
+    {
+      "name": "Table"
     },
     {
       "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
@@ -44624,6 +44965,442 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/tables": {
+      "get": {
+        "description": "Returns an array of all tables that are configured in specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Return an array of tables",
+        "operationId": "getTables",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/tables"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new table in the specified peer section in the configuration file.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Add a new table",
+        "operationId": "createTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent peer section name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Table created",
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/table"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/tables/{name}": {
+      "get": {
+        "description": "Returns one table configuration by it's name in the specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Return one table",
+        "operationId": "getTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_version": {
+                  "type": "integer"
+                },
+                "data": {
+                  "$ref": "#/definitions/table"
+                }
+              }
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a table configuration by it's name in the specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Replace a table",
+        "operationId": "replaceTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Table replaced",
+            "schema": {
+              "$ref": "#/definitions/table"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/table"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a table configuration by it's name in the specified peer section.",
+        "tags": [
+          "Table"
+        ],
+        "summary": "Delete a table",
+        "operationId": "deleteTable",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Table name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent peers name",
+            "name": "peer_section",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Table deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/tcp_checks": {
       "get": {
         "description": "Returns all TCP checks that are configured in specified parent.",
@@ -58360,7 +59137,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Expression Value"
@@ -58371,6 +59151,7 @@ func init() {
             "type": {
               "required": true,
               "value": [
+                "sc-add-gpc",
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
@@ -58384,7 +59165,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-inc-gpc"
+              "value": [
+                "sc-add-gpc",
+                "sc-inc-gpc"
+              ]
             }
           }
         },
@@ -58393,7 +59177,10 @@ func init() {
           "x-dependency": {
             "type": {
               "required": true,
-              "value": "sc-set-gpt0"
+              "value": [
+                "sc-add-gpc",
+                "sc-set-gpt0"
+              ]
             }
           },
           "x-display-name": "ScSet Integer Value",
@@ -58442,6 +59229,7 @@ func init() {
             "del-map",
             "replace-header",
             "replace-value",
+            "sc-add-gpc",
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
@@ -62069,9 +62857,6 @@ func init() {
         "shards": {
           "description": "In some configurations, one would like to distribute the stick-table contents\nto some peers in place of sending all the stick-table contents to each peer\ndeclared in the \"peers\" section. In such cases, \"shards\" specifies the\nnumber of peer involved in this stick-table contents distribution.",
           "type": "integer"
-        },
-        "stick_table": {
-          "$ref": "#/definitions/config_stick_table"
         }
       },
       "additionalProperties": false
@@ -63577,24 +64362,14 @@ func init() {
         },
         "resolve-net": {
           "type": "string",
-          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$"
         },
         "resolve-prefer": {
           "type": "string",
           "enum": [
             "ipv4",
             "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          ]
         },
         "resolve_opts": {
           "type": "string",
@@ -64784,6 +65559,53 @@ func init() {
       "title": "Stick Tables Array",
       "items": {
         "$ref": "#/definitions/stick_table"
+      }
+    },
+    "table": {
+      "type": "object",
+      "properties": {
+        "expire": {
+          "type": "string",
+          "pattern": "^\\d+(ms|s|m|h|d)?$",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "no_purge": {
+          "type": "boolean",
+          "x-display-name": "No Purge"
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^\\d+(k|K|m|M|g|G)?$"
+        },
+        "store": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ip",
+            "integer",
+            "string",
+            "binary"
+          ]
+        },
+        "type_len": {
+          "type": "integer",
+          "x-display-name": "Type",
+          "x-nullable": true
+        }
+      }
+    },
+    "tables": {
+      "description": "HAProxy table array",
+      "type": "array",
+      "title": "Tables",
+      "items": {
+        "$ref": "#/definitions/table"
       }
     },
     "tcp_check": {
@@ -66515,6 +67337,9 @@ func init() {
     },
     {
       "name": "TCPResponseRule"
+    },
+    {
+      "name": "Table"
     },
     {
       "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
