@@ -1,0 +1,6 @@
+{
+  "name": "t1",
+  "type": "ip",
+  "size": "2m",
+  "store": "gpc0,gpc1,conn_rate(30s)"
+}

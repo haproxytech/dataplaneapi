@@ -570,6 +570,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	api.PeerEntryGetPeerEntriesHandler = &handlers.GetPeerEntriesHandlerImpl{Client: client}
 	api.PeerEntryReplacePeerEntryHandler = &handlers.ReplacePeerEntryHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup tables handlers
+	api.TableCreateTableHandler = &handlers.CreateTableHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TableDeleteTableHandler = &handlers.DeleteTableHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TableGetTableHandler = &handlers.GetTableHandlerImpl{Client: client}
+	api.TableGetTablesHandler = &handlers.GetTablesHandlerImpl{Client: client}
+	api.TableReplaceTableHandler = &handlers.ReplaceTableHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup http-errors sections handlers
 	api.HTTPErrorsCreateHTTPErrorsSectionHandler = &handlers.CreateHTTPErrorsSectionHandlerImpl{Client: client, ReloadAgent: ra}
 	api.HTTPErrorsDeleteHTTPErrorsSectionHandler = &handlers.DeleteHTTPErrorsSectionHandlerImpl{Client: client, ReloadAgent: ra}

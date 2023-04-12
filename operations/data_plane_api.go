@@ -84,6 +84,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
 	"github.com/haproxytech/dataplaneapi/operations/stick_table"
 	"github.com/haproxytech/dataplaneapi/operations/storage"
+	"github.com/haproxytech/dataplaneapi/operations/table"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_check"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
@@ -294,6 +295,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPResponseRuleCreateTCPResponseRuleHandler: tcp_response_rule.CreateTCPResponseRuleHandlerFunc(func(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.CreateTCPResponseRule has not yet been implemented")
 		}),
+		TableCreateTableHandler: table.CreateTableHandlerFunc(func(params table.CreateTableParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation table.CreateTable has not yet been implemented")
+		}),
 		UserCreateUserHandler: user.CreateUserHandlerFunc(func(params user.CreateUserParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation user.CreateUser has not yet been implemented")
 		}),
@@ -449,6 +453,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPResponseRuleDeleteTCPResponseRuleHandler: tcp_response_rule.DeleteTCPResponseRuleHandlerFunc(func(params tcp_response_rule.DeleteTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.DeleteTCPResponseRule has not yet been implemented")
+		}),
+		TableDeleteTableHandler: table.DeleteTableHandlerFunc(func(params table.DeleteTableParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation table.DeleteTable has not yet been implemented")
 		}),
 		TransactionsDeleteTransactionHandler: transactions.DeleteTransactionHandlerFunc(func(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.DeleteTransaction has not yet been implemented")
@@ -837,6 +844,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPResponseRuleGetTCPResponseRulesHandler: tcp_response_rule.GetTCPResponseRulesHandlerFunc(func(params tcp_response_rule.GetTCPResponseRulesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.GetTCPResponseRules has not yet been implemented")
 		}),
+		TableGetTableHandler: table.GetTableHandlerFunc(func(params table.GetTableParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation table.GetTable has not yet been implemented")
+		}),
+		TableGetTablesHandler: table.GetTablesHandlerFunc(func(params table.GetTablesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation table.GetTables has not yet been implemented")
+		}),
 		TransactionsGetTransactionHandler: transactions.GetTransactionHandlerFunc(func(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.GetTransaction has not yet been implemented")
 		}),
@@ -1001,6 +1014,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TCPResponseRuleReplaceTCPResponseRuleHandler: tcp_response_rule.ReplaceTCPResponseRuleHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.ReplaceTCPResponseRule has not yet been implemented")
+		}),
+		TableReplaceTableHandler: table.ReplaceTableHandlerFunc(func(params table.ReplaceTableParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation table.ReplaceTable has not yet been implemented")
 		}),
 		UserReplaceUserHandler: user.ReplaceUserHandlerFunc(func(params user.ReplaceUserParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation user.ReplaceUser has not yet been implemented")
@@ -1197,6 +1213,8 @@ type DataPlaneAPI struct {
 	TCPRequestRuleCreateTCPRequestRuleHandler tcp_request_rule.CreateTCPRequestRuleHandler
 	// TCPResponseRuleCreateTCPResponseRuleHandler sets the operation handler for the create TCP response rule operation
 	TCPResponseRuleCreateTCPResponseRuleHandler tcp_response_rule.CreateTCPResponseRuleHandler
+	// TableCreateTableHandler sets the operation handler for the create table operation
+	TableCreateTableHandler table.CreateTableHandler
 	// UserCreateUserHandler sets the operation handler for the create user operation
 	UserCreateUserHandler user.CreateUserHandler
 	// UserlistCreateUserlistHandler sets the operation handler for the create userlist operation
@@ -1301,6 +1319,8 @@ type DataPlaneAPI struct {
 	TCPRequestRuleDeleteTCPRequestRuleHandler tcp_request_rule.DeleteTCPRequestRuleHandler
 	// TCPResponseRuleDeleteTCPResponseRuleHandler sets the operation handler for the delete TCP response rule operation
 	TCPResponseRuleDeleteTCPResponseRuleHandler tcp_response_rule.DeleteTCPResponseRuleHandler
+	// TableDeleteTableHandler sets the operation handler for the delete table operation
+	TableDeleteTableHandler table.DeleteTableHandler
 	// TransactionsDeleteTransactionHandler sets the operation handler for the delete transaction operation
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
 	// UserDeleteUserHandler sets the operation handler for the delete user operation
@@ -1559,6 +1579,10 @@ type DataPlaneAPI struct {
 	TCPResponseRuleGetTCPResponseRuleHandler tcp_response_rule.GetTCPResponseRuleHandler
 	// TCPResponseRuleGetTCPResponseRulesHandler sets the operation handler for the get TCP response rules operation
 	TCPResponseRuleGetTCPResponseRulesHandler tcp_response_rule.GetTCPResponseRulesHandler
+	// TableGetTableHandler sets the operation handler for the get table operation
+	TableGetTableHandler table.GetTableHandler
+	// TableGetTablesHandler sets the operation handler for the get tables operation
+	TableGetTablesHandler table.GetTablesHandler
 	// TransactionsGetTransactionHandler sets the operation handler for the get transaction operation
 	TransactionsGetTransactionHandler transactions.GetTransactionHandler
 	// TransactionsGetTransactionsHandler sets the operation handler for the get transactions operation
@@ -1669,6 +1693,8 @@ type DataPlaneAPI struct {
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
 	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
+	// TableReplaceTableHandler sets the operation handler for the replace table operation
+	TableReplaceTableHandler table.ReplaceTableHandler
 	// UserReplaceUserHandler sets the operation handler for the replace user operation
 	UserReplaceUserHandler user.ReplaceUserHandler
 	// StickTableSetStickTableEntriesHandler sets the operation handler for the set stick table entries operation
@@ -1946,6 +1972,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPResponseRuleCreateTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.CreateTCPResponseRuleHandler")
 	}
+	if o.TableCreateTableHandler == nil {
+		unregistered = append(unregistered, "table.CreateTableHandler")
+	}
 	if o.UserCreateUserHandler == nil {
 		unregistered = append(unregistered, "user.CreateUserHandler")
 	}
@@ -2101,6 +2130,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPResponseRuleDeleteTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.DeleteTCPResponseRuleHandler")
+	}
+	if o.TableDeleteTableHandler == nil {
+		unregistered = append(unregistered, "table.DeleteTableHandler")
 	}
 	if o.TransactionsDeleteTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.DeleteTransactionHandler")
@@ -2489,6 +2521,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPResponseRuleGetTCPResponseRulesHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.GetTCPResponseRulesHandler")
 	}
+	if o.TableGetTableHandler == nil {
+		unregistered = append(unregistered, "table.GetTableHandler")
+	}
+	if o.TableGetTablesHandler == nil {
+		unregistered = append(unregistered, "table.GetTablesHandler")
+	}
 	if o.TransactionsGetTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionHandler")
 	}
@@ -2653,6 +2691,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TCPResponseRuleReplaceTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleHandler")
+	}
+	if o.TableReplaceTableHandler == nil {
+		unregistered = append(unregistered, "table.ReplaceTableHandler")
 	}
 	if o.UserReplaceUserHandler == nil {
 		unregistered = append(unregistered, "user.ReplaceUserHandler")
@@ -3010,6 +3051,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/tables"] = table.NewCreateTable(o.context, o.TableCreateTableHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/users"] = user.NewCreateUser(o.context, o.UserCreateUserHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -3215,6 +3260,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewDeleteTCPResponseRule(o.context, o.TCPResponseRuleDeleteTCPResponseRuleHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/tables/{name}"] = table.NewDeleteTable(o.context, o.TableDeleteTableHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3734,6 +3783,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/tables/{name}"] = table.NewGetTable(o.context, o.TableGetTableHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/tables"] = table.NewGetTables(o.context, o.TableGetTablesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/transactions/{id}"] = transactions.NewGetTransaction(o.context, o.TransactionsGetTransactionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -3951,6 +4008,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/tables/{name}"] = table.NewReplaceTable(o.context, o.TableReplaceTableHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

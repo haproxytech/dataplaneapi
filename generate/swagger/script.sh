@@ -120,6 +120,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=Group \
     --tags=MailerEntry \
     --tags=Mailers \
+    --tags=Table \
     -r $SPEC_DIR/copyright.txt \
     --template-dir generate/swagger/templates
 
