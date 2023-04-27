@@ -289,7 +289,9 @@ func (ra *ReloadAgent) ReloadWithCallback(callback func()) string {
 		next = ra.cache.newReloadWithCallback(callback)
 		log.WithFields(map[string]interface{}{logFieldReloadID: next}, log.DebugLevel, "Scheduling a new reload...")
 	}
-
+	ra.cache.mu.Lock()
+	ra.cache.callbacks[next] = callback
+	ra.cache.mu.Unlock()
 	return next
 }
 
@@ -301,6 +303,7 @@ func (ra *ReloadAgent) ForceReloadWithCallback(callback func()) error {
 		if err != nil {
 			return NewReloadError(fmt.Sprintf("Reload failed: %v, %v", err, r))
 		}
+		callback()
 		return nil
 	}
 
@@ -335,7 +338,9 @@ func (rc *reloadCache) newReload() string {
 
 func (rc *reloadCache) newReloadWithCallback(callback func()) string {
 	next := rc.newReload()
+	rc.mu.Lock()
 	rc.callbacks[next] = callback
+	rc.mu.Unlock()
 	return next
 }
 
