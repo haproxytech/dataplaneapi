@@ -32,6 +32,7 @@ var mutex = &sync.Mutex{}
 type ServiceInstance interface {
 	GetName() string
 	GetBackendName() string
+	GetFrom() string
 	Changed() bool
 	GetServers() []configuration.ServiceServer
 }
@@ -183,7 +184,7 @@ func (s *ServiceDiscoveryInstance) initService(service ServiceInstance) (bool, e
 	if err != nil {
 		return false, err
 	}
-	reload, err := se.Init(s.transactionID)
+	reload, err := se.Init(s.transactionID, service.GetFrom())
 	if err != nil {
 		return false, err
 	}

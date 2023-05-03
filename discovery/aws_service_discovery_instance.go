@@ -61,6 +61,10 @@ func (a awsService) GetName() string {
 	return a.name
 }
 
+func (a awsService) GetFrom() string {
+	return ""
+}
+
 func (a awsService) GetBackendName() string {
 	return fmt.Sprintf("aws-%s-%s-%s", a.region, a.instanceName, a.GetName())
 }

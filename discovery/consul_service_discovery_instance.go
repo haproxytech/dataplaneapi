@@ -42,6 +42,10 @@ func (c *consulService) GetName() string {
 	return c.name
 }
 
+func (c *consulService) GetFrom() string {
+	return c.params.Defaults
+}
+
 func (c *consulService) GetBackendName() string {
 	return fmt.Sprintf("consul-backend-%s-%d-%s", *c.params.Address, *c.params.Port, c.name)
 }
