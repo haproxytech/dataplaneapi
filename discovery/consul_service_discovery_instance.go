@@ -170,6 +170,9 @@ func (c *consulInstance) updateServices() error {
 func (c *consulInstance) convertToServers(nodes []*serviceEntry) []configuration.ServiceServer {
 	servers := make([]configuration.ServiceServer, 0)
 	for _, node := range nodes {
+		if !c.validateHealthChecks(node) {
+			continue
+		}
 		if node.Service.Address != "" {
 			servers = append(servers, configuration.ServiceServer{
 				Address: node.Service.Address,
@@ -183,6 +186,61 @@ func (c *consulInstance) convertToServers(nodes []*serviceEntry) []configuration
 		}
 	}
 	return servers
+}
+
+func (c *consulInstance) validateHealthChecks(node *serviceEntry) bool {
+	switch *c.params.HealthCheckPolicy {
+	case models.ConsulHealthCheckPolicyAny:
+		return c.validateHealthChecksAny(node)
+	case models.ConsulHealthCheckPolicyAll:
+		return c.validateHealthChecksAll(node)
+	case models.ConsulHealthCheckPolicyMin:
+		return c.validateHealthChecksMin(node)
+	case models.ConsulHealthCheckPolicyNone:
+		return true
+	default:
+		return true
+	}
+}
+
+func (c *consulInstance) validateHealthChecksAny(node *serviceEntry) bool {
+	if node.Checks == nil || len(node.Checks) == 0 {
+		return false
+	}
+
+	for _, check := range node.Checks {
+		if check.Status == "passing" {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *consulInstance) validateHealthChecksAll(node *serviceEntry) bool {
+	if node.Checks == nil || len(node.Checks) == 0 {
+		return false
+	}
+
+	for _, check := range node.Checks {
+		if check.Status != "passing" {
+			return false
+		}
+	}
+	return true
+}
+
+func (c *consulInstance) validateHealthChecksMin(node *serviceEntry) bool {
+	if node.Checks == nil || len(node.Checks) == 0 {
+		return false
+	}
+
+	passing := 0
+	for _, check := range node.Checks {
+		if check.Status == "passing" {
+			passing++
+		}
+	}
+	return passing >= int(c.params.HealthCheckPolicyMin)
 }
 
 func (c *consulInstance) hasServiceChanged(service string, index uint64) bool {
@@ -312,6 +370,9 @@ type serviceEntry struct {
 	Service *struct {
 		Address string
 		Port    int
+	}
+	Checks []*struct {
+		Status string
 	}
 }
 

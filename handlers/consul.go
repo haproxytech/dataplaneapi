@@ -64,6 +64,13 @@ func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulPa
 		return service_discovery.NewCreateConsulDefault(int(*e.Code)).WithPayload(e)
 	}
 	setFilters(params.Data)
+	if *params.Data.HealthCheckPolicy == models.ConsulHealthCheckPolicyMin && params.Data.HealthCheckPolicyMin <= 0 {
+		e := &models.Error{
+			Message: misc.StringP("health_check_policy_min is required for 'min' health_check_policy"),
+			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+		}
+		return service_discovery.NewCreateConsulDefault(int(*e.Code)).WithPayload(e)
+	}
 	err := c.Discovery.AddNode("consul", *params.Data.ID, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -134,6 +141,13 @@ func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsul
 		return service_discovery.NewReplaceConsulDefault(int(*e.Code)).WithPayload(e)
 	}
 	setFilters(params.Data)
+	if *params.Data.HealthCheckPolicy == models.ConsulHealthCheckPolicyMin && params.Data.HealthCheckPolicyMin <= 0 {
+		e := &models.Error{
+			Message: misc.StringP("health_check_policy_min is required for 'min' health_check_policy"),
+			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
+		}
+		return service_discovery.NewCreateConsulDefault(int(*e.Code)).WithPayload(e)
+	}
 	err := c.Discovery.UpdateNode("consul", *params.Data.ID, params.Data)
 	if err != nil {
 		e := misc.HandleError(err)
