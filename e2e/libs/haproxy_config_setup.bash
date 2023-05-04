@@ -29,9 +29,21 @@ setup() {
       skip
   fi
 
+  local haproxy_cfg_file="${BATS_TEST_DIRNAME}/data/haproxy_*.cfg"
+  local haproxy_file_version=""
+
+  if ls $haproxy_cfg_file 1> /dev/null 2>&1; then
+      haproxy_file_version=$(echo $haproxy_cfg_file | sed 's/.*_\([0-9]\+\.[0-9]\+\)\.cfg/\1/')
+  fi
+
+  major_file_version=$(echo $haproxy_file_version | cut -d '.' -f 1)
+  minor_file_version=$(echo $haproxy_file_version | cut -d '.' -f 2)
+  major_cfg_version=$(echo $HAPROXY_VERSION | cut -d '.' -f 1)
+  minor_cfg_version=$(echo $HAPROXY_VERSION | cut -d '.' -f 2)
+
   # replace the default haproxy config file
-  if [ $HAPROXY_VERSION = 2.8 ] && [ -f "${BATS_TEST_DIRNAME}/data/haproxy_${HAPROXY_VERSION}.cfg" ]; then
-      run docker cp "${BATS_TEST_DIRNAME}/data/haproxy_${HAPROXY_VERSION}.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+  if [[ $major_cfg_version -ge $major_file_version && $minor_cfg_version -ge $minor_file_version ]] && [ -f "${BATS_TEST_DIRNAME}/data/haproxy_${haproxy_file_version}.cfg" ]; then
+      run docker cp "${BATS_TEST_DIRNAME}/data/haproxy_${haproxy_file_version}.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   elif [ -f "${BATS_TEST_DIRNAME}/data/haproxy.cfg" ]; then
       run docker cp "${BATS_TEST_DIRNAME}/data/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
   else

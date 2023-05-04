@@ -16,17 +16,18 @@
 #
 
 load '../../libs/dataplaneapi'
-load '../../libs/get_json_path'
-load '../../libs/haproxy_config_setup'
+load "../../libs/get_json_path"
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_config_setup'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
 @test "binds: Delete a bind" {
   resource_delete "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 204
+  assert_equal "$SC" 204
 
-	resource_delete "$_BIND_BASE_PATH/loopback" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 204
+  resource_delete "$_BIND_BASE_PATH/loopback" "frontend=test_frontend&force_reload=true"
+  assert_equal "$SC" 204
 }

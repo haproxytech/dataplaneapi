@@ -16,15 +16,20 @@
 #
 
 load '../../libs/dataplaneapi'
-load '../../libs/get_json_path'
-load '../../libs/haproxy_config_setup'
+load "../../libs/get_json_path"
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_config_setup'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
 @test "binds: Return one bind" {
-	resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
-	assert_equal "$SC" 200
+  resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
+  assert_equal "$SC" 200
   assert_equal "$(get_json_path "$BODY" '.data.name')" "fixture"
+  if haproxy_version_ge "2.5"
+  then
+    assert_equal "all" "$(get_json_path "$BODY" ".data.thread")"
+  fi
 }
