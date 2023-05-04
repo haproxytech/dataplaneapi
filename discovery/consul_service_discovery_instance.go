@@ -344,7 +344,7 @@ func (c *consulInstance) doConsulQuery(method string, path string, params *query
 
 	// Request's parameters.
 	if params.Namespace != "" {
-		req.Header.Add("ns", c.params.Namespace)
+		q.Add("ns", c.params.Namespace)
 	}
 
 	if params.Filter != "" {
