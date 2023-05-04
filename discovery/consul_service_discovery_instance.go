@@ -142,6 +142,10 @@ func (c *consulInstance) updateServices() error {
 	if c.params.Namespace != "" {
 		params.Namespace = c.params.Namespace
 	}
+
+	if c.params.ServiceNameRegexp != "" {
+		params.Filter = fmt.Sprintf("ServiceName matches \"%s\"", c.params.ServiceNameRegexp)
+	}
 	cServices, _, err := c.queryCatalogServices(params)
 	if err != nil {
 		return err
@@ -336,10 +340,18 @@ func (c *consulInstance) doConsulQuery(method string, path string, params *query
 		req.Header.Add("X-Consul-Token", c.params.Token)
 	}
 
+	q := url.Values{}
+
 	// Request's parameters.
 	if params.Namespace != "" {
 		req.Header.Add("ns", c.params.Namespace)
 	}
+
+	if params.Filter != "" {
+		q.Add("filter", params.Filter)
+	}
+
+	req.URL.RawQuery = q.Encode()
 
 	httpResp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -378,6 +390,7 @@ type serviceEntry struct {
 
 type queryParams struct {
 	Namespace string
+	Filter    string
 }
 
 type queryMetadata struct {
