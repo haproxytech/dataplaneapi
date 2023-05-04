@@ -28,6 +28,7 @@ func ConfigureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 		configuration_options.ConfigurationFile(haproxyOptions.ConfigFile),
 		configuration_options.HAProxyBin(haproxyOptions.HAProxy),
 		configuration_options.Backups(haproxyOptions.BackupsNumber),
+		configuration_options.BackupsDir(haproxyOptions.BackupsDir),
 		configuration_options.UsePersistentTransactions,
 		configuration_options.TransactionsDir(haproxyOptions.TransactionDir),
 		configuration_options.ValidateCmd(haproxyOptions.ValidateCmd),
