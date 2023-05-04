@@ -131,8 +131,8 @@ github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
-github.com/haproxytech/client-native/v4 v4.0.1-0.20230504081549-d9ba634097b0 h1:dTV+ZGMFEnl4cyPiJcRC3VN5WHPe9k7S5jQT38OkSkc=
-github.com/haproxytech/client-native/v4 v4.0.1-0.20230504081549-d9ba634097b0/go.mod h1:0bwyZBbxQHuiE4HAwgm+cSAIm39eLwW2NNkxtrMQFHM=
+github.com/haproxytech/client-native/v4 v4.0.1-0.20230504113058-f55491c8b41e h1:bI3Bnon58HIqBA0mZQAfKHEkEkxyBCsEWesTBsS+1xU=
+github.com/haproxytech/client-native/v4 v4.0.1-0.20230504113058-f55491c8b41e/go.mod h1:z9ivkDkeC5yOi0x7RiP2RrRJ8lpJ2BWuGUZ6c7VUGWQ=
 github.com/haproxytech/config-parser/v4 v4.1.1-0.20230502134419-7132e027b9bc h1:sxAMZm+sawCRv6v6tlQYMZnHCYAXVUwGJjdivB7fC5I=
 github.com/haproxytech/config-parser/v4 v4.1.1-0.20230502134419-7132e027b9bc/go.mod h1:d3pys9YgaLU5WE+j5lMLsFV7fYBUmFaR1b6hoXjamhQ=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
@@ -260,8 +260,8 @@ github.com/yusufpapurcu/wmi v1.2.2/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQ
 go.mongodb.org/mongo-driver v1.7.3/go.mod h1:NqaYOwnXWr5Pm7AOpO5QFxKJ503nbMse/R79oO62zWg=
 go.mongodb.org/mongo-driver v1.7.5/go.mod h1:VXEWRZ6URJIkUq2SCAyapmhH0ZLRBP+FT4xhp5Zvxng=
 go.mongodb.org/mongo-driver v1.10.0/go.mod h1:wsihk0Kdgv8Kqu1Anit4sfK+22vSFbUrAVEYRhCXrA8=
-go.mongodb.org/mongo-driver v1.11.4 h1:4ayjakA013OdpGyL2K3ZqylTac/rMjrJOMZ1EHizXas=
-go.mongodb.org/mongo-driver v1.11.4/go.mod h1:PTSz5yu21bkT/wXpkS7WR5f0ddqw5quethTUn9WM+2g=
+go.mongodb.org/mongo-driver v1.11.5 h1:CLrb1a22ddViSnnPCzGT4+PGrOJsUXI/9SWj8N1uHCM=
+go.mongodb.org/mongo-driver v1.11.5/go.mod h1:PTSz5yu21bkT/wXpkS7WR5f0ddqw5quethTUn9WM+2g=
 golang.org/x/crypto v0.0.0-20180904163835-0709b304e793/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20190422162423-af44ce270edf/go.mod h1:WFFai1msRO1wXaEeE5yQxYXgSfI8pQAWXbQop6sCtWE=
