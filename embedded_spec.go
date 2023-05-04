@@ -17449,6 +17449,14 @@ func init() {
           "type": "integer",
           "example": 1
         },
+        "no_alpn": {
+          "type": "boolean",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "no_ca_names": {
           "type": "boolean",
           "x-dependency": {
@@ -17595,6 +17603,9 @@ func init() {
         },
         "tfo": {
           "type": "boolean"
+        },
+        "thread": {
+          "type": "string"
         },
         "tls_ticket_keys": {
           "type": "string"
@@ -20575,6 +20586,22 @@ func init() {
               ],
               "x-display-name": "Edge-triggered polling mode"
             },
+            "h2_be_initial_window_size": {
+              "type": "integer",
+              "x-display-name": "Initial window size for outgoing connections"
+            },
+            "h2_be_max_concurrent_streams": {
+              "type": "integer",
+              "x-display-name": "Maximum number of concurrent streams per outgoing connection"
+            },
+            "h2_fe_initial_window_size": {
+              "type": "integer",
+              "x-display-name": "Initial window size for incoming connections"
+            },
+            "h2_fe_max_concurrent_streams": {
+              "type": "integer",
+              "x-display-name": "Maximum number of concurrent streams per incoming connection"
+            },
             "h2_header_table_size": {
               "type": "integer",
               "maximum": 65535,
@@ -20628,6 +20655,11 @@ func init() {
                 "disabled"
               ],
               "x-display-name": "Listener Multi Queue Accept"
+            },
+            "lua_burst_timeout": {
+              "type": "integer",
+              "x-display-name": "Burst execution timeout",
+              "x-nullable": true
             },
             "lua_forced_yield": {
               "type": "integer",
@@ -22661,6 +22693,7 @@ func init() {
             "disable-l7-retry",
             "do-resolve",
             "early-hint",
+            "lua",
             "normalize-uri",
             "redirect",
             "reject",
@@ -23430,6 +23463,7 @@ func init() {
             "del-header",
             "del-map",
             "deny",
+            "lua",
             "redirect",
             "replace-header",
             "replace-value",
@@ -53754,6 +53788,22 @@ func init() {
           ],
           "x-display-name": "Edge-triggered polling mode"
         },
+        "h2_be_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "Initial window size for outgoing connections"
+        },
+        "h2_be_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of concurrent streams per outgoing connection"
+        },
+        "h2_fe_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "Initial window size for incoming connections"
+        },
+        "h2_fe_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of concurrent streams per incoming connection"
+        },
         "h2_header_table_size": {
           "type": "integer",
           "maximum": 65535,
@@ -53808,6 +53858,11 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Listener Multi Queue Accept"
+        },
+        "lua_burst_timeout": {
+          "type": "integer",
+          "x-display-name": "Burst execution timeout",
+          "x-nullable": true
         },
         "lua_forced_yield": {
           "type": "integer",
@@ -55638,6 +55693,14 @@ func init() {
           "type": "integer",
           "example": 1
         },
+        "no_alpn": {
+          "type": "boolean",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "no_ca_names": {
           "type": "boolean",
           "x-dependency": {
@@ -55784,6 +55847,9 @@ func init() {
         },
         "tfo": {
           "type": "boolean"
+        },
+        "thread": {
+          "type": "string"
         },
         "tls_ticket_keys": {
           "type": "string"
@@ -58566,6 +58632,22 @@ func init() {
               ],
               "x-display-name": "Edge-triggered polling mode"
             },
+            "h2_be_initial_window_size": {
+              "type": "integer",
+              "x-display-name": "Initial window size for outgoing connections"
+            },
+            "h2_be_max_concurrent_streams": {
+              "type": "integer",
+              "x-display-name": "Maximum number of concurrent streams per outgoing connection"
+            },
+            "h2_fe_initial_window_size": {
+              "type": "integer",
+              "x-display-name": "Initial window size for incoming connections"
+            },
+            "h2_fe_max_concurrent_streams": {
+              "type": "integer",
+              "x-display-name": "Maximum number of concurrent streams per incoming connection"
+            },
             "h2_header_table_size": {
               "type": "integer",
               "maximum": 65535,
@@ -58620,6 +58702,11 @@ func init() {
                 "disabled"
               ],
               "x-display-name": "Listener Multi Queue Accept"
+            },
+            "lua_burst_timeout": {
+              "type": "integer",
+              "x-display-name": "Burst execution timeout",
+              "x-nullable": true
             },
             "lua_forced_yield": {
               "type": "integer",
@@ -60653,6 +60740,7 @@ func init() {
             "disable-l7-retry",
             "do-resolve",
             "early-hint",
+            "lua",
             "normalize-uri",
             "redirect",
             "reject",
@@ -61422,6 +61510,7 @@ func init() {
             "del-header",
             "del-map",
             "deny",
+            "lua",
             "redirect",
             "replace-header",
             "replace-value",
