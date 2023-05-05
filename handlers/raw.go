@@ -95,6 +95,15 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		onlyValidate = *params.OnlyValidate
 	}
 
+	// Check for a common error where the user ran `curl -d @haproxy.cfg` without
+	// converting the file to json, which removes all the \n from the configuration.
+	if len(params.Data) > 0 && !strings.ContainsRune(params.Data, '\n') {
+		code := misc.ErrHTTPBadRequest
+		msg := "invalid configuration: no newline character found"
+		e := &models.Error{Code: &code, Message: &msg}
+		return configuration.NewPostHAProxyConfigurationBadRequest().WithPayload(e)
+	}
+
 	cfg, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
