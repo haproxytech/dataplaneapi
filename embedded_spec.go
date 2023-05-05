@@ -17900,11 +17900,34 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "defaults": {
+          "description": "Name of the defaults section to be used in backends created by this service",
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
         "enabled": {
           "type": "boolean"
+        },
+        "health_check_policy": {
+          "description": "Defines the health check conditions required for each node to be considered valid for the service.\n  none: all nodes are considered valid\n  any: a node is considered valid if any one health check is 'passing'\n  all: a node is considered valid if all health checks are 'passing'\n  min: a node is considered valid if the number of 'passing' checks is greater or equal to the 'health_check_policy_min' value.\n    If the node has less health checks configured then 'health_check_policy_min' it is considered invalid.",
+          "type": "string",
+          "default": "none",
+          "enum": [
+            "none",
+            "any",
+            "all",
+            "min"
+          ]
+        },
+        "health_check_policy_min": {
+          "type": "integer",
+          "x-dependency": {
+            "health_check_policy": {
+              "value": "min"
+            }
+          }
         },
         "id": {
           "description": "Auto generated ID.",
@@ -17976,6 +17999,10 @@ func init() {
             "pattern": "^[^\\s]+$"
           },
           "x-omitempty": true
+        },
+        "service_name_regexp": {
+          "description": "Regular expression used to filter services by name.",
+          "type": "string"
         },
         "token": {
           "type": "string",
@@ -56118,11 +56145,34 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "defaults": {
+          "description": "Name of the defaults section to be used in backends created by this service",
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
         "enabled": {
           "type": "boolean"
+        },
+        "health_check_policy": {
+          "description": "Defines the health check conditions required for each node to be considered valid for the service.\n  none: all nodes are considered valid\n  any: a node is considered valid if any one health check is 'passing'\n  all: a node is considered valid if all health checks are 'passing'\n  min: a node is considered valid if the number of 'passing' checks is greater or equal to the 'health_check_policy_min' value.\n    If the node has less health checks configured then 'health_check_policy_min' it is considered invalid.",
+          "type": "string",
+          "default": "none",
+          "enum": [
+            "none",
+            "any",
+            "all",
+            "min"
+          ]
+        },
+        "health_check_policy_min": {
+          "type": "integer",
+          "x-dependency": {
+            "health_check_policy": {
+              "value": "min"
+            }
+          }
         },
         "id": {
           "description": "Auto generated ID.",
@@ -56194,6 +56244,10 @@ func init() {
             "pattern": "^[^\\s]+$"
           },
           "x-omitempty": true
+        },
+        "service_name_regexp": {
+          "description": "Regular expression used to filter services by name.",
+          "type": "string"
         },
         "token": {
           "type": "string",

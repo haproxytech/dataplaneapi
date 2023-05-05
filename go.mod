@@ -22,7 +22,7 @@ require (
 	github.com/go-openapi/validate v0.22.1
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.3.0
-	github.com/haproxytech/client-native/v4 v4.0.1-0.20230504113058-f55491c8b41e
+	github.com/haproxytech/client-native/v4 v4.0.1-0.20230505070940-f348c65a7348
 	github.com/haproxytech/config-parser/v4 v4.1.1-0.20230502134419-7132e027b9bc
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.5.0
