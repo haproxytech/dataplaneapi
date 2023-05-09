@@ -17333,6 +17333,14 @@ func init() {
             }
           }
         },
+        "client_sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "crl_file": {
           "type": "string",
           "x-dependency": {
@@ -17516,6 +17524,14 @@ func init() {
         "npn": {
           "type": "string"
         },
+        "ocsp_update": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "prefer_client_ciphers": {
           "type": "boolean"
         },
@@ -17546,6 +17562,14 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "ssl": {
           "type": "boolean"
@@ -20675,6 +20699,15 @@ func init() {
               "x-display-name": "Idle Stream Duration",
               "x-nullable": true
             },
+            "listener_default_shards": {
+              "type": "string",
+              "enum": [
+                "by-process",
+                "by-thread",
+                "by-group"
+              ],
+              "x-display-name": "Listener Default Shards"
+            },
             "listener_multi_queue": {
               "type": "string",
               "enum": [
@@ -20722,6 +20755,11 @@ func init() {
             "maxrewrite": {
               "type": "integer",
               "x-display-name": "Maximum Rewrite Space"
+            },
+            "memory_hot_size": {
+              "type": "integer",
+              "x-display-name": "Per-thread Amount of Memory",
+              "x-nullable": true
             },
             "pattern_cache_size": {
               "type": "integer",
@@ -53878,6 +53916,15 @@ func init() {
           "x-display-name": "Idle Stream Duration",
           "x-nullable": true
         },
+        "listener_default_shards": {
+          "type": "string",
+          "enum": [
+            "by-process",
+            "by-thread",
+            "by-group"
+          ],
+          "x-display-name": "Listener Default Shards"
+        },
         "listener_multi_queue": {
           "type": "string",
           "enum": [
@@ -53925,6 +53972,11 @@ func init() {
         "maxrewrite": {
           "type": "integer",
           "x-display-name": "Maximum Rewrite Space"
+        },
+        "memory_hot_size": {
+          "type": "integer",
+          "x-display-name": "Per-thread Amount of Memory",
+          "x-nullable": true
         },
         "pattern_cache_size": {
           "type": "integer",
@@ -55604,6 +55656,14 @@ func init() {
             }
           }
         },
+        "client_sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "crl_file": {
           "type": "string",
           "x-dependency": {
@@ -55787,6 +55847,14 @@ func init() {
         "npn": {
           "type": "string"
         },
+        "ocsp_update": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "prefer_client_ciphers": {
           "type": "boolean"
         },
@@ -55817,6 +55885,14 @@ func init() {
           ],
           "x-display-name": "Format",
           "example": "none"
+        },
+        "sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "ssl": {
           "type": "boolean"
@@ -58749,6 +58825,15 @@ func init() {
               "x-display-name": "Idle Stream Duration",
               "x-nullable": true
             },
+            "listener_default_shards": {
+              "type": "string",
+              "enum": [
+                "by-process",
+                "by-thread",
+                "by-group"
+              ],
+              "x-display-name": "Listener Default Shards"
+            },
             "listener_multi_queue": {
               "type": "string",
               "enum": [
@@ -58796,6 +58881,11 @@ func init() {
             "maxrewrite": {
               "type": "integer",
               "x-display-name": "Maximum Rewrite Space"
+            },
+            "memory_hot_size": {
+              "type": "integer",
+              "x-display-name": "Per-thread Amount of Memory",
+              "x-nullable": true
             },
             "pattern_cache_size": {
               "type": "integer",
