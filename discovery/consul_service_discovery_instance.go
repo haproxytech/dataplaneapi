@@ -190,7 +190,7 @@ func (c *consulInstance) hasServiceChanged(service string, index uint64) bool {
 	if !ok {
 		return true
 	}
-	return prevIndex == index
+	return prevIndex != index
 }
 
 func (c *consulInstance) updateTimeout(timeoutSeconds int) error {
