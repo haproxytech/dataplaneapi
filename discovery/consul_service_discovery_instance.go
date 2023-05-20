@@ -193,6 +193,9 @@ func (c *consulInstance) convertToServers(nodes []*serviceEntry) []configuration
 }
 
 func (c *consulInstance) validateHealthChecks(node *serviceEntry) bool {
+	if c.params.HealthCheckPolicy == nil {
+		return true
+	}
 	switch *c.params.HealthCheckPolicy {
 	case models.ConsulHealthCheckPolicyAny:
 		return c.validateHealthChecksAny(node)
