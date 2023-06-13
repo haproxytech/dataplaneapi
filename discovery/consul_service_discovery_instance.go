@@ -360,6 +360,7 @@ func (c *consulInstance) doConsulQuery(method string, path string, params *query
 	if err != nil {
 		return nil, err
 	}
+	defer httpResp.Body.Close()
 	raw, err := io.ReadAll(httpResp.Body)
 	if err != nil {
 		return nil, err

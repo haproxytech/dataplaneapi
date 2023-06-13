@@ -10,7 +10,7 @@ variables:
 diff:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/docker:stable-go1.19
+    name: $CI_REGISTRY_GO/docker:stable-go1.20
     entrypoint: [ "" ]
   services:
     - name: $CI_REGISTRY_GO/docker:20.10.5-dind
@@ -33,7 +33,7 @@ golangci-lint:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:1.19
+    name: $CI_REGISTRY_GO/golang:1.20
     entrypoint: [""]
   tags:
     - go
@@ -48,7 +48,7 @@ gofumpt:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
   image:
-    name: $CI_REGISTRY_GO/golang:1.19
+    name: $CI_REGISTRY_GO/golang:1.20
     entrypoint: [""]
   tags:
     - go
@@ -73,7 +73,7 @@ build:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:1.19
+    name: $CI_REGISTRY_GO/golang:1.20
     entrypoint: [ "" ]
   tags:
     - go

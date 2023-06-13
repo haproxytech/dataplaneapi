@@ -20,12 +20,10 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
-	"time"
 
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/haproxytech/client-native/v4/models"
@@ -242,7 +240,6 @@ func (c *Configuration) Load() error {
 		hostname, nameErr := os.Hostname()
 		if nameErr != nil {
 			log.Warningf("Error fetching hostname, using petname for dataplaneapi name: %s", nameErr.Error())
-			rand.Seed(time.Now().UnixNano())
 			c.Name.Store(petname.Generate(2, "_"))
 		}
 		c.Name.Store(hostname)
