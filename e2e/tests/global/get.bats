@@ -33,8 +33,12 @@ load 'utils/_helpers'
   assert_equal "$(get_json_path "$BODY" '.data.pidfile')" "/var/run/haproxy.pid"
   assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].address')" "/var/lib/haproxy/stats"
   assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].level')" "admin"
-  if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+  if haproxy_version_ge "2.8"; then
       assert_equal "$(get_json_path "$BODY" '.data.tune_options.ssl_ocsp_update_min_delay')" "10"
       assert_equal "$(get_json_path "$BODY" '.data.tune_options.stick_counters')" "50"
+      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_be_initial_window_size')" "10"
+      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_be_max_concurrent_streams')" "11"
+      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_fe_initial_window_size')" "12"
+      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_fe_max_concurrent_streams')" "13"
   fi
 }

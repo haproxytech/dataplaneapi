@@ -1,0 +1,9 @@
+{
+  "address": "127.0.0.2",
+  "name": "test_bind",
+  "port": 10000,
+  "defer_accept": true,
+  "allow_0rtt": true,
+  "thread": "1/all",
+  "no_alpn": true
+}
