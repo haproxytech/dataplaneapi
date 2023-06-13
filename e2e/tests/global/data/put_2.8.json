@@ -1,0 +1,18 @@
+{
+    "runtime_apis": [
+      {
+        "address": "/var/lib/haproxy/stats",
+        "level": "admin"
+      }
+    ],
+    "tune_options": {
+        "h2_be_initial_window_size": 20,
+        "h2_be_max_concurrent_streams": 21,
+        "h2_fe_initial_window_size": 22,
+        "h2_fe_max_concurrent_streams": 23
+    },
+    "daemon": "enabled",
+    "master-worker": true,
+    "maxconn": 5000,
+    "pidfile": "/var/run/haproxy.pid"
+  }
