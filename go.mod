@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.18.1
 	github.com/aws/aws-sdk-go-v2/config v1.18.26
 	github.com/aws/aws-sdk-go-v2/credentials v1.13.25
-	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.2.1
+	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.28.8
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.100.0
 	github.com/docker/go-units v0.5.0
 	github.com/dustinkirkland/golang-petname v0.0.0-20191129215211-8e5a1ed0cff0
