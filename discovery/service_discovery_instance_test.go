@@ -33,8 +33,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/autoscaling/types"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/google/uuid"
-	"github.com/haproxytech/client-native/v4/configuration"
-	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v5/configuration"
+	"github.com/haproxytech/client-native/v5/models"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"

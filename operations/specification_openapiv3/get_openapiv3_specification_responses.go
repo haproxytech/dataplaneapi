@@ -25,7 +25,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v5/models"
 )
 
 // GetOpenapiv3SpecificationOKCode is the HTTP code returned for type GetOpenapiv3SpecificationOK

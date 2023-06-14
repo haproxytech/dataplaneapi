@@ -29,8 +29,8 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/google/renameio"
-	"github.com/haproxytech/client-native/v4/misc"
-	"github.com/haproxytech/client-native/v4/storage"
+	"github.com/haproxytech/client-native/v5/misc"
+	"github.com/haproxytech/client-native/v5/storage"
 	jsoniter "github.com/json-iterator/go"
 )
 

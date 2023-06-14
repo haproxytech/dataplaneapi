@@ -22,9 +22,9 @@ import (
 	"strconv"
 	"strings"
 
-	clientnative "github.com/haproxytech/client-native/v4"
-	"github.com/haproxytech/client-native/v4/configuration"
-	"github.com/haproxytech/client-native/v4/models"
+	clientnative "github.com/haproxytech/client-native/v5"
+	"github.com/haproxytech/client-native/v5/configuration"
+	"github.com/haproxytech/client-native/v5/models"
 	"github.com/haproxytech/dataplaneapi/log"
 )
 

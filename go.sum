@@ -131,10 +131,10 @@ github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
-github.com/haproxytech/client-native/v4 v4.0.1-0.20230509111137-23ddc280e0ba h1:R9IRPi5WH7s1NxlrT7x3VzEYPCo0SyXHf4Y3GXvWCAg=
-github.com/haproxytech/client-native/v4 v4.0.1-0.20230509111137-23ddc280e0ba/go.mod h1:8pRqnBkB5xtuOPqDiIGhDxTScjy84gP0G8Ohwspg3Fk=
-github.com/haproxytech/config-parser/v4 v4.1.1-0.20230509072715-b48ea7c948bf h1:x8886NttUUhlADyEr193D8ak5Drd2z3RM5FAcLKNhNk=
-github.com/haproxytech/config-parser/v4 v4.1.1-0.20230509072715-b48ea7c948bf/go.mod h1:OcltP2I+4BR03I4kZWb1nJ7BL8uy0HV2xOEIF+TsJ0w=
+github.com/haproxytech/client-native/v5 v5.0.0 h1:CbGbDPvZQREPp8FkwIgyVUFCxZSQTLt6Kan15U40/aA=
+github.com/haproxytech/client-native/v5 v5.0.0/go.mod h1:+dlqvx/9wxU9DpdzFn/HARxJRnnUVcgbUUVAIcftndk=
+github.com/haproxytech/config-parser/v5 v5.0.0 h1:KXcRhNL8TDlCfV0XEyKvMsuGAm9jjESQYWtelApl/LU=
+github.com/haproxytech/config-parser/v5 v5.0.0/go.mod h1:7JxHGhCD6WRRc+++7QRBMjoUZMYEP+JRQmp/nBGI9zo=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
 github.com/haproxytech/go-logger v1.1.0/go.mod h1:OekUd8HCb7ubxMplzHUPBTHNxZmddOWfOjWclZsqIeM=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
@@ -211,8 +211,6 @@ github.com/rogpeppe/go-internal v1.2.2/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFR
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZVejAe8=
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
-github.com/rs/cors v1.8.2 h1:KCooALfAYGs415Cwu5ABvv9n9509fSiG5SQJn/AQo4U=
-github.com/rs/cors v1.8.2/go.mod h1:XyqrcTp5zjWr1wsJ8PIRZssZ8b/WMcMf71DJnit4EMU=
 github.com/rs/cors v1.9.0 h1:l9HGsTsHJcvW14Nk7J9KFz8bzeAWXn3CG6bgt7LsrAE=
 github.com/rs/cors v1.9.0/go.mod h1:XyqrcTp5zjWr1wsJ8PIRZssZ8b/WMcMf71DJnit4EMU=
 github.com/shirou/gopsutil v3.21.11+incompatible h1:+1+c1VGhc88SSonWP6foOcLhvnKlUeu/erjjvaPEYiI=

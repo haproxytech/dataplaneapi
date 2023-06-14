@@ -20,8 +20,8 @@ import (
 	"strings"
 
 	"github.com/go-openapi/runtime/middleware"
-	client_native "github.com/haproxytech/client-native/v4"
-	"github.com/haproxytech/client-native/v4/models"
+	client_native "github.com/haproxytech/client-native/v5"
+	"github.com/haproxytech/client-native/v5/models"
 
 	config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/misc"

@@ -29,10 +29,10 @@ import (
 	"time"
 
 	"github.com/google/renameio"
-	client_native "github.com/haproxytech/client-native/v4"
-	"github.com/haproxytech/client-native/v4/misc"
-	"github.com/haproxytech/client-native/v4/models"
-	"github.com/haproxytech/client-native/v4/runtime"
+	client_native "github.com/haproxytech/client-native/v5"
+	"github.com/haproxytech/client-native/v5/misc"
+	"github.com/haproxytech/client-native/v5/models"
+	"github.com/haproxytech/client-native/v5/runtime"
 	"github.com/haproxytech/dataplaneapi/log"
 )
 

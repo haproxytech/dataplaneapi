@@ -25,7 +25,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v5/models"
 )
 
 // ReplacePeerEntryOKCode is the HTTP code returned for type ReplacePeerEntryOK

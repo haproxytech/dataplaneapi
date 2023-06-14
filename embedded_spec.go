@@ -18878,6 +18878,14 @@ func init() {
         }
       }
     },
+    "email_alerts": {
+      "description": "Email Alerts array (corresponds to email-alert directives)",
+      "type": "array",
+      "title": "Email Alerts Array",
+      "items": {
+        "$ref": "#/definitions/email_alert"
+      }
+    },
     "endpoint": {
       "description": "Endpoint definition",
       "type": "object",
@@ -19976,6 +19984,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Chroot"
         },
+        "close_spread_time": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "cluster_secret": {
           "type": "string",
           "x-display-name": "Cluster Secret"
@@ -20141,6 +20153,40 @@ func init() {
           "x-display-name": "Hard Stop After",
           "x-nullable": true
         },
+        "httpclient_resolvers_disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Client Resolvers Disabled"
+        },
+        "httpclient_resolvers_id": {
+          "type": "string",
+          "x-display-name": "HTTP Client Resolvers ID"
+        },
+        "httpclient_resolvers_prefer": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-display-name": "HTTP Client Resolvers Prefer"
+        },
+        "httpclient_ssl_ca_file": {
+          "type": "string",
+          "x-display-name": "HTTP Client SSL CA File"
+        },
+        "httpclient_ssl_verify": {
+          "type": "string",
+          "enum": [
+            "",
+            "none",
+            "required"
+          ],
+          "x-display-name": "HTTP Client SSL Verify",
+          "x-nullable": true
+        },
         "insecure_fork_wanted": {
           "type": "boolean"
         },
@@ -20232,7 +20278,8 @@ func init() {
           "x-display-name": "Master Worker Mode"
         },
         "max_spread_checks": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "maxcompcpuusage": {
           "type": "integer",
@@ -20331,6 +20378,10 @@ func init() {
         },
         "pp2_never_send_local": {
           "type": "boolean"
+        },
+        "prealloc-fd": {
+          "type": "boolean",
+          "x-display-name": "Prealloc FD"
         },
         "presetenv": {
           "type": "array",
@@ -20493,6 +20544,10 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Bind Ciphersuites"
         },
+        "ssl_default_bind_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Client Sigalgs"
+        },
         "ssl_default_bind_curves": {
           "type": "string",
           "x-display-name": "SSL Default Bind Curves"
@@ -20500,6 +20555,10 @@ func init() {
         "ssl_default_bind_options": {
           "type": "string",
           "x-display-name": "SSL Default Bind Options"
+        },
+        "ssl_default_bind_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Sigalgs"
         },
         "ssl_default_server_ciphers": {
           "type": "string",
@@ -26605,7 +26664,8 @@ func init() {
           ]
         },
         "tcp_ut": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "tfo": {
           "type": "string",
@@ -57161,6 +57221,14 @@ func init() {
         }
       }
     },
+    "email_alerts": {
+      "description": "Email Alerts array (corresponds to email-alert directives)",
+      "type": "array",
+      "title": "Email Alerts Array",
+      "items": {
+        "$ref": "#/definitions/email_alert"
+      }
+    },
     "endpoint": {
       "description": "Endpoint definition",
       "type": "object",
@@ -58260,6 +58328,10 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Chroot"
         },
+        "close_spread_time": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "cluster_secret": {
           "type": "string",
           "x-display-name": "Cluster Secret"
@@ -58397,6 +58469,40 @@ func init() {
           "x-display-name": "Hard Stop After",
           "x-nullable": true
         },
+        "httpclient_resolvers_disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Client Resolvers Disabled"
+        },
+        "httpclient_resolvers_id": {
+          "type": "string",
+          "x-display-name": "HTTP Client Resolvers ID"
+        },
+        "httpclient_resolvers_prefer": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-display-name": "HTTP Client Resolvers Prefer"
+        },
+        "httpclient_ssl_ca_file": {
+          "type": "string",
+          "x-display-name": "HTTP Client SSL CA File"
+        },
+        "httpclient_ssl_verify": {
+          "type": "string",
+          "enum": [
+            "",
+            "none",
+            "required"
+          ],
+          "x-display-name": "HTTP Client SSL Verify",
+          "x-nullable": true
+        },
         "insecure_fork_wanted": {
           "type": "boolean"
         },
@@ -58461,7 +58567,8 @@ func init() {
           "x-display-name": "Master Worker Mode"
         },
         "max_spread_checks": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "maxcompcpuusage": {
           "type": "integer",
@@ -58562,6 +58669,10 @@ func init() {
         "pp2_never_send_local": {
           "type": "boolean"
         },
+        "prealloc-fd": {
+          "type": "boolean",
+          "x-display-name": "Prealloc FD"
+        },
         "presetenv": {
           "type": "array",
           "items": {
@@ -58648,6 +58759,10 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Bind Ciphersuites"
         },
+        "ssl_default_bind_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Client Sigalgs"
+        },
         "ssl_default_bind_curves": {
           "type": "string",
           "x-display-name": "SSL Default Bind Curves"
@@ -58655,6 +58770,10 @@ func init() {
         "ssl_default_bind_options": {
           "type": "string",
           "x-display-name": "SSL Default Bind Options"
+        },
+        "ssl_default_bind_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Sigalgs"
         },
         "ssl_default_server_ciphers": {
           "type": "string",
@@ -64732,7 +64851,8 @@ func init() {
           ]
         },
         "tcp_ut": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "tfo": {
           "type": "string",

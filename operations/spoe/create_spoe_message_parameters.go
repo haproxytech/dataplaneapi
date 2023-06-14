@@ -31,7 +31,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v5/models"
 )
 
 // NewCreateSpoeMessageParams creates a new CreateSpoeMessageParams object

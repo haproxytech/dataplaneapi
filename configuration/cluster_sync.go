@@ -34,8 +34,8 @@ import (
 	"time"
 
 	"github.com/google/renameio"
-	client_native "github.com/haproxytech/client-native/v4"
-	"github.com/haproxytech/config-parser/v4/types"
+	client_native "github.com/haproxytech/client-native/v5"
+	"github.com/haproxytech/config-parser/v5/types"
 	jsoniter "github.com/json-iterator/go"
 
 	"github.com/haproxytech/dataplaneapi/log"

@@ -26,8 +26,8 @@ import (
 	"github.com/go-openapi/runtime/security"
 	flags "github.com/jessevdk/go-flags"
 
-	"github.com/haproxytech/client-native/v4/models"
-	"github.com/haproxytech/client-native/v4/storage"
+	"github.com/haproxytech/client-native/v5/models"
+	"github.com/haproxytech/client-native/v5/storage"
 	"github.com/haproxytech/dataplaneapi"
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"

@@ -25,10 +25,10 @@ import (
 
 	"github.com/GehirnInc/crypt"
 	api_errors "github.com/go-openapi/errors"
-	parser "github.com/haproxytech/config-parser/v4"
-	"github.com/haproxytech/config-parser/v4/common"
-	"github.com/haproxytech/config-parser/v4/options"
-	"github.com/haproxytech/config-parser/v4/types"
+	parser "github.com/haproxytech/config-parser/v5"
+	"github.com/haproxytech/config-parser/v5/common"
+	"github.com/haproxytech/config-parser/v5/options"
+	"github.com/haproxytech/config-parser/v5/types"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 )

@@ -23,9 +23,9 @@ import (
 	"time"
 
 	"github.com/go-openapi/runtime/middleware"
-	client_native "github.com/haproxytech/client-native/v4"
-	"github.com/haproxytech/client-native/v4/models"
-	"github.com/haproxytech/client-native/v4/runtime"
+	client_native "github.com/haproxytech/client-native/v5"
+	"github.com/haproxytech/client-native/v5/models"
+	"github.com/haproxytech/client-native/v5/runtime"
 
 	cn "github.com/haproxytech/dataplaneapi/client-native"
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"

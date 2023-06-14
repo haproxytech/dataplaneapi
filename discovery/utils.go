@@ -20,7 +20,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
-	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v5/models"
 	"github.com/haproxytech/dataplaneapi/misc"
 )
 

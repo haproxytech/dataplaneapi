@@ -25,8 +25,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/haproxytech/client-native/v4/configuration"
-	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v5/configuration"
+	"github.com/haproxytech/client-native/v5/models"
 	"github.com/haproxytech/dataplaneapi/log"
 	jsoniter "github.com/json-iterator/go"
 )

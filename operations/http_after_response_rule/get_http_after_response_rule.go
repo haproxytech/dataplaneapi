@@ -29,7 +29,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/haproxytech/client-native/v4/models"
+	"github.com/haproxytech/client-native/v5/models"
 )
 
 // GetHTTPAfterResponseRuleHandlerFunc turns a function with the right signature into a get HTTP after response rule handler
