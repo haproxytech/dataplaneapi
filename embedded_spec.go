@@ -22747,6 +22747,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Key"
         },
         "track-sc0-table": {
@@ -22757,6 +22758,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Table"
         },
         "track-sc1-key": {
@@ -22768,6 +22770,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Key"
         },
         "track-sc1-table": {
@@ -22778,6 +22781,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Table"
         },
         "track-sc2-key": {
@@ -22789,6 +22793,7 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Key"
         },
         "track-sc2-table": {
@@ -22799,7 +22804,39 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Table"
+        },
+        "track_sc_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Key"
+        },
+        "track_sc_stick_counter": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc StickCounter",
+          "x-nullable": true
+        },
+        "track_sc_table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Table"
         },
         "type": {
           "type": "string",
@@ -22858,6 +22895,7 @@ func init() {
             "track-sc0",
             "track-sc1",
             "track-sc2",
+            "track-sc",
             "unset-var",
             "use-service",
             "wait-for-body",
@@ -23521,6 +23559,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Key"
         },
         "track-sc0-table": {
@@ -23531,6 +23570,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Table"
         },
         "track-sc1-key": {
@@ -23542,6 +23582,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Key"
         },
         "track-sc1-table": {
@@ -23552,6 +23593,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Table"
         },
         "track-sc2-key": {
@@ -23563,6 +23605,7 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Key"
         },
         "track-sc2-table": {
@@ -23573,7 +23616,39 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Table"
+        },
+        "track_sc_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Key"
+        },
+        "track_sc_stick_counter": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc StickCounter",
+          "x-nullable": true
+        },
+        "track_sc_table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Table"
         },
         "type": {
           "type": "string",
@@ -23612,6 +23687,7 @@ func init() {
             "track-sc0",
             "track-sc1",
             "track-sc2",
+            "track-sc",
             "unset-var",
             "wait-for-body",
             "set-bandwidth-limit"
@@ -28272,6 +28348,7 @@ func init() {
             "track-sc0",
             "track-sc1",
             "track-sc2",
+            "track-sc",
             "unset-var",
             "use-service",
             "lua",
@@ -28760,7 +28837,8 @@ func init() {
               "value": [
                 "track-sc0",
                 "track-sc1",
-                "track-sc2"
+                "track-sc2",
+                "track-sc"
               ]
             },
             "type": {
@@ -28773,6 +28851,29 @@ func init() {
           },
           "x-display-name": "Sample expression rule"
         },
+        "track_stick_counter": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": false,
+              "value": [
+                "track-sc0",
+                "track-sc1",
+                "track-sc2",
+                "track-sc"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Track Stick Counter",
+          "x-nullable": true
+        },
         "track_table": {
           "type": "string",
           "x-dependency": {
@@ -28781,7 +28882,8 @@ func init() {
               "value": [
                 "track-sc0",
                 "track-sc1",
-                "track-sc2"
+                "track-sc2",
+                "track-sc"
               ]
             },
             "type": {
@@ -60933,6 +61035,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Key"
         },
         "track-sc0-table": {
@@ -60943,6 +61046,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Table"
         },
         "track-sc1-key": {
@@ -60954,6 +61058,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Key"
         },
         "track-sc1-table": {
@@ -60964,6 +61069,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Table"
         },
         "track-sc2-key": {
@@ -60975,6 +61081,7 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Key"
         },
         "track-sc2-table": {
@@ -60985,7 +61092,39 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Table"
+        },
+        "track_sc_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Key"
+        },
+        "track_sc_stick_counter": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc StickCounter",
+          "x-nullable": true
+        },
+        "track_sc_table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Table"
         },
         "type": {
           "type": "string",
@@ -61044,6 +61183,7 @@ func init() {
             "track-sc0",
             "track-sc1",
             "track-sc2",
+            "track-sc",
             "unset-var",
             "use-service",
             "wait-for-body",
@@ -61707,6 +61847,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Key"
         },
         "track-sc0-table": {
@@ -61717,6 +61858,7 @@ func init() {
               "value": "track-sc0"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc0 Table"
         },
         "track-sc1-key": {
@@ -61728,6 +61870,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Key"
         },
         "track-sc1-table": {
@@ -61738,6 +61881,7 @@ func init() {
               "value": "track-sc1"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc1 Table"
         },
         "track-sc2-key": {
@@ -61749,6 +61893,7 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Key"
         },
         "track-sc2-table": {
@@ -61759,7 +61904,39 @@ func init() {
               "value": "track-sc2"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "track-sc2 Table"
+        },
+        "track_sc_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Key"
+        },
+        "track_sc_stick_counter": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc StickCounter",
+          "x-nullable": true
+        },
+        "track_sc_table": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "track-sc"
+            }
+          },
+          "x-display-name": "track-sc Table"
         },
         "type": {
           "type": "string",
@@ -61798,6 +61975,7 @@ func init() {
             "track-sc0",
             "track-sc1",
             "track-sc2",
+            "track-sc",
             "unset-var",
             "wait-for-body",
             "set-bandwidth-limit"
@@ -66353,6 +66531,7 @@ func init() {
             "track-sc0",
             "track-sc1",
             "track-sc2",
+            "track-sc",
             "unset-var",
             "use-service",
             "lua",
@@ -66841,7 +67020,8 @@ func init() {
               "value": [
                 "track-sc0",
                 "track-sc1",
-                "track-sc2"
+                "track-sc2",
+                "track-sc"
               ]
             },
             "type": {
@@ -66854,6 +67034,29 @@ func init() {
           },
           "x-display-name": "Sample expression rule"
         },
+        "track_stick_counter": {
+          "type": "integer",
+          "x-dependency": {
+            "action": {
+              "required": false,
+              "value": [
+                "track-sc0",
+                "track-sc1",
+                "track-sc2",
+                "track-sc"
+              ]
+            },
+            "type": {
+              "value": [
+                "session",
+                "connection",
+                "content"
+              ]
+            }
+          },
+          "x-display-name": "Track Stick Counter",
+          "x-nullable": true
+        },
         "track_table": {
           "type": "string",
           "x-dependency": {
@@ -66862,7 +67065,8 @@ func init() {
               "value": [
                 "track-sc0",
                 "track-sc1",
-                "track-sc2"
+                "track-sc2",
+                "track-sc"
               ]
             },
             "type": {

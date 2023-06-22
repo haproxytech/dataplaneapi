@@ -1,0 +1,10 @@
+{
+  "type": "content",
+  "action": "track-sc",
+  "cond": "if",
+  "cond_test": "TRUE",
+  "index": 0,
+  "track_table": "test_sticksc",
+  "track_key": "src",
+  "track_stick_counter": 5
+}
