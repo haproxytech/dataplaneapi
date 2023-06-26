@@ -3,13 +3,11 @@ before:
   hooks:
     - go mod download
     - go mod tidy
-    - make clean
-    - mkdir build/
 builds:
   -
     id: my-build
-    main: ./cmd/dataplaneapi/main.go
-    binary: ./build/dataplaneapi
+    main: ./cmd/dataplaneapi
+    binary: dataplaneapi
     ldflags:
       - -s -w -X main.GitRepo={{.GitURL}} -X main.GitTag={{.Tag}} -X main.GitCommit={{.ShortCommit}} -X main.GitDirty= -X main.BuildTime={{.Date}}
     env:
@@ -25,6 +23,9 @@ builds:
       - arm64
       - ppc64le
       - s390x
+changelog:
+  sort: asc
+  use: git
 archives:
   -
     id: my-archive
