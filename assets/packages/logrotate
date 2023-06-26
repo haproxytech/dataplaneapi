@@ -1,0 +1,9 @@
+/var/log/dataplaneapi.log {
+	missingok
+	compress
+	notifempty
+	copytruncate
+	daily
+	rotate 7
+	create 0640 root root
+}

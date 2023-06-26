@@ -3,13 +3,11 @@ before:
   hooks:
     - go mod download
     - go mod tidy
-    - make clean
-    - mkdir build/
 builds:
   -
     id: my-build
-    main: ./cmd/dataplaneapi/main.go
-    binary: ./build/dataplaneapi
+    main: ./cmd/dataplaneapi
+    binary: dataplaneapi
     ldflags:
       - -s -w -X main.GitRepo={{.GitURL}} -X main.GitTag={{.Tag}} -X main.GitCommit={{.ShortCommit}} -X main.GitDirty= -X main.BuildTime={{.Date}}
     env:
@@ -25,6 +23,9 @@ builds:
       - arm64
       - ppc64le
       - s390x
+changelog:
+  sort: asc
+  use: git
 archives:
   -
     id: my-archive
@@ -37,6 +38,15 @@ archives:
       freebsd: FreeBSD
       386: i386
       amd64: x86_64
+    files:
+      - LICENSE
+      - README.md
+      - src: dist/CHANGELOG.md
+        dst: ""
+        strip_parent: true
+      - src: assets/packages/dataplaneapi.yml.dist
+        dst: ""
+        strip_parent: true
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -53,3 +63,72 @@ release:
     Build date: {{.Date}}
   draft: true
   name_template: "HAProxy Data Plane API v{{.Version}}"
+nfpms:
+  - 
+    id: my-package
+    package_name: dataplaneapi
+    builds:
+      - my-build
+    vendor: HAProxy Technologies
+    homepage: https://github.com/haproxytech/dataplaneapi
+    maintainer: Marko Juraga <mjuraga@haproxy.com>
+    description: HAProxy Data Plane API - API endpoints for managing HAProxy
+    license: Apache 2.0
+    formats:
+      - apk
+      - deb
+      - rpm
+    dependencies:
+      - haproxy
+    bindir: /usr/sbin
+    section: net
+    priority: optional
+    contents:
+      - dst: /etc/dataplaneapi
+        type: dir
+        file_info:
+          owner: root
+          group: root
+          mode: 0750
+      - dst: /var/lib/dataplaneapi
+        type: dir
+        file_info:
+          owner: root
+          group: root
+          mode: 0750
+      - src: assets/packages/dataplaneapi.yml.dist
+        dst: /etc/dataplaneapi/dataplaneapi.yml
+        type: "config|noreplace"
+        file_info:
+          owner: root
+          group: root
+          mode: 0640
+      - src: assets/packages/dataplaneapi.service
+        dst: /etc/systemd/system/dataplaneapi.service
+        type: config
+        file_info:
+          owner: root
+          group: root
+          mode: 0640
+      - src: assets/packages/default
+        dst: /etc/default/dataplaneapi
+        type: config
+        file_info:
+          owner: root
+          group: root
+          mode: 0640
+      - src: assets/packages/logrotate
+        dst: /etc/logrotate.d/dataplaneapi
+        type: config
+        file_info:
+          owner: root
+          group: root
+          mode: 0640
+    scripts:
+      postinstall: "assets/packages/post-install.sh"
+      preremove: "assets/packages/pre-uninstall.sh"
+      postremove: "assets/packages/post-uninstall.sh"
+    deb:
+      lintian_overrides:
+        - statically-linked-binary
+        - changelog-file-missing-in-native-package

@@ -1,0 +1,28 @@
+dataplaneapi:
+  host: 0.0.0.0
+  port: 5555
+  userlist:
+    userlist: dataplaneapi
+  resources:
+    maps_dir: /etc/haproxy/maps
+    ssl_certs_dir: /etc/haproxy/ssl
+    general_storage_dir: /etc/haproxy/general
+    spoe_dir: /etc/haproxy/spoe
+  transaction:
+    transaction_dir: /var/lib/dataplaneapi/transactions
+    backups_number: 10
+    backups_dir: /var/lib/dataplaneapi/backups
+haproxy:
+  config_file: /etc/haproxy/haproxy.cfg
+  haproxy_bin: /usr/sbin/haproxy
+  reload:
+    reload_delay: 5
+    service_name: haproxy
+    reload_strategy: systemd
+log_targets:
+- log_to: file
+  log_file: /var/log/dataplaneapi.log
+  log_level: info
+  log_types:
+  - access
+  - app

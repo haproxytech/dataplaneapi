@@ -1,0 +1,15 @@
+[Unit]
+Description=HAProxy Data Plane API
+After=syslog.target network-online.target
+
+[Service]
+Environment="PIDFILE=/run/dataplaneapi.pid"
+EnvironmentFile=/etc/default/dataplaneapi
+ExecStart=/usr/sbin/dataplaneapi $SYSD_OPTIONS
+ExecReload=/bin/kill -s SIGUSR1 $MAINPID
+Type=simple
+PIDFile=
+GuessMainPID=1
+
+[Install]
+WantedBy=multi-user.target
