@@ -1,0 +1,3 @@
+# Options for dataplaneapi
+
+SYSD_OPTIONS='-f /etc/dataplaneapi/dataplaneapi.yml'
