@@ -21278,6 +21278,17 @@ func init() {
         },
         "method": {
           "type": "string",
+          "enum": [
+            "HEAD",
+            "PUT",
+            "POST",
+            "GET",
+            "TRACE",
+            "PATCH",
+            "DELETE",
+            "CONNECT",
+            "OPTIONS"
+          ],
           "x-dependency": {
             "type": {
               "value": "send"
@@ -23352,7 +23363,10 @@ func init() {
             "POST",
             "GET",
             "TRACE",
-            "PATCH"
+            "PATCH",
+            "DELETE",
+            "CONNECT",
+            "OPTIONS"
           ]
         },
         "uri": {
@@ -58993,6 +59007,17 @@ func init() {
         },
         "method": {
           "type": "string",
+          "enum": [
+            "HEAD",
+            "PUT",
+            "POST",
+            "GET",
+            "TRACE",
+            "PATCH",
+            "DELETE",
+            "CONNECT",
+            "OPTIONS"
+          ],
           "x-dependency": {
             "type": {
               "value": "send"
@@ -61067,7 +61092,10 @@ func init() {
             "POST",
             "GET",
             "TRACE",
-            "PATCH"
+            "PATCH",
+            "DELETE",
+            "CONNECT",
+            "OPTIONS"
           ]
         },
         "uri": {

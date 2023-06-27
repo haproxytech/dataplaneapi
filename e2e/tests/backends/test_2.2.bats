@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 #
-# Copyright 2021 HAProxy Technologies
+# Copyright 2023 HAProxy Technologies
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,56 +19,49 @@ load '../../libs/dataplaneapi'
 load '../../libs/get_json_path'
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
-@test "backends: Add a backend" {
-  resource_post "$_BACKEND_BASE_PATH" "data/post.json" "force_reload=true"
+
+@test "backends: Add a backend (>=2.2)" {
+  if haproxy_version_ge "2.2"
+  then
+  resource_post "$_BACKEND_BASE_PATH" "data/post_2.2.json" "force_reload=true"
   assert_equal "$SC" "201"
 
   resource_get "$_BACKEND_BASE_PATH/test_backend"  assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" ".data.\"http-check\".method")" "OPTIONS"
+  assert_equal "$(get_json_path "$BODY" ".data.\"http-check\".uri")" "/"
+  assert_equal "$(get_json_path "$BODY" ".data.\"http-check\".version")" "HTTP/1.1"
   assert_equal "$(get_json_path "$BODY" ".data.adv_check")" "httpchk"
   assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.method")" "GET"
   assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.uri")" "/check"
   assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.version")" "HTTP/1.1"
+  fi
 }
 
-@test "backends: fail adding a backend (invalid send method in httpchk_params)" {
-  resource_post "$_BACKEND_BASE_PATH" "data/post_invalid_send_method_1.json" "force_reload=true"
-	assert_equal "$SC" 422
-    assert_equal "$(get_json_path "$BODY" ".code")" "606"
-}
-
-@test "backends: fail adding a backend (invalid send method in http-check)" {
-  resource_post "$_BACKEND_BASE_PATH" "data/post_invalid_send_method_2.json" "force_reload=true"
-	assert_equal "$SC" 422
-    assert_equal "$(get_json_path "$BODY" ".code")" "606"
-}
-
-@test "backends: Return a backend" {
-	resource_get "$_BACKEND_BASE_PATH/test_backend"
-	assert_equal "$SC" 200
-	assert_equal "test_backend" "$(get_json_path "$BODY" '.data.name')"
-}
-
-@test "backends: Replace a backend" {
+@test "backends: Replace a backend (>=2.2)" {
+  if haproxy_version_ge "2.2"
+  then
 	resource_put "$_BACKEND_BASE_PATH/test_backend" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 
 	resource_get "$_BACKEND_BASE_PATH/test_backend"  assert_equal "$SC" 200
+    assert_equal "$(get_json_path "$BODY" ".data.\"http-check\".method")" "OPTIONS"
+    assert_equal "$(get_json_path "$BODY" ".data.\"http-check\".uri")" "/"
+    assert_equal "$(get_json_path "$BODY" ".data.\"http-check\".version")" "HTTP/1.1"
     assert_equal "$(get_json_path "$BODY" ".data.adv_check")" "httpchk"
     assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.method")" "GET"
     assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.uri")" "/healthz"
     assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.version")" "HTTP/1.1"
-}
-
-@test "backends: Return an array of backends" {
-	resource_get "$_BACKEND_BASE_PATH"
-	assert_equal "$SC" 200
-	assert_equal "test_backend" "$(get_json_path "$BODY" '.data[0].name')"
+  fi
 }
 
 @test "backends: Delete a backend" {
+  if haproxy_version_ge "2.2"
+  then
 	resource_delete "$_BACKEND_BASE_PATH/test_backend" "force_reload=true"
 	assert_equal "$SC" 204
+  fi
 }
