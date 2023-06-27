@@ -1,8 +1,9 @@
 {
+  "adv_check": "httpchk",
   "balance": {
     "algorithm": "static-rr"
   },
-  "httpchk": {
+  "httpchk_params": {
     "method": "GET",
     "uri": "/healthz",
     "version": "HTTP/1.1"
