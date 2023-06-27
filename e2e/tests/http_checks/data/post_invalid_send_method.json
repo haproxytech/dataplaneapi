@@ -1,0 +1,7 @@
+{
+  "index": 0,
+  "type": "send",
+  "method": "invalid",
+  "uri": "/",
+  "version": "HTTP/1.1"
+}
