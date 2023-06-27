@@ -49,7 +49,7 @@ func (h *StorageCreateStorageGeneralFileHandlerImpl) Handle(params storage.Creat
 		return storage.NewCreateStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	filename, err := gs.Create(file.Header.Filename, params.FileUpload)
+	filename, size, err := gs.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return storage.NewCreateStorageGeneralFileDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -59,6 +59,7 @@ func (h *StorageCreateStorageGeneralFileHandlerImpl) Handle(params storage.Creat
 		Description: "managed general use file",
 		File:        filename,
 		StorageName: filepath.Base(filename),
+		Size:        size,
 	}
 
 	return storage.NewCreateStorageGeneralFileCreated().WithPayload(me)
@@ -108,7 +109,7 @@ func (h *StorageGetOneStorageGeneralFileHandlerImpl) Handle(params storage.GetOn
 		return storage.NewGetOneStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	filename, err := gs.Get(params.Name)
+	filename, _, err := gs.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)
@@ -144,7 +145,7 @@ func (h *StorageDeleteStorageGeneralFileHandlerImpl) Handle(params storage.Delet
 
 	runningConf := strings.NewReader(configuration.Parser().String())
 
-	filename, err := gs.Get(params.Name)
+	filename, _, err := gs.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)

@@ -49,7 +49,7 @@ func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateSto
 		return storage.NewCreateStorageMapFileDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	filename, err := st.Create(file.Header.Filename, params.FileUpload)
+	filename, size, err := st.Create(file.Header.Filename, params.FileUpload)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return storage.NewCreateStorageMapFileDefault(status).WithPayload(misc.SetError(status, err.Error()))
@@ -59,6 +59,7 @@ func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateSto
 		Description: "managed but not loaded map file (no runtime ID)",
 		File:        filename,
 		StorageName: filepath.Base(filename),
+		Size:        size,
 	}
 	// no reload or force reload since this is just a file upload,
 	// haproxy configuration has not been changed
@@ -110,7 +111,7 @@ func (h *GetOneStorageMapHandlerImpl) Handle(params storage.GetOneStorageMapPara
 		return storage.NewGetAllStorageMapFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	filename, err := st.Get(params.Name)
+	filename, _, err := st.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageMapDefault(int(*e.Code)).WithPayload(e)
@@ -146,7 +147,7 @@ func (h *StorageDeleteStorageMapHandlerImpl) Handle(params storage.DeleteStorage
 
 	runningConf := strings.NewReader(configuration.Parser().String())
 
-	filename, err := st.Get(params.Name)
+	filename, _, err := st.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)

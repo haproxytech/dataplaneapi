@@ -19949,6 +19949,10 @@ func init() {
         "id": {
           "type": "string"
         },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer"
+        },
         "storage_name": {
           "type": "string"
         }
@@ -24203,6 +24207,10 @@ func init() {
         "id": {
           "type": "string"
         },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer"
+        },
         "storage_name": {
           "type": "string"
         }
@@ -27488,8 +27496,38 @@ func init() {
         "description": {
           "type": "string"
         },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "file": {
           "type": "string"
+        },
+        "ip_addresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "issuers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "not_after": {
+          "type": "string",
+          "format": "date"
+        },
+        "not_before": {
+          "type": "string",
+          "format": "date"
+        },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer"
         },
         "storage_name": {
           "type": "string"
@@ -58408,6 +58446,10 @@ func init() {
         "id": {
           "type": "string"
         },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer"
+        },
         "storage_name": {
           "type": "string"
         }
@@ -62506,6 +62548,10 @@ func init() {
         "id": {
           "type": "string"
         },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer"
+        },
         "storage_name": {
           "type": "string"
         }
@@ -65727,8 +65773,38 @@ func init() {
         "description": {
           "type": "string"
         },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "file": {
           "type": "string"
+        },
+        "ip_addresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "issuers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "not_after": {
+          "type": "string",
+          "format": "date"
+        },
+        "not_before": {
+          "type": "string",
+          "format": "date"
+        },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer"
         },
         "storage_name": {
           "type": "string"

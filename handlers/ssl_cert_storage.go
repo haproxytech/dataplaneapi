@@ -23,6 +23,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
 	client_native "github.com/haproxytech/client-native/v5"
 	models "github.com/haproxytech/client-native/v5/models"
 
@@ -73,7 +74,7 @@ func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.Ge
 		return storage.NewGetOneStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	filename, err := sslStorage.Get(params.Name)
+	filename, size, err := sslStorage.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewGetOneStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -81,10 +82,21 @@ func (h *StorageGetOneStorageSSLCertificateHandlerImpl) Handle(params storage.Ge
 	if filename == "" {
 		return storage.NewGetOneStorageSSLCertificateNotFound()
 	}
+	info, err := sslStorage.GetCertificatesInfo(params.Name)
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewGetOneStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
 	retf := &models.SslCertificate{
 		File:        filename,
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
+		Size:        size,
+		NotAfter:    strfmt.Date(info.NotAfter),
+		NotBefore:   strfmt.Date(info.NotBefore),
+		Issuers:     info.Issuers,
+		Domains:     info.DNS,
+		IPAddresses: info.IPs,
 	}
 	return storage.NewGetOneStorageSSLCertificateOK().WithPayload(retf)
 }
@@ -109,7 +121,7 @@ func (h *StorageDeleteStorageSSLCertificateHandlerImpl) Handle(params storage.De
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	filename, err := sslStorage.Get(params.Name)
+	filename, _, err := sslStorage.Get(params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewDeleteStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -181,10 +193,21 @@ func (h *StorageReplaceStorageSSLCertificateHandlerImpl) Handle(params storage.R
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
 	}
+	info, err := sslStorage.GetCertificatesInfo(filename)
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewReplaceStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
 	retf := &models.SslCertificate{
 		File:        filename,
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
+		Size:        int64(len(params.Data)),
+		NotAfter:    strfmt.Date(info.NotAfter),
+		NotBefore:   strfmt.Date(info.NotBefore),
+		Issuers:     info.Issuers,
+		Domains:     info.DNS,
+		IPAddresses: info.IPs,
 	}
 
 	skipReload := false
@@ -230,7 +253,12 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 	if !ok {
 		return storage.NewCreateStorageSSLCertificateBadRequest()
 	}
-	filename, err := sslStorage.Create(file.Header.Filename, params.FileUpload)
+	filename, size, err := sslStorage.Create(file.Header.Filename, params.FileUpload)
+	if err != nil {
+		e := misc.HandleError(err)
+		return storage.NewCreateStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
+	}
+	info, err := sslStorage.GetCertificatesInfo(filename)
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewCreateStorageSSLCertificateDefault(int(*e.Code)).WithPayload(e)
@@ -239,6 +267,12 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 		File:        filename,
 		Description: "managed SSL file",
 		StorageName: filepath.Base(filename),
+		Size:        size,
+		NotAfter:    strfmt.Date(info.NotAfter),
+		NotBefore:   strfmt.Date(info.NotBefore),
+		Issuers:     info.Issuers,
+		Domains:     info.DNS,
+		IPAddresses: info.IPs,
 	}
 
 	forceReload := false
