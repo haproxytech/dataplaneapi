@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.28.9
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.102.0
 	github.com/docker/go-units v0.5.0
-	github.com/dustinkirkland/golang-petname v0.0.0-20191129215211-8e5a1ed0cff0
+	github.com/dustinkirkland/golang-petname v0.0.0-20230626224747-e794b9370d49
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/getkin/kin-openapi v0.118.0
 	github.com/go-openapi/errors v0.20.4
@@ -74,7 +74,7 @@ require (
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
-	go.mongodb.org/mongo-driver v1.11.7 // indirect
+	go.mongodb.org/mongo-driver v1.12.0 // indirect
 	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
