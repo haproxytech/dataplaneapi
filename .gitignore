@@ -4,3 +4,6 @@ cmd/dataplaneapi/*
 .vscode/
 .test/
 bin/golangci-lint
+
+# ignore Goland ide config
+.idea
