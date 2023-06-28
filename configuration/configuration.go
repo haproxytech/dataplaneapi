@@ -207,22 +207,12 @@ func (c *Configuration) Load() error {
 		c.storage = &StorageDummy{}
 		_ = c.storage.Load("")
 	} else {
-		ext := strings.ToLower(filepath.Ext(c.HAProxy.DataplaneConfig))
-
-		switch ext {
-		case ".yml", ".yaml":
-			c.storage = &StorageYML{}
-		default:
-			if err = (&StorageYML{}).Load(c.HAProxy.DataplaneConfig); err == nil {
-				c.storage = &StorageYML{}
-				break
-			}
-		}
+		c.storage = &StorageYML{}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
 			if errors.Is(err, fs.ErrNotExist) {
 				log.Warningf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
 			} else {
-				return fmt.Errorf("configuration file %s not valid: %w", c.HAProxy.DataplaneConfig, err)
+				return fmt.Errorf("configuration file %s not valid (only yaml format is supported): %w", c.HAProxy.DataplaneConfig, err)
 			}
 		}
 	}
