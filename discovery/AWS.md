@@ -7,13 +7,13 @@ Data Plane API allows performing EC2 instances discovery, self-registering IP ad
 All instances must be tagged with the following tags:
 
 - `HAProxy:Service:Name`: the service name will compose the HAProxy `backend` name.
-- `HAProxy:Service:Port`: the default service port is listening to.
+- `HAProxy:Service:Port`: the default service port is listening to (only one port is allowed).
 
 > The said tags are mandatory, otherwise, the instance will be ignored.
 
 An additional tag is provided, in case of override for the single instance
 
-- `HAProxy:Instance:Port`: allows to override the default Service port.
+- `HAProxy:Instance:Port`: allows to override the default Service port (only one port is allowed).
 
 ## Filtering
 
