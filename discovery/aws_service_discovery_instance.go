@@ -28,6 +28,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/haproxytech/client-native/v5/configuration"
 	"github.com/haproxytech/client-native/v5/models"
+
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/log"
 )
@@ -255,6 +256,8 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 			var sn string
 			sn, err = a.serviceNameFromEC2(i)
 			if err != nil {
+				a.logErrorf("unable to retrieve service name for the instance %s", *i.InstanceId)
+
 				continue
 			}
 			// creating empty service in case it isn't there
@@ -268,6 +271,13 @@ func (a *awsInstance) updateServices(api *ec2.Client) (err error) {
 				}
 			}
 			instanceID := aws.ToString(i.InstanceId)
+
+			if _, portErr := mapService[sn].instancePortFromEC2(i); portErr != nil {
+				a.logErrorf("unable to retrieve service port for the instance %s", *i.InstanceId)
+
+				continue
+			}
+
 			mapService[sn].instances[instanceID] = i
 		}
 	}
