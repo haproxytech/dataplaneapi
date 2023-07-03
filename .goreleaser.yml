@@ -31,13 +31,11 @@ archives:
     id: my-archive
     builds:
       - my-build
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-    replacements:
-      linux: Linux
-      darwin: Darwin
-      freebsd: FreeBSD
-      386: i386
-      amd64: x86_64
+    name_template: >-
+      {{.ProjectName}}_{{.Version}}_{{.Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
     files:
       - LICENSE
       - README.md
@@ -69,6 +67,10 @@ nfpms:
     package_name: dataplaneapi
     builds:
       - my-build
+    file_name_template: >-
+      {{.ProjectName}}_{{.Version}}_{{.Os }}_
+      {{- if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
     vendor: HAProxy Technologies
     homepage: https://github.com/haproxytech/dataplaneapi
     maintainer: Marko Juraga <mjuraga@haproxy.com>
