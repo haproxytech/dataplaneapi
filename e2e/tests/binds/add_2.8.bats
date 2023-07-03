@@ -34,5 +34,6 @@ load 'utils/_helpers'
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" '.data.name')" "test_bind"
     assert_equal "$(get_json_path "$BODY" ".data.no_alpn")" "true"
+    assert_equal "$(get_json_path "$BODY" '.data.ca_verify_file')" "/certs/ca-verify.pem"
   fi
 }

@@ -31,5 +31,6 @@ load 'utils/_helpers'
   if haproxy_version_ge "2.5"
   then
     assert_equal "all" "$(get_json_path "$BODY" ".data.thread")"
+    assert_equal "$(get_json_path "$BODY" '.data.ca_verify_file')" "/certs/ca-verify.pem"
   fi
 }
