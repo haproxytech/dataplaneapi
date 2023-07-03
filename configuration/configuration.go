@@ -17,7 +17,9 @@ package configuration
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/fs"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -221,8 +223,8 @@ func (c *Configuration) Load() error {
 			c.storage = &StorageHCL{}
 		}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
-			if os.IsNotExist(err) {
-				log.Warningf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
+			if errors.Is(err, fs.ErrNotExist) {
+				fmt.Printf("configuration file %s does not exists, creating one\n", c.HAProxy.DataplaneConfig)
 			} else {
 				return fmt.Errorf("configuration file %s not valid: %w", c.HAProxy.DataplaneConfig, err)
 			}
