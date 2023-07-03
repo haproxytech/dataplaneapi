@@ -20,12 +20,10 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
-	"time"
 
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/haproxytech/client-native/v4/models"
@@ -226,7 +224,7 @@ func (c *Configuration) Load() error {
 		}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
 			if errors.Is(err, fs.ErrNotExist) {
-				log.Warningf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
+				fmt.Printf("configuration file %s does not exists, creating one\n", c.HAProxy.DataplaneConfig)
 			} else {
 				return fmt.Errorf("configuration file %s not valid: %w", c.HAProxy.DataplaneConfig, err)
 			}
@@ -245,8 +243,7 @@ func (c *Configuration) Load() error {
 	if c.Name.Load() == "" {
 		hostname, nameErr := os.Hostname()
 		if nameErr != nil {
-			log.Warningf("Error fetching hostname, using petname for dataplaneapi name: %s", nameErr.Error())
-			rand.Seed(time.Now().UnixNano())
+			fmt.Printf("Error fetching hostname, using petname for dataplaneapi name: %s\n", nameErr.Error())
 			c.Name.Store(petname.Generate(2, "_"))
 		}
 		c.Name.Store(hostname)
