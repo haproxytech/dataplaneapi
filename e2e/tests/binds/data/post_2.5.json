@@ -4,5 +4,6 @@
   "port": 10000,
   "defer_accept": true,
   "allow_0rtt": true,
-  "thread": "1/all"
+  "thread": "1/all",
+  "ca_verify_file": "/certs/ca-verify.pem"
 }
