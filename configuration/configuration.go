@@ -210,7 +210,7 @@ func (c *Configuration) Load() error {
 		c.storage = &StorageYML{}
 		if err = c.storage.Load(c.HAProxy.DataplaneConfig); err != nil {
 			if errors.Is(err, fs.ErrNotExist) {
-				log.Warningf("configuration file %s does not exists, creating one", c.HAProxy.DataplaneConfig)
+				fmt.Printf("configuration file %s does not exists, creating one\n", c.HAProxy.DataplaneConfig)
 			} else {
 				return fmt.Errorf("configuration file %s not valid (only yaml format is supported): %w", c.HAProxy.DataplaneConfig, err)
 			}
@@ -229,7 +229,7 @@ func (c *Configuration) Load() error {
 	if c.Name.Load() == "" {
 		hostname, nameErr := os.Hostname()
 		if nameErr != nil {
-			log.Warningf("Error fetching hostname, using petname for dataplaneapi name: %s", nameErr.Error())
+			fmt.Printf("Error fetching hostname, using petname for dataplaneapi name: %s\n", nameErr.Error())
 			c.Name.Store(petname.Generate(2, "_"))
 		}
 		c.Name.Store(hostname)
