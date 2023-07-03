@@ -17524,14 +17524,6 @@ func init() {
         "npn": {
           "type": "string"
         },
-        "ocsp_update": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": true
-            }
-          }
-        },
         "prefer_client_ciphers": {
           "type": "boolean"
         },
@@ -20845,7 +20837,7 @@ func init() {
               "type": "integer",
               "x-display-name": "Max Used Low FD Ratio"
             },
-            "quic_frontend_conn_tc_buffers_limit": {
+            "quic_frontend_conn_tx_buffers_limit": {
               "type": "integer",
               "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
               "x-nullable": true
@@ -54213,7 +54205,7 @@ func init() {
           "type": "integer",
           "x-display-name": "Max Used Low FD Ratio"
         },
-        "quic_frontend_conn_tc_buffers_limit": {
+        "quic_frontend_conn_tx_buffers_limit": {
           "type": "integer",
           "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
           "x-nullable": true
@@ -56060,14 +56052,6 @@ func init() {
         },
         "npn": {
           "type": "string"
-        },
-        "ocsp_update": {
-          "type": "string",
-          "x-dependency": {
-            "ssl": {
-              "value": true
-            }
-          }
         },
         "prefer_client_ciphers": {
           "type": "boolean"
@@ -59185,7 +59169,7 @@ func init() {
               "type": "integer",
               "x-display-name": "Max Used Low FD Ratio"
             },
-            "quic_frontend_conn_tc_buffers_limit": {
+            "quic_frontend_conn_tx_buffers_limit": {
               "type": "integer",
               "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
               "x-nullable": true
