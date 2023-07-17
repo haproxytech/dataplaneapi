@@ -194,34 +194,19 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
 	go handleSignals(ctx, cancel, sigs, client, haproxyOptions, users)
 
+	ra := configureReloadAgent(ctx, haproxyOptions, client)
+
 	if !haproxyOptions.DisableInotify {
-		if err := startWatcher(ctx, client, haproxyOptions, users); err != nil {
+		if err := startWatcher(ctx, client, haproxyOptions, users, ra); err != nil {
 			haproxyOptions.DisableInotify = true
 			client = configureNativeClient(clientCtx, haproxyOptions, mWorker)
+			ra = configureReloadAgent(ctx, haproxyOptions, client)
 		}
 	}
 
 	// Sync map physical file with runtime map entries
 	if haproxyOptions.UpdateMapFiles {
 		go cfg.MapSync.SyncAll(client)
-	}
-
-	// Initialize reload agent
-	raParams := haproxy.ReloadAgentParams{
-		Delay:      haproxyOptions.ReloadDelay,
-		ReloadCmd:  haproxyOptions.ReloadCmd,
-		RestartCmd: haproxyOptions.RestartCmd,
-		StatusCmd:  haproxyOptions.StatusCmd,
-		ConfigFile: haproxyOptions.ConfigFile,
-		BackupDir:  haproxyOptions.BackupsDir,
-		Retention:  haproxyOptions.ReloadRetention,
-		Ctx:        ctx,
-	}
-
-	ra, e := haproxy.NewReloadAgent(raParams)
-	if e != nil {
-		// nolint:gocritic
-		log.Fatalf("Cannot initialize reload agent: %v", e)
 	}
 
 	// setup discovery handlers
@@ -816,6 +801,26 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler {
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares), adpts...)
 }
 
+func configureReloadAgent(ctx context.Context, haproxyOptions dataplaneapi_config.HAProxyConfiguration, client client_native.HAProxyClient) *haproxy.ReloadAgent {
+	raParams := haproxy.ReloadAgentParams{
+		Delay:      haproxyOptions.ReloadDelay,
+		ReloadCmd:  haproxyOptions.ReloadCmd,
+		RestartCmd: haproxyOptions.RestartCmd,
+		StatusCmd:  haproxyOptions.StatusCmd,
+		ConfigFile: haproxyOptions.ConfigFile,
+		BackupDir:  haproxyOptions.BackupsDir,
+		Retention:  haproxyOptions.ReloadRetention,
+		Ctx:        ctx,
+	}
+
+	ra, e := haproxy.NewReloadAgent(raParams)
+	if e != nil {
+		// nolint:gocritic
+		log.Fatalf("Cannot initialize reload agent: %v", e)
+	}
+	return ra
+}
+
 // The TLS configuration before HTTPS server starts.
 func configureTLS(tlsConfig *tls.Config) {
 	// Make all necessary changes to the TLS configuration here.
@@ -962,12 +967,40 @@ func reloadConfigurationFile(client client_native.HAProxyClient, haproxyOptions 
 	client.ReplaceConfiguration(confClient)
 }
 
-func startWatcher(ctx context.Context, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) error {
+func startWatcher(ctx context.Context, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users, reloadAgent *haproxy.ReloadAgent) error {
 	cb := func() {
-		reloadConfigurationFile(client, haproxyOptions, users)
 		configuration, err := client.Configuration()
 		if err != nil {
-			log.Warningf("Failed to increment configuration version: %v", err)
+			log.Warningf("Failed to get configuration: %s", err)
+			return
+		}
+
+		// save old runtime configuration to know if the runtime client must be configured after the new configuration is
+		// reloaded by HAProxy. Logic is done by cn.ReconfigureRuntime() function.
+		_, globalConf, err := configuration.GetGlobalConfiguration("")
+		if err != nil {
+			log.Warningf("Failed to get global configuration section: %s", err)
+			return
+		}
+		runtimeAPIsOld := globalConf.RuntimeAPIs
+
+		// reload configuration from config file.
+		reloadConfigurationFile(client, haproxyOptions, users)
+
+		// reload runtime client if necessary.
+		callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(client, runtimeAPIsOld)
+		if err != nil {
+			log.Warningf("Failed to check if native client need to be reloaded: %s", err)
+			return
+		}
+		if callbackNeeded {
+			reloadAgent.ReloadWithCallback(reconfigureFunc)
+		}
+
+		// get the last configuration which has been updated by reloadConfigurationFile and increment version in config file.
+		configuration, err = client.Configuration()
+		if err != nil {
+			log.Warningf("Failed to get configuration: %s", err)
 			return
 		}
 		if err := configuration.IncrementVersion(); err != nil {
