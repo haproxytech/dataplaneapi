@@ -16,3 +16,6 @@
 #
 
 _GLOBAL_BASE_PATH="/services/haproxy/configuration/global"
+_RUNTIME_MAP_FILES_BASE_PATH="/services/haproxy/runtime/maps"
+_TRANSACTIONS_BASE_PATH="/services/haproxy/transactions"
+
