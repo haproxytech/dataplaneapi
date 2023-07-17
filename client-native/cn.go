@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	clientnative "github.com/haproxytech/client-native/v5"
-	"github.com/haproxytech/client-native/v5/models"
+	clientnative "github.com/haproxytech/client-native/v4"
+	"github.com/haproxytech/client-native/v4/models"
 
 	"github.com/haproxytech/client-native/v4/configuration"
 	configuration_options "github.com/haproxytech/client-native/v4/configuration/options"
