@@ -34,3 +34,26 @@ load 'utils/_helpers'
   assert_equal "$SC" 400
   assert_equal "$(get_json_path "$BODY" '.message')" "invalid configuration: no newline character found"
 }
+
+
+@test "raw: Post new configuration with socket path changed" {
+    resource_post "$_RAW_BASE_PATH" 'data/haproxy_socket.cfg.json'
+	assert_equal "$SC" 202
+
+	resource_get "$_RAW_BASE_PATH" ""
+	assert_equal "$SC" 200
+
+    local socket; socket='stats socket /var/lib/haproxy/stats-new'
+    if [[ "$BODY" != *"$socket"* ]]; then
+       batslib_print_kv_single_or_multi 8 \
+          'configuration' "$BODY" \
+          'expected socket'   "$socket" \
+          | batslib_decorate 'configuration does not contains the new socket' \
+          | fail
+    fi
+
+	# check that runtime client has been reconfigured with the new socket
+	sleep 5
+	resource_get "$_RUNTIME_MAP_FILES_BASE_PATH" ""
+    assert_equal "$SC" 200
+}

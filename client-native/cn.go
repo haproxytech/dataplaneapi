@@ -5,6 +5,10 @@ import (
 	"fmt"
 	"strconv"
 	"sync"
+	"time"
+
+	clientnative "github.com/haproxytech/client-native/v5"
+	"github.com/haproxytech/client-native/v5/models"
 
 	"github.com/haproxytech/client-native/v5/configuration"
 	configuration_options "github.com/haproxytech/client-native/v5/configuration/options"
@@ -154,4 +158,67 @@ func ConfigureRuntimeClient(ctx context.Context, confClient configuration.Config
 	}
 	log.Warning("Cannot read runtime API configuration, not using it")
 	return runtimeClient
+}
+
+// ReconfigureRuntime check if runtime client need be reconfigured by comparing the current configuration with the old
+// one (i.e. runtimeAPIsOld) and returns a callback that ReloadAgent can use to reconfigure the runtime client.
+func ReconfigureRuntime(client clientnative.HAProxyClient, runtimeAPIsOld []*models.RuntimeAPI) (callbackNeeded bool, callback func(), err error) {
+	cfg, err := client.Configuration()
+	if err != nil {
+		return false, nil, err
+	}
+	_, globalConf, err := cfg.GetGlobalConfiguration("")
+	if err != nil {
+		return false, nil, err
+	}
+	runtimeAPIsNew := globalConf.RuntimeAPIs
+	reconfigureRuntime := false
+	if len(runtimeAPIsOld) != len(runtimeAPIsNew) {
+		reconfigureRuntime = true
+	} else {
+		for _, runtimeOld := range runtimeAPIsOld {
+			if runtimeOld.Address == nil {
+				continue
+			}
+			found := false
+			for _, runtimeNew := range runtimeAPIsNew {
+				if runtimeNew.Address == nil {
+					continue
+				}
+				if *runtimeNew.Address == *runtimeOld.Address {
+					found = true
+					break
+				}
+			}
+			if !found {
+				reconfigureRuntime = true
+				break
+			}
+		}
+	}
+
+	if reconfigureRuntime {
+		dpapiCfg := dataplaneapi_config.Get()
+		haproxyOptions := dpapiCfg.HAProxy
+		return true, func() {
+			var rnt runtime_api.Runtime
+			i := 1
+			for i < 10 {
+				rnt = ConfigureRuntimeClient(context.Background(), cfg, haproxyOptions)
+				if rnt != nil {
+					break
+				}
+				time.Sleep(time.Duration(i) * time.Second)
+				i += i // exponential backoof
+			}
+			client.ReplaceRuntime(rnt)
+			if rnt == nil {
+				log.Debugf("reload callback completed, no runtime API")
+			} else {
+				log.Debugf("reload callback completed, runtime API reconfigured")
+			}
+		}, nil
+	}
+
+	return false, nil, nil
 }

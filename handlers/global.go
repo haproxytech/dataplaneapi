@@ -19,7 +19,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v5"
 	"github.com/haproxytech/client-native/v5/models"
-
+	cn "github.com/haproxytech/dataplaneapi/client-native"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/global"
@@ -84,6 +84,15 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
 
+	// save old runtime configuration to know if the runtime client must be configured after the new configuration is
+	// reloaded by HAProxy. Logic is done by cn.ReconfigureRuntime() function.
+	_, globalConf, err := configuration.GetGlobalConfiguration("")
+	if err != nil {
+		e := misc.HandleError(err)
+		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
+	}
+	runtimeAPIsOld := globalConf.RuntimeAPIs
+
 	err = configuration.PushGlobalConfiguration(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -91,15 +100,32 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 	}
 
 	if params.TransactionID == nil {
+		callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client, runtimeAPIsOld)
+		if err != nil {
+			e := misc.HandleError(err)
+			return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
+		}
+
 		if *params.ForceReload {
-			err := h.ReloadAgent.ForceReload()
+			if callbackNeeded {
+				err = h.ReloadAgent.ForceReloadWithCallback(reconfigureFunc)
+			} else {
+				err = h.ReloadAgent.ForceReload()
+			}
+
 			if err != nil {
 				e := misc.HandleError(err)
 				return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
 			}
 			return global.NewReplaceGlobalOK().WithPayload(params.Data)
 		}
-		rID := h.ReloadAgent.Reload()
+
+		var rID string
+		if callbackNeeded {
+			rID = h.ReloadAgent.ReloadWithCallback(reconfigureFunc)
+		} else {
+			rID = h.ReloadAgent.Reload()
+		}
 		return global.NewReplaceGlobalAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return global.NewReplaceGlobalAccepted().WithPayload(params.Data)

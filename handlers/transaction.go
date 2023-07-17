@@ -22,6 +22,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v5"
 	"github.com/haproxytech/client-native/v5/models"
+	cn "github.com/haproxytech/dataplaneapi/client-native"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
@@ -167,6 +168,15 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 		return transactions.NewCommitTransactionNotAcceptable().WithPayload(misc.FailedTransactionError(transaction.ID))
 	}
 
+	// save old runtime configuration to know if the runtime client must be configured after the new configuration is
+	// reloaded by HAProxy. Logic is done by cn.ReconfigureRuntime() function.
+	_, globalConf, err := configuration.GetGlobalConfiguration("")
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+	runtimeAPIsOld := globalConf.RuntimeAPIs
+
 	var t *models.Transaction
 	t, err = configuration.CommitTransaction(params.ID)
 	if err != nil {
@@ -191,15 +201,33 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 		}
 	}
 
+	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client, runtimeAPIsOld)
+	if err != nil {
+		e := misc.HandleError(err)
+		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
+	}
+
 	if *params.ForceReload {
-		err := h.ReloadAgent.ForceReload()
+		if callbackNeeded {
+			err = h.ReloadAgent.ForceReloadWithCallback(reconfigureFunc)
+		} else {
+			err = h.ReloadAgent.ForceReload()
+		}
+
 		if err != nil {
 			e := misc.HandleError(err)
 			return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
 		}
 		return transactions.NewCommitTransactionOK().WithPayload(t)
 	}
-	rID := h.ReloadAgent.Reload()
+
+	var rID string
+	if callbackNeeded {
+		rID = h.ReloadAgent.ReloadWithCallback(reconfigureFunc)
+	} else {
+		rID = h.ReloadAgent.Reload()
+	}
+
 	return transactions.NewCommitTransactionAccepted().WithReloadID(rID).WithPayload(t)
 }
 
