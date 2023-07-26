@@ -22094,28 +22094,18 @@ func init() {
         },
         "resolve-net": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$"
         },
         "resolve-prefer": {
           "type": "string",
           "enum": [
             "ipv4",
             "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          ]
         },
         "resolve_opts": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
+          "pattern": "^(allow-dup-ip|ignore-weight|prevent-dup-ip)(,(allow-dup-ip|ignore-weight|prevent-dup-ip))*$"
         },
         "resolvers": {
           "type": "string",
@@ -53927,28 +53917,18 @@ func init() {
         },
         "resolve-net": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$",
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          "pattern": "^([A-Za-z0-9.:/]+)(,[A-Za-z0-9.:/]+)*$"
         },
         "resolve-prefer": {
           "type": "string",
           "enum": [
             "ipv4",
             "ipv6"
-          ],
-          "x-dependency": {
-            "resolvers": {
-              "required": true
-            }
-          }
+          ]
         },
         "resolve_opts": {
           "type": "string",
-          "pattern": "^[^,\\s][^\\,]*[^,\\s]*$"
+          "pattern": "^(allow-dup-ip|ignore-weight|prevent-dup-ip)(,(allow-dup-ip|ignore-weight|prevent-dup-ip))*$"
         },
         "resolvers": {
           "type": "string",
