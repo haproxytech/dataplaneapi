@@ -17586,6 +17586,9 @@ func init() {
         "tfo": {
           "type": "boolean"
         },
+        "thread": {
+          "type": "string"
+        },
         "tls_ticket_keys": {
           "type": "string"
         },
@@ -55515,6 +55518,9 @@ func init() {
         },
         "tfo": {
           "type": "boolean"
+        },
+        "thread": {
+          "type": "string"
         },
         "tls_ticket_keys": {
           "type": "string"
