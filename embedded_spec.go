@@ -7441,11 +7441,11 @@ func init() {
     },
     "/services/haproxy/configuration/named_defaults/{name}": {
       "get": {
-        "description": "Returns one defautls section configuration by it's name.",
+        "description": "Returns one defaults section configuration by it's name.",
         "tags": [
           "Defaults"
         ],
-        "summary": "Return a defautls section",
+        "summary": "Return a defaults section",
         "operationId": "getDefaultsSection",
         "parameters": [
           {
@@ -20878,7 +20878,7 @@ func init() {
             },
             "recv_enough": {
               "type": "integer",
-              "x-display-name": "Recieve Enough Socket Buffer Size"
+              "x-display-name": "Receive Enough Socket Buffer Size"
             },
             "runqueue_depth": {
               "type": "integer",
@@ -24000,9 +24000,13 @@ func init() {
         "format": {
           "type": "string",
           "enum": [
+            "local",
             "rfc3164",
             "rfc5424",
+            "priority",
             "short",
+            "timed",
+            "iso",
             "raw"
           ],
           "x-dependency": {
@@ -29722,7 +29726,7 @@ func init() {
       "name": "Table"
     },
     {
-      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
+      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is committed. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
     },
     {
@@ -40611,11 +40615,11 @@ func init() {
     },
     "/services/haproxy/configuration/named_defaults/{name}": {
       "get": {
-        "description": "Returns one defautls section configuration by it's name.",
+        "description": "Returns one defaults section configuration by it's name.",
         "tags": [
           "Defaults"
         ],
-        "summary": "Return a defautls section",
+        "summary": "Return a defaults section",
         "operationId": "getDefaultsSection",
         "parameters": [
           {
@@ -54212,7 +54216,7 @@ func init() {
         },
         "recv_enough": {
           "type": "integer",
-          "x-display-name": "Recieve Enough Socket Buffer Size"
+          "x-display-name": "Receive Enough Socket Buffer Size"
         },
         "runqueue_depth": {
           "type": "integer",
@@ -59172,7 +59176,7 @@ func init() {
             },
             "recv_enough": {
               "type": "integer",
-              "x-display-name": "Recieve Enough Socket Buffer Size"
+              "x-display-name": "Receive Enough Socket Buffer Size"
             },
             "runqueue_depth": {
               "type": "integer",
@@ -62294,9 +62298,13 @@ func init() {
         "format": {
           "type": "string",
           "enum": [
+            "local",
             "rfc3164",
             "rfc5424",
+            "priority",
             "short",
+            "timed",
+            "iso",
             "raw"
           ],
           "x-dependency": {
@@ -67911,7 +67919,7 @@ func init() {
       "name": "Table"
     },
     {
-      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is commited. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
+      "description": "Managing transactions. Configuration changes can be grouped in the transaction. You start the\ntransaction with trasactions POST, and call the configuration changes you need with parameter\ntransaction_id. When you want to commit the transaction, you call the transactions PUT and all changes\nin that transaction is committed. If you call a configuration change without the transaction_id,\ntransaction mechanism is implicitly called with one operation in transaction.\n",
       "name": "Transactions"
     },
     {
