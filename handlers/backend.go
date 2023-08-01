@@ -16,6 +16,8 @@
 package handlers
 
 import (
+	"github.com/haproxytech/dataplaneapi/log"
+
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v5"
 	"github.com/haproxytech/client-native/v5/models"
@@ -53,6 +55,18 @@ type ReplaceBackendHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+func logDeprecatedFieldsWarning(b *models.Backend) {
+	if b.Httpclose != "" {
+		log.Warningf("Field Httpclose is deprecated. Use HTTPConnectionMode.")
+	}
+	if b.HTTPKeepAlive != "" {
+		log.Warningf("Field HTTPKeepAlive is deprecated. Use HTTPConnectionMode.")
+	}
+	if b.HTTPServerClose != "" {
+		log.Warningf("Field HTTPServerClose is deprecated. Use HTTPConnectionMode.")
+	}
+}
+
 // Handle executing the request and returning a response
 func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -73,6 +87,8 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 		}
 		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
 	}
+
+	logDeprecatedFieldsWarning(params.Data)
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
@@ -200,6 +216,8 @@ func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, 
 	if params.Version != nil {
 		v = *params.Version
 	}
+
+	logDeprecatedFieldsWarning(params.Data)
 
 	if t != "" && *params.ForceReload {
 		msg := "Both force_reload and transaction specified, specify only one"

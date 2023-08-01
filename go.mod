@@ -22,7 +22,7 @@ require (
 	github.com/go-openapi/validate v0.22.1
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.3.0
-	github.com/haproxytech/client-native/v5 v5.0.1-0.20230710054839-8879b6b71da0
+	github.com/haproxytech/client-native/v5 v5.0.1-0.20230801141958-2081a288d108
 	github.com/haproxytech/config-parser/v5 v5.0.1-0.20230621085204-83b68fc565ef
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
@@ -75,6 +75,6 @@ require (
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
 	go.mongodb.org/mongo-driver v1.12.0 // indirect
-	golang.org/x/exp v0.0.0-20230711023510-fffb14384f22 // indirect
+	golang.org/x/exp v0.0.0-20230725093048-515e97ebf090 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

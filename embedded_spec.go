@@ -16149,8 +16149,7 @@ func init() {
       "required": [
         "index",
         "acl_name",
-        "criterion",
-        "value"
+        "criterion"
       ],
       "properties": {
         "acl_name": {
@@ -16591,6 +16590,7 @@ func init() {
               "value": "http"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "HTTP keep-alive"
         },
         "http-no-delay": {
@@ -16617,6 +16617,7 @@ func init() {
               "value": "http"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "HTTP server close"
         },
         "http-use-htx": {
@@ -16738,6 +16739,7 @@ func init() {
               "value": "http"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "HTTP connection closing"
         },
         "id": {
@@ -54682,8 +54684,7 @@ func init() {
       "required": [
         "index",
         "acl_name",
-        "criterion",
-        "value"
+        "criterion"
       ],
       "properties": {
         "acl_name": {
@@ -55124,6 +55125,7 @@ func init() {
               "value": "http"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "HTTP keep-alive"
         },
         "http-no-delay": {
@@ -55150,6 +55152,7 @@ func init() {
               "value": "http"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "HTTP server close"
         },
         "http-use-htx": {
@@ -55271,6 +55274,7 @@ func init() {
               "value": "http"
             }
           },
+          "x-deprecated": true,
           "x-display-name": "HTTP connection closing"
         },
         "id": {
