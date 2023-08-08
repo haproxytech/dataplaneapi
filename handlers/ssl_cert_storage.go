@@ -286,6 +286,8 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 			e := misc.HandleError(err)
 			return storage.NewReplaceStorageMapFileDefault(int(*e.Code)).WithPayload(e)
 		}
+		return storage.NewCreateStorageSSLCertificateCreated().WithPayload(retf)
 	}
-	return storage.NewCreateStorageSSLCertificateCreated().WithPayload(retf)
+	rID := h.ReloadAgent.Reload()
+	return storage.NewCreateStorageSSLCertificateAccepted().WithReloadID(rID).WithPayload(retf)
 }

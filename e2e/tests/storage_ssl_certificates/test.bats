@@ -24,7 +24,14 @@ load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
+setup() {
+   run docker cp "${BATS_TEST_DIRNAME}/data/3.pem" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/ssl/"
+   assert_success
+}
+
 @test "storage_ssl_certificates: Add a ssl certificate file" {
+    run docker cp "${BATS_TEST_DIRNAME}/data/3.pem" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/ssl/"
+    assert_success
 
     refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
     pre_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
@@ -33,23 +40,31 @@ load 'utils/_helpers'
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal $SC 201
+    assert_equal $SC 202
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
 
     assert dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
 
-    # confirm haproxy wasn't reloaded or restarted
     post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
     new_logs_count=$(( $pre_logs_count - $post_logs_count ))
-    assert [ $new_logs_count = 0 ]
+
+    new_logs=$(docker logs dataplaneapi-e2e 2>&1 | tail -n $new_logs_count)
+
+    echo -e "$new_logs" # this will help debugging if the test fails
+    if haproxy_version_ge "2.5"
+    then
+        assert echo -e "$new_logs" | grep -q "Loading success"
+    else
+        assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+    fi
 }
 
 @test "storage_ssl_certificates: Get a list of managed ssl certificate files" {
     resource_get "$_STORAGE_SSL_CERTS_BASE_PATH"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "$BODY" '.|length')" 1
+    assert_equal "$(get_json_path "$BODY" '.|length')" 2
     assert_equal "$(get_json_path "$BODY" '.[0].storage_name')" "1.pem"
 }
 
@@ -106,7 +121,7 @@ load 'utils/_helpers'
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal "$SC" 201
+    assert_equal "$SC" 202
 
     resource_delete "$_STORAGE_SSL_CERTS_BASE_PATH/1.pem" "force_reload=true"
     assert_equal "$SC" 204
@@ -120,7 +135,7 @@ load 'utils/_helpers'
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal "$SC" 201
+    assert_equal "$SC" 202
 
     resource_delete "$_STORAGE_SSL_CERTS_BASE_PATH/1.pem" "skip_reload=true"
     assert_equal "$SC" 204
@@ -172,12 +187,13 @@ load 'utils/_helpers'
     dpa_curl_status_body '$output'
     assert_equal $SC 200
 
+    sleep 3
     post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
     new_logs_count=$(( $pre_logs_count - $post_logs_count ))
 
     new_logs=$(docker logs dataplaneapi-e2e 2>&1 | tail -n $new_logs_count)
 
-    echo -e "$new_logs" # this will help debugging if the test fails
+    echo -e "debug->>>>$new_logs" # this will help debugging if the test fails
     if haproxy_version_ge "2.5"
     then
         assert echo -e "$new_logs" | grep -q "Loading success"
