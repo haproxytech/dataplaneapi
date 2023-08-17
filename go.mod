@@ -21,9 +21,9 @@ require (
 	github.com/go-openapi/swag v0.22.4
 	github.com/go-openapi/validate v0.22.1
 	github.com/google/renameio v1.0.1
-	github.com/google/uuid v1.3.0
-	github.com/haproxytech/client-native/v5 v5.0.1-0.20230801141958-2081a288d108
-	github.com/haproxytech/config-parser/v5 v5.0.1-0.20230621085204-83b68fc565ef
+	github.com/google/uuid v1.3.1
+	github.com/haproxytech/client-native/v5 v5.0.1-0.20230829105339-6137ed6c405c
+	github.com/haproxytech/config-parser/v5 v5.0.1-0.20230821131853-5878ad7f5340
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
@@ -31,9 +31,9 @@ require (
 	github.com/rs/cors v1.9.0
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sirupsen/logrus v1.9.3
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.4
 	golang.org/x/net v0.12.0
-	golang.org/x/sys v0.10.0
+	golang.org/x/sys v0.11.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -51,7 +51,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-openapi/analysis v0.21.4 // indirect
-	github.com/go-openapi/jsonpointer v0.19.6 // indirect
+	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
@@ -74,7 +74,6 @@ require (
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
-	go.mongodb.org/mongo-driver v1.12.0 // indirect
-	golang.org/x/exp v0.0.0-20230725093048-515e97ebf090 // indirect
+	go.mongodb.org/mongo-driver v1.12.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

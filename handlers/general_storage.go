@@ -59,7 +59,7 @@ func (h *StorageCreateStorageGeneralFileHandlerImpl) Handle(params storage.Creat
 		Description: "managed general use file",
 		File:        filename,
 		StorageName: filepath.Base(filename),
-		Size:        size,
+		Size:        &size,
 	}
 
 	return storage.NewCreateStorageGeneralFileCreated().WithPayload(me)

@@ -59,7 +59,7 @@ func (h *StorageCreateStorageMapFileHandlerImpl) Handle(params storage.CreateSto
 		Description: "managed but not loaded map file (no runtime ID)",
 		File:        filename,
 		StorageName: filepath.Base(filename),
-		Size:        size,
+		Size:        &size,
 	}
 	// no reload or force reload since this is just a file upload,
 	// haproxy configuration has not been changed

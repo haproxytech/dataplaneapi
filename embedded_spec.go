@@ -15740,6 +15740,18 @@ func init() {
               "$ref": "#/definitions/ssl_certificate"
             }
           },
+          "202": {
+            "description": "SSL certificate created requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "400": {
             "$ref": "#/responses/BadRequest"
           },
@@ -19945,7 +19957,8 @@ func init() {
         },
         "size": {
           "description": "File size in bytes.",
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "storage_name": {
           "type": "string"
@@ -24207,7 +24220,8 @@ func init() {
         },
         "size": {
           "description": "File size in bytes.",
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "storage_name": {
           "type": "string"
@@ -27495,37 +27509,42 @@ func init() {
           "type": "string"
         },
         "domains": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
         },
         "file": {
           "type": "string"
         },
         "ip_addresses": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
         },
         "issuers": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
         },
         "not_after": {
           "type": "string",
-          "format": "date"
+          "format": "date-time",
+          "x-go-custom-tag": "gorm:\"type:timestamp with time zone\"",
+          "x-nullable": true,
+          "readOnly": true
         },
         "not_before": {
           "type": "string",
-          "format": "date"
+          "format": "date-time",
+          "x-go-custom-tag": "gorm:\"type:timestamp with time zone\"",
+          "x-nullable": true,
+          "readOnly": true
         },
         "size": {
           "description": "File size in bytes.",
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
         },
         "storage_name": {
           "type": "string"
@@ -52970,6 +52989,18 @@ func init() {
               "$ref": "#/definitions/ssl_certificate"
             }
           },
+          "202": {
+            "description": "SSL certificate created requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -58440,7 +58471,8 @@ func init() {
         },
         "size": {
           "description": "File size in bytes.",
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "storage_name": {
           "type": "string"
@@ -62546,7 +62578,8 @@ func init() {
         },
         "size": {
           "description": "File size in bytes.",
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "storage_name": {
           "type": "string"
@@ -65770,37 +65803,42 @@ func init() {
           "type": "string"
         },
         "domains": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
         },
         "file": {
           "type": "string"
         },
         "ip_addresses": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
         },
         "issuers": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
         },
         "not_after": {
           "type": "string",
-          "format": "date"
+          "format": "date-time",
+          "x-go-custom-tag": "gorm:\"type:timestamp with time zone\"",
+          "x-nullable": true,
+          "readOnly": true
         },
         "not_before": {
           "type": "string",
-          "format": "date"
+          "format": "date-time",
+          "x-go-custom-tag": "gorm:\"type:timestamp with time zone\"",
+          "x-nullable": true,
+          "readOnly": true
         },
         "size": {
           "description": "File size in bytes.",
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true,
+          "readOnly": true
         },
         "storage_name": {
           "type": "string"
