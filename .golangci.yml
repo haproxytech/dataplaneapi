@@ -71,9 +71,16 @@ linters:
     - forbidigo
     - errcheck
     - gocritic
+    - tagalign
+    - depguard
 
 
 issues:
+  exclude:
+    # bugs of typecheck linter
+    - "undeclared name: `shellquote`"
+    - "github.com/kballard/go-shellquote\" imported but not used"
+    - "github.com/haproxytech/config-parser/v5/types\" imported but not used"
   exclude-rules:
     - linters:
         - staticcheck

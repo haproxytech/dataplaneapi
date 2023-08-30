@@ -9,7 +9,7 @@
 
 ## Building the Data Plane API
 
-In order to build the Data Plane API you need go 1.20 installed on your system with go modules support enabled, and execute the following steps:
+In order to build the Data Plane API you need Go installed on your system with go modules support enabled, and execute the following steps:
 
 1\. Clone dataplaneapi repository
 
