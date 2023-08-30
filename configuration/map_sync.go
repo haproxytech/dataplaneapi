@@ -176,7 +176,7 @@ func equal(a, b models.MapEntries) bool {
 // dumpRuntimeEntries dumps runtime entries into map file
 // Returns true,nil if succeed, otherwise retuns false,error
 func dumpRuntimeEntries(file string, me models.MapEntries) (bool, error) {
-	f, err := os.OpenFile(file, os.O_APPEND|os.O_WRONLY|os.O_TRUNC, 0600)
+	f, err := os.OpenFile(file, os.O_APPEND|os.O_WRONLY|os.O_TRUNC, 0o600)
 	if err != nil {
 		return false, fmt.Errorf("error opening map file: %s %s", file, err.Error())
 	}

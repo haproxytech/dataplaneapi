@@ -320,7 +320,7 @@ func CreateClusterUser() (types.User, string, error) {
 
 // ConvertStruct tries to convert a struct from one type to another.
 func ConvertStruct[T1 any, T2 any](from T1, to T2) error {
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	js, err := json.Marshal(from)
 	if err != nil {
 		return err

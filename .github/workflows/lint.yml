@@ -4,6 +4,28 @@ on:
     branches:
       - master
 jobs:
+  gofumpt:
+    name: gofumpt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: tidy
+        run: make gofumpt
+      - name: changes
+        run: test -z "$(git diff 2> /dev/null)" || exit "Go code not formatted, issue \`make gofumpt\` and commit the result"
   golangci-lint:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
@@ -13,4 +35,15 @@ jobs:
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@v1
         with:
-          github_token: ${{ secrets.github_token }}
+          go-version-file: 'go.mod'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Lint
+        run: |
+          make lint

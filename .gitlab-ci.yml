@@ -6,11 +6,12 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_BASE_IMAGE: $CI_REGISTRY_GO/haproxy-alpine
   BATS_VERSION: v1.4.1
+  GO_VERSION: '1.21'
 
 diff:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/docker:stable-go1.19
+    name: $CI_REGISTRY_GO/docker:stable-go$GO_VERSION
     entrypoint: [ "" ]
   services:
     - name: $CI_REGISTRY_GO/docker:20.10.5-dind
@@ -34,16 +35,28 @@ golangci-lint:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/lint:1.46.2
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION
     entrypoint: [""]
   tags:
     - go
   script:
-    - golangci-lint cache clean && go clean -modcache -cache -i
-    - golangci-lint run --timeout 5m --color always --max-issues-per-linter 0 --max-same-issues 0
-  only:
-    - merge_requests
-    - branches
+    - make lint
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
+gofumpt:
+  stage: lint
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
+  image:
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    entrypoint: [""]
+  tags:
+    - go
+  script:
+    - make gofumpt
+    - test -z "$(git diff 2> /dev/null)" || exit 'Go code not formatted, issue \`make gofumpt\` and commit the result'
 lint-commit-msg:
   stage: lint
   image:
@@ -62,7 +75,7 @@ build:
     paths:
       - build
   image:
-    name: $CI_REGISTRY_GO/golang:1.19
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION
     entrypoint: [ "" ]
   tags:
     - go

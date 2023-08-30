@@ -337,7 +337,7 @@ func configureLogger(logger *logrus.Logger, target Target) {
 			Warning("Error opening log file, no logging implemented: " + err.Error())
 		}
 		//nolint:govet
-		logFile, err := os.OpenFile(target.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+		logFile, err := os.OpenFile(target.LogFile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0o666)
 		if err != nil {
 			Warning("Error opening log file, no logging implemented: " + err.Error())
 		}

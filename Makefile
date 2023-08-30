@@ -9,11 +9,22 @@ GIT_MODIFIED=${GIT_MODIFIED1}${GIT_MODIFIED2}
 SWAGGER_VERSION=${shell curl -s https://raw.githubusercontent.com/haproxytech/client-native/master/Makefile | grep SWAGGER_VERSION -m 1 | awk -F"=" '{print $$2}'}
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
+GOLANGCI_LINT_VERSION=1.54.2
 
 all: update clean build
 
 update:
 	go mod tidy
+
+.PHONY: lint
+lint:
+	cd bin;GOLANGCI_LINT_VERSION=${GOLANGCI_LINT_VERSION} sh lint-check.sh
+	bin/golangci-lint run --timeout 5m --color always --max-issues-per-linter 0 --max-same-issues 0
+
+.PHONY: gofumpt
+gofumpt:
+	go install mvdan.cc/gofumpt@latest
+	gofumpt -l -w .
 
 clean:
 	rm -rf ${DATAPLANEAPI_PATH}/build

@@ -12,21 +12,72 @@ linters-settings:
   goconst:
     min-len: 2
     min-occurrences: 2
-
+  revive:
+    rules:
+    - name: var-naming
+      severity: warning
+      disabled: true
 linters:
-  enable:
-    - golint
-    - gocritic
-    - stylecheck
-    - goimports
-    - gosec
-    - unconvert
+  enable-all: true
   disable:
-    - maligned
-    - prealloc
+    - dupl
+    - exhaustive
+    - exhaustivestruct
+    - funlen
+    - gci
     - gochecknoglobals
+    - gocognit
+    - goconst
+    - gocyclo
+    - godot
+    - goerr113
+    - gomnd
+    - lll
+    - nestif
+    - nlreturn
+    - wrapcheck
+    - wsl
+    - nakedret
+    - paralleltest
+    - testpackage
+    - varnamelen
+    - nosnakecase
+    - exhaustruct
+    - nonamedreturns
+    - forcetypeassert
+    - golint #deprecated
+    - varcheck #deprecated
+    - ifshort #deprecated
+    - structcheck #deprecated
+    - maligned #deprecated
+    - scopelint #deprecated
+    - interfacer #deprecated
+    - deadcode #deprecated
+    - rowserrcheck #rowserrcheck is disabled because of generics
+    - sqlclosecheck #rowserrcheck is disabled because of generics
+    - wastedassign #rowserrcheck is disabled because of generics
+    - ireturn
+    - tagliatelle
+    - noctx
+    - errorlint
+    - contextcheck
+    - godox
+    - containedctx
+    - unused
+    - unparam
+    - prealloc
+    - forbidigo
+    - errcheck
+    - gocritic
+    - tagalign
+    - depguard
 
 issues:
+  exclude:
+    # bugs of typecheck linter
+    - "undeclared name: `shellquote`"
+    - "github.com/kballard/go-shellquote\" imported but not used"
+    - "github.com/haproxytech/config-parser/v5/types\" imported but not used"
   exclude-rules:
     - linters:
         - staticcheck

@@ -102,7 +102,7 @@ func (s *StorageHCL) SaveAs(filename string) error {
 		return err
 	}
 
-	return ioutil.WriteFile(filename, hcl, 0644) //nolint:gosec
+	return ioutil.WriteFile(filename, hcl, 0o644) //nolint:gosec
 }
 
 func (s *StorageHCL) Save() error {
