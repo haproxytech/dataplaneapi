@@ -8674,6 +8674,14 @@ func init() {
               }
             },
             "headers": {
+              "Cluster-Version": {
+                "type": "string",
+                "description": "Cluster configuration version"
+              },
+              "Configuration-Checksum": {
+                "type": "string",
+                "description": "Configuration file md5 checksum"
+              },
               "Configuration-Version": {
                 "type": "string",
                 "description": "Configuration file version"
@@ -8746,6 +8754,20 @@ func init() {
             "description": "New HAProxy configuration pushed",
             "schema": {
               "type": "string"
+            },
+            "headers": {
+              "Cluster-Version": {
+                "type": "string",
+                "description": "Cluster configuration version"
+              },
+              "Configuration-Checksum": {
+                "type": "string",
+                "description": "Configuration file md5 checksum"
+              },
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "202": {
@@ -8754,6 +8776,18 @@ func init() {
               "type": "string"
             },
             "headers": {
+              "Cluster-Version": {
+                "type": "string",
+                "description": "Cluster configuration version"
+              },
+              "Configuration-Checksum": {
+                "type": "string",
+                "description": "Configuration file md5 checksum"
+              },
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              },
               "Reload-ID": {
                 "type": "string",
                 "description": "ID of the requested reload"
@@ -42539,6 +42573,14 @@ func init() {
               }
             },
             "headers": {
+              "Cluster-Version": {
+                "type": "string",
+                "description": "Cluster configuration version"
+              },
+              "Configuration-Checksum": {
+                "type": "string",
+                "description": "Configuration file md5 checksum"
+              },
               "Configuration-Version": {
                 "type": "string",
                 "description": "Configuration file version"
@@ -42628,6 +42670,20 @@ func init() {
             "description": "New HAProxy configuration pushed",
             "schema": {
               "type": "string"
+            },
+            "headers": {
+              "Cluster-Version": {
+                "type": "string",
+                "description": "Cluster configuration version"
+              },
+              "Configuration-Checksum": {
+                "type": "string",
+                "description": "Configuration file md5 checksum"
+              },
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "202": {
@@ -42636,6 +42692,18 @@ func init() {
               "type": "string"
             },
             "headers": {
+              "Cluster-Version": {
+                "type": "string",
+                "description": "Cluster configuration version"
+              },
+              "Configuration-Checksum": {
+                "type": "string",
+                "description": "Configuration file md5 checksum"
+              },
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              },
               "Reload-ID": {
                 "type": "string",
                 "description": "ID of the requested reload"

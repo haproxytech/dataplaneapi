@@ -58,12 +58,16 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 		return configuration.NewGetConfigurationVersionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, data, err := cfg.GetRawConfiguration(t, v)
+	v, clusterVersion, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData(t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
-	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: &data})
+	cVersion := ""
+	if clusterVersion != 0 {
+		cVersion = strconv.FormatInt(clusterVersion, 10)
+	}
+	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: &data}).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 }
 
 // Handle executing the request and returning a response
@@ -115,9 +119,19 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
 
+	_, clusterVersion, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData("", 0)
+	if err != nil {
+		e := misc.HandleError(err)
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	cVersion := ""
+	if clusterVersion != 0 {
+		cVersion = strconv.FormatInt(clusterVersion, 10)
+	}
 	if onlyValidate {
 		// return here without reloading, since config is only validated.
-		return configuration.NewPostHAProxyConfigurationAccepted().WithPayload(params.Data)
+		return configuration.NewPostHAProxyConfigurationAccepted().WithPayload(data).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 	}
 	if skipReload {
 		if params.XRuntimeActions != nil {
@@ -126,7 +140,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 				return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 			}
 		}
-		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(params.Data)
+		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(data).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 	}
 	if forceReload {
 		var callbackNeeded bool
@@ -145,7 +159,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 			e := misc.HandleError(err)
 			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 		}
-		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(params.Data)
+		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(data).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 	}
 	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client, runtimeAPIsOld)
 	if err != nil {
@@ -160,7 +174,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		rID = h.ReloadAgent.Reload()
 	}
 
-	return configuration.NewPostHAProxyConfigurationAccepted().WithReloadID(rID).WithPayload(params.Data)
+	return configuration.NewPostHAProxyConfigurationAccepted().WithReloadID(rID).WithPayload(data).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 }
 
 func executeRuntimeActions(actionsStr string, client client_native.HAProxyClient) error {
