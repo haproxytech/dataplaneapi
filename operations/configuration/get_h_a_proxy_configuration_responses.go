@@ -37,6 +37,14 @@ GetHAProxyConfigurationOK Operation successful
 swagger:response getHAProxyConfigurationOK
 */
 type GetHAProxyConfigurationOK struct {
+	/*Cluster configuration version
+
+	 */
+	ClusterVersion string `json:"Cluster-Version"`
+	/*Configuration file md5 checksum
+
+	 */
+	ConfigurationChecksum string `json:"Configuration-Checksum"`
 	/*Configuration file version
 
 	 */
@@ -52,6 +60,28 @@ type GetHAProxyConfigurationOK struct {
 func NewGetHAProxyConfigurationOK() *GetHAProxyConfigurationOK {
 
 	return &GetHAProxyConfigurationOK{}
+}
+
+// WithClusterVersion adds the clusterVersion to the get h a proxy configuration o k response
+func (o *GetHAProxyConfigurationOK) WithClusterVersion(clusterVersion string) *GetHAProxyConfigurationOK {
+	o.ClusterVersion = clusterVersion
+	return o
+}
+
+// SetClusterVersion sets the clusterVersion to the get h a proxy configuration o k response
+func (o *GetHAProxyConfigurationOK) SetClusterVersion(clusterVersion string) {
+	o.ClusterVersion = clusterVersion
+}
+
+// WithConfigurationChecksum adds the configurationChecksum to the get h a proxy configuration o k response
+func (o *GetHAProxyConfigurationOK) WithConfigurationChecksum(configurationChecksum string) *GetHAProxyConfigurationOK {
+	o.ConfigurationChecksum = configurationChecksum
+	return o
+}
+
+// SetConfigurationChecksum sets the configurationChecksum to the get h a proxy configuration o k response
+func (o *GetHAProxyConfigurationOK) SetConfigurationChecksum(configurationChecksum string) {
+	o.ConfigurationChecksum = configurationChecksum
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get h a proxy configuration o k response
@@ -78,6 +108,20 @@ func (o *GetHAProxyConfigurationOK) SetPayload(payload *GetHAProxyConfigurationO
 
 // WriteResponse to the client
 func (o *GetHAProxyConfigurationOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Cluster-Version
+
+	clusterVersion := o.ClusterVersion
+	if clusterVersion != "" {
+		rw.Header().Set("Cluster-Version", clusterVersion)
+	}
+
+	// response header Configuration-Checksum
+
+	configurationChecksum := o.ConfigurationChecksum
+	if configurationChecksum != "" {
+		rw.Header().Set("Configuration-Checksum", configurationChecksum)
+	}
 
 	// response header Configuration-Version
 

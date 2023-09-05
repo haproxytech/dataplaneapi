@@ -37,6 +37,18 @@ PostHAProxyConfigurationCreated New HAProxy configuration pushed
 swagger:response postHAProxyConfigurationCreated
 */
 type PostHAProxyConfigurationCreated struct {
+	/*Cluster configuration version
+
+	 */
+	ClusterVersion string `json:"Cluster-Version"`
+	/*Configuration file md5 checksum
+
+	 */
+	ConfigurationChecksum string `json:"Configuration-Checksum"`
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -48,6 +60,39 @@ type PostHAProxyConfigurationCreated struct {
 func NewPostHAProxyConfigurationCreated() *PostHAProxyConfigurationCreated {
 
 	return &PostHAProxyConfigurationCreated{}
+}
+
+// WithClusterVersion adds the clusterVersion to the post h a proxy configuration created response
+func (o *PostHAProxyConfigurationCreated) WithClusterVersion(clusterVersion string) *PostHAProxyConfigurationCreated {
+	o.ClusterVersion = clusterVersion
+	return o
+}
+
+// SetClusterVersion sets the clusterVersion to the post h a proxy configuration created response
+func (o *PostHAProxyConfigurationCreated) SetClusterVersion(clusterVersion string) {
+	o.ClusterVersion = clusterVersion
+}
+
+// WithConfigurationChecksum adds the configurationChecksum to the post h a proxy configuration created response
+func (o *PostHAProxyConfigurationCreated) WithConfigurationChecksum(configurationChecksum string) *PostHAProxyConfigurationCreated {
+	o.ConfigurationChecksum = configurationChecksum
+	return o
+}
+
+// SetConfigurationChecksum sets the configurationChecksum to the post h a proxy configuration created response
+func (o *PostHAProxyConfigurationCreated) SetConfigurationChecksum(configurationChecksum string) {
+	o.ConfigurationChecksum = configurationChecksum
+}
+
+// WithConfigurationVersion adds the configurationVersion to the post h a proxy configuration created response
+func (o *PostHAProxyConfigurationCreated) WithConfigurationVersion(configurationVersion string) *PostHAProxyConfigurationCreated {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the post h a proxy configuration created response
+func (o *PostHAProxyConfigurationCreated) SetConfigurationVersion(configurationVersion string) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the post h a proxy configuration created response
@@ -63,6 +108,27 @@ func (o *PostHAProxyConfigurationCreated) SetPayload(payload string) {
 
 // WriteResponse to the client
 func (o *PostHAProxyConfigurationCreated) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Cluster-Version
+
+	clusterVersion := o.ClusterVersion
+	if clusterVersion != "" {
+		rw.Header().Set("Cluster-Version", clusterVersion)
+	}
+
+	// response header Configuration-Checksum
+
+	configurationChecksum := o.ConfigurationChecksum
+	if configurationChecksum != "" {
+		rw.Header().Set("Configuration-Checksum", configurationChecksum)
+	}
+
+	// response header Configuration-Version
+
+	configurationVersion := o.ConfigurationVersion
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(201)
 	payload := o.Payload
@@ -80,6 +146,18 @@ PostHAProxyConfigurationAccepted Configuration change accepted and reload reques
 swagger:response postHAProxyConfigurationAccepted
 */
 type PostHAProxyConfigurationAccepted struct {
+	/*Cluster configuration version
+
+	 */
+	ClusterVersion string `json:"Cluster-Version"`
+	/*Configuration file md5 checksum
+
+	 */
+	ConfigurationChecksum string `json:"Configuration-Checksum"`
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 	/*ID of the requested reload
 
 	 */
@@ -95,6 +173,39 @@ type PostHAProxyConfigurationAccepted struct {
 func NewPostHAProxyConfigurationAccepted() *PostHAProxyConfigurationAccepted {
 
 	return &PostHAProxyConfigurationAccepted{}
+}
+
+// WithClusterVersion adds the clusterVersion to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) WithClusterVersion(clusterVersion string) *PostHAProxyConfigurationAccepted {
+	o.ClusterVersion = clusterVersion
+	return o
+}
+
+// SetClusterVersion sets the clusterVersion to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) SetClusterVersion(clusterVersion string) {
+	o.ClusterVersion = clusterVersion
+}
+
+// WithConfigurationChecksum adds the configurationChecksum to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) WithConfigurationChecksum(configurationChecksum string) *PostHAProxyConfigurationAccepted {
+	o.ConfigurationChecksum = configurationChecksum
+	return o
+}
+
+// SetConfigurationChecksum sets the configurationChecksum to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) SetConfigurationChecksum(configurationChecksum string) {
+	o.ConfigurationChecksum = configurationChecksum
+}
+
+// WithConfigurationVersion adds the configurationVersion to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) WithConfigurationVersion(configurationVersion string) *PostHAProxyConfigurationAccepted {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the post h a proxy configuration accepted response
+func (o *PostHAProxyConfigurationAccepted) SetConfigurationVersion(configurationVersion string) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithReloadID adds the reloadId to the post h a proxy configuration accepted response
@@ -121,6 +232,27 @@ func (o *PostHAProxyConfigurationAccepted) SetPayload(payload string) {
 
 // WriteResponse to the client
 func (o *PostHAProxyConfigurationAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Cluster-Version
+
+	clusterVersion := o.ClusterVersion
+	if clusterVersion != "" {
+		rw.Header().Set("Cluster-Version", clusterVersion)
+	}
+
+	// response header Configuration-Checksum
+
+	configurationChecksum := o.ConfigurationChecksum
+	if configurationChecksum != "" {
+		rw.Header().Set("Configuration-Checksum", configurationChecksum)
+	}
+
+	// response header Configuration-Version
+
+	configurationVersion := o.ConfigurationVersion
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	// response header Reload-ID
 
