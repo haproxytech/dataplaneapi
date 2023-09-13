@@ -20218,6 +20218,10 @@ func init() {
           ],
           "x-display-name": "HTTP Client Resolvers Prefer"
         },
+        "httpclient_retries": {
+          "type": "integer",
+          "x-display-name": "HTTP Client Retries"
+        },
         "httpclient_ssl_ca_file": {
           "type": "string",
           "x-display-name": "HTTP Client SSL CA File"
@@ -20230,6 +20234,11 @@ func init() {
             "required"
           ],
           "x-display-name": "HTTP Client SSL Verify",
+          "x-nullable": true
+        },
+        "httpclient_timeout_connect": {
+          "type": "integer",
+          "x-display-name": "HTTP Client Connect Timeout",
           "x-nullable": true
         },
         "insecure_fork_wanted": {
@@ -20613,9 +20622,21 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Server Ciphersuites"
         },
+        "ssl_default_server_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Client Sigalgs"
+        },
+        "ssl_default_server_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Curves"
+        },
         "ssl_default_server_options": {
           "type": "string",
           "x-display-name": "SSL Default Server Options"
+        },
+        "ssl_default_server_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Sigalgs"
         },
         "ssl_dh_param_file": {
           "type": "string"
@@ -20655,6 +20676,18 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
+        },
+        "ssl_propquery": {
+          "type": "string",
+          "x-display-name": "SSL Query String Property"
+        },
+        "ssl_provider": {
+          "type": "string",
+          "x-display-name": "SSL Provider"
+        },
+        "ssl_provider_path": {
+          "type": "string",
+          "x-display-name": "SSL Provider Path"
         },
         "ssl_server_verify": {
           "type": "string",
@@ -26431,6 +26464,14 @@ func init() {
             }
           }
         },
+        "client_sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -26440,6 +26481,14 @@ func init() {
           "x-dependency": {
             "ssl": {
               "value": "enabled"
+            }
+          }
+        },
+        "curves": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
             }
           }
         },
@@ -26726,6 +26775,14 @@ func init() {
         },
         "shard": {
           "type": "integer"
+        },
+        "sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "slowstart": {
           "type": "integer",
@@ -58739,6 +58796,10 @@ func init() {
           ],
           "x-display-name": "HTTP Client Resolvers Prefer"
         },
+        "httpclient_retries": {
+          "type": "integer",
+          "x-display-name": "HTTP Client Retries"
+        },
         "httpclient_ssl_ca_file": {
           "type": "string",
           "x-display-name": "HTTP Client SSL CA File"
@@ -58751,6 +58812,11 @@ func init() {
             "required"
           ],
           "x-display-name": "HTTP Client SSL Verify",
+          "x-nullable": true
+        },
+        "httpclient_timeout_connect": {
+          "type": "integer",
+          "x-display-name": "HTTP Client Connect Timeout",
           "x-nullable": true
         },
         "insecure_fork_wanted": {
@@ -59033,9 +59099,21 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Default Server Ciphersuites"
         },
+        "ssl_default_server_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Client Sigalgs"
+        },
+        "ssl_default_server_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Curves"
+        },
         "ssl_default_server_options": {
           "type": "string",
           "x-display-name": "SSL Default Server Options"
+        },
+        "ssl_default_server_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Sigalgs"
         },
         "ssl_dh_param_file": {
           "type": "string"
@@ -59060,6 +59138,18 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Asynchronous TLS I/O operations"
+        },
+        "ssl_propquery": {
+          "type": "string",
+          "x-display-name": "SSL Query String Property"
+        },
+        "ssl_provider": {
+          "type": "string",
+          "x-display-name": "SSL Provider"
+        },
+        "ssl_provider_path": {
+          "type": "string",
+          "x-display-name": "SSL Provider Path"
         },
         "ssl_server_verify": {
           "type": "string",
@@ -64823,6 +64913,14 @@ func init() {
             }
           }
         },
+        "client_sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "cookie": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -64832,6 +64930,14 @@ func init() {
           "x-dependency": {
             "ssl": {
               "value": "enabled"
+            }
+          }
+        },
+        "curves": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
             }
           }
         },
@@ -65118,6 +65224,14 @@ func init() {
         },
         "shard": {
           "type": "integer"
+        },
+        "sigalgs": {
+          "type": "string",
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "slowstart": {
           "type": "integer",
