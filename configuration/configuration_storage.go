@@ -29,6 +29,7 @@ type configTypeDataplaneapi struct {
 	ShowSystemInfo   *bool                  `yaml:"show_system_info,omitempty"`
 	MaxHeaderSize    *string                `yaml:"max_header_size,omitempty"`
 	SocketPath       *flags.Filename        `yaml:"socket_path,omitempty"`
+	DebugSocketPath  *string                `yaml:"debug_socket_path,omitempty"`
 	Host             *string                `yaml:"host,omitempty"`
 	Port             *int                   `yaml:"port,omitempty"`
 	ListenLimit      *int                   `yaml:"listen_limit,omitempty"`
@@ -191,6 +192,9 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.PIDFile != nil && !misc.HasOSArg("", "pid-file", "") {
 		cfg.HAProxy.PIDFile = *cfgStorage.Dataplaneapi.PIDFile
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.DebugSocketPath != nil && !misc.HasOSArg("", "debug-socket-path", "") {
+		cfg.HAProxy.DebugSocketPath = *cfgStorage.Dataplaneapi.DebugSocketPath
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.UID != nil && !misc.HasOSArg("", "uid", "") {
 		cfg.HAProxy.UID = *cfgStorage.Dataplaneapi.UID

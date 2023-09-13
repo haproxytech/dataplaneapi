@@ -33,6 +33,7 @@ var serverGroups = map[string]string{
 	"GracefulTimeout":   "dataplaneapi",
 	"MaxHeaderSize":     "dataplaneapi",
 	"SocketPath":        "dataplaneapi",
+	"DebugSocketPath":   "dataplaneapi",
 	"Host":              "dataplaneapi",
 	"Port":              "dataplaneapi",
 	"ListenLimit":       "dataplaneapi",

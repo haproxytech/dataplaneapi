@@ -87,7 +87,7 @@ HAProxy options:
       --validate-cmd=                                 Executes a custom command to perform the HAProxy configuration check
       --disable-inotify                               Disables inotify watcher watcher for the configuration file
       --pid-file=                                     Path to file that will dataplaneapi use to write its pid
-
+      --debug-socket-path=                            Unix socket path for the debugging command socket
 Logging options:
       --log-to=[stdout|file|syslog]                   Log target, can be stdout, file, or syslog (default: stdout)
       --log-file=                                     Location of the log file (default: /var/log/dataplaneapi/dataplaneapi.log)
@@ -138,6 +138,10 @@ Alternatively, dataplaneapi serves its own interactive documentation relevant fo
 ## Service Discovery
 
 Check the documentation in the [README](./discovery/README.md).
+
+## Command socket for debugging purpose
+
+Check the documentation in the [README](./runtime/README.md).
 
 ## Contributing
 

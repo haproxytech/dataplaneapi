@@ -26,7 +26,9 @@ require (
 	github.com/haproxytech/config-parser/v5 v5.0.1-0.20230913105857-585d83cb48ba
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
+	github.com/kr/pretty v0.3.1
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
+	github.com/maruel/panicparse/v2 v2.3.1
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
 	github.com/rs/cors v1.10.0
 	github.com/shirou/gopsutil v3.21.11+incompatible
@@ -60,6 +62,7 @@ require (
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
+	github.com/kr/text v0.2.0 // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect

@@ -67,6 +67,7 @@ type HAProxyConfiguration struct {
 	ShowSystemInfo       bool   `short:"i" long:"show-system-info" description:"Show system info on info endpoint" group:"dataplaneapi"`
 	MasterWorkerMode     bool   `long:"master-worker-mode" description:"Flag to enable helpers when running within HAProxy" group:"haproxy"`
 	DisableInotify       bool   `long:"disable-inotify" description:"Disables inotify watcher for the configuration file" group:"dataplaneapi"`
+	DebugSocketPath      string `long:"debug-socket-path" description:"Unix socket path for the debugging command socket" group:"dataplaneapi"`
 }
 
 type User struct {

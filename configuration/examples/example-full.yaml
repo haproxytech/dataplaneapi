@@ -9,6 +9,7 @@ dataplaneapi:
   graceful_timeout: "15s" # time.Duration
   max_header_size: "1MiB" # flagext.ByteSize
   socket_path: "/var/run/data-plane.sock" # flags.Filename
+  debug_socket_path: "/var/run/dataplane-debug.sock" #string
   host: "localhost" # string
   port: 80 # int
   listen_limit: 1024 # int

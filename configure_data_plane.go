@@ -58,6 +58,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
 	"github.com/haproxytech/dataplaneapi/rate"
+	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
 
 	// import various crypting algorithms
 	_ "github.com/GehirnInc/crypt/md5_crypt"
@@ -858,6 +859,15 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	}
 	if appLogger != nil {
 		adpts = append(adpts, adapters.RecoverMiddleware(appLogger))
+	}
+
+	// Configure/Re-configure DebugServer on runtime socket
+	debugServer := socket_runtime.GetServer()
+	select {
+	case debugServer.CnChannel <- client:
+	default:
+		// ... do not block dataplane
+		log.Warning("-- command socket failed to update cn client")
 	}
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares), adpts...)

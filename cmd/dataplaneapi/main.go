@@ -16,6 +16,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path"
@@ -32,6 +33,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/operations"
+	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
 )
 
 // GitRepo ...
@@ -54,16 +56,27 @@ var cliOptions struct {
 }
 
 func main() {
+	cancelDebugServer := startRuntimeDebugServer()
+
 	cfg := configuration.Get()
 	for {
-		restart := startServer(cfg)
+		restart := startServer(cfg, cancelDebugServer)
 		if !restart.Load() {
 			break
 		}
 	}
 }
 
-func startServer(cfg *configuration.Configuration) (reload configuration.AtomicBool) {
+func startRuntimeDebugServer() context.CancelFunc {
+	ctx := context.Background()
+	ctx, cancelDebugServer := context.WithCancel(ctx)
+	debugServer := socket_runtime.GetServer()
+	debugServer.DAPIVersion = fmt.Sprintf("%s %s%s", GitTag, GitCommit, GitDirty)
+	go debugServer.Start(ctx, cancelDebugServer)
+	return cancelDebugServer
+}
+
+func startServer(cfg *configuration.Configuration, cancelDebugServer context.CancelFunc) (reload configuration.AtomicBool) {
 	swaggerSpec, err := loads.Embedded(dataplaneapi.SwaggerJSON, dataplaneapi.FlatSwaggerJSON)
 	if err != nil {
 		fmt.Println(err)
@@ -209,7 +222,7 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		cfg.UnSubscribeAll()
 		cfg.StopSignalHandler()
 		dataplaneapi.ContextHandler.Cancel()
-		err := server.Shutdown()
+		err = server.Shutdown()
 		if err != nil {
 			log.Fatalf("Error reloading HAProxy Data Plane API: %s", err.Error())
 		}
@@ -219,10 +232,11 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 		select {
 		case <-cfg.Notify.Shutdown.Subscribe("main"):
 			log.Info("HAProxy Data Plane API shutting down")
-			err := server.Shutdown()
+			err = server.Shutdown()
 			if err != nil {
 				log.Fatalf("Error shutting down HAProxy Data Plane API: %s", err.Error())
 			}
+			cancelDebugServer()
 			os.Exit(0)
 		case <-dataplaneapi.ContextHandler.Context().Done():
 			return
