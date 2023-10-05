@@ -17999,6 +17999,14 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": true
         },
+        "mode": {
+          "type": "string",
+          "default": "http",
+          "enum": [
+            "http",
+            "https"
+          ]
+        },
         "name": {
           "type": "string"
         },
@@ -56617,6 +56625,14 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "default": "http",
+          "enum": [
+            "http",
+            "https"
+          ]
         },
         "name": {
           "type": "string"
