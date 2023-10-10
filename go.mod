@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.30.7
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.124.0
 	github.com/docker/go-units v0.5.0
-	github.com/dustinkirkland/golang-petname v0.0.0-20230626224747-e794b9370d49
+	github.com/dustinkirkland/golang-petname v0.0.0-20231002161417-6a283f1aaaf2
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/getkin/kin-openapi v0.120.0
 	github.com/go-openapi/errors v0.20.4
@@ -28,7 +28,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
-	github.com/rs/cors v1.10.0
+	github.com/rs/cors v1.10.1
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.8.4
@@ -54,7 +54,7 @@ require (
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
-	github.com/google/go-cmp v0.5.9 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
