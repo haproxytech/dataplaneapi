@@ -1,0 +1,27 @@
+name: manual goreleaser
+on:
+  workflow_dispatch:
+jobs:
+  manual_goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # we have to fetch all history to be able to generate the release note. c.f. https://goreleaser.com/ci/actions/.
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+      - name: Reposition to latest tag
+        run: |
+          git checkout $(git describe --tags --abbrev=0)
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean --skip-announce
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
