@@ -189,7 +189,7 @@ func (a *awsInstance) start() {
 				if err = a.updateServices(api); err != nil {
 					switch t := err.(type) {
 					case *configuration.ConfError:
-						switch t.Code() {
+						switch t.Err() {
 						case configuration.ErrObjectAlreadyExists:
 							continue
 						default:

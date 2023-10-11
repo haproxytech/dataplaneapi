@@ -78,7 +78,7 @@ func HandleError(err error) *models.Error {
 	case *configuration.ConfError:
 		msg := t.Error()
 		httpCode := ErrHTTPInternalServerError
-		switch t.Code() {
+		switch t.Err() {
 		case configuration.ErrObjectDoesNotExist:
 			httpCode = ErrHTTPNotFound
 		case configuration.ErrObjectAlreadyExists, configuration.ErrVersionMismatch, configuration.ErrTransactionAlreadyExists:
@@ -107,7 +107,7 @@ func HandleError(err error) *models.Error {
 // HandleContainerGetError translates error codes from client native into models.Error with appropriate http status code. Intended for get requests on container endpoints.
 func HandleContainerGetError(err error) *models.Error {
 	if t, ok := err.(*configuration.ConfError); ok {
-		if t.Code() == configuration.ErrParentDoesNotExist {
+		if t.Is(configuration.ErrParentDoesNotExist) {
 			code := ErrHTTPOk
 			return &models.Error{Code: &code}
 		}
@@ -192,7 +192,7 @@ func ParseTimeout(tOut string) *int64 {
 }
 
 func GetHTTPStatusFromConfErr(err *configuration.ConfError) int {
-	switch err.Code() {
+	switch err.Err() {
 	case configuration.ErrObjectDoesNotExist:
 		return http.StatusNotFound
 	case configuration.ErrObjectAlreadyExists:
