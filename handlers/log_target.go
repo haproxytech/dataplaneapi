@@ -75,7 +75,7 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 	}
 
 	pName := ""
-	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" {
+	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" || params.ParentType == "log_forward" {
 		if params.ParentName == nil {
 			msg := "parent_name in query is required"
 			c := misc.ErrHTTPBadRequest
