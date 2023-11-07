@@ -23126,7 +23126,8 @@ func init() {
         "stats_show_node_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": false
         },
         "stats_uri_prefix": {
           "type": "string",
@@ -54934,7 +54935,8 @@ func init() {
         "stats_show_node_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": false
         },
         "stats_uri_prefix": {
           "type": "string",
