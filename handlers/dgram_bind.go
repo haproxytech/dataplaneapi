@@ -80,7 +80,7 @@ func (h *CreateDgramBindHandlerImpl) Handle(params dgram_bind.CreateDgramBindPar
 		return dgram_bind.NewCreateDgramBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateDgramBind(params.Data.Name, params.Data, t, v)
+	err = configuration.CreateDgramBind(params.LogForward, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewCreateDgramBindDefault(int(*e.Code)).WithPayload(e)
