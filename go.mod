@@ -21,8 +21,8 @@ require (
 	github.com/go-openapi/swag v0.22.4
 	github.com/go-openapi/validate v0.22.1
 	github.com/google/renameio v1.0.1
-	github.com/google/uuid v1.3.1
-	github.com/haproxytech/client-native/v5 v5.0.1-0.20231011083306-519f1b08727d
+	github.com/google/uuid v1.4.0
+	github.com/haproxytech/client-native/v5 v5.0.1-0.20231106120845-bee8caf96cec
 	github.com/haproxytech/config-parser/v5 v5.0.1-0.20230913105857-585d83cb48ba
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
@@ -35,7 +35,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/net v0.17.0
-	golang.org/x/sys v0.13.0
+	golang.org/x/sys v0.14.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
