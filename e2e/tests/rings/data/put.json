@@ -2,7 +2,7 @@
   "description": "My local buffer update",
   "format": "iso",
   "maxlen": 1400,
-  "name": "myring2",
+  "name": "test_ring",
   "size": 32740,
   "timeout_connect": 15,
   "timeout_server": 20
