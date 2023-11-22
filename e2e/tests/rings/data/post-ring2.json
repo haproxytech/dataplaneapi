@@ -1,0 +1,9 @@
+{
+  "description": "My Second local buffer",
+  "format": "rfc3164",
+  "maxlen": 1200,
+  "name": "test_ring_2",
+  "size": 32764,
+  "timeout_connect": 5,
+  "timeout_server": 10
+}
