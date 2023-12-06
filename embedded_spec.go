@@ -52,7 +52,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.8"
+    "version": "2.9"
   },
   "basePath": "/v2",
   "paths": {
@@ -16855,7 +16855,8 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp"
+            "tcp",
+            "log"
           ]
         },
         "mysql_check_params": {
@@ -17501,6 +17502,10 @@ func init() {
           "type": "string",
           "example": "app"
         },
+        "nbconn": {
+          "type": "integer",
+          "x-display-name": "Number of connection"
+        },
         "nice": {
           "type": "integer",
           "example": 1
@@ -17592,6 +17597,13 @@ func init() {
         },
         "quic-force-retry": {
           "type": "boolean"
+        },
+        "quic-socket": {
+          "type": "string",
+          "enum": [
+            "connection",
+            "listener"
+          ]
         },
         "severity_output": {
           "type": "string",
@@ -17933,6 +17945,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "srvkey": {
+          "type": "string",
+          "enum": [
+            "addr",
+            "name"
+          ],
+          "x-nullable": true
+        },
         "store": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -17946,6 +17966,11 @@ func init() {
             "string",
             "binary"
           ]
+        },
+        "write_to": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
         }
       }
     },
@@ -18622,7 +18647,8 @@ func init() {
           "type": "string",
           "enum": [
             "tcp",
-            "http"
+            "http",
+            "log"
           ]
         },
         "monitor_uri": {
@@ -20258,6 +20284,9 @@ func init() {
         "issuers_chain_path": {
           "type": "string"
         },
+        "limited_quic": {
+          "type": "boolean"
+        },
         "load_server_state_from_file": {
           "type": "string",
           "enum": [
@@ -20570,6 +20599,12 @@ func init() {
           "x-go-name": "SetVarFmts",
           "x-omitempty": true
         },
+        "setcap": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "OS Capabilities",
+          "x-omitempty": true
+        },
         "setenv": {
           "type": "array",
           "items": {
@@ -20770,6 +20805,15 @@ func init() {
               "type": "integer",
               "x-display-name": "Maximum Compression Level"
             },
+            "disable_zero_copy_forwarding": {
+              "type": "boolean",
+              "x-display-name": "Disable zero-copy forwarding"
+            },
+            "events_max_events_at_once": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 1
+            },
             "fail_alloc": {
               "type": "boolean",
               "x-display-name": "Failed Allocation Chance"
@@ -20781,6 +20825,22 @@ func init() {
                 "disabled"
               ],
               "x-display-name": "Edge-triggered polling mode"
+            },
+            "h1_zero_copy_fwd_recv": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
+            },
+            "h1_zero_copy_fwd_send": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
             },
             "h2_be_initial_window_size": {
               "type": "integer",
@@ -20815,6 +20875,14 @@ func init() {
             "h2_max_frame_size": {
               "type": "integer",
               "x-display-name": "HTTP/2 Maximum Frame Size"
+            },
+            "h2_zero_copy_fwd_send": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
             },
             "http_cookielen": {
               "type": "integer",
@@ -20870,6 +20938,23 @@ func init() {
               "type": "integer",
               "x-display-name": "Lua Forced Yield"
             },
+            "lua_log_loggers": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Send Lua Logs to the Loggers"
+            },
+            "lua_log_stderr": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Send Lua Logs to stderr"
+            },
             "lua_maxmem": {
               "type": "boolean",
               "x-display-name": "Lua Maximum Memory Usage"
@@ -20887,6 +20972,11 @@ func init() {
             "lua_task_timeout": {
               "type": "integer",
               "x-display-name": "Lua Task Timeout",
+              "x-nullable": true
+            },
+            "max_checks_per_thread": {
+              "type": "integer",
+              "x-display-name": "Maximum checks per thread",
               "x-nullable": true
             },
             "maxaccept": {
@@ -20927,6 +21017,14 @@ func init() {
               "type": "integer",
               "x-display-name": "Max Used Low FD Ratio"
             },
+            "pt_zero_copy_forwarding": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+            },
             "quic_frontend_conn_tx_buffers_limit": {
               "type": "integer",
               "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
@@ -20960,14 +21058,24 @@ func init() {
               ],
               "x-display-name": "QUIC Socket Owner"
             },
+            "rcvbuf_backend": {
+              "type": "integer",
+              "x-display-name": "Backend Receive Buffer Size",
+              "x-nullable": true
+            },
             "rcvbuf_client": {
               "type": "integer",
-              "x-display-name": "Receive Buffer Client Size",
+              "x-display-name": "Client Receive Buffer Size",
+              "x-nullable": true
+            },
+            "rcvbuf_frontend": {
+              "type": "integer",
+              "x-display-name": "Frontend Receive Buffer Size",
               "x-nullable": true
             },
             "rcvbuf_server": {
               "type": "integer",
-              "x-display-name": "Receive Buffer Server Size",
+              "x-display-name": "Server Receive Buffer Size",
               "x-nullable": true
             },
             "recv_enough": {
@@ -20986,14 +21094,24 @@ func init() {
               ],
               "x-display-name": "Low Latency Task Scheduler"
             },
+            "sndbuf_backend": {
+              "type": "integer",
+              "x-display-name": "Backend Send Buffer Size",
+              "x-nullable": true
+            },
             "sndbuf_client": {
               "type": "integer",
-              "x-display-name": "Send Buffer Client Size",
+              "x-display-name": "Client Send Buffer Size",
+              "x-nullable": true
+            },
+            "sndbuf_frontend": {
+              "type": "integer",
+              "x-display-name": "Frontend Send Buffer Size",
               "x-nullable": true
             },
             "sndbuf_server": {
               "type": "integer",
-              "x-display-name": "Send Buffer Server Size",
+              "x-display-name": "Server Send Buffer Size",
               "x-nullable": true
             },
             "ssl_cachesize": {
@@ -21178,7 +21296,8 @@ func init() {
             "sdbm",
             "djb2",
             "wt6",
-            "crc32"
+            "crc32",
+            "none"
           ]
         },
         "method": {
@@ -21964,7 +22083,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -22642,7 +22761,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -22815,7 +22934,8 @@ func init() {
           "type": "string",
           "enum": [
             "server",
-            "tunnel"
+            "tunnel",
+            "client"
           ],
           "x-dependency": {
             "type": {
@@ -23469,7 +23589,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -23636,6 +23756,29 @@ func init() {
             }
           }
         },
+        "timeout": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
+        "timeout_type": {
+          "type": "string",
+          "enum": [
+            "server",
+            "tunnel",
+            "client"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
         "tos_value": {
           "type": "string",
           "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
@@ -23776,6 +23919,7 @@ func init() {
             "set-mark",
             "set-nice",
             "set-status",
+            "set-timeout",
             "set-tos",
             "set-var",
             "set-var-fmt",
@@ -26571,6 +26715,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log-bufsize": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "log_proto": {
           "type": "string",
           "enum": [
@@ -26780,6 +26928,21 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "set-proxy-v2-tlv-fmt": {
+          "type": "object",
+          "required": [
+            "id",
+            "value"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
         },
         "shard": {
           "type": "integer"
@@ -28114,6 +28277,10 @@ func init() {
           "type": "integer",
           "x-display-name": "Type",
           "x-nullable": true
+        },
+        "write_to": {
+          "type": "string",
+          "x-nullable": true
         }
       }
     },
@@ -28497,6 +28664,7 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
+            "attach-srv",
             "capture",
             "do-resolve",
             "expect-netscaler-cip",
@@ -28912,6 +29080,19 @@ func init() {
           },
           "x-display-name": "ScSet Integer Value",
           "x-nullable": true
+        },
+        "server_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "attach-srv"
+            },
+            "type": {
+              "value": "session"
+            }
+          },
+          "x-display-name": "Server name"
         },
         "service_name": {
           "type": "string",
@@ -29917,7 +30098,7 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.8"
+    "version": "2.9"
   },
   "basePath": "/v2",
   "paths": {
@@ -54218,6 +54399,15 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum Compression Level"
         },
+        "disable_zero_copy_forwarding": {
+          "type": "boolean",
+          "x-display-name": "Disable zero-copy forwarding"
+        },
+        "events_max_events_at_once": {
+          "type": "integer",
+          "maximum": 10000,
+          "minimum": 1
+        },
         "fail_alloc": {
           "type": "boolean",
           "x-display-name": "Failed Allocation Chance"
@@ -54229,6 +54419,22 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Edge-triggered polling mode"
+        },
+        "h1_zero_copy_fwd_recv": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
+        },
+        "h1_zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
         },
         "h2_be_initial_window_size": {
           "type": "integer",
@@ -54263,6 +54469,14 @@ func init() {
         "h2_max_frame_size": {
           "type": "integer",
           "x-display-name": "HTTP/2 Maximum Frame Size"
+        },
+        "h2_zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
         },
         "http_cookielen": {
           "type": "integer",
@@ -54319,6 +54533,23 @@ func init() {
           "type": "integer",
           "x-display-name": "Lua Forced Yield"
         },
+        "lua_log_loggers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Send Lua Logs to the Loggers"
+        },
+        "lua_log_stderr": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Send Lua Logs to stderr"
+        },
         "lua_maxmem": {
           "type": "boolean",
           "x-display-name": "Lua Maximum Memory Usage"
@@ -54336,6 +54567,11 @@ func init() {
         "lua_task_timeout": {
           "type": "integer",
           "x-display-name": "Lua Task Timeout",
+          "x-nullable": true
+        },
+        "max_checks_per_thread": {
+          "type": "integer",
+          "x-display-name": "Maximum checks per thread",
           "x-nullable": true
         },
         "maxaccept": {
@@ -54376,6 +54612,14 @@ func init() {
           "type": "integer",
           "x-display-name": "Max Used Low FD Ratio"
         },
+        "pt_zero_copy_forwarding": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+        },
         "quic_frontend_conn_tx_buffers_limit": {
           "type": "integer",
           "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
@@ -54409,14 +54653,24 @@ func init() {
           ],
           "x-display-name": "QUIC Socket Owner"
         },
+        "rcvbuf_backend": {
+          "type": "integer",
+          "x-display-name": "Backend Receive Buffer Size",
+          "x-nullable": true
+        },
         "rcvbuf_client": {
           "type": "integer",
-          "x-display-name": "Receive Buffer Client Size",
+          "x-display-name": "Client Receive Buffer Size",
+          "x-nullable": true
+        },
+        "rcvbuf_frontend": {
+          "type": "integer",
+          "x-display-name": "Frontend Receive Buffer Size",
           "x-nullable": true
         },
         "rcvbuf_server": {
           "type": "integer",
-          "x-display-name": "Receive Buffer Server Size",
+          "x-display-name": "Server Receive Buffer Size",
           "x-nullable": true
         },
         "recv_enough": {
@@ -54435,14 +54689,24 @@ func init() {
           ],
           "x-display-name": "Low Latency Task Scheduler"
         },
+        "sndbuf_backend": {
+          "type": "integer",
+          "x-display-name": "Backend Send Buffer Size",
+          "x-nullable": true
+        },
         "sndbuf_client": {
           "type": "integer",
-          "x-display-name": "Send Buffer Client Size",
+          "x-display-name": "Client Send Buffer Size",
+          "x-nullable": true
+        },
+        "sndbuf_frontend": {
+          "type": "integer",
+          "x-display-name": "Frontend Send Buffer Size",
           "x-nullable": true
         },
         "sndbuf_server": {
           "type": "integer",
-          "x-display-name": "Send Buffer Server Size",
+          "x-display-name": "Server Send Buffer Size",
           "x-nullable": true
         },
         "ssl_cachesize": {
@@ -54649,6 +54913,21 @@ func init() {
         },
         "total_memory": {
           "type": "integer"
+        }
+      }
+    },
+    "ServerParamsSetProxyV2TlvFmt": {
+      "type": "object",
+      "required": [
+        "id",
+        "value"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
         }
       }
     },
@@ -55509,7 +55788,8 @@ func init() {
           "type": "string",
           "enum": [
             "http",
-            "tcp"
+            "tcp",
+            "log"
           ]
         },
         "mysql_check_params": {
@@ -56155,6 +56435,10 @@ func init() {
           "type": "string",
           "example": "app"
         },
+        "nbconn": {
+          "type": "integer",
+          "x-display-name": "Number of connection"
+        },
         "nice": {
           "type": "integer",
           "example": 1
@@ -56246,6 +56530,13 @@ func init() {
         },
         "quic-force-retry": {
           "type": "boolean"
+        },
+        "quic-socket": {
+          "type": "string",
+          "enum": [
+            "connection",
+            "listener"
+          ]
         },
         "severity_output": {
           "type": "string",
@@ -56561,6 +56852,14 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "srvkey": {
+          "type": "string",
+          "enum": [
+            "addr",
+            "name"
+          ],
+          "x-nullable": true
+        },
         "store": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -56574,6 +56873,11 @@ func init() {
             "string",
             "binary"
           ]
+        },
+        "write_to": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": true
         }
       }
     },
@@ -57236,7 +57540,8 @@ func init() {
           "type": "string",
           "enum": [
             "tcp",
-            "http"
+            "http",
+            "log"
           ]
         },
         "monitor_uri": {
@@ -58845,6 +59150,9 @@ func init() {
         "issuers_chain_path": {
           "type": "string"
         },
+        "limited_quic": {
+          "type": "boolean"
+        },
         "load_server_state_from_file": {
           "type": "string",
           "enum": [
@@ -59071,6 +59379,12 @@ func init() {
           "x-go-name": "SetVarFmts",
           "x-omitempty": true
         },
+        "setcap": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "OS Capabilities",
+          "x-omitempty": true
+        },
         "setenv": {
           "type": "array",
           "items": {
@@ -59226,6 +59540,15 @@ func init() {
               "type": "integer",
               "x-display-name": "Maximum Compression Level"
             },
+            "disable_zero_copy_forwarding": {
+              "type": "boolean",
+              "x-display-name": "Disable zero-copy forwarding"
+            },
+            "events_max_events_at_once": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 1
+            },
             "fail_alloc": {
               "type": "boolean",
               "x-display-name": "Failed Allocation Chance"
@@ -59237,6 +59560,22 @@ func init() {
                 "disabled"
               ],
               "x-display-name": "Edge-triggered polling mode"
+            },
+            "h1_zero_copy_fwd_recv": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
+            },
+            "h1_zero_copy_fwd_send": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
             },
             "h2_be_initial_window_size": {
               "type": "integer",
@@ -59271,6 +59610,14 @@ func init() {
             "h2_max_frame_size": {
               "type": "integer",
               "x-display-name": "HTTP/2 Maximum Frame Size"
+            },
+            "h2_zero_copy_fwd_send": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
             },
             "http_cookielen": {
               "type": "integer",
@@ -59327,6 +59674,23 @@ func init() {
               "type": "integer",
               "x-display-name": "Lua Forced Yield"
             },
+            "lua_log_loggers": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Send Lua Logs to the Loggers"
+            },
+            "lua_log_stderr": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "Send Lua Logs to stderr"
+            },
             "lua_maxmem": {
               "type": "boolean",
               "x-display-name": "Lua Maximum Memory Usage"
@@ -59344,6 +59708,11 @@ func init() {
             "lua_task_timeout": {
               "type": "integer",
               "x-display-name": "Lua Task Timeout",
+              "x-nullable": true
+            },
+            "max_checks_per_thread": {
+              "type": "integer",
+              "x-display-name": "Maximum checks per thread",
               "x-nullable": true
             },
             "maxaccept": {
@@ -59384,6 +59753,14 @@ func init() {
               "type": "integer",
               "x-display-name": "Max Used Low FD Ratio"
             },
+            "pt_zero_copy_forwarding": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+            },
             "quic_frontend_conn_tx_buffers_limit": {
               "type": "integer",
               "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
@@ -59417,14 +59794,24 @@ func init() {
               ],
               "x-display-name": "QUIC Socket Owner"
             },
+            "rcvbuf_backend": {
+              "type": "integer",
+              "x-display-name": "Backend Receive Buffer Size",
+              "x-nullable": true
+            },
             "rcvbuf_client": {
               "type": "integer",
-              "x-display-name": "Receive Buffer Client Size",
+              "x-display-name": "Client Receive Buffer Size",
+              "x-nullable": true
+            },
+            "rcvbuf_frontend": {
+              "type": "integer",
+              "x-display-name": "Frontend Receive Buffer Size",
               "x-nullable": true
             },
             "rcvbuf_server": {
               "type": "integer",
-              "x-display-name": "Receive Buffer Server Size",
+              "x-display-name": "Server Receive Buffer Size",
               "x-nullable": true
             },
             "recv_enough": {
@@ -59443,14 +59830,24 @@ func init() {
               ],
               "x-display-name": "Low Latency Task Scheduler"
             },
+            "sndbuf_backend": {
+              "type": "integer",
+              "x-display-name": "Backend Send Buffer Size",
+              "x-nullable": true
+            },
             "sndbuf_client": {
               "type": "integer",
-              "x-display-name": "Send Buffer Client Size",
+              "x-display-name": "Client Send Buffer Size",
+              "x-nullable": true
+            },
+            "sndbuf_frontend": {
+              "type": "integer",
+              "x-display-name": "Frontend Send Buffer Size",
               "x-nullable": true
             },
             "sndbuf_server": {
               "type": "integer",
-              "x-display-name": "Send Buffer Server Size",
+              "x-display-name": "Server Send Buffer Size",
               "x-nullable": true
             },
             "ssl_cachesize": {
@@ -59635,7 +60032,8 @@ func init() {
             "sdbm",
             "djb2",
             "wt6",
-            "crc32"
+            "crc32",
+            "none"
           ]
         },
         "method": {
@@ -60421,7 +60819,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -61099,7 +61497,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -61272,7 +61670,8 @@ func init() {
           "type": "string",
           "enum": [
             "server",
-            "tunnel"
+            "tunnel",
+            "client"
           ],
           "x-dependency": {
             "type": {
@@ -61926,7 +62325,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -62093,6 +62492,29 @@ func init() {
             }
           }
         },
+        "timeout": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
+        "timeout_type": {
+          "type": "string",
+          "enum": [
+            "server",
+            "tunnel",
+            "client"
+          ],
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-timeout"
+            }
+          }
+        },
         "tos_value": {
           "type": "string",
           "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$",
@@ -62233,6 +62655,7 @@ func init() {
             "set-mark",
             "set-nice",
             "set-status",
+            "set-timeout",
             "set-tos",
             "set-var",
             "set-var-fmt",
@@ -65029,6 +65452,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "log-bufsize": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "log_proto": {
           "type": "string",
           "enum": [
@@ -65238,6 +65665,21 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "set-proxy-v2-tlv-fmt": {
+          "type": "object",
+          "required": [
+            "id",
+            "value"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
         },
         "shard": {
           "type": "integer"
@@ -66466,6 +66908,10 @@ func init() {
           "type": "integer",
           "x-display-name": "Type",
           "x-nullable": true
+        },
+        "write_to": {
+          "type": "string",
+          "x-nullable": true
         }
       }
     },
@@ -66849,6 +67295,7 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
+            "attach-srv",
             "capture",
             "do-resolve",
             "expect-netscaler-cip",
@@ -67264,6 +67711,19 @@ func init() {
           },
           "x-display-name": "ScSet Integer Value",
           "x-nullable": true
+        },
+        "server_name": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "attach-srv"
+            },
+            "type": {
+              "value": "session"
+            }
+          },
+          "x-display-name": "Server name"
         },
         "service_name": {
           "type": "string",
