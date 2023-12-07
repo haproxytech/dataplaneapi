@@ -44,7 +44,12 @@ if [ ! -z $PREWIPE ] && [ "$PREWIPE" == "y" ]; then
 fi
 
 # Custom configuration to run tests with the master socket.
-if [ $HAPROXY_VERSION = 2.7 ]; then
+IFS='.' read -ra version_parts <<< "$HAPROXY_VERSION"
+major="${version_parts[0]}"
+minor="${version_parts[1]}"
+
+if [[ "$major" -eq "2"  &&  "$minor" -ge "7" || "$major" -gt "2" ]] ; then
+  echo "Running<<<<<<<<<<< master socket"
   HAPROXY_FLAGS="-W -db -S /var/lib/haproxy/master -f /usr/local/etc/haproxy/haproxy.cfg"
   VARIANT="-master-socket"
 fi
