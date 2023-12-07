@@ -19,6 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
@@ -55,6 +56,9 @@ load 'utils/_helpers'
 }
 
 @test "acl_runtime: Delete an ACL file entry by its ID" {
+  if haproxy_version_ge "2.9"; then
+    skip "cause: bug in HAPRoxy 2.9"
+  fi
 	# checking items and retrieving first ID
 	resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=1"
   assert_equal "$SC" 200

@@ -19,6 +19,7 @@ load '../../libs/dataplaneapi'
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
