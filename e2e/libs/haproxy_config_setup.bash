@@ -29,27 +29,35 @@ setup() {
       skip
   fi
 
+  # replace the default haproxy config file
   local haproxy_cfg_file="${BATS_TEST_DIRNAME}/data/haproxy_*.cfg"
   local haproxy_file_version=""
+  local copy_haproxy_file=true
 
   if ls $haproxy_cfg_file 1> /dev/null 2>&1; then
-      haproxy_file_version=$(echo $haproxy_cfg_file | sed 's/.*_\([0-9]\+\.[0-9]\+\)\.cfg/\1/')
+    haproxy_file_version=$(echo $haproxy_cfg_file | sed 's/.*_\([0-9]\+\.[0-9]\+\)\.cfg/\1/')
+    major_file_version=$(echo $haproxy_file_version | cut -d '.' -f 1)
+    minor_file_version=$(echo $haproxy_file_version | cut -d '.' -f 2)
+    major_cfg_version=$(echo $HAPROXY_VERSION | cut -d '.' -f 1)
+    minor_cfg_version=$(echo $HAPROXY_VERSION | cut -d '.' -f 2)
+    if [[ -f "${BATS_TEST_DIRNAME}/data/haproxy_${haproxy_file_version}.cfg" ]] ; then
+        if [[  $major_cfg_version -eq $major_file_version && $minor_cfg_version -ge $minor_file_version || $major_cfg_version -gt $major_file_version ]] ; then
+            run docker cp "${BATS_TEST_DIRNAME}/data/haproxy_${haproxy_file_version}.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+            copy_haproxy_file=false
+            assert_success
+        fi
+    fi
   fi
 
-  major_file_version=$(echo $haproxy_file_version | cut -d '.' -f 1)
-  minor_file_version=$(echo $haproxy_file_version | cut -d '.' -f 2)
-  major_cfg_version=$(echo $HAPROXY_VERSION | cut -d '.' -f 1)
-  minor_cfg_version=$(echo $HAPROXY_VERSION | cut -d '.' -f 2)
-
-  # replace the default haproxy config file
-  if [[ $major_cfg_version -ge $major_file_version && $minor_cfg_version -ge $minor_file_version ]] && [ -f "${BATS_TEST_DIRNAME}/data/haproxy_${haproxy_file_version}.cfg" ]; then
-      run docker cp "${BATS_TEST_DIRNAME}/data/haproxy_${haproxy_file_version}.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
-  elif [ -f "${BATS_TEST_DIRNAME}/data/haproxy.cfg" ]; then
-      run docker cp "${BATS_TEST_DIRNAME}/data/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
-  else
-      run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+  if [[ "$copy_haproxy_file" = true ]] ; then
+    if [ -f "${BATS_TEST_DIRNAME}/data/haproxy.cfg" ]; then
+        run docker cp "${BATS_TEST_DIRNAME}/data/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+        assert_success
+    else
+        run docker cp "${E2E_DIR}/fixtures/haproxy.cfg" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg"
+        assert_success
+    fi
   fi
-  assert_success
 
   # replace the default dataplaneapi config file
   if [ -f "${BATS_TEST_DIRNAME}/dataplaneapi.yaml" ]; then
