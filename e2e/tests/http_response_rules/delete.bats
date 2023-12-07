@@ -20,6 +20,7 @@ load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
@@ -35,7 +36,7 @@ load 'utils/_helpers'
 	resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 204
 	#
-	if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+	if haproxy_version_ge "2.8"; then
         # Deleting the third one
         #
         resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"

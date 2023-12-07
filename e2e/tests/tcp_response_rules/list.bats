@@ -20,6 +20,7 @@ load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
@@ -27,14 +28,14 @@ load 'utils/_helpers'
   resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH" "backend=test_backend"
 	assert_equal "$SC" 200
 
-    if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+    if haproxy_version_ge "2.8"; then
         assert_equal "$(get_json_path "${BODY}" ".data | length")" 3
 	else
 	    assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
     fi
 	assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"accept\") ).action")" "accept"
 	assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"reject\") ).action")" "reject"
-	if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+	if haproxy_version_ge "2.8"; then
 	    assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"sc-add-gpc\") ).action")" "sc-add-gpc"
     fi
 }

@@ -20,13 +20,14 @@ load '../../libs/get_json_path'
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
 load '../../libs/version'
+load '../../libs/haproxy_version'
 
 load 'utils/_helpers'
 
 @test "http_response_rules: Return an array of all HTTP Response Rules from frontend" {
   resource_get "$_RES_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-	if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+	if haproxy_version_ge "2.8"; then
 	    assert_equal "$(get_json_path "$BODY" ".data | length")" 3
 	else
 	    assert_equal "$(get_json_path "$BODY" ".data | length")" 2
@@ -39,7 +40,7 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".data[1].hdr_name")" "X-Del-Frontend"
 	assert_equal "$(get_json_path "$BODY" ".data[1].cond")" "if"
 	assert_equal "$(get_json_path "$BODY" ".data[1].cond_test")" "{ src 10.1.0.0/16 }"
-	if [[ "$HAPROXY_VERSION" == "2.8" ]]; then
+	if haproxy_version_ge "2.8"; then
         assert_equal "$(get_json_path "$BODY" ".data[2].type")" "sc-add-gpc"
         assert_equal "$(get_json_path "$BODY" ".data[2].index")" "2"
         assert_equal "$(get_json_path "$BODY" ".data[2].sc_id")" "1"

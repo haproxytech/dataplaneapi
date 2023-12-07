@@ -27,12 +27,16 @@
 # >>> 1
 function haproxy_version_ge() {
     target=$1; shift
-    major_minor=$HAPROXY_VERSION
-    numerical_v="${major_minor//.}"
-    numerical_target="${target//.}"
 
-    if [ "$numerical_v" -ge "$numerical_target" ]
-    then
+    IFS='.' read -ra version_parts <<< "$HAPROXY_VERSION"
+    haproxy_major="${version_parts[0]}"
+    haproxy_minor="${version_parts[1]}"
+
+    IFS='.' read -ra version_parts_target <<< "$target"
+    target_major="${version_parts_target[0]}"
+    target_minor="${version_parts_target[1]}"
+
+    if [[ "$haproxy_major" -eq "$target_major" && "$haproxy_minor" -ge "$target_minor" || "$haproxy_major" -gt "$target_major" ]] ; then
         return 0
     else
         return 1
