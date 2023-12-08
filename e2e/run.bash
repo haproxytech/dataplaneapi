@@ -19,7 +19,7 @@ set -eo pipefail
 export BASE_PATH="/v2"
 
 HAPROXY_VERSION=${HAPROXY_VERSION:-2.9}
-DOCKER_BASE_IMAGE="${DOCKER_BASE_IMAGE:-haproxytech/haproxy-alpine}:${HAPROXY_VERSION}"
+DOCKER_BASE_IMAGE="${DOCKER_BASE_IMAGE:-haproxytech/haproxy-debian}:${HAPROXY_VERSION}"
 DOCKER_CONTAINER_NAME="dataplaneapi-e2e"
 export DOCKER_CONTAINER_NAME
 
