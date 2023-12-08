@@ -49,7 +49,6 @@ major="${version_parts[0]}"
 minor="${version_parts[1]}"
 
 if [[ "$major" -eq "2"  &&  "$minor" -ge "7" || "$major" -gt "2" ]] ; then
-  echo "Running<<<<<<<<<<< master socket"
   HAPROXY_FLAGS="-W -db -S /var/lib/haproxy/master -f /usr/local/etc/haproxy/haproxy.cfg"
   VARIANT="-master-socket"
 fi
@@ -63,6 +62,7 @@ else
       --detach \
       --name ${DOCKER_CONTAINER_NAME} \
       --publish "${E2E_PORT}":8080 \
+      --security-opt seccomp=unconfined \
       "${DOCKER_BASE_IMAGE}" $HAPROXY_FLAGS > /dev/null 2>&1
     docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
     docker cp "${E2E_DIR}/fixtures/dataplaneapi${VARIANT}.hcl" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.hcl
