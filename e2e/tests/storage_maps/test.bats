@@ -41,7 +41,7 @@ load 'utils/_helpers'
 
     # sometimes we can't establish a connection to the haproxy stat socket
     # forcing haproxy to restart seems to fix that
-    assert dpa_docker_exec 'kill -SIGUSR2 1'
+    assert dpa_docker_exec 'kill -s 12 1'
     sleep 1
 
     resource_get "$_STORAGE_MAPS_BASE_PATH/"
