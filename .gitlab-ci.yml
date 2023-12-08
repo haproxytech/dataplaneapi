@@ -95,7 +95,7 @@ build:
     name: $CI_REGISTRY_GO/docker:stable
     entrypoint: [ "" ]
   services:
-    - name: $CI_REGISTRY_GO/docker:20.10.5-dind
+    - name: $CI_REGISTRY_GO/docker:24.0-dind
       alias: docker
   variables:
     LOCAL_IP_ADDRESS: docker
