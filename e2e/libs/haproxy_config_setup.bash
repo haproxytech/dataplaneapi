@@ -72,7 +72,7 @@ setup() {
       assert_success
   fi
 
-  run dpa_docker_exec 'kill -SIGUSR2 1'
+  run dpa_docker_exec 'kill -s 12 1'
   assert_success
 
   run dpa_docker_exec 'pkill -9 dataplaneapi'
@@ -111,7 +111,7 @@ teardown() {
   run docker cp "${E2E_DIR}/fixtures/dataplaneapi.yaml" "${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.yaml"
   assert_success
 
-  run dpa_docker_exec 'kill -SIGUSR2 1'
+  run dpa_docker_exec 'kill -s 12 1'
   assert_success
 
   run dpa_docker_exec 'pkill -9 dataplaneapi'
