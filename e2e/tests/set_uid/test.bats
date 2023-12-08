@@ -64,5 +64,5 @@ teardown() {
 @test "set_uid: check if running user is testuiduser for dataplane" {
     PS=$(dpa_docker_exec "ps -eo ruser,user,comm | grep dataplaneapi")
     echo $PS
-    [ "${PS}" = "testuidu testuidu dataplaneapi" ]
+    [ "${PS}" = "testuid+ testuid+ dataplaneapi" ]
 }

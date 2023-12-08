@@ -2,6 +2,6 @@
   "name": "test",
   "command": "echo true",
   "start-on-reload": "disabled",
-  "user": "nobody",
-  "group": "nobody"
+  "user": "haproxy",
+  "group": "haproxy"
 }

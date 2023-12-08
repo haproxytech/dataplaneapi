@@ -4,7 +4,7 @@ stages:
   - e2e
 variables:
   DOCKER_HOST: tcp://docker:2375
-  DOCKER_BASE_IMAGE: haproxytech/haproxy-debian
+  DOCKER_BASE_IMAGE: $CI_REGISTRY_GO/haproxy-debian
   BATS_VERSION: v1.4.1
   GO_VERSION: '1.21'
 
