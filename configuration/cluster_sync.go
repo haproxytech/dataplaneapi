@@ -248,6 +248,10 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			}
 			c.cfg.Cluster.Name.Store(data["name"])
 			c.cfg.Cluster.Description.Store(data["description"])
+			c.cfg.Cluster.StorageDir.Store(data["storage-dir"])
+			c.cfg.Cluster.ClusterID.Store(data["cluster-id"])
+			c.cfg.HAProxy.ClusterTLSCertDir = path.Join(data["storage-dir"], "certs-cluster")
+			c.cfg.Cluster.CertificateDir.Store(path.Join(data["storage-dir"], "certs-cluster"))
 			c.cfg.Mode.Store(ModeCluster)
 			err = c.cfg.Save()
 			if err != nil {
