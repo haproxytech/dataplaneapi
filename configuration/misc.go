@@ -118,9 +118,6 @@ func CheckIfStorageDirIsOK(storageDir string, config *Configuration) error {
 			return errStorage
 		}
 	}
-	config.Cluster.StorageDir.Store(storageDir)
-	config.HAProxy.ClusterTLSCertDir = path.Join(storageDir, "certs-cluster")
-	config.Cluster.CertificateDir.Store(path.Join(storageDir, "certs-cluster"))
 	return nil
 }
 
