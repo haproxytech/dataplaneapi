@@ -17283,35 +17283,37 @@ func init() {
     },
     "bind": {
       "description": "HAProxy frontend bind configuration",
-      "type": "object",
       "title": "Bind",
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
-        }
-      ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "example": "127.0.0.1"
         },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 80
-        },
-        "port-range-end": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 81
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "example": "127.0.0.1"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 80
+            },
+            "port-range-end": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 81
+            }
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
+      ]
     },
     "bind_params": {
       "type": "object",
@@ -18202,7 +18204,6 @@ func init() {
     },
     "default_bind": {
       "description": "HAProxy default bind configuration",
-      "type": "object",
       "title": "Default Bind",
       "allOf": [
         {
@@ -18211,7 +18212,6 @@ func init() {
       ]
     },
     "default_server": {
-      "type": "object",
       "title": "Default Server",
       "allOf": [
         {
@@ -20517,21 +20517,23 @@ func init() {
         "runtime_apis": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "address"
-            ],
             "allOf": [
               {
                 "$ref": "#/definitions/bind_params"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "address"
+                ],
+                "properties": {
+                  "address": {
+                    "type": "string",
+                    "pattern": "^[^\\s]+$"
+                  }
+                }
               }
             ],
-            "properties": {
-              "address": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              }
-            },
             "x-go-name": "RuntimeAPI"
           },
           "x-display-name": "Runtime APIs",
@@ -26471,39 +26473,41 @@ func init() {
     },
     "server": {
       "description": "HAProxy backend server configuration",
-      "type": "object",
       "title": "Server",
-      "required": [
-        "name",
-        "address"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          }
         }
       ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        }
-      },
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
@@ -27162,43 +27166,45 @@ func init() {
     },
     "server_template": {
       "description": "Set a template to initialize servers with shared parameters.",
-      "type": "object",
       "title": "Server template",
-      "required": [
-        "prefix",
-        "num_or_range",
-        "fqdn"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "prefix",
+            "num_or_range",
+            "fqdn"
+          ],
+          "properties": {
+            "fqdn": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "num_or_range": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            },
+            "prefix": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            }
+          }
         }
       ],
-      "properties": {
-        "fqdn": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "num_or_range": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "prefix": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        }
-      },
       "additionalProperties": false,
       "example": {
         "fqdn": "google.com",
@@ -27767,6 +27773,12 @@ func init() {
       "type": "object",
       "title": "SSL File",
       "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "authority_key_id": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
@@ -27802,6 +27814,15 @@ func init() {
           "x-nullable": true,
           "readOnly": true
         },
+        "serial": {
+          "type": "string"
+        },
+        "sha1_finger_print": {
+          "type": "string"
+        },
+        "sha256_finger_print": {
+          "type": "string"
+        },
         "size": {
           "description": "File size in bytes.",
           "type": "integer",
@@ -27809,6 +27830,15 @@ func init() {
           "readOnly": true
         },
         "storage_name": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "subject_alternative_names": {
+          "type": "string"
+        },
+        "subject_key_id": {
           "type": "string"
         }
       }
@@ -54271,21 +54301,23 @@ func init() {
       "x-go-name": "PresetEnv"
     },
     "GlobalRuntimeApisItems0": {
-      "type": "object",
-      "required": [
-        "address"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            }
+          }
         }
       ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        }
-      },
       "x-go-name": "RuntimeAPI"
     },
     "GlobalSetVarFmtItems0": {
@@ -56216,35 +56248,37 @@ func init() {
     },
     "bind": {
       "description": "HAProxy frontend bind configuration",
-      "type": "object",
       "title": "Bind",
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
-        }
-      ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "example": "127.0.0.1"
         },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 80
-        },
-        "port-range-end": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 81
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "example": "127.0.0.1"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 80
+            },
+            "port-range-end": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 81
+            }
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
+      ]
     },
     "bind_params": {
       "type": "object",
@@ -57095,7 +57129,6 @@ func init() {
     },
     "default_bind": {
       "description": "HAProxy default bind configuration",
-      "type": "object",
       "title": "Default Bind",
       "allOf": [
         {
@@ -57104,7 +57137,6 @@ func init() {
       ]
     },
     "default_server": {
-      "type": "object",
       "title": "Default Server",
       "allOf": [
         {
@@ -65208,39 +65240,41 @@ func init() {
     },
     "server": {
       "description": "HAProxy backend server configuration",
-      "type": "object",
       "title": "Server",
-      "required": [
-        "name",
-        "address"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          }
         }
       ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        }
-      },
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
@@ -65899,43 +65933,45 @@ func init() {
     },
     "server_template": {
       "description": "Set a template to initialize servers with shared parameters.",
-      "type": "object",
       "title": "Server template",
-      "required": [
-        "prefix",
-        "num_or_range",
-        "fqdn"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "prefix",
+            "num_or_range",
+            "fqdn"
+          ],
+          "properties": {
+            "fqdn": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "num_or_range": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            },
+            "prefix": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            }
+          }
         }
       ],
-      "properties": {
-        "fqdn": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "num_or_range": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "prefix": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        }
-      },
       "additionalProperties": false,
       "example": {
         "fqdn": "google.com",
@@ -66440,6 +66476,12 @@ func init() {
       "type": "object",
       "title": "SSL File",
       "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "authority_key_id": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
@@ -66475,6 +66517,15 @@ func init() {
           "x-nullable": true,
           "readOnly": true
         },
+        "serial": {
+          "type": "string"
+        },
+        "sha1_finger_print": {
+          "type": "string"
+        },
+        "sha256_finger_print": {
+          "type": "string"
+        },
         "size": {
           "description": "File size in bytes.",
           "type": "integer",
@@ -66482,6 +66533,15 @@ func init() {
           "readOnly": true
         },
         "storage_name": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "subject_alternative_names": {
+          "type": "string"
+        },
+        "subject_key_id": {
           "type": "string"
         }
       }
