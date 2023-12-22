@@ -13,16 +13,16 @@ require (
 	github.com/dustinkirkland/golang-petname v0.0.0-20231002161417-6a283f1aaaf2
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/getkin/kin-openapi v0.122.0
-	github.com/go-openapi/errors v0.20.4
-	github.com/go-openapi/loads v0.21.2
+	github.com/go-openapi/errors v0.21.0
+	github.com/go-openapi/loads v0.21.3
 	github.com/go-openapi/runtime v0.26.0
-	github.com/go-openapi/spec v0.20.11
-	github.com/go-openapi/strfmt v0.21.9
-	github.com/go-openapi/swag v0.22.4
-	github.com/go-openapi/validate v0.22.3
+	github.com/go-openapi/spec v0.20.13
+	github.com/go-openapi/strfmt v0.21.10
+	github.com/go-openapi/swag v0.22.6
+	github.com/go-openapi/validate v0.22.4
 	github.com/google/renameio v1.0.1
-	github.com/google/uuid v1.4.0
-	github.com/haproxytech/client-native/v5 v5.1.1
+	github.com/google/uuid v1.5.0
+	github.com/haproxytech/client-native/v5 v5.1.2
 	github.com/haproxytech/config-parser/v5 v5.1.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
@@ -53,9 +53,9 @@ require (
 	github.com/aws/smithy-go v1.19.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
-	github.com/go-openapi/analysis v0.21.4 // indirect
-	github.com/go-openapi/jsonpointer v0.20.0 // indirect
-	github.com/go-openapi/jsonreference v0.20.2 // indirect
+	github.com/go-openapi/analysis v0.22.0 // indirect
+	github.com/go-openapi/jsonpointer v0.20.2 // indirect
+	github.com/go-openapi/jsonreference v0.20.4 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
