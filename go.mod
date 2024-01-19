@@ -35,8 +35,8 @@ require (
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/net v0.17.0
-	golang.org/x/sys v0.14.0
+	golang.org/x/net v0.20.0
+	golang.org/x/sys v0.16.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -91,6 +91,6 @@ require (
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
 	go.mongodb.org/mongo-driver v1.12.1 // indirect
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
