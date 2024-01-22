@@ -18,7 +18,7 @@ require (
 	github.com/go-openapi/runtime v0.26.2
 	github.com/go-openapi/spec v0.20.14
 	github.com/go-openapi/strfmt v0.22.0
-	github.com/go-openapi/swag v0.22.7
+	github.com/go-openapi/swag v0.22.8
 	github.com/go-openapi/validate v0.22.6
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.5.0
