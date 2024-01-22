@@ -274,12 +274,26 @@ func HasOSArg(short, long, env string) bool {
 }
 
 func RandomString(size int) (string, error) {
-	b := make([]byte, size)
+	str, err := randomString(size)
+	if err != nil {
+		return "", err
+	}
+	for len(str) < size {
+		str2, _ := randomString(size)
+		str += str2
+	}
+	return str[:size], nil
+}
+
+// randomString generates a random string of the recommended size.
+// Result is not guaranteed to be correct length.
+func randomString(recommendedSize int) (string, error) {
+	b := make([]byte, recommendedSize+8)
 	_, err := rand.Read(b)
 	result := strings.ReplaceAll(base64.URLEncoding.EncodeToString(b), `=`, ``)
 	result = strings.ReplaceAll(result, `-`, ``)
 	result = strings.ReplaceAll(result, `_`, ``)
-	return result[:size], err
+	return result, err
 }
 
 func IsNetworkErr(err error) bool {
