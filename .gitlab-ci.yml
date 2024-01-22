@@ -104,7 +104,7 @@ build:
   before_script:
     - apk add git bash curl jq git
     - git clone https://github.com/bats-core/bats-core.git && cd bats-core && git checkout $BATS_VERSION && ./install.sh /usr/local && cd ..
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY_GO
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY_GO
   script:
     - bash -x ./e2e/run.bash
   rules:
