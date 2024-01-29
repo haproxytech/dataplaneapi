@@ -52,9 +52,9 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.9"
+    "version": "3.0"
   },
-  "basePath": "/v2",
+  "basePath": "/v3",
   "paths": {
     "/": {
       "get": {
@@ -20287,14 +20287,6 @@ func init() {
         "limited_quic": {
           "type": "boolean"
         },
-        "load_server_state_from_file": {
-          "type": "string",
-          "enum": [
-            "global",
-            "local",
-            "none"
-          ]
-        },
         "localpeer": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -30128,9 +30120,9 @@ func init() {
       "url": "https://my.haproxy.com/portal/cust/login",
       "email": "support@haproxy.com"
     },
-    "version": "2.9"
+    "version": "3.0"
   },
-  "basePath": "/v2",
+  "basePath": "/v3",
   "paths": {
     "/": {
       "get": {
@@ -59184,14 +59176,6 @@ func init() {
         },
         "limited_quic": {
           "type": "boolean"
-        },
-        "load_server_state_from_file": {
-          "type": "string",
-          "enum": [
-            "global",
-            "local",
-            "none"
-          ]
         },
         "localpeer": {
           "type": "string",

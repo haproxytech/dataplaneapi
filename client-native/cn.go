@@ -7,13 +7,13 @@ import (
 	"sync"
 	"time"
 
-	clientnative "github.com/haproxytech/client-native/v5"
-	"github.com/haproxytech/client-native/v5/models"
+	clientnative "github.com/haproxytech/client-native/v6"
+	"github.com/haproxytech/client-native/v6/models"
 
-	"github.com/haproxytech/client-native/v5/configuration"
-	configuration_options "github.com/haproxytech/client-native/v5/configuration/options"
-	runtime_api "github.com/haproxytech/client-native/v5/runtime"
-	runtime_options "github.com/haproxytech/client-native/v5/runtime/options"
+	"github.com/haproxytech/client-native/v6/configuration"
+	configuration_options "github.com/haproxytech/client-native/v6/configuration/options"
+	runtime_api "github.com/haproxytech/client-native/v6/runtime"
+	runtime_options "github.com/haproxytech/client-native/v6/runtime/options"
 	parser "github.com/haproxytech/config-parser/v5"
 	"github.com/haproxytech/config-parser/v5/types"
 

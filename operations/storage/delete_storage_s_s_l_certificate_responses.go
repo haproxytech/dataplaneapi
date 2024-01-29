@@ -25,7 +25,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/haproxytech/client-native/v5/models"
+	"github.com/haproxytech/client-native/v6/models"
 )
 
 // DeleteStorageSSLCertificateAcceptedCode is the HTTP code returned for type DeleteStorageSSLCertificateAccepted

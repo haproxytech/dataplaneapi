@@ -45,7 +45,7 @@ function deprecated_auth_curl() {
 # version
 # >>> 10
 function version() {
-  read -r SC RES < <(deprecated_auth_curl GET "/v2/services/haproxy/configuration/global")
+  read -r SC RES < <(deprecated_auth_curl GET "/v3/services/haproxy/configuration/global")
   V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
   echo "$V"
 }

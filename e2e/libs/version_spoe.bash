@@ -37,6 +37,6 @@ function deprecated_auth_curl() {
 }
 
 function version() {
-  read -r SC RES < <(deprecated_auth_curl GET "/v2/services/haproxy/spoe/version?spoe=$SPOE_FILE")
+  read -r SC RES < <(deprecated_auth_curl GET "/v3/services/haproxy/spoe/version?spoe=$SPOE_FILE")
   echo "$RES"
 }

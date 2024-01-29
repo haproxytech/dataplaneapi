@@ -22,7 +22,7 @@ import (
 	"sync"
 	"syscall"
 
-	client_native "github.com/haproxytech/client-native/v5"
+	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"
 	commands "github.com/haproxytech/dataplaneapi/runtime/commands"

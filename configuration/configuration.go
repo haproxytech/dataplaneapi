@@ -26,7 +26,7 @@ import (
 	"sync"
 
 	petname "github.com/dustinkirkland/golang-petname"
-	"github.com/haproxytech/client-native/v5/models"
+	"github.com/haproxytech/client-native/v6/models"
 	"github.com/haproxytech/dataplaneapi/log"
 	jsoniter "github.com/json-iterator/go"
 )

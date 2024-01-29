@@ -19,8 +19,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/haproxytech/client-native/v5/configuration"
-	"github.com/haproxytech/client-native/v5/models"
+	"github.com/haproxytech/client-native/v6/configuration"
+	"github.com/haproxytech/client-native/v6/models"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 )
 

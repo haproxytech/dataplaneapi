@@ -20,8 +20,8 @@ import (
 	"sync"
 
 	"github.com/go-openapi/runtime/middleware"
-	client_native "github.com/haproxytech/client-native/v5"
-	"github.com/haproxytech/client-native/v5/models"
+	client_native "github.com/haproxytech/client-native/v6"
+	"github.com/haproxytech/client-native/v6/models"
 	cn "github.com/haproxytech/dataplaneapi/client-native"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -86,7 +86,6 @@ func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransact
 		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	err = configuration.DeleteTransaction(params.ID)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {

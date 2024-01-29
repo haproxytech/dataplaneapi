@@ -19,7 +19,7 @@ import (
 	"errors"
 	"strconv"
 
-	client_native "github.com/haproxytech/client-native/v5"
+	client_native "github.com/haproxytech/client-native/v6"
 )
 
 const (

@@ -25,7 +25,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/haproxytech/client-native/v5/models"
+	"github.com/haproxytech/client-native/v6/models"
 )
 
 // CreateSpoeAgentCreatedCode is the HTTP code returned for type CreateSpoeAgentCreated
