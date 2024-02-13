@@ -86,7 +86,6 @@ func (h *DeleteTransactionHandlerImpl) Handle(params transactions.DeleteTransact
 		return transactions.NewDeleteTransactionDefault(int(*e.Code)).WithPayload(e)
 	}
 	err = configuration.DeleteTransaction(params.ID)
-
 	if err != nil {
 		e := misc.HandleError(err)
 		if strings.HasSuffix(*e.Message, "does not exist") {
