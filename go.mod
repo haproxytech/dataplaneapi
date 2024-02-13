@@ -15,13 +15,13 @@ require (
 	github.com/getkin/kin-openapi v0.123.0
 	github.com/go-openapi/errors v0.21.0
 	github.com/go-openapi/loads v0.21.5
-	github.com/go-openapi/runtime v0.26.2
+	github.com/go-openapi/runtime v0.27.1
 	github.com/go-openapi/spec v0.20.14
 	github.com/go-openapi/strfmt v0.22.0
-	github.com/go-openapi/swag v0.22.8
-	github.com/go-openapi/validate v0.22.6
+	github.com/go-openapi/swag v0.22.9
+	github.com/go-openapi/validate v0.23.0
 	github.com/google/renameio v1.0.1
-	github.com/google/uuid v1.5.0
+	github.com/google/uuid v1.6.0
 	github.com/haproxytech/client-native/v4 v4.1.12
 	github.com/haproxytech/config-parser/v4 v4.1.5
 	github.com/hashicorp/consul/api v1.27.0
@@ -93,5 +93,6 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
 	go.mongodb.org/mongo-driver v1.13.1 // indirect
 	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a // indirect
+	golang.org/x/sync v0.6.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
