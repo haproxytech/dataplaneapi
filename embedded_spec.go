@@ -21594,7 +21594,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -22274,7 +22274,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -23041,7 +23041,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -59365,7 +59365,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -60045,7 +60045,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -60812,7 +60812,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
