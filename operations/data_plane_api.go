@@ -547,9 +547,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DeclareCaptureGetDeclareCapturesHandler: declare_capture.GetDeclareCapturesHandlerFunc(func(params declare_capture.GetDeclareCapturesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.GetDeclareCaptures has not yet been implemented")
 		}),
-		DefaultsGetDefaultsHandler: defaults.GetDefaultsHandlerFunc(func(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation defaults.GetDefaults has not yet been implemented")
-		}),
 		DefaultsGetDefaultsSectionHandler: defaults.GetDefaultsSectionHandlerFunc(func(params defaults.GetDefaultsSectionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.GetDefaultsSection has not yet been implemented")
 		}),
@@ -900,9 +897,6 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		DeclareCaptureReplaceDeclareCaptureHandler: declare_capture.ReplaceDeclareCaptureHandlerFunc(func(params declare_capture.ReplaceDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.ReplaceDeclareCapture has not yet been implemented")
-		}),
-		DefaultsReplaceDefaultsHandler: defaults.ReplaceDefaultsHandlerFunc(func(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation defaults.ReplaceDefaults has not yet been implemented")
 		}),
 		DefaultsReplaceDefaultsSectionHandler: defaults.ReplaceDefaultsSectionHandlerFunc(func(params defaults.ReplaceDefaultsSectionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.ReplaceDefaultsSection has not yet been implemented")
@@ -1381,8 +1375,6 @@ type DataPlaneAPI struct {
 	DeclareCaptureGetDeclareCaptureHandler declare_capture.GetDeclareCaptureHandler
 	// DeclareCaptureGetDeclareCapturesHandler sets the operation handler for the get declare captures operation
 	DeclareCaptureGetDeclareCapturesHandler declare_capture.GetDeclareCapturesHandler
-	// DefaultsGetDefaultsHandler sets the operation handler for the get defaults operation
-	DefaultsGetDefaultsHandler defaults.GetDefaultsHandler
 	// DefaultsGetDefaultsSectionHandler sets the operation handler for the get defaults section operation
 	DefaultsGetDefaultsSectionHandler defaults.GetDefaultsSectionHandler
 	// DefaultsGetDefaultsSectionsHandler sets the operation handler for the get defaults sections operation
@@ -1617,8 +1609,6 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
 	// DeclareCaptureReplaceDeclareCaptureHandler sets the operation handler for the replace declare capture operation
 	DeclareCaptureReplaceDeclareCaptureHandler declare_capture.ReplaceDeclareCaptureHandler
-	// DefaultsReplaceDefaultsHandler sets the operation handler for the replace defaults operation
-	DefaultsReplaceDefaultsHandler defaults.ReplaceDefaultsHandler
 	// DefaultsReplaceDefaultsSectionHandler sets the operation handler for the replace defaults section operation
 	DefaultsReplaceDefaultsSectionHandler defaults.ReplaceDefaultsSectionHandler
 	// DgramBindReplaceDgramBindHandler sets the operation handler for the replace dgram bind operation
@@ -2224,9 +2214,6 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DeclareCaptureGetDeclareCapturesHandler == nil {
 		unregistered = append(unregistered, "declare_capture.GetDeclareCapturesHandler")
 	}
-	if o.DefaultsGetDefaultsHandler == nil {
-		unregistered = append(unregistered, "defaults.GetDefaultsHandler")
-	}
 	if o.DefaultsGetDefaultsSectionHandler == nil {
 		unregistered = append(unregistered, "defaults.GetDefaultsSectionHandler")
 	}
@@ -2578,9 +2565,6 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DeclareCaptureReplaceDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.ReplaceDeclareCaptureHandler")
 	}
-	if o.DefaultsReplaceDefaultsHandler == nil {
-		unregistered = append(unregistered, "defaults.ReplaceDefaultsHandler")
-	}
 	if o.DefaultsReplaceDefaultsSectionHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsSectionHandler")
 	}
@@ -2896,10 +2880,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/configuration/captures"] = declare_capture.NewCreateDeclareCapture(o.context, o.DeclareCaptureCreateDeclareCaptureHandler)
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/named_defaults"] = defaults.NewCreateDefaultsSection(o.context, o.DefaultsCreateDefaultsSectionHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults"] = defaults.NewCreateDefaultsSection(o.context, o.DefaultsCreateDefaultsSectionHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -3099,7 +3083,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/services/haproxy/configuration/named_defaults/{name}"] = defaults.NewDeleteDefaultsSection(o.context, o.DefaultsDeleteDefaultsSectionHandler)
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{name}"] = defaults.NewDeleteDefaultsSection(o.context, o.DefaultsDeleteDefaultsSectionHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -3387,15 +3371,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/defaults"] = defaults.NewGetDefaults(o.context, o.DefaultsGetDefaultsHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{name}"] = defaults.NewGetDefaultsSection(o.context, o.DefaultsGetDefaultsSectionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/services/haproxy/configuration/named_defaults/{name}"] = defaults.NewGetDefaultsSection(o.context, o.DefaultsGetDefaultsSectionHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/services/haproxy/configuration/named_defaults"] = defaults.NewGetDefaultsSections(o.context, o.DefaultsGetDefaultsSectionsHandler)
+	o.handlers["GET"]["/services/haproxy/configuration/defaults"] = defaults.NewGetDefaultsSections(o.context, o.DefaultsGetDefaultsSectionsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3859,11 +3839,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/services/haproxy/configuration/defaults"] = defaults.NewReplaceDefaults(o.context, o.DefaultsReplaceDefaultsHandler)
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/services/haproxy/configuration/named_defaults/{name}"] = defaults.NewReplaceDefaultsSection(o.context, o.DefaultsReplaceDefaultsSectionHandler)
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{name}"] = defaults.NewReplaceDefaultsSection(o.context, o.DefaultsReplaceDefaultsSectionHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

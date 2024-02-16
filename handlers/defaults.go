@@ -37,7 +37,7 @@ type ReplaceDefaultsHandlerImpl struct {
 }
 
 // Handle executing the request and returning a response
-func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, principal interface{}) middleware.Responder {
+func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsSectionParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -46,19 +46,19 @@ func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, princ
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
+		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	_, data, err := configuration.GetDefaultsConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
+		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
-	return defaults.NewGetDefaultsOK().WithPayload(data)
+	return defaults.NewGetDefaultsSectionOK().WithPayload(data)
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsSectionParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -75,19 +75,19 @@ func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParam
 			Message: &msg,
 			Code:    &c,
 		}
-		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)
+		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)
+		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	err = configuration.PushDefaultsConfiguration(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)
+		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -95,14 +95,14 @@ func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsParam
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return defaults.NewReplaceDefaultsDefault(int(*e.Code)).WithPayload(e)
+				return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 			}
-			return defaults.NewReplaceDefaultsOK().WithPayload(params.Data)
+			return defaults.NewReplaceDefaultsSectionOK().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return defaults.NewReplaceDefaultsAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return defaults.NewReplaceDefaultsSectionAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return defaults.NewReplaceDefaultsAccepted().WithPayload(params.Data)
+	return defaults.NewReplaceDefaultsSectionAccepted().WithPayload(params.Data)
 }
 
 // GetDefaultsHandlerImpl implementation of the GetDefaultsHandler interface

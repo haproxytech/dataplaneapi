@@ -24,11 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "defaults: Delete a named defaults configuration" {
-  resource_delete "$_NAMED_DEFAULTS_BASE_PATH/unnamed_defaults_1"
+  resource_delete "$_DEFAULTS_BASE_PATH/unnamed_defaults_1"
   assert_equal "$SC" 202
 }
 
 @test "defaults: Delete a named defaults configuration that does not exist" {
-  resource_delete "$_NAMED_DEFAULTS_BASE_PATH/nothing_to_see_here"
+  resource_delete "$_DEFAULTS_BASE_PATH/nothing_to_see_here"
   assert_equal "$SC" 404
 }

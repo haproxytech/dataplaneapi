@@ -23,27 +23,20 @@ load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "defaults: Return a defaults configuration" {
-  resource_get "$_DEFAULTS_BASE_PATH"
-  assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.mode')" "http"
-  assert_equal "$(get_json_path "$BODY" '.balance.algorithm')" "roundrobin"
-  assert_equal "$(get_json_path "$BODY" '.client_timeout')" "30000"
-}
 
-@test "defaults: Return a list of named defaults configurations" {
-  resource_get "$_NAMED_DEFAULTS_BASE_PATH"
+@test "defaults: Return a list of defaults configurations" {
+  resource_get "$_DEFAULTS_BASE_PATH"
   assert_equal "$SC" 200
   assert_equal "$(get_json_path "$BODY" '.[0].name')" "unnamed_defaults_1"
 }
 
-@test "defaults: Return a named defaults configuration" {
-  resource_get "$_NAMED_DEFAULTS_BASE_PATH/unnamed_defaults_1"
+@test "defaults: Return a defaults configuration" {
+  resource_get "$_DEFAULTS_BASE_PATH/unnamed_defaults_1"
   assert_equal "$SC" 200
   assert_equal "$(get_json_path "$BODY" '.name')" "unnamed_defaults_1"
 }
 
 @test "defaults: Return a named defaults configuration that does not exist" {
-  resource_get "$_NAMED_DEFAULTS_BASE_PATH/nothing_to_see_here"
+  resource_get "$_DEFAULTS_BASE_PATH/nothing_to_see_here"
   assert_equal "$SC" 404
 }

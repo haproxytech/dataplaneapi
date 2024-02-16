@@ -17,5 +17,4 @@
 
 _DEFAULTS_BASE_PATH="/services/haproxy/configuration/defaults"
 
-_NAMED_DEFAULTS_BASE_PATH="/services/haproxy/configuration/named_defaults"
 _ERR_SUPPORTED_HAPROXY_VERSION="2.4"

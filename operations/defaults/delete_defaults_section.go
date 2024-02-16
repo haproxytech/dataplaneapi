@@ -45,7 +45,7 @@ func NewDeleteDefaultsSection(ctx *middleware.Context, handler DeleteDefaultsSec
 }
 
 /*
-	DeleteDefaultsSection swagger:route DELETE /services/haproxy/configuration/named_defaults/{name} Defaults deleteDefaultsSection
+	DeleteDefaultsSection swagger:route DELETE /services/haproxy/configuration/defaults/{name} Defaults deleteDefaultsSection
 
 # Delete a defaults section
 

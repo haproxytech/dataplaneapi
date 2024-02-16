@@ -57,7 +57,7 @@ func (o *GetDefaultsSectionURL) SetBasePath(bp string) {
 func (o *GetDefaultsSectionURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/named_defaults/{name}"
+	var _path = "/services/haproxy/configuration/defaults/{name}"
 
 	name := o.Name
 	if name != "" {

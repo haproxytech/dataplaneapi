@@ -45,7 +45,7 @@ func NewCreateDefaultsSection(ctx *middleware.Context, handler CreateDefaultsSec
 }
 
 /*
-	CreateDefaultsSection swagger:route POST /services/haproxy/configuration/named_defaults Defaults createDefaultsSection
+	CreateDefaultsSection swagger:route PUT /services/haproxy/configuration/defaults Defaults createDefaultsSection
 
 # Add a defaults section
 

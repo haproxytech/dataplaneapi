@@ -45,7 +45,7 @@ func NewReplaceDefaultsSection(ctx *middleware.Context, handler ReplaceDefaultsS
 }
 
 /*
-	ReplaceDefaultsSection swagger:route PUT /services/haproxy/configuration/named_defaults/{name} Defaults replaceDefaultsSection
+	ReplaceDefaultsSection swagger:route PUT /services/haproxy/configuration/defaults/{name} Defaults replaceDefaultsSection
 
 # Replace a defatults section
 

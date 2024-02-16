@@ -58,7 +58,7 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 		return configuration.NewGetConfigurationVersionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, clusterVersion, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData(t, v)
+	_, clusterVersion, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData(t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)

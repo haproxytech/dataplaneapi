@@ -45,7 +45,7 @@ func NewGetDefaultsSection(ctx *middleware.Context, handler GetDefaultsSectionHa
 }
 
 /*
-	GetDefaultsSection swagger:route GET /services/haproxy/configuration/named_defaults/{name} Defaults getDefaultsSection
+	GetDefaultsSection swagger:route GET /services/haproxy/configuration/defaults/{name} Defaults getDefaultsSection
 
 # Return a defaults section
 
