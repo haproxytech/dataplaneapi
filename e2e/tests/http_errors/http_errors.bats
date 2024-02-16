@@ -30,7 +30,7 @@ load 'utils/_helpers'
   resource_get "$_ERR_SECTIONS_BASE_PATH"
   assert_equal "$SC" 200
 
-	assert_equal "$(get_json_path "$BODY" ".data | length")" 2
+	assert_equal "$(get_json_path "$BODY" ". | length")" 2
 }
 
 @test "http_error_sections: Return one section by name" {
@@ -39,14 +39,14 @@ load 'utils/_helpers'
   resource_get "$_ERR_SECTIONS_BASE_PATH/website-2"
   assert_equal "$SC" 200
 
-  assert_equal "$(get_json_path "$BODY" ".data.name")" "website-2"
-  assert_equal "$(get_json_path "$BODY" ".data.error_files | length")" 3
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[0].code")" 500 
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[0].file")" "/dev/null"
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[1].code")" 404 
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[1].file")" "/dev/null"
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[2].code")" 503 
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[2].file")" "/dev/null"
+  assert_equal "$(get_json_path "$BODY" ".name")" "website-2"
+  assert_equal "$(get_json_path "$BODY" ".error_files | length")" 3
+  assert_equal "$(get_json_path "$BODY" ".error_files[0].code")" 500
+  assert_equal "$(get_json_path "$BODY" ".error_files[0].file")" "/dev/null"
+  assert_equal "$(get_json_path "$BODY" ".error_files[1].code")" 404
+  assert_equal "$(get_json_path "$BODY" ".error_files[1].file")" "/dev/null"
+  assert_equal "$(get_json_path "$BODY" ".error_files[2].code")" 503
+  assert_equal "$(get_json_path "$BODY" ".error_files[2].file")" "/dev/null"
 }
 
 @test "http_error_sections: Fail to return a section that does not exist" {
@@ -78,14 +78,14 @@ load 'utils/_helpers'
 
   resource_post "$_ERR_SECTIONS_BASE_PATH" "data/section.json" "force_reload=true"
   assert_equal "$SC" 201
-  
+
   resource_get "$_ERR_SECTIONS_BASE_PATH/website-3"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.error_files | length")" 2
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[0].code")" 500 
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[0].file")" "/dev/null"
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[1].code")" 502
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[1].file")" "/dev/null"
+  assert_equal "$(get_json_path "$BODY" ".error_files | length")" 2
+  assert_equal "$(get_json_path "$BODY" ".error_files[0].code")" 500
+  assert_equal "$(get_json_path "$BODY" ".error_files[0].file")" "/dev/null"
+  assert_equal "$(get_json_path "$BODY" ".error_files[1].code")" 502
+  assert_equal "$(get_json_path "$BODY" ".error_files[1].file")" "/dev/null"
 }
 
 @test "http_error_sections: Fail to create a section with an existing name" {
@@ -126,12 +126,12 @@ load 'utils/_helpers'
 
   resource_get "$_ERR_SECTIONS_BASE_PATH/website-1"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.name")" "website-1"
-  assert_equal "$(get_json_path "$BODY" ".data.error_files | length")" 2
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[0].code")" 500 
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[0].file")" "/dev/null"
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[1].code")" 502 
-  assert_equal "$(get_json_path "$BODY" ".data.error_files[1].file")" "/dev/null"
+  assert_equal "$(get_json_path "$BODY" ".name")" "website-1"
+  assert_equal "$(get_json_path "$BODY" ".error_files | length")" 2
+  assert_equal "$(get_json_path "$BODY" ".error_files[0].code")" 500
+  assert_equal "$(get_json_path "$BODY" ".error_files[0].file")" "/dev/null"
+  assert_equal "$(get_json_path "$BODY" ".error_files[1].code")" 502
+  assert_equal "$(get_json_path "$BODY" ".error_files[1].file")" "/dev/null"
 }
 
 @test "http_error_sections: Fail to replace a section that does not exist" {

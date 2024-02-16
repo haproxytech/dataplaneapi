@@ -110,12 +110,12 @@ func (h *SpoeGetSpoeGroupsHandlerImpl) Handle(params spoe.GetSpoeGroupsParams, p
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	v, groups, err := ss.GetGroups(params.Scope, t)
+	_, groups, err := ss.GetGroups(params.Scope, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeGroupsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return spoe.NewGetSpoeGroupsOK().WithPayload(&spoe.GetSpoeGroupsOKBody{Version: v, Data: groups})
+	return spoe.NewGetSpoeGroupsOK().WithPayload(groups)
 }
 
 // SpoeGetSpoeGroupHandlerImpl implementation of the SpoeGetSpoeGroupHandler interface
@@ -139,7 +139,7 @@ func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c i
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	v, group, err := ss.GetGroup(params.Scope, params.Name, t)
+	_, group, err := ss.GetGroup(params.Scope, params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -147,7 +147,7 @@ func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c i
 	if group == nil {
 		return spoe.NewGetSpoeGroupNotFound()
 	}
-	return spoe.NewGetSpoeGroupOK().WithPayload(&spoe.GetSpoeGroupOKBody{Version: v, Data: group})
+	return spoe.NewGetSpoeGroupOK().WithPayload(group)
 }
 
 // SpoeReplaceSpoeGroupHandlerImpl implementation of the SpoeReplaceSpoeGroupHandler interface

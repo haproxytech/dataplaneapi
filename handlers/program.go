@@ -151,14 +151,14 @@ func (g GetProgramHandlerImpl) Handle(params process_manager.GetProgramParams, _
 		return process_manager.NewGetProgramDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, r, err := configuration.GetProgram(params.Name, t)
+	_, r, err := configuration.GetProgram(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 
 		return process_manager.NewGetProgramDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return process_manager.NewGetProgramOK().WithPayload(&process_manager.GetProgramOKBody{Version: v, Data: r})
+	return process_manager.NewGetProgramOK().WithPayload(r)
 }
 
 type GetProgramsHandlerImpl struct {
@@ -179,14 +179,14 @@ func (g GetProgramsHandlerImpl) Handle(params process_manager.GetProgramsParams,
 		return process_manager.NewGetProgramsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, r, err := configuration.GetPrograms(t)
+	_, r, err := configuration.GetPrograms(t)
 	if err != nil {
 		e := misc.HandleError(err)
 
 		return process_manager.NewGetProgramsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return process_manager.NewGetProgramsOK().WithPayload(&process_manager.GetProgramsOKBody{Version: v, Data: r})
+	return process_manager.NewGetProgramsOK().WithPayload(r)
 }
 
 type ReplaceProgramHandlerImpl struct {

@@ -45,7 +45,7 @@ teardown() {
     resource_get "$_SPOE_SCOPES_BASE_PATH/%5Bip-reputation%5D" "spoe=spoefile_example2.cfg"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "${BODY}" ".data")" "[ip-reputation]"
+    assert_equal "$(get_json_path "${BODY}" ".")" "[ip-reputation]"
 }
 
 @test "spoe_scopes: Return an error when trying to get non existing spoe scope" {

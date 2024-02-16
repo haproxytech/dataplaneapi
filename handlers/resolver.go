@@ -161,12 +161,12 @@ func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, princ
 		return resolver.NewGetResolverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, r, err := configuration.GetResolver(params.Name, t)
+	_, r, err := configuration.GetResolver(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewGetResolverDefault(int(*e.Code)).WithPayload(e)
 	}
-	return resolver.NewGetResolverOK().WithPayload(&resolver.GetResolverOKBody{Version: v, Data: r})
+	return resolver.NewGetResolverOK().WithPayload(r)
 }
 
 // Handle executing the request and returning a response
@@ -182,12 +182,12 @@ func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, pri
 		return resolver.NewGetResolversDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rs, err := configuration.GetResolvers(t)
+	_, rs, err := configuration.GetResolvers(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewGetResolversDefault(int(*e.Code)).WithPayload(e)
 	}
-	return resolver.NewGetResolversOK().WithPayload(&resolver.GetResolversOKBody{Version: v, Data: rs})
+	return resolver.NewGetResolversOK().WithPayload(rs)
 }
 
 // Handle executing the request and returning a response

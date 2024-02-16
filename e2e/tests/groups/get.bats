@@ -26,15 +26,15 @@ load 'utils/_helpers'
 @test "groups: Return group G1 from a userlist" {
 	resource_get "$_GROUPS_BASE_PATH/G1" "userlist=first"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.name")" "G1"
-    assert_equal "$(get_json_path "$BODY" ".data.users")" "tiger,scott"
+	assert_equal "$(get_json_path "$BODY" ".name")" "G1"
+    assert_equal "$(get_json_path "$BODY" ".users")" "tiger,scott"
 }
 
 @test "groups: Return group G2 from a userlist" {
 	resource_get "$_GROUPS_BASE_PATH/G2" "userlist=first"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.name")" "G2"
-    assert_equal "$(get_json_path "$BODY" ".data.users")" "scott"
+	assert_equal "$(get_json_path "$BODY" ".name")" "G2"
+    assert_equal "$(get_json_path "$BODY" ".users")" "scott"
 }
 
 @test "groups: Return a non existing group from a userlist" {
@@ -50,20 +50,20 @@ load 'utils/_helpers'
 @test "groups: Return group one from a userlist" {
 	resource_get "$_GROUPS_BASE_PATH/one" "userlist=second"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.name")" "one"
-    assert_equal "$(get_json_path "$BODY" ".data.users")" null
+	assert_equal "$(get_json_path "$BODY" ".name")" "one"
+    assert_equal "$(get_json_path "$BODY" ".users")" null
 }
 
 @test "groups: Return group two from a userlist" {
 	resource_get "$_GROUPS_BASE_PATH/two" "userlist=second"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.name")" "two"
-    assert_equal "$(get_json_path "$BODY" ".data.users")" null
+	assert_equal "$(get_json_path "$BODY" ".name")" "two"
+    assert_equal "$(get_json_path "$BODY" ".users")" null
 }
 
 @test "groups: Return group three from a userlist" {
 	resource_get "$_GROUPS_BASE_PATH/three" "userlist=second"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.name")" "three"
-    assert_equal "$(get_json_path "$BODY" ".data.users")" null
+	assert_equal "$(get_json_path "$BODY" ".name")" "three"
+    assert_equal "$(get_json_path "$BODY" ".users")" null
 }

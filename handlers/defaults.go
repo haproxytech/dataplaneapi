@@ -49,12 +49,12 @@ func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsParams, princ
 		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, data, err := configuration.GetDefaultsConfiguration(t)
+	_, data, err := configuration.GetDefaultsConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return defaults.NewGetDefaultsOK().WithPayload(&defaults.GetDefaultsOKBody{Version: v, Data: data})
+	return defaults.NewGetDefaultsOK().WithPayload(data)
 }
 
 // Handle executing the request and returning a response
@@ -122,12 +122,12 @@ func (h GetDefaultsSectionsHandlerImpl) Handle(params defaults.GetDefaultsSectio
 		return defaults.NewGetDefaultsSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, fs, err := configuration.GetDefaultsSections(t)
+	_, fs, err := configuration.GetDefaultsSections(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return defaults.NewGetDefaultsSectionsOK().WithPayload(&defaults.GetDefaultsSectionsOKBody{Version: v, Data: fs})
+	return defaults.NewGetDefaultsSectionsOK().WithPayload(fs)
 }
 
 type GetDefaultsSectionHandlerImpl struct {
@@ -146,12 +146,12 @@ func (h GetDefaultsSectionHandlerImpl) Handle(params defaults.GetDefaultsSection
 		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, f, err := configuration.GetDefaultsSection(params.Name, t)
+	_, f, err := configuration.GetDefaultsSection(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
-	return defaults.NewGetDefaultsSectionOK().WithPayload(&defaults.GetDefaultsSectionOKBody{Version: v, Data: f})
+	return defaults.NewGetDefaultsSectionOK().WithPayload(f)
 }
 
 type CreateDefaultsSectionHandlerImpl struct {

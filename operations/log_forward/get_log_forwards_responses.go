@@ -45,7 +45,7 @@ type GetLogForwardsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetLogForwardsOKBody `json:"body,omitempty"`
+	Payload models.LogForwards `json:"body,omitempty"`
 }
 
 // NewGetLogForwardsOK creates GetLogForwardsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetLogForwardsOK) SetConfigurationVersion(configurationVersion string) 
 }
 
 // WithPayload adds the payload to the get log forwards o k response
-func (o *GetLogForwardsOK) WithPayload(payload *GetLogForwardsOKBody) *GetLogForwardsOK {
+func (o *GetLogForwardsOK) WithPayload(payload models.LogForwards) *GetLogForwardsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get log forwards o k response
-func (o *GetLogForwardsOK) SetPayload(payload *GetLogForwardsOKBody) {
+func (o *GetLogForwardsOK) SetPayload(payload models.LogForwards) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetLogForwardsOK) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.LogForwards{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

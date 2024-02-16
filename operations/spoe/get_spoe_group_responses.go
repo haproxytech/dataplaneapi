@@ -45,7 +45,7 @@ type GetSpoeGroupOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetSpoeGroupOKBody `json:"body,omitempty"`
+	Payload *models.SpoeGroup `json:"body,omitempty"`
 }
 
 // NewGetSpoeGroupOK creates GetSpoeGroupOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetSpoeGroupOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get spoe group o k response
-func (o *GetSpoeGroupOK) WithPayload(payload *GetSpoeGroupOKBody) *GetSpoeGroupOK {
+func (o *GetSpoeGroupOK) WithPayload(payload *models.SpoeGroup) *GetSpoeGroupOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get spoe group o k response
-func (o *GetSpoeGroupOK) SetPayload(payload *GetSpoeGroupOKBody) {
+func (o *GetSpoeGroupOK) SetPayload(payload *models.SpoeGroup) {
 	o.Payload = payload
 }
 

@@ -32,14 +32,14 @@ load 'utils/_helpers'
 
 	resource_get "$_GLOBAL_BASE_PATH" ""
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.data.maxconn')" "5000"
-	assert_equal "$(get_json_path "$BODY" '.data.daemon')" "enabled"
-	assert_equal "$(get_json_path "$BODY" '.data.pidfile')" "/var/run/haproxy.pid"
-	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].address')" "/var/lib/haproxy/stats"
-	assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].level')" "admin"
-	assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_be_initial_window_size')" "20"
-    assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_be_max_concurrent_streams')" "21"
-	assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_fe_initial_window_size')" "22"
-    assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_fe_max_concurrent_streams')" "23"
+	assert_equal "$(get_json_path "$BODY" '.maxconn')" "5000"
+	assert_equal "$(get_json_path "$BODY" '.daemon')" "enabled"
+	assert_equal "$(get_json_path "$BODY" '.pidfile')" "/var/run/haproxy.pid"
+	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].address')" "/var/lib/haproxy/stats"
+	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].level')" "admin"
+	assert_equal "$(get_json_path "$BODY" '.tune_options.h2_be_initial_window_size')" "20"
+    assert_equal "$(get_json_path "$BODY" '.tune_options.h2_be_max_concurrent_streams')" "21"
+	assert_equal "$(get_json_path "$BODY" '.tune_options.h2_fe_initial_window_size')" "22"
+    assert_equal "$(get_json_path "$BODY" '.tune_options.h2_fe_max_concurrent_streams')" "23"
   fi
 }

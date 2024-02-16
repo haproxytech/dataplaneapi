@@ -161,12 +161,12 @@ func (h *GetDgramBindHandlerImpl) Handle(params dgram_bind.GetDgramBindParams, p
 		return dgram_bind.NewGetDgramBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, bck, err := configuration.GetDgramBind(params.Name, params.LogForward, t)
+	_, bck, err := configuration.GetDgramBind(params.Name, params.LogForward, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewGetDgramBindDefault(int(*e.Code)).WithPayload(e)
 	}
-	return dgram_bind.NewGetDgramBindOK().WithPayload(&dgram_bind.GetDgramBindOKBody{Version: v, Data: bck})
+	return dgram_bind.NewGetDgramBindOK().WithPayload(bck)
 }
 
 // Handle executing the request and returning a response
@@ -182,12 +182,12 @@ func (h *GetDgramBindsHandlerImpl) Handle(params dgram_bind.GetDgramBindsParams,
 		return dgram_bind.NewGetDgramBindsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, bcks, err := configuration.GetDgramBinds(params.LogForward, t)
+	_, bcks, err := configuration.GetDgramBinds(params.LogForward, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewGetDgramBindsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return dgram_bind.NewGetDgramBindsOK().WithPayload(&dgram_bind.GetDgramBindsOKBody{Version: v, Data: bcks})
+	return dgram_bind.NewGetDgramBindsOK().WithPayload(bcks)
 }
 
 // Handle executing the request and returning a response

@@ -45,7 +45,7 @@ teardown() {
     resource_get "$_SPOE_GROUPS_BASE_PATH/newgroup" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "$BODY" ".data")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
+    assert_equal "$(get_json_path "$BODY" ".")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
 }
 
 @test "spoe_groups: Return an error when trying to get non existing spoe group" {

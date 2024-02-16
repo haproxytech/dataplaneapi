@@ -45,7 +45,7 @@ teardown() {
     resource_get "$_SPOE_MESSAGES_BASE_PATH/check-ip" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "$BODY" ".data")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
+    assert_equal "$(get_json_path "$BODY" ".")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
 }
 
 @test "spoe_messages: Return an error when trying to get non existing spoe message" {

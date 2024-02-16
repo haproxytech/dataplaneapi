@@ -87,7 +87,7 @@ func (g GetAWSRegionHandlerImpl) Handle(params service_discovery.GetAWSRegionPar
 	if !ok {
 		return handleError(err)
 	}
-	return service_discovery.NewGetAWSRegionOK().WithPayload(&service_discovery.GetAWSRegionOKBody{Data: region})
+	return service_discovery.NewGetAWSRegionOK().WithPayload(region)
 }
 
 type GetAWSRegionsHandlerImpl struct {
@@ -100,7 +100,7 @@ func (g GetAWSRegionsHandlerImpl) Handle(params service_discovery.GetAWSRegionsP
 		e := misc.HandleError(err)
 		return service_discovery.NewGetAWSRegionsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return service_discovery.NewGetAWSRegionsOK().WithPayload(&service_discovery.GetAWSRegionsOKBody{Data: regions})
+	return service_discovery.NewGetAWSRegionsOK().WithPayload(regions)
 }
 
 type ReplaceAWSRegionHandlerImpl struct {

@@ -45,7 +45,7 @@ type GetSiteOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetSiteOKBody `json:"body,omitempty"`
+	Payload *models.Site `json:"body,omitempty"`
 }
 
 // NewGetSiteOK creates GetSiteOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetSiteOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get site o k response
-func (o *GetSiteOK) WithPayload(payload *GetSiteOKBody) *GetSiteOK {
+func (o *GetSiteOK) WithPayload(payload *models.Site) *GetSiteOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get site o k response
-func (o *GetSiteOK) SetPayload(payload *GetSiteOKBody) {
+func (o *GetSiteOK) SetPayload(payload *models.Site) {
 	o.Payload = payload
 }
 

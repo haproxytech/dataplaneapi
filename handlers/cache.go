@@ -161,12 +161,12 @@ func (h *GetCacheHandlerImpl) Handle(params cache.GetCacheParams, principal inte
 		return cache.NewGetCacheDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, r, err := configuration.GetCache(params.Name, t)
+	_, r, err := configuration.GetCache(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewGetCacheDefault(int(*e.Code)).WithPayload(e)
 	}
-	return cache.NewGetCacheOK().WithPayload(&cache.GetCacheOKBody{Version: v, Data: r})
+	return cache.NewGetCacheOK().WithPayload(r)
 }
 
 // Handle executing the request and returning a response
@@ -182,12 +182,12 @@ func (h *GetCachesHandlerImpl) Handle(params cache.GetCachesParams, principal in
 		return cache.NewGetCachesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rs, err := configuration.GetCaches(t)
+	_, rs, err := configuration.GetCaches(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return cache.NewGetCachesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return cache.NewGetCachesOK().WithPayload(&cache.GetCachesOKBody{Version: v, Data: rs})
+	return cache.NewGetCachesOK().WithPayload(rs)
 }
 
 // Handle executing the request and returning a response

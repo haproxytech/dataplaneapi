@@ -30,10 +30,10 @@ load 'utils/_helpers'
   resource_get "$_SERVER_TEMPLATE_BASE_PATH/first" "backend=test_backend"
   assert_equal "$SC" 200
 
-  assert_equal "first" "$(get_json_path "$BODY" '.data.prefix')"
-  assert_equal "1-50" "$(get_json_path "$BODY" '.data.num_or_range')"
-  assert_equal "first.com" "$(get_json_path "$BODY" '.data.fqdn')"
-  assert_equal "443" "$(get_json_path "$BODY" '.data.port')"
+  assert_equal "first" "$(get_json_path "$BODY" '.prefix')"
+  assert_equal "1-50" "$(get_json_path "$BODY" '.num_or_range')"
+  assert_equal "first.com" "$(get_json_path "$BODY" '.fqdn')"
+  assert_equal "443" "$(get_json_path "$BODY" '.port')"
 }
 
 @test "server_templates: Add a new server template 2" {
@@ -43,10 +43,10 @@ load 'utils/_helpers'
   resource_get "$_SERVER_TEMPLATE_BASE_PATH/second" "backend=test_backend"
   assert_equal "$SC" 200
 
-  assert_equal "second" "$(get_json_path "$BODY" '.data.prefix')"
-  assert_equal "1-3" "$(get_json_path "$BODY" '.data.num_or_range')"
-  assert_equal "second.com" "$(get_json_path "$BODY" '.data.fqdn')"
-  assert_equal "8080" "$(get_json_path "$BODY" '.data.port')"
+  assert_equal "second" "$(get_json_path "$BODY" '.prefix')"
+  assert_equal "1-3" "$(get_json_path "$BODY" '.num_or_range')"
+  assert_equal "second.com" "$(get_json_path "$BODY" '.fqdn')"
+  assert_equal "8080" "$(get_json_path "$BODY" '.port')"
 }
 
 @test "server_templates: Add a new server template when missing frontend" {

@@ -67,7 +67,7 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 	if clusterVersion != 0 {
 		cVersion = strconv.FormatInt(clusterVersion, 10)
 	}
-	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Version: v, Data: &data}).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
+	return configuration.NewGetHAProxyConfigurationOK().WithPayload(&configuration.GetHAProxyConfigurationOKBody{Data: &data}).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 }
 
 // Handle executing the request and returning a response

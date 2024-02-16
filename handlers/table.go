@@ -160,12 +160,12 @@ func (h *GetTableHandlerImpl) Handle(params table.GetTableParams, principal inte
 		return table.NewGetTableDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, ta, err := configuration.GetTable(params.Name, params.PeerSection, t)
+	_, ta, err := configuration.GetTable(params.Name, params.PeerSection, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return table.NewGetTableDefault(int(*e.Code)).WithPayload(e)
 	}
-	return table.NewGetTableOK().WithPayload(&table.GetTableOKBody{Version: v, Data: ta})
+	return table.NewGetTableOK().WithPayload(ta)
 }
 
 // Handle executing the request and returning a response
@@ -181,12 +181,12 @@ func (h *GetTablesHandlerImpl) Handle(params table.GetTablesParams, principal in
 		return table.NewGetTablesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, tables, err := configuration.GetTables(params.PeerSection, t)
+	_, tables, err := configuration.GetTables(params.PeerSection, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return table.NewGetTablesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return table.NewGetTablesOK().WithPayload(&table.GetTablesOKBody{Version: v, Data: tables})
+	return table.NewGetTablesOK().WithPayload(tables)
 }
 
 // Handle executing the request and returning a response

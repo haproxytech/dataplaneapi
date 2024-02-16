@@ -29,9 +29,9 @@ load 'utils/_helpers'
 
   resource_get "$_CACHE_BASE_PATH/test_cache"
   assert_equal "$SC" 200
-  assert_equal "test_cache" "$(get_json_path "$BODY" ".data.name")"
-  assert_equal 1 "$(get_json_path "$BODY" ".data.max_object_size")"
-  assert_equal 1000 "$(get_json_path "$BODY" ".data.total_max_size")"
+  assert_equal "test_cache" "$(get_json_path "$BODY" ".name")"
+  assert_equal 1 "$(get_json_path "$BODY" ".max_object_size")"
+  assert_equal 1000 "$(get_json_path "$BODY" ".total_max_size")"
 }
 
 

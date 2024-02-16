@@ -32,15 +32,15 @@ load 'utils/_helpers'
 
 	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "status"
-	assert_equal "$(get_json_path "$BODY" ".data.status")" 429
-	assert_equal "$(get_json_path "$BODY" ".data.return_content_type")" "application/json"
-	assert_equal "$(get_json_path "$BODY" ".data.return_content_format")" "string"
-	assert_equal "$(get_json_path "$BODY" ".data.return_content")" "\"My content\""
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[0].name")" "Additional-Header"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[0].fmt")" "value1"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[1].name")" "Some-Header"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[1].fmt")" "value"
+	assert_equal "$(get_json_path "$BODY" ".type")" "status"
+	assert_equal "$(get_json_path "$BODY" ".status")" 429
+	assert_equal "$(get_json_path "$BODY" ".return_content_type")" "application/json"
+	assert_equal "$(get_json_path "$BODY" ".return_content_format")" "string"
+	assert_equal "$(get_json_path "$BODY" ".return_content")" "\"My content\""
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].name")" "Additional-Header"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].fmt")" "value1"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[1].name")" "Some-Header"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[1].fmt")" "value"
 }
 
 @test "http_error_rules: Replace a HTTP Error Rule of backend" {
@@ -51,15 +51,15 @@ load 'utils/_helpers'
 
 	resource_get "$_ERR_RULES_BASE_PATH/1" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "status"
-	assert_equal "$(get_json_path "$BODY" ".data.status")" 429
-	assert_equal "$(get_json_path "$BODY" ".data.return_content_type")" "application/json"
-	assert_equal "$(get_json_path "$BODY" ".data.return_content_format")" "string"
-	assert_equal "$(get_json_path "$BODY" ".data.return_content")" "\"My content\""
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[0].name")" "Additional-Header"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[0].fmt")" "value1"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[1].name")" "Some-Header"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[1].fmt")" "value"
+	assert_equal "$(get_json_path "$BODY" ".type")" "status"
+	assert_equal "$(get_json_path "$BODY" ".status")" 429
+	assert_equal "$(get_json_path "$BODY" ".return_content_type")" "application/json"
+	assert_equal "$(get_json_path "$BODY" ".return_content_format")" "string"
+	assert_equal "$(get_json_path "$BODY" ".return_content")" "\"My content\""
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].name")" "Additional-Header"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].fmt")" "value1"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[1].name")" "Some-Header"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[1].fmt")" "value"
 }
 
 @test "http_error_rules: Replace a HTTP Error Rule of defaults" {
@@ -70,15 +70,15 @@ load 'utils/_helpers'
 
 	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "status"
-	assert_equal "$(get_json_path "$BODY" ".data.status")" 429
-	assert_equal "$(get_json_path "$BODY" ".data.return_content_type")" "application/json"
-	assert_equal "$(get_json_path "$BODY" ".data.return_content_format")" "string"
-	assert_equal "$(get_json_path "$BODY" ".data.return_content")" "\"My content\""
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[0].name")" "Additional-Header"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[0].fmt")" "value1"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[1].name")" "Some-Header"
-	assert_equal "$(get_json_path "$BODY" ".data.return_hdrs[1].fmt")" "value"
+	assert_equal "$(get_json_path "$BODY" ".type")" "status"
+	assert_equal "$(get_json_path "$BODY" ".status")" 429
+	assert_equal "$(get_json_path "$BODY" ".return_content_type")" "application/json"
+	assert_equal "$(get_json_path "$BODY" ".return_content_format")" "string"
+	assert_equal "$(get_json_path "$BODY" ".return_content")" "\"My content\""
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].name")" "Additional-Header"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].fmt")" "value1"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[1].name")" "Some-Header"
+	assert_equal "$(get_json_path "$BODY" ".return_hdrs[1].fmt")" "value"
 }
 
 @test "http_error_rules: Fail to replace a HTTP Error rule when backend does not exist" {

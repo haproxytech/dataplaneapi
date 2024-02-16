@@ -29,13 +29,13 @@ load 'utils/_helpers'
   #
   resource_get "$_BSR_BASE_PATH/0" "frontend=test_frontend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ req_ssl_sni -i first.example.com }"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ req_ssl_sni -i first.example.com }"
   #
   # Retrieving the second
   #
 	resource_get "$_BSR_BASE_PATH/1" "frontend=test_frontend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ req_ssl_sni -i second.example.com }"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ req_ssl_sni -i second.example.com }"
   #
   # Not found for non existing
   #

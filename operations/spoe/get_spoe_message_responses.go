@@ -45,7 +45,7 @@ type GetSpoeMessageOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetSpoeMessageOKBody `json:"body,omitempty"`
+	Payload *models.SpoeMessage `json:"body,omitempty"`
 }
 
 // NewGetSpoeMessageOK creates GetSpoeMessageOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetSpoeMessageOK) SetConfigurationVersion(configurationVersion string) 
 }
 
 // WithPayload adds the payload to the get spoe message o k response
-func (o *GetSpoeMessageOK) WithPayload(payload *GetSpoeMessageOKBody) *GetSpoeMessageOK {
+func (o *GetSpoeMessageOK) WithPayload(payload *models.SpoeMessage) *GetSpoeMessageOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get spoe message o k response
-func (o *GetSpoeMessageOK) SetPayload(payload *GetSpoeMessageOKBody) {
+func (o *GetSpoeMessageOK) SetPayload(payload *models.SpoeMessage) {
 	o.Payload = payload
 }
 

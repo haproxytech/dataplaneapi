@@ -30,10 +30,10 @@ load 'utils/_helpers'
 	resource_get "$_SERVER_TEMPLATE_BASE_PATH/srv_google" "backend=test_backend"
   assert_equal "$SC" 200
 
-  assert_equal "srv_google" "$(get_json_path "$BODY" '.data.prefix')"
-  assert_equal "1-100" "$(get_json_path "$BODY" '.data.num_or_range')"
-  assert_equal "google.com" "$(get_json_path "$BODY" '.data.fqdn')"
-  assert_equal "8080" "$(get_json_path "$BODY" '.data.port')"
+  assert_equal "srv_google" "$(get_json_path "$BODY" '.prefix')"
+  assert_equal "1-100" "$(get_json_path "$BODY" '.num_or_range')"
+  assert_equal "google.com" "$(get_json_path "$BODY" '.fqdn')"
+  assert_equal "8080" "$(get_json_path "$BODY" '.port')"
 }
 
 @test "server_templates: Replacing a non existing server template" {

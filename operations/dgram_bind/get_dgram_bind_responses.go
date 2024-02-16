@@ -45,7 +45,7 @@ type GetDgramBindOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetDgramBindOKBody `json:"body,omitempty"`
+	Payload *models.DgramBind `json:"body,omitempty"`
 }
 
 // NewGetDgramBindOK creates GetDgramBindOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetDgramBindOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get dgram bind o k response
-func (o *GetDgramBindOK) WithPayload(payload *GetDgramBindOKBody) *GetDgramBindOK {
+func (o *GetDgramBindOK) WithPayload(payload *models.DgramBind) *GetDgramBindOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get dgram bind o k response
-func (o *GetDgramBindOK) SetPayload(payload *GetDgramBindOKBody) {
+func (o *GetDgramBindOK) SetPayload(payload *models.DgramBind) {
 	o.Payload = payload
 }
 

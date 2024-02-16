@@ -308,15 +308,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/awsRegions"
-                }
-              }
+              "$ref": "#/definitions/awsRegions"
             }
           },
           "default": {
@@ -381,12 +373,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/awsRegion"
-                }
-              }
+              "$ref": "#/definitions/awsRegion"
             }
           },
           "404": {
@@ -480,15 +467,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/consuls"
-                }
-              }
+              "$ref": "#/definitions/consuls"
             }
           },
           "default": {
@@ -553,12 +532,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/consul"
-                }
-              }
+              "$ref": "#/definitions/consul"
             }
           },
           "404": {
@@ -754,18 +728,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/acls"
-                }
-              }
+              "$ref": "#/definitions/acls"
             },
             "headers": {
               "Configuration-Version": {
@@ -896,15 +859,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/acl"
-                }
-              }
+              "$ref": "#/definitions/acl"
             },
             "headers": {
               "Configuration-Version": {
@@ -1091,18 +1046,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backend_switching_rules"
-                }
-              }
+              "$ref": "#/definitions/backend_switching_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -1211,15 +1155,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backend_switching_rule"
-                }
-              }
+              "$ref": "#/definitions/backend_switching_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -1377,18 +1313,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backends"
-                }
-              }
+              "$ref": "#/definitions/backends"
             },
             "headers": {
               "Configuration-Version": {
@@ -1483,15 +1408,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backend"
-                }
-              }
+              "$ref": "#/definitions/backend"
             },
             "headers": {
               "Configuration-Version": {
@@ -1658,18 +1575,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/binds"
-                }
-              }
+              "$ref": "#/definitions/binds"
             },
             "headers": {
               "Configuration-Version": {
@@ -1810,15 +1716,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/bind"
-                }
-              }
+              "$ref": "#/definitions/bind"
             },
             "headers": {
               "Configuration-Version": {
@@ -2008,18 +1906,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/caches"
-                }
-              }
+              "$ref": "#/definitions/caches"
             },
             "headers": {
               "Configuration-Version": {
@@ -2114,15 +2001,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/cache"
-                }
-              }
+              "$ref": "#/definitions/cache"
             },
             "headers": {
               "Configuration-Version": {
@@ -2273,18 +2152,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/captures"
-                }
-              }
+              "$ref": "#/definitions/captures"
             },
             "headers": {
               "Configuration-Version": {
@@ -2393,15 +2261,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/capture"
-                }
-              }
+              "$ref": "#/definitions/capture"
             },
             "headers": {
               "Configuration-Version": {
@@ -2560,15 +2420,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/defaults"
-                }
-              }
+              "$ref": "#/definitions/defaults"
             },
             "headers": {
               "Configuration-Version": {
@@ -2661,18 +2513,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/dgram_binds"
-                }
-              }
+              "$ref": "#/definitions/dgram_binds"
             },
             "headers": {
               "Configuration-Version": {
@@ -2781,15 +2622,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/dgram_bind"
-                }
-              }
+              "$ref": "#/definitions/dgram_bind"
             },
             "headers": {
               "Configuration-Version": {
@@ -2947,18 +2780,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/fcgiApps"
-                }
-              }
+              "$ref": "#/definitions/fcgiApps"
             },
             "headers": {
               "Configuration-Version": {
@@ -3053,15 +2875,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/fcgiApp"
-                }
-              }
+              "$ref": "#/definitions/fcgiApp"
             },
             "headers": {
               "Configuration-Version": {
@@ -3223,18 +3037,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/filters"
-                }
-              }
+              "$ref": "#/definitions/filters"
             },
             "headers": {
               "Configuration-Version": {
@@ -3365,15 +3168,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/filter"
-                }
-              }
+              "$ref": "#/definitions/filter"
             },
             "headers": {
               "Configuration-Version": {
@@ -3553,18 +3348,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/frontends"
-                }
-              }
+              "$ref": "#/definitions/frontends"
             },
             "headers": {
               "Configuration-Version": {
@@ -3659,15 +3443,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/frontend"
-                }
-              }
+              "$ref": "#/definitions/frontend"
             },
             "headers": {
               "Configuration-Version": {
@@ -3811,15 +3587,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/global"
-                }
-              }
+              "$ref": "#/definitions/global"
             },
             "headers": {
               "Configuration-Version": {
@@ -3910,18 +3678,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/groups"
-                }
-              }
+              "$ref": "#/definitions/groups"
             },
             "headers": {
               "Configuration-Version": {
@@ -4028,15 +3785,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/group"
-                }
-              }
+              "$ref": "#/definitions/group"
             },
             "headers": {
               "Configuration-Version": {
@@ -4210,18 +3959,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_after_response_rules"
-                }
-              }
+              "$ref": "#/definitions/http_after_response_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -4352,15 +4090,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_after_response_rule"
-                }
-              }
+              "$ref": "#/definitions/http_after_response_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -4557,18 +4287,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_checks"
-                }
-              }
+              "$ref": "#/definitions/http_checks"
             },
             "headers": {
               "Configuration-Version": {
@@ -4697,15 +4416,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_check"
-                }
-              }
+              "$ref": "#/definitions/http_check"
             },
             "headers": {
               "Configuration-Version": {
@@ -4901,18 +4612,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_error_rules"
-                }
-              }
+              "$ref": "#/definitions/http_error_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -5043,15 +4743,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_error_rule"
-                }
-              }
+              "$ref": "#/definitions/http_error_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -5231,18 +4923,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_errors_sections"
-                }
-              }
+              "$ref": "#/definitions/http_errors_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -5337,15 +5018,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_errors_section"
-                }
-              }
+              "$ref": "#/definitions/http_errors_section"
             },
             "headers": {
               "Configuration-Version": {
@@ -5507,18 +5180,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_request_rules"
-                }
-              }
+              "$ref": "#/definitions/http_request_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -5649,15 +5311,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_request_rule"
-                }
-              }
+              "$ref": "#/definitions/http_request_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -5855,18 +5509,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_response_rules"
-                }
-              }
+              "$ref": "#/definitions/http_response_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -5997,15 +5640,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_response_rule"
-                }
-              }
+              "$ref": "#/definitions/http_response_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -6185,18 +5820,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_forwards"
-                }
-              }
+              "$ref": "#/definitions/log_forwards"
             },
             "headers": {
               "Configuration-Version": {
@@ -6291,15 +5915,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_forward"
-                }
-              }
+              "$ref": "#/definitions/log_forward"
             },
             "headers": {
               "Configuration-Version": {
@@ -6464,18 +6080,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_targets"
-                }
-              }
+              "$ref": "#/definitions/log_targets"
             },
             "headers": {
               "Configuration-Version": {
@@ -6612,15 +6217,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_target"
-                }
-              }
+              "$ref": "#/definitions/log_target"
             },
             "headers": {
               "Configuration-Version": {
@@ -6813,18 +6410,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailer_entries"
-                }
-              }
+              "$ref": "#/definitions/mailer_entries"
             },
             "headers": {
               "Configuration-Version": {
@@ -6933,15 +6519,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailer_entry"
-                }
-              }
+              "$ref": "#/definitions/mailer_entry"
             },
             "headers": {
               "Configuration-Version": {
@@ -7099,18 +6677,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailers_sections"
-                }
-              }
+              "$ref": "#/definitions/mailers_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -7205,15 +6772,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailers_section"
-                }
-              }
+              "$ref": "#/definitions/mailers_section"
             },
             "headers": {
               "Configuration-Version": {
@@ -7357,18 +6916,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/defaults_sections"
-                }
-              }
+              "$ref": "#/definitions/defaults_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -7463,15 +7011,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/defaults"
-                }
-              }
+              "$ref": "#/definitions/defaults"
             },
             "headers": {
               "Configuration-Version": {
@@ -7622,18 +7162,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/nameservers"
-                }
-              }
+              "$ref": "#/definitions/nameservers"
             },
             "headers": {
               "Configuration-Version": {
@@ -7742,15 +7271,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/nameserver"
-                }
-              }
+              "$ref": "#/definitions/nameserver"
             },
             "headers": {
               "Configuration-Version": {
@@ -7915,18 +7436,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_entries"
-                }
-              }
+              "$ref": "#/definitions/peer_entries"
             },
             "headers": {
               "Configuration-Version": {
@@ -8035,15 +7545,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_entry"
-                }
-              }
+              "$ref": "#/definitions/peer_entry"
             },
             "headers": {
               "Configuration-Version": {
@@ -8201,18 +7703,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_sections"
-                }
-              }
+              "$ref": "#/definitions/peer_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -8307,15 +7798,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_section"
-                }
-              }
+              "$ref": "#/definitions/peer_section"
             },
             "headers": {
               "Configuration-Version": {
@@ -8396,18 +7879,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/programs"
-                }
-              }
+              "$ref": "#/definitions/programs"
             },
             "headers": {
               "Configuration-Version": {
@@ -8502,15 +7974,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/program"
-                }
-              }
+              "$ref": "#/definitions/program"
             },
             "headers": {
               "Configuration-Version": {
@@ -8665,9 +8129,6 @@ func init() {
                 "data"
               ],
               "properties": {
-                "_version": {
-                  "type": "integer"
-                },
                 "data": {
                   "type": "string"
                 }
@@ -8820,18 +8281,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/resolvers"
-                }
-              }
+              "$ref": "#/definitions/resolvers"
             },
             "headers": {
               "Configuration-Version": {
@@ -8926,15 +8376,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/resolver"
-                }
-              }
+              "$ref": "#/definitions/resolver"
             },
             "headers": {
               "Configuration-Version": {
@@ -9078,18 +8520,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/rings"
-                }
-              }
+              "$ref": "#/definitions/rings"
             },
             "headers": {
               "Configuration-Version": {
@@ -9184,15 +8615,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/ring"
-                }
-              }
+              "$ref": "#/definitions/ring"
             },
             "headers": {
               "Configuration-Version": {
@@ -9343,18 +8766,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_switching_rules"
-                }
-              }
+              "$ref": "#/definitions/server_switching_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -9463,15 +8875,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_switching_rule"
-                }
-              }
+              "$ref": "#/definitions/server_switching_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -9636,22 +9040,11 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_templates"
-                }
-              }
+              "$ref": "#/definitions/server_templates"
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -9756,19 +9149,11 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_template"
-                }
-              }
+              "$ref": "#/definitions/server_template"
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -9945,18 +9330,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/servers"
-                }
-              }
+              "$ref": "#/definitions/servers"
             },
             "headers": {
               "Configuration-Version": {
@@ -10097,15 +9471,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server"
-                }
-              }
+              "$ref": "#/definitions/server"
             },
             "headers": {
               "Configuration-Version": {
@@ -10302,18 +9668,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/stick_rules"
-                }
-              }
+              "$ref": "#/definitions/stick_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -10422,15 +9777,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/stick_rule"
-                }
-              }
+              "$ref": "#/definitions/stick_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -10595,18 +9942,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tables"
-                }
-              }
+              "$ref": "#/definitions/tables"
             },
             "headers": {
               "Configuration-Version": {
@@ -10715,15 +10051,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/table"
-                }
-              }
+              "$ref": "#/definitions/table"
             },
             "headers": {
               "Configuration-Version": {
@@ -10898,18 +10226,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_checks"
-                }
-              }
+              "$ref": "#/definitions/tcp_checks"
             },
             "headers": {
               "Configuration-Version": {
@@ -11038,15 +10355,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_check"
-                }
-              }
+              "$ref": "#/definitions/tcp_check"
             },
             "headers": {
               "Configuration-Version": {
@@ -11242,18 +10551,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_request_rules"
-                }
-              }
+              "$ref": "#/definitions/tcp_request_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -11384,15 +10682,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_request_rule"
-                }
-              }
+              "$ref": "#/definitions/tcp_request_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -11579,18 +10869,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_response_rules"
-                }
-              }
+              "$ref": "#/definitions/tcp_response_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -11699,15 +10978,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_response_rule"
-                }
-              }
+              "$ref": "#/definitions/tcp_response_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -11865,18 +11136,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/userlists"
-                }
-              }
+              "$ref": "#/definitions/userlists"
             },
             "headers": {
               "Configuration-Version": {
@@ -11971,15 +11231,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/userlist"
-                }
-              }
+              "$ref": "#/definitions/userlist"
             },
             "headers": {
               "Configuration-Version": {
@@ -12066,18 +11318,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/users"
-                }
-              }
+              "$ref": "#/definitions/users"
             },
             "headers": {
               "Configuration-Version": {
@@ -12184,15 +11425,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/user"
-                }
-              }
+              "$ref": "#/definitions/user"
             },
             "headers": {
               "Configuration-Version": {
@@ -13513,18 +12746,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/sites"
-                }
-              }
+              "$ref": "#/definitions/sites"
             },
             "headers": {
               "Configuration-Version": {
@@ -13619,15 +12841,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/site"
-                }
-              }
+              "$ref": "#/definitions/site"
             },
             "headers": {
               "Configuration-Version": {
@@ -13809,18 +13023,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_agents"
-                }
-              }
+              "$ref": "#/definitions/spoe_agents"
             },
             "headers": {
               "Configuration-Version": {
@@ -13928,18 +13131,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_agent"
-                }
-              }
+              "$ref": "#/definitions/spoe_agent"
             },
             "headers": {
               "Configuration-Version": {
@@ -14151,9 +13343,6 @@ func init() {
             "schema": {
               "type": "object",
               "properties": {
-                "_version": {
-                  "type": "integer"
-                },
                 "data": {
                   "type": "string"
                 }
@@ -14234,18 +13423,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_groups"
-                }
-              }
+              "$ref": "#/definitions/spoe_groups"
             },
             "headers": {
               "Configuration-Version": {
@@ -14353,18 +13531,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_group"
-                }
-              }
+              "$ref": "#/definitions/spoe_group"
             },
             "headers": {
               "Configuration-Version": {
@@ -14523,18 +13690,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_messages"
-                }
-              }
+              "$ref": "#/definitions/spoe_messages"
             },
             "headers": {
               "Configuration-Version": {
@@ -14642,18 +13798,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_message"
-                }
-              }
+              "$ref": "#/definitions/spoe_message"
             },
             "headers": {
               "Configuration-Version": {
@@ -14805,18 +13950,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_scopes"
-                }
-              }
+              "$ref": "#/definitions/spoe_scopes"
             },
             "headers": {
               "Configuration-Version": {
@@ -14910,18 +14044,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_scope"
-                }
-              }
+              "$ref": "#/definitions/spoe_scope"
             },
             "headers": {
               "Configuration-Version": {
@@ -15999,6 +15122,12 @@ func init() {
             "description": "Transaction started",
             "schema": {
               "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "429": {
@@ -16047,6 +15176,12 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
@@ -16081,6 +15216,12 @@ func init() {
             "description": "Transaction successfully committed",
             "schema": {
               "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "202": {
@@ -16089,6 +15230,10 @@ func init() {
               "$ref": "#/definitions/transaction"
             },
             "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              },
               "Reload-ID": {
                 "type": "string",
                 "description": "ID of the requested reload"
@@ -22694,7 +21839,6 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "redirect"
             }
           },
@@ -30478,15 +29622,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/awsRegions"
-                }
-              }
+              "$ref": "#/definitions/awsRegions"
             }
           },
           "default": {
@@ -30587,12 +29723,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/awsRegion"
-                }
-              }
+              "$ref": "#/definitions/awsRegion"
             }
           },
           "404": {
@@ -30749,15 +29880,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/consuls"
-                }
-              }
+              "$ref": "#/definitions/consuls"
             }
           },
           "default": {
@@ -30858,12 +29981,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/consul"
-                }
-              }
+              "$ref": "#/definitions/consul"
             }
           },
           "404": {
@@ -31153,18 +30271,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/acls"
-                }
-              }
+              "$ref": "#/definitions/acls"
             },
             "headers": {
               "Configuration-Version": {
@@ -31347,15 +30454,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/acl"
-                }
-              }
+              "$ref": "#/definitions/acl"
             },
             "headers": {
               "Configuration-Version": {
@@ -31633,18 +30732,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backend_switching_rules"
-                }
-              }
+              "$ref": "#/definitions/backend_switching_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -31805,15 +30893,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backend_switching_rule"
-                }
-              }
+              "$ref": "#/definitions/backend_switching_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -32062,18 +31142,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backends"
-                }
-              }
+              "$ref": "#/definitions/backends"
             },
             "headers": {
               "Configuration-Version": {
@@ -32220,15 +31289,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/backend"
-                }
-              }
+              "$ref": "#/definitions/backend"
             },
             "headers": {
               "Configuration-Version": {
@@ -32486,18 +31547,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/binds"
-                }
-              }
+              "$ref": "#/definitions/binds"
             },
             "headers": {
               "Configuration-Version": {
@@ -32690,15 +31740,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/bind"
-                }
-              }
+              "$ref": "#/definitions/bind"
             },
             "headers": {
               "Configuration-Version": {
@@ -32979,18 +32021,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/caches"
-                }
-              }
+              "$ref": "#/definitions/caches"
             },
             "headers": {
               "Configuration-Version": {
@@ -33137,15 +32168,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/cache"
-                }
-              }
+              "$ref": "#/definitions/cache"
             },
             "headers": {
               "Configuration-Version": {
@@ -33387,18 +32410,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/captures"
-                }
-              }
+              "$ref": "#/definitions/captures"
             },
             "headers": {
               "Configuration-Version": {
@@ -33559,15 +32571,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/capture"
-                }
-              }
+              "$ref": "#/definitions/capture"
             },
             "headers": {
               "Configuration-Version": {
@@ -33817,15 +32821,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/defaults"
-                }
-              }
+              "$ref": "#/definitions/defaults"
             },
             "headers": {
               "Configuration-Version": {
@@ -33961,18 +32957,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/dgram_binds"
-                }
-              }
+              "$ref": "#/definitions/dgram_binds"
             },
             "headers": {
               "Configuration-Version": {
@@ -34133,15 +33118,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/dgram_bind"
-                }
-              }
+              "$ref": "#/definitions/dgram_bind"
             },
             "headers": {
               "Configuration-Version": {
@@ -34390,18 +33367,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/fcgiApps"
-                }
-              }
+              "$ref": "#/definitions/fcgiApps"
             },
             "headers": {
               "Configuration-Version": {
@@ -34548,15 +33514,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/fcgiApp"
-                }
-              }
+              "$ref": "#/definitions/fcgiApp"
             },
             "headers": {
               "Configuration-Version": {
@@ -34809,18 +33767,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/filters"
-                }
-              }
+              "$ref": "#/definitions/filters"
             },
             "headers": {
               "Configuration-Version": {
@@ -35003,15 +33950,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/filter"
-                }
-              }
+              "$ref": "#/definitions/filter"
             },
             "headers": {
               "Configuration-Version": {
@@ -35282,18 +34221,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/frontends"
-                }
-              }
+              "$ref": "#/definitions/frontends"
             },
             "headers": {
               "Configuration-Version": {
@@ -35440,15 +34368,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/frontend"
-                }
-              }
+              "$ref": "#/definitions/frontend"
             },
             "headers": {
               "Configuration-Version": {
@@ -35683,15 +34603,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/global"
-                }
-              }
+              "$ref": "#/definitions/global"
             },
             "headers": {
               "Configuration-Version": {
@@ -35825,18 +34737,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/groups"
-                }
-              }
+              "$ref": "#/definitions/groups"
             },
             "headers": {
               "Configuration-Version": {
@@ -35995,15 +34896,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/group"
-                }
-              }
+              "$ref": "#/definitions/group"
             },
             "headers": {
               "Configuration-Version": {
@@ -36268,18 +35161,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_after_response_rules"
-                }
-              }
+              "$ref": "#/definitions/http_after_response_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -36462,15 +35344,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_after_response_rule"
-                }
-              }
+              "$ref": "#/definitions/http_after_response_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -36758,18 +35632,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_checks"
-                }
-              }
+              "$ref": "#/definitions/http_checks"
             },
             "headers": {
               "Configuration-Version": {
@@ -36950,15 +35813,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_check"
-                }
-              }
+              "$ref": "#/definitions/http_check"
             },
             "headers": {
               "Configuration-Version": {
@@ -37245,18 +36100,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_error_rules"
-                }
-              }
+              "$ref": "#/definitions/http_error_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -37439,15 +36283,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_error_rule"
-                }
-              }
+              "$ref": "#/definitions/http_error_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -37718,18 +36554,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_errors_sections"
-                }
-              }
+              "$ref": "#/definitions/http_errors_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -37876,15 +36701,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_errors_section"
-                }
-              }
+              "$ref": "#/definitions/http_errors_section"
             },
             "headers": {
               "Configuration-Version": {
@@ -38137,18 +36954,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_request_rules"
-                }
-              }
+              "$ref": "#/definitions/http_request_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -38331,15 +37137,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_request_rule"
-                }
-              }
+              "$ref": "#/definitions/http_request_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -38628,18 +37426,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_response_rules"
-                }
-              }
+              "$ref": "#/definitions/http_response_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -38822,15 +37609,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/http_response_rule"
-                }
-              }
+              "$ref": "#/definitions/http_response_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -39101,18 +37880,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_forwards"
-                }
-              }
+              "$ref": "#/definitions/log_forwards"
             },
             "headers": {
               "Configuration-Version": {
@@ -39259,15 +38027,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_forward"
-                }
-              }
+              "$ref": "#/definitions/log_forward"
             },
             "headers": {
               "Configuration-Version": {
@@ -39523,18 +38283,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_targets"
-                }
-              }
+              "$ref": "#/definitions/log_targets"
             },
             "headers": {
               "Configuration-Version": {
@@ -39723,15 +38472,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/log_target"
-                }
-              }
+              "$ref": "#/definitions/log_target"
             },
             "headers": {
               "Configuration-Version": {
@@ -40015,18 +38756,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailer_entries"
-                }
-              }
+              "$ref": "#/definitions/mailer_entries"
             },
             "headers": {
               "Configuration-Version": {
@@ -40187,15 +38917,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailer_entry"
-                }
-              }
+              "$ref": "#/definitions/mailer_entry"
             },
             "headers": {
               "Configuration-Version": {
@@ -40444,18 +39166,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailers_sections"
-                }
-              }
+              "$ref": "#/definitions/mailers_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -40602,15 +39313,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/mailers_section"
-                }
-              }
+              "$ref": "#/definitions/mailers_section"
             },
             "headers": {
               "Configuration-Version": {
@@ -40845,18 +39548,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/defaults_sections"
-                }
-              }
+              "$ref": "#/definitions/defaults_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -41003,15 +39695,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/defaults"
-                }
-              }
+              "$ref": "#/definitions/defaults"
             },
             "headers": {
               "Configuration-Version": {
@@ -41253,18 +39937,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/nameservers"
-                }
-              }
+              "$ref": "#/definitions/nameservers"
             },
             "headers": {
               "Configuration-Version": {
@@ -41425,15 +40098,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/nameserver"
-                }
-              }
+              "$ref": "#/definitions/nameserver"
             },
             "headers": {
               "Configuration-Version": {
@@ -41689,18 +40354,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_entries"
-                }
-              }
+              "$ref": "#/definitions/peer_entries"
             },
             "headers": {
               "Configuration-Version": {
@@ -41861,15 +40515,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_entry"
-                }
-              }
+              "$ref": "#/definitions/peer_entry"
             },
             "headers": {
               "Configuration-Version": {
@@ -42118,18 +40764,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_sections"
-                }
-              }
+              "$ref": "#/definitions/peer_sections"
             },
             "headers": {
               "Configuration-Version": {
@@ -42276,15 +40911,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/peer_section"
-                }
-              }
+              "$ref": "#/definitions/peer_section"
             },
             "headers": {
               "Configuration-Version": {
@@ -42417,18 +41044,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/programs"
-                }
-              }
+              "$ref": "#/definitions/programs"
             },
             "headers": {
               "Configuration-Version": {
@@ -42575,15 +41191,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/program"
-                }
-              }
+              "$ref": "#/definitions/program"
             },
             "headers": {
               "Configuration-Version": {
@@ -42833,9 +41441,6 @@ func init() {
                 "data"
               ],
               "properties": {
-                "_version": {
-                  "type": "integer"
-                },
                 "data": {
                   "type": "string"
                 }
@@ -43027,18 +41632,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/resolvers"
-                }
-              }
+              "$ref": "#/definitions/resolvers"
             },
             "headers": {
               "Configuration-Version": {
@@ -43185,15 +41779,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/resolver"
-                }
-              }
+              "$ref": "#/definitions/resolver"
             },
             "headers": {
               "Configuration-Version": {
@@ -43428,18 +42014,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/rings"
-                }
-              }
+              "$ref": "#/definitions/rings"
             },
             "headers": {
               "Configuration-Version": {
@@ -43586,15 +42161,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/ring"
-                }
-              }
+              "$ref": "#/definitions/ring"
             },
             "headers": {
               "Configuration-Version": {
@@ -43836,18 +42403,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_switching_rules"
-                }
-              }
+              "$ref": "#/definitions/server_switching_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -44008,15 +42564,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_switching_rule"
-                }
-              }
+              "$ref": "#/definitions/server_switching_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -44272,22 +42820,11 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_templates"
-                }
-              }
+              "$ref": "#/definitions/server_templates"
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -44444,19 +42981,11 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server_template"
-                }
-              }
+              "$ref": "#/definitions/server_template"
             },
             "headers": {
               "Configuration-Version": {
-                "type": "integer",
+                "type": "string",
                 "description": "Configuration file version"
               }
             }
@@ -44724,18 +43253,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/servers"
-                }
-              }
+              "$ref": "#/definitions/servers"
             },
             "headers": {
               "Configuration-Version": {
@@ -44928,15 +43446,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/server"
-                }
-              }
+              "$ref": "#/definitions/server"
             },
             "headers": {
               "Configuration-Version": {
@@ -45224,18 +43734,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/stick_rules"
-                }
-              }
+              "$ref": "#/definitions/stick_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -45396,15 +43895,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/stick_rule"
-                }
-              }
+              "$ref": "#/definitions/stick_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -45660,18 +44151,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tables"
-                }
-              }
+              "$ref": "#/definitions/tables"
             },
             "headers": {
               "Configuration-Version": {
@@ -45832,15 +44312,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/table"
-                }
-              }
+              "$ref": "#/definitions/table"
             },
             "headers": {
               "Configuration-Version": {
@@ -46106,18 +44578,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_checks"
-                }
-              }
+              "$ref": "#/definitions/tcp_checks"
             },
             "headers": {
               "Configuration-Version": {
@@ -46298,15 +44759,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_check"
-                }
-              }
+              "$ref": "#/definitions/tcp_check"
             },
             "headers": {
               "Configuration-Version": {
@@ -46593,18 +45046,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_request_rules"
-                }
-              }
+              "$ref": "#/definitions/tcp_request_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -46787,15 +45229,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_request_rule"
-                }
-              }
+              "$ref": "#/definitions/tcp_request_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -47073,18 +45507,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_response_rules"
-                }
-              }
+              "$ref": "#/definitions/tcp_response_rules"
             },
             "headers": {
               "Configuration-Version": {
@@ -47245,15 +45668,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/tcp_response_rule"
-                }
-              }
+              "$ref": "#/definitions/tcp_response_rule"
             },
             "headers": {
               "Configuration-Version": {
@@ -47502,18 +45917,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/userlists"
-                }
-              }
+              "$ref": "#/definitions/userlists"
             },
             "headers": {
               "Configuration-Version": {
@@ -47660,15 +46064,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/userlist"
-                }
-              }
+              "$ref": "#/definitions/userlist"
             },
             "headers": {
               "Configuration-Version": {
@@ -47807,18 +46203,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/users"
-                }
-              }
+              "$ref": "#/definitions/users"
             },
             "headers": {
               "Configuration-Version": {
@@ -47977,15 +46362,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/user"
-                }
-              }
+              "$ref": "#/definitions/user"
             },
             "headers": {
               "Configuration-Version": {
@@ -49959,18 +48336,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/sites"
-                }
-              }
+              "$ref": "#/definitions/sites"
             },
             "headers": {
               "Configuration-Version": {
@@ -50117,15 +48483,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/site"
-                }
-              }
+              "$ref": "#/definitions/site"
             },
             "headers": {
               "Configuration-Version": {
@@ -50407,18 +48765,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_agents"
-                }
-              }
+              "$ref": "#/definitions/spoe_agents"
             },
             "headers": {
               "Configuration-Version": {
@@ -50574,18 +48921,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_agent"
-                }
-              }
+              "$ref": "#/definitions/spoe_agent"
             },
             "headers": {
               "Configuration-Version": {
@@ -50921,9 +49257,6 @@ func init() {
             "schema": {
               "type": "object",
               "properties": {
-                "_version": {
-                  "type": "integer"
-                },
                 "data": {
                   "type": "string"
                 }
@@ -51044,18 +49377,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_groups"
-                }
-              }
+              "$ref": "#/definitions/spoe_groups"
             },
             "headers": {
               "Configuration-Version": {
@@ -51211,18 +49533,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_group"
-                }
-              }
+              "$ref": "#/definitions/spoe_group"
             },
             "headers": {
               "Configuration-Version": {
@@ -51464,18 +49775,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_messages"
-                }
-              }
+              "$ref": "#/definitions/spoe_messages"
             },
             "headers": {
               "Configuration-Version": {
@@ -51631,18 +49931,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_message"
-                }
-              }
+              "$ref": "#/definitions/spoe_message"
             },
             "headers": {
               "Configuration-Version": {
@@ -51877,18 +50166,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_scopes"
-                }
-              }
+              "$ref": "#/definitions/spoe_scopes"
             },
             "headers": {
               "Configuration-Version": {
@@ -52030,18 +50308,7 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "_version": {
-                  "type": "integer"
-                },
-                "data": {
-                  "$ref": "#/definitions/spoe_scope"
-                }
-              }
+              "$ref": "#/definitions/spoe_scope"
             },
             "headers": {
               "Configuration-Version": {
@@ -53666,6 +51933,12 @@ func init() {
             "description": "Transaction started",
             "schema": {
               "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "429": {
@@ -53723,6 +51996,12 @@ func init() {
             "description": "Successful operation",
             "schema": {
               "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "404": {
@@ -53779,6 +52058,12 @@ func init() {
             "description": "Transaction successfully committed",
             "schema": {
               "$ref": "#/definitions/transaction"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
             }
           },
           "202": {
@@ -53787,6 +52072,10 @@ func init() {
               "$ref": "#/definitions/transaction"
             },
             "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              },
               "Reload-ID": {
                 "type": "string",
                 "description": "ID of the requested reload"
@@ -61452,7 +59741,6 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "redirect"
             }
           },

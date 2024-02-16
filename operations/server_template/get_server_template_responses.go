@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -41,12 +40,12 @@ type GetServerTemplateOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
 	*/
-	Payload *GetServerTemplateOKBody `json:"body,omitempty"`
+	Payload *models.ServerTemplate `json:"body,omitempty"`
 }
 
 // NewGetServerTemplateOK creates GetServerTemplateOK with default headers values
@@ -56,24 +55,24 @@ func NewGetServerTemplateOK() *GetServerTemplateOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get server template o k response
-func (o *GetServerTemplateOK) WithConfigurationVersion(configurationVersion int64) *GetServerTemplateOK {
+func (o *GetServerTemplateOK) WithConfigurationVersion(configurationVersion string) *GetServerTemplateOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get server template o k response
-func (o *GetServerTemplateOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetServerTemplateOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get server template o k response
-func (o *GetServerTemplateOK) WithPayload(payload *GetServerTemplateOKBody) *GetServerTemplateOK {
+func (o *GetServerTemplateOK) WithPayload(payload *models.ServerTemplate) *GetServerTemplateOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get server template o k response
-func (o *GetServerTemplateOK) SetPayload(payload *GetServerTemplateOKBody) {
+func (o *GetServerTemplateOK) SetPayload(payload *models.ServerTemplate) {
 	o.Payload = payload
 }
 
@@ -82,7 +81,7 @@ func (o *GetServerTemplateOK) WriteResponse(rw http.ResponseWriter, producer run
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}

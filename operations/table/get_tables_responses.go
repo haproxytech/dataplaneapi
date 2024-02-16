@@ -45,7 +45,7 @@ type GetTablesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetTablesOKBody `json:"body,omitempty"`
+	Payload models.Tables `json:"body,omitempty"`
 }
 
 // NewGetTablesOK creates GetTablesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetTablesOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get tables o k response
-func (o *GetTablesOK) WithPayload(payload *GetTablesOKBody) *GetTablesOK {
+func (o *GetTablesOK) WithPayload(payload models.Tables) *GetTablesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get tables o k response
-func (o *GetTablesOK) SetPayload(payload *GetTablesOKBody) {
+func (o *GetTablesOK) SetPayload(payload models.Tables) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetTablesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Tables{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

@@ -45,7 +45,7 @@ type GetUserlistOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetUserlistOKBody `json:"body,omitempty"`
+	Payload *models.Userlist `json:"body,omitempty"`
 }
 
 // NewGetUserlistOK creates GetUserlistOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetUserlistOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get userlist o k response
-func (o *GetUserlistOK) WithPayload(payload *GetUserlistOKBody) *GetUserlistOK {
+func (o *GetUserlistOK) WithPayload(payload *models.Userlist) *GetUserlistOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get userlist o k response
-func (o *GetUserlistOK) SetPayload(payload *GetUserlistOKBody) {
+func (o *GetUserlistOK) SetPayload(payload *models.Userlist) {
 	o.Payload = payload
 }
 

@@ -37,7 +37,7 @@ load 'utils/_helpers'
   then
     resource_get "$_LOG_FORWARD_BASE_PATH/sylog-loadb"
     assert_equal "$SC" 200
-  	assert_equal "sylog-loadb" "$(get_json_path "$BODY" '.data.name')"
+  	assert_equal "sylog-loadb" "$(get_json_path "$BODY" '.name')"
   fi
 }
 
@@ -54,7 +54,7 @@ load 'utils/_helpers'
   then
     resource_get "$_LOG_FORWARD_BASE_PATH"
     assert_equal "$SC" 200
-    assert_equal "sylog-loadb" "$(get_json_path "$BODY" '.data[0].name')"
+    assert_equal "sylog-loadb" "$(get_json_path "$BODY" '.[0].name')"
   fi
 }
 

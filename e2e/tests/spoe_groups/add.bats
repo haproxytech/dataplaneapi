@@ -48,7 +48,7 @@ teardown() {
     resource_get "$_SPOE_GROUPS_BASE_PATH/group1" "scope=\[ip-reputation\]&spoe=spoefile_example.cfg"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "${BODY}" ".data")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
+    assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
 
     # refuse adding an existing spoe group
     resource_post "$_SPOE_GROUPS_BASE_PATH" "/data/post.json" "spoe=spoefile_example.cfg&scope=%5Bip-reputation%5D"

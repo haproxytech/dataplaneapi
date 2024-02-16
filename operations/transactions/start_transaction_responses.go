@@ -37,6 +37,10 @@ StartTransactionCreated Transaction started
 swagger:response startTransactionCreated
 */
 type StartTransactionCreated struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -48,6 +52,17 @@ type StartTransactionCreated struct {
 func NewStartTransactionCreated() *StartTransactionCreated {
 
 	return &StartTransactionCreated{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the start transaction created response
+func (o *StartTransactionCreated) WithConfigurationVersion(configurationVersion string) *StartTransactionCreated {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the start transaction created response
+func (o *StartTransactionCreated) SetConfigurationVersion(configurationVersion string) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the start transaction created response
@@ -63,6 +78,13 @@ func (o *StartTransactionCreated) SetPayload(payload *models.Transaction) {
 
 // WriteResponse to the client
 func (o *StartTransactionCreated) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := o.ConfigurationVersion
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(201)
 	if o.Payload != nil {

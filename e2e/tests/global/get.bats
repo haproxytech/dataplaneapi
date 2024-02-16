@@ -27,19 +27,19 @@ load 'utils/_helpers'
 @test "global: Return a global configuration" {
   resource_get "$_GLOBAL_BASE_PATH"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.data.chroot')" "/var/lib/haproxy"
-  assert_equal "$(get_json_path "$BODY" '.data.user')" "haproxy"
-  assert_equal "$(get_json_path "$BODY" '.data.group')" "haproxy"
-  assert_equal "$(get_json_path "$BODY" '.data.maxconn')" "4000"
-  assert_equal "$(get_json_path "$BODY" '.data.pidfile')" "/var/run/haproxy.pid"
-  assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].address')" "/var/lib/haproxy/stats"
-  assert_equal "$(get_json_path "$BODY" '.data.runtime_apis[0].level')" "admin"
+  assert_equal "$(get_json_path "$BODY" '.chroot')" "/var/lib/haproxy"
+  assert_equal "$(get_json_path "$BODY" '.user')" "haproxy"
+  assert_equal "$(get_json_path "$BODY" '.group')" "haproxy"
+  assert_equal "$(get_json_path "$BODY" '.maxconn')" "4000"
+  assert_equal "$(get_json_path "$BODY" '.pidfile')" "/var/run/haproxy.pid"
+  assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].address')" "/var/lib/haproxy/stats"
+  assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].level')" "admin"
   if haproxy_version_ge "2.8"; then
-      assert_equal "$(get_json_path "$BODY" '.data.tune_options.ssl_ocsp_update_min_delay')" "10"
-      assert_equal "$(get_json_path "$BODY" '.data.tune_options.stick_counters')" "50"
-      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_be_initial_window_size')" "10"
-      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_be_max_concurrent_streams')" "11"
-      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_fe_initial_window_size')" "12"
-      assert_equal "$(get_json_path "$BODY" '.data.tune_options.h2_fe_max_concurrent_streams')" "13"
+      assert_equal "$(get_json_path "$BODY" '.tune_options.ssl_ocsp_update_min_delay')" "10"
+      assert_equal "$(get_json_path "$BODY" '.tune_options.stick_counters')" "50"
+      assert_equal "$(get_json_path "$BODY" '.tune_options.h2_be_initial_window_size')" "10"
+      assert_equal "$(get_json_path "$BODY" '.tune_options.h2_be_max_concurrent_streams')" "11"
+      assert_equal "$(get_json_path "$BODY" '.tune_options.h2_fe_initial_window_size')" "12"
+      assert_equal "$(get_json_path "$BODY" '.tune_options.h2_fe_max_concurrent_streams')" "13"
   fi
 }

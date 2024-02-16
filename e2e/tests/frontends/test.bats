@@ -30,7 +30,7 @@ load 'utils/_helpers'
 @test "frontends: Return a frontend" {
   resource_get "$_FRONTEND_BASE_PATH/test_frontend"
   assert_equal "$SC" 200
-  assert_equal "test_frontend" "$(get_json_path "$BODY" '.data.name')"
+  assert_equal "test_frontend" "$(get_json_path "$BODY" '.name')"
 }
 
 @test "frontends: Replace a frontend" {
@@ -40,14 +40,14 @@ load 'utils/_helpers'
   # Retrieving the current data
   #
 	resource_get "$_FRONTEND_BASE_PATH/test_frontend"
-	assert_equal "http-keep-alive" "$(get_json_path "$BODY" '.data.http_connection_mode')"
-	assert_equal "http" "$(get_json_path "$BODY" '.data.mode')"
+	assert_equal "http-keep-alive" "$(get_json_path "$BODY" '.http_connection_mode')"
+	assert_equal "http" "$(get_json_path "$BODY" '.mode')"
 }
 
 @test "frontends: Return an array of frontends" {
   resource_get "$_FRONTEND_BASE_PATH"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.data[0].name')" "test_frontend"
+	assert_equal "$(get_json_path "$BODY" '.[0].name')" "test_frontend"
 }
 
 @test "frontends: Delete a frontend" {

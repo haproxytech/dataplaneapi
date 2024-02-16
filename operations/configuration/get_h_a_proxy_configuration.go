@@ -95,9 +95,6 @@ func (o *GetHAProxyConfiguration) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 // swagger:model GetHAProxyConfigurationOKBody
 type GetHAProxyConfigurationOKBody struct {
 
-	// version
-	Version int64 `json:"_version,omitempty"`
-
 	// data
 	// Required: true
 	Data *string `json:"data"`

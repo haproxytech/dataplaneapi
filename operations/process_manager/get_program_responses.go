@@ -45,7 +45,7 @@ type GetProgramOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetProgramOKBody `json:"body,omitempty"`
+	Payload *models.Program `json:"body,omitempty"`
 }
 
 // NewGetProgramOK creates GetProgramOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetProgramOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get program o k response
-func (o *GetProgramOK) WithPayload(payload *GetProgramOKBody) *GetProgramOK {
+func (o *GetProgramOK) WithPayload(payload *models.Program) *GetProgramOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get program o k response
-func (o *GetProgramOK) SetPayload(payload *GetProgramOKBody) {
+func (o *GetProgramOK) SetPayload(payload *models.Program) {
 	o.Payload = payload
 }
 

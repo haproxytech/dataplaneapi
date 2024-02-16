@@ -29,8 +29,8 @@ load 'utils/_helpers'
 
   resource_get "$_FCGIAPP_BASE_PATH/test_1"
   assert_equal "$SC" 200
-  assert_equal "test_1" "$(get_json_path "$BODY" ".data.name")"
-  assert_equal "$(get_json_path "${BODY}" ".data.log_stder | length")" 0
+  assert_equal "test_1" "$(get_json_path "$BODY" ".name")"
+  assert_equal "$(get_json_path "${BODY}" ".log_stder | length")" 0
 }
 
 @test "fcgi-app: Fail replacing cache that doesn't exist" {

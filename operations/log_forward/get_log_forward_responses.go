@@ -45,7 +45,7 @@ type GetLogForwardOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetLogForwardOKBody `json:"body,omitempty"`
+	Payload *models.LogForward `json:"body,omitempty"`
 }
 
 // NewGetLogForwardOK creates GetLogForwardOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetLogForwardOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get log forward o k response
-func (o *GetLogForwardOK) WithPayload(payload *GetLogForwardOKBody) *GetLogForwardOK {
+func (o *GetLogForwardOK) WithPayload(payload *models.LogForward) *GetLogForwardOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get log forward o k response
-func (o *GetLogForwardOK) SetPayload(payload *GetLogForwardOKBody) {
+func (o *GetLogForwardOK) SetPayload(payload *models.LogForward) {
 	o.Payload = payload
 }
 

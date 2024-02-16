@@ -129,13 +129,13 @@ func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_r
 		return http_after_response_rule.NewGetHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rule, err := configuration.GetHTTPAfterResponseRule(params.Index, params.ParentType, params.ParentName, t)
+	_, rule, err := configuration.GetHTTPAfterResponseRule(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_after_response_rule.NewGetHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return http_after_response_rule.NewGetHTTPAfterResponseRuleOK().WithPayload(&http_after_response_rule.GetHTTPAfterResponseRuleOKBody{Version: v, Data: rule})
+	return http_after_response_rule.NewGetHTTPAfterResponseRuleOK().WithPayload(rule)
 }
 
 type GetHTTPAfterResponseRulesHandlerImpl struct {
@@ -155,13 +155,13 @@ func (g GetHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_response_
 		return http_after_response_rule.NewGetHTTPAfterResponseRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rules, err := configuration.GetHTTPAfterResponseRules(params.ParentType, params.ParentName, t)
+	_, rules, err := configuration.GetHTTPAfterResponseRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_after_response_rule.NewGetHTTPAfterResponseRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return http_after_response_rule.NewGetHTTPAfterResponseRulesOK().WithPayload(&http_after_response_rule.GetHTTPAfterResponseRulesOKBody{Version: v, Data: rules})
+	return http_after_response_rule.NewGetHTTPAfterResponseRulesOK().WithPayload(rules)
 }
 
 type ReplaceHTTPAfterResponseRuleHandlerImpl struct {

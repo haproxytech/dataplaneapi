@@ -45,7 +45,7 @@ type GetResolverOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetResolverOKBody `json:"body,omitempty"`
+	Payload *models.Resolver `json:"body,omitempty"`
 }
 
 // NewGetResolverOK creates GetResolverOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetResolverOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get resolver o k response
-func (o *GetResolverOK) WithPayload(payload *GetResolverOKBody) *GetResolverOK {
+func (o *GetResolverOK) WithPayload(payload *models.Resolver) *GetResolverOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get resolver o k response
-func (o *GetResolverOK) SetPayload(payload *GetResolverOKBody) {
+func (o *GetResolverOK) SetPayload(payload *models.Resolver) {
 	o.Payload = payload
 }
 

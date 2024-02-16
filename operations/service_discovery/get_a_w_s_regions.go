@@ -21,16 +21,9 @@ package service_discovery
 // Editing this file might prove futile when you re-run the generate command
 
 import (
-	"context"
 	"net/http"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
-
-	"github.com/haproxytech/client-native/v6/models"
 )
 
 // GetAWSRegionsHandlerFunc turns a function with the right signature into a get a w s regions handler
@@ -90,92 +83,4 @@ func (o *GetAWSRegions) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	res := o.Handler.Handle(Params, principal) // actually handle the request
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
-}
-
-// GetAWSRegionsOKBody get a w s regions o k body
-//
-// swagger:model GetAWSRegionsOKBody
-type GetAWSRegionsOKBody struct {
-
-	// data
-	// Required: true
-	Data models.AwsRegions `json:"data"`
-}
-
-// Validate validates this get a w s regions o k body
-func (o *GetAWSRegionsOKBody) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.validateData(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *GetAWSRegionsOKBody) validateData(formats strfmt.Registry) error {
-
-	if err := validate.Required("getAWSRegionsOK"+"."+"data", "body", o.Data); err != nil {
-		return err
-	}
-
-	if err := o.Data.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("getAWSRegionsOK" + "." + "data")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("getAWSRegionsOK" + "." + "data")
-		}
-		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this get a w s regions o k body based on the context it is used
-func (o *GetAWSRegionsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.contextValidateData(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *GetAWSRegionsOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
-
-	if err := o.Data.ContextValidate(ctx, formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("getAWSRegionsOK" + "." + "data")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("getAWSRegionsOK" + "." + "data")
-		}
-		return err
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *GetAWSRegionsOKBody) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *GetAWSRegionsOKBody) UnmarshalBinary(b []byte) error {
-	var res GetAWSRegionsOKBody
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
 }

@@ -32,7 +32,7 @@ load 'utils/_helpers'
     resource_get "$_ACL_BASE_PATH/2" "parent_name=fe_acl&parent_type=frontend"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "$BODY" " .data" )" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
+    assert_equal "$(get_json_path "$BODY" " ." )" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
 }
 
 @test "acls: Return an error when trying to replace non existing ACL" {

@@ -161,12 +161,12 @@ func (h *GetHTTPResponseRuleHandlerImpl) Handle(params http_response_rule.GetHTT
 		return http_response_rule.NewCreateHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rule, err := configuration.GetHTTPResponseRule(params.Index, params.ParentType, params.ParentName, t)
+	_, rule, err := configuration.GetHTTPResponseRule(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_response_rule.NewGetHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_response_rule.NewGetHTTPResponseRuleOK().WithPayload(&http_response_rule.GetHTTPResponseRuleOKBody{Version: v, Data: rule})
+	return http_response_rule.NewGetHTTPResponseRuleOK().WithPayload(rule)
 }
 
 // Handle executing the request and returning a response
@@ -182,15 +182,15 @@ func (h *GetHTTPResponseRulesHandlerImpl) Handle(params http_response_rule.GetHT
 		return http_response_rule.NewGetHTTPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rules, err := configuration.GetHTTPResponseRules(params.ParentType, params.ParentName, t)
+	_, rules, err := configuration.GetHTTPResponseRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(&http_response_rule.GetHTTPResponseRulesOKBody{Version: v, Data: models.HTTPResponseRules{}})
+			return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(models.HTTPResponseRules{})
 		}
 		return http_response_rule.NewGetHTTPResponseRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(&http_response_rule.GetHTTPResponseRulesOKBody{Version: v, Data: rules})
+	return http_response_rule.NewGetHTTPResponseRulesOK().WithPayload(rules)
 }
 
 // Handle executing the request and returning a response

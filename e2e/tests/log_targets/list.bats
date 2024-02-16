@@ -27,32 +27,32 @@ load 'utils/_helpers'
   resource_get "$_LOG_TRAGET_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
 
-	assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+	assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 
-	assert_equal "$(get_json_path "${BODY}" ".data[0].address")" "localhost"
-	assert_equal "$(get_json_path "${BODY}" ".data[0].facility")" "user"
-	assert_equal "$(get_json_path "${BODY}" ".data[0].format")" "raw"
-	assert_equal "$(get_json_path "${BODY}" ".data[0].level")" "warning"
+	assert_equal "$(get_json_path "${BODY}" ".[0].address")" "localhost"
+	assert_equal "$(get_json_path "${BODY}" ".[0].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".[0].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".[0].level")" "warning"
 
-	assert_equal "$(get_json_path "${BODY}" ".data[1].address")" "10.0.0.1"
-	assert_equal "$(get_json_path "${BODY}" ".data[1].facility")" "user"
-	assert_equal "$(get_json_path "${BODY}" ".data[1].format")" "raw"
-	assert_equal "$(get_json_path "${BODY}" ".data[1].level")" "info"
+	assert_equal "$(get_json_path "${BODY}" ".[1].address")" "10.0.0.1"
+	assert_equal "$(get_json_path "${BODY}" ".[1].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".[1].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".[1].level")" "info"
 }
 
 @test "log_targets: Return an array of all Log Targets from backend" {
   resource_get "$_LOG_TRAGET_BASE_PATH" "parent_type=backend&parent_name=test_backend"
   assert_equal "$SC" 200
 
-  assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+  assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 
-	assert_equal "$(get_json_path "${BODY}" ".data[0].address")" "localhost"
-	assert_equal "$(get_json_path "${BODY}" ".data[0].facility")" "user"
-	assert_equal "$(get_json_path "${BODY}" ".data[0].format")" "raw"
-	assert_equal "$(get_json_path "${BODY}" ".data[0].level")" "warning"
+	assert_equal "$(get_json_path "${BODY}" ".[0].address")" "localhost"
+	assert_equal "$(get_json_path "${BODY}" ".[0].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".[0].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".[0].level")" "warning"
 
-	assert_equal "$(get_json_path "${BODY}" ".data[1].address")" "10.0.0.1"
-	assert_equal "$(get_json_path "${BODY}" ".data[1].facility")" "user"
-	assert_equal "$(get_json_path "${BODY}" ".data[1].format")" "raw"
-	assert_equal "$(get_json_path "${BODY}" ".data[1].level")" "info"
+	assert_equal "$(get_json_path "${BODY}" ".[1].address")" "10.0.0.1"
+	assert_equal "$(get_json_path "${BODY}" ".[1].facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".[1].format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".[1].level")" "info"
 }

@@ -161,13 +161,13 @@ func (h *GetHTTPErrorsSectionHandlerImpl) Handle(params http_errors.GetHTTPError
 		return http_errors.NewGetHTTPErrorsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, ms, err := configuration.GetHTTPErrorsSection(params.Name, t)
+	_, ms, err := configuration.GetHTTPErrorsSection(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_errors.NewGetHTTPErrorsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return http_errors.NewGetHTTPErrorsSectionOK().WithPayload(&http_errors.GetHTTPErrorsSectionOKBody{Version: v, Data: ms})
+	return http_errors.NewGetHTTPErrorsSectionOK().WithPayload(ms)
 }
 
 // Handle executing the request and returning a response
@@ -183,13 +183,13 @@ func (h *GetHTTPErrorsSectionsHandlerImpl) Handle(params http_errors.GetHTTPErro
 		return http_errors.NewGetHTTPErrorsSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, ms, err := configuration.GetHTTPErrorsSections(t)
+	_, ms, err := configuration.GetHTTPErrorsSections(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_errors.NewGetHTTPErrorsSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return http_errors.NewGetHTTPErrorsSectionsOK().WithPayload(&http_errors.GetHTTPErrorsSectionsOKBody{Version: v, Data: ms})
+	return http_errors.NewGetHTTPErrorsSectionsOK().WithPayload(ms)
 }
 
 func (h *ReplaceHTTPErrorsSectionHandlerImpl) Handle(params http_errors.ReplaceHTTPErrorsSectionParams, principal interface{}) middleware.Responder {

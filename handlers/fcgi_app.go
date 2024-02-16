@@ -151,14 +151,14 @@ func (g GetFCGIAppHandlerImpl) Handle(params fcgi_app.GetFCGIAppParams, _ interf
 		return fcgi_app.NewGetFCGIAppDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, r, err := configuration.GetFCGIApplication(params.Name, t)
+	_, r, err := configuration.GetFCGIApplication(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 
 		return fcgi_app.NewGetFCGIAppDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return fcgi_app.NewGetFCGIAppOK().WithPayload(&fcgi_app.GetFCGIAppOKBody{Version: v, Data: r})
+	return fcgi_app.NewGetFCGIAppOK().WithPayload(r)
 }
 
 type GetFCGIAppsHandlerImpl struct {
@@ -179,14 +179,14 @@ func (g GetFCGIAppsHandlerImpl) Handle(params fcgi_app.GetFCGIAppsParams, _ inte
 		return fcgi_app.NewGetFCGIAppsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, r, err := configuration.GetFCGIApplications(t)
+	_, r, err := configuration.GetFCGIApplications(t)
 	if err != nil {
 		e := misc.HandleError(err)
 
 		return fcgi_app.NewGetFCGIAppsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return fcgi_app.NewGetFCGIAppsOK().WithPayload(&fcgi_app.GetFCGIAppsOKBody{Version: v, Data: r})
+	return fcgi_app.NewGetFCGIAppsOK().WithPayload(r)
 }
 
 type ReplaceFCGIAppHandlerImpl struct {

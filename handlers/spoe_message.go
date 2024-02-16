@@ -111,12 +111,12 @@ func (h *SpoeGetSpoeMessagesHandlerImpl) Handle(params spoe.GetSpoeMessagesParam
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	v, messages, err := ss.GetMessages(params.Scope, t)
+	_, messages, err := ss.GetMessages(params.Scope, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeMessagesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return spoe.NewGetSpoeMessagesOK().WithPayload(&spoe.GetSpoeMessagesOKBody{Version: v, Data: messages})
+	return spoe.NewGetSpoeMessagesOK().WithPayload(messages)
 }
 
 // SpoeGetSpoeMessageHandlerImpl implementation of the SpoeGetSpoeMessageHandler interface
@@ -140,7 +140,7 @@ func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams,
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	v, message, err := ss.GetMessage(params.Scope, params.Name, t)
+	_, message, err := ss.GetMessage(params.Scope, params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -148,7 +148,7 @@ func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams,
 	if message == nil {
 		return spoe.NewGetSpoeMessageNotFound()
 	}
-	return spoe.NewGetSpoeMessageOK().WithPayload(&spoe.GetSpoeMessageOKBody{Version: v, Data: message})
+	return spoe.NewGetSpoeMessageOK().WithPayload(message)
 }
 
 // SpoeReplaceSpoeMessageHandlerImpl implementation of the SpoeReplaceSpoeMessageHandler interface

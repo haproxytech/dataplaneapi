@@ -29,8 +29,8 @@ load 'utils/_helpers'
 
 	resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH/1" "backend=test_backend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 192.168.0.0/16 }"
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "content"
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "reject"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
+	assert_equal "$(get_json_path "$BODY" ".type")" "content"
+	assert_equal "$(get_json_path "$BODY" ".action")" "reject"
 }

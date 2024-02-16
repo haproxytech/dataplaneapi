@@ -45,7 +45,7 @@ type GetFrontendsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetFrontendsOKBody `json:"body,omitempty"`
+	Payload models.Frontends `json:"body,omitempty"`
 }
 
 // NewGetFrontendsOK creates GetFrontendsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetFrontendsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get frontends o k response
-func (o *GetFrontendsOK) WithPayload(payload *GetFrontendsOKBody) *GetFrontendsOK {
+func (o *GetFrontendsOK) WithPayload(payload models.Frontends) *GetFrontendsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get frontends o k response
-func (o *GetFrontendsOK) SetPayload(payload *GetFrontendsOKBody) {
+func (o *GetFrontendsOK) SetPayload(payload models.Frontends) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetFrontendsOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Frontends{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

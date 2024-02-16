@@ -27,7 +27,7 @@ load 'utils/_helpers'
   for name in "server_01" "server_02" "server_03"; do
     resource_get "$_SERVER_BASE_PATH/$name" "backend=test_backend"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" '.data.name')" "$name"
+    assert_equal "$(get_json_path "$BODY" '.name')" "$name"
   done
 }
 
@@ -35,8 +35,8 @@ load 'utils/_helpers'
 @test "servers: Return one IPv6 server" {
     resource_get "$_SERVER_BASE_PATH/server_ipv6" "backend=test_backend"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" '.data.address')" "fd00:6:48:c85:deb:f:62:4"
-    assert_equal "$(get_json_path "$BODY" '.data.check')" "enabled"
-    assert_equal "$(get_json_path "$BODY" '.data.name')" "server_ipv6"
-    assert_equal "$(get_json_path "$BODY" '.data.port')" "80"
+    assert_equal "$(get_json_path "$BODY" '.address')" "fd00:6:48:c85:deb:f:62:4"
+    assert_equal "$(get_json_path "$BODY" '.check')" "enabled"
+    assert_equal "$(get_json_path "$BODY" '.name')" "server_ipv6"
+    assert_equal "$(get_json_path "$BODY" '.port')" "80"
 }

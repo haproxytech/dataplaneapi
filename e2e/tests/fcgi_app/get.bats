@@ -26,8 +26,8 @@ load 'utils/_helpers'
 @test "fcgi-app: Return one app by name" {
   resource_get "$_FCGIAPP_BASE_PATH/test_1"
   assert_equal "$SC" 200
-  assert_equal "test_1" "$(get_json_path "$BODY" ".data.name")"
-  assert_equal "index.php" "$(get_json_path "$BODY" ".data.index")"
+  assert_equal "test_1" "$(get_json_path "$BODY" ".name")"
+  assert_equal "index.php" "$(get_json_path "$BODY" ".index")"
 }
 
 @test "fcgi-app: Fail returning app that doesn't exist" {

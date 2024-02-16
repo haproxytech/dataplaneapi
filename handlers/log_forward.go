@@ -161,12 +161,12 @@ func (h *GetLogForwardHandlerImpl) Handle(params log_forward.GetLogForwardParams
 		return log_forward.NewGetLogForwardDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, bck, err := configuration.GetLogForward(params.Name, t)
+	_, bck, err := configuration.GetLogForward(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_forward.NewGetLogForwardDefault(int(*e.Code)).WithPayload(e)
 	}
-	return log_forward.NewGetLogForwardOK().WithPayload(&log_forward.GetLogForwardOKBody{Version: v, Data: bck})
+	return log_forward.NewGetLogForwardOK().WithPayload(bck)
 }
 
 // Handle executing the request and returning a response
@@ -182,12 +182,12 @@ func (h *GetLogForwardsHandlerImpl) Handle(params log_forward.GetLogForwardsPara
 		return log_forward.NewGetLogForwardsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, bcks, err := configuration.GetLogForwards(t)
+	_, bcks, err := configuration.GetLogForwards(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_forward.NewGetLogForwardsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return log_forward.NewGetLogForwardsOK().WithPayload(&log_forward.GetLogForwardsOKBody{Version: v, Data: bcks})
+	return log_forward.NewGetLogForwardsOK().WithPayload(bcks)
 }
 
 // Handle executing the request and returning a response

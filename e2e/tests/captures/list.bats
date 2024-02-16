@@ -26,19 +26,19 @@ load 'utils/_helpers'
 @test "captures: Return an array of all declare captures from the test frontend" {
   resource_get "$_CAPTURES_BASE_PATH" "frontend=test"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+  assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 }
 
 @test "captures: Return an array of all declare captures from the test_second frontend" {
   resource_get "$_CAPTURES_BASE_PATH" "frontend=test_second"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "${BODY}" ".data | length")" 4
+  assert_equal "$(get_json_path "${BODY}" ". | length")" 4
 }
 
 @test "captures: Return an array of all declare captures from the test_empty frontend" {
   resource_get "$_CAPTURES_BASE_PATH" "frontend=test_empty"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "${BODY}" ".data | length")" 0
+  assert_equal "$(get_json_path "${BODY}" ". | length")" 0
 }
 
 @test "captures: Return an array of all declare captures from a non existing frontend" {

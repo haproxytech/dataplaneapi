@@ -28,8 +28,8 @@ load 'utils/_helpers'
 	assert_equal "$SC" 200
   resource_get "$_REQ_RULES_BASE_PATH/t1" "peer_section=mycluster"
   	assert_equal "$SC" 200
-  	assert_equal "$(get_json_path "$BODY" ".data.name")" "t1"
-  	assert_equal "$(get_json_path "$BODY" ".data.type")" "ip"
-  	assert_equal "$(get_json_path "$BODY" ".data.size")" "2m"
-  	assert_equal "$(get_json_path "$BODY" ".data.store")" "gpc0,gpc1,conn_rate(30s)"
+  	assert_equal "$(get_json_path "$BODY" ".name")" "t1"
+  	assert_equal "$(get_json_path "$BODY" ".type")" "ip"
+  	assert_equal "$(get_json_path "$BODY" ".size")" "2m"
+  	assert_equal "$(get_json_path "$BODY" ".store")" "gpc0,gpc1,conn_rate(30s)"
 }

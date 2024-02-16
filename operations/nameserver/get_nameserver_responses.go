@@ -45,7 +45,7 @@ type GetNameserverOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetNameserverOKBody `json:"body,omitempty"`
+	Payload *models.Nameserver `json:"body,omitempty"`
 }
 
 // NewGetNameserverOK creates GetNameserverOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetNameserverOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get nameserver o k response
-func (o *GetNameserverOK) WithPayload(payload *GetNameserverOKBody) *GetNameserverOK {
+func (o *GetNameserverOK) WithPayload(payload *models.Nameserver) *GetNameserverOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get nameserver o k response
-func (o *GetNameserverOK) SetPayload(payload *GetNameserverOKBody) {
+func (o *GetNameserverOK) SetPayload(payload *models.Nameserver) {
 	o.Payload = payload
 }
 

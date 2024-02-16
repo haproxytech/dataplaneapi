@@ -45,7 +45,7 @@ type GetHTTPErrorsSectionsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetHTTPErrorsSectionsOKBody `json:"body,omitempty"`
+	Payload models.HTTPErrorsSections `json:"body,omitempty"`
 }
 
 // NewGetHTTPErrorsSectionsOK creates GetHTTPErrorsSectionsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetHTTPErrorsSectionsOK) SetConfigurationVersion(configurationVersion s
 }
 
 // WithPayload adds the payload to the get Http errors sections o k response
-func (o *GetHTTPErrorsSectionsOK) WithPayload(payload *GetHTTPErrorsSectionsOKBody) *GetHTTPErrorsSectionsOK {
+func (o *GetHTTPErrorsSectionsOK) WithPayload(payload models.HTTPErrorsSections) *GetHTTPErrorsSectionsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Http errors sections o k response
-func (o *GetHTTPErrorsSectionsOK) SetPayload(payload *GetHTTPErrorsSectionsOKBody) {
+func (o *GetHTTPErrorsSectionsOK) SetPayload(payload models.HTTPErrorsSections) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetHTTPErrorsSectionsOK) WriteResponse(rw http.ResponseWriter, producer
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.HTTPErrorsSections{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

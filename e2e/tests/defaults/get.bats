@@ -26,21 +26,21 @@ load 'utils/_helpers'
 @test "defaults: Return a defaults configuration" {
   resource_get "$_DEFAULTS_BASE_PATH"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.data.mode')" "http"
-  assert_equal "$(get_json_path "$BODY" '.data.balance.algorithm')" "roundrobin"
-  assert_equal "$(get_json_path "$BODY" '.data.client_timeout')" "30000"
+  assert_equal "$(get_json_path "$BODY" '.mode')" "http"
+  assert_equal "$(get_json_path "$BODY" '.balance.algorithm')" "roundrobin"
+  assert_equal "$(get_json_path "$BODY" '.client_timeout')" "30000"
 }
 
 @test "defaults: Return a list of named defaults configurations" {
   resource_get "$_NAMED_DEFAULTS_BASE_PATH"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.data[0].name')" "unnamed_defaults_1"
+  assert_equal "$(get_json_path "$BODY" '.[0].name')" "unnamed_defaults_1"
 }
 
 @test "defaults: Return a named defaults configuration" {
   resource_get "$_NAMED_DEFAULTS_BASE_PATH/unnamed_defaults_1"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.data.name')" "unnamed_defaults_1"
+  assert_equal "$(get_json_path "$BODY" '.name')" "unnamed_defaults_1"
 }
 
 @test "defaults: Return a named defaults configuration that does not exist" {

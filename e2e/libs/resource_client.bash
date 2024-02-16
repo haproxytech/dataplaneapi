@@ -15,12 +15,13 @@
 # limitations under the License.
 #
 
+
 function resource_post() {
   local endpoint;  endpoint="$1"; shift
   local data;      data="$1"; shift
 	local qs_params; qs_params="$1"
-
-	run dpa_curl POST "$endpoint?$qs_params&version=$(version)" "$data"
+	get_version
+	run dpa_curl POST "$endpoint?$qs_params&version=${VERSION}" "$data"
 	assert_success
 	dpa_curl_status_body '$output'
 }
@@ -29,8 +30,8 @@ function resource_put() {
   local endpoint;  endpoint="$1"; shift
   local data;      data="$1"; shift
 	local qs_params; qs_params="$1"
-
-	run dpa_curl PUT "$endpoint?$qs_params&version=$(version)" "$data"
+   	get_version
+	run dpa_curl PUT "$endpoint?$qs_params&version=${VERSION}" "$data"
 	assert_success
 	dpa_curl_status_body '$output'
 }
@@ -38,8 +39,8 @@ function resource_put() {
 function resource_delete() {
   local endpoint;  endpoint="$1"; shift
 	local qs_params; qs_params="$1"
-
-	run dpa_curl DELETE "$endpoint?$qs_params&version=$(version)" "$data"
+    get_version
+	run dpa_curl DELETE "$endpoint?$qs_params&version=${VERSION}" "$data"
 	assert_success
 	dpa_curl_status_body '$output'
 }
@@ -47,7 +48,6 @@ function resource_delete() {
 function resource_get() {
   local endpoint;  endpoint="$1"; shift
   local qs_params; qs_params="$1"
-
   run dpa_curl GET "$endpoint?$qs_params"
 	assert_success
 	dpa_curl_status_body '$output'

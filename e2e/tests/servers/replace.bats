@@ -29,5 +29,5 @@ load 'utils/_helpers'
 
 	resource_get "$_SERVER_BASE_PATH/server_01" "backend=test_backend"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data")" "$(get_json_path "$(cat $BATS_TEST_DIRNAME/data/put.json)" ".")"
+  assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat $BATS_TEST_DIRNAME/data/put.json)" ".")"
 }

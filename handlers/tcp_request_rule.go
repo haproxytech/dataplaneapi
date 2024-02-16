@@ -161,12 +161,12 @@ func (h *GetTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.GetTCPRequ
 		return tcp_request_rule.NewGetTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rule, err := configuration.GetTCPRequestRule(params.Index, params.ParentType, params.ParentName, t)
+	_, rule, err := configuration.GetTCPRequestRule(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_request_rule.NewGetTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return tcp_request_rule.NewGetTCPRequestRuleOK().WithPayload(&tcp_request_rule.GetTCPRequestRuleOKBody{Version: v, Data: rule})
+	return tcp_request_rule.NewGetTCPRequestRuleOK().WithPayload(rule)
 }
 
 // Handle executing the request and returning a response
@@ -182,15 +182,15 @@ func (h *GetTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.GetTCPReq
 		return tcp_request_rule.NewGetTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rules, err := configuration.GetTCPRequestRules(params.ParentType, params.ParentName, t)
+	_, rules, err := configuration.GetTCPRequestRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(&tcp_request_rule.GetTCPRequestRulesOKBody{Version: v, Data: models.TCPRequestRules{}})
+			return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(models.TCPRequestRules{})
 		}
 		return tcp_request_rule.NewGetTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(&tcp_request_rule.GetTCPRequestRulesOKBody{Version: v, Data: rules})
+	return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(rules)
 }
 
 // Handle executing the request and returning a response

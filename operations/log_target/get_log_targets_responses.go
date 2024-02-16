@@ -45,7 +45,7 @@ type GetLogTargetsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetLogTargetsOKBody `json:"body,omitempty"`
+	Payload models.LogTargets `json:"body,omitempty"`
 }
 
 // NewGetLogTargetsOK creates GetLogTargetsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetLogTargetsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get log targets o k response
-func (o *GetLogTargetsOK) WithPayload(payload *GetLogTargetsOKBody) *GetLogTargetsOK {
+func (o *GetLogTargetsOK) WithPayload(payload models.LogTargets) *GetLogTargetsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get log targets o k response
-func (o *GetLogTargetsOK) SetPayload(payload *GetLogTargetsOKBody) {
+func (o *GetLogTargetsOK) SetPayload(payload models.LogTargets) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetLogTargetsOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.LogTargets{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

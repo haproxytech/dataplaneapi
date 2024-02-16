@@ -36,7 +36,7 @@ function deprecated_auth_curl() {
   echo "$status_code $response"
 }
 
-function version() {
-  read -r SC RES < <(deprecated_auth_curl GET "/v3/services/haproxy/spoe/version?spoe=$SPOE_FILE")
-  echo "$RES"
+function get_version() {
+  resource_get "/services/haproxy/spoe/version" "spoe=$SPOE_FILE"
+  eval VERSION="'$BODY'"
 }

@@ -26,31 +26,31 @@ load 'utils/_helpers'
 @test "log_targets: Return one Log Target from frontend" {
   resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.address")" "localhost"
-	assert_equal "$(get_json_path "$BODY" ".data.facility")" "user"
-	assert_equal "$(get_json_path "$BODY" ".data.format")" "raw"
-	assert_equal "$(get_json_path "$BODY" ".data.level")" "warning"
+	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
+	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
+	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
+	assert_equal "$(get_json_path "$BODY" ".level")" "warning"
 
 	resource_get "$_LOG_TRAGET_BASE_PATH/1" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "${BODY}" ".data.address")" "10.0.0.1"
-	assert_equal "$(get_json_path "${BODY}" ".data.facility")" "user"
-	assert_equal "$(get_json_path "${BODY}" ".data.format")" "raw"
-	assert_equal "$(get_json_path "${BODY}" ".data.level")" "info"
+  assert_equal "$(get_json_path "${BODY}" ".address")" "10.0.0.1"
+	assert_equal "$(get_json_path "${BODY}" ".facility")" "user"
+	assert_equal "$(get_json_path "${BODY}" ".format")" "raw"
+	assert_equal "$(get_json_path "${BODY}" ".level")" "info"
 }
 
 @test "log_targets: Return one Log Target from backend" {
   resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.address")" "localhost"
-	assert_equal "$(get_json_path "$BODY" ".data.facility")" "user"
-	assert_equal "$(get_json_path "$BODY" ".data.format")" "raw"
-	assert_equal "$(get_json_path "$BODY" ".data.level")" "warning"
+	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
+	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
+	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
+	assert_equal "$(get_json_path "$BODY" ".level")" "warning"
 
 	resource_get "$_LOG_TRAGET_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.address")" "10.0.0.1"
-	assert_equal "$(get_json_path "$BODY" ".data.facility")" "user"
-	assert_equal "$(get_json_path "$BODY" ".data.format")" "raw"
-	assert_equal "$(get_json_path "$BODY" ".data.level")" "info"
+  assert_equal "$(get_json_path "$BODY" ".address")" "10.0.0.1"
+	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
+	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
+	assert_equal "$(get_json_path "$BODY" ".level")" "info"
 }

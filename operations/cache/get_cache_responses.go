@@ -45,7 +45,7 @@ type GetCacheOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetCacheOKBody `json:"body,omitempty"`
+	Payload *models.Cache `json:"body,omitempty"`
 }
 
 // NewGetCacheOK creates GetCacheOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetCacheOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get cache o k response
-func (o *GetCacheOK) WithPayload(payload *GetCacheOKBody) *GetCacheOK {
+func (o *GetCacheOK) WithPayload(payload *models.Cache) *GetCacheOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get cache o k response
-func (o *GetCacheOK) SetPayload(payload *GetCacheOKBody) {
+func (o *GetCacheOK) SetPayload(payload *models.Cache) {
 	o.Payload = payload
 }
 

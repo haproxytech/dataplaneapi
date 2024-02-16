@@ -30,17 +30,17 @@ load 'utils/_helpers'
 
   if haproxy_version_ge "2.5"
   then
-    assert_equal 3 "$(get_json_path "$BODY" ".data | length")"
+    assert_equal 3 "$(get_json_path "$BODY" ". | length")"
   else
-    assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
+    assert_equal 2 "$(get_json_path "$BODY" ". | length")"
   fi
-  assert_equal "fixture" "$(get_json_path "$BODY" ".data[0].name")"
-  assert_equal "loopback" "$(get_json_path "$BODY" ".data[1].name")"
+  assert_equal "fixture" "$(get_json_path "$BODY" ".[0].name")"
+  assert_equal "loopback" "$(get_json_path "$BODY" ".[1].name")"
   if haproxy_version_ge "2.5"
   then
-    assert_equal "all" "$(get_json_path "$BODY" ".data[0].thread")"
-    assert_equal "1/1" "$(get_json_path "$BODY" ".data[1].thread")"
-    assert_equal "loopback1" "$(get_json_path "$BODY" ".data[2].name")"
-    assert_equal "1/1-1" "$(get_json_path "$BODY" ".data[2].thread")"
+    assert_equal "all" "$(get_json_path "$BODY" ".[0].thread")"
+    assert_equal "1/1" "$(get_json_path "$BODY" ".[1].thread")"
+    assert_equal "loopback1" "$(get_json_path "$BODY" ".[2].name")"
+    assert_equal "1/1-1" "$(get_json_path "$BODY" ".[2].thread")"
   fi
 }

@@ -45,7 +45,7 @@ type GetCachesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetCachesOKBody `json:"body,omitempty"`
+	Payload models.Caches `json:"body,omitempty"`
 }
 
 // NewGetCachesOK creates GetCachesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetCachesOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get caches o k response
-func (o *GetCachesOK) WithPayload(payload *GetCachesOKBody) *GetCachesOK {
+func (o *GetCachesOK) WithPayload(payload models.Caches) *GetCachesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get caches o k response
-func (o *GetCachesOK) SetPayload(payload *GetCachesOKBody) {
+func (o *GetCachesOK) SetPayload(payload models.Caches) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetCachesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Caches{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

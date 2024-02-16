@@ -45,7 +45,7 @@ type GetBackendSwitchingRuleOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetBackendSwitchingRuleOKBody `json:"body,omitempty"`
+	Payload *models.BackendSwitchingRule `json:"body,omitempty"`
 }
 
 // NewGetBackendSwitchingRuleOK creates GetBackendSwitchingRuleOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetBackendSwitchingRuleOK) SetConfigurationVersion(configurationVersion
 }
 
 // WithPayload adds the payload to the get backend switching rule o k response
-func (o *GetBackendSwitchingRuleOK) WithPayload(payload *GetBackendSwitchingRuleOKBody) *GetBackendSwitchingRuleOK {
+func (o *GetBackendSwitchingRuleOK) WithPayload(payload *models.BackendSwitchingRule) *GetBackendSwitchingRuleOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get backend switching rule o k response
-func (o *GetBackendSwitchingRuleOK) SetPayload(payload *GetBackendSwitchingRuleOKBody) {
+func (o *GetBackendSwitchingRuleOK) SetPayload(payload *models.BackendSwitchingRule) {
 	o.Payload = payload
 }
 

@@ -45,7 +45,7 @@ type GetFiltersOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetFiltersOKBody `json:"body,omitempty"`
+	Payload models.Filters `json:"body,omitempty"`
 }
 
 // NewGetFiltersOK creates GetFiltersOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetFiltersOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get filters o k response
-func (o *GetFiltersOK) WithPayload(payload *GetFiltersOKBody) *GetFiltersOK {
+func (o *GetFiltersOK) WithPayload(payload models.Filters) *GetFiltersOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get filters o k response
-func (o *GetFiltersOK) SetPayload(payload *GetFiltersOKBody) {
+func (o *GetFiltersOK) SetPayload(payload models.Filters) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetFiltersOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Filters{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

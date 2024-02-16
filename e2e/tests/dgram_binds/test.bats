@@ -37,7 +37,7 @@ load 'utils/_helpers'
   then
     resource_get "$_DGRAMBIND_BASE_PATH/test_dgram_bind" "log_forward=sylog-loadb"
     assert_equal "$SC" 200
-    assert_equal "test_dgram_bind" "$(get_json_path "$BODY" '.data.name')"
+    assert_equal "test_dgram_bind" "$(get_json_path "$BODY" '.name')"
   fi
 }
 
@@ -54,7 +54,7 @@ load 'utils/_helpers'
   then
     resource_get "$_DGRAMBIND_BASE_PATH" "log_forward=sylog-loadb"
     assert_equal "$SC" 200
-    assert_equal "test_dgram_bind" "$(get_json_path "$BODY" '.data[0].name')"
+    assert_equal "test_dgram_bind" "$(get_json_path "$BODY" '.[0].name')"
   fi
 }
 

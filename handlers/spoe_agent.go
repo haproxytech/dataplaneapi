@@ -115,7 +115,7 @@ func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, p
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return spoe.NewGetSpoeAgentsOK().WithPayload(&spoe.GetSpoeAgentsOKBody{Data: agents})
+	return spoe.NewGetSpoeAgentsOK().WithPayload(agents)
 }
 
 // SpoeGetSpoeAgentHandlerImpl implementation of the SpoeGetSpoeAgentHandler interface
@@ -139,7 +139,7 @@ func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, pri
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	v, agent, err := ss.GetAgent(params.Scope, params.Name, t)
+	_, agent, err := ss.GetAgent(params.Scope, params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -147,7 +147,7 @@ func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, pri
 	if agent == nil {
 		return spoe.NewGetSpoeAgentNotFound()
 	}
-	return spoe.NewGetSpoeAgentOK().WithPayload(&spoe.GetSpoeAgentOKBody{Version: v, Data: agent})
+	return spoe.NewGetSpoeAgentOK().WithPayload(agent)
 }
 
 // SpoeReplaceSpoeAgentHandlerImpl implementation of the SpoeReplaceSpoeAgentHandler interface

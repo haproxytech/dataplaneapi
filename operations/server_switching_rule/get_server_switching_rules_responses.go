@@ -45,7 +45,7 @@ type GetServerSwitchingRulesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetServerSwitchingRulesOKBody `json:"body,omitempty"`
+	Payload models.ServerSwitchingRules `json:"body,omitempty"`
 }
 
 // NewGetServerSwitchingRulesOK creates GetServerSwitchingRulesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetServerSwitchingRulesOK) SetConfigurationVersion(configurationVersion
 }
 
 // WithPayload adds the payload to the get server switching rules o k response
-func (o *GetServerSwitchingRulesOK) WithPayload(payload *GetServerSwitchingRulesOKBody) *GetServerSwitchingRulesOK {
+func (o *GetServerSwitchingRulesOK) WithPayload(payload models.ServerSwitchingRules) *GetServerSwitchingRulesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get server switching rules o k response
-func (o *GetServerSwitchingRulesOK) SetPayload(payload *GetServerSwitchingRulesOKBody) {
+func (o *GetServerSwitchingRulesOK) SetPayload(payload models.ServerSwitchingRules) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetServerSwitchingRulesOK) WriteResponse(rw http.ResponseWriter, produc
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.ServerSwitchingRules{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

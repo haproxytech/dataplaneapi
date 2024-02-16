@@ -26,26 +26,26 @@ load 'utils/_helpers'
 @test "http_checks: Return an array of all HTTP Checks from defaults" {
     resource_get "$_CHECKS_BASE_PATH" "parent_type=defaults"
 	assert_equal "$SC" 200
-    assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
+    assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 
-    assert_equal "$(get_json_path "$BODY" ".data[0].type")" "send-state"
+    assert_equal "$(get_json_path "$BODY" ".[0].type")" "send-state"
 
-    assert_equal "$(get_json_path "$BODY" ".data[1].type")" "disable-on-404"
+    assert_equal "$(get_json_path "$BODY" ".[1].type")" "disable-on-404"
 }
 
 @test "http_checks: Return an array of HTTP Checks from backend" {
     resource_get "$_CHECKS_BASE_PATH" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-	assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
+	assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 
-    assert_equal "$(get_json_path "$BODY" ".data[0].type")" "send"
-    assert_equal 1 "$(get_json_path "$BODY" ".data[0].headers | length")"
-    assert_equal "$(get_json_path "$BODY" ".data[0].headers[0].name")" "host"
-    assert_equal "$(get_json_path "$BODY" ".data[0].headers[0].fmt")" "haproxy.1wt.eu"
+    assert_equal "$(get_json_path "$BODY" ".[0].type")" "send"
+    assert_equal 1 "$(get_json_path "$BODY" ".[0].headers | length")"
+    assert_equal "$(get_json_path "$BODY" ".[0].headers[0].name")" "host"
+    assert_equal "$(get_json_path "$BODY" ".[0].headers[0].fmt")" "haproxy.1wt.eu"
 
-    assert_equal "$(get_json_path "$BODY" ".data[1].type")" "expect"
-    assert_equal "$(get_json_path "$BODY" ".data[1].match")" "status"
-    assert_equal "$(get_json_path "$BODY" ".data[1].pattern")" "200-399"
+    assert_equal "$(get_json_path "$BODY" ".[1].type")" "expect"
+    assert_equal "$(get_json_path "$BODY" ".[1].match")" "status"
+    assert_equal "$(get_json_path "$BODY" ".[1].pattern")" "200-399"
 }
 
 @test "http_checks: Return 422 for frontend" {

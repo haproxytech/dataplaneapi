@@ -154,12 +154,12 @@ func (h *GetMailerEntryHandlerImpl) Handle(params mailer_entry.GetMailerEntryPar
 		return mailer_entry.NewGetMailerEntryDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, me, err := configuration.GetMailerEntry(params.Name, params.MailersSection, t)
+	_, me, err := configuration.GetMailerEntry(params.Name, params.MailersSection, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return mailer_entry.NewGetMailerEntryDefault(int(*e.Code)).WithPayload(e)
 	}
-	return mailer_entry.NewGetMailerEntryOK().WithPayload(&mailer_entry.GetMailerEntryOKBody{Version: v, Data: me})
+	return mailer_entry.NewGetMailerEntryOK().WithPayload(me)
 }
 
 // Handle executing the request and returning a response
@@ -175,12 +175,12 @@ func (h *GetMailerEntriesHandlerImpl) Handle(params mailer_entry.GetMailerEntrie
 		return mailer_entry.NewGetMailerEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, mes, err := configuration.GetMailerEntries(params.MailersSection, t)
+	_, mes, err := configuration.GetMailerEntries(params.MailersSection, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return mailer_entry.NewGetMailerEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return mailer_entry.NewGetMailerEntriesOK().WithPayload(&mailer_entry.GetMailerEntriesOKBody{Version: v, Data: mes})
+	return mailer_entry.NewGetMailerEntriesOK().WithPayload(mes)
 }
 
 // Handle executing the request and returning a response

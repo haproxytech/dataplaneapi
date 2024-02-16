@@ -27,10 +27,10 @@ load 'utils/_helpers'
 @test "binds: Return one bind" {
   resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.data.name')" "fixture"
+  assert_equal "$(get_json_path "$BODY" '.name')" "fixture"
   if haproxy_version_ge "2.5"
   then
-    assert_equal "all" "$(get_json_path "$BODY" ".data.thread")"
-    assert_equal "$(get_json_path "$BODY" '.data.ca_verify_file')" "/certs/ca-verify.pem"
+    assert_equal "all" "$(get_json_path "$BODY" ".thread")"
+    assert_equal "$(get_json_path "$BODY" '.ca_verify_file')" "/certs/ca-verify.pem"
   fi
 }

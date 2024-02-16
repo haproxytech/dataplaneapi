@@ -27,10 +27,10 @@ load 'utils/_helpers'
   assert_equal "$SC" "201"
 
   resource_get "$_BACKEND_BASE_PATH/test_backend"  assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.adv_check")" "httpchk"
-  assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.method")" "GET"
-  assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.uri")" "/check"
-  assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.version")" "HTTP/1.1"
+  assert_equal "$(get_json_path "$BODY" ".adv_check")" "httpchk"
+  assert_equal "$(get_json_path "$BODY" ".httpchk_params.method")" "GET"
+  assert_equal "$(get_json_path "$BODY" ".httpchk_params.uri")" "/check"
+  assert_equal "$(get_json_path "$BODY" ".httpchk_params.version")" "HTTP/1.1"
 }
 
 @test "backends: fail adding a backend (invalid send method in httpchk_params)" {
@@ -48,7 +48,7 @@ load 'utils/_helpers'
 @test "backends: Return a backend" {
 	resource_get "$_BACKEND_BASE_PATH/test_backend"
 	assert_equal "$SC" 200
-	assert_equal "test_backend" "$(get_json_path "$BODY" '.data.name')"
+	assert_equal "test_backend" "$(get_json_path "$BODY" '.name')"
 }
 
 @test "backends: Replace a backend" {
@@ -56,16 +56,16 @@ load 'utils/_helpers'
 	assert_equal "$SC" 200
 
 	resource_get "$_BACKEND_BASE_PATH/test_backend"  assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" ".data.adv_check")" "httpchk"
-    assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.method")" "GET"
-    assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.uri")" "/healthz"
-    assert_equal "$(get_json_path "$BODY" ".data.httpchk_params.version")" "HTTP/1.1"
+    assert_equal "$(get_json_path "$BODY" ".adv_check")" "httpchk"
+    assert_equal "$(get_json_path "$BODY" ".httpchk_params.method")" "GET"
+    assert_equal "$(get_json_path "$BODY" ".httpchk_params.uri")" "/healthz"
+    assert_equal "$(get_json_path "$BODY" ".httpchk_params.version")" "HTTP/1.1"
 }
 
 @test "backends: Return an array of backends" {
 	resource_get "$_BACKEND_BASE_PATH"
 	assert_equal "$SC" 200
-	assert_equal "test_backend" "$(get_json_path "$BODY" '.data[0].name')"
+	assert_equal "test_backend" "$(get_json_path "$BODY" '.[0].name')"
 }
 
 @test "backends: Delete a backend" {

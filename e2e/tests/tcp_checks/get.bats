@@ -26,26 +26,26 @@ load 'utils/_helpers'
 @test "tcp_checks: Return connect TCP check from a backend" {
 	resource_get "$_TCP_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend_get"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "connect"
+	assert_equal "$(get_json_path "$BODY" ".action")" "connect"
 }
 
 @test "tcp_checks: Return send TCP check from a backend" {
 	resource_get "$_TCP_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend_get"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "send"
+	assert_equal "$(get_json_path "$BODY" ".action")" "send"
 }
 
 @test "tcp_checks: Return expect TCP check from a backend" {
 	resource_get "$_TCP_CHECKS_BASE_PATH/2" "parent_type=backend&parent_name=test_backend_get"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "expect"
+	assert_equal "$(get_json_path "$BODY" ".action")" "expect"
 }
 
 @test "tcp_checks: Return send-binary TCP check from a backend" {
 	resource_get "$_TCP_CHECKS_BASE_PATH/3" "parent_type=backend&parent_name=test_backend_get"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "send-binary"
-	assert_equal "$(get_json_path "$BODY" ".data.hex_string")" "50494e470d0a"
+	assert_equal "$(get_json_path "$BODY" ".action")" "send-binary"
+	assert_equal "$(get_json_path "$BODY" ".hex_string")" "50494e470d0a"
 }
 
 @test "tcp_checks: Return a non existing TCP check from a backend" {

@@ -45,7 +45,7 @@ type GetDeclareCapturesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetDeclareCapturesOKBody `json:"body,omitempty"`
+	Payload models.Captures `json:"body,omitempty"`
 }
 
 // NewGetDeclareCapturesOK creates GetDeclareCapturesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetDeclareCapturesOK) SetConfigurationVersion(configurationVersion stri
 }
 
 // WithPayload adds the payload to the get declare captures o k response
-func (o *GetDeclareCapturesOK) WithPayload(payload *GetDeclareCapturesOKBody) *GetDeclareCapturesOK {
+func (o *GetDeclareCapturesOK) WithPayload(payload models.Captures) *GetDeclareCapturesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get declare captures o k response
-func (o *GetDeclareCapturesOK) SetPayload(payload *GetDeclareCapturesOKBody) {
+func (o *GetDeclareCapturesOK) SetPayload(payload models.Captures) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetDeclareCapturesOK) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Captures{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

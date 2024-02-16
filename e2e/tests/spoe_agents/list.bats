@@ -43,5 +43,5 @@ teardown() {
     resource_get "$_SPOE_AGENTS_BASE_PATH" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 }

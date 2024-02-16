@@ -29,13 +29,13 @@ load 'utils/_helpers'
 	assert_equal "$SC" 200
 
     if haproxy_version_ge "2.8"; then
-        assert_equal "$(get_json_path "${BODY}" ".data | length")" 3
+        assert_equal "$(get_json_path "${BODY}" ". | length")" 3
 	else
-	    assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+	    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
     fi
-	assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"accept\") ).action")" "accept"
-	assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"reject\") ).action")" "reject"
+	assert_equal "$(get_json_path "$BODY" ".[] | select(.action | contains(\"accept\") ).action")" "accept"
+	assert_equal "$(get_json_path "$BODY" ".[] | select(.action | contains(\"reject\") ).action")" "reject"
 	if haproxy_version_ge "2.8"; then
-	    assert_equal "$(get_json_path "$BODY" ".data[] | select(.action | contains(\"sc-add-gpc\") ).action")" "sc-add-gpc"
+	    assert_equal "$(get_json_path "$BODY" ".[] | select(.action | contains(\"sc-add-gpc\") ).action")" "sc-add-gpc"
     fi
 }

@@ -26,7 +26,7 @@ load 'utils/_helpers'
 @test "process-manager: Return one program by name" {
   resource_get "$_PROGRAMS_BASE_PATH/echo"
   assert_equal "$SC" 200
-  assert_equal "echo" "$(get_json_path "$BODY" ".data.name")"
+  assert_equal "echo" "$(get_json_path "$BODY" ".name")"
 }
 
 @test "process-manager: Fail returning program that doesn't exist" {

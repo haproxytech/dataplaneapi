@@ -19,6 +19,7 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/resource_client'
 load "../../libs/run_only"
+load '../../libs/version'
 
 load 'utils/_helpers'
 

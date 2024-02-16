@@ -45,7 +45,7 @@ type GetServerSwitchingRuleOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetServerSwitchingRuleOKBody `json:"body,omitempty"`
+	Payload *models.ServerSwitchingRule `json:"body,omitempty"`
 }
 
 // NewGetServerSwitchingRuleOK creates GetServerSwitchingRuleOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetServerSwitchingRuleOK) SetConfigurationVersion(configurationVersion 
 }
 
 // WithPayload adds the payload to the get server switching rule o k response
-func (o *GetServerSwitchingRuleOK) WithPayload(payload *GetServerSwitchingRuleOKBody) *GetServerSwitchingRuleOK {
+func (o *GetServerSwitchingRuleOK) WithPayload(payload *models.ServerSwitchingRule) *GetServerSwitchingRuleOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get server switching rule o k response
-func (o *GetServerSwitchingRuleOK) SetPayload(payload *GetServerSwitchingRuleOKBody) {
+func (o *GetServerSwitchingRuleOK) SetPayload(payload *models.ServerSwitchingRule) {
 	o.Payload = payload
 }
 

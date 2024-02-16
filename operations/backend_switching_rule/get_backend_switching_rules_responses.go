@@ -45,7 +45,7 @@ type GetBackendSwitchingRulesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetBackendSwitchingRulesOKBody `json:"body,omitempty"`
+	Payload models.BackendSwitchingRules `json:"body,omitempty"`
 }
 
 // NewGetBackendSwitchingRulesOK creates GetBackendSwitchingRulesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetBackendSwitchingRulesOK) SetConfigurationVersion(configurationVersio
 }
 
 // WithPayload adds the payload to the get backend switching rules o k response
-func (o *GetBackendSwitchingRulesOK) WithPayload(payload *GetBackendSwitchingRulesOKBody) *GetBackendSwitchingRulesOK {
+func (o *GetBackendSwitchingRulesOK) WithPayload(payload models.BackendSwitchingRules) *GetBackendSwitchingRulesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get backend switching rules o k response
-func (o *GetBackendSwitchingRulesOK) SetPayload(payload *GetBackendSwitchingRulesOKBody) {
+func (o *GetBackendSwitchingRulesOK) SetPayload(payload models.BackendSwitchingRules) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetBackendSwitchingRulesOK) WriteResponse(rw http.ResponseWriter, produ
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.BackendSwitchingRules{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

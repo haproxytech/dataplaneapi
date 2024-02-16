@@ -45,7 +45,7 @@ type GetTCPResponseRuleOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetTCPResponseRuleOKBody `json:"body,omitempty"`
+	Payload *models.TCPResponseRule `json:"body,omitempty"`
 }
 
 // NewGetTCPResponseRuleOK creates GetTCPResponseRuleOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetTCPResponseRuleOK) SetConfigurationVersion(configurationVersion stri
 }
 
 // WithPayload adds the payload to the get Tcp response rule o k response
-func (o *GetTCPResponseRuleOK) WithPayload(payload *GetTCPResponseRuleOKBody) *GetTCPResponseRuleOK {
+func (o *GetTCPResponseRuleOK) WithPayload(payload *models.TCPResponseRule) *GetTCPResponseRuleOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Tcp response rule o k response
-func (o *GetTCPResponseRuleOK) SetPayload(payload *GetTCPResponseRuleOKBody) {
+func (o *GetTCPResponseRuleOK) SetPayload(payload *models.TCPResponseRule) {
 	o.Payload = payload
 }
 

@@ -37,6 +37,10 @@ GetTransactionOK Successful operation
 swagger:response getTransactionOK
 */
 type GetTransactionOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -48,6 +52,17 @@ type GetTransactionOK struct {
 func NewGetTransactionOK() *GetTransactionOK {
 
 	return &GetTransactionOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the get transaction o k response
+func (o *GetTransactionOK) WithConfigurationVersion(configurationVersion string) *GetTransactionOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the get transaction o k response
+func (o *GetTransactionOK) SetConfigurationVersion(configurationVersion string) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get transaction o k response
@@ -63,6 +78,13 @@ func (o *GetTransactionOK) SetPayload(payload *models.Transaction) {
 
 // WriteResponse to the client
 func (o *GetTransactionOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := o.ConfigurationVersion
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(200)
 	if o.Payload != nil {

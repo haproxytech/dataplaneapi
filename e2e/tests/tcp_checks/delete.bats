@@ -38,7 +38,7 @@ load 'utils/_helpers'
 
   resource_get "$_TCP_CHECKS_BASE_PATH" "parent_type=backend&parent_name=test_backend_delete"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+  assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 }
 
 @test "tcp_checks: Delete a non existant backend TCP check" {

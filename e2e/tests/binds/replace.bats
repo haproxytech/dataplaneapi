@@ -29,5 +29,5 @@ load 'utils/_helpers'
 
 	resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.data')" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
+	assert_equal "$(get_json_path "$BODY" '.')" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
 }

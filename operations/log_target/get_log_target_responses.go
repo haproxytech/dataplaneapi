@@ -45,7 +45,7 @@ type GetLogTargetOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetLogTargetOKBody `json:"body,omitempty"`
+	Payload *models.LogTarget `json:"body,omitempty"`
 }
 
 // NewGetLogTargetOK creates GetLogTargetOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetLogTargetOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get log target o k response
-func (o *GetLogTargetOK) WithPayload(payload *GetLogTargetOKBody) *GetLogTargetOK {
+func (o *GetLogTargetOK) WithPayload(payload *models.LogTarget) *GetLogTargetOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get log target o k response
-func (o *GetLogTargetOK) SetPayload(payload *GetLogTargetOKBody) {
+func (o *GetLogTargetOK) SetPayload(payload *models.LogTarget) {
 	o.Payload = payload
 }
 

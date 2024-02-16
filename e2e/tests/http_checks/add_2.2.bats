@@ -32,9 +32,9 @@ load 'utils/_helpers'
 
     resource_get "$_CHECKS_BASE_PATH/2" "parent_type=defaults"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" ".data.method")" "OPTIONS"
-	assert_equal "$(get_json_path "$BODY" ".data.uri")" "/"
-	assert_equal "$(get_json_path "$BODY" ".data.version")" "HTTP/1.1"
+    assert_equal "$(get_json_path "$BODY" ".method")" "OPTIONS"
+	assert_equal "$(get_json_path "$BODY" ".uri")" "/"
+	assert_equal "$(get_json_path "$BODY" ".version")" "HTTP/1.1"
     fi
 }
 
@@ -47,9 +47,9 @@ load 'utils/_helpers'
 
     resource_get "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend_2"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" ".data.method")" "OPTIONS"
-	assert_equal "$(get_json_path "$BODY" ".data.uri")" "/"
-	assert_equal "$(get_json_path "$BODY" ".data.version")" "HTTP/1.1"
+    assert_equal "$(get_json_path "$BODY" ".method")" "OPTIONS"
+	assert_equal "$(get_json_path "$BODY" ".uri")" "/"
+	assert_equal "$(get_json_path "$BODY" ".version")" "HTTP/1.1"
     fi
 }
 

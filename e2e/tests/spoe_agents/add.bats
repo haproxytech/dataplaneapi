@@ -22,6 +22,7 @@ load "../../libs/run_only"
 load '../../libs/version_spoe'
 
 load 'utils/_helpers'
+load '../../libs/debug'
 
 setup() {
     SPOE_FILE="spoefile_example.cfg"
@@ -48,7 +49,7 @@ teardown() {
     resource_get "$_SPOE_AGENTS_BASE_PATH/post_agent1" "scope=\[ip-reputation\]&spoe=spoefile_example.cfg"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "$BODY" ".data")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME"/data/post.json)" ".")"
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME"/data/post.json)" ".")"
 
     # refuse adding an existing spoe agent
     resource_post "$_SPOE_AGENTS_BASE_PATH" "/data/post.json" "spoe=spoefile_example.cfg&scope=%5Bip-reputation%5D"

@@ -21,16 +21,9 @@ package spoe
 // Editing this file might prove futile when you re-run the generate command
 
 import (
-	"context"
 	"net/http"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
-
-	"github.com/haproxytech/client-native/v6/models"
 )
 
 // GetSpoeAgentsHandlerFunc turns a function with the right signature into a get spoe agents handler
@@ -90,95 +83,4 @@ func (o *GetSpoeAgents) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	res := o.Handler.Handle(Params, principal) // actually handle the request
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
-}
-
-// GetSpoeAgentsOKBody get spoe agents o k body
-//
-// swagger:model GetSpoeAgentsOKBody
-type GetSpoeAgentsOKBody struct {
-
-	// version
-	Version int64 `json:"_version,omitempty"`
-
-	// data
-	// Required: true
-	Data models.SpoeAgents `json:"data"`
-}
-
-// Validate validates this get spoe agents o k body
-func (o *GetSpoeAgentsOKBody) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.validateData(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *GetSpoeAgentsOKBody) validateData(formats strfmt.Registry) error {
-
-	if err := validate.Required("getSpoeAgentsOK"+"."+"data", "body", o.Data); err != nil {
-		return err
-	}
-
-	if err := o.Data.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("getSpoeAgentsOK" + "." + "data")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("getSpoeAgentsOK" + "." + "data")
-		}
-		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this get spoe agents o k body based on the context it is used
-func (o *GetSpoeAgentsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.contextValidateData(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *GetSpoeAgentsOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
-
-	if err := o.Data.ContextValidate(ctx, formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("getSpoeAgentsOK" + "." + "data")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("getSpoeAgentsOK" + "." + "data")
-		}
-		return err
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *GetSpoeAgentsOKBody) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *GetSpoeAgentsOKBody) UnmarshalBinary(b []byte) error {
-	var res GetSpoeAgentsOKBody
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
 }

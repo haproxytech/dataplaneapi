@@ -45,7 +45,7 @@ type GetFCGIAppsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetFCGIAppsOKBody `json:"body,omitempty"`
+	Payload models.FCGIApps `json:"body,omitempty"`
 }
 
 // NewGetFCGIAppsOK creates GetFCGIAppsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetFCGIAppsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get Fcgi apps o k response
-func (o *GetFCGIAppsOK) WithPayload(payload *GetFCGIAppsOKBody) *GetFCGIAppsOK {
+func (o *GetFCGIAppsOK) WithPayload(payload models.FCGIApps) *GetFCGIAppsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Fcgi apps o k response
-func (o *GetFCGIAppsOK) SetPayload(payload *GetFCGIAppsOKBody) {
+func (o *GetFCGIAppsOK) SetPayload(payload models.FCGIApps) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetFCGIAppsOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.FCGIApps{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

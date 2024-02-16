@@ -45,7 +45,7 @@ type GetPeerEntriesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetPeerEntriesOKBody `json:"body,omitempty"`
+	Payload models.PeerEntries `json:"body,omitempty"`
 }
 
 // NewGetPeerEntriesOK creates GetPeerEntriesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetPeerEntriesOK) SetConfigurationVersion(configurationVersion string) 
 }
 
 // WithPayload adds the payload to the get peer entries o k response
-func (o *GetPeerEntriesOK) WithPayload(payload *GetPeerEntriesOKBody) *GetPeerEntriesOK {
+func (o *GetPeerEntriesOK) WithPayload(payload models.PeerEntries) *GetPeerEntriesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get peer entries o k response
-func (o *GetPeerEntriesOK) SetPayload(payload *GetPeerEntriesOKBody) {
+func (o *GetPeerEntriesOK) SetPayload(payload models.PeerEntries) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetPeerEntriesOK) WriteResponse(rw http.ResponseWriter, producer runtim
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.PeerEntries{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

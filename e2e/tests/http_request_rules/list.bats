@@ -28,38 +28,38 @@ load 'utils/_helpers'
     resource_get "$_REQ_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
     assert_equal "$SC" 200
     if haproxy_version_ge "2.8"; then
-        assert_equal "$(get_json_path "$BODY" ".data | length")" 3
+        assert_equal "$(get_json_path "$BODY" ". | length")" 3
     else
-        assert_equal "$(get_json_path "$BODY" ".data | length")" 2
+        assert_equal "$(get_json_path "$BODY" ". | length")" 2
     fi
-    assert_equal "$(get_json_path "$BODY" ".data[0].type")" "add-header"
-	assert_equal "$(get_json_path "$BODY" ".data[0].hdr_name")" "X-Add-Frontend"
-	assert_equal "$(get_json_path "$BODY" ".data[0].cond")" "unless"
-	assert_equal "$(get_json_path "$BODY" ".data[0].cond_test")" "{ src 192.168.0.0/16 }"
-    assert_equal "$(get_json_path "$BODY" ".data[1].type")" "del-header"
-	assert_equal "$(get_json_path "$BODY" ".data[1].hdr_name")" "X-Del-Frontend"
-	assert_equal "$(get_json_path "$BODY" ".data[1].cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data[1].cond_test")" "{ src 10.1.0.0/16 }"
+    assert_equal "$(get_json_path "$BODY" ".[0].type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".[0].hdr_name")" "X-Add-Frontend"
+	assert_equal "$(get_json_path "$BODY" ".[0].cond")" "unless"
+	assert_equal "$(get_json_path "$BODY" ".[0].cond_test")" "{ src 192.168.0.0/16 }"
+    assert_equal "$(get_json_path "$BODY" ".[1].type")" "del-header"
+	assert_equal "$(get_json_path "$BODY" ".[1].hdr_name")" "X-Del-Frontend"
+	assert_equal "$(get_json_path "$BODY" ".[1].cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".[1].cond_test")" "{ src 10.1.0.0/16 }"
 	if haproxy_version_ge "2.8"; then
-        assert_equal "$(get_json_path "$BODY" ".data[2].type")" "sc-add-gpc"
-        assert_equal "$(get_json_path "$BODY" ".data[2].index")" "2"
-        assert_equal "$(get_json_path "$BODY" ".data[2].sc_id")" "1"
-        assert_equal "$(get_json_path "$BODY" ".data[2].sc_int")" "1"
-        assert_equal "$(get_json_path "$BODY" ".data[2].cond")" "if"
-        assert_equal "$(get_json_path "$BODY" ".data[2].cond_test")" "FALSE"
+        assert_equal "$(get_json_path "$BODY" ".[2].type")" "sc-add-gpc"
+        assert_equal "$(get_json_path "$BODY" ".[2].index")" "2"
+        assert_equal "$(get_json_path "$BODY" ".[2].sc_id")" "1"
+        assert_equal "$(get_json_path "$BODY" ".[2].sc_int")" "1"
+        assert_equal "$(get_json_path "$BODY" ".[2].cond")" "if"
+        assert_equal "$(get_json_path "$BODY" ".[2].cond_test")" "FALSE"
     fi
 }
 
 @test "http_request_rules: Return one HTTP Request Rule from backend" {
     resource_get "$_REQ_RULES_BASE_PATH" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-	assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
-    assert_equal "$(get_json_path "$BODY" ".data[0].type")" "add-header"
-	assert_equal "$(get_json_path "$BODY" ".data[0].hdr_name")" "X-Add-Backend"
-	assert_equal "$(get_json_path "$BODY" ".data[0].cond")" "unless"
-	assert_equal "$(get_json_path "$BODY" ".data[0].cond_test")" "{ src 192.168.0.0/16 }"
-    assert_equal "$(get_json_path "$BODY" ".data[1].type")" "del-header"
-	assert_equal "$(get_json_path "$BODY" ".data[1].hdr_name")" "X-Del-Backend"
-	assert_equal "$(get_json_path "$BODY" ".data[1].cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data[1].cond_test")" "{ src 10.1.0.0/16 }"
+	assert_equal 2 "$(get_json_path "$BODY" ". | length")"
+    assert_equal "$(get_json_path "$BODY" ".[0].type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".[0].hdr_name")" "X-Add-Backend"
+	assert_equal "$(get_json_path "$BODY" ".[0].cond")" "unless"
+	assert_equal "$(get_json_path "$BODY" ".[0].cond_test")" "{ src 192.168.0.0/16 }"
+    assert_equal "$(get_json_path "$BODY" ".[1].type")" "del-header"
+	assert_equal "$(get_json_path "$BODY" ".[1].hdr_name")" "X-Del-Backend"
+	assert_equal "$(get_json_path "$BODY" ".[1].cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".[1].cond_test")" "{ src 10.1.0.0/16 }"
 }

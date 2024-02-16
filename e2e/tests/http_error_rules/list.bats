@@ -29,12 +29,12 @@ load 'utils/_helpers'
 
 	resource_get "$_ERR_RULES_BASE_PATH" "parent_type=defaults"
 	assert_equal "$SC" 200
-	assert_equal 1 "$(get_json_path "$BODY" ".data | length")"
-	assert_equal "$(get_json_path "$BODY" ".data[0].type")" "status"
-	assert_equal "$(get_json_path "$BODY" ".data[0].status")" 503
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_content_type")" "\"application/json\""
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_content_format")" "string"
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_content")" "\"Default 503 content\""
+	assert_equal 1 "$(get_json_path "$BODY" ". | length")"
+	assert_equal "$(get_json_path "$BODY" ".[0].type")" "status"
+	assert_equal "$(get_json_path "$BODY" ".[0].status")" 503
+	assert_equal "$(get_json_path "$BODY" ".[0].return_content_type")" "\"application/json\""
+	assert_equal "$(get_json_path "$BODY" ".[0].return_content_format")" "string"
+	assert_equal "$(get_json_path "$BODY" ".[0].return_content")" "\"Default 503 content\""
 }
 
 @test "http_error_rules: Return an array of all HTTP Error Rules from frontend" {
@@ -42,9 +42,9 @@ load 'utils/_helpers'
 
 	resource_get "$_ERR_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-	assert_equal 1 "$(get_json_path "$BODY" ".data | length")"
-	assert_equal "$(get_json_path "$BODY" ".data[0].type")" "status"
-	assert_equal "$(get_json_path "$BODY" ".data[0].status")" 400
+	assert_equal 1 "$(get_json_path "$BODY" ". | length")"
+	assert_equal "$(get_json_path "$BODY" ".[0].type")" "status"
+	assert_equal "$(get_json_path "$BODY" ".[0].status")" 400
 }
 
 @test "http_error_rules: Return an array of all HTTP Error Rules from backend" {
@@ -52,21 +52,21 @@ load 'utils/_helpers'
 
 	resource_get "$_ERR_RULES_BASE_PATH" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-	assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
-	assert_equal "$(get_json_path "$BODY" ".data[0].type")" "status"
-	assert_equal "$(get_json_path "$BODY" ".data[0].status")" 200
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_content_type")" "\"text/plain\""
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_content_format")" "string"
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_content")" "\"My content\""
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_hdrs[0].name")" "Some-Header"
-	assert_equal "$(get_json_path "$BODY" ".data[0].return_hdrs[0].fmt")" "value"
-	assert_equal "$(get_json_path "$BODY" ".data[1].type")" "status"
-	assert_equal "$(get_json_path "$BODY" ".data[1].status")" 503
-	assert_equal "$(get_json_path "$BODY" ".data[1].return_content_type")" "application/json"
-	assert_equal "$(get_json_path "$BODY" ".data[1].return_content_format")" "string"
-	assert_equal "$(get_json_path "$BODY" ".data[1].return_content")" "\"My content\""
-	assert_equal "$(get_json_path "$BODY" ".data[1].return_hdrs[0].name")" "Additional-Header"
-	assert_equal "$(get_json_path "$BODY" ".data[1].return_hdrs[0].fmt")" "value1"
-	assert_equal "$(get_json_path "$BODY" ".data[1].return_hdrs[1].name")" "Some-Header"
-	assert_equal "$(get_json_path "$BODY" ".data[1].return_hdrs[1].fmt")" "value"
+	assert_equal 2 "$(get_json_path "$BODY" ". | length")"
+	assert_equal "$(get_json_path "$BODY" ".[0].type")" "status"
+	assert_equal "$(get_json_path "$BODY" ".[0].status")" 200
+	assert_equal "$(get_json_path "$BODY" ".[0].return_content_type")" "\"text/plain\""
+	assert_equal "$(get_json_path "$BODY" ".[0].return_content_format")" "string"
+	assert_equal "$(get_json_path "$BODY" ".[0].return_content")" "\"My content\""
+	assert_equal "$(get_json_path "$BODY" ".[0].return_hdrs[0].name")" "Some-Header"
+	assert_equal "$(get_json_path "$BODY" ".[0].return_hdrs[0].fmt")" "value"
+	assert_equal "$(get_json_path "$BODY" ".[1].type")" "status"
+	assert_equal "$(get_json_path "$BODY" ".[1].status")" 503
+	assert_equal "$(get_json_path "$BODY" ".[1].return_content_type")" "application/json"
+	assert_equal "$(get_json_path "$BODY" ".[1].return_content_format")" "string"
+	assert_equal "$(get_json_path "$BODY" ".[1].return_content")" "\"My content\""
+	assert_equal "$(get_json_path "$BODY" ".[1].return_hdrs[0].name")" "Additional-Header"
+	assert_equal "$(get_json_path "$BODY" ".[1].return_hdrs[0].fmt")" "value1"
+	assert_equal "$(get_json_path "$BODY" ".[1].return_hdrs[1].name")" "Some-Header"
+	assert_equal "$(get_json_path "$BODY" ".[1].return_hdrs[1].fmt")" "value"
 }

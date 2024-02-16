@@ -45,7 +45,7 @@ type GetTCPRequestRulesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetTCPRequestRulesOKBody `json:"body,omitempty"`
+	Payload models.TCPRequestRules `json:"body,omitempty"`
 }
 
 // NewGetTCPRequestRulesOK creates GetTCPRequestRulesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetTCPRequestRulesOK) SetConfigurationVersion(configurationVersion stri
 }
 
 // WithPayload adds the payload to the get Tcp request rules o k response
-func (o *GetTCPRequestRulesOK) WithPayload(payload *GetTCPRequestRulesOKBody) *GetTCPRequestRulesOK {
+func (o *GetTCPRequestRulesOK) WithPayload(payload models.TCPRequestRules) *GetTCPRequestRulesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Tcp request rules o k response
-func (o *GetTCPRequestRulesOK) SetPayload(payload *GetTCPRequestRulesOKBody) {
+func (o *GetTCPRequestRulesOK) SetPayload(payload models.TCPRequestRules) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetTCPRequestRulesOK) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.TCPRequestRules{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

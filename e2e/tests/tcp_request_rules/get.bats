@@ -27,14 +27,14 @@ load 'utils/_helpers'
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
 
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "inspect-delay"
-	assert_equal "$(get_json_path "$BODY" ".data.timeout")" 5000
+	assert_equal "$(get_json_path "$BODY" ".type")" "inspect-delay"
+	assert_equal "$(get_json_path "$BODY" ".timeout")" 5000
 }
 
 @test "tcp_request_rules: Return one TCP Request Rule from backend" {
 	resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
 
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "inspect-delay"
-	assert_equal "$(get_json_path "$BODY" ".data.timeout")" 1000
+	assert_equal "$(get_json_path "$BODY" ".type")" "inspect-delay"
+	assert_equal "$(get_json_path "$BODY" ".timeout")" 1000
 }

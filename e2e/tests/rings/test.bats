@@ -39,7 +39,7 @@ load 'utils/_helpers'
   then
 	resource_get "$_RING_BASE_PATH/test_ring"
 	assert_equal "$SC" 200
-	assert_equal "test_ring" "$(get_json_path "$BODY" '.data.name')"
+	assert_equal "test_ring" "$(get_json_path "$BODY" '.name')"
   fi
 }
 
@@ -56,8 +56,8 @@ load 'utils/_helpers'
   then
 	resource_get "$_RING_BASE_PATH"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data | length")" 2
-	assert_equal "$(get_json_path "$BODY" ".data[] | select(.name | contains(\"test_ring_2\") ).name")" "test_ring_2"
+	assert_equal "$(get_json_path "$BODY" ". | length")" 2
+	assert_equal "$(get_json_path "$BODY" ".[] | select(.name | contains(\"test_ring_2\") ).name")" "test_ring_2"
   fi
 }
 

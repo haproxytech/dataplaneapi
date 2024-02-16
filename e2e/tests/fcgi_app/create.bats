@@ -29,8 +29,8 @@ load 'utils/_helpers'
 
   resource_get "$_FCGIAPP_BASE_PATH/app_created"
   assert_equal "$SC" 200
-  assert_equal "app_created" "$(get_json_path "$BODY" ".data.name")"
-  assert_equal "/path/to/chroot" "$(get_json_path "$BODY" ".data.docroot")"
+  assert_equal "app_created" "$(get_json_path "$BODY" ".name")"
+  assert_equal "/path/to/chroot" "$(get_json_path "$BODY" ".docroot")"
 }
 
 @test "fcgi-app: Fail creating app with same name" {

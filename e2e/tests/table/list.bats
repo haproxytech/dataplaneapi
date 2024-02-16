@@ -26,12 +26,11 @@ load 'utils/_helpers'
 @test "table: Return an array of all tables from peers" {
     resource_get "$_REQ_RULES_BASE_PATH" "peer_section=mycluster"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" ".data[0].name")" "t1"
-    assert_equal "$(get_json_path "$BODY" ".data[0].type")" "string"
-    assert_equal "$(get_json_path "$BODY" ".data[0].type_len")" "1000"
-    assert_equal "$(get_json_path "$BODY" ".data[0].size")" "200k"
-    assert_equal "$(get_json_path "$BODY" ".data[0].expire")" "5m"
-    assert_equal "$(get_json_path "$BODY" ".data[0].no_purge")" "true"
-    assert_equal "$(get_json_path "$BODY" ".data[0].store")" "gpc0,conn_rate(30s)"
+    assert_equal "$(get_json_path "$BODY" ".[0].name")" "t1"
+    assert_equal "$(get_json_path "$BODY" ".[0].type")" "string"
+    assert_equal "$(get_json_path "$BODY" ".[0].type_len")" "1000"
+    assert_equal "$(get_json_path "$BODY" ".[0].size")" "200k"
+    assert_equal "$(get_json_path "$BODY" ".[0].expire")" "5m"
+    assert_equal "$(get_json_path "$BODY" ".[0].no_purge")" "true"
+    assert_equal "$(get_json_path "$BODY" ".[0].store")" "gpc0,conn_rate(30s)"
 }
-

@@ -26,37 +26,37 @@ load 'utils/_helpers'
 @test "userlists: Return userlist first" {
     resource_get "$_USERLISTS_BASE_PATH/first"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data.name")" "first"
+    assert_equal "$(get_json_path "${BODY}" ".name")" "first"
 }
 
 @test "userlists: Return userlist second" {
     resource_get "$_USERLISTS_BASE_PATH/second"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data.name")" "second"
+    assert_equal "$(get_json_path "${BODY}" ".name")" "second"
 }
 
 @test "userlists: Return userlist empty" {
     resource_get "$_USERLISTS_BASE_PATH/empty"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data.name")" "empty"
+    assert_equal "$(get_json_path "${BODY}" ".name")" "empty"
 }
 
 @test "userlists: Return userlist add_test" {
     resource_get "$_USERLISTS_BASE_PATH/add_test"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data.name")" "add_test"
+    assert_equal "$(get_json_path "${BODY}" ".name")" "add_test"
 }
 
 @test "userlists: Return userlist replace_test" {
     resource_get "$_USERLISTS_BASE_PATH/replace_test"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data.name")" "replace_test"
+    assert_equal "$(get_json_path "${BODY}" ".name")" "replace_test"
 }
 
 @test "userlists: Return userlist delete_test" {
     resource_get "$_USERLISTS_BASE_PATH/delete_test"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data.name")" "delete_test"
+    assert_equal "$(get_json_path "${BODY}" ".name")" "delete_test"
 }
 
 @test "userlists: Return userlist 0" {

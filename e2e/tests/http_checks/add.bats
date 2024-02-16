@@ -29,7 +29,7 @@ load 'utils/_helpers'
 
     resource_get "$_CHECKS_BASE_PATH/2" "parent_type=defaults"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" ".data.type")" "disable-on-404"
+    assert_equal "$(get_json_path "$BODY" ".type")" "disable-on-404"
 }
 
 @test "http_checks: Add a new HTTP Check to backend" {
@@ -38,7 +38,7 @@ load 'utils/_helpers'
 
     resource_get "$_CHECKS_BASE_PATH/2" "parent_type=backend&parent_name=test_backend"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" ".data.type")" "disable-on-404"
+    assert_equal "$(get_json_path "$BODY" ".type")" "disable-on-404"
 }
 
 @test "http_checks: fail adding an unvalid HTTP Check to backend" {

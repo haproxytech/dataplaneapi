@@ -41,7 +41,7 @@ type GetAWSRegionsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetAWSRegionsOKBody `json:"body,omitempty"`
+	Payload models.AwsRegions `json:"body,omitempty"`
 }
 
 // NewGetAWSRegionsOK creates GetAWSRegionsOK with default headers values
@@ -51,13 +51,13 @@ func NewGetAWSRegionsOK() *GetAWSRegionsOK {
 }
 
 // WithPayload adds the payload to the get a w s regions o k response
-func (o *GetAWSRegionsOK) WithPayload(payload *GetAWSRegionsOKBody) *GetAWSRegionsOK {
+func (o *GetAWSRegionsOK) WithPayload(payload models.AwsRegions) *GetAWSRegionsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get a w s regions o k response
-func (o *GetAWSRegionsOK) SetPayload(payload *GetAWSRegionsOKBody) {
+func (o *GetAWSRegionsOK) SetPayload(payload models.AwsRegions) {
 	o.Payload = payload
 }
 
@@ -65,11 +65,14 @@ func (o *GetAWSRegionsOK) SetPayload(payload *GetAWSRegionsOKBody) {
 func (o *GetAWSRegionsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.AwsRegions{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

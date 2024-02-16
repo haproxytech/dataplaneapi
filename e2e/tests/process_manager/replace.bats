@@ -29,8 +29,8 @@ load 'utils/_helpers'
 
   resource_get "$_PROGRAMS_BASE_PATH/echo"
   assert_equal "$SC" 200
-  assert_equal "echo" "$(get_json_path "$BODY" ".data.name")"
-  assert_equal "echo \"Hello Universe\"" "$(get_json_path "$BODY" ".data.command")"
+  assert_equal "echo" "$(get_json_path "$BODY" ".name")"
+  assert_equal "echo \"Hello Universe\"" "$(get_json_path "$BODY" ".command")"
 }
 
 @test "process-manager: Fail replacing program that doesn't exist" {

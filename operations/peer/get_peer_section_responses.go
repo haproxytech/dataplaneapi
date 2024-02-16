@@ -45,7 +45,7 @@ type GetPeerSectionOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetPeerSectionOKBody `json:"body,omitempty"`
+	Payload *models.PeerSection `json:"body,omitempty"`
 }
 
 // NewGetPeerSectionOK creates GetPeerSectionOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetPeerSectionOK) SetConfigurationVersion(configurationVersion string) 
 }
 
 // WithPayload adds the payload to the get peer section o k response
-func (o *GetPeerSectionOK) WithPayload(payload *GetPeerSectionOKBody) *GetPeerSectionOK {
+func (o *GetPeerSectionOK) WithPayload(payload *models.PeerSection) *GetPeerSectionOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get peer section o k response
-func (o *GetPeerSectionOK) SetPayload(payload *GetPeerSectionOKBody) {
+func (o *GetPeerSectionOK) SetPayload(payload *models.PeerSection) {
 	o.Payload = payload
 }
 

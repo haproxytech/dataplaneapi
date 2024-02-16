@@ -45,7 +45,7 @@ type GetGroupOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetGroupOKBody `json:"body,omitempty"`
+	Payload *models.Group `json:"body,omitempty"`
 }
 
 // NewGetGroupOK creates GetGroupOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetGroupOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get group o k response
-func (o *GetGroupOK) WithPayload(payload *GetGroupOKBody) *GetGroupOK {
+func (o *GetGroupOK) WithPayload(payload *models.Group) *GetGroupOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get group o k response
-func (o *GetGroupOK) SetPayload(payload *GetGroupOKBody) {
+func (o *GetGroupOK) SetPayload(payload *models.Group) {
 	o.Payload = payload
 }
 

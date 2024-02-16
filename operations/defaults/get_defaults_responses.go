@@ -45,7 +45,7 @@ type GetDefaultsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetDefaultsOKBody `json:"body,omitempty"`
+	Payload *models.Defaults `json:"body,omitempty"`
 }
 
 // NewGetDefaultsOK creates GetDefaultsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetDefaultsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get defaults o k response
-func (o *GetDefaultsOK) WithPayload(payload *GetDefaultsOKBody) *GetDefaultsOK {
+func (o *GetDefaultsOK) WithPayload(payload *models.Defaults) *GetDefaultsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get defaults o k response
-func (o *GetDefaultsOK) SetPayload(payload *GetDefaultsOKBody) {
+func (o *GetDefaultsOK) SetPayload(payload *models.Defaults) {
 	o.Payload = payload
 }
 

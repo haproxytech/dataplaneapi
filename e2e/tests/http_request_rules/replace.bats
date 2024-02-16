@@ -29,11 +29,11 @@ load 'utils/_helpers'
 
 	resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 192.168.0.0/16 }"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_format")" "%T"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Haproxy-Current-Date"
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
+	assert_equal "$(get_json_path "$BODY" ".hdr_format")" "%T"
+	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Haproxy-Current-Date"
+	assert_equal "$(get_json_path "$BODY" ".type")" "add-header"
 }
 
 @test "http_request_rules: Replace a HTTP Request Rule of backend" {
@@ -42,9 +42,9 @@ load 'utils/_helpers'
 
 	resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 192.168.0.0/16 }"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_format")" "%T"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Haproxy-Current-Date"
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
+	assert_equal "$(get_json_path "$BODY" ".hdr_format")" "%T"
+	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Haproxy-Current-Date"
+	assert_equal "$(get_json_path "$BODY" ".type")" "add-header"
 }

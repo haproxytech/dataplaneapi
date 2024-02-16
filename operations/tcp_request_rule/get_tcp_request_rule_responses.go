@@ -45,7 +45,7 @@ type GetTCPRequestRuleOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetTCPRequestRuleOKBody `json:"body,omitempty"`
+	Payload *models.TCPRequestRule `json:"body,omitempty"`
 }
 
 // NewGetTCPRequestRuleOK creates GetTCPRequestRuleOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetTCPRequestRuleOK) SetConfigurationVersion(configurationVersion strin
 }
 
 // WithPayload adds the payload to the get Tcp request rule o k response
-func (o *GetTCPRequestRuleOK) WithPayload(payload *GetTCPRequestRuleOKBody) *GetTCPRequestRuleOK {
+func (o *GetTCPRequestRuleOK) WithPayload(payload *models.TCPRequestRule) *GetTCPRequestRuleOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Tcp request rule o k response
-func (o *GetTCPRequestRuleOK) SetPayload(payload *GetTCPRequestRuleOKBody) {
+func (o *GetTCPRequestRuleOK) SetPayload(payload *models.TCPRequestRule) {
 	o.Payload = payload
 }
 

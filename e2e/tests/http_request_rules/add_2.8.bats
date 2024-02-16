@@ -34,12 +34,12 @@ load 'utils/_helpers'
 
   resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "track-sc"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "TRUE"
-	assert_equal "$(get_json_path "$BODY" ".data.track_sc_key")" "src"
-	assert_equal "$(get_json_path "$BODY" ".data.track_sc_table")" "test_sticksc"
-	assert_equal "$(get_json_path "$BODY" ".data.track_sc_stick_counter")" 5
+	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "TRUE"
+	assert_equal "$(get_json_path "$BODY" ".track_sc_key")" "src"
+	assert_equal "$(get_json_path "$BODY" ".track_sc_table")" "test_sticksc"
+	assert_equal "$(get_json_path "$BODY" ".track_sc_stick_counter")" 5
   fi
 }
 
@@ -52,12 +52,12 @@ load 'utils/_helpers'
 
   resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "track-sc"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "TRUE"
-	assert_equal "$(get_json_path "$BODY" ".data.track_sc_key")" "src"
-	assert_equal "$(get_json_path "$BODY" ".data.track_sc_table")" "test_sticksc"
-	assert_equal "$(get_json_path "$BODY" ".data.track_sc_stick_counter")" 0
+	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "TRUE"
+	assert_equal "$(get_json_path "$BODY" ".track_sc_key")" "src"
+	assert_equal "$(get_json_path "$BODY" ".track_sc_table")" "test_sticksc"
+	assert_equal "$(get_json_path "$BODY" ".track_sc_stick_counter")" 0
   fi
 }
 

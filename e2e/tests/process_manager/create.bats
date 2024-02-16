@@ -29,9 +29,9 @@ load 'utils/_helpers'
 
   resource_get "$_PROGRAMS_BASE_PATH/test"
   assert_equal "$SC" 200
-  assert_equal "test" "$(get_json_path "$BODY" ".data.name")"
-  assert_equal "haproxy" "$(get_json_path "$BODY" ".data.user")"
-  assert_equal "haproxy" "$(get_json_path "$BODY" ".data.group")"
+  assert_equal "test" "$(get_json_path "$BODY" ".name")"
+  assert_equal "haproxy" "$(get_json_path "$BODY" ".user")"
+  assert_equal "haproxy" "$(get_json_path "$BODY" ".group")"
 }
 
 @test "process-manager: Fail creating program with same name" {

@@ -177,13 +177,13 @@ func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, prin
 		return tcp_check.NewGetTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, data, err := configuration.GetTCPCheck(params.Index, params.ParentType, pName, t)
+	_, data, err := configuration.GetTCPCheck(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewGetTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return tcp_check.NewGetTCPCheckOK().WithPayload(&tcp_check.GetTCPCheckOKBody{Version: v, Data: data})
+	return tcp_check.NewGetTCPCheckOK().WithPayload(data)
 }
 
 // Handle executing the request and returning a response
@@ -203,16 +203,16 @@ func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, pr
 		return tcp_check.NewGetTCPChecksDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, data, err := configuration.GetTCPChecks(params.ParentType, pName, t)
+	_, data, err := configuration.GetTCPChecks(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return tcp_check.NewGetTCPChecksOK().WithPayload(&tcp_check.GetTCPChecksOKBody{Version: v, Data: models.TCPChecks{}})
+			return tcp_check.NewGetTCPChecksOK().WithPayload(models.TCPChecks{})
 		}
 		return tcp_check.NewGetTCPChecksDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return tcp_check.NewGetTCPChecksOK().WithPayload(&tcp_check.GetTCPChecksOKBody{Version: v, Data: data})
+	return tcp_check.NewGetTCPChecksOK().WithPayload(data)
 }
 
 // Handle executing the request and returning a response

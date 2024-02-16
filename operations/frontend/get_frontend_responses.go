@@ -45,7 +45,7 @@ type GetFrontendOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetFrontendOKBody `json:"body,omitempty"`
+	Payload *models.Frontend `json:"body,omitempty"`
 }
 
 // NewGetFrontendOK creates GetFrontendOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetFrontendOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get frontend o k response
-func (o *GetFrontendOK) WithPayload(payload *GetFrontendOKBody) *GetFrontendOK {
+func (o *GetFrontendOK) WithPayload(payload *models.Frontend) *GetFrontendOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get frontend o k response
-func (o *GetFrontendOK) SetPayload(payload *GetFrontendOKBody) {
+func (o *GetFrontendOK) SetPayload(payload *models.Frontend) {
 	o.Payload = payload
 }
 

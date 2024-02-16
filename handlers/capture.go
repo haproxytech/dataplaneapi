@@ -162,12 +162,12 @@ func (h *GetDeclareCaptureHandlerImpl) Handle(params capture.GetDeclareCapturePa
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	v, data, err := configuration.GetDeclareCapture(params.Index, params.Frontend, t)
+	_, data, err := configuration.GetDeclareCapture(params.Index, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewGetDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
-	return capture.NewGetDeclareCaptureOK().WithPayload(&capture.GetDeclareCaptureOKBody{Version: v, Data: data})
+	return capture.NewGetDeclareCaptureOK().WithPayload(data)
 }
 
 func (h *GetDeclareCapturesHandlerImpl) Handle(params capture.GetDeclareCapturesParams, principal interface{}) middleware.Responder {
@@ -189,15 +189,15 @@ func (h *GetDeclareCapturesHandlerImpl) Handle(params capture.GetDeclareCaptures
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	v, data, err := configuration.GetDeclareCaptures(params.Frontend, t)
+	_, data, err := configuration.GetDeclareCaptures(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return capture.NewGetDeclareCapturesOK().WithPayload(&capture.GetDeclareCapturesOKBody{Version: v, Data: data})
+			return capture.NewGetDeclareCapturesOK().WithPayload(data)
 		}
 		return capture.NewGetDeclareCapturesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return capture.NewGetDeclareCapturesOK().WithPayload(&capture.GetDeclareCapturesOKBody{Version: v, Data: data})
+	return capture.NewGetDeclareCapturesOK().WithPayload(data)
 }
 
 func (h *ReplaceDeclareCaptureHandlerImpl) Handle(params capture.ReplaceDeclareCaptureParams, principal interface{}) middleware.Responder {

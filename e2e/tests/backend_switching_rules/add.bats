@@ -30,5 +30,5 @@ load 'utils/_helpers'
   # Checking the presence of applied backend switching rule
   #
 	resource_get "$_BSR_BASE_PATH/0" "frontend=test_frontend"
-	assert_equal "$(get_json_path "$BODY" ".data")" "$(get_json_path "$(cat $BATS_TEST_DIRNAME/data/post.json)" ".")"
+	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat $BATS_TEST_DIRNAME/data/post.json)" ".")"
 }

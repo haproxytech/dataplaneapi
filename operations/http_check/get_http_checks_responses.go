@@ -45,7 +45,7 @@ type GetHTTPChecksOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetHTTPChecksOKBody `json:"body,omitempty"`
+	Payload models.HTTPChecks `json:"body,omitempty"`
 }
 
 // NewGetHTTPChecksOK creates GetHTTPChecksOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetHTTPChecksOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get Http checks o k response
-func (o *GetHTTPChecksOK) WithPayload(payload *GetHTTPChecksOKBody) *GetHTTPChecksOK {
+func (o *GetHTTPChecksOK) WithPayload(payload models.HTTPChecks) *GetHTTPChecksOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Http checks o k response
-func (o *GetHTTPChecksOK) SetPayload(payload *GetHTTPChecksOKBody) {
+func (o *GetHTTPChecksOK) SetPayload(payload models.HTTPChecks) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetHTTPChecksOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.HTTPChecks{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

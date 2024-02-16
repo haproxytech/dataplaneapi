@@ -26,18 +26,18 @@ load 'utils/_helpers'
     resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend"
     assert_equal $SC "200"
 
-    assert_equal "$(get_json_path "$BODY" " .data | .[2].acl_name" )" "local_dst"
-    assert_equal "$(get_json_path "$BODY" " .data | .[2].criterion" )" "hdr(host)"
-    assert_equal "$(get_json_path "$BODY" " .data | .[2].index" )" "2"
-    assert_equal "$(get_json_path "$BODY" " .data | .[2].value" )" "-i localhost"
+    assert_equal "$(get_json_path "$BODY" " . | .[2].acl_name" )" "local_dst"
+    assert_equal "$(get_json_path "$BODY" " . | .[2].criterion" )" "hdr(host)"
+    assert_equal "$(get_json_path "$BODY" " . | .[2].index" )" "2"
+    assert_equal "$(get_json_path "$BODY" " . | .[2].value" )" "-i localhost"
 }
 
 @test "acls: Return ACL list by its name" {
     resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend&acl_name=invalid_src"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "$BODY" " .data | .[1].acl_name" )" "invalid_src"
-    assert_equal "$(get_json_path "$BODY" " .data | .[1].criterion" )" "src_port"
-    assert_equal "$(get_json_path "$BODY" " .data | .[1].index" )" "1"
-    assert_equal "$(get_json_path "$BODY" " .data | .[1].value" )" "0:1023"
+    assert_equal "$(get_json_path "$BODY" " . | .[1].acl_name" )" "invalid_src"
+    assert_equal "$(get_json_path "$BODY" " . | .[1].criterion" )" "src_port"
+    assert_equal "$(get_json_path "$BODY" " . | .[1].index" )" "1"
+    assert_equal "$(get_json_path "$BODY" " . | .[1].value" )" "0:1023"
 }

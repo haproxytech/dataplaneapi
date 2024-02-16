@@ -93,9 +93,6 @@ func (o *GetOneSpoeFile) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 // swagger:model GetOneSpoeFileOKBody
 type GetOneSpoeFileOKBody struct {
 
-	// version
-	Version int64 `json:"_version,omitempty"`
-
 	// data
 	Data string `json:"data,omitempty"`
 }

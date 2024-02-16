@@ -45,7 +45,7 @@ type GetRingsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetRingsOKBody `json:"body,omitempty"`
+	Payload models.Rings `json:"body,omitempty"`
 }
 
 // NewGetRingsOK creates GetRingsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetRingsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get rings o k response
-func (o *GetRingsOK) WithPayload(payload *GetRingsOKBody) *GetRingsOK {
+func (o *GetRingsOK) WithPayload(payload models.Rings) *GetRingsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get rings o k response
-func (o *GetRingsOK) SetPayload(payload *GetRingsOKBody) {
+func (o *GetRingsOK) SetPayload(payload models.Rings) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetRingsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Rings{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

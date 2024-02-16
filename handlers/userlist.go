@@ -154,12 +154,12 @@ func (h *GetUserListHandlerImpl) Handle(params userlist.GetUserlistParams, princ
 		return userlist.NewGetUserlistDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, u, err := configuration.GetUserList(params.Name, t)
+	_, u, err := configuration.GetUserList(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return userlist.NewGetUserlistDefault(int(*e.Code)).WithPayload(e)
 	}
-	return userlist.NewGetUserlistOK().WithPayload(&userlist.GetUserlistOKBody{Version: v, Data: u})
+	return userlist.NewGetUserlistOK().WithPayload(u)
 }
 
 // Handle executing the request and returning a response
@@ -175,10 +175,10 @@ func (h *GetUserListsHandlerImpl) Handle(params userlist.GetUserlistsParams, pri
 		return userlist.NewGetUserlistsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, userlists, err := configuration.GetUserLists(t)
+	_, userlists, err := configuration.GetUserLists(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return userlist.NewGetUserlistsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return userlist.NewGetUserlistsOK().WithPayload(&userlist.GetUserlistsOKBody{Version: v, Data: userlists})
+	return userlist.NewGetUserlistsOK().WithPayload(userlists)
 }

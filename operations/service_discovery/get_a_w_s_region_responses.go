@@ -41,7 +41,7 @@ type GetAWSRegionOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetAWSRegionOKBody `json:"body,omitempty"`
+	Payload *models.AwsRegion `json:"body,omitempty"`
 }
 
 // NewGetAWSRegionOK creates GetAWSRegionOK with default headers values
@@ -51,13 +51,13 @@ func NewGetAWSRegionOK() *GetAWSRegionOK {
 }
 
 // WithPayload adds the payload to the get a w s region o k response
-func (o *GetAWSRegionOK) WithPayload(payload *GetAWSRegionOKBody) *GetAWSRegionOK {
+func (o *GetAWSRegionOK) WithPayload(payload *models.AwsRegion) *GetAWSRegionOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get a w s region o k response
-func (o *GetAWSRegionOK) SetPayload(payload *GetAWSRegionOKBody) {
+func (o *GetAWSRegionOK) SetPayload(payload *models.AwsRegion) {
 	o.Payload = payload
 }
 

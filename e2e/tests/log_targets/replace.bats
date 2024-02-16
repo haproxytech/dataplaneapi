@@ -29,10 +29,10 @@ load 'utils/_helpers'
 
 	resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.address")" "localhost"
-	assert_equal "$(get_json_path "$BODY" ".data.format")" "raw"
-	assert_equal "$(get_json_path "$BODY" ".data.facility")" "user"
-	assert_equal "$(get_json_path "$BODY" ".data.level")" "warning"
+	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
+	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
+	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
+	assert_equal "$(get_json_path "$BODY" ".level")" "warning"
 }
 
 @test "log_targets: Replace a Log Target of backend" {
@@ -41,8 +41,8 @@ load 'utils/_helpers'
 
 	resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.address")" "localhost"
-	assert_equal "$(get_json_path "$BODY" ".data.format")" "raw"
-	assert_equal "$(get_json_path "$BODY" ".data.facility")" "user"
-	assert_equal "$(get_json_path "$BODY" ".data.level")" "warning"
+	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
+	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
+	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
+	assert_equal "$(get_json_path "$BODY" ".level")" "warning"
 }

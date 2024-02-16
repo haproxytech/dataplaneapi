@@ -45,7 +45,7 @@ type GetStickRuleOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetStickRuleOKBody `json:"body,omitempty"`
+	Payload *models.StickRule `json:"body,omitempty"`
 }
 
 // NewGetStickRuleOK creates GetStickRuleOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetStickRuleOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get stick rule o k response
-func (o *GetStickRuleOK) WithPayload(payload *GetStickRuleOKBody) *GetStickRuleOK {
+func (o *GetStickRuleOK) WithPayload(payload *models.StickRule) *GetStickRuleOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get stick rule o k response
-func (o *GetStickRuleOK) SetPayload(payload *GetStickRuleOKBody) {
+func (o *GetStickRuleOK) SetPayload(payload *models.StickRule) {
 	o.Payload = payload
 }
 

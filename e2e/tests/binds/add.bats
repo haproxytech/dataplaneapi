@@ -36,8 +36,8 @@ load 'utils/_helpers'
   then
     resource_get "$_BIND_BASE_PATH/test_bind" "frontend=test_frontend&force_reload=true"
     assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" '.data.name')" "test_bind"
-    assert_equal "1/all" "$(get_json_path "$BODY" ".data.thread")"
-    assert_equal "$(get_json_path "$BODY" '.data.ca_verify_file')" "/certs/ca-verify.pem"
+    assert_equal "$(get_json_path "$BODY" '.name')" "test_bind"
+    assert_equal "1/all" "$(get_json_path "$BODY" ".thread")"
+    assert_equal "$(get_json_path "$BODY" '.ca_verify_file')" "/certs/ca-verify.pem"
   fi
 }

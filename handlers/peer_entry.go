@@ -160,12 +160,12 @@ func (h *GetPeerEntryHandlerImpl) Handle(params peer_entry.GetPeerEntryParams, p
 		return peer_entry.NewGetPeerEntryDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, pe, err := configuration.GetPeerEntry(params.Name, params.PeerSection, t)
+	_, pe, err := configuration.GetPeerEntry(params.Name, params.PeerSection, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer_entry.NewGetPeerEntryDefault(int(*e.Code)).WithPayload(e)
 	}
-	return peer_entry.NewGetPeerEntryOK().WithPayload(&peer_entry.GetPeerEntryOKBody{Version: v, Data: pe})
+	return peer_entry.NewGetPeerEntryOK().WithPayload(pe)
 }
 
 // Handle executing the request and returning a response
@@ -181,12 +181,12 @@ func (h *GetPeerEntriesHandlerImpl) Handle(params peer_entry.GetPeerEntriesParam
 		return peer_entry.NewGetPeerEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, pes, err := configuration.GetPeerEntries(params.PeerSection, t)
+	_, pes, err := configuration.GetPeerEntries(params.PeerSection, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer_entry.NewGetPeerEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return peer_entry.NewGetPeerEntriesOK().WithPayload(&peer_entry.GetPeerEntriesOKBody{Version: v, Data: pes})
+	return peer_entry.NewGetPeerEntriesOK().WithPayload(pes)
 }
 
 // Handle executing the request and returning a response

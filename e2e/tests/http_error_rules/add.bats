@@ -29,10 +29,10 @@ load 'utils/_helpers'
 
 	resource_post "$_ERR_RULES_BASE_PATH" "data/post.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 201
-	
+
 	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.status")" 425 
+	assert_equal "$(get_json_path "$BODY" ".status")" 425
 }
 
 @test "http_error_rules: Add a new HTTP Error Rule to backend" {
@@ -40,12 +40,12 @@ load 'utils/_helpers'
 
 	resource_post "$_ERR_RULES_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 201
-	
+
 	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.status")" 425 
+	assert_equal "$(get_json_path "$BODY" ".status")" 425
 }
- 
+
 @test "http_error_rules: Add a new HTTP Error Rule to defaults" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
@@ -54,7 +54,7 @@ load 'utils/_helpers'
 
 	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.status")" 425
+	assert_equal "$(get_json_path "$BODY" ".status")" 425
 }
 
 @test "http_error_rules: Fail to add a new HTTP Error Rule without status code to backend" {

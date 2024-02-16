@@ -161,12 +161,12 @@ func (h *GetServerTemplateHandlerImpl) Handle(params server_template.GetServerTe
 		return server_template.NewGetServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, template, err := configuration.GetServerTemplate(params.Prefix, params.Backend, t)
+	_, template, err := configuration.GetServerTemplate(params.Prefix, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewGetServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_template.NewGetServerTemplateOK().WithPayload(&server_template.GetServerTemplateOKBody{Version: v, Data: template})
+	return server_template.NewGetServerTemplateOK().WithPayload(template)
 }
 
 // Handle executing the request and returning a response
@@ -182,15 +182,15 @@ func (h *GetServerTemplatesHandlerImpl) Handle(params server_template.GetServerT
 		return server_template.NewGetServerTemplatesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, templates, err := configuration.GetServerTemplates(params.Backend, t)
+	_, templates, err := configuration.GetServerTemplates(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return server_template.NewGetServerTemplatesOK().WithPayload(&server_template.GetServerTemplatesOKBody{Version: v, Data: models.ServerTemplates{}})
+			return server_template.NewGetServerTemplatesOK().WithPayload(models.ServerTemplates{})
 		}
 		return server_template.NewGetServerTemplatesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_template.NewGetServerTemplatesOK().WithPayload(&server_template.GetServerTemplatesOKBody{Version: v, Data: templates})
+	return server_template.NewGetServerTemplatesOK().WithPayload(templates)
 }
 
 // Handle executing the request and returning a response

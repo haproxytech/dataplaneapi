@@ -186,7 +186,7 @@ func (h *GetUserHandlerImpl) Handle(params user.GetUserParams, principal interfa
 		return user.NewGetUserNotFound()
 	}
 
-	v, u, err := configuration.GetUser(params.Username, params.Userlist, t)
+	_, u, err := configuration.GetUser(params.Username, params.Userlist, t)
 	if u == nil {
 		return user.NewGetUserNotFound()
 	}
@@ -195,7 +195,7 @@ func (h *GetUserHandlerImpl) Handle(params user.GetUserParams, principal interfa
 		return user.NewGetUserDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return user.NewGetUserOK().WithPayload(&user.GetUserOKBody{Version: v, Data: u})
+	return user.NewGetUserOK().WithPayload(u)
 }
 
 // Handle executing the request and returning a response
@@ -216,15 +216,15 @@ func (h *GetUsersHandlerImpl) Handle(params user.GetUsersParams, principal inter
 	if err != nil {
 		return user.NewGetUserNotFound()
 	}
-	v, users, err := configuration.GetUsers(params.Userlist, t)
+	_, users, err := configuration.GetUsers(params.Userlist, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return user.NewGetUsersOK().WithPayload(&user.GetUsersOKBody{Version: v, Data: models.Users{}})
+			return user.NewGetUsersOK().WithPayload(models.Users{})
 		}
 		return user.NewGetUsersDefault(int(*e.Code)).WithPayload(e)
 	}
-	return user.NewGetUsersOK().WithPayload(&user.GetUsersOKBody{Version: v, Data: users})
+	return user.NewGetUsersOK().WithPayload(users)
 }
 
 // Handle executing the request and returning a response

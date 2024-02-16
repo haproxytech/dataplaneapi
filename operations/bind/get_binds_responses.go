@@ -45,7 +45,7 @@ type GetBindsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetBindsOKBody `json:"body,omitempty"`
+	Payload models.Binds `json:"body,omitempty"`
 }
 
 // NewGetBindsOK creates GetBindsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetBindsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get binds o k response
-func (o *GetBindsOK) WithPayload(payload *GetBindsOKBody) *GetBindsOK {
+func (o *GetBindsOK) WithPayload(payload models.Binds) *GetBindsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get binds o k response
-func (o *GetBindsOK) SetPayload(payload *GetBindsOKBody) {
+func (o *GetBindsOK) SetPayload(payload models.Binds) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetBindsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Binds{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

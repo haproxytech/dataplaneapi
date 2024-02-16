@@ -29,20 +29,20 @@ load 'utils/_helpers'
 	assert_equal "$SC" 200
 
     if haproxy_version_ge "2.8"; then
-        assert_equal "$(get_json_path "${BODY}" ".data | length")" 5
+        assert_equal "$(get_json_path "${BODY}" ". | length")" 5
     else
-        assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+        assert_equal "$(get_json_path "${BODY}" ". | length")" 2
     fi
-	assert_equal "$(get_json_path "$BODY" ".data[0].type")" "inspect-delay"
-	assert_equal "$(get_json_path "$BODY" ".data[1].type")" "content"
-	assert_equal "$(get_json_path "$BODY" ".data[1].action")" "accept"
+	assert_equal "$(get_json_path "$BODY" ".[0].type")" "inspect-delay"
+	assert_equal "$(get_json_path "$BODY" ".[1].type")" "content"
+	assert_equal "$(get_json_path "$BODY" ".[1].action")" "accept"
 	if haproxy_version_ge "2.8"; then
-        assert_equal "$(get_json_path "$BODY" ".data[2].type")" "connection"
-        assert_equal "$(get_json_path "$BODY" ".data[2].action")" "sc-add-gpc"
-        assert_equal "$(get_json_path "$BODY" ".data[3].type")" "session"
-        assert_equal "$(get_json_path "$BODY" ".data[3].action")" "sc-add-gpc"
-        assert_equal "$(get_json_path "$BODY" ".data[4].type")" "content"
-        assert_equal "$(get_json_path "$BODY" ".data[4].action")" "sc-add-gpc"
+        assert_equal "$(get_json_path "$BODY" ".[2].type")" "connection"
+        assert_equal "$(get_json_path "$BODY" ".[2].action")" "sc-add-gpc"
+        assert_equal "$(get_json_path "$BODY" ".[3].type")" "session"
+        assert_equal "$(get_json_path "$BODY" ".[3].action")" "sc-add-gpc"
+        assert_equal "$(get_json_path "$BODY" ".[4].type")" "content"
+        assert_equal "$(get_json_path "$BODY" ".[4].action")" "sc-add-gpc"
     fi
 }
 
@@ -50,6 +50,6 @@ load 'utils/_helpers'
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
 
-  assert_equal "$(get_json_path "$BODY" ".data[] | select(.type | contains(\"inspect-delay\") ).type")" "inspect-delay"
-  assert_equal "$(get_json_path "$BODY" ".data[] | select(.type | contains(\"content\") ).type")" "content"
+  assert_equal "$(get_json_path "$BODY" ".[] | select(.type | contains(\"inspect-delay\") ).type")" "inspect-delay"
+  assert_equal "$(get_json_path "$BODY" ".[] | select(.type | contains(\"content\") ).type")" "content"
 }

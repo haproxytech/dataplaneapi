@@ -20,6 +20,7 @@ load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
 load '../../libs/haproxy_version'
+load '../../libs/version'
 
 load 'utils/_helpers'
 

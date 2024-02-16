@@ -45,7 +45,7 @@ type GetACLOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetACLOKBody `json:"body,omitempty"`
+	Payload *models.ACL `json:"body,omitempty"`
 }
 
 // NewGetACLOK creates GetACLOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetACLOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get Acl o k response
-func (o *GetACLOK) WithPayload(payload *GetACLOKBody) *GetACLOK {
+func (o *GetACLOK) WithPayload(payload *models.ACL) *GetACLOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Acl o k response
-func (o *GetACLOK) SetPayload(payload *GetACLOKBody) {
+func (o *GetACLOK) SetPayload(payload *models.ACL) {
 	o.Payload = payload
 }
 

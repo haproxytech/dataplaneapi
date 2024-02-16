@@ -24,7 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/swag"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -41,12 +40,12 @@ type GetServerTemplatesOK struct {
 	/*Configuration file version
 
 	 */
-	ConfigurationVersion int64 `json:"Configuration-Version"`
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
 	*/
-	Payload *GetServerTemplatesOKBody `json:"body,omitempty"`
+	Payload models.ServerTemplates `json:"body,omitempty"`
 }
 
 // NewGetServerTemplatesOK creates GetServerTemplatesOK with default headers values
@@ -56,24 +55,24 @@ func NewGetServerTemplatesOK() *GetServerTemplatesOK {
 }
 
 // WithConfigurationVersion adds the configurationVersion to the get server templates o k response
-func (o *GetServerTemplatesOK) WithConfigurationVersion(configurationVersion int64) *GetServerTemplatesOK {
+func (o *GetServerTemplatesOK) WithConfigurationVersion(configurationVersion string) *GetServerTemplatesOK {
 	o.ConfigurationVersion = configurationVersion
 	return o
 }
 
 // SetConfigurationVersion sets the configurationVersion to the get server templates o k response
-func (o *GetServerTemplatesOK) SetConfigurationVersion(configurationVersion int64) {
+func (o *GetServerTemplatesOK) SetConfigurationVersion(configurationVersion string) {
 	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the get server templates o k response
-func (o *GetServerTemplatesOK) WithPayload(payload *GetServerTemplatesOKBody) *GetServerTemplatesOK {
+func (o *GetServerTemplatesOK) WithPayload(payload models.ServerTemplates) *GetServerTemplatesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get server templates o k response
-func (o *GetServerTemplatesOK) SetPayload(payload *GetServerTemplatesOKBody) {
+func (o *GetServerTemplatesOK) SetPayload(payload models.ServerTemplates) {
 	o.Payload = payload
 }
 
@@ -82,17 +81,20 @@ func (o *GetServerTemplatesOK) WriteResponse(rw http.ResponseWriter, producer ru
 
 	// response header Configuration-Version
 
-	configurationVersion := swag.FormatInt64(o.ConfigurationVersion)
+	configurationVersion := o.ConfigurationVersion
 	if configurationVersion != "" {
 		rw.Header().Set("Configuration-Version", configurationVersion)
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.ServerTemplates{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

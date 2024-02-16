@@ -45,7 +45,7 @@ type GetBindOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetBindOKBody `json:"body,omitempty"`
+	Payload *models.Bind `json:"body,omitempty"`
 }
 
 // NewGetBindOK creates GetBindOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetBindOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get bind o k response
-func (o *GetBindOK) WithPayload(payload *GetBindOKBody) *GetBindOK {
+func (o *GetBindOK) WithPayload(payload *models.Bind) *GetBindOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get bind o k response
-func (o *GetBindOK) SetPayload(payload *GetBindOKBody) {
+func (o *GetBindOK) SetPayload(payload *models.Bind) {
 	o.Payload = payload
 }
 

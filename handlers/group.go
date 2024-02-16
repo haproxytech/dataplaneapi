@@ -168,7 +168,7 @@ func (h *GetGroupHandlerImpl) Handle(params group.GetGroupParams, principal inte
 		return group.NewGetGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, g, err := configuration.GetGroup(params.Name, params.Userlist, t)
+	_, g, err := configuration.GetGroup(params.Name, params.Userlist, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return group.NewGetGroupDefault(int(*e.Code)).WithPayload(e)
@@ -178,7 +178,7 @@ func (h *GetGroupHandlerImpl) Handle(params group.GetGroupParams, principal inte
 		return group.NewGetGroupNotFound()
 	}
 
-	return group.NewGetGroupOK().WithPayload(&group.GetGroupOKBody{Version: v, Data: g})
+	return group.NewGetGroupOK().WithPayload(g)
 }
 
 // Handle executing the request and returning a response
@@ -202,15 +202,15 @@ func (h *GetGroupsHandlerImpl) Handle(params group.GetGroupsParams, principal in
 		return group.NewGetGroupNotFound()
 	}
 
-	v, groups, err := configuration.GetGroups(params.Userlist, t)
+	_, groups, err := configuration.GetGroups(params.Userlist, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return group.NewGetGroupsOK().WithPayload(&group.GetGroupsOKBody{Version: v, Data: models.Groups{}})
+			return group.NewGetGroupsOK().WithPayload(models.Groups{})
 		}
 		return group.NewGetGroupsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return group.NewGetGroupsOK().WithPayload(&group.GetGroupsOKBody{Version: v, Data: groups})
+	return group.NewGetGroupsOK().WithPayload(groups)
 }
 
 // Handle executing the request and returning a response

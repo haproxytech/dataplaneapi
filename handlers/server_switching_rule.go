@@ -162,12 +162,12 @@ func (h *GetServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.
 		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rule, err := configuration.GetServerSwitchingRule(params.Index, params.Backend, t)
+	_, rule, err := configuration.GetServerSwitchingRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewGetServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(&server_switching_rule.GetServerSwitchingRuleOKBody{Version: v, Data: rule})
+	return server_switching_rule.NewGetServerSwitchingRuleOK().WithPayload(rule)
 }
 
 // Handle executing the request and returning a response
@@ -183,15 +183,15 @@ func (h *GetServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule
 		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rules, err := configuration.GetServerSwitchingRules(params.Backend, t)
+	_, rules, err := configuration.GetServerSwitchingRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: models.ServerSwitchingRules{}})
+			return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(models.ServerSwitchingRules{})
 		}
 		return server_switching_rule.NewGetServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(&server_switching_rule.GetServerSwitchingRulesOKBody{Version: v, Data: rules})
+	return server_switching_rule.NewGetServerSwitchingRulesOK().WithPayload(rules)
 }
 
 // Handle executing the request and returning a response

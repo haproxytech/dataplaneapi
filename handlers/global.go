@@ -49,12 +49,12 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, data, err := configuration.GetGlobalConfiguration(t)
+	_, data, err := configuration.GetGlobalConfiguration(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
-	return global.NewGetGlobalOK().WithPayload(&global.GetGlobalOKBody{Version: v, Data: data})
+	return global.NewGetGlobalOK().WithPayload(data)
 }
 
 // Handle executing the request and returning a response

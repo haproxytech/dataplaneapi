@@ -26,5 +26,5 @@ load 'utils/_helpers'
 @test "fcgi-app: Return an array of caches" {
   resource_get "$_FCGIAPP_BASE_PATH"
   assert_equal "$SC" 200
-  assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
+  assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 }

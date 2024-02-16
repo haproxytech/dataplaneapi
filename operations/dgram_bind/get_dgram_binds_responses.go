@@ -45,7 +45,7 @@ type GetDgramBindsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetDgramBindsOKBody `json:"body,omitempty"`
+	Payload models.DgramBinds `json:"body,omitempty"`
 }
 
 // NewGetDgramBindsOK creates GetDgramBindsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetDgramBindsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get dgram binds o k response
-func (o *GetDgramBindsOK) WithPayload(payload *GetDgramBindsOKBody) *GetDgramBindsOK {
+func (o *GetDgramBindsOK) WithPayload(payload models.DgramBinds) *GetDgramBindsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get dgram binds o k response
-func (o *GetDgramBindsOK) SetPayload(payload *GetDgramBindsOKBody) {
+func (o *GetDgramBindsOK) SetPayload(payload models.DgramBinds) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetDgramBindsOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.DgramBinds{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

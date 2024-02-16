@@ -35,13 +35,13 @@ load 'utils/_helpers'
 
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.action")" "track-sc"
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "content"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "TRUE"
-	assert_equal "$(get_json_path "$BODY" ".data.track_key")" "src"
-	assert_equal "$(get_json_path "$BODY" ".data.track_table")" "test_sticksc"
-	assert_equal "$(get_json_path "$BODY" ".data.track_stick_counter")" 5
+	assert_equal "$(get_json_path "$BODY" ".action")" "track-sc"
+	assert_equal "$(get_json_path "$BODY" ".type")" "content"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "TRUE"
+	assert_equal "$(get_json_path "$BODY" ".track_key")" "src"
+	assert_equal "$(get_json_path "$BODY" ".track_table")" "test_sticksc"
+	assert_equal "$(get_json_path "$BODY" ".track_stick_counter")" 5
   fi
 }
 
@@ -54,13 +54,13 @@ load 'utils/_helpers'
 
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.action")" "track-sc"
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "content"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "TRUE"
-	assert_equal "$(get_json_path "$BODY" ".data.track_key")" "src"
-	assert_equal "$(get_json_path "$BODY" ".data.track_table")" "test_sticksc"
-	assert_equal "$(get_json_path "$BODY" ".data.track_stick_counter")" 0
+  assert_equal "$(get_json_path "$BODY" ".action")" "track-sc"
+	assert_equal "$(get_json_path "$BODY" ".type")" "content"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "TRUE"
+	assert_equal "$(get_json_path "$BODY" ".track_key")" "src"
+	assert_equal "$(get_json_path "$BODY" ".track_table")" "test_sticksc"
+	assert_equal "$(get_json_path "$BODY" ".track_stick_counter")" 0
   fi
 }
 

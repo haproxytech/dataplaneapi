@@ -45,7 +45,7 @@ type GetGroupsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetGroupsOKBody `json:"body,omitempty"`
+	Payload models.Groups `json:"body,omitempty"`
 }
 
 // NewGetGroupsOK creates GetGroupsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetGroupsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get groups o k response
-func (o *GetGroupsOK) WithPayload(payload *GetGroupsOKBody) *GetGroupsOK {
+func (o *GetGroupsOK) WithPayload(payload models.Groups) *GetGroupsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get groups o k response
-func (o *GetGroupsOK) SetPayload(payload *GetGroupsOKBody) {
+func (o *GetGroupsOK) SetPayload(payload models.Groups) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetGroupsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Groups{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

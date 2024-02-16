@@ -21,16 +21,9 @@ package http_check
 // Editing this file might prove futile when you re-run the generate command
 
 import (
-	"context"
 	"net/http"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
-
-	"github.com/haproxytech/client-native/v6/models"
 )
 
 // GetHTTPChecksHandlerFunc turns a function with the right signature into a get HTTP checks handler
@@ -90,95 +83,4 @@ func (o *GetHTTPChecks) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	res := o.Handler.Handle(Params, principal) // actually handle the request
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
-}
-
-// GetHTTPChecksOKBody get HTTP checks o k body
-//
-// swagger:model GetHTTPChecksOKBody
-type GetHTTPChecksOKBody struct {
-
-	// version
-	Version int64 `json:"_version,omitempty"`
-
-	// data
-	// Required: true
-	Data models.HTTPChecks `json:"data"`
-}
-
-// Validate validates this get HTTP checks o k body
-func (o *GetHTTPChecksOKBody) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.validateData(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *GetHTTPChecksOKBody) validateData(formats strfmt.Registry) error {
-
-	if err := validate.Required("getHttpChecksOK"+"."+"data", "body", o.Data); err != nil {
-		return err
-	}
-
-	if err := o.Data.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("getHttpChecksOK" + "." + "data")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("getHttpChecksOK" + "." + "data")
-		}
-		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this get HTTP checks o k body based on the context it is used
-func (o *GetHTTPChecksOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.contextValidateData(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *GetHTTPChecksOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
-
-	if err := o.Data.ContextValidate(ctx, formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("getHttpChecksOK" + "." + "data")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("getHttpChecksOK" + "." + "data")
-		}
-		return err
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *GetHTTPChecksOKBody) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *GetHTTPChecksOKBody) UnmarshalBinary(b []byte) error {
-	var res GetHTTPChecksOKBody
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
 }

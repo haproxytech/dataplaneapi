@@ -45,7 +45,7 @@ type GetUserlistsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetUserlistsOKBody `json:"body,omitempty"`
+	Payload models.Userlists `json:"body,omitempty"`
 }
 
 // NewGetUserlistsOK creates GetUserlistsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetUserlistsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get userlists o k response
-func (o *GetUserlistsOK) WithPayload(payload *GetUserlistsOKBody) *GetUserlistsOK {
+func (o *GetUserlistsOK) WithPayload(payload models.Userlists) *GetUserlistsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get userlists o k response
-func (o *GetUserlistsOK) SetPayload(payload *GetUserlistsOKBody) {
+func (o *GetUserlistsOK) SetPayload(payload models.Userlists) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetUserlistsOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Userlists{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

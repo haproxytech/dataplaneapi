@@ -91,3 +91,5 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/haproxytech/client-native/v6 => github.com/haproxytech/client-native/v6 v6.0.0-20240213133620-fe640f8094a4

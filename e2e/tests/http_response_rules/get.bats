@@ -26,31 +26,31 @@ load 'utils/_helpers'
 @test "http_response_rules: Return one HTTP Response Rule from frontend" {
   resource_get "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.type")" "add-header"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Add-Frontend"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "unless"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 192.168.0.0/16 }"
+  assert_equal "$(get_json_path "$BODY" ".type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Add-Frontend"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "unless"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
 
 	resource_get "$_RES_RULES_BASE_PATH/1" "parent_type=frontend&parent_name=test_frontend"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.type")" "del-header"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Del-Frontend"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 10.1.0.0/16 }"
+  assert_equal "$(get_json_path "$BODY" ".type")" "del-header"
+	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Del-Frontend"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 10.1.0.0/16 }"
 }
 
 @test "http_response_rules: Return one HTTP Response Rule from backend" {
   resource_get "$_RES_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "add-header"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Add-Backend"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "unless"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 192.168.0.0/16 }"
+	assert_equal "$(get_json_path "$BODY" ".type")" "add-header"
+	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Add-Backend"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "unless"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
 
 	resource_get "$_RES_RULES_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".data.type")" "del-header"
-	assert_equal "$(get_json_path "$BODY" ".data.hdr_name")" "X-Del-Backend"
-	assert_equal "$(get_json_path "$BODY" ".data.cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".data.cond_test")" "{ src 10.1.0.0/16 }"
+  assert_equal "$(get_json_path "$BODY" ".type")" "del-header"
+	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Del-Backend"
+	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
+	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 10.1.0.0/16 }"
 }

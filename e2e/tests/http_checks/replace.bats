@@ -29,7 +29,7 @@ load 'utils/_helpers'
 
 	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=defaults"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "send-state"
+	assert_equal "$(get_json_path "$BODY" ".type")" "send-state"
 }
 
 @test "http_checks: Replace a HTTP Check of backend" {
@@ -38,7 +38,7 @@ load 'utils/_helpers'
 
 	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "send-state"
+	assert_equal "$(get_json_path "$BODY" ".type")" "send-state"
 }
 
 @test "http_checks: Fail replacing a HTTP Check of unexisting backend" {

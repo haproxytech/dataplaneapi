@@ -45,7 +45,7 @@ type GetSitesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetSitesOKBody `json:"body,omitempty"`
+	Payload models.Sites `json:"body,omitempty"`
 }
 
 // NewGetSitesOK creates GetSitesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetSitesOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get sites o k response
-func (o *GetSitesOK) WithPayload(payload *GetSitesOKBody) *GetSitesOK {
+func (o *GetSitesOK) WithPayload(payload models.Sites) *GetSitesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get sites o k response
-func (o *GetSitesOK) SetPayload(payload *GetSitesOKBody) {
+func (o *GetSitesOK) SetPayload(payload models.Sites) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetSitesOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Sites{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

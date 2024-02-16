@@ -26,12 +26,11 @@ load 'utils/_helpers'
 @test "table: Return one table from peers" {
   resource_get "$_REQ_RULES_BASE_PATH/t1" "peer_section=mycluster"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data.name")" "t1"
-	assert_equal "$(get_json_path "$BODY" ".data.type")" "string"
-	assert_equal "$(get_json_path "$BODY" ".data.type_len")" "1000"
-	assert_equal "$(get_json_path "$BODY" ".data.size")" "200k"
-	assert_equal "$(get_json_path "$BODY" ".data.expire")" "5m"
-	assert_equal "$(get_json_path "$BODY" ".data.no_purge")" "true"
-	assert_equal "$(get_json_path "$BODY" ".data.store")" "gpc0,conn_rate(30s)"
+	assert_equal "$(get_json_path "$BODY" ".name")" "t1"
+	assert_equal "$(get_json_path "$BODY" ".type")" "string"
+	assert_equal "$(get_json_path "$BODY" ".type_len")" "1000"
+	assert_equal "$(get_json_path "$BODY" ".size")" "200k"
+	assert_equal "$(get_json_path "$BODY" ".expire")" "5m"
+	assert_equal "$(get_json_path "$BODY" ".no_purge")" "true"
+	assert_equal "$(get_json_path "$BODY" ".store")" "gpc0,conn_rate(30s)"
 }
-

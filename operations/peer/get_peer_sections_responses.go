@@ -45,7 +45,7 @@ type GetPeerSectionsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetPeerSectionsOKBody `json:"body,omitempty"`
+	Payload models.PeerSections `json:"body,omitempty"`
 }
 
 // NewGetPeerSectionsOK creates GetPeerSectionsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetPeerSectionsOK) SetConfigurationVersion(configurationVersion string)
 }
 
 // WithPayload adds the payload to the get peer sections o k response
-func (o *GetPeerSectionsOK) WithPayload(payload *GetPeerSectionsOKBody) *GetPeerSectionsOK {
+func (o *GetPeerSectionsOK) WithPayload(payload models.PeerSections) *GetPeerSectionsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get peer sections o k response
-func (o *GetPeerSectionsOK) SetPayload(payload *GetPeerSectionsOKBody) {
+func (o *GetPeerSectionsOK) SetPayload(payload models.PeerSections) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetPeerSectionsOK) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.PeerSections{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

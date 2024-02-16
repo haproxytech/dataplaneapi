@@ -36,16 +36,8 @@ function deprecated_auth_curl() {
   echo "$status_code $response"
 }
 
-# version return the current HAProxy configuration file version, useful to
-# avoid keeping track of it at each POST/PUT call.
-#
-# Any argument is required.
-#
-# Example:
-# version
-# >>> 10
-function version() {
-  read -r SC RES < <(deprecated_auth_curl GET "/v3/services/haproxy/configuration/global")
-  V="$(RES=${RES} jq -n 'env.RES | fromjson | ._version')"
-  echo "$V"
+
+function get_version() {
+  resource_get "/services/haproxy/configuration/version"
+  eval VERSION="'$BODY'"
 }

@@ -26,42 +26,42 @@ load 'utils/_helpers'
 @test "users: Return an array of users from userlist first" {
   resource_get "$_USERS_BASE_PATH" "userlist=first"
 	assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 
-    assert_equal "$(get_json_path "${BODY}" ".data[0].username" )" "tiger"
-    assert_equal "$(get_json_path "${BODY}" ".data[0].secure_password" )" true
-    assert_equal "$(get_json_path "${BODY}" ".data[0].groups" )" null
+    assert_equal "$(get_json_path "${BODY}" ".[0].username" )" "tiger"
+    assert_equal "$(get_json_path "${BODY}" ".[0].secure_password" )" true
+    assert_equal "$(get_json_path "${BODY}" ".[0].groups" )" null
 
-    assert_equal "$(get_json_path "${BODY}" ".data[1].username" )" "scott"
-    assert_equal "$(get_json_path "${BODY}" ".data[1].secure_password" )" false
-    assert_equal "$(get_json_path "${BODY}" ".data[1].password" )" "elgato"
+    assert_equal "$(get_json_path "${BODY}" ".[1].username" )" "scott"
+    assert_equal "$(get_json_path "${BODY}" ".[1].secure_password" )" false
+    assert_equal "$(get_json_path "${BODY}" ".[1].password" )" "elgato"
 }
 
 @test "users: Return an array of users from userlist second" {
   resource_get "$_USERS_BASE_PATH" "userlist=second"
 	assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 3
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 3
 
-    assert_equal "$(get_json_path "${BODY}" ".data[0].username" )" "neo"
-    assert_equal "$(get_json_path "${BODY}" ".data[0].secure_password" )" true
-    assert_equal "$(get_json_path "${BODY}" ".data[0].password" )" "JlKBxxHSwRv6J.C0/D7cV91"
-    assert_equal "$(get_json_path "${BODY}" ".data[0].groups" )" "one"
+    assert_equal "$(get_json_path "${BODY}" ".[0].username" )" "neo"
+    assert_equal "$(get_json_path "${BODY}" ".[0].secure_password" )" true
+    assert_equal "$(get_json_path "${BODY}" ".[0].password" )" "JlKBxxHSwRv6J.C0/D7cV91"
+    assert_equal "$(get_json_path "${BODY}" ".[0].groups" )" "one"
 
-    assert_equal "$(get_json_path "${BODY}" ".data[1].username" )" "thomas"
-    assert_equal "$(get_json_path "${BODY}" ".data[1].secure_password" )" false
-    assert_equal "$(get_json_path "${BODY}" ".data[1].password" )" "white-rabbit"
-    assert_equal "$(get_json_path "${BODY}" ".data[1].groups" )" "one,two"
+    assert_equal "$(get_json_path "${BODY}" ".[1].username" )" "thomas"
+    assert_equal "$(get_json_path "${BODY}" ".[1].secure_password" )" false
+    assert_equal "$(get_json_path "${BODY}" ".[1].password" )" "white-rabbit"
+    assert_equal "$(get_json_path "${BODY}" ".[1].groups" )" "one,two"
 
-    assert_equal "$(get_json_path "${BODY}" ".data[2].username" )" "anderson"
-    assert_equal "$(get_json_path "${BODY}" ".data[2].secure_password" )" false
-    assert_equal "$(get_json_path "${BODY}" ".data[2].password" )" "hello"
-    assert_equal "$(get_json_path "${BODY}" ".data[2].groups" )" "two"
+    assert_equal "$(get_json_path "${BODY}" ".[2].username" )" "anderson"
+    assert_equal "$(get_json_path "${BODY}" ".[2].secure_password" )" false
+    assert_equal "$(get_json_path "${BODY}" ".[2].password" )" "hello"
+    assert_equal "$(get_json_path "${BODY}" ".[2].groups" )" "two"
 }
 
 @test "users: Return an array of users from userlist empty" {
   resource_get "$_USERS_BASE_PATH" "userlist=empty"
 	assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 0
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 0
 }
 
 @test "users: Return an array of users from non existing userlist" {

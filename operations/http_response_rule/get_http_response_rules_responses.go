@@ -45,7 +45,7 @@ type GetHTTPResponseRulesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetHTTPResponseRulesOKBody `json:"body,omitempty"`
+	Payload models.HTTPResponseRules `json:"body,omitempty"`
 }
 
 // NewGetHTTPResponseRulesOK creates GetHTTPResponseRulesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetHTTPResponseRulesOK) SetConfigurationVersion(configurationVersion st
 }
 
 // WithPayload adds the payload to the get Http response rules o k response
-func (o *GetHTTPResponseRulesOK) WithPayload(payload *GetHTTPResponseRulesOKBody) *GetHTTPResponseRulesOK {
+func (o *GetHTTPResponseRulesOK) WithPayload(payload models.HTTPResponseRules) *GetHTTPResponseRulesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Http response rules o k response
-func (o *GetHTTPResponseRulesOK) SetPayload(payload *GetHTTPResponseRulesOKBody) {
+func (o *GetHTTPResponseRulesOK) SetPayload(payload models.HTTPResponseRules) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetHTTPResponseRulesOK) WriteResponse(rw http.ResponseWriter, producer 
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.HTTPResponseRules{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

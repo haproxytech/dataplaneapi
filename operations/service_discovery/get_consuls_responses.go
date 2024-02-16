@@ -41,7 +41,7 @@ type GetConsulsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetConsulsOKBody `json:"body,omitempty"`
+	Payload models.Consuls `json:"body,omitempty"`
 }
 
 // NewGetConsulsOK creates GetConsulsOK with default headers values
@@ -51,13 +51,13 @@ func NewGetConsulsOK() *GetConsulsOK {
 }
 
 // WithPayload adds the payload to the get consuls o k response
-func (o *GetConsulsOK) WithPayload(payload *GetConsulsOKBody) *GetConsulsOK {
+func (o *GetConsulsOK) WithPayload(payload models.Consuls) *GetConsulsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get consuls o k response
-func (o *GetConsulsOK) SetPayload(payload *GetConsulsOKBody) {
+func (o *GetConsulsOK) SetPayload(payload models.Consuls) {
 	o.Payload = payload
 }
 
@@ -65,11 +65,14 @@ func (o *GetConsulsOK) SetPayload(payload *GetConsulsOKBody) {
 func (o *GetConsulsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Consuls{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

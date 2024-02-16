@@ -45,7 +45,7 @@ type GetSpoeAgentsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetSpoeAgentsOKBody `json:"body,omitempty"`
+	Payload models.SpoeAgents `json:"body,omitempty"`
 }
 
 // NewGetSpoeAgentsOK creates GetSpoeAgentsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetSpoeAgentsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get spoe agents o k response
-func (o *GetSpoeAgentsOK) WithPayload(payload *GetSpoeAgentsOKBody) *GetSpoeAgentsOK {
+func (o *GetSpoeAgentsOK) WithPayload(payload models.SpoeAgents) *GetSpoeAgentsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get spoe agents o k response
-func (o *GetSpoeAgentsOK) SetPayload(payload *GetSpoeAgentsOKBody) {
+func (o *GetSpoeAgentsOK) SetPayload(payload models.SpoeAgents) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetSpoeAgentsOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.SpoeAgents{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

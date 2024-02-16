@@ -34,21 +34,21 @@ load 'utils/_helpers'
 @test "mailers: get a section" {
   resource_get "$_MAILERS_SECTION_PATH/$_SECTION_NAME"
   assert_equal "$SC" "200"
-  assert_equal "$_SECTION_NAME" "$(get_json_path "$BODY" .data.name)"
-  assert_equal "15000" "$(get_json_path "$BODY" .data.timeout)"
+  assert_equal "$_SECTION_NAME" "$(get_json_path "$BODY" .name)"
+  assert_equal "15000" "$(get_json_path "$BODY" .timeout)"
 }
 
 @test "mailers: edit a section" {
   resource_put "$_MAILERS_SECTION_PATH/$_SECTION_NAME" "data/put_section.json" "force_reload=true"
   assert_equal "$SC" "200"
   resource_get "$_MAILERS_SECTION_PATH/$_SECTION_NAME"
-  assert_equal "30000" "$(get_json_path "$BODY" .data.timeout)"
+  assert_equal "30000" "$(get_json_path "$BODY" .timeout)"
 }
 
 @test "mailers: get a list of sections" {
   resource_get "$_MAILERS_SECTION_PATH"
   assert_equal "$SC" "200"
-  assert_equal "$_SECTION_NAME" "$(get_json_path "$BODY" .data[0].name)"
+  assert_equal "$_SECTION_NAME" "$(get_json_path "$BODY" .[0].name)"
 }
 
 @test "mailers: add entries" {
@@ -61,17 +61,17 @@ load 'utils/_helpers'
 @test "mailers: get an entry" {
   resource_get "$_MAILER_ENTRIES_PATH/smtp1" "mailers_section=$_SECTION_NAME"
   assert_equal "$SC" "200"
-  assert_equal "smtp1" "$(get_json_path "$BODY" .data.name)"
-  assert_equal "10.0.10.1" "$(get_json_path "$BODY" .data.address)"
-  assert_equal "587" "$(get_json_path "$BODY" .data.port)"
+  assert_equal "smtp1" "$(get_json_path "$BODY" .name)"
+  assert_equal "10.0.10.1" "$(get_json_path "$BODY" .address)"
+  assert_equal "587" "$(get_json_path "$BODY" .port)"
 }
 
 @test "mailers: get all entries" {
   resource_get "$_MAILER_ENTRIES_PATH" "mailers_section=$_SECTION_NAME"
   assert_equal "$SC" "200"
-  assert_equal "2" "$(get_json_path "$BODY" '.data|length')"
-  assert_equal "smtp1" "$(get_json_path "$BODY" .data[0].name)"
-  assert_equal "smtp2" "$(get_json_path "$BODY" .data[1].name)"
+  assert_equal "2" "$(get_json_path "$BODY" '.|length')"
+  assert_equal "smtp1" "$(get_json_path "$BODY" .[0].name)"
+  assert_equal "smtp2" "$(get_json_path "$BODY" .[1].name)"
 }
 
 @test "mailers: modify an entry" {
@@ -79,9 +79,9 @@ load 'utils/_helpers'
     "mailers_section=$_SECTION_NAME" "force_reload=true"
   assert_equal "$SC" "202"
   resource_get "$_MAILER_ENTRIES_PATH/smtp2" "mailers_section=$_SECTION_NAME"
-  assert_equal "smtp2" "$(get_json_path "$BODY" .data.name)"
-  assert_equal "10.0.10.88" "$(get_json_path "$BODY" .data.address)"
-  assert_equal "8587" "$(get_json_path "$BODY" .data.port)"
+  assert_equal "smtp2" "$(get_json_path "$BODY" .name)"
+  assert_equal "10.0.10.88" "$(get_json_path "$BODY" .address)"
+  assert_equal "8587" "$(get_json_path "$BODY" .port)"
 }
 
 @test "mailers: delete an entry" {

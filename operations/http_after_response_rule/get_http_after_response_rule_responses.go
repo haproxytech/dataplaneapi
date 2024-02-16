@@ -45,7 +45,7 @@ type GetHTTPAfterResponseRuleOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetHTTPAfterResponseRuleOKBody `json:"body,omitempty"`
+	Payload *models.HTTPAfterResponseRule `json:"body,omitempty"`
 }
 
 // NewGetHTTPAfterResponseRuleOK creates GetHTTPAfterResponseRuleOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetHTTPAfterResponseRuleOK) SetConfigurationVersion(configurationVersio
 }
 
 // WithPayload adds the payload to the get Http after response rule o k response
-func (o *GetHTTPAfterResponseRuleOK) WithPayload(payload *GetHTTPAfterResponseRuleOKBody) *GetHTTPAfterResponseRuleOK {
+func (o *GetHTTPAfterResponseRuleOK) WithPayload(payload *models.HTTPAfterResponseRule) *GetHTTPAfterResponseRuleOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Http after response rule o k response
-func (o *GetHTTPAfterResponseRuleOK) SetPayload(payload *GetHTTPAfterResponseRuleOKBody) {
+func (o *GetHTTPAfterResponseRuleOK) SetPayload(payload *models.HTTPAfterResponseRule) {
 	o.Payload = payload
 }
 

@@ -45,7 +45,7 @@ type GetStickRulesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetStickRulesOKBody `json:"body,omitempty"`
+	Payload models.StickRules `json:"body,omitempty"`
 }
 
 // NewGetStickRulesOK creates GetStickRulesOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetStickRulesOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get stick rules o k response
-func (o *GetStickRulesOK) WithPayload(payload *GetStickRulesOKBody) *GetStickRulesOK {
+func (o *GetStickRulesOK) WithPayload(payload models.StickRules) *GetStickRulesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get stick rules o k response
-func (o *GetStickRulesOK) SetPayload(payload *GetStickRulesOKBody) {
+func (o *GetStickRulesOK) SetPayload(payload models.StickRules) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetStickRulesOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.StickRules{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

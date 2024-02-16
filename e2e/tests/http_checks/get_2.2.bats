@@ -29,17 +29,17 @@ load 'utils/_helpers'
 	if haproxy_version_ge "2.2"
     then
 	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
-    assert_equal "$(get_json_path "$BODY" ".data.type")" "send"
-    assert_equal 1 "$(get_json_path "$BODY" ".data.headers | length")"
-    assert_equal "$(get_json_path "$BODY" ".data.headers[0].name")" "host"
-    assert_equal "$(get_json_path "$BODY" ".data.headers[0].fmt")" "haproxy.1wt.eu"
-    assert_equal "$(get_json_path "$BODY" ".data.method")" "OPTIONS"
-	assert_equal "$(get_json_path "$BODY" ".data.uri")" "/"
-	assert_equal "$(get_json_path "$BODY" ".data.version")" "HTTP/1.1"
+    assert_equal "$(get_json_path "$BODY" ".type")" "send"
+    assert_equal 1 "$(get_json_path "$BODY" ".headers | length")"
+    assert_equal "$(get_json_path "$BODY" ".headers[0].name")" "host"
+    assert_equal "$(get_json_path "$BODY" ".headers[0].fmt")" "haproxy.1wt.eu"
+    assert_equal "$(get_json_path "$BODY" ".method")" "OPTIONS"
+	assert_equal "$(get_json_path "$BODY" ".uri")" "/"
+	assert_equal "$(get_json_path "$BODY" ".version")" "HTTP/1.1"
 
 	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
-    assert_equal "$(get_json_path "$BODY" ".data.type")" "expect"
-    assert_equal "$(get_json_path "$BODY" ".data.match")" "status"
-    assert_equal "$(get_json_path "$BODY" ".data.pattern")" "200-399"
+    assert_equal "$(get_json_path "$BODY" ".type")" "expect"
+    assert_equal "$(get_json_path "$BODY" ".match")" "status"
+    assert_equal "$(get_json_path "$BODY" ".pattern")" "200-399"
 	fi
 }

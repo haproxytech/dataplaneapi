@@ -159,12 +159,12 @@ func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rul
 		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, bckRule, err := configuration.GetBackendSwitchingRule(params.Index, params.Frontend, t)
+	_, bckRule, err := configuration.GetBackendSwitchingRule(params.Index, params.Frontend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewGetBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend_switching_rule.NewGetBackendSwitchingRuleOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRuleOKBody{Version: v, Data: bckRule})
+	return backend_switching_rule.NewGetBackendSwitchingRuleOK().WithPayload(bckRule)
 }
 
 // Handle executing the request and returning a response
@@ -180,15 +180,15 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, bckRules, err := configuration.GetBackendSwitchingRules(params.Frontend, t)
+	_, bckRules, err := configuration.GetBackendSwitchingRules(params.Frontend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: models.BackendSwitchingRules{}})
+			return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(models.BackendSwitchingRules{})
 		}
 		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(&backend_switching_rule.GetBackendSwitchingRulesOKBody{Version: v, Data: bckRules})
+	return backend_switching_rule.NewGetBackendSwitchingRulesOK().WithPayload(bckRules)
 }
 
 // Handle executing the request and returning a response

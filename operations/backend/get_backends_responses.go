@@ -45,7 +45,7 @@ type GetBackendsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetBackendsOKBody `json:"body,omitempty"`
+	Payload models.Backends `json:"body,omitempty"`
 }
 
 // NewGetBackendsOK creates GetBackendsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetBackendsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get backends o k response
-func (o *GetBackendsOK) WithPayload(payload *GetBackendsOKBody) *GetBackendsOK {
+func (o *GetBackendsOK) WithPayload(payload models.Backends) *GetBackendsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get backends o k response
-func (o *GetBackendsOK) SetPayload(payload *GetBackendsOKBody) {
+func (o *GetBackendsOK) SetPayload(payload models.Backends) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetBackendsOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Backends{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

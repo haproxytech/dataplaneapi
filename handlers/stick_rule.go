@@ -161,12 +161,12 @@ func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, p
 		return stick_rule.NewGetStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rule, err := configuration.GetStickRule(params.Index, params.Backend, t)
+	_, rule, err := configuration.GetStickRule(params.Index, params.Backend, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewGetStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	return stick_rule.NewGetStickRuleOK().WithPayload(&stick_rule.GetStickRuleOKBody{Version: v, Data: rule})
+	return stick_rule.NewGetStickRuleOK().WithPayload(rule)
 }
 
 // Handle executing the request and returning a response
@@ -182,15 +182,15 @@ func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams,
 		return stick_rule.NewGetStickRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rules, err := configuration.GetStickRules(params.Backend, t)
+	_, rules, err := configuration.GetStickRules(params.Backend, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return stick_rule.NewGetStickRulesOK().WithPayload(&stick_rule.GetStickRulesOKBody{Version: v, Data: models.StickRules{}})
+			return stick_rule.NewGetStickRulesOK().WithPayload(models.StickRules{})
 		}
 		return stick_rule.NewGetStickRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return stick_rule.NewGetStickRulesOK().WithPayload(&stick_rule.GetStickRulesOKBody{Version: v, Data: rules})
+	return stick_rule.NewGetStickRulesOK().WithPayload(rules)
 }
 
 // Handle executing the request and returning a response

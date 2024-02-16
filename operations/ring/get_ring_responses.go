@@ -45,7 +45,7 @@ type GetRingOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetRingOKBody `json:"body,omitempty"`
+	Payload *models.Ring `json:"body,omitempty"`
 }
 
 // NewGetRingOK creates GetRingOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetRingOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get ring o k response
-func (o *GetRingOK) WithPayload(payload *GetRingOKBody) *GetRingOK {
+func (o *GetRingOK) WithPayload(payload *models.Ring) *GetRingOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get ring o k response
-func (o *GetRingOK) SetPayload(payload *GetRingOKBody) {
+func (o *GetRingOK) SetPayload(payload *models.Ring) {
 	o.Payload = payload
 }
 

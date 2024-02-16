@@ -45,7 +45,7 @@ type GetUsersOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetUsersOKBody `json:"body,omitempty"`
+	Payload models.Users `json:"body,omitempty"`
 }
 
 // NewGetUsersOK creates GetUsersOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetUsersOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get users o k response
-func (o *GetUsersOK) WithPayload(payload *GetUsersOKBody) *GetUsersOK {
+func (o *GetUsersOK) WithPayload(payload models.Users) *GetUsersOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get users o k response
-func (o *GetUsersOK) SetPayload(payload *GetUsersOKBody) {
+func (o *GetUsersOK) SetPayload(payload models.Users) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetUsersOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Users{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

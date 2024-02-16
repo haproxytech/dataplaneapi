@@ -26,18 +26,18 @@ load 'utils/_helpers'
 @test "cache: Return an array of caches" {
   resource_get "$_CACHE_BASE_PATH"
   assert_equal "$SC" 200
-  assert_equal 2 "$(get_json_path "$BODY" ".data | length")"
+  assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 
   for (( i=0; i<=1; i++ ))
   do
-    if [ "$(get_json_path "$BODY" ".data[$i].name")" == "test_cache" ]
+    if [ "$(get_json_path "$BODY" ".[$i].name")" == "test_cache" ]
     then
-      assert_equal 60 "$(get_json_path "$BODY" ".data[$i].max_age")"
-      assert_equal 8 "$(get_json_path "$BODY" ".data[$i].max_object_size")"
-      assert_equal 1024 "$(get_json_path "$BODY" ".data[$i].total_max_size")"
-    elif [ "$(get_json_path "$BODY" ".data[$i].name")" == "test_cache2" ]
+      assert_equal 60 "$(get_json_path "$BODY" ".[$i].max_age")"
+      assert_equal 8 "$(get_json_path "$BODY" ".[$i].max_object_size")"
+      assert_equal 1024 "$(get_json_path "$BODY" ".[$i].total_max_size")"
+    elif [ "$(get_json_path "$BODY" ".[$i].name")" == "test_cache2" ]
 	then
-      assert_equal 1024 "$(get_json_path "$BODY" ".data[$i].total_max_size")"
+      assert_equal 1024 "$(get_json_path "$BODY" ".[$i].total_max_size")"
     else
       assert_failure
     fi

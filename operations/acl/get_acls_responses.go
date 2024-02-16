@@ -45,7 +45,7 @@ type GetAclsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetAclsOKBody `json:"body,omitempty"`
+	Payload models.Acls `json:"body,omitempty"`
 }
 
 // NewGetAclsOK creates GetAclsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetAclsOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get acls o k response
-func (o *GetAclsOK) WithPayload(payload *GetAclsOKBody) *GetAclsOK {
+func (o *GetAclsOK) WithPayload(payload models.Acls) *GetAclsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get acls o k response
-func (o *GetAclsOK) SetPayload(payload *GetAclsOKBody) {
+func (o *GetAclsOK) SetPayload(payload models.Acls) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetAclsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.Acls{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

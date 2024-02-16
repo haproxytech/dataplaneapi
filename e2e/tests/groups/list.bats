@@ -26,34 +26,34 @@ load 'utils/_helpers'
 @test "groups: Return an array of groups from userlist first" {
   resource_get "$_GROUPS_BASE_PATH" "userlist=first"
 	assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 
-    assert_equal "$(get_json_path "${BODY}" ".data[0].name" )" "G1"
-    assert_equal "$(get_json_path "${BODY}" ".data[0].users" )" "tiger,scott"
+    assert_equal "$(get_json_path "${BODY}" ".[0].name" )" "G1"
+    assert_equal "$(get_json_path "${BODY}" ".[0].users" )" "tiger,scott"
 
-    assert_equal "$(get_json_path "${BODY}" ".data[1].name" )" "G2"
-    assert_equal "$(get_json_path "${BODY}" ".data[1].users" )" "scott"
+    assert_equal "$(get_json_path "${BODY}" ".[1].name" )" "G2"
+    assert_equal "$(get_json_path "${BODY}" ".[1].users" )" "scott"
 }
 
 @test "groups: Return an array of groups from userlist second" {
   resource_get "$_GROUPS_BASE_PATH" "userlist=second"
 	assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 3
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 3
 
-    assert_equal "$(get_json_path "${BODY}" ".data[0].name" )" "one"
-    assert_equal "$(get_json_path "${BODY}" ".data[0].users" )" null
+    assert_equal "$(get_json_path "${BODY}" ".[0].name" )" "one"
+    assert_equal "$(get_json_path "${BODY}" ".[0].users" )" null
 
-    assert_equal "$(get_json_path "${BODY}" ".data[1].name" )" "two"
-    assert_equal "$(get_json_path "${BODY}" ".data[1].users" )" null
+    assert_equal "$(get_json_path "${BODY}" ".[1].name" )" "two"
+    assert_equal "$(get_json_path "${BODY}" ".[1].users" )" null
 
-    assert_equal "$(get_json_path "${BODY}" ".data[2].name" )" "three"
-    assert_equal "$(get_json_path "${BODY}" ".data[2].users" )" null
+    assert_equal "$(get_json_path "${BODY}" ".[2].name" )" "three"
+    assert_equal "$(get_json_path "${BODY}" ".[2].users" )" null
 }
 
 @test "groups: Return an array of groups from userlist empty" {
   resource_get "$_GROUPS_BASE_PATH" "userlist=empty"
 	assert_equal "$SC" 200
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 0
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 0
 }
 
 @test "groups: Return an array of groups from non existing userlist" {

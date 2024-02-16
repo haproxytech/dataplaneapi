@@ -45,7 +45,7 @@ type GetHTTPRequestRuleOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetHTTPRequestRuleOKBody `json:"body,omitempty"`
+	Payload *models.HTTPRequestRule `json:"body,omitempty"`
 }
 
 // NewGetHTTPRequestRuleOK creates GetHTTPRequestRuleOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetHTTPRequestRuleOK) SetConfigurationVersion(configurationVersion stri
 }
 
 // WithPayload adds the payload to the get Http request rule o k response
-func (o *GetHTTPRequestRuleOK) WithPayload(payload *GetHTTPRequestRuleOKBody) *GetHTTPRequestRuleOK {
+func (o *GetHTTPRequestRuleOK) WithPayload(payload *models.HTTPRequestRule) *GetHTTPRequestRuleOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get Http request rule o k response
-func (o *GetHTTPRequestRuleOK) SetPayload(payload *GetHTTPRequestRuleOKBody) {
+func (o *GetHTTPRequestRuleOK) SetPayload(payload *models.HTTPRequestRule) {
 	o.Payload = payload
 }
 

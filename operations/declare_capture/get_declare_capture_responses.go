@@ -45,7 +45,7 @@ type GetDeclareCaptureOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetDeclareCaptureOKBody `json:"body,omitempty"`
+	Payload *models.Capture `json:"body,omitempty"`
 }
 
 // NewGetDeclareCaptureOK creates GetDeclareCaptureOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetDeclareCaptureOK) SetConfigurationVersion(configurationVersion strin
 }
 
 // WithPayload adds the payload to the get declare capture o k response
-func (o *GetDeclareCaptureOK) WithPayload(payload *GetDeclareCaptureOKBody) *GetDeclareCaptureOK {
+func (o *GetDeclareCaptureOK) WithPayload(payload *models.Capture) *GetDeclareCaptureOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get declare capture o k response
-func (o *GetDeclareCaptureOK) SetPayload(payload *GetDeclareCaptureOKBody) {
+func (o *GetDeclareCaptureOK) SetPayload(payload *models.Capture) {
 	o.Payload = payload
 }
 

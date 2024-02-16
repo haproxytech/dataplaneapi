@@ -45,7 +45,7 @@ type GetMailersSectionsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetMailersSectionsOKBody `json:"body,omitempty"`
+	Payload models.MailersSections `json:"body,omitempty"`
 }
 
 // NewGetMailersSectionsOK creates GetMailersSectionsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetMailersSectionsOK) SetConfigurationVersion(configurationVersion stri
 }
 
 // WithPayload adds the payload to the get mailers sections o k response
-func (o *GetMailersSectionsOK) WithPayload(payload *GetMailersSectionsOKBody) *GetMailersSectionsOK {
+func (o *GetMailersSectionsOK) WithPayload(payload models.MailersSections) *GetMailersSectionsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get mailers sections o k response
-func (o *GetMailersSectionsOK) SetPayload(payload *GetMailersSectionsOKBody) {
+func (o *GetMailersSectionsOK) SetPayload(payload models.MailersSections) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetMailersSectionsOK) WriteResponse(rw http.ResponseWriter, producer ru
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.MailersSections{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

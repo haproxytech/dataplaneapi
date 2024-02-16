@@ -161,13 +161,13 @@ func (h *GetMailersSectionHandlerImpl) Handle(params mailers.GetMailersSectionPa
 		return mailers.NewGetMailersSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, ms, err := configuration.GetMailersSection(params.Name, t)
+	_, ms, err := configuration.GetMailersSection(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return mailers.NewGetMailersSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return mailers.NewGetMailersSectionOK().WithPayload(&mailers.GetMailersSectionOKBody{Version: v, Data: ms})
+	return mailers.NewGetMailersSectionOK().WithPayload(ms)
 }
 
 // Handle executing the request and returning a response
@@ -183,13 +183,13 @@ func (h *GetMailersSectionsHandlerImpl) Handle(params mailers.GetMailersSections
 		return mailers.NewGetMailersSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, ms, err := configuration.GetMailersSections(t)
+	_, ms, err := configuration.GetMailersSections(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return mailers.NewGetMailersSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return mailers.NewGetMailersSectionsOK().WithPayload(&mailers.GetMailersSectionsOKBody{Version: v, Data: ms})
+	return mailers.NewGetMailersSectionsOK().WithPayload(ms)
 }
 
 func (h *EditMailersSectionHandlerImpl) Handle(params mailers.EditMailersSectionParams, principal interface{}) middleware.Responder {

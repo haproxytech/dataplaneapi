@@ -26,7 +26,7 @@ load 'utils/_helpers'
 @test "backend_switching_rules: Replace a Backend Switching Rule" {
   resource_get "$_BSR_BASE_PATH" "frontend=test_frontend"
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".data | length")" 2
-	assert_equal "$(get_json_path "$BODY" ".data[0].cond_test")" "{ req_ssl_sni -i first.example.com }"
-	assert_equal "$(get_json_path "$BODY" ".data[1].cond_test")" "{ req_ssl_sni -i second.example.com }"
+	assert_equal "$(get_json_path "$BODY" ". | length")" 2
+	assert_equal "$(get_json_path "$BODY" ".[0].cond_test")" "{ req_ssl_sni -i first.example.com }"
+	assert_equal "$(get_json_path "$BODY" ".[1].cond_test")" "{ req_ssl_sni -i second.example.com }"
 }

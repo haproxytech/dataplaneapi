@@ -45,7 +45,7 @@ type GetPeerEntryOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetPeerEntryOKBody `json:"body,omitempty"`
+	Payload *models.PeerEntry `json:"body,omitempty"`
 }
 
 // NewGetPeerEntryOK creates GetPeerEntryOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetPeerEntryOK) SetConfigurationVersion(configurationVersion string) {
 }
 
 // WithPayload adds the payload to the get peer entry o k response
-func (o *GetPeerEntryOK) WithPayload(payload *GetPeerEntryOKBody) *GetPeerEntryOK {
+func (o *GetPeerEntryOK) WithPayload(payload *models.PeerEntry) *GetPeerEntryOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get peer entry o k response
-func (o *GetPeerEntryOK) SetPayload(payload *GetPeerEntryOKBody) {
+func (o *GetPeerEntryOK) SetPayload(payload *models.PeerEntry) {
 	o.Payload = payload
 }
 

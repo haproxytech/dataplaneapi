@@ -203,12 +203,12 @@ func (h *GetLogTargetHandlerImpl) Handle(params log_target.GetLogTargetParams, p
 		return log_target.NewGetLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, logTarget, err := configuration.GetLogTarget(params.Index, params.ParentType, pName, t)
+	_, logTarget, err := configuration.GetLogTarget(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewGetLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
-	return log_target.NewGetLogTargetOK().WithPayload(&log_target.GetLogTargetOKBody{Version: v, Data: logTarget})
+	return log_target.NewGetLogTargetOK().WithPayload(logTarget)
 }
 
 // Handle executing the request and returning a response
@@ -237,15 +237,15 @@ func (h *GetLogTargetsHandlerImpl) Handle(params log_target.GetLogTargetsParams,
 		return log_target.NewGetLogTargetsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, logTargets, err := configuration.GetLogTargets(params.ParentType, pName, t)
+	_, logTargets, err := configuration.GetLogTargets(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return log_target.NewGetLogTargetsOK().WithPayload(&log_target.GetLogTargetsOKBody{Version: v, Data: models.LogTargets{}})
+			return log_target.NewGetLogTargetsOK().WithPayload(models.LogTargets{})
 		}
 		return log_target.NewGetLogTargetsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return log_target.NewGetLogTargetsOK().WithPayload(&log_target.GetLogTargetsOKBody{Version: v, Data: logTargets})
+	return log_target.NewGetLogTargetsOK().WithPayload(logTargets)
 }
 
 // Handle executing the request and returning a response

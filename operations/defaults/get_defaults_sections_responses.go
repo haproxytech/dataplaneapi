@@ -45,7 +45,7 @@ type GetDefaultsSectionsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *GetDefaultsSectionsOKBody `json:"body,omitempty"`
+	Payload models.DefaultsSections `json:"body,omitempty"`
 }
 
 // NewGetDefaultsSectionsOK creates GetDefaultsSectionsOK with default headers values
@@ -66,13 +66,13 @@ func (o *GetDefaultsSectionsOK) SetConfigurationVersion(configurationVersion str
 }
 
 // WithPayload adds the payload to the get defaults sections o k response
-func (o *GetDefaultsSectionsOK) WithPayload(payload *GetDefaultsSectionsOKBody) *GetDefaultsSectionsOK {
+func (o *GetDefaultsSectionsOK) WithPayload(payload models.DefaultsSections) *GetDefaultsSectionsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get defaults sections o k response
-func (o *GetDefaultsSectionsOK) SetPayload(payload *GetDefaultsSectionsOKBody) {
+func (o *GetDefaultsSectionsOK) SetPayload(payload models.DefaultsSections) {
 	o.Payload = payload
 }
 
@@ -87,11 +87,14 @@ func (o *GetDefaultsSectionsOK) WriteResponse(rw http.ResponseWriter, producer r
 	}
 
 	rw.WriteHeader(200)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if payload == nil {
+		// return empty array
+		payload = models.DefaultsSections{}
+	}
+
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 

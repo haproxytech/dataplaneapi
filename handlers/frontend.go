@@ -160,12 +160,12 @@ func (h *GetFrontendHandlerImpl) Handle(params frontend.GetFrontendParams, princ
 		return frontend.NewGetFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, f, err := configuration.GetFrontend(params.Name, t)
+	_, f, err := configuration.GetFrontend(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewGetFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return frontend.NewGetFrontendOK().WithPayload(&frontend.GetFrontendOKBody{Version: v, Data: f})
+	return frontend.NewGetFrontendOK().WithPayload(f)
 }
 
 // Handle executing the request and returning a response
@@ -181,12 +181,12 @@ func (h *GetFrontendsHandlerImpl) Handle(params frontend.GetFrontendsParams, pri
 		return frontend.NewGetFrontendsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, fs, err := configuration.GetFrontends(t)
+	_, fs, err := configuration.GetFrontends(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewGetFrontendsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return frontend.NewGetFrontendsOK().WithPayload(&frontend.GetFrontendsOKBody{Version: v, Data: fs})
+	return frontend.NewGetFrontendsOK().WithPayload(fs)
 }
 
 // Handle executing the request and returning a response

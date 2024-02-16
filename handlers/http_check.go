@@ -173,12 +173,12 @@ func (h *GetHTTPCheckHandlerImpl) Handle(params http_check.GetHTTPCheckParams, p
 		return http_check.NewGetHTTPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rule, err := configuration.GetHTTPCheck(params.Index, params.ParentType, pName, t)
+	_, rule, err := configuration.GetHTTPCheck(params.Index, params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_check.NewGetHTTPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_check.NewGetHTTPCheckOK().WithPayload(&http_check.GetHTTPCheckOKBody{Version: v, Data: rule})
+	return http_check.NewGetHTTPCheckOK().WithPayload(rule)
 }
 
 // Handle executing the request and returning a response
@@ -198,15 +198,15 @@ func (h *GetHTTPChecksHandlerImpl) Handle(params http_check.GetHTTPChecksParams,
 		return http_check.NewGetHTTPChecksDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, rules, err := configuration.GetHTTPChecks(params.ParentType, pName, t)
+	_, rules, err := configuration.GetHTTPChecks(params.ParentType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return http_check.NewGetHTTPChecksOK().WithPayload(&http_check.GetHTTPChecksOKBody{Version: v, Data: models.HTTPChecks{}})
+			return http_check.NewGetHTTPChecksOK().WithPayload(models.HTTPChecks{})
 		}
 		return http_check.NewGetHTTPChecksDefault(int(*e.Code)).WithPayload(e)
 	}
-	return http_check.NewGetHTTPChecksOK().WithPayload(&http_check.GetHTTPChecksOKBody{Version: v, Data: rules})
+	return http_check.NewGetHTTPChecksOK().WithPayload(rules)
 }
 
 // Handle executing the request and returning a response

@@ -45,7 +45,7 @@ teardown() {
     resource_get "$_SPOE_SCOPES_BASE_PATH" "spoe=spoefile_example2.cfg"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "${BODY}" ".data | length")" 2
-    assert_equal "$(get_json_path "${BODY}" ".data | .[] | select( contains(\"[ip-reputation]\") )")" "[ip-reputation]"
-    assert_equal "$(get_json_path "${BODY}" ".data | .[] | select( contains(\"[my-agent]\") )")" "[my-agent]"
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
+    assert_equal "$(get_json_path "${BODY}" ". | .[] | select( contains(\"[ip-reputation]\") )")" "[ip-reputation]"
+    assert_equal "$(get_json_path "${BODY}" ". | .[] | select( contains(\"[my-agent]\") )")" "[my-agent]"
 }

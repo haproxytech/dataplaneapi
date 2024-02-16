@@ -161,12 +161,12 @@ func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal 
 		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, p, err := configuration.GetPeerSection(params.Name, t)
+	_, p, err := configuration.GetPeerSection(params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
 	}
-	return peer.NewGetPeerSectionOK().WithPayload(&peer.GetPeerSectionOKBody{Version: v, Data: p})
+	return peer.NewGetPeerSectionOK().WithPayload(p)
 }
 
 // Handle executing the request and returning a response
@@ -182,10 +182,10 @@ func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principa
 		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, ps, err := configuration.GetPeerSections(t)
+	_, ps, err := configuration.GetPeerSections(t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
-	return peer.NewGetPeerSectionsOK().WithPayload(&peer.GetPeerSectionsOKBody{Version: v, Data: ps})
+	return peer.NewGetPeerSectionsOK().WithPayload(ps)
 }

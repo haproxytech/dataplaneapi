@@ -37,6 +37,10 @@ CommitTransactionOK Transaction successfully committed
 swagger:response commitTransactionOK
 */
 type CommitTransactionOK struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 
 	/*
 	  In: Body
@@ -48,6 +52,17 @@ type CommitTransactionOK struct {
 func NewCommitTransactionOK() *CommitTransactionOK {
 
 	return &CommitTransactionOK{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the commit transaction o k response
+func (o *CommitTransactionOK) WithConfigurationVersion(configurationVersion string) *CommitTransactionOK {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the commit transaction o k response
+func (o *CommitTransactionOK) SetConfigurationVersion(configurationVersion string) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithPayload adds the payload to the commit transaction o k response
@@ -63,6 +78,13 @@ func (o *CommitTransactionOK) SetPayload(payload *models.Transaction) {
 
 // WriteResponse to the client
 func (o *CommitTransactionOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := o.ConfigurationVersion
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	rw.WriteHeader(200)
 	if o.Payload != nil {
@@ -82,6 +104,10 @@ CommitTransactionAccepted Configuration change accepted and reload requested
 swagger:response commitTransactionAccepted
 */
 type CommitTransactionAccepted struct {
+	/*Configuration file version
+
+	 */
+	ConfigurationVersion string `json:"Configuration-Version"`
 	/*ID of the requested reload
 
 	 */
@@ -97,6 +123,17 @@ type CommitTransactionAccepted struct {
 func NewCommitTransactionAccepted() *CommitTransactionAccepted {
 
 	return &CommitTransactionAccepted{}
+}
+
+// WithConfigurationVersion adds the configurationVersion to the commit transaction accepted response
+func (o *CommitTransactionAccepted) WithConfigurationVersion(configurationVersion string) *CommitTransactionAccepted {
+	o.ConfigurationVersion = configurationVersion
+	return o
+}
+
+// SetConfigurationVersion sets the configurationVersion to the commit transaction accepted response
+func (o *CommitTransactionAccepted) SetConfigurationVersion(configurationVersion string) {
+	o.ConfigurationVersion = configurationVersion
 }
 
 // WithReloadID adds the reloadId to the commit transaction accepted response
@@ -123,6 +160,13 @@ func (o *CommitTransactionAccepted) SetPayload(payload *models.Transaction) {
 
 // WriteResponse to the client
 func (o *CommitTransactionAccepted) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header Configuration-Version
+
+	configurationVersion := o.ConfigurationVersion
+	if configurationVersion != "" {
+		rw.Header().Set("Configuration-Version", configurationVersion)
+	}
 
 	// response header Reload-ID
 

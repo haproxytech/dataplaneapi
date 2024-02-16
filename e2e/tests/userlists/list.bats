@@ -26,5 +26,5 @@ load 'utils/_helpers'
 @test "userlists: Return an array of userlists" {
   resource_get "$_USERLISTS_BASE_PATH"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "${BODY}" ".data | length")" 6
+  assert_equal "$(get_json_path "${BODY}" ". | length")" 6
 }

@@ -26,5 +26,5 @@ load 'utils/_helpers'
 @test "process-manager: Return an array of programs" {
   resource_get "$_PROGRAMS_BASE_PATH"
   assert_equal "$SC" 200
-  assert_equal 1 "$(get_json_path "$BODY" ".data | length")"
+  assert_equal 1 "$(get_json_path "$BODY" ". | length")"
 }

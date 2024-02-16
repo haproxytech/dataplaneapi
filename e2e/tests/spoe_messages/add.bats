@@ -48,7 +48,7 @@ teardown() {
     resource_get "$_SPOE_MESSAGES_BASE_PATH/message1" "spoe=spoefile_example.cfg&scope=\[ip-reputation\]"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "${BODY}" ".data")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
+    assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
 
     # refuse adding an existing spoe message
     resource_post "$_SPOE_MESSAGES_BASE_PATH" "/data/post.json" "spoe=spoefile_example.cfg&scope=%5Bip-reputation%5D"

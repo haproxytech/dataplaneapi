@@ -48,5 +48,5 @@ teardown() {
     resource_get "$_SPOE_MESSAGES_BASE_PATH/check-ip" "spoe=spoefile_example2.cfg&version=1&scope=\[ip-reputation\]"
     assert_equal "$SC" 200
 
-    assert_equal "$(get_json_path "${BODY}" ".data")" "$(cat ${BATS_TEST_DIRNAME}/data/put.json)"
+    assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/put.json)"
 }

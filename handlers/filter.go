@@ -160,12 +160,12 @@ func (h *GetFilterHandlerImpl) Handle(params filter.GetFilterParams, principal i
 		return filter.NewGetFilterDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, f, err := configuration.GetFilter(params.Index, params.ParentType, params.ParentName, t)
+	_, f, err := configuration.GetFilter(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewGetFilterDefault(int(*e.Code)).WithPayload(e)
 	}
-	return filter.NewGetFilterOK().WithPayload(&filter.GetFilterOKBody{Version: v, Data: f})
+	return filter.NewGetFilterOK().WithPayload(f)
 }
 
 // Handle executing the request and returning a response
@@ -181,15 +181,15 @@ func (h *GetFiltersHandlerImpl) Handle(params filter.GetFiltersParams, principal
 		return filter.NewGetFiltersDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	v, fs, err := configuration.GetFilters(params.ParentType, params.ParentName, t)
+	_, fs, err := configuration.GetFilters(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: models.Filters{}})
+			return filter.NewGetFiltersOK().WithPayload(models.Filters{})
 		}
 		return filter.NewGetFiltersDefault(int(*e.Code)).WithPayload(e)
 	}
-	return filter.NewGetFiltersOK().WithPayload(&filter.GetFiltersOKBody{Version: v, Data: fs})
+	return filter.NewGetFiltersOK().WithPayload(fs)
 }
 
 // Handle executing the request and returning a response
