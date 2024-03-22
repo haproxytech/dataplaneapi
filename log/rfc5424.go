@@ -18,8 +18,10 @@ package log
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/nathanaelle/syslog5424/v2"
+	circuit "github.com/rubyist/circuitbreaker"
 	"github.com/sirupsen/logrus"
 )
 
@@ -27,6 +29,10 @@ type RFC5424Hook struct {
 	syslog *syslog5424.Syslog
 	sender *syslog5424.Sender
 	msgID  string
+
+	// Use a circuit breaker to pause sending messages to the syslog target
+	// in the presence of connection errors.
+	cb *circuit.Breaker
 }
 
 func (r RFC5424Hook) Levels() []logrus.Level {
@@ -58,7 +64,13 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 
 	msg := strings.Join(messages, " ")
 
-	r.syslog.Channel(sev).Msgid(r.msgID).Log(msg)
+	// Do not perform any action unless the circuit breaker is either closed (reset), or is ready to retry.
+	if r.cb.Ready() {
+		r.syslog.Channel(sev).Msgid(r.msgID).Log(msg)
+		// Register any call as successful to enable automatic resets.
+		// Failures are registered asynchronously by the goroutine that consumes errors from the corresponding channel.
+		r.cb.Success()
+	}
 
 	return
 }
@@ -74,7 +86,9 @@ func NewRFC5424Hook(opts Target) (logrus.Hook, error) {
 		return nil, err
 	}
 
-	slConn, _, err := syslog5424.Dial(opts.SyslogProto, opts.SyslogAddr)
+	// syslog5424.Dial() returns an error channel, which needs to be drained
+	// in order to avoid blocking.
+	slConn, errCh, err := syslog5424.Dial(opts.SyslogProto, opts.SyslogAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -84,10 +98,64 @@ func NewRFC5424Hook(opts Target) (logrus.Hook, error) {
 		return nil, err
 	}
 
-	return &RFC5424Hook{syslog: syslogServer, sender: slConn, msgID: opts.SyslogMsgID}, nil
+	r := &RFC5424Hook{
+		syslog: syslogServer, sender: slConn, msgID: opts.SyslogMsgID,
+		// We can change the circuit breaker settings as desired - including making
+		// them configurable and/or dynamically adjustable based on runtime conditions.
+		//
+		// Please note, however, that a 3-failure threshold breaker with default settings
+		// was found to work well with varying load and different states of a log target.
+		// Specifically, the breaker will remain tripped when sending messages to the target
+		// that is consistently failing, and will reset quickly when delivery begins to succeed.
+		cb: circuit.NewThresholdBreaker(3),
+	}
+
+	// A signal channel that is used to stop the goroutine reporting on circuit breaker state changes.
+	doneCh := make(chan struct{})
+
+	// Consume errors from errCh until it is closed.
+	go func() {
+		for {
+			err, ok := <-errCh
+			if err != nil {
+				r.cb.Fail() // Register a failure with the circuit breaker.
+			}
+			if !ok {
+				close(doneCh)
+				return
+			}
+		}
+	}()
+
+	// Report on circuit breaker state changes.
+	cbStateCh := r.cb.Subscribe()
+	go func() {
+		for {
+			select {
+			case e, ok := <-cbStateCh:
+				if !ok {
+					return
+				}
+				var state string
+				switch e {
+				case circuit.BreakerTripped:
+					state = "too many connection errors, log delivery is stopped until this improves"
+				case circuit.BreakerReset:
+					state = "resuming log delivery"
+				default:
+					continue
+				}
+				fmt.Println(time.Now().Format(time.RFC3339), "syslog target", opts.SyslogAddr, "("+opts.SyslogTag+"):", state)
+			case <-doneCh:
+				return
+			}
+		}
+	}()
+
+	return r, nil
 }
 
 func (r RFC5424Hook) Close() error {
-	r.sender.End()
+	r.sender.End() // This will also close errCh returned by syslog.Dial() in NewRFC5424Hook(), causing related goroutines to exit.
 	return nil
 }
