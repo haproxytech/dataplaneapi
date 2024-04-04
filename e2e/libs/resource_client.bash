@@ -37,10 +37,10 @@ function resource_put() {
 }
 
 function resource_delete() {
-  local endpoint;  endpoint="$1"; shift
+	local endpoint;  endpoint="$1"; shift
 	local qs_params; qs_params="$1"
-    get_version
-	run dpa_curl DELETE "$endpoint?$qs_params&version=${VERSION}" "$data"
+	get_version
+	run dpa_curl DELETE "$endpoint?$qs_params&version=${VERSION}"
 	assert_success
 	dpa_curl_status_body '$output'
 }
