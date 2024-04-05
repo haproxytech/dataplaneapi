@@ -131,10 +131,9 @@ func newAWSRegionInstance(ctx context.Context, params *models.AwsRegion, client 
 func (a *awsInstance) filterConverter(in []*models.AwsFilters) (out []types.Filter) {
 	out = make([]types.Filter, len(in))
 	for i, l := range in {
-		filter := l
 		out[i] = types.Filter{
-			Name:   filter.Key,
-			Values: []string{aws.ToString(filter.Value)},
+			Name:   l.Key,
+			Values: []string{aws.ToString(l.Value)},
 		}
 	}
 	return

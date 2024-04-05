@@ -18,6 +18,7 @@ package haproxy
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -42,10 +43,10 @@ const (
 
 type IReloadAgent interface {
 	Reload() string
-	ReloadWithCallback(func()) string
+	ReloadWithCallback(callback func()) string
 	Restart() error
 	ForceReload() error
-	ForceReloadWithCallback(func()) error
+	ForceReloadWithCallback(callback func()) error
 	Status() (bool, error)
 	GetReloads() models.Reloads
 	GetReload(id string) *models.Reload
@@ -479,7 +480,7 @@ func (ra *ReloadAgent) Status() (bool, error) {
 
 func (ra *ReloadAgent) status() (bool, error) {
 	if ra.statusCmd == "" {
-		return false, fmt.Errorf("status command not configured")
+		return false, errors.New("status command not configured")
 	}
 	resp, err := execCmd(ra.statusCmd)
 	if err != nil {
@@ -511,7 +512,7 @@ type ReloadError struct {
 
 // Error implementation for ConfError
 func (e *ReloadError) Error() string {
-	return fmt.Sprintf(e.msg)
+	return e.msg
 }
 
 // NewReloadError constructor for ReloadError

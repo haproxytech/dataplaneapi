@@ -33,7 +33,7 @@ var RuntimeSupportedFields = map[string][]string{
 
 // ChangeThroughRuntimeAPI checks if something can be changed through the runtime API, and
 // returns false if reload is not needed, or true if needed.
-func changeThroughRuntimeAPI(data, ondisk interface{}, parentName, parentType string, client client_native.HAProxyClient) (reload bool) {
+func changeThroughRuntimeAPI(data, ondisk interface{}, parentName string, client client_native.HAProxyClient) (reload bool) {
 	// reflect kinds and values are loosely checked as they are bound strictly in
 	// schema, but in case of any panic, we will log and reload to ensure
 	// changes go through
@@ -183,7 +183,7 @@ func compareObjects(data, ondisk interface{}) []string {
 	diff := make([]string, 0)
 	dataVal := reflect.ValueOf(data)
 	ondiskVal := reflect.ValueOf(ondisk)
-	for i := 0; i < dataVal.NumField(); i++ {
+	for i := range dataVal.NumField() {
 		fName := dataVal.Type().Field(i).Name
 		dataField := dataVal.FieldByName(fName)
 		ondiskField := ondiskVal.FieldByName(fName)

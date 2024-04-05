@@ -96,7 +96,7 @@ func (ms *MapSync) Sync(mp *models.Map, client client_native.HAProxyClient) (boo
 	sort.Slice(fileEntries, func(i, j int) bool { return fileEntries[i].Key < fileEntries[j].Key })
 
 	// runtime map entries
-	id := fmt.Sprintf("#%s", mp.ID)
+	id := "#" + mp.ID
 	runtimeEntries, err := runtime.ShowMapEntries(id)
 	if err != nil {
 		return false, fmt.Errorf("getting runtime entries error: id: %s %s", id, err.Error())
@@ -144,7 +144,7 @@ func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 		maxRandom = max
 	}
 
-	for i := 0; i < maxRandom; i++ {
+	for range maxRandom {
 		// There's no need for strong number generation, here, just need for performance
 		r := rand.Intn(max)
 		if len(index) > 0 {

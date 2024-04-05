@@ -16,7 +16,7 @@
 package handlers
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v6"
@@ -60,10 +60,10 @@ func bindTypeParams(frontend *string, parentType *string, parentName *string) (p
 		return "frontend", *frontend, nil
 	}
 	if parentType == nil || *parentType == "" {
-		return "", "", fmt.Errorf("parentType empty")
+		return "", "", errors.New("parentType empty")
 	}
 	if parentName == nil || *parentName == "" {
-		return "", "", fmt.Errorf("parentName empty")
+		return "", "", errors.New("parentName empty")
 	}
 	return *parentType, *parentName, nil
 }

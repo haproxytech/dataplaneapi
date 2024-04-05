@@ -222,7 +222,7 @@ func getExample(att Attribute) string {
 	if att.Example != "" {
 		if att.Type == "int" {
 			i, _ := strconv.ParseInt(att.Example, 10, 64)
-			return fmt.Sprintf("%d", i)
+			return strconv.FormatInt(i, 10)
 		}
 		return att.Example
 	}
@@ -243,7 +243,7 @@ func getExample(att Attribute) string {
 	if v, ok := itemDefaults[att.FileName]; ok {
 		switch t := v.(type) {
 		case int:
-			return fmt.Sprintf("%d", v.(int))
+			return strconv.Itoa(v.(int))
 		default:
 			return t.(string)
 		}
