@@ -16,7 +16,7 @@
 package handlers
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v5"
@@ -61,10 +61,10 @@ func serverTypeParams(backend *string, parentType *string, parentName *string) (
 		return "backend", *backend, nil
 	}
 	if parentType == nil || *parentType == "" {
-		return "", "", fmt.Errorf("parentType empty")
+		return "", "", errors.New("parentType empty")
 	}
 	if parentName == nil || *parentName == "" {
-		return "", "", fmt.Errorf("parentName empty")
+		return "", "", errors.New("parentName empty")
 	}
 	return *parentType, *parentName, nil
 }
@@ -308,7 +308,7 @@ func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, pri
 		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
-		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, pType, "", h.Client)
+		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, pName, h.Client)
 		if reload {
 			if *params.ForceReload {
 				err := h.ReloadAgent.ForceReload()

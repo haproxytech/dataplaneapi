@@ -16,6 +16,7 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 	"strings"
@@ -255,7 +256,7 @@ func (h *EditClusterHandlerImpl) Handle(params cluster.EditClusterParams, princi
 		}
 		return cluster.NewEditClusterOK().WithPayload(getClusterSettings(h.Config))
 	}
-	return h.err406(fmt.Errorf("dataplaneapi in single mode"))
+	return h.err406(errors.New("dataplaneapi in single mode"))
 }
 
 func (h *EditClusterHandlerImpl) err406(err error) middleware.Responder {

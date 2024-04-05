@@ -25,6 +25,7 @@ import (
 	"crypto/x509/pkix"
 	"encoding/asn1"
 	"encoding/pem"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -149,7 +150,7 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 
 	req, err := http.NewRequest(http.MethodPatch, url, bytes.NewBuffer(bytesRepresentation))
 	if err != nil {
-		return fmt.Errorf("error creating new POST request for cluster comunication")
+		return errors.New("error creating new POST request for cluster comunication")
 	}
 	req.Header.Add("X-Node-Key", c.cfg.Cluster.Token.Load())
 	req.Header.Add("Content-Type", "application/json")

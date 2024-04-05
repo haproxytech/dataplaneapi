@@ -322,7 +322,7 @@ func CreateClusterUser() (types.User, string, error) {
 	if err != nil {
 		return types.User{}, "", err
 	}
-	name = fmt.Sprintf("dpapi-c-%s", name)
+	name = "dpapi-c" + name
 	log.Infof("Creating user %s for cluster connection", name)
 	user := types.User{
 		Name:       name,

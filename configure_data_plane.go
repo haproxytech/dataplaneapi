@@ -1041,6 +1041,7 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 				reloadConfigurationFile(client, haproxyOptions, users)
 			}
 		case <-ctx.Done():
+			cancel()
 			return
 		}
 	}

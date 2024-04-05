@@ -16,6 +16,7 @@
 package discovery
 
 import (
+	"errors"
 	"fmt"
 	"sync"
 )
@@ -72,7 +73,7 @@ func (s *instanceStore) Create(name string, service interface{}) error {
 	defer s.mu.Unlock()
 
 	if _, err := s.get(name); err == nil {
-		return fmt.Errorf("instance already exists")
+		return errors.New("instance already exists")
 	}
 
 	s.store[name] = service
@@ -102,7 +103,7 @@ func (s *instanceStore) get(name string) (sd interface{}, err error) {
 	var ok bool
 	sd, ok = s.store[name]
 	if !ok {
-		return nil, fmt.Errorf("instance not found")
+		return nil, errors.New("instance not found")
 	}
 	return
 }

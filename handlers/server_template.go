@@ -232,7 +232,7 @@ func (h *ReplaceServerTemplateHandlerImpl) Handle(params server_template.Replace
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
-		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, params.Backend, "", h.Client)
+		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, params.Backend, h.Client)
 		if reload {
 			if *params.ForceReload {
 				err := h.ReloadAgent.ForceReload()

@@ -327,7 +327,7 @@ func (c *consulInstance) queryHealthService(se string, params *queryParams) ([]*
 func (c *consulInstance) doConsulQuery(method string, path string, params *queryParams, resp interface{}) (*queryMetadata, error) {
 	mode := "http://"
 	if c.params.Mode != nil {
-		mode = fmt.Sprintf("%s://", *c.params.Mode)
+		mode = *c.params.Mode + "://"
 	}
 	fullPath, err := url.JoinPath(
 		mode,
