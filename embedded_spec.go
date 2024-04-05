@@ -16431,14 +16431,14 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "ssl-hello-chk",
-            "smtpchk",
+            "httpchk",
             "ldap-check",
             "mysql-check",
             "pgsql-check",
-            "tcp-check",
             "redis-check",
-            "httpchk"
+            "smtpchk",
+            "ssl-hello-chk",
+            "tcp-check"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -17153,17 +17153,17 @@ func init() {
         "algorithm": {
           "type": "string",
           "enum": [
-            "roundrobin",
-            "static-rr",
-            "leastconn",
             "first",
-            "source",
-            "uri",
-            "url_param",
+            "hash",
             "hdr",
+            "leastconn",
             "random",
             "rdp-cookie",
-            "hash"
+            "roundrobin",
+            "source",
+            "static-rr",
+            "uri",
+            "url_param"
           ]
         },
         "hash_expression": {
@@ -17898,6 +17898,16 @@ func init() {
     "compression": {
       "type": "object",
       "properties": {
+        "algo-req": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "gzip",
+            "deflate",
+            "raw-deflate"
+          ],
+          "x-omitempty": true
+        },
         "algorithms": {
           "type": "array",
           "items": {
@@ -17911,10 +17921,46 @@ func init() {
           },
           "x-omitempty": true
         },
+        "algos-res": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "gzip",
+              "deflate",
+              "raw-deflate"
+            ]
+          },
+          "x-omitempty": true
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response",
+            "both"
+          ],
+          "x-omitempty": true
+        },
         "offload": {
           "type": "boolean"
         },
         "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-req": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-res": {
           "type": "array",
           "items": {
             "type": "string"
@@ -18250,14 +18296,14 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "ssl-hello-chk",
-            "smtpchk",
+            "httpchk",
             "ldap-check",
             "mysql-check",
             "pgsql-check",
-            "tcp-check",
             "redis-check",
-            "httpchk"
+            "smtpchk",
+            "ssl-hello-chk",
+            "tcp-check"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -19502,13 +19548,13 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
-            "trace",
-            "compression",
-            "spoe",
-            "cache",
-            "fcgi-app",
             "bwlim-in",
-            "bwlim-out"
+            "bwlim-out",
+            "cache",
+            "compression",
+            "fcgi-app",
+            "spoe",
+            "trace"
           ],
           "x-nullable": false
         }
@@ -21526,6 +21572,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             }
@@ -21538,7 +21585,8 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
-                "sc-inc-gpc"
+                "sc-inc-gpc",
+                "sc-set-gpt"
               ]
             }
           }
@@ -21604,6 +21652,7 @@ func init() {
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "set-header",
             "set-log-level",
@@ -22593,7 +22642,7 @@ func init() {
             "path-strip-dot",
             "path-strip-dotdot",
             "percent-decode-unreserved",
-            "percent-to-upercase",
+            "percent-to-uppercase",
             "query-sort-by-name"
           ],
           "x-dependency": {
@@ -22620,7 +22669,7 @@ func init() {
             "normalizer": {
               "value": [
                 "percent-decode-unreserved",
-                "percent-to-upercase"
+                "percent-to-uppercase"
               ]
             },
             "type": {
@@ -22702,7 +22751,6 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "redirect"
             }
           },
@@ -22848,6 +22896,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             }
@@ -22860,7 +22909,8 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
-                "sc-inc-gpc"
+                "sc-inc-gpc",
+                "sc-set-gpt"
               ]
             }
           }
@@ -23087,6 +23137,7 @@ func init() {
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "send-spoe-group",
             "set-dst",
@@ -23674,6 +23725,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             }
@@ -23686,7 +23738,8 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
-                "sc-inc-gpc"
+                "sc-inc-gpc",
+                "sc-set-gpt"
               ]
             }
           }
@@ -23913,6 +23966,7 @@ func init() {
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "send-spoe-group",
             "set-header",
@@ -24968,6 +25022,13 @@ func init() {
           },
           "x-nullable": true
         },
+        "last_chk": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
         "lastchg": {
           "type": "integer",
           "x-dependency": {
@@ -25220,6 +25281,7 @@ func init() {
         "hrsp_other": 0,
         "iid": 0,
         "intercepted": 346,
+        "last_chk": "L4OK in 0ms",
         "mode": "http",
         "pid": 3204,
         "rate": 64,
@@ -26243,13 +26305,13 @@ func init() {
           "items": {
             "type": "string",
             "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
               "authority",
+              "cert-cn",
+              "cert-key",
+              "cert-sig",
               "crc32c",
+              "ssl",
+              "ssl-cipher",
               "unique-id"
             ]
           },
@@ -26862,13 +26924,13 @@ func init() {
           "items": {
             "type": "string",
             "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
               "authority",
+              "cert-cn",
+              "cert-key",
+              "cert-sig",
               "crc32c",
+              "ssl",
+              "ssl-cipher",
               "unique-id"
             ]
           },
@@ -27646,14 +27708,14 @@ func init() {
             "name": {
               "type": "string",
               "enum": [
-                "on-client-session",
-                "on-server-session",
-                "on-frontend-tcp-request",
-                "on-backend-tcp-request",
-                "on-tcp-response",
-                "on-frontend-http-request",
                 "on-backend-http-request",
-                "on-http-response"
+                "on-backend-tcp-request",
+                "on-client-session",
+                "on-frontend-http-request",
+                "on-frontend-tcp-request",
+                "on-http-response",
+                "on-server-session",
+                "on-tcp-response"
               ]
             }
           }
@@ -28066,25 +28128,25 @@ func init() {
               "field": {
                 "type": "string",
                 "enum": [
-                  "server_id",
+                  "bytes_in_cnt",
+                  "bytes_in_rate",
+                  "bytes_out_cnt",
+                  "bytes_out_rate",
+                  "conn_cnt",
+                  "conn_cur",
+                  "conn_rate",
                   "gpc0",
                   "gpc0_rate",
                   "gpc1",
                   "gpc1_rate",
                   "gpt0",
-                  "conn_cnt",
-                  "conn_cur",
-                  "conn_rate",
-                  "sess_cnt",
-                  "sess_rate",
                   "http_req_cnt",
                   "http_req_rate",
                   "http_err_cnt",
                   "http_err_rate",
-                  "bytes_in_cnt",
-                  "bytes_in_rate",
-                  "bytes_out_cnt",
-                  "bytes_out_rate"
+                  "server_id",
+                  "sess_cnt",
+                  "sess_rate"
                 ]
               },
               "period": {
@@ -28675,34 +28737,35 @@ func init() {
             "do-resolve",
             "expect-netscaler-cip",
             "expect-proxy",
+            "lua",
             "reject",
             "sc-add-gpc",
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
-            "send-spoe-group",
+            "set-bandwidth-limit",
             "set-dst-port",
             "set-dst",
+            "set-log-level",
+            "set-mark",
+            "set-nice",
             "set-priority",
             "set-src",
+            "set-src-port",
+            "set-tos",
             "set-var",
+            "set-var-fmt",
+            "send-spoe-group",
             "silent-drop",
+            "switch-mode",
             "track-sc0",
             "track-sc1",
             "track-sc2",
             "track-sc",
             "unset-var",
-            "use-service",
-            "lua",
-            "set-bandwidth-limit",
-            "set-src-port",
-            "set-mark",
-            "set-tos",
-            "set-var-fmt",
-            "set-log-level",
-            "set-nice",
-            "switch-mode"
+            "use-service"
           ],
           "x-dependency": {
             "type": {
@@ -28833,12 +28896,12 @@ func init() {
               "required": true,
               "value": [
                 "do-resolve",
-                "set-var",
-                "set-src",
-                "set-priority",
                 "set-dst",
                 "set-dst-port",
-                "set-src-port"
+                "set-priority",
+                "set-src",
+                "set-src-port",
+                "set-var"
               ]
             },
             "type": {
@@ -29036,7 +29099,9 @@ func init() {
           "x-dependency": {
             "action": {
               "required": true,
-              "value": null
+              "value": [
+                "sc-set-gpt"
+              ]
             },
             "type": {
               "required": true,
@@ -29059,6 +29124,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             },
@@ -29352,16 +29418,17 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
-            "reject",
-            "lua",
-            "set-bandwidth-limit",
             "close",
+            "lua",
+            "reject",
             "sc-add-gpc",
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "send-spoe-group",
+            "set-bandwidth-limit",
             "set-log-level",
             "set-mark",
             "set-nice",
@@ -29568,6 +29635,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             },
@@ -29583,6 +29651,7 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
+                "sc-set-gpt",
                 "sc-inc-gpc"
               ]
             },
@@ -55072,14 +55141,14 @@ func init() {
         "name": {
           "type": "string",
           "enum": [
-            "on-client-session",
-            "on-server-session",
-            "on-frontend-tcp-request",
-            "on-backend-tcp-request",
-            "on-tcp-response",
-            "on-frontend-http-request",
             "on-backend-http-request",
-            "on-http-response"
+            "on-backend-tcp-request",
+            "on-client-session",
+            "on-frontend-http-request",
+            "on-frontend-tcp-request",
+            "on-http-response",
+            "on-server-session",
+            "on-tcp-response"
           ]
         }
       }
@@ -55090,25 +55159,25 @@ func init() {
         "field": {
           "type": "string",
           "enum": [
-            "server_id",
+            "bytes_in_cnt",
+            "bytes_in_rate",
+            "bytes_out_cnt",
+            "bytes_out_rate",
+            "conn_cnt",
+            "conn_cur",
+            "conn_rate",
             "gpc0",
             "gpc0_rate",
             "gpc1",
             "gpc1_rate",
             "gpt0",
-            "conn_cnt",
-            "conn_cur",
-            "conn_rate",
-            "sess_cnt",
-            "sess_rate",
             "http_req_cnt",
             "http_req_rate",
             "http_err_cnt",
             "http_err_rate",
-            "bytes_in_cnt",
-            "bytes_in_rate",
-            "bytes_out_cnt",
-            "bytes_out_rate"
+            "server_id",
+            "sess_cnt",
+            "sess_rate"
           ]
         },
         "period": {
@@ -55372,14 +55441,14 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "ssl-hello-chk",
-            "smtpchk",
+            "httpchk",
             "ldap-check",
             "mysql-check",
             "pgsql-check",
-            "tcp-check",
             "redis-check",
-            "httpchk"
+            "smtpchk",
+            "ssl-hello-chk",
+            "tcp-check"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -56094,17 +56163,17 @@ func init() {
         "algorithm": {
           "type": "string",
           "enum": [
-            "roundrobin",
-            "static-rr",
-            "leastconn",
             "first",
-            "source",
-            "uri",
-            "url_param",
+            "hash",
             "hdr",
+            "leastconn",
             "random",
             "rdp-cookie",
-            "hash"
+            "roundrobin",
+            "source",
+            "static-rr",
+            "uri",
+            "url_param"
           ]
         },
         "hash_expression": {
@@ -56813,6 +56882,16 @@ func init() {
     "compression": {
       "type": "object",
       "properties": {
+        "algo-req": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "gzip",
+            "deflate",
+            "raw-deflate"
+          ],
+          "x-omitempty": true
+        },
         "algorithms": {
           "type": "array",
           "items": {
@@ -56826,10 +56905,46 @@ func init() {
           },
           "x-omitempty": true
         },
+        "algos-res": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "gzip",
+              "deflate",
+              "raw-deflate"
+            ]
+          },
+          "x-omitempty": true
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response",
+            "both"
+          ],
+          "x-omitempty": true
+        },
         "offload": {
           "type": "boolean"
         },
         "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-req": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-res": {
           "type": "array",
           "items": {
             "type": "string"
@@ -57151,14 +57266,14 @@ func init() {
         "adv_check": {
           "type": "string",
           "enum": [
-            "ssl-hello-chk",
-            "smtpchk",
+            "httpchk",
             "ldap-check",
             "mysql-check",
             "pgsql-check",
-            "tcp-check",
             "redis-check",
-            "httpchk"
+            "smtpchk",
+            "ssl-hello-chk",
+            "tcp-check"
           ],
           "x-display-name": "Advanced Check"
         },
@@ -58403,13 +58518,13 @@ func init() {
         "type": {
           "type": "string",
           "enum": [
-            "trace",
-            "compression",
-            "spoe",
-            "cache",
-            "fcgi-app",
             "bwlim-in",
-            "bwlim-out"
+            "bwlim-out",
+            "cache",
+            "compression",
+            "fcgi-app",
+            "spoe",
+            "trace"
           ],
           "x-nullable": false
         }
@@ -60268,6 +60383,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             }
@@ -60280,7 +60396,8 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
-                "sc-inc-gpc"
+                "sc-inc-gpc",
+                "sc-set-gpt"
               ]
             }
           }
@@ -60346,6 +60463,7 @@ func init() {
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "set-header",
             "set-log-level",
@@ -61335,7 +61453,7 @@ func init() {
             "path-strip-dot",
             "path-strip-dotdot",
             "percent-decode-unreserved",
-            "percent-to-upercase",
+            "percent-to-uppercase",
             "query-sort-by-name"
           ],
           "x-dependency": {
@@ -61362,7 +61480,7 @@ func init() {
             "normalizer": {
               "value": [
                 "percent-decode-unreserved",
-                "percent-to-upercase"
+                "percent-to-uppercase"
               ]
             },
             "type": {
@@ -61444,7 +61562,6 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "redirect"
             }
           },
@@ -61590,6 +61707,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             }
@@ -61602,7 +61720,8 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
-                "sc-inc-gpc"
+                "sc-inc-gpc",
+                "sc-set-gpt"
               ]
             }
           }
@@ -61829,6 +61948,7 @@ func init() {
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "send-spoe-group",
             "set-dst",
@@ -62416,6 +62536,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             }
@@ -62428,7 +62549,8 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
-                "sc-inc-gpc"
+                "sc-inc-gpc",
+                "sc-set-gpt"
               ]
             }
           }
@@ -62655,6 +62777,7 @@ func init() {
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "send-spoe-group",
             "set-header",
@@ -63711,6 +63834,13 @@ func init() {
           },
           "x-nullable": true
         },
+        "last_chk": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
         "lastchg": {
           "type": "integer",
           "x-dependency": {
@@ -63963,6 +64093,7 @@ func init() {
         "hrsp_other": 0,
         "iid": 0,
         "intercepted": 346,
+        "last_chk": "L4OK in 0ms",
         "mode": "http",
         "pid": 3204,
         "rate": 64,
@@ -64986,13 +65117,13 @@ func init() {
           "items": {
             "type": "string",
             "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
               "authority",
+              "cert-cn",
+              "cert-key",
+              "cert-sig",
               "crc32c",
+              "ssl",
+              "ssl-cipher",
               "unique-id"
             ]
           },
@@ -65605,13 +65736,13 @@ func init() {
           "items": {
             "type": "string",
             "enum": [
-              "ssl",
-              "cert-cn",
-              "ssl-cipher",
-              "cert-sig",
-              "cert-key",
               "authority",
+              "cert-cn",
+              "cert-key",
+              "cert-sig",
               "crc32c",
+              "ssl",
+              "ssl-cipher",
               "unique-id"
             ]
           },
@@ -66325,14 +66456,14 @@ func init() {
             "name": {
               "type": "string",
               "enum": [
-                "on-client-session",
-                "on-server-session",
-                "on-frontend-tcp-request",
-                "on-backend-tcp-request",
-                "on-tcp-response",
-                "on-frontend-http-request",
                 "on-backend-http-request",
-                "on-http-response"
+                "on-backend-tcp-request",
+                "on-client-session",
+                "on-frontend-http-request",
+                "on-frontend-tcp-request",
+                "on-http-response",
+                "on-server-session",
+                "on-tcp-response"
               ]
             }
           }
@@ -67312,34 +67443,35 @@ func init() {
             "do-resolve",
             "expect-netscaler-cip",
             "expect-proxy",
+            "lua",
             "reject",
             "sc-add-gpc",
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
-            "send-spoe-group",
+            "set-bandwidth-limit",
             "set-dst-port",
             "set-dst",
+            "set-log-level",
+            "set-mark",
+            "set-nice",
             "set-priority",
             "set-src",
+            "set-src-port",
+            "set-tos",
             "set-var",
+            "set-var-fmt",
+            "send-spoe-group",
             "silent-drop",
+            "switch-mode",
             "track-sc0",
             "track-sc1",
             "track-sc2",
             "track-sc",
             "unset-var",
-            "use-service",
-            "lua",
-            "set-bandwidth-limit",
-            "set-src-port",
-            "set-mark",
-            "set-tos",
-            "set-var-fmt",
-            "set-log-level",
-            "set-nice",
-            "switch-mode"
+            "use-service"
           ],
           "x-dependency": {
             "type": {
@@ -67470,12 +67602,12 @@ func init() {
               "required": true,
               "value": [
                 "do-resolve",
-                "set-var",
-                "set-src",
-                "set-priority",
                 "set-dst",
                 "set-dst-port",
-                "set-src-port"
+                "set-priority",
+                "set-src",
+                "set-src-port",
+                "set-var"
               ]
             },
             "type": {
@@ -67673,7 +67805,9 @@ func init() {
           "x-dependency": {
             "action": {
               "required": true,
-              "value": []
+              "value": [
+                "sc-set-gpt"
+              ]
             },
             "type": {
               "required": true,
@@ -67696,6 +67830,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             },
@@ -67989,16 +68124,17 @@ func init() {
           "type": "string",
           "enum": [
             "accept",
-            "reject",
-            "lua",
-            "set-bandwidth-limit",
             "close",
+            "lua",
+            "reject",
             "sc-add-gpc",
             "sc-inc-gpc",
             "sc-inc-gpc0",
             "sc-inc-gpc1",
+            "sc-set-gpt",
             "sc-set-gpt0",
             "send-spoe-group",
+            "set-bandwidth-limit",
             "set-log-level",
             "set-mark",
             "set-nice",
@@ -68205,6 +68341,7 @@ func init() {
                 "sc-inc-gpc",
                 "sc-inc-gpc0",
                 "sc-inc-gpc1",
+                "sc-set-gpt",
                 "sc-set-gpt0"
               ]
             },
@@ -68220,6 +68357,7 @@ func init() {
               "required": true,
               "value": [
                 "sc-add-gpc",
+                "sc-set-gpt",
                 "sc-inc-gpc"
               ]
             },
