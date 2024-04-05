@@ -17270,35 +17270,37 @@ func init() {
     },
     "bind": {
       "description": "HAProxy frontend bind configuration",
-      "type": "object",
       "title": "Bind",
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
-        }
-      ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "example": "127.0.0.1"
         },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 80
-        },
-        "port-range-end": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 81
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "example": "127.0.0.1"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 80
+            },
+            "port-range-end": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 81
+            }
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
+      ]
     },
     "bind_params": {
       "type": "object",
@@ -17872,6 +17874,16 @@ func init() {
     "compression": {
       "type": "object",
       "properties": {
+        "algo-req": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "gzip",
+            "deflate",
+            "raw-deflate"
+          ],
+          "x-omitempty": true
+        },
         "algorithms": {
           "type": "array",
           "items": {
@@ -17885,10 +17897,46 @@ func init() {
           },
           "x-omitempty": true
         },
+        "algos-res": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "gzip",
+              "deflate",
+              "raw-deflate"
+            ]
+          },
+          "x-omitempty": true
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response",
+            "both"
+          ],
+          "x-omitempty": true
+        },
         "offload": {
           "type": "boolean"
         },
         "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-req": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-res": {
           "type": "array",
           "items": {
             "type": "string"
@@ -18157,7 +18205,6 @@ func init() {
     },
     "default_bind": {
       "description": "HAProxy default bind configuration",
-      "type": "object",
       "title": "Default Bind",
       "allOf": [
         {
@@ -18166,7 +18213,6 @@ func init() {
       ]
     },
     "default_server": {
-      "type": "object",
       "title": "Default Server",
       "allOf": [
         {
@@ -20454,21 +20500,23 @@ func init() {
         "runtime_apis": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "address"
-            ],
             "allOf": [
               {
                 "$ref": "#/definitions/bind_params"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "address"
+                ],
+                "properties": {
+                  "address": {
+                    "type": "string",
+                    "pattern": "^[^\\s]+$"
+                  }
+                }
               }
             ],
-            "properties": {
-              "address": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              }
-            },
             "x-go-name": "RuntimeAPI"
           },
           "x-display-name": "Runtime APIs",
@@ -21906,7 +21954,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -22523,7 +22571,6 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "redirect"
             }
           },
@@ -22584,7 +22631,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -23411,7 +23458,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -24759,6 +24806,13 @@ func init() {
           },
           "x-nullable": true
         },
+        "last_chk": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
         "lastchg": {
           "type": "integer",
           "x-dependency": {
@@ -25011,6 +25065,7 @@ func init() {
         "hrsp_other": 0,
         "iid": 0,
         "intercepted": 346,
+        "last_chk": "L4OK in 0ms",
         "mode": "http",
         "pid": 3204,
         "rate": 64,
@@ -26264,39 +26319,41 @@ func init() {
     },
     "server": {
       "description": "HAProxy backend server configuration",
-      "type": "object",
       "title": "Server",
-      "required": [
-        "name",
-        "address"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          }
         }
       ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        }
-      },
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
@@ -26912,43 +26969,45 @@ func init() {
     },
     "server_template": {
       "description": "Set a template to initialize servers with shared parameters.",
-      "type": "object",
       "title": "Server template",
-      "required": [
-        "prefix",
-        "num_or_range",
-        "fqdn"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "prefix",
+            "num_or_range",
+            "fqdn"
+          ],
+          "properties": {
+            "fqdn": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "num_or_range": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            },
+            "prefix": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            }
+          }
         }
       ],
-      "properties": {
-        "fqdn": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "num_or_range": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "prefix": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        }
-      },
       "additionalProperties": false,
       "example": {
         "fqdn": "google.com",
@@ -53956,21 +54015,23 @@ func init() {
       "x-go-name": "PresetEnv"
     },
     "GlobalRuntimeApisItems0": {
-      "type": "object",
-      "required": [
-        "address"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
+            }
+          }
         }
       ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        }
-      },
       "x-go-name": "RuntimeAPI"
     },
     "GlobalSetVarFmtItems0": {
@@ -55802,35 +55863,37 @@ func init() {
     },
     "bind": {
       "description": "HAProxy frontend bind configuration",
-      "type": "object",
       "title": "Bind",
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
-        }
-      ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "example": "127.0.0.1"
         },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 80
-        },
-        "port-range-end": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 81
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "example": "127.0.0.1"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 80
+            },
+            "port-range-end": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 81
+            }
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
+      ]
     },
     "bind_params": {
       "type": "object",
@@ -56378,6 +56441,16 @@ func init() {
     "compression": {
       "type": "object",
       "properties": {
+        "algo-req": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "gzip",
+            "deflate",
+            "raw-deflate"
+          ],
+          "x-omitempty": true
+        },
         "algorithms": {
           "type": "array",
           "items": {
@@ -56391,10 +56464,46 @@ func init() {
           },
           "x-omitempty": true
         },
+        "algos-res": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "gzip",
+              "deflate",
+              "raw-deflate"
+            ]
+          },
+          "x-omitempty": true
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "request",
+            "response",
+            "both"
+          ],
+          "x-omitempty": true
+        },
         "offload": {
           "type": "boolean"
         },
         "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-req": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "types-res": {
           "type": "array",
           "items": {
             "type": "string"
@@ -56649,7 +56758,6 @@ func init() {
     },
     "default_bind": {
       "description": "HAProxy default bind configuration",
-      "type": "object",
       "title": "Default Bind",
       "allOf": [
         {
@@ -56658,7 +56766,6 @@ func init() {
       ]
     },
     "default_server": {
-      "type": "object",
       "title": "Default Server",
       "allOf": [
         {
@@ -60241,7 +60348,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -60858,7 +60965,6 @@ func init() {
           "type": "string",
           "x-dependency": {
             "type": {
-              "required": true,
               "value": "redirect"
             }
           },
@@ -60919,7 +61025,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -61746,7 +61852,7 @@ func init() {
         "return_content_format": {
           "type": "string",
           "enum": [
-            "default-errorfile",
+            "default-errorfiles",
             "errorfile",
             "errorfiles",
             "file",
@@ -63095,6 +63201,13 @@ func init() {
           },
           "x-nullable": true
         },
+        "last_chk": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
+          },
+          "x-nullable": true
+        },
         "lastchg": {
           "type": "integer",
           "x-dependency": {
@@ -63347,6 +63460,7 @@ func init() {
         "hrsp_other": 0,
         "iid": 0,
         "intercepted": 346,
+        "last_chk": "L4OK in 0ms",
         "mode": "http",
         "pid": 3204,
         "rate": 64,
@@ -64600,39 +64714,41 @@ func init() {
     },
     "server": {
       "description": "HAProxy backend server configuration",
-      "type": "object",
       "title": "Server",
-      "required": [
-        "name",
-        "address"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            }
+          }
         }
       ],
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        }
-      },
       "additionalProperties": false,
       "example": {
         "address": "10.1.1.1",
@@ -65248,43 +65364,45 @@ func init() {
     },
     "server_template": {
       "description": "Set a template to initialize servers with shared parameters.",
-      "type": "object",
       "title": "Server template",
-      "required": [
-        "prefix",
-        "num_or_range",
-        "fqdn"
-      ],
       "allOf": [
         {
           "$ref": "#/definitions/server_params"
+        },
+        {
+          "type": "object",
+          "required": [
+            "prefix",
+            "num_or_range",
+            "fqdn"
+          ],
+          "properties": {
+            "fqdn": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "id": {
+              "type": "integer",
+              "x-nullable": true
+            },
+            "num_or_range": {
+              "type": "string",
+              "x-nullable": false
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true
+            },
+            "prefix": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "x-nullable": false
+            }
+          }
         }
       ],
-      "properties": {
-        "fqdn": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "num_or_range": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true
-        },
-        "prefix": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-nullable": false
-        }
-      },
       "additionalProperties": false,
       "example": {
         "fqdn": "google.com",
