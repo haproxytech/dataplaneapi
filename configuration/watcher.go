@@ -18,7 +18,7 @@ package configuration
 import (
 	"context"
 	"crypto/md5"
-	"fmt"
+	"encoding/hex"
 	"os"
 	"path/filepath"
 	"strings"
@@ -108,6 +108,6 @@ func (w *ConfigWatcher) invalidHash() bool {
 		return true
 	}
 	bHash := md5.Sum([]byte(strings.Join(lines[1:], "\n")))
-	hash := fmt.Sprintf("%x", bHash)
+	hash := hex.EncodeToString(bHash[:])
 	return parts[1] != hash
 }

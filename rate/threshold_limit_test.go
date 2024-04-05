@@ -18,6 +18,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func Test_thresholdLimit_LimitReached(t *testing.T) {
@@ -37,6 +38,6 @@ func Test_thresholdLimit_LimitReached(t *testing.T) {
 			},
 			limit: 10,
 		}
-		assert.Nil(t, tl.LimitReached())
+		require.NoError(t, tl.LimitReached())
 	})
 }

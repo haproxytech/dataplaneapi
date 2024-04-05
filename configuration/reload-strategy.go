@@ -15,7 +15,10 @@
 
 package configuration
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 const (
 	ReloadStratCustom  = "custom"
@@ -53,7 +56,7 @@ func validateReloadConfiguration(c *HAProxyConfiguration) error {
 	case ReloadStratCustom:
 		// The custom commands need to be set.
 		if c.ReloadCmd == "" || c.RestartCmd == "" {
-			return fmt.Errorf("the custom reload strategy requires these options to be set: " +
+			return errors.New("the custom reload strategy requires these options to be set: " +
 				"ReloadCmd, RestartCmd")
 		}
 	case ReloadStratS6:

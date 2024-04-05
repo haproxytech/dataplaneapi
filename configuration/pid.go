@@ -16,7 +16,6 @@
 package configuration
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 
@@ -47,7 +46,7 @@ func HandlePIDFile(haproxyOptions HAProxyConfiguration) {
 		}
 	}
 
-	err := renameio.WriteFile(haproxyOptions.PIDFile, []byte(fmt.Sprintf("%d", os.Getpid())), 0o644)
+	err := renameio.WriteFile(haproxyOptions.PIDFile, []byte(strconv.Itoa(os.Getpid())), 0o644)
 	if err != nil {
 		log.Fatalf("error while writing PID file: %s %s", haproxyOptions.PIDFile, err.Error())
 	} else {
