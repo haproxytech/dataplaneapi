@@ -22,16 +22,17 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestReloadAgentDoesntMissReloads(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	f, err := os.CreateTemp("", "config.cfg")
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, f)
 	t.Cleanup(func() {
 		cancel()
-		assert.Nil(t, os.Remove(f.Name()))
+		assert.NoError(t, os.Remove(f.Name()))
 	})
 
 	reloadAgentParams := ReloadAgentParams{
@@ -45,7 +46,7 @@ func TestReloadAgentDoesntMissReloads(t *testing.T) {
 	}
 
 	ra, err := NewReloadAgent(reloadAgentParams)
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, ra)
 
 	var reloadID, firstReloadID, secondReloadID string

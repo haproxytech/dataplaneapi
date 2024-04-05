@@ -21,7 +21,7 @@ import (
 )
 
 func TestRandomString(t *testing.T) {
-	for i := 0; i < 1024; i++ {
+	for range 1024 {
 		size := rand.Intn(512)
 		str, err := RandomString(size)
 		if err != nil {

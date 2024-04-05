@@ -16,6 +16,7 @@
 package log
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -77,7 +78,7 @@ func (r RFC5424Hook) Fire(entry *logrus.Entry) (err error) {
 
 func NewRFC5424Hook(opts Target) (logrus.Hook, error) {
 	if len(opts.SyslogAddr) == 0 {
-		return nil, fmt.Errorf("no address has been declared")
+		return nil, errors.New("no address has been declared")
 	}
 
 	priority := strings.Join([]string{opts.SyslogFacility, opts.SyslogLevel}, ".")

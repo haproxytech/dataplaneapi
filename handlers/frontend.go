@@ -228,7 +228,7 @@ func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParam
 		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
-		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, "", "", h.Client)
+		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, "", h.Client)
 		if reload {
 			if *params.ForceReload {
 				err := h.ReloadAgent.ForceReload()

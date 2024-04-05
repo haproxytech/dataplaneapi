@@ -16,9 +16,9 @@ linters-settings:
     min-occurrences: 2
   revive:
     rules:
-    - name: var-naming
-      severity: warning
-      disabled: true
+      - name: var-naming
+        severity: warning
+        disabled: true
 linters:
   enable-all: true
   disable:
@@ -74,13 +74,12 @@ linters:
     - tagalign
     - depguard
 
-
 issues:
   exclude:
     # bugs of typecheck linter
     - "undeclared name: `shellquote`"
-    - "github.com/kballard/go-shellquote\" imported but not used"
-    - "github.com/haproxytech/config-parser/v5/types\" imported but not used"
+    - 'github.com/kballard/go-shellquote" imported but not used'
+    - 'github.com/haproxytech/config-parser/v5/types" imported but not used'
   exclude-rules:
     - linters:
         - staticcheck
@@ -91,7 +90,5 @@ issues:
     - linters:
         - gosec
       text: "G[404]"
-
-run:
-  skip-dirs:
+  exclude-dirs:
     - test

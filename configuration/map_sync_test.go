@@ -23,7 +23,7 @@ import (
 )
 
 func data(differentAtIndex ...int) (fileEntries models.MapEntries, runtimeEntries models.MapEntries) {
-	for i := 0; i < 50; i++ {
+	for i := range 50 {
 		fe := &models.MapEntry{Key: "k" + strconv.Itoa(i), Value: "v" + strconv.Itoa(i)}
 		re := &models.MapEntry{Key: "k" + strconv.Itoa(i), Value: "v" + strconv.Itoa(i)}
 		fileEntries = append(fileEntries, fe)
