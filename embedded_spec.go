@@ -15810,6 +15810,7 @@ func init() {
           "x-nullable": true
         },
         "ignore_persist": {
+          "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -15833,7 +15834,40 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "ignore_persist_list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "cond",
+              "cond_test"
+            ],
+            "properties": {
+              "cond": {
+                "type": "string",
+                "enum": [
+                  "if",
+                  "unless"
+                ],
+                "x-display-name": "Condition"
+              },
+              "cond_test": {
+                "type": "string",
+                "x-dependency": {
+                  "cond": {
+                    "required": true
+                  }
+                },
+                "x-display-name": "Condition Test"
+              }
+            },
+            "x-go-name": "IgnorePersist"
+          },
+          "x-go-name": "IgnorePersistList",
+          "x-omitempty": true
         },
         "independent_streams": {
           "type": "string",
@@ -51963,6 +51997,7 @@ func init() {
       }
     },
     "BackendIgnorePersist": {
+      "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
       "type": "object",
       "required": [
         "cond",
@@ -51986,7 +52021,35 @@ func init() {
           },
           "x-display-name": "Condition Test"
         }
-      }
+      },
+      "x-deprecated": true
+    },
+    "BackendIgnorePersistListItems0": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      },
+      "x-go-name": "IgnorePersist"
     },
     "ClusterSettingsCluster": {
       "type": "object",
@@ -53687,6 +53750,7 @@ func init() {
           "x-nullable": true
         },
         "ignore_persist": {
+          "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -53710,7 +53774,16 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "ignore_persist_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BackendIgnorePersistListItems0"
+          },
+          "x-go-name": "IgnorePersistList",
+          "x-omitempty": true
         },
         "independent_streams": {
           "type": "string",
