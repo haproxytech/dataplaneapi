@@ -16552,6 +16552,7 @@ func init() {
           "x-display-name": "External Check Path"
         },
         "force_persist": {
+          "description": "This field is deprecated in favor of force_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -16575,7 +16576,40 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "force_persist_list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "cond",
+              "cond_test"
+            ],
+            "properties": {
+              "cond": {
+                "type": "string",
+                "enum": [
+                  "if",
+                  "unless"
+                ],
+                "x-display-name": "Condition"
+              },
+              "cond_test": {
+                "type": "string",
+                "x-dependency": {
+                  "cond": {
+                    "required": true
+                  }
+                },
+                "x-display-name": "Condition Test"
+              }
+            },
+            "x-go-name": "ForcePersist"
+          },
+          "x-go-name": "ForcePersistList",
+          "x-omitempty": true
         },
         "forwardfor": {
           "x-dependency": {
@@ -16605,6 +16639,10 @@ func init() {
             }
           },
           "x-display-name": "H1 Adjust Bogus Server"
+        },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -16793,6 +16831,7 @@ func init() {
           "x-nullable": true
         },
         "ignore_persist": {
+          "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -16816,7 +16855,40 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "ignore_persist_list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "cond",
+              "cond_test"
+            ],
+            "properties": {
+              "cond": {
+                "type": "string",
+                "enum": [
+                  "if",
+                  "unless"
+                ],
+                "x-display-name": "Condition"
+              },
+              "cond_test": {
+                "type": "string",
+                "x-dependency": {
+                  "cond": {
+                    "required": true
+                  }
+                },
+                "x-display-name": "Condition Test"
+              }
+            },
+            "x-go-name": "IgnorePersist"
+          },
+          "x-go-name": "IgnorePersistList",
+          "x-omitempty": true
         },
         "independent_streams": {
           "type": "string",
@@ -18509,6 +18581,10 @@ func init() {
           ],
           "x-display-name": "H1 Adjust Bogus Server"
         },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
         },
@@ -18892,11 +18968,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
@@ -20030,11 +20101,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
@@ -21410,6 +21476,36 @@ func init() {
           },
           "x-display-name": "ACK Key Format"
         },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Len"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -21643,6 +21739,7 @@ func init() {
           "enum": [
             "add-header",
             "allow",
+            "capture",
             "del-acl",
             "del-header",
             "del-map",
@@ -21659,6 +21756,7 @@ func init() {
             "set-map",
             "set-status",
             "set-var",
+            "set-var-fmt",
             "strict-mode",
             "unset-var"
           ],
@@ -21674,6 +21772,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -21682,6 +21790,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -21695,6 +21804,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -29337,6 +29447,7 @@ func init() {
             },
             "type": {
               "value": [
+                "session",
                 "connection",
                 "content"
               ]
@@ -54012,6 +54123,7 @@ func init() {
   },
   "definitions": {
     "BackendForcePersist": {
+      "description": "This field is deprecated in favor of force_persist_list, and will be removed in a future release",
       "type": "object",
       "required": [
         "cond",
@@ -54035,9 +54147,38 @@ func init() {
           },
           "x-display-name": "Condition Test"
         }
-      }
+      },
+      "x-deprecated": true
+    },
+    "BackendForcePersistListItems0": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      },
+      "x-go-name": "ForcePersist"
     },
     "BackendIgnorePersist": {
+      "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
       "type": "object",
       "required": [
         "cond",
@@ -54061,7 +54202,35 @@ func init() {
           },
           "x-display-name": "Condition Test"
         }
-      }
+      },
+      "x-deprecated": true
+    },
+    "BackendIgnorePersistListItems0": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      },
+      "x-go-name": "IgnorePersist"
     },
     "ClusterSettingsCluster": {
       "type": "object",
@@ -55562,6 +55731,7 @@ func init() {
           "x-display-name": "External Check Path"
         },
         "force_persist": {
+          "description": "This field is deprecated in favor of force_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -55585,7 +55755,16 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "force_persist_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BackendForcePersistListItems0"
+          },
+          "x-go-name": "ForcePersistList",
+          "x-omitempty": true
         },
         "forwardfor": {
           "x-dependency": {
@@ -55615,6 +55794,10 @@ func init() {
             }
           },
           "x-display-name": "H1 Adjust Bogus Server"
+        },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -55803,6 +55986,7 @@ func init() {
           "x-nullable": true
         },
         "ignore_persist": {
+          "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -55826,7 +56010,16 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "ignore_persist_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BackendIgnorePersistListItems0"
+          },
+          "x-go-name": "IgnorePersistList",
+          "x-omitempty": true
         },
         "independent_streams": {
           "type": "string",
@@ -57479,6 +57672,10 @@ func init() {
           ],
           "x-display-name": "H1 Adjust Bogus Server"
         },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
         },
@@ -57862,11 +58059,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
@@ -59000,11 +59192,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
@@ -60221,6 +60408,36 @@ func init() {
           },
           "x-display-name": "ACK Key Format"
         },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Len"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -60454,6 +60671,7 @@ func init() {
           "enum": [
             "add-header",
             "allow",
+            "capture",
             "del-acl",
             "del-header",
             "del-map",
@@ -60470,6 +60688,7 @@ func init() {
             "set-map",
             "set-status",
             "set-var",
+            "set-var-fmt",
             "strict-mode",
             "unset-var"
           ],
@@ -60485,6 +60704,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -60493,6 +60722,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -60506,6 +60736,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -68043,6 +68274,7 @@ func init() {
             },
             "type": {
               "value": [
+                "session",
                 "connection",
                 "content"
               ]

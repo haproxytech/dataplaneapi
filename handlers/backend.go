@@ -16,13 +16,15 @@
 package handlers
 
 import (
-	"github.com/haproxytech/dataplaneapi/log"
+	"net/http"
+	"slices"
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v5"
 	"github.com/haproxytech/client-native/v5/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
+	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/backend"
 )
@@ -65,6 +67,69 @@ func logDeprecatedFieldsWarning(b *models.Backend) {
 	if b.HTTPServerClose != "" {
 		log.Warningf("Field HTTPServerClose is deprecated. Use HTTPConnectionMode.")
 	}
+	if b.IgnorePersist != nil {
+		log.Warningf("Field ignore_persist is deprecated. Use ignore_persist_list.")
+	}
+}
+
+// handleDeprecatedBackendFields adds backward compatibility support for the field ignore_persist,
+// which is deprecated in favour of ignore_persist_list.
+func handleDeprecatedBackendFields(method string, payload *models.Backend, onDisk *models.Backend) {
+	switch method {
+	case http.MethodGet:
+		// Populate ignore_persist with the first element of ignore_persist_list if it is present.
+		if len(payload.IgnorePersistList) > 0 {
+			payload.IgnorePersist = &models.BackendIgnorePersist{
+				Cond:     payload.IgnorePersistList[0].Cond,
+				CondTest: payload.IgnorePersistList[0].CondTest,
+			}
+		}
+	case http.MethodPost, http.MethodPut:
+		// Do nothing if ignore_persist is not present in the payload.
+		if payload.IgnorePersist == nil {
+			return
+		}
+		// If both ignore_persist and ignore_persist_list are present, ignore and remove ignore_persist.
+		if len(payload.IgnorePersistList) > 0 {
+			payload.IgnorePersist = nil
+			return
+		}
+
+		if method == http.MethodPut && onDisk != nil && len(onDisk.IgnorePersistList) > 0 {
+			// Preserve ignore_persist_list if it exists prior to modification.
+			// Add or reposition the value of ignore_persist unless it is already present as the first element.
+			found := -1
+			for i, item := range onDisk.IgnorePersistList {
+				if *item.Cond == *payload.IgnorePersist.Cond && *item.CondTest == *payload.IgnorePersist.CondTest {
+					found = i
+					break
+				}
+			}
+			switch found {
+			case -1:
+				// ignore_persist value is not part of existing ignore_persist_list - insert it in the first position.
+				payload.IgnorePersistList = slices.Insert(onDisk.IgnorePersistList, 0, &models.IgnorePersist{
+					Cond:     payload.IgnorePersist.Cond,
+					CondTest: payload.IgnorePersist.CondTest,
+				})
+			case 0:
+				// ignore_persist value matches the first element of ignore_persist_list - preserve it without modification.
+				payload.IgnorePersistList = onDisk.IgnorePersistList
+			default:
+				// ignore_persist value matches another element of ignore_persist_list - move it to the first position.
+				payload.IgnorePersistList = slices.Concat(onDisk.IgnorePersistList[found:found+1], onDisk.IgnorePersistList[:found], onDisk.IgnorePersistList[found+1:])
+			}
+		} else {
+			// Otherwise, add ignore_persist_list with the value of the provided ignore_persist as its only element.
+			payload.IgnorePersistList = []*models.IgnorePersist{{
+				Cond:     payload.IgnorePersist.Cond,
+				CondTest: payload.IgnorePersist.CondTest,
+			}}
+		}
+
+		// Remove ignore_persist from the payload.
+		payload.IgnorePersist = nil
+	}
 }
 
 // Handle executing the request and returning a response
@@ -95,6 +160,10 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 		e := misc.HandleError(err)
 		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
 	}
+
+	// Populate ignore_persist_list if the deprecated ignore_persist field
+	// is present in the request payload.
+	handleDeprecatedBackendFields(http.MethodPost, params.Data, nil)
 
 	err = configuration.CreateBackend(params.Data, t, v)
 	if err != nil {
@@ -182,6 +251,10 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 		e := misc.HandleError(err)
 		return backend.NewGetBackendDefault(int(*e.Code)).WithPayload(e)
 	}
+
+	// Populate deprecated ignore_persist field in returned response.
+	handleDeprecatedBackendFields(http.MethodGet, bck, nil)
+
 	return backend.NewGetBackendOK().WithPayload(&backend.GetBackendOKBody{Version: v, Data: bck})
 }
 
@@ -203,6 +276,12 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 		e := misc.HandleError(err)
 		return backend.NewGetBackendsDefault(int(*e.Code)).WithPayload(e)
 	}
+
+	// Populate deprecated ignore_persist field in returned response.
+	for _, bck := range bcks {
+		handleDeprecatedBackendFields(http.MethodGet, bck, nil)
+	}
+
 	return backend.NewGetBackendsOK().WithPayload(&backend.GetBackendsOKBody{Version: v, Data: bcks})
 }
 
@@ -233,6 +312,17 @@ func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, 
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	// Populate or modify ignore_persist_list if the deprecated ignore_persist field
+	// is present in the request payload.
+	if params.Data.IgnorePersist != nil {
+		_, onDisk, confErr := configuration.GetBackend(params.Data.Name, t)
+		if confErr != nil {
+			e := misc.HandleError(confErr)
+			return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)
+		}
+		handleDeprecatedBackendFields(http.MethodPut, params.Data, onDisk)
 	}
 
 	err = configuration.EditBackend(params.Name, params.Data, t, v)
