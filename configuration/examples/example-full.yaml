@@ -59,6 +59,8 @@ haproxy:
   master_runtime: null # string
   fid: null # string
   master_worker_mode: false # bool
+  delayed_start_max: 30s # time.Duration
+  delayed_start_tick: 500ms # time.Duration
   reload:
     reload_delay: 5 # int 2
     reload_cmd: "systemctl reload haproxy"

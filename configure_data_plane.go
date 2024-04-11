@@ -58,6 +58,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/specification"
 	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
 	"github.com/haproxytech/dataplaneapi/rate"
+	"github.com/haproxytech/dataplaneapi/resilient"
 	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
 
 	// import various crypting algorithms
@@ -290,6 +291,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	})
 
 	// setup transaction handlers
+	client = resilient.NewClient(client)
 	api.TransactionsStartTransactionHandler = &handlers.StartTransactionHandlerImpl{Client: client}
 	api.TransactionsDeleteTransactionHandler = &handlers.DeleteTransactionHandlerImpl{Client: client}
 	api.TransactionsGetTransactionHandler = &handlers.GetTransactionHandlerImpl{Client: client}

@@ -16,6 +16,8 @@
 package configuration
 
 import (
+	"time"
+
 	"github.com/haproxytech/client-native/v6/models"
 	"github.com/jessevdk/go-flags"
 
@@ -74,6 +76,8 @@ type configTypeHaproxy struct {
 	NodeIDFile       *string           `yaml:"fid,omitempty"`
 	MasterWorkerMode *bool             `yaml:"master_worker_mode,omitempty"`
 	Reload           *configTypeReload `yaml:"reload,omitempty"`
+	DelayedStartMax  *string           `yaml:"delayed_start_max,omitempty"`
+	DelayedStartTick *string           `yaml:"delayed_start_tick,omitempty"`
 }
 
 type configTypeUserlist struct {
@@ -390,6 +394,16 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	}
 	if cfgStorage.LogTargets != nil {
 		cfg.LogTargets = *cfgStorage.LogTargets
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Haproxy.DelayedStartMax != nil && !misc.HasOSArg("", "delayed-start-max", "") {
+		if d, err := time.ParseDuration(*cfgStorage.Haproxy.DelayedStartMax); err == nil {
+			cfg.HAProxy.DelayedStartMax = d
+		}
+	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Haproxy.DelayedStartTick != nil && !misc.HasOSArg("", "delayed-start-tick", "") {
+		if d, err := time.ParseDuration(*cfgStorage.Haproxy.DelayedStartTick); err == nil {
+			cfg.HAProxy.DelayedStartTick = d
+		}
 	}
 }
 
