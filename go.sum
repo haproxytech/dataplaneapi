@@ -56,8 +56,8 @@ github.com/fsnotify/fsnotify v1.7.0 h1:8JEhPFa5W2WU7YfeZzPNqzMP6Lwt7L2715Ggo0nos
 github.com/fsnotify/fsnotify v1.7.0/go.mod h1:40Bi/Hjc2AVfZrqy+aj+yEI+/bRxZnMJyTJwOpGvigM=
 github.com/getkin/kin-openapi v0.123.0 h1:zIik0mRwFNLyvtXK274Q6ut+dPh6nlxBp0x7mNrPhs8=
 github.com/getkin/kin-openapi v0.123.0/go.mod h1:wb1aSZA/iWmorQP9KTAS/phLj/t17B5jT7+fS8ed9NM=
-github.com/go-faker/faker/v4 v4.3.0 h1:UXOW7kn/Mwd0u6MR30JjUKVzguT20EB/hBOddAAO+DY=
-github.com/go-faker/faker/v4 v4.3.0/go.mod h1:F/bBy8GH9NxOxMInug5Gx4WYeG6fHJZ8Ol/dhcpRub4=
+github.com/go-faker/faker/v4 v4.4.1 h1:LY1jDgjVkBZWIhATCt+gkl0x9i/7wC61gZx73GTFb+Q=
+github.com/go-faker/faker/v4 v4.4.1/go.mod h1:HRLrjis+tYsbFtIHufEPTAIzcZiRu0rS9EYl2Ccwme4=
 github.com/go-ole/go-ole v1.2.6/go.mod h1:pprOEPIfldk/42T2oK7lQ4v4JSDwmV0As9GaiUsvbm0=
 github.com/go-ole/go-ole v1.3.0 h1:Dt6ye7+vXGIKZ7Xtk4s6/xVdGDQynvom7xCFEdWr6uE=
 github.com/go-ole/go-ole v1.3.0/go.mod h1:5LS6F96DhAwUc7C+1HLexzMXY1xGRSryjyPPKW6zv78=
@@ -98,10 +98,10 @@ github.com/google/renameio v1.0.1 h1:Lh/jXZmvZxb0BBeSY5VKEfidcbcbenKjZFzM/q0fSeU
 github.com/google/renameio v1.0.1/go.mod h1:t/HQoYBZSsWSNK35C6CO/TpPLDVWvxOHboWUAweKUpk=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v6 v6.0.0-20240404115818-cc6709fcf3f2 h1:ekVVs673iIrBxkpXhsiwvtiWVqj1Kllt/JaIyiYxJho=
-github.com/haproxytech/client-native/v6 v6.0.0-20240404115818-cc6709fcf3f2/go.mod h1:2LWXlAIPg7eowJ880hW2X/AaINjPUSjXaEZqy4+eauA=
-github.com/haproxytech/config-parser/v5 v5.1.1-0.20240404084124-95ffb3171d4e h1:ZvuU/kaWuBoQp5NO/T859/FiPvqw+ZXeU6HHbYfW7k8=
-github.com/haproxytech/config-parser/v5 v5.1.1-0.20240404084124-95ffb3171d4e/go.mod h1:A6eEOf58vr5oFlips/tbYzjLm3Te7Uwonsnyr1HNm6A=
+github.com/haproxytech/client-native/v6 v6.0.0-20240419071454-4670363c5994 h1:B7a+DGiwUsrf6hzr1Z3u/y8NM3N9ocjg369pT/r3fds=
+github.com/haproxytech/client-native/v6 v6.0.0-20240419071454-4670363c5994/go.mod h1:wslWxnKJkqrHRm285d0PYNEAxaiAXj85mVQhaQBQe28=
+github.com/haproxytech/config-parser/v5 v5.1.1-0.20240408103122-267515d6336b h1:7mp51CTK3V+D7c7CInseuMBhFSaQU0mf2gs8z0pzZbU=
+github.com/haproxytech/config-parser/v5 v5.1.1-0.20240408103122-267515d6336b/go.mod h1:T2iWRfXW84pxyk3PlYresm1ntHodIWgBN6ZxzB5Yqow=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
 github.com/haproxytech/go-logger v1.1.0/go.mod h1:OekUd8HCb7ubxMplzHUPBTHNxZmddOWfOjWclZsqIeM=
 github.com/invopop/yaml v0.2.0 h1:7zky/qH+O0DwAyoobXUqvVBwgBFRxKoQ/3FjcVpjTMY=
@@ -189,8 +189,8 @@ github.com/ugorji/go/codec v1.2.7 h1:YPXUKf7fYbp/y8xloBqZOw2qaVggbfwMlI8WM3wZUJ0
 github.com/ugorji/go/codec v1.2.7/go.mod h1:WGN1fab3R1fzQlVQTkfxVtIBhWDRqOviHU95kRgeqEY=
 github.com/yusufpapurcu/wmi v1.2.4 h1:zFUKzehAFReQwLys1b/iSMl+JQGSCSjtVqQn9bBrPo0=
 github.com/yusufpapurcu/wmi v1.2.4/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQmPyzfmi0=
-go.mongodb.org/mongo-driver v1.14.0 h1:P98w8egYRjYe3XDjxhYJagTokP/H6HzlsnojRgZRd80=
-go.mongodb.org/mongo-driver v1.14.0/go.mod h1:Vzb0Mk/pa7e6cWw85R4F/endUC3u0U9jGcNU603k65c=
+go.mongodb.org/mongo-driver v1.15.0 h1:rJCKC8eEliewXjZGf0ddURtl7tTVy1TK3bfl0gkUSLc=
+go.mongodb.org/mongo-driver v1.15.0/go.mod h1:Vzb0Mk/pa7e6cWw85R4F/endUC3u0U9jGcNU603k65c=
 go.uber.org/automaxprocs v1.5.3 h1:kWazyxZUrS3Gs4qUpbwo5kEIMGe/DAvi5Z4tl2NW4j8=
 go.uber.org/automaxprocs v1.5.3/go.mod h1:eRbA25aqJrxAbsLO0xy5jVwPt7FQnRgjW+efnwa1WM0=
 go.uber.org/goleak v1.1.12 h1:gZAh5/EyT/HQwlpkCy6wTpqfH9H8Lz8zbm3dZh+OyzA=

@@ -23,8 +23,8 @@ require (
 	github.com/go-openapi/validate v0.24.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
-	github.com/haproxytech/client-native/v6 v6.0.0-20240404115818-cc6709fcf3f2
-	github.com/haproxytech/config-parser/v5 v5.1.1-0.20240404084124-95ffb3171d4e
+	github.com/haproxytech/client-native/v6 v6.0.0-20240419071454-4670363c5994
+	github.com/haproxytech/config-parser/v5 v5.1.1-0.20240408103122-267515d6336b
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
 	github.com/kr/pretty v0.3.1
@@ -90,7 +90,7 @@ require (
 	github.com/tklauser/go-sysconf v0.3.13 // indirect
 	github.com/tklauser/numcpus v0.7.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
-	go.mongodb.org/mongo-driver v1.14.0 // indirect
+	go.mongodb.org/mongo-driver v1.15.0 // indirect
 	golang.org/x/exp v0.0.0-20240404231335-c0f41cb1a7a0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect

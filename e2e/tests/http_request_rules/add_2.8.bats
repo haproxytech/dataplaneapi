@@ -43,24 +43,6 @@ load 'utils/_helpers'
   fi
 }
 
-@test "http_request_rules: Add a new HTTP Request Rule track-sc-x to backend" {
-  # Using old track-sc(0|1|2)
-  if haproxy_version_ge "2.8"
-  then
-  resource_post "$_REQ_RULES_BASE_PATH" "data/post-track-sc-x.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
-	assert_equal "$SC" 201
-
-  resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
-	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
-	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".cond_test")" "TRUE"
-	assert_equal "$(get_json_path "$BODY" ".track_sc_key")" "src"
-	assert_equal "$(get_json_path "$BODY" ".track_sc_table")" "test_sticksc"
-	assert_equal "$(get_json_path "$BODY" ".track_sc_stick_counter")" 0
-  fi
-}
-
 @test "http_request_rules: Fail - Add a new HTTP Request Rule track-sc to backend - when track_sc_stick_counter is missing" {
   # Using new track-sc with track_sc_stick_counter
   # Fail due to missing track_sc_stick_counter

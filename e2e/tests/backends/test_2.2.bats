@@ -31,9 +31,6 @@ load 'utils/_helpers'
   assert_equal "$SC" "201"
 
   resource_get "$_BACKEND_BASE_PATH/test_backend"  assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".\"http-check\".method")" "OPTIONS"
-  assert_equal "$(get_json_path "$BODY" ".\"http-check\".uri")" "/"
-  assert_equal "$(get_json_path "$BODY" ".\"http-check\".version")" "HTTP/1.1"
   assert_equal "$(get_json_path "$BODY" ".adv_check")" "httpchk"
   assert_equal "$(get_json_path "$BODY" ".httpchk_params.method")" "GET"
   assert_equal "$(get_json_path "$BODY" ".httpchk_params.uri")" "/check"
@@ -48,9 +45,6 @@ load 'utils/_helpers'
 	assert_equal "$SC" 200
 
 	resource_get "$_BACKEND_BASE_PATH/test_backend"  assert_equal "$SC" 200
-    assert_equal "$(get_json_path "$BODY" ".\"http-check\".method")" "OPTIONS"
-    assert_equal "$(get_json_path "$BODY" ".\"http-check\".uri")" "/"
-    assert_equal "$(get_json_path "$BODY" ".\"http-check\".version")" "HTTP/1.1"
     assert_equal "$(get_json_path "$BODY" ".adv_check")" "httpchk"
     assert_equal "$(get_json_path "$BODY" ".httpchk_params.method")" "GET"
     assert_equal "$(get_json_path "$BODY" ".httpchk_params.uri")" "/healthz"

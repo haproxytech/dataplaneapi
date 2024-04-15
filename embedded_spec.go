@@ -15664,6 +15664,10 @@ func init() {
           },
           "x-display-name": "H1 Adjust Bogus Server"
         },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
         },
@@ -15680,23 +15684,6 @@ func init() {
           },
           "x-display-name": "HTTP bufferrequest"
         },
-        "http-check": {
-          "$ref": "#/definitions/http_check"
-        },
-        "http-keep-alive": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "HTTP keep-alive"
-        },
         "http-no-delay": {
           "type": "string",
           "enum": [
@@ -15709,20 +15696,6 @@ func init() {
             }
           },
           "x-display-name": "HTTP low interactive delays"
-        },
-        "http-server-close": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "HTTP server close"
         },
         "http-use-htx": {
           "type": "string",
@@ -15831,20 +15804,6 @@ func init() {
             }
           },
           "$ref": "#/definitions/httpchk_params"
-        },
-        "httpclose": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "HTTP connection closing"
         },
         "id": {
           "type": "integer",
@@ -17169,24 +17128,6 @@ func init() {
             "exponential"
           ]
         },
-        "service-blacklist": {
-          "description": "deprecated, use service_denylist",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          },
-          "x-omitempty": true
-        },
-        "service-whitelist": {
-          "description": "deprecated, use service_allowlist",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          },
-          "x-omitempty": true
-        },
         "service_allowlist": {
           "type": "array",
           "items": {
@@ -17566,6 +17507,10 @@ func init() {
             "disabled"
           ],
           "x-display-name": "H1 Adjust Bogus Server"
+        },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -20306,11 +20251,6 @@ func init() {
             }
           }
         },
-        "tune_ssl_default_dh_param": {
-          "type": "integer",
-          "x-deprecated": true,
-          "x-display-name": "SSL Default DH Parameter Size"
-        },
         "uid": {
           "type": "integer",
           "x-display-name": "UID"
@@ -22061,75 +22001,6 @@ func init() {
           },
           "x-display-name": "Tos Value"
         },
-        "track-sc0-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Key"
-        },
-        "track-sc0-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Table"
-        },
-        "track-sc1-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Key"
-        },
-        "track-sc1-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Table"
-        },
-        "track-sc2-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Key"
-        },
-        "track-sc2-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Table"
-        },
         "track_sc_key": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -22915,75 +22786,6 @@ func init() {
             }
           },
           "x-display-name": "Tos Value"
-        },
-        "track-sc0-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Key"
-        },
-        "track-sc0-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Table"
-        },
-        "track-sc1-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Key"
-        },
-        "track-sc1-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Table"
-        },
-        "track-sc2-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Key"
-        },
-        "track-sc2-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Table"
         },
         "track_sc_key": {
           "type": "string",
@@ -53739,6 +53541,10 @@ func init() {
           },
           "x-display-name": "H1 Adjust Bogus Server"
         },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
+        },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
         },
@@ -53755,23 +53561,6 @@ func init() {
           },
           "x-display-name": "HTTP bufferrequest"
         },
-        "http-check": {
-          "$ref": "#/definitions/http_check"
-        },
-        "http-keep-alive": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "HTTP keep-alive"
-        },
         "http-no-delay": {
           "type": "string",
           "enum": [
@@ -53784,20 +53573,6 @@ func init() {
             }
           },
           "x-display-name": "HTTP low interactive delays"
-        },
-        "http-server-close": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "HTTP server close"
         },
         "http-use-htx": {
           "type": "string",
@@ -53906,20 +53681,6 @@ func init() {
             }
           },
           "$ref": "#/definitions/httpchk_params"
-        },
-        "httpclose": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-dependency": {
-            "mode": {
-              "value": "http"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "HTTP connection closing"
         },
         "id": {
           "type": "integer",
@@ -55218,24 +54979,6 @@ func init() {
             "exponential"
           ]
         },
-        "service-blacklist": {
-          "description": "deprecated, use service_denylist",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          },
-          "x-omitempty": true
-        },
-        "service-whitelist": {
-          "description": "deprecated, use service_allowlist",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          },
-          "x-omitempty": true
-        },
         "service_allowlist": {
           "type": "array",
           "items": {
@@ -55601,6 +55344,10 @@ func init() {
             "disabled"
           ],
           "x-display-name": "H1 Adjust Bogus Server"
+        },
+        "hash_balance_factor": {
+          "type": "integer",
+          "x-nullable": true
         },
         "hash_type": {
           "$ref": "#/definitions/hash_type"
@@ -58182,11 +57929,6 @@ func init() {
             }
           }
         },
-        "tune_ssl_default_dh_param": {
-          "type": "integer",
-          "x-deprecated": true,
-          "x-display-name": "SSL Default DH Parameter Size"
-        },
         "uid": {
           "type": "integer",
           "x-display-name": "UID"
@@ -59937,75 +59679,6 @@ func init() {
           },
           "x-display-name": "Tos Value"
         },
-        "track-sc0-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Key"
-        },
-        "track-sc0-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Table"
-        },
-        "track-sc1-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Key"
-        },
-        "track-sc1-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Table"
-        },
-        "track-sc2-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Key"
-        },
-        "track-sc2-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Table"
-        },
         "track_sc_key": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -60791,75 +60464,6 @@ func init() {
             }
           },
           "x-display-name": "Tos Value"
-        },
-        "track-sc0-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Key"
-        },
-        "track-sc0-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc0"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc0 Table"
-        },
-        "track-sc1-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Key"
-        },
-        "track-sc1-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc1"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc1 Table"
-        },
-        "track-sc2-key": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "required": true,
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Key"
-        },
-        "track-sc2-table": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-dependency": {
-            "type": {
-              "value": "track-sc2"
-            }
-          },
-          "x-deprecated": true,
-          "x-display-name": "track-sc2 Table"
         },
         "track_sc_key": {
           "type": "string",

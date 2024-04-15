@@ -63,7 +63,6 @@ func (c *CreateConsulHandlerImpl) Handle(params service_discovery.CreateConsulPa
 		e := misc.HandleError(err)
 		return service_discovery.NewCreateConsulDefault(int(*e.Code)).WithPayload(e)
 	}
-	setFilters(params.Data)
 	if params.Data.HealthCheckPolicy != nil && *params.Data.HealthCheckPolicy == models.ConsulHealthCheckPolicyMin && params.Data.HealthCheckPolicyMin <= 0 {
 		e := &models.Error{
 			Message: misc.StringP("health_check_policy_min is required for 'min' health_check_policy"),
@@ -140,7 +139,6 @@ func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsul
 		e := misc.HandleError(err)
 		return service_discovery.NewReplaceConsulDefault(int(*e.Code)).WithPayload(e)
 	}
-	setFilters(params.Data)
 	if *params.Data.HealthCheckPolicy == models.ConsulHealthCheckPolicyMin && params.Data.HealthCheckPolicyMin <= 0 {
 		e := &models.Error{
 			Message: misc.StringP("health_check_policy_min is required for 'min' health_check_policy"),
@@ -164,16 +162,6 @@ func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsul
 		return service_discovery.NewDeleteConsulDefault(int(*e.Code)).WithPayload(e)
 	}
 	return service_discovery.NewReplaceConsulOK().WithPayload(params.Data)
-}
-
-func setFilters(data *models.Consul) {
-	if len(data.ServiceAllowlist) == 0 && len(data.ServiceWhitelist) > 0 {
-		data.ServiceAllowlist = data.ServiceWhitelist
-	}
-
-	if len(data.ServiceDenylist) == 0 && len(data.ServiceBlacklist) > 0 {
-		data.ServiceDenylist = data.ServiceBlacklist
-	}
 }
 
 func getConsuls(discovery sc.ServiceDiscoveries) (models.Consuls, error) {

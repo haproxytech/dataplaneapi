@@ -11,13 +11,6 @@
     "uri": "/check",
     "version": "HTTP/1.1"
   },
-  "http-check": {
-    "index": 0,
-    "method": "OPTIONS",
-    "uri": "/",
-    "version": "HTTP/1.1",
-    "type": "send"
-  },
   "mode": "http",
   "name": "test_backend"
 }
