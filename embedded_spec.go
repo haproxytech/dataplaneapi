@@ -15610,6 +15610,7 @@ func init() {
           "x-display-name": "External Check Path"
         },
         "force_persist": {
+          "description": "This field is deprecated in favor of force_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -15633,7 +15634,40 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "force_persist_list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "cond",
+              "cond_test"
+            ],
+            "properties": {
+              "cond": {
+                "type": "string",
+                "enum": [
+                  "if",
+                  "unless"
+                ],
+                "x-display-name": "Condition"
+              },
+              "cond_test": {
+                "type": "string",
+                "x-dependency": {
+                  "cond": {
+                    "required": true
+                  }
+                },
+                "x-display-name": "Condition Test"
+              }
+            },
+            "x-go-name": "ForcePersist"
+          },
+          "x-go-name": "ForcePersistList",
+          "x-omitempty": true
         },
         "forwardfor": {
           "x-dependency": {
@@ -17929,11 +17963,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
@@ -19067,11 +19096,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
@@ -51971,6 +51995,7 @@ func init() {
   },
   "definitions": {
     "BackendForcePersist": {
+      "description": "This field is deprecated in favor of force_persist_list, and will be removed in a future release",
       "type": "object",
       "required": [
         "cond",
@@ -51994,7 +52019,35 @@ func init() {
           },
           "x-display-name": "Condition Test"
         }
-      }
+      },
+      "x-deprecated": true
+    },
+    "BackendForcePersistListItems0": {
+      "type": "object",
+      "required": [
+        "cond",
+        "cond_test"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test"
+        }
+      },
+      "x-go-name": "ForcePersist"
     },
     "BackendIgnorePersist": {
       "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
@@ -53550,6 +53603,7 @@ func init() {
           "x-display-name": "External Check Path"
         },
         "force_persist": {
+          "description": "This field is deprecated in favor of force_persist_list, and will be removed in a future release",
           "type": "object",
           "required": [
             "cond",
@@ -53573,7 +53627,16 @@ func init() {
               },
               "x-display-name": "Condition Test"
             }
-          }
+          },
+          "x-deprecated": true
+        },
+        "force_persist_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BackendForcePersistListItems0"
+          },
+          "x-go-name": "ForcePersistList",
+          "x-omitempty": true
         },
         "forwardfor": {
           "x-dependency": {
@@ -55805,11 +55868,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
@@ -56943,11 +57001,6 @@ func init() {
         },
         "unique_id_header": {
           "type": "string",
-          "x-dependency": {
-            "unique_id_format": {
-              "required": true
-            }
-          },
           "x-display-name": "Unique ID header"
         }
       },
