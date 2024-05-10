@@ -9,9 +9,9 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.27.13
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.13
 	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.40.6
-	github.com/aws/aws-sdk-go-v2/service/ec2 v1.161.0
+	github.com/aws/aws-sdk-go-v2/service/ec2 v1.161.1
 	github.com/docker/go-units v0.5.0
-	github.com/dustinkirkland/golang-petname v0.0.0-20231002161417-6a283f1aaaf2
+	github.com/dustinkirkland/golang-petname v0.0.0-20240428194347-eebcea082ee0
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/getkin/kin-openapi v0.124.0
 	github.com/go-openapi/errors v0.22.0
@@ -31,7 +31,7 @@ require (
 	github.com/lestrrat-go/apache-logformat v0.0.0-20210106032603-24d066f940f8
 	github.com/maruel/panicparse/v2 v2.3.1
 	github.com/nathanaelle/syslog5424/v2 v2.0.5
-	github.com/rs/cors v1.10.1
+	github.com/rs/cors v1.11.0
 	github.com/rubyist/circuitbreaker v2.2.1+incompatible
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sirupsen/logrus v1.9.3
@@ -55,7 +55,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.28.7 // indirect
 	github.com/aws/smithy-go v1.20.2 // indirect
 	github.com/cenk/backoff v2.2.1+incompatible // indirect
-	github.com/cilium/ebpf v0.14.0 // indirect
+	github.com/cilium/ebpf v0.15.0 // indirect
 	github.com/containerd/cgroups/v3 v3.0.3 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -93,6 +93,6 @@ require (
 	go.mongodb.org/mongo-driver v1.15.0 // indirect
 	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
