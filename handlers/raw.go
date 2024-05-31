@@ -107,12 +107,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
 	}
-	_, globalConf, err := cfg.GetGlobalConfiguration("")
-	if err != nil {
-		e := misc.HandleError(err)
-		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
-	}
-	runtimeAPIsOld := globalConf.RuntimeAPIs
+
 	err = cfg.PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -145,7 +140,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 	if forceReload {
 		var callbackNeeded bool
 		var reconfigureFunc func()
-		callbackNeeded, reconfigureFunc, err = cn.ReconfigureRuntime(h.Client, runtimeAPIsOld)
+		callbackNeeded, reconfigureFunc, err = cn.ReconfigureRuntime(h.Client)
 		if err != nil {
 			e := misc.HandleError(err)
 			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
@@ -161,7 +156,7 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		}
 		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(data).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 	}
-	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client, runtimeAPIsOld)
+	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client)
 	if err != nil {
 		e := misc.HandleError(err)
 		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)

@@ -34,7 +34,6 @@ type GetStickTableEntriesURL struct {
 	Filter     *string
 	Key        *string
 	Offset     *int64
-	Process    int64
 	StickTable string
 
 	_basePath string
@@ -101,11 +100,6 @@ func (o *GetStickTableEntriesURL) Build() (*url.URL, error) {
 	}
 	if offsetQ != "" {
 		qs.Set("offset", offsetQ)
-	}
-
-	processQ := swag.FormatInt64(o.Process)
-	if processQ != "" {
-		qs.Set("process", processQ)
 	}
 
 	stickTableQ := o.StickTable

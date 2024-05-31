@@ -48,18 +48,13 @@ type SetStickTableEntriesHandlerImpl struct {
 
 // Handle executing the request and returning a response
 func (h *GetStickTablesHandlerImpl) Handle(params stick_table.GetStickTablesParams, principal interface{}) middleware.Responder {
-	process := 0
-	if params.Process != nil {
-		process = int(*params.Process)
-	}
-
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTablesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	stkTS, err := runtime.ShowTables(process)
+	stkTS, err := runtime.ShowTables()
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTablesDefault(int(*e.Code)).WithPayload(e)
@@ -80,9 +75,9 @@ func (h *GetStickTableHandlerImpl) Handle(params stick_table.GetStickTableParams
 		return stick_table.NewGetStickTableDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	stkT, err := runtime.ShowTable(params.Name, int(params.Process))
+	stkT, err := runtime.ShowTable(params.Name)
 	if stkT == nil {
-		msg := fmt.Sprintf("Stick table %s not found in process %d", params.Name, params.Process)
+		msg := fmt.Sprintf("Stick table %s not found", params.Name)
 		c := misc.ErrHTTPNotFound
 		e := &models.Error{
 			Message: &msg,
@@ -108,7 +103,7 @@ func (h *SetStickTableEntriesHandlerImpl) Handle(params stick_table.SetStickTabl
 		return stick_table.NewSetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = runtime.SetTableEntry(params.StickTable, *params.StickTableEntry.Key, *params.StickTableEntry.DataType, int(params.Process))
+	err = runtime.SetTableEntry(params.StickTable, *params.StickTableEntry.Key, *params.StickTableEntry.DataType)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewSetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
@@ -134,7 +129,7 @@ func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTabl
 		return stick_table.NewGetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	stkEntries, err := runtime.GetTableEntries(params.StickTable, int(params.Process), filter, key)
+	stkEntries, err := runtime.GetTableEntries(params.StickTable, filter, key)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)

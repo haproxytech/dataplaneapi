@@ -24,17 +24,11 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
-
-	"github.com/go-openapi/swag"
 )
 
 // GetStickTablesURL generates an URL for the get stick tables operation
 type GetStickTablesURL struct {
-	Process *int64
-
 	_basePath string
-	// avoid unkeyed usage
-	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -63,18 +57,6 @@ func (o *GetStickTablesURL) Build() (*url.URL, error) {
 		_basePath = "/v3"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
-
-	qs := make(url.Values)
-
-	var processQ string
-	if o.Process != nil {
-		processQ = swag.FormatInt64(*o.Process)
-	}
-	if processQ != "" {
-		qs.Set("process", processQ)
-	}
-
-	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

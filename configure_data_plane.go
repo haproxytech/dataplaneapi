@@ -1063,26 +1063,11 @@ func reloadConfigurationFile(client client_native.HAProxyClient, haproxyOptions 
 
 func startWatcher(ctx context.Context, client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users, reloadAgent *haproxy.ReloadAgent) error {
 	cb := func() {
-		configuration, err := client.Configuration()
-		if err != nil {
-			log.Warningf("Failed to get configuration: %s", err)
-			return
-		}
-
-		// save old runtime configuration to know if the runtime client must be configured after the new configuration is
-		// reloaded by HAProxy. Logic is done by cn.ReconfigureRuntime() function.
-		_, globalConf, err := configuration.GetGlobalConfiguration("")
-		if err != nil {
-			log.Warningf("Failed to get global configuration section: %s", err)
-			return
-		}
-		runtimeAPIsOld := globalConf.RuntimeAPIs
-
 		// reload configuration from config file.
 		reloadConfigurationFile(client, haproxyOptions, users)
 
 		// reload runtime client if necessary.
-		callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(client, runtimeAPIsOld)
+		callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(client)
 		if err != nil {
 			log.Warningf("Failed to check if native client need to be reloaded: %s", err)
 			return
@@ -1092,7 +1077,7 @@ func startWatcher(ctx context.Context, client client_native.HAProxyClient, hapro
 		}
 
 		// get the last configuration which has been updated by reloadConfigurationFile and increment version in config file.
-		configuration, err = client.Configuration()
+		configuration, err := client.Configuration()
 		if err != nil {
 			log.Warningf("Failed to get configuration: %s", err)
 			return

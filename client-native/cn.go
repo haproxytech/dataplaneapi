@@ -3,12 +3,10 @@ package cn
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"sync"
 	"time"
 
 	clientnative "github.com/haproxytech/client-native/v6"
-	"github.com/haproxytech/client-native/v6/models"
 
 	"github.com/haproxytech/client-native/v6/configuration"
 	configuration_options "github.com/haproxytech/client-native/v6/configuration/options"
@@ -84,72 +82,32 @@ func ConfigureRuntimeClient(ctx context.Context, confClient configuration.Config
 		// If master socket is set and a valid unix socket, use only this
 		if haproxyOptions.MasterRuntime != "" && misc.IsUnixSocketAddr(haproxyOptions.MasterRuntime) {
 			masterSocket := haproxyOptions.MasterRuntime
-			// if nbproc is set, set nbproc sockets
-			if globalConf.Nbproc > 0 {
-				nbproc := int(globalConf.Nbproc)
-				ms := runtime_options.MasterSocket(masterSocket, nbproc)
-				runtimeClient, err = runtime_api.New(ctx, mapsDir, ms, waitForRuntimeOption)
-				if err == nil {
-					return runtimeClient
-				}
-				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
-			} else {
-				// if nbproc is not set, use master socket with 1 process
-				ms := runtime_options.MasterSocket(masterSocket, 1)
-				runtimeClient, err = runtime_api.New(ctx, mapsDir, ms, waitForRuntimeOption)
-				if err == nil {
-					return runtimeClient
-				}
-				log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
-			}
-		}
-		runtimeAPIs := globalConf.RuntimeAPIs
-		// if no master socket set, read from first valid socket if nbproc <= 1
-		if globalConf.Nbproc <= 1 {
-			sockets := make(map[int]string)
-			for _, r := range runtimeAPIs {
-				if misc.IsUnixSocketAddr(*r.Address) {
-					sockets[1] = *r.Address
-					socketsL := runtime_options.Sockets(sockets)
-					runtimeClient, err = runtime_api.New(ctx, mapsDir, socketsL, waitForRuntimeOption)
-					if err == nil {
-						muSocketsList.Lock()
-						socketsList = sockets
-						muSocketsList.Unlock()
-						return runtimeClient
-					}
-					log.Warningf("Error setting up runtime client with socket: %s : %s", *r.Address, err.Error())
-				}
-			}
-		} else {
-			// else try to find process specific sockets and set them up
-			sockets := make(map[int]string)
-			for _, r := range runtimeAPIs {
-				//nolint:govet
-				if misc.IsUnixSocketAddr(*r.Address) && r.Process != "" {
-					process, err := strconv.ParseInt(r.Process, 10, 64)
-					if err == nil {
-						sockets[int(process)] = *r.Address
-					}
-				}
-			}
-			// no process specific settings found, Issue a warning and return empty runtime client
-			if len(sockets) == 0 {
-				log.Warning("Runtime API not configured, found multiple processes and no stats sockets bound to them.")
-				return runtimeClient
-				// use only found process specific sockets issue a warning if not all processes have a socket configured
-			}
-			if len(sockets) < int(globalConf.Nbproc) {
-				log.Warning("Runtime API not configured properly, there are more processes then configured sockets")
-			}
-
-			socketLst := runtime_options.Sockets(sockets)
-			runtimeClient, err = runtime_api.New(ctx, mapsDir, socketLst, waitForRuntimeOption)
+			// nbproc has been removed, use master socket with 1 process
+			ms := runtime_options.MasterSocket(masterSocket)
+			runtimeClient, err = runtime_api.New(ctx, mapsDir, ms, waitForRuntimeOption)
 			if err == nil {
 				return runtimeClient
 			}
-			log.Warningf("Error setting up runtime client with sockets: %v : %s", sockets, err.Error())
+			log.Warningf("Error setting up runtime client with master socket: %s : %s", masterSocket, err.Error())
 		}
+
+		runtimeAPIs := globalConf.RuntimeAPIs
+		// if no master socket set, read from first valid socket
+		sockets := make(map[int]string)
+		for _, r := range runtimeAPIs {
+			if misc.IsUnixSocketAddr(*r.Address) {
+				socketsL := runtime_options.Socket(*r.Address)
+				runtimeClient, err = runtime_api.New(ctx, mapsDir, socketsL, waitForRuntimeOption)
+				if err == nil {
+					muSocketsList.Lock()
+					socketsList = sockets
+					muSocketsList.Unlock()
+					return runtimeClient
+				}
+				log.Warningf("Error setting up runtime client with socket: %s : %s", *r.Address, err.Error())
+			}
+		}
+
 		if err != nil {
 			log.Warning("Runtime API not configured, not using it: " + err.Error())
 		} else {
@@ -162,39 +120,54 @@ func ConfigureRuntimeClient(ctx context.Context, confClient configuration.Config
 }
 
 // ReconfigureRuntime check if runtime client need be reconfigured by comparing the current configuration with the old
-// one (i.e. runtimeAPIsOld) and returns a callback that ReloadAgent can use to reconfigure the runtime client.
-func ReconfigureRuntime(client clientnative.HAProxyClient, runtimeAPIsOld []*models.RuntimeAPI) (callbackNeeded bool, callback func(), err error) {
+// one and returns a callback that ReloadAgent can use to reconfigure the runtime client.
+func ReconfigureRuntime(client clientnative.HAProxyClient) (callbackNeeded bool, callback func(), err error) {
 	cfg, err := client.Configuration()
 	if err != nil {
 		return false, nil, err
 	}
-	_, globalConf, err := cfg.GetGlobalConfiguration("")
-	if err != nil {
-		return false, nil, err
-	}
-	runtimeAPIsNew := globalConf.RuntimeAPIs
+
 	reconfigureRuntime := false
-	if len(runtimeAPIsOld) != len(runtimeAPIsNew) {
+
+	// client Runtime is not reconfigured yet, so client.Runtime() return the "old" runtime
+	oldRuntime, err := client.Runtime()
+	// In case we have an error, we need to reconfigure
+	if err != nil {
 		reconfigureRuntime = true
-	} else {
-		for _, runtimeOld := range runtimeAPIsOld {
-			if runtimeOld.Address == nil {
+	}
+
+	if !reconfigureRuntime {
+		// If we are not using stats socket (i.e. using master socket)
+		// Return immediately and do not reconfigure
+		// Do not try to compare the master socket path with stats socket paths
+		if !oldRuntime.IsStatsSocket() {
+			return false, nil, nil
+		}
+
+		_, globalConf, err := cfg.GetGlobalConfiguration("")
+		if err != nil {
+			return false, nil, err
+		}
+		runtimeAPIsNew := globalConf.RuntimeAPIs
+
+		oldSocketPath := oldRuntime.SocketPath()
+
+		// Now check if the new configuration contains the "old" runtime socket we are using
+		// If yes, no need to reconfigure, socket path still exists.
+		// If not found, only then reconfigure
+		// This, only if stats socket, not for master socket
+		found := false
+		for _, runtimeNew := range runtimeAPIsNew {
+			if runtimeNew.Address == nil {
 				continue
 			}
-			found := false
-			for _, runtimeNew := range runtimeAPIsNew {
-				if runtimeNew.Address == nil {
-					continue
-				}
-				if *runtimeNew.Address == *runtimeOld.Address {
-					found = true
-					break
-				}
-			}
-			if !found {
-				reconfigureRuntime = true
+			if *runtimeNew.Address == oldSocketPath {
+				found = true
 				break
 			}
+		}
+		if !found {
+			reconfigureRuntime = true
 		}
 	}
 

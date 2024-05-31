@@ -24,11 +24,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
-	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // NewGetStickTableParams creates a new GetStickTableParams object
@@ -53,11 +50,6 @@ type GetStickTableParams struct {
 	  In: path
 	*/
 	Name string
-	/*Process number if master-worker mode, if not only first process is returned
-	  Required: true
-	  In: query
-	*/
-	Process int64
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -69,15 +61,8 @@ func (o *GetStickTableParams) BindRequest(r *http.Request, route *middleware.Mat
 
 	o.HTTPRequest = r
 
-	qs := runtime.Values(r.URL.Query())
-
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
-	qProcess, qhkProcess, _ := qs.GetOK("process")
-	if err := o.bindProcess(qProcess, qhkProcess, route.Formats); err != nil {
 		res = append(res, err)
 	}
 	if len(res) > 0 {
@@ -96,32 +81,6 @@ func (o *GetStickTableParams) bindName(rawData []string, hasKey bool, formats st
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
-
-	return nil
-}
-
-// bindProcess binds and validates parameter Process from query.
-func (o *GetStickTableParams) bindProcess(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("process", "query", rawData)
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("process", "query", raw); err != nil {
-		return err
-	}
-
-	value, err := swag.ConvertInt64(raw)
-	if err != nil {
-		return errors.InvalidType("process", "query", "int64", raw)
-	}
-	o.Process = value
 
 	return nil
 }

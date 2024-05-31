@@ -59,7 +59,7 @@ func (h *GetHaproxyProcessInfoHandlerImpl) Handle(params information.GetHaproxyP
 		return information.NewGetHaproxyProcessInfoDefault(int(misc.ErrHTTPInternalServerError)).WithPayload(e)
 	}
 
-	return information.NewGetHaproxyProcessInfoOK().WithPayload(info)
+	return information.NewGetHaproxyProcessInfoOK().WithPayload(&info)
 }
 
 // GetInfoHandlerImpl implementation of the GetInfoHandler interface

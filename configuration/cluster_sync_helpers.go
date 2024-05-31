@@ -34,12 +34,12 @@ func (c *ClusterSync) getNodeFacts() map[string]string {
 		log.Errorf("unable to fetch processInfo: %s", err.Error())
 		return facts
 	}
-	processInfos, err := runtime.GetInfo()
-	if err != nil || len(processInfos) < 1 {
+	processInfo, err := runtime.GetInfo()
+	if err != nil {
 		log.Error("unable to fetch processInfo")
 	} else {
-		if processInfos[0].Info != nil {
-			facts["haproxy_version"] = processInfos[0].Info.Version
+		if processInfo.Info != nil {
+			facts["haproxy_version"] = processInfo.Info.Version
 		} else {
 			log.Error("empty process info")
 		}

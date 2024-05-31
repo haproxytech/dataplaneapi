@@ -53,44 +53,38 @@ func (h *GetStatsHandlerImpl) Handle(params stats.GetStatsParams, principal inte
 		return stats.NewGetStatsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	s := runtime.GetStats()
+	nStat := runtime.GetStats()
 
-	errorFound := false
-	for _, nStat := range s {
-		if nStat.Error != "" {
-			errorFound = true
-			continue
-		}
-		retVal := make([]*models.NativeStat, 0, len(nStat.Stats))
-		for _, item := range nStat.Stats {
-			if params.Name != nil {
-				if item.Type == "server" {
-					if item.Name == *params.Name && item.Type == *params.Type && item.BackendName == *params.Parent {
+	if nStat.Error != "" {
+		return stats.NewGetStatsInternalServerError().WithPayload(&nStat)
+	}
+	retVal := make([]*models.NativeStat, 0, len(nStat.Stats))
+	for _, item := range nStat.Stats {
+		if params.Name != nil {
+			if item.Type == "server" {
+				if item.Name == *params.Name && item.Type == *params.Type && item.BackendName == *params.Parent {
+					retVal = append(retVal, item)
+				}
+			} else if item.Name == *params.Name && item.Type == *params.Type {
+				retVal = append(retVal, item)
+			}
+		} else {
+			if params.Type != nil {
+				if *params.Type == "server" && params.Parent != nil {
+					if item.Type == *params.Type && item.BackendName == *params.Parent {
 						retVal = append(retVal, item)
 					}
-				} else if item.Name == *params.Name && item.Type == *params.Type {
-					retVal = append(retVal, item)
+				} else {
+					if item.Type == *params.Type {
+						retVal = append(retVal, item)
+					}
 				}
 			} else {
-				if params.Type != nil {
-					if *params.Type == "server" && params.Parent != nil {
-						if item.Type == *params.Type && item.BackendName == *params.Parent {
-							retVal = append(retVal, item)
-						}
-					} else {
-						if item.Type == *params.Type {
-							retVal = append(retVal, item)
-						}
-					}
-				} else {
-					retVal = append(retVal, item)
-				}
+				retVal = append(retVal, item)
 			}
 		}
-		nStat.Stats = retVal
 	}
-	if errorFound {
-		return stats.NewGetStatsInternalServerError().WithPayload(s)
-	}
-	return stats.NewGetStatsOK().WithPayload(s)
+	nStat.Stats = retVal
+
+	return stats.NewGetStatsOK().WithPayload(&nStat)
 }

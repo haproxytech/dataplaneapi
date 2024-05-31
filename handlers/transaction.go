@@ -167,15 +167,6 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 		return transactions.NewCommitTransactionNotAcceptable().WithPayload(misc.FailedTransactionError(transaction.ID))
 	}
 
-	// save old runtime configuration to know if the runtime client must be configured after the new configuration is
-	// reloaded by HAProxy. Logic is done by cn.ReconfigureRuntime() function.
-	_, globalConf, err := configuration.GetGlobalConfiguration("")
-	if err != nil {
-		e := misc.HandleError(err)
-		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)
-	}
-	runtimeAPIsOld := globalConf.RuntimeAPIs
-
 	var t *models.Transaction
 	t, err = configuration.CommitTransaction(params.ID)
 	if err != nil {
@@ -200,7 +191,7 @@ func (h *CommitTransactionHandlerImpl) Handle(params transactions.CommitTransact
 		}
 	}
 
-	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client, runtimeAPIsOld)
+	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client)
 	if err != nil {
 		e := misc.HandleError(err)
 		return transactions.NewCommitTransactionDefault(int(*e.Code)).WithPayload(e)

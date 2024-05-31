@@ -64,11 +64,6 @@ type GetStickTableEntriesParams struct {
 	  In: query
 	*/
 	Offset *int64
-	/*Process number if master-worker mode, if not only first process is returned
-	  Required: true
-	  In: query
-	*/
-	Process int64
 	/*Stick table name
 	  Required: true
 	  In: query
@@ -104,11 +99,6 @@ func (o *GetStickTableEntriesParams) BindRequest(r *http.Request, route *middlew
 
 	qOffset, qhkOffset, _ := qs.GetOK("offset")
 	if err := o.bindOffset(qOffset, qhkOffset, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
-	qProcess, qhkProcess, _ := qs.GetOK("process")
-	if err := o.bindProcess(qProcess, qhkProcess, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -200,32 +190,6 @@ func (o *GetStickTableEntriesParams) bindOffset(rawData []string, hasKey bool, f
 		return errors.InvalidType("offset", "query", "int64", raw)
 	}
 	o.Offset = &value
-
-	return nil
-}
-
-// bindProcess binds and validates parameter Process from query.
-func (o *GetStickTableEntriesParams) bindProcess(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("process", "query", rawData)
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("process", "query", raw); err != nil {
-		return err
-	}
-
-	value, err := swag.ConvertInt64(raw)
-	if err != nil {
-		return errors.InvalidType("process", "query", "int64", raw)
-	}
-	o.Process = value
 
 	return nil
 }

@@ -24,13 +24,10 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
-
-	"github.com/go-openapi/swag"
 )
 
 // SetStickTableEntriesURL generates an URL for the set stick table entries operation
 type SetStickTableEntriesURL struct {
-	Process    int64
 	StickTable string
 
 	_basePath string
@@ -66,11 +63,6 @@ func (o *SetStickTableEntriesURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	processQ := swag.FormatInt64(o.Process)
-	if processQ != "" {
-		qs.Set("process", processQ)
-	}
 
 	stickTableQ := o.StickTable
 	if stickTableQ != "" {

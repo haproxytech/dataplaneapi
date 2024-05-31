@@ -84,15 +84,6 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	// save old runtime configuration to know if the runtime client must be configured after the new configuration is
-	// reloaded by HAProxy. Logic is done by cn.ReconfigureRuntime() function.
-	_, globalConf, err := configuration.GetGlobalConfiguration("")
-	if err != nil {
-		e := misc.HandleError(err)
-		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
-	}
-	runtimeAPIsOld := globalConf.RuntimeAPIs
-
 	err = configuration.PushGlobalConfiguration(params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
@@ -100,7 +91,7 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 	}
 
 	if params.TransactionID == nil {
-		callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client, runtimeAPIsOld)
+		callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client)
 		if err != nil {
 			e := misc.HandleError(err)
 			return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)

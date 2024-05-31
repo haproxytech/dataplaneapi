@@ -11867,7 +11867,7 @@ func init() {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/process_infos"
+              "$ref": "#/definitions/process_info"
             }
           },
           "default": {
@@ -12477,13 +12477,6 @@ func init() {
             "required": true
           },
           {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not only first process is returned",
-            "name": "process",
-            "in": "query",
-            "required": true
-          },
-          {
             "type": "string",
             "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
             "name": "filter",
@@ -12536,13 +12529,6 @@ func init() {
             "required": true
           },
           {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not only first process is returned",
-            "name": "process",
-            "in": "query",
-            "required": true
-          },
-          {
             "description": "Stick table entry",
             "name": "stick_table_entry",
             "in": "body",
@@ -12581,14 +12567,6 @@ func init() {
         ],
         "summary": "Return Stick Tables",
         "operationId": "getStickTables",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not all processes are returned",
-            "name": "process",
-            "in": "query"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -12616,13 +12594,6 @@ func init() {
             "description": "Stick table name",
             "name": "name",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not only first process is returned",
-            "name": "process",
-            "in": "query",
             "required": true
           }
         ],
@@ -15511,10 +15482,6 @@ func init() {
         "balance": {
           "$ref": "#/definitions/balance"
         },
-        "bind_process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "check_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -16667,10 +16634,6 @@ func init() {
         "prefer_client_ciphers": {
           "type": "boolean"
         },
-        "process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "proto": {
           "type": "string",
           "x-display-name": "Protocol name"
@@ -17389,10 +17352,6 @@ func init() {
         },
         "balance": {
           "$ref": "#/definitions/balance"
-        },
-        "bind_process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
         },
         "check_timeout": {
           "type": "integer",
@@ -18688,10 +18647,6 @@ func init() {
           "x-display-name": "Backlog",
           "x-nullable": true
         },
-        "bind_process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "clflog": {
           "type": "boolean",
           "x-dependency": {
@@ -19511,10 +19466,6 @@ func init() {
           "type": "integer",
           "x-display-name": "The number of times a worker can survive a reload",
           "x-nullable": true
-        },
-        "nbproc": {
-          "type": "integer",
-          "x-display-name": "Number of Processes"
         },
         "nbthread": {
           "type": "integer",
@@ -20458,6 +20409,36 @@ func init() {
           },
           "x-display-name": "ACK Key Format"
         },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Len"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -20691,6 +20672,7 @@ func init() {
           "enum": [
             "add-header",
             "allow",
+            "capture",
             "del-acl",
             "del-header",
             "del-map",
@@ -20707,6 +20689,7 @@ func init() {
             "set-map",
             "set-status",
             "set-var",
+            "set-var-fmt",
             "strict-mode",
             "unset-var"
           ],
@@ -20722,6 +20705,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -20730,6 +20723,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -20743,6 +20737,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -24232,17 +24227,8 @@ func init() {
     },
     "native_stats": {
       "description": "HAProxy stats array",
-      "type": "array",
-      "title": "Stats Array",
-      "items": {
-        "$ref": "#/definitions/native_stats_collection"
-      },
-      "x-omitempty": true
-    },
-    "native_stats_collection": {
-      "description": "Stats from one runtime API",
       "type": "object",
-      "title": "Stats collection",
+      "title": "Stats Array",
       "properties": {
         "error": {
           "type": "string"
@@ -24257,7 +24243,8 @@ func init() {
           },
           "x-omitempty": true
         }
-      }
+      },
+      "x-omitempty": true
     },
     "originalto": {
       "type": "object",
@@ -24393,7 +24380,9 @@ func init() {
       }
     },
     "process_info": {
+      "description": "General HAProxy process information",
       "type": "object",
+      "title": "HAProxy Information",
       "properties": {
         "error": {
           "type": "string"
@@ -24404,7 +24393,8 @@ func init() {
         "runtimeAPI": {
           "type": "string"
         }
-      }
+      },
+      "x-omitempty": true
     },
     "process_info_item": {
       "type": "object",
@@ -24659,15 +24649,6 @@ func init() {
           "x-nullable": true
         }
       }
-    },
-    "process_infos": {
-      "description": "General HAProxy process information",
-      "type": "array",
-      "title": "HAProxy Information",
-      "items": {
-        "$ref": "#/definitions/process_info"
-      },
-      "x-omitempty": true
     },
     "program": {
       "description": "HAProxy program configuration",
@@ -27129,11 +27110,6 @@ func init() {
         "name": {
           "type": "string"
         },
-        "process": {
-          "description": "Process number if master-worker mode",
-          "type": "integer",
-          "x-nullable": true
-        },
         "size": {
           "type": "integer",
           "x-nullable": true
@@ -28286,6 +28262,7 @@ func init() {
             },
             "type": {
               "value": [
+                "session",
                 "connection",
                 "content"
               ]
@@ -46936,7 +46913,7 @@ func init() {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/process_infos"
+              "$ref": "#/definitions/process_info"
             }
           },
           "default": {
@@ -47852,13 +47829,6 @@ func init() {
             "required": true
           },
           {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not only first process is returned",
-            "name": "process",
-            "in": "query",
-            "required": true
-          },
-          {
             "type": "string",
             "description": "A list of filters in format data.\u003ctype\u003e \u003coperator\u003e \u003cvalue\u003e separated by comma",
             "name": "filter",
@@ -47920,13 +47890,6 @@ func init() {
             "required": true
           },
           {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not only first process is returned",
-            "name": "process",
-            "in": "query",
-            "required": true
-          },
-          {
             "description": "Stick table entry",
             "name": "stick_table_entry",
             "in": "body",
@@ -47974,14 +47937,6 @@ func init() {
         ],
         "summary": "Return Stick Tables",
         "operationId": "getStickTables",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not all processes are returned",
-            "name": "process",
-            "in": "query"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -48018,13 +47973,6 @@ func init() {
             "description": "Stick table name",
             "name": "name",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "description": "Process number if master-worker mode, if not only first process is returned",
-            "name": "process",
-            "in": "query",
             "required": true
           }
         ],
@@ -53504,10 +53452,6 @@ func init() {
         "balance": {
           "$ref": "#/definitions/balance"
         },
-        "bind_process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "check_timeout": {
           "type": "integer",
           "x-nullable": true
@@ -54612,10 +54556,6 @@ func init() {
         "prefer_client_ciphers": {
           "type": "boolean"
         },
-        "process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "proto": {
           "type": "string",
           "x-display-name": "Protocol name"
@@ -55294,10 +55234,6 @@ func init() {
         },
         "balance": {
           "$ref": "#/definitions/balance"
-        },
-        "bind_process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
         },
         "check_timeout": {
           "type": "integer",
@@ -56593,10 +56529,6 @@ func init() {
           "x-display-name": "Backlog",
           "x-nullable": true
         },
-        "bind_process": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
         "clflog": {
           "type": "boolean",
           "x-dependency": {
@@ -57363,10 +57295,6 @@ func init() {
           "minimum": 0,
           "x-display-name": "The number of times a worker can survive a reload",
           "x-nullable": true
-        },
-        "nbproc": {
-          "type": "integer",
-          "x-display-name": "Number of Processes"
         },
         "nbthread": {
           "type": "integer",
@@ -58204,6 +58132,36 @@ func init() {
           },
           "x-display-name": "ACK Key Format"
         },
+        "capture_id": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture SlotID",
+          "x-nullable": true
+        },
+        "capture_len": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Len"
+        },
+        "capture_sample": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-dependency": {
+            "type": {
+              "value": "capture"
+            }
+          },
+          "x-display-name": "Capture Sample"
+        },
         "cond": {
           "type": "string",
           "enum": [
@@ -58437,6 +58395,7 @@ func init() {
           "enum": [
             "add-header",
             "allow",
+            "capture",
             "del-acl",
             "del-header",
             "del-map",
@@ -58453,6 +58412,7 @@ func init() {
             "set-map",
             "set-status",
             "set-var",
+            "set-var-fmt",
             "strict-mode",
             "unset-var"
           ],
@@ -58468,6 +58428,16 @@ func init() {
           },
           "x-display-name": "Var Expression"
         },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": "set-var-fmt"
+            }
+          },
+          "x-display-name": "Var Format"
+        },
         "var_name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -58476,6 +58446,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -58489,6 +58460,7 @@ func init() {
               "required": true,
               "value": [
                 "set-var",
+                "set-var-fmt",
                 "unset-var"
               ]
             }
@@ -61979,17 +61951,8 @@ func init() {
     },
     "native_stats": {
       "description": "HAProxy stats array",
-      "type": "array",
-      "title": "Stats Array",
-      "items": {
-        "$ref": "#/definitions/native_stats_collection"
-      },
-      "x-omitempty": true
-    },
-    "native_stats_collection": {
-      "description": "Stats from one runtime API",
       "type": "object",
-      "title": "Stats collection",
+      "title": "Stats Array",
       "properties": {
         "error": {
           "type": "string"
@@ -62004,7 +61967,8 @@ func init() {
           },
           "x-omitempty": true
         }
-      }
+      },
+      "x-omitempty": true
     },
     "originalto": {
       "type": "object",
@@ -62140,7 +62104,9 @@ func init() {
       }
     },
     "process_info": {
+      "description": "General HAProxy process information",
       "type": "object",
+      "title": "HAProxy Information",
       "properties": {
         "error": {
           "type": "string"
@@ -62151,7 +62117,8 @@ func init() {
         "runtimeAPI": {
           "type": "string"
         }
-      }
+      },
+      "x-omitempty": true
     },
     "process_info_item": {
       "type": "object",
@@ -62406,15 +62373,6 @@ func init() {
           "x-nullable": true
         }
       }
-    },
-    "process_infos": {
-      "description": "General HAProxy process information",
-      "type": "array",
-      "title": "HAProxy Information",
-      "items": {
-        "$ref": "#/definitions/process_info"
-      },
-      "x-omitempty": true
     },
     "program": {
       "description": "HAProxy program configuration",
@@ -64770,11 +64728,6 @@ func init() {
         "name": {
           "type": "string"
         },
-        "process": {
-          "description": "Process number if master-worker mode",
-          "type": "integer",
-          "x-nullable": true
-        },
         "size": {
           "type": "integer",
           "x-nullable": true
@@ -65927,6 +65880,7 @@ func init() {
             },
             "type": {
               "value": [
+                "session",
                 "connection",
                 "content"
               ]

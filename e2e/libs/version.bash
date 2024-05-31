@@ -18,7 +18,7 @@
 # auth_curl is going to return the response status code along with the body
 # these values can be easily read as following
 #
-# read -r SC BODY < <(auth_curl GET /v2/services/haproxy/runtime/info)
+# read -r SC BODY < <(auth_curl GET /v3/services/haproxy/runtime/info)
 # echo "Status Code: ${SC}"
 # echo "Body: ${BODY}"
 #

@@ -23,8 +23,8 @@ require (
 	github.com/go-openapi/validate v0.24.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
-	github.com/haproxytech/client-native/v6 v6.0.0-20240429111325-5d017d2013ca
-	github.com/haproxytech/config-parser/v5 v5.1.1-0.20240419150429-e4dc867964ef
+	github.com/haproxytech/client-native/v6 v6.0.0-20240603153702-bfaec86dc3d1
+	github.com/haproxytech/config-parser/v5 v5.1.1-0.20240430110427-8eea621717fd
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
 	github.com/kr/pretty v0.3.1
@@ -66,7 +66,6 @@ require (
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
 	github.com/invopop/yaml v0.3.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect

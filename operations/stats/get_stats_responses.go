@@ -41,7 +41,7 @@ type GetStatsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.NativeStats `json:"body,omitempty"`
+	Payload *models.NativeStats `json:"body,omitempty"`
 }
 
 // NewGetStatsOK creates GetStatsOK with default headers values
@@ -51,13 +51,13 @@ func NewGetStatsOK() *GetStatsOK {
 }
 
 // WithPayload adds the payload to the get stats o k response
-func (o *GetStatsOK) WithPayload(payload models.NativeStats) *GetStatsOK {
+func (o *GetStatsOK) WithPayload(payload *models.NativeStats) *GetStatsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get stats o k response
-func (o *GetStatsOK) SetPayload(payload models.NativeStats) {
+func (o *GetStatsOK) SetPayload(payload *models.NativeStats) {
 	o.Payload = payload
 }
 
@@ -65,14 +65,11 @@ func (o *GetStatsOK) SetPayload(payload models.NativeStats) {
 func (o *GetStatsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(200)
-	payload := o.Payload
-	if payload == nil {
-		// return empty array
-		payload = models.NativeStats{}
-	}
-
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 
@@ -89,7 +86,7 @@ type GetStatsInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload models.NativeStats `json:"body,omitempty"`
+	Payload *models.NativeStats `json:"body,omitempty"`
 }
 
 // NewGetStatsInternalServerError creates GetStatsInternalServerError with default headers values
@@ -99,13 +96,13 @@ func NewGetStatsInternalServerError() *GetStatsInternalServerError {
 }
 
 // WithPayload adds the payload to the get stats internal server error response
-func (o *GetStatsInternalServerError) WithPayload(payload models.NativeStats) *GetStatsInternalServerError {
+func (o *GetStatsInternalServerError) WithPayload(payload *models.NativeStats) *GetStatsInternalServerError {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get stats internal server error response
-func (o *GetStatsInternalServerError) SetPayload(payload models.NativeStats) {
+func (o *GetStatsInternalServerError) SetPayload(payload *models.NativeStats) {
 	o.Payload = payload
 }
 
@@ -113,14 +110,11 @@ func (o *GetStatsInternalServerError) SetPayload(payload models.NativeStats) {
 func (o *GetStatsInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(500)
-	payload := o.Payload
-	if payload == nil {
-		// return empty array
-		payload = models.NativeStats{}
-	}
-
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 

@@ -53,6 +53,7 @@ if [[ "$major" -eq "2"  &&  "$minor" -ge "7" || "$major" -gt "2" ]] ; then
   VARIANT="-master-socket"
 fi
 
+
 if [ ! -z $(docker ps -q -f name=${DOCKER_CONTAINER_NAME}) ]; then
     echo ">>> Skipping provisioning the e2e environment, ${DOCKER_CONTAINER_NAME} already present"
 else
