@@ -24,7 +24,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/haproxytech/client-native/v4 v4.1.14
 	github.com/haproxytech/config-parser/v4 v4.1.5
-	github.com/hashicorp/consul/api v1.28.2
+	github.com/hashicorp/consul/api v1.29.1
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
@@ -57,7 +57,7 @@ require (
 	github.com/cenk/backoff v2.2.1+incompatible // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
-	github.com/fatih/color v1.16.0 // indirect
+	github.com/fatih/color v1.17.0 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/go-openapi/analysis v0.23.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
