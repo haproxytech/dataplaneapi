@@ -1,4 +1,5 @@
 ---
+version: 2
 before:
   hooks:
     - go mod download
@@ -62,7 +63,7 @@ release:
   draft: true
   name_template: "HAProxy Data Plane API v{{.Version}}"
 nfpms:
-  - 
+  -
     id: my-package
     package_name: dataplaneapi
     builds:
