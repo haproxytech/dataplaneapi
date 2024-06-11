@@ -24,7 +24,7 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "acls: Add a new ACL" {
-    resource_post "$_ACL_BASE_PATH" "data/post.json" "parent_name=fe_acl&parent_type=frontend"
+    resource_post "$_ACL_BASE_PATH"/2 "data/post.json" "index=2&parent_name=fe_acl&parent_type=frontend"
     assert_equal "$SC" 202
     #
     # verify that ACL is actually added

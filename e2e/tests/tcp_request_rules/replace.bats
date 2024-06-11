@@ -35,3 +35,27 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "${BODY}" ".action")" "reject"
 	assert_equal "$(get_json_path "${BODY}" ".cond_test")" "{ src 10.0.0.0/8 }"
 }
+
+@test "tcp_request_rules: Replace all TCP Request Rule of frontend (>=2.8)" {
+  if haproxy_version_ge "2.8"
+  then
+  resource_put "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/replace-all.json" "parent_type=frontend&parent_name=test_frontend"
+	assert_equal "$SC" 202
+  resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH" "parent_name=test_frontend&parent_type=frontend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+  fi
+}
+
+@test "tcp_request_rules: Replace all TCP Request Rule of backend (>= 2.8)" {
+  if haproxy_version_ge "2.8"
+  then
+  resource_put "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/replace-all.json" "parent_type=backend&parent_name=test_backend"
+	assert_equal "$SC" 202
+  resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH" "parent_name=test_backend&parent_type=backend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+  fi
+}

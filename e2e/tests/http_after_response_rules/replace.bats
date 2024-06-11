@@ -56,3 +56,16 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Haproxy-Current-Date"
 	assert_equal "$(get_json_path "$BODY" ".hdr_format")" "%T"
 }
+
+@test "http_after_response_rules: Replace all HTTP After Response Rules of backend" {
+	if [[ "$HAPROXY_VERSION" == "2.1" ]]; then
+		skip "http-after-response is not supported in HAProxy 2.1"
+	fi
+
+	resource_put "$_RES_RULES_BASE_PATH" "data/replace-all.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	assert_equal "$SC" 200
+
+    resource_get "$_RES_RULES_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 3
+	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+}

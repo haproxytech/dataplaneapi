@@ -1,0 +1,11 @@
+[
+  {
+    "type": "send-state"
+  },
+  {
+    "method": "OPTIONS",
+    "type": "send",
+    "uri": "/",
+    "version": "HTTP/1.1"
+  }
+]

@@ -24,12 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateStickRuleURL generates an URL for the create stick rule operation
 type CreateStickRuleURL struct {
+	Index int64
+
 	Backend       string
 	ForceReload   *bool
 	TransactionID *string
@@ -59,7 +62,14 @@ func (o *CreateStickRuleURL) SetBasePath(bp string) {
 func (o *CreateStickRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/stick_rules"
+	var _path = "/services/haproxy/configuration/stick_rules/{index}"
+
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
+	} else {
+		return nil, errors.New("index is required on CreateStickRuleURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {

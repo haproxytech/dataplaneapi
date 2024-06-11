@@ -65,10 +65,10 @@ load 'utils/_helpers'
 @test "http_error_rules: Replace a HTTP Error Rule of defaults" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_put "$_ERR_RULES_BASE_PATH/0" "data/put.json" "parent_type=defaults&force_reload=true"
+	resource_put "$_ERR_RULES_BASE_PATH/0" "data/put.json" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
 	assert_equal "$SC" 200
 
-	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults"
+	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "status"
 	assert_equal "$(get_json_path "$BODY" ".status")" 429
@@ -114,4 +114,44 @@ load 'utils/_helpers'
 
 	resource_put "$_ERR_RULES_BASE_PATH/1000" "data/put.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 404
+}
+
+@test "http_error_rules: Replace all HTTP Error Rule of frontend" {
+    haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
+
+	resource_put "$_ERR_RULES_BASE_PATH" "data/replace-all.json" "parent_type=frontend&parent_name=test_frontend"
+    assert_equal "$SC" 202
+    resource_get "$_ERR_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+
+    # empty
+	resource_put "$_ERR_RULES_BASE_PATH" "data/replace-all-empty.json" "parent_type=frontend&parent_name=test_frontend"
+    assert_equal "$SC" 202
+    resource_get "$_ERR_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 0
+}
+
+@test "http_error_rules: Replace all HTTP Error Rule of backend" {
+	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
+
+	resource_put "$_ERR_RULES_BASE_PATH" "data/replace-all.json" "parent_type=backend&parent_name=test_backend"
+    assert_equal "$SC" 202
+    resource_get "$_ERR_RULES_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+}
+
+@test "http_error_rules: Replace all HTTP Error Rule of defaults" {
+	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
+
+	resource_put "$_ERR_RULES_BASE_PATH" "data/replace-all.json" "parent_type=defaults&parent_name=mydefaults"
+    assert_equal "$SC" 202
+    resource_get "$_ERR_RULES_BASE_PATH" "parent_type=defaults&parent_name=mydefaults"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
 }

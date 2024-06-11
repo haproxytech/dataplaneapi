@@ -45,7 +45,7 @@ func NewCreateTCPResponseRule(ctx *middleware.Context, handler CreateTCPResponse
 }
 
 /*
-	CreateTCPResponseRule swagger:route POST /services/haproxy/configuration/tcp_response_rules TCPResponseRule createTcpResponseRule
+	CreateTCPResponseRule swagger:route POST /services/haproxy/configuration/tcp_response_rules/{index} TCPResponseRule createTcpResponseRule
 
 # Add a new TCP Response Rule
 

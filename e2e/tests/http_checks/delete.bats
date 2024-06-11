@@ -27,17 +27,17 @@ load 'utils/_helpers'
   #
   # Deleting first
   #
-  resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&force_reload=true"
+  resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Deleting second
   #
-	resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&force_reload=true"
+	resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Not found
   #
-  resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&force_reload=true"
+  resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
 	assert_equal "$SC" 404
 }
 

@@ -68,10 +68,16 @@ type CreateTCPCheckParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*TCP check Index
+	  Required: true
+	  In: path
+	*/
+	Index int64
 	/*Parent name
+	  Required: true
 	  In: query
 	*/
-	ParentName *string
+	ParentName string
 	/*Parent type
 	  Required: true
 	  In: query
@@ -126,6 +132,11 @@ func (o *CreateTCPCheckParams) BindRequest(r *http.Request, route *middleware.Ma
 		res = append(res, err)
 	}
 
+	rIndex, rhkIndex, _ := route.Params.GetOK("index")
+	if err := o.bindIndex(rIndex, rhkIndex, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qParentName, qhkParentName, _ := qs.GetOK("parent_name")
 	if err := o.bindParentName(qParentName, qhkParentName, route.Formats); err != nil {
 		res = append(res, err)
@@ -175,20 +186,42 @@ func (o *CreateTCPCheckParams) bindForceReload(rawData []string, hasKey bool, fo
 	return nil
 }
 
-// bindParentName binds and validates parameter ParentName from query.
-func (o *CreateTCPCheckParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindIndex binds and validates parameter Index from path.
+func (o *CreateTCPCheckParams) bindIndex(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
-	// Required: false
+	// Required: true
+	// Parameter is provided by construction from the route
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("index", "path", "int64", raw)
+	}
+	o.Index = value
+
+	return nil
+}
+
+// bindParentName binds and validates parameter ParentName from query.
+func (o *CreateTCPCheckParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	if !hasKey {
+		return errors.Required("parent_name", "query", rawData)
+	}
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: true
 	// AllowEmptyValue: false
 
-	if raw == "" { // empty values pass all other validations
-		return nil
+	if err := validate.RequiredString("parent_name", "query", raw); err != nil {
+		return err
 	}
-	o.ParentName = &raw
+	o.ParentName = raw
 
 	return nil
 }

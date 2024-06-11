@@ -1,5 +1,4 @@
 {
-    "index": 2,
     "type": "send",
     "method": "OPTIONS",
     "uri": "/",

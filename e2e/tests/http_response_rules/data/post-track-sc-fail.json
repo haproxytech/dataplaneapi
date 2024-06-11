@@ -1,7 +1,6 @@
 {
   "cond": "if",
   "cond_test": "TRUE",
-  "index": 0,
   "type": "track-sc",
   "track_sc_table": "test_sticksc",
   "track_sc_key": "src"

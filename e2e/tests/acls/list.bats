@@ -28,7 +28,6 @@ load 'utils/_helpers'
 
     assert_equal "$(get_json_path "$BODY" " . | .[2].acl_name" )" "local_dst"
     assert_equal "$(get_json_path "$BODY" " . | .[2].criterion" )" "hdr(host)"
-    assert_equal "$(get_json_path "$BODY" " . | .[2].index" )" "2"
     assert_equal "$(get_json_path "$BODY" " . | .[2].value" )" "-i localhost"
 }
 
@@ -38,6 +37,5 @@ load 'utils/_helpers'
 
     assert_equal "$(get_json_path "$BODY" " . | .[1].acl_name" )" "invalid_src"
     assert_equal "$(get_json_path "$BODY" " . | .[1].criterion" )" "src_port"
-    assert_equal "$(get_json_path "$BODY" " . | .[1].index" )" "1"
     assert_equal "$(get_json_path "$BODY" " . | .[1].value" )" "0:1023"
 }

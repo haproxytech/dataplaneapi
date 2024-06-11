@@ -1,0 +1,17 @@
+[
+  {
+    "acl_name": "replace_0",
+    "criterion": "src_port",
+    "value": "0:1110"
+  },
+  {
+    "acl_name": "replace_1",
+    "criterion": "src_port",
+    "value": "0:1111"
+  },
+  {
+    "acl_name": "replace_2",
+    "criterion": "src_port",
+    "value": "0:1112"
+  }
+]

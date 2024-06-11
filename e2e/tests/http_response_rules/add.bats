@@ -24,11 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_response_rules: Add a new HTTP Response Rule to frontend" {
-  resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+  resource_post "$_RES_RULES_BASE_PATH/0" "data/post.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 201
 }
 
 @test "http_response_rules: Add a new HTTP Response Rule to backend" {
-	resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_post "$_RES_RULES_BASE_PATH/0" "data/post.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 201
 }

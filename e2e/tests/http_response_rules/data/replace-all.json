@@ -1,0 +1,19 @@
+[
+  {
+    "cond": "if",
+    "cond_test": "{ src 192.168.0.0/16 }",
+    "type": "allow"
+  },
+  {
+    "cond": "if",
+    "cond_test": "{ src 192.168.0.0/16 }",
+    "hdr_format": "%T",
+    "hdr_name": "X-Haproxy-Current-Date",
+    "type": "add-header"
+  },
+  {
+    "cond": "if",
+    "cond_test": "{ src 3.3.3.3/16 }",
+    "type": "allow"
+  }
+]

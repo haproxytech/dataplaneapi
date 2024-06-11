@@ -1,0 +1,17 @@
+[
+  {
+    "action": "reject",
+    "cond": "if",
+    "cond_test": "{ src 192.168.0.0/16 }",
+    "type": "content"
+  },
+  {
+    "action": "track-sc",
+    "cond": "if",
+    "cond_test": "TRUE",
+    "track_key": "src",
+    "track_stick_counter": 5,
+    "track_table": "test_sticksc",
+    "type": "content"
+  }
+]

@@ -1,6 +1,5 @@
 {
   "cond": "if",
   "cond_test": "{ req_ssl_sni -i example.com }",
-  "index": 0,
   "name": "test_backend"
 }

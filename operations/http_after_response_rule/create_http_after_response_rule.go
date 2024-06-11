@@ -45,7 +45,7 @@ func NewCreateHTTPAfterResponseRule(ctx *middleware.Context, handler CreateHTTPA
 }
 
 /*
-	CreateHTTPAfterResponseRule swagger:route POST /services/haproxy/configuration/http_after_response_rules HTTPAfterResponseRule createHttpAfterResponseRule
+	CreateHTTPAfterResponseRule swagger:route POST /services/haproxy/configuration/http_after_response_rules/{index} HTTPAfterResponseRule createHttpAfterResponseRule
 
 # Add a new HTTP After Response Rule
 

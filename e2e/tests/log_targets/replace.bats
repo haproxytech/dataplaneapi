@@ -46,3 +46,16 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
 	assert_equal "$(get_json_path "$BODY" ".level")" "warning"
 }
+
+
+@test "log_targets: Replace all Log Targets of backend" {
+	resource_put "$_LOG_TRAGET_BASE_PATH" "data/replace-all.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+    assert_equal "$SC" 200
+    #
+    # verify that Log Targets is actually changed
+    #
+    #
+    resource_get "$_LOG_TRAGET_BASE_PATH" "parent_name=test_backend&parent_type=backend"
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 3
+	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+}

@@ -24,11 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_checks: Return one HTTP Check from defaults" {
-  	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=defaults"
+  	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "send-state"
 
-	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=defaults"
+	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=defaults&parent_name=mydefaults"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "disable-on-404"
 }

@@ -1,0 +1,23 @@
+[
+  {"return_hdrs": [
+      {
+        "fmt": "value1",
+        "name": "Additional-Header"
+      },
+      {
+        "fmt": "value",
+        "name": "Some-Header"
+      }
+    ],
+    "return_content": "\"My content\"",
+    "return_content_format": "string",
+    "return_content_type": "application/json",
+    "status": 429,
+    "type": "status"
+  },
+  {
+    "return_content_type": "",
+    "status": 425,
+    "type": "status"
+  }
+]

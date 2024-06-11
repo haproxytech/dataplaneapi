@@ -42,7 +42,6 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".[1].cond_test")" "{ src 10.1.0.0/16 }"
 	if haproxy_version_ge "2.8"; then
         assert_equal "$(get_json_path "$BODY" ".[2].type")" "sc-add-gpc"
-        assert_equal "$(get_json_path "$BODY" ".[2].index")" "2"
         assert_equal "$(get_json_path "$BODY" ".[2].sc_id")" "1"
         assert_equal "$(get_json_path "$BODY" ".[2].sc_int")" "1"
         assert_equal "$(get_json_path "$BODY" ".[2].cond")" "if"

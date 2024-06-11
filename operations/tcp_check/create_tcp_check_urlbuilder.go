@@ -24,14 +24,17 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateTCPCheckURL generates an URL for the create TCP check operation
 type CreateTCPCheckURL struct {
+	Index int64
+
 	ForceReload   *bool
-	ParentName    *string
+	ParentName    string
 	ParentType    string
 	TransactionID *string
 	Version       *int64
@@ -60,7 +63,14 @@ func (o *CreateTCPCheckURL) SetBasePath(bp string) {
 func (o *CreateTCPCheckURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/tcp_checks"
+	var _path = "/services/haproxy/configuration/tcp_checks/{index}"
+
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
+	} else {
+		return nil, errors.New("index is required on CreateTCPCheckURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -78,10 +88,7 @@ func (o *CreateTCPCheckURL) Build() (*url.URL, error) {
 		qs.Set("force_reload", forceReloadQ)
 	}
 
-	var parentNameQ string
-	if o.ParentName != nil {
-		parentNameQ = *o.ParentName
-	}
+	parentNameQ := o.ParentName
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

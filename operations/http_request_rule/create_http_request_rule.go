@@ -45,7 +45,7 @@ func NewCreateHTTPRequestRule(ctx *middleware.Context, handler CreateHTTPRequest
 }
 
 /*
-	CreateHTTPRequestRule swagger:route POST /services/haproxy/configuration/http_request_rules HTTPRequestRule createHttpRequestRule
+	CreateHTTPRequestRule swagger:route POST /services/haproxy/configuration/http_request_rules/{index} HTTPRequestRule createHttpRequestRule
 
 # Add a new HTTP Request Rule
 

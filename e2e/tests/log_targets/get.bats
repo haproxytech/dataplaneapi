@@ -49,7 +49,7 @@ load 'utils/_helpers'
 
 	resource_get "$_LOG_TRAGET_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".address")" "10.0.0.1"
+    assert_equal "$(get_json_path "$BODY" ".address")" "10.0.0.1"
 	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
 	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
 	assert_equal "$(get_json_path "$BODY" ".level")" "info"

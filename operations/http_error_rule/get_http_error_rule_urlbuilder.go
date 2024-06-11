@@ -33,7 +33,7 @@ import (
 type GetHTTPErrorRuleURL struct {
 	Index int64
 
-	ParentName    *string
+	ParentName    string
 	ParentType    string
 	TransactionID *string
 
@@ -78,10 +78,7 @@ func (o *GetHTTPErrorRuleURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var parentNameQ string
-	if o.ParentName != nil {
-		parentNameQ = *o.ParentName
-	}
+	parentNameQ := o.ParentName
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

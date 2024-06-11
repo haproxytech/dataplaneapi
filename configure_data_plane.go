@@ -415,6 +415,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.HTTPCheckCreateHTTPCheckHandler = &handlers.CreateHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
 	api.HTTPCheckReplaceHTTPCheckHandler = &handlers.ReplaceHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
 	api.HTTPCheckDeleteHTTPCheckHandler = &handlers.DeleteHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceHTTPChecksHandler = &handlers.ReplaceHTTPChecksHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http request rule handlers
 	api.HTTPRequestRuleCreateHTTPRequestRuleHandler = &handlers.CreateHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -422,6 +423,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.HTTPRequestRuleGetHTTPRequestRuleHandler = &handlers.GetHTTPRequestRuleHandlerImpl{Client: client}
 	api.HTTPRequestRuleGetHTTPRequestRulesHandler = &handlers.GetHTTPRequestRulesHandlerImpl{Client: client}
 	api.HTTPRequestRuleReplaceHTTPRequestRuleHandler = &handlers.ReplaceHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleReplaceHTTPRequestRulesHandler = &handlers.ReplaceHTTPRequestRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http after response rule handlers
 	api.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler = &handlers.CreateHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -429,6 +431,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler = &handlers.GetHTTPAfterResponseRuleHandlerImpl{Client: client}
 	api.HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler = &handlers.GetHTTPAfterResponseRulesHandlerImpl{Client: client}
 	api.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler = &handlers.ReplaceHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleReplaceHTTPAfterResponseRulesHandler = &handlers.ReplaceHTTPAfterResponseRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http response rule handlers
 	api.HTTPResponseRuleCreateHTTPResponseRuleHandler = &handlers.CreateHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -436,6 +439,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.HTTPResponseRuleGetHTTPResponseRuleHandler = &handlers.GetHTTPResponseRuleHandlerImpl{Client: client}
 	api.HTTPResponseRuleGetHTTPResponseRulesHandler = &handlers.GetHTTPResponseRulesHandlerImpl{Client: client}
 	api.HTTPResponseRuleReplaceHTTPResponseRuleHandler = &handlers.ReplaceHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleReplaceHTTPResponseRulesHandler = &handlers.ReplaceHTTPResponseRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http error rule handlers
 	api.HTTPErrorRuleCreateHTTPErrorRuleHandler = &handlers.CreateHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -443,6 +447,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.HTTPErrorRuleGetHTTPErrorRuleHandler = &handlers.GetHTTPErrorRuleHandlerImpl{Client: client}
 	api.HTTPErrorRuleGetHTTPErrorRulesHandler = &handlers.GetHTTPErrorRulesHandlerImpl{Client: client}
 	api.HTTPErrorRuleReplaceHTTPErrorRuleHandler = &handlers.ReplaceHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleReplaceHTTPErrorRulesHandler = &handlers.ReplaceHTTPErrorRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp content rule handlers
 	api.TCPRequestRuleCreateTCPRequestRuleHandler = &handlers.CreateTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -450,6 +455,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.TCPRequestRuleGetTCPRequestRuleHandler = &handlers.GetTCPRequestRuleHandlerImpl{Client: client}
 	api.TCPRequestRuleGetTCPRequestRulesHandler = &handlers.GetTCPRequestRulesHandlerImpl{Client: client}
 	api.TCPRequestRuleReplaceTCPRequestRuleHandler = &handlers.ReplaceTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleReplaceTCPRequestRulesHandler = &handlers.ReplaceTCPRequestRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp connection rule handlers
 	api.TCPResponseRuleCreateTCPResponseRuleHandler = &handlers.CreateTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -457,6 +463,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.TCPResponseRuleGetTCPResponseRuleHandler = &handlers.GetTCPResponseRuleHandlerImpl{Client: client}
 	api.TCPResponseRuleGetTCPResponseRulesHandler = &handlers.GetTCPResponseRulesHandlerImpl{Client: client}
 	api.TCPResponseRuleReplaceTCPResponseRuleHandler = &handlers.ReplaceTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleReplaceTCPResponseRulesHandler = &handlers.ReplaceTCPResponseRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp check handlers
 	api.TCPCheckCreateTCPCheckHandler = &handlers.CreateTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
@@ -464,6 +471,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.TCPCheckGetTCPCheckHandler = &handlers.GetTCPCheckHandlerImpl{Client: client}
 	api.TCPCheckGetTCPChecksHandler = &handlers.GetTCPChecksHandlerImpl{Client: client}
 	api.TCPCheckReplaceTCPCheckHandler = &handlers.ReplaceTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckReplaceTCPChecksHandler = &handlers.ReplaceTCPChecksHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup declare capture handlers
 	api.DeclareCaptureCreateDeclareCaptureHandler = &handlers.CreateDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
@@ -471,6 +479,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.DeclareCaptureGetDeclareCaptureHandler = &handlers.GetDeclareCaptureHandlerImpl{Client: client}
 	api.DeclareCaptureGetDeclareCapturesHandler = &handlers.GetDeclareCapturesHandlerImpl{Client: client}
 	api.DeclareCaptureReplaceDeclareCaptureHandler = &handlers.ReplaceDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
+	api.DeclareCaptureReplaceDeclareCapturesHandler = &handlers.ReplaceDeclareCapturesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup backend switching rule handlers
 	api.BackendSwitchingRuleCreateBackendSwitchingRuleHandler = &handlers.CreateBackendSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -478,6 +487,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.BackendSwitchingRuleGetBackendSwitchingRuleHandler = &handlers.GetBackendSwitchingRuleHandlerImpl{Client: client}
 	api.BackendSwitchingRuleGetBackendSwitchingRulesHandler = &handlers.GetBackendSwitchingRulesHandlerImpl{Client: client}
 	api.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler = &handlers.ReplaceBackendSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BackendSwitchingRuleReplaceBackendSwitchingRulesHandler = &handlers.ReplaceBackendSwitchingRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup server switching rule handlers
 	api.ServerSwitchingRuleCreateServerSwitchingRuleHandler = &handlers.CreateServerSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -485,6 +495,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.ServerSwitchingRuleGetServerSwitchingRuleHandler = &handlers.GetServerSwitchingRuleHandlerImpl{Client: client}
 	api.ServerSwitchingRuleGetServerSwitchingRulesHandler = &handlers.GetServerSwitchingRulesHandlerImpl{Client: client}
 	api.ServerSwitchingRuleReplaceServerSwitchingRuleHandler = &handlers.ReplaceServerSwitchingRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerSwitchingRuleReplaceServerSwitchingRulesHandler = &handlers.ReplaceServerSwitchingRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup filter handlers
 	api.FilterCreateFilterHandler = &handlers.CreateFilterHandlerImpl{Client: client, ReloadAgent: ra}
@@ -492,6 +503,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.FilterGetFilterHandler = &handlers.GetFilterHandlerImpl{Client: client}
 	api.FilterGetFiltersHandler = &handlers.GetFiltersHandlerImpl{Client: client}
 	api.FilterReplaceFilterHandler = &handlers.ReplaceFilterHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterReplaceFiltersHandler = &handlers.ReplaceFiltersHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup stick rule handlers
 	api.StickRuleCreateStickRuleHandler = &handlers.CreateStickRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -499,6 +511,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.StickRuleGetStickRuleHandler = &handlers.GetStickRuleHandlerImpl{Client: client}
 	api.StickRuleGetStickRulesHandler = &handlers.GetStickRulesHandlerImpl{Client: client}
 	api.StickRuleReplaceStickRuleHandler = &handlers.ReplaceStickRuleHandlerImpl{Client: client, ReloadAgent: ra}
+	api.StickRuleReplaceStickRulesHandler = &handlers.ReplaceStickRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup log target handlers
 	api.LogTargetCreateLogTargetHandler = &handlers.CreateLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
@@ -506,6 +519,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.LogTargetGetLogTargetHandler = &handlers.GetLogTargetHandlerImpl{Client: client}
 	api.LogTargetGetLogTargetsHandler = &handlers.GetLogTargetsHandlerImpl{Client: client}
 	api.LogTargetReplaceLogTargetHandler = &handlers.ReplaceLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetReplaceLogTargetsHandler = &handlers.ReplaceLogTargetsHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup acl rule handlers
 	api.ACLCreateACLHandler = &handlers.CreateACLHandlerImpl{Client: client, ReloadAgent: ra}
@@ -513,6 +527,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.ACLGetACLHandler = &handlers.GetACLHandlerImpl{Client: client}
 	api.ACLGetAclsHandler = &handlers.GetAclsHandlerImpl{Client: client}
 	api.ACLReplaceACLHandler = &handlers.ReplaceACLHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLReplaceAclsHandler = &handlers.ReplaceAclsHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup resolvers handlers
 	api.ResolverCreateResolverHandler = &handlers.CreateResolverHandlerImpl{Client: client, ReloadAgent: ra}

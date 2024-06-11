@@ -30,7 +30,7 @@ load 'utils/_helpers'
   if haproxy_version_ge "2.8"
   then
   # Using new track-sc with track_sc_stick_counter
-  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/post-track-sc.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
+  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/post-track-sc.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
 	assert_equal "$SC" 201
 
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
@@ -49,7 +49,7 @@ load 'utils/_helpers'
   if haproxy_version_ge "2.8"
   then
   # Using old track-sc(0|1|2)
-  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/post-track-sc-x.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
+  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/post-track-sc-x.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
 	assert_equal "$SC" 201
 
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
@@ -69,7 +69,7 @@ load 'utils/_helpers'
   then
   # Using new track-sc with track_sc_stick_counter
   # Fail due to missing track_sc_stick_counter
-  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/post-track-sc-fail.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
+  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/post-track-sc-fail.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
 	assert_equal "$SC" 400
   fi
 }

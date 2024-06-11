@@ -62,7 +62,7 @@ load 'utils/_helpers'
 @test "http_error_rules: Return one HTTP Error Rule from defaults" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults"
+	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "status"
 	assert_equal "$(get_json_path "$BODY" ".status")" 503

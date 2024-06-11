@@ -1,5 +1,4 @@
 {
-    "action": "send-binary",
-    "hex_string": "50494e470d0a12",
-    "index": 0
-  }
+  "action": "send-binary",
+  "hex_string": "50494e470d0a12"
+}

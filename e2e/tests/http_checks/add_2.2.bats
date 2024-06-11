@@ -27,10 +27,10 @@ load 'utils/_helpers'
 @test "http_checks: Add a new HTTP Check (send) to defaults (>=2.2)" {
     if haproxy_version_ge "2.2"
     then
-    resource_post "$_CHECKS_BASE_PATH" "data/post_defaults_send.json" "parent_type=defaults&force_reload=true"
+    resource_post "$_CHECKS_BASE_PATH/2" "data/post_defaults_send.json" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
 	assert_equal "$SC" 201
 
-    resource_get "$_CHECKS_BASE_PATH/2" "parent_type=defaults"
+    resource_get "$_CHECKS_BASE_PATH/2" "parent_type=defaults&parent_name=mydefaults"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" ".method")" "OPTIONS"
 	assert_equal "$(get_json_path "$BODY" ".uri")" "/"
@@ -42,7 +42,7 @@ load 'utils/_helpers'
 @test "http_checks: Add a new HTTP Check (send) to backend (>=2.2)" {
     if haproxy_version_ge "2.2"
     then
-    resource_post "$_CHECKS_BASE_PATH" "data/post_send.json" "parent_type=backend&parent_name=test_backend_2&force_reload=true"
+    resource_post "$_CHECKS_BASE_PATH/0" "data/post_send.json" "parent_type=backend&parent_name=test_backend_2&force_reload=true"
 	assert_equal "$SC" 201
 
     resource_get "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend_2"
@@ -57,7 +57,7 @@ load 'utils/_helpers'
 @test "http_checks: fail adding an invalid HTTP Check (send method) to backend (>=2.2)" {
     if haproxy_version_ge "2.2"
     then
-    resource_post "$_CHECKS_BASE_PATH" "data/post_invalid_send_method.json" "parent_type=backend&parent_name=test_backend_2&force_reload=true"
+    resource_post "$_CHECKS_BASE_PATH/0" "data/post_invalid_send_method.json" "parent_type=backend&parent_name=test_backend_2&force_reload=true"
 	assert_equal "$SC" 422
     assert_equal "$(get_json_path "$BODY" ".code")" "606"
     fi

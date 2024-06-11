@@ -1,0 +1,23 @@
+[
+    {
+        "action": "connect",
+        "check_comment": "replace"
+    },
+    {
+        "action": "comment",
+        "check_comment": "replace"
+    },
+    {
+        "action": "send",
+        "data": "replace"
+    },
+    {
+        "action": "send-binary",
+        "hex_string": "50494e470d0a12"
+    },
+    {
+        "action": "expect",
+        "match": "string",
+        "pattern": "replace"
+    }
+]

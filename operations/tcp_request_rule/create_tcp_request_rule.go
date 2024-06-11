@@ -45,7 +45,7 @@ func NewCreateTCPRequestRule(ctx *middleware.Context, handler CreateTCPRequestRu
 }
 
 /*
-	CreateTCPRequestRule swagger:route POST /services/haproxy/configuration/tcp_request_rules TCPRequestRule createTcpRequestRule
+	CreateTCPRequestRule swagger:route POST /services/haproxy/configuration/tcp_request_rules/{index} TCPRequestRule createTcpRequestRule
 
 # Add a new TCP Request Rule
 

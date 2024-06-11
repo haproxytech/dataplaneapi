@@ -24,12 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateLogTargetURL generates an URL for the create log target operation
 type CreateLogTargetURL struct {
+	Index int64
+
 	ForceReload   *bool
 	ParentName    *string
 	ParentType    string
@@ -60,7 +63,14 @@ func (o *CreateLogTargetURL) SetBasePath(bp string) {
 func (o *CreateLogTargetURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/log_targets"
+	var _path = "/services/haproxy/configuration/log_targets/{index}"
+
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
+	} else {
+		return nil, errors.New("index is required on CreateLogTargetURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {

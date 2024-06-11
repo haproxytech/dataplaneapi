@@ -1,5 +1,4 @@
 {
   "action": "comment",
-  "log_message": "log_message",
-  "index": 0
+  "check_comment": "a check comment"
 }

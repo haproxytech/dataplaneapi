@@ -73,6 +73,11 @@ type CreateTCPResponseRuleParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*TCP Response Rule Index
+	  Required: true
+	  In: path
+	*/
+	Index int64
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -124,6 +129,11 @@ func (o *CreateTCPResponseRuleParams) BindRequest(r *http.Request, route *middle
 
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	rIndex, rhkIndex, _ := route.Params.GetOK("index")
+	if err := o.bindIndex(rIndex, rhkIndex, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -183,6 +193,25 @@ func (o *CreateTCPResponseRuleParams) bindForceReload(rawData []string, hasKey b
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindIndex binds and validates parameter Index from path.
+func (o *CreateTCPResponseRuleParams) bindIndex(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("index", "path", "int64", raw)
+	}
+	o.Index = value
 
 	return nil
 }

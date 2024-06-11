@@ -45,7 +45,7 @@ func NewCreateHTTPErrorRule(ctx *middleware.Context, handler CreateHTTPErrorRule
 }
 
 /*
-	CreateHTTPErrorRule swagger:route POST /services/haproxy/configuration/http_error_rules HTTPErrorRule createHttpErrorRule
+	CreateHTTPErrorRule swagger:route POST /services/haproxy/configuration/http_error_rules/{index} HTTPErrorRule createHttpErrorRule
 
 # Add a new HTTP Error Rule
 

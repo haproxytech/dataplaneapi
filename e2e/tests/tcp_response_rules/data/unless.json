@@ -1,7 +1,6 @@
 {
   "cond": "unless",
   "cond_test": "{ src 10.0.0.0/8 }",
-  "index": 0,
   "type": "content",
   "action": "accept"
 }

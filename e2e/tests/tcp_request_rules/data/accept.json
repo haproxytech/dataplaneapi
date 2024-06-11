@@ -2,6 +2,5 @@
   "action": "accept",
   "cond": "if",
   "cond_test": "{ src 192.168.0.0/16 }",
-  "index": 0,
   "type": "content"
 }

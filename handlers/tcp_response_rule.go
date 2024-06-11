@@ -53,6 +53,12 @@ type ReplaceTCPResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+// ReplaceTCPResponseRulesHandlerImpl implementation of the ReplaceTCPResponseRulesHandler interface using client-native client
+type ReplaceTCPResponseRulesHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // Handle executing the request and returning a response
 func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.CreateTCPResponseRuleParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -80,7 +86,7 @@ func (h *CreateTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Creat
 		return tcp_response_rule.NewCreateTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateTCPResponseRule(params.Backend, params.Data, t, v)
+	err = configuration.CreateTCPResponseRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_response_rule.NewCreateTCPResponseRuleDefault(int(*e.Code)).WithPayload(e)
@@ -238,4 +244,50 @@ func (h *ReplaceTCPResponseRuleHandlerImpl) Handle(params tcp_response_rule.Repl
 		return tcp_response_rule.NewReplaceTCPResponseRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return tcp_response_rule.NewReplaceTCPResponseRuleAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceTCPResponseRulesHandlerImpl) Handle(params tcp_response_rule.ReplaceTCPResponseRulesParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return tcp_response_rule.NewReplaceTCPResponseRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_response_rule.NewReplaceTCPResponseRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.ReplaceTCPResponseRules(params.Backend, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_response_rule.NewReplaceTCPResponseRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return tcp_response_rule.NewReplaceTCPResponseRulesDefault(int(*e.Code)).WithPayload(e)
+			}
+			return tcp_response_rule.NewReplaceTCPResponseRulesOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return tcp_response_rule.NewReplaceTCPResponseRulesAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return tcp_response_rule.NewReplaceTCPResponseRulesAccepted().WithPayload(params.Data)
 }

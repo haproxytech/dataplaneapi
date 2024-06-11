@@ -28,3 +28,12 @@ load 'utils/_helpers'
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/put.json")" ".")"
 }
+
+@test "backend_switching_rules: Replace all Backend Switching Rule" {
+  resource_put "$_BSR_BASE_PATH" "data/replace-all.json" "frontend=test_frontend&force_reload=true"
+	assert_equal "$SC" 200
+
+  resource_get "$_BSR_BASE_PATH" "frontend=test_frontend"
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 3
+	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+}

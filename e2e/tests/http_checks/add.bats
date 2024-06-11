@@ -24,16 +24,16 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_checks: Add a new HTTP Check to defaults" {
-    resource_post "$_CHECKS_BASE_PATH" "data/post_defaults.json" "parent_type=defaults&force_reload=true"
+    resource_post "$_CHECKS_BASE_PATH/2" "data/post_defaults.json" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
 	assert_equal "$SC" 201
 
-    resource_get "$_CHECKS_BASE_PATH/2" "parent_type=defaults"
+    resource_get "$_CHECKS_BASE_PATH/2" "parent_type=defaults&parent_name=mydefaults"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" ".type")" "disable-on-404"
 }
 
 @test "http_checks: Add a new HTTP Check to backend" {
-    resource_post "$_CHECKS_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+    resource_post "$_CHECKS_BASE_PATH/2" "data/post.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 201
 
     resource_get "$_CHECKS_BASE_PATH/2" "parent_type=backend&parent_name=test_backend"
@@ -42,6 +42,6 @@ load 'utils/_helpers'
 }
 
 @test "http_checks: fail adding an unvalid HTTP Check to backend" {
-    resource_post "$_CHECKS_BASE_PATH" "data/post_unvalid.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+    resource_post "$_CHECKS_BASE_PATH/0" "data/post_unvalid.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 400
 }

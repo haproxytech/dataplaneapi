@@ -53,14 +53,16 @@ type ReplaceTCPCheckHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+// ReplaceTCPChecksHandlerImpl implementation of the ReplaceTCPChecksHandler interface using client-native client
+type ReplaceTCPChecksHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // Handle executing the request and returning a response
 func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
-	pName := ""
-	if params.ParentName != nil {
-		pName = *params.ParentName
-	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -84,7 +86,7 @@ func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams
 		return tcp_check.NewCreateTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateTCPCheck(params.ParentType, pName, params.Data, t, v)
+	err = configuration.CreateTCPCheck(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewCreateTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -110,10 +112,6 @@ func (h *CreateTCPCheckHandlerImpl) Handle(params tcp_check.CreateTCPCheckParams
 func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
-	pName := ""
-	if params.ParentName != nil {
-		pName = *params.ParentName
-	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -137,7 +135,7 @@ func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams
 		return tcp_check.NewDeleteTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteTCPCheck(params.Index, params.ParentType, pName, t, v)
+	err = configuration.DeleteTCPCheck(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewDeleteTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -162,11 +160,6 @@ func (h *DeleteTCPCheckHandlerImpl) Handle(params tcp_check.DeleteTCPCheckParams
 // Handle executing the request and returning a response
 func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, principal interface{}) middleware.Responder {
 	t := ""
-	pName := ""
-	if params.ParentName != nil {
-		pName = *params.ParentName
-	}
-
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -177,7 +170,7 @@ func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, prin
 		return tcp_check.NewGetTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, data, err := configuration.GetTCPCheck(params.Index, params.ParentType, pName, t)
+	_, data, err := configuration.GetTCPCheck(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewGetTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -189,10 +182,6 @@ func (h *GetTCPCheckHandlerImpl) Handle(params tcp_check.GetTCPCheckParams, prin
 // Handle executing the request and returning a response
 func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, principal interface{}) middleware.Responder {
 	t := ""
-	pName := ""
-	if params.ParentName != nil {
-		pName = *params.ParentName
-	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -203,7 +192,7 @@ func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, pr
 		return tcp_check.NewGetTCPChecksDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, data, err := configuration.GetTCPChecks(params.ParentType, pName, t)
+	_, data, err := configuration.GetTCPChecks(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -219,10 +208,6 @@ func (h *GetTCPChecksHandlerImpl) Handle(params tcp_check.GetTCPChecksParams, pr
 func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
-	pName := ""
-	if params.ParentName != nil {
-		pName = *params.ParentName
-	}
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
@@ -246,7 +231,7 @@ func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckPara
 		return tcp_check.NewReplaceTCPCheckDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditTCPCheck(params.Index, params.ParentType, pName, params.Data, t, v)
+	err = configuration.EditTCPCheck(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return tcp_check.NewReplaceTCPCheckDefault(int(*e.Code)).WithPayload(e)
@@ -266,4 +251,51 @@ func (h *ReplaceTCPCheckHandlerImpl) Handle(params tcp_check.ReplaceTCPCheckPara
 	}
 
 	return tcp_check.NewReplaceTCPCheckAccepted().WithPayload(params.Data)
+}
+
+// Handle executing the request and returning a response
+func (h *ReplaceTCPChecksHandlerImpl) Handle(params tcp_check.ReplaceTCPChecksParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return tcp_check.NewReplaceTCPChecksDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_check.NewReplaceTCPChecksDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.ReplaceTCPChecks(params.ParentType, params.ParentName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return tcp_check.NewReplaceTCPChecksDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return tcp_check.NewReplaceTCPChecksDefault(int(*e.Code)).WithPayload(e)
+			}
+			return tcp_check.NewReplaceTCPChecksOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return tcp_check.NewReplaceTCPChecksAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return tcp_check.NewReplaceTCPChecksAccepted().WithPayload(params.Data)
 }

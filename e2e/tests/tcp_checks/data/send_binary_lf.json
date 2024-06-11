@@ -1,5 +1,4 @@
 {
-    "action": "send-binary-lf",
-    "hex_fmt": "hex-fmt",
-    "index": 0
-  }
+  "action": "send-binary-lf",
+  "hex_fmt": "hex-fmt"
+}

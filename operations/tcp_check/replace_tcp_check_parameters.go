@@ -74,9 +74,10 @@ type ReplaceTCPCheckParams struct {
 	*/
 	Index int64
 	/*Parent name
+	  Required: true
 	  In: query
 	*/
-	ParentName *string
+	ParentName string
 	/*Parent type
 	  Required: true
 	  In: query
@@ -206,18 +207,21 @@ func (o *ReplaceTCPCheckParams) bindIndex(rawData []string, hasKey bool, formats
 
 // bindParentName binds and validates parameter ParentName from query.
 func (o *ReplaceTCPCheckParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	if !hasKey {
+		return errors.Required("parent_name", "query", rawData)
+	}
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
-	// Required: false
+	// Required: true
 	// AllowEmptyValue: false
 
-	if raw == "" { // empty values pass all other validations
-		return nil
+	if err := validate.RequiredString("parent_name", "query", raw); err != nil {
+		return err
 	}
-	o.ParentName = &raw
+	o.ParentName = raw
 
 	return nil
 }

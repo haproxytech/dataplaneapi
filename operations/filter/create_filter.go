@@ -45,7 +45,7 @@ func NewCreateFilter(ctx *middleware.Context, handler CreateFilterHandler) *Crea
 }
 
 /*
-	CreateFilter swagger:route POST /services/haproxy/configuration/filters Filter createFilter
+	CreateFilter swagger:route POST /services/haproxy/configuration/filters/{index} Filter createFilter
 
 # Add a new Filter
 

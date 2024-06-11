@@ -1,6 +1,5 @@
 {
-    "action": "expect",
-    "match": "string",
-    "pattern": "replace",
-    "index": 0
-  }
+  "action": "expect",
+  "match": "string",
+  "pattern": "replace"
+}

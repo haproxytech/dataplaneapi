@@ -880,11 +880,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ACLReplaceACLHandler: acl.ReplaceACLHandlerFunc(func(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl.ReplaceACL has not yet been implemented")
 		}),
+		ACLReplaceAclsHandler: acl.ReplaceAclsHandlerFunc(func(params acl.ReplaceAclsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation acl.ReplaceAcls has not yet been implemented")
+		}),
 		BackendReplaceBackendHandler: backend.ReplaceBackendHandlerFunc(func(params backend.ReplaceBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend.ReplaceBackend has not yet been implemented")
 		}),
 		BackendSwitchingRuleReplaceBackendSwitchingRuleHandler: backend_switching_rule.ReplaceBackendSwitchingRuleHandlerFunc(func(params backend_switching_rule.ReplaceBackendSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation backend_switching_rule.ReplaceBackendSwitchingRule has not yet been implemented")
+		}),
+		BackendSwitchingRuleReplaceBackendSwitchingRulesHandler: backend_switching_rule.ReplaceBackendSwitchingRulesHandlerFunc(func(params backend_switching_rule.ReplaceBackendSwitchingRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation backend_switching_rule.ReplaceBackendSwitchingRules has not yet been implemented")
 		}),
 		BindReplaceBindHandler: bind.ReplaceBindHandlerFunc(func(params bind.ReplaceBindParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.ReplaceBind has not yet been implemented")
@@ -898,6 +904,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		DeclareCaptureReplaceDeclareCaptureHandler: declare_capture.ReplaceDeclareCaptureHandlerFunc(func(params declare_capture.ReplaceDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.ReplaceDeclareCapture has not yet been implemented")
 		}),
+		DeclareCaptureReplaceDeclareCapturesHandler: declare_capture.ReplaceDeclareCapturesHandlerFunc(func(params declare_capture.ReplaceDeclareCapturesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation declare_capture.ReplaceDeclareCaptures has not yet been implemented")
+		}),
 		DefaultsReplaceDefaultsSectionHandler: defaults.ReplaceDefaultsSectionHandlerFunc(func(params defaults.ReplaceDefaultsSectionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.ReplaceDefaultsSection has not yet been implemented")
 		}),
@@ -909,6 +918,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		FilterReplaceFilterHandler: filter.ReplaceFilterHandlerFunc(func(params filter.ReplaceFilterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.ReplaceFilter has not yet been implemented")
+		}),
+		FilterReplaceFiltersHandler: filter.ReplaceFiltersHandlerFunc(func(params filter.ReplaceFiltersParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation filter.ReplaceFilters has not yet been implemented")
 		}),
 		FrontendReplaceFrontendHandler: frontend.ReplaceFrontendHandlerFunc(func(params frontend.ReplaceFrontendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation frontend.ReplaceFrontend has not yet been implemented")
@@ -922,11 +934,20 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler: http_after_response_rule.ReplaceHTTPAfterResponseRuleHandlerFunc(func(params http_after_response_rule.ReplaceHTTPAfterResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_after_response_rule.ReplaceHTTPAfterResponseRule has not yet been implemented")
 		}),
+		HTTPAfterResponseRuleReplaceHTTPAfterResponseRulesHandler: http_after_response_rule.ReplaceHTTPAfterResponseRulesHandlerFunc(func(params http_after_response_rule.ReplaceHTTPAfterResponseRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_after_response_rule.ReplaceHTTPAfterResponseRules has not yet been implemented")
+		}),
 		HTTPCheckReplaceHTTPCheckHandler: http_check.ReplaceHTTPCheckHandlerFunc(func(params http_check.ReplaceHTTPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_check.ReplaceHTTPCheck has not yet been implemented")
 		}),
+		HTTPCheckReplaceHTTPChecksHandler: http_check.ReplaceHTTPChecksHandlerFunc(func(params http_check.ReplaceHTTPChecksParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_check.ReplaceHTTPChecks has not yet been implemented")
+		}),
 		HTTPErrorRuleReplaceHTTPErrorRuleHandler: http_error_rule.ReplaceHTTPErrorRuleHandlerFunc(func(params http_error_rule.ReplaceHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_error_rule.ReplaceHTTPErrorRule has not yet been implemented")
+		}),
+		HTTPErrorRuleReplaceHTTPErrorRulesHandler: http_error_rule.ReplaceHTTPErrorRulesHandlerFunc(func(params http_error_rule.ReplaceHTTPErrorRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_error_rule.ReplaceHTTPErrorRules has not yet been implemented")
 		}),
 		HTTPErrorsReplaceHTTPErrorsSectionHandler: http_errors.ReplaceHTTPErrorsSectionHandlerFunc(func(params http_errors.ReplaceHTTPErrorsSectionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_errors.ReplaceHTTPErrorsSection has not yet been implemented")
@@ -934,14 +955,23 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		HTTPRequestRuleReplaceHTTPRequestRuleHandler: http_request_rule.ReplaceHTTPRequestRuleHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_request_rule.ReplaceHTTPRequestRule has not yet been implemented")
 		}),
+		HTTPRequestRuleReplaceHTTPRequestRulesHandler: http_request_rule.ReplaceHTTPRequestRulesHandlerFunc(func(params http_request_rule.ReplaceHTTPRequestRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_request_rule.ReplaceHTTPRequestRules has not yet been implemented")
+		}),
 		HTTPResponseRuleReplaceHTTPResponseRuleHandler: http_response_rule.ReplaceHTTPResponseRuleHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRule has not yet been implemented")
+		}),
+		HTTPResponseRuleReplaceHTTPResponseRulesHandler: http_response_rule.ReplaceHTTPResponseRulesHandlerFunc(func(params http_response_rule.ReplaceHTTPResponseRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation http_response_rule.ReplaceHTTPResponseRules has not yet been implemented")
 		}),
 		LogForwardReplaceLogForwardHandler: log_forward.ReplaceLogForwardHandlerFunc(func(params log_forward.ReplaceLogForwardParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_forward.ReplaceLogForward has not yet been implemented")
 		}),
 		LogTargetReplaceLogTargetHandler: log_target.ReplaceLogTargetHandlerFunc(func(params log_target.ReplaceLogTargetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.ReplaceLogTarget has not yet been implemented")
+		}),
+		LogTargetReplaceLogTargetsHandler: log_target.ReplaceLogTargetsHandlerFunc(func(params log_target.ReplaceLogTargetsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_target.ReplaceLogTargets has not yet been implemented")
 		}),
 		MailerEntryReplaceMailerEntryHandler: mailer_entry.ReplaceMailerEntryHandlerFunc(func(params mailer_entry.ReplaceMailerEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation mailer_entry.ReplaceMailerEntry has not yet been implemented")
@@ -973,6 +1003,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServerSwitchingRuleReplaceServerSwitchingRuleHandler: server_switching_rule.ReplaceServerSwitchingRuleHandlerFunc(func(params server_switching_rule.ReplaceServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server_switching_rule.ReplaceServerSwitchingRule has not yet been implemented")
 		}),
+		ServerSwitchingRuleReplaceServerSwitchingRulesHandler: server_switching_rule.ReplaceServerSwitchingRulesHandlerFunc(func(params server_switching_rule.ReplaceServerSwitchingRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation server_switching_rule.ReplaceServerSwitchingRules has not yet been implemented")
+		}),
 		ServerTemplateReplaceServerTemplateHandler: server_template.ReplaceServerTemplateHandlerFunc(func(params server_template.ReplaceServerTemplateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server_template.ReplaceServerTemplate has not yet been implemented")
 		}),
@@ -991,6 +1024,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StickRuleReplaceStickRuleHandler: stick_rule.ReplaceStickRuleHandlerFunc(func(params stick_rule.ReplaceStickRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_rule.ReplaceStickRule has not yet been implemented")
 		}),
+		StickRuleReplaceStickRulesHandler: stick_rule.ReplaceStickRulesHandlerFunc(func(params stick_rule.ReplaceStickRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation stick_rule.ReplaceStickRules has not yet been implemented")
+		}),
 		StorageReplaceStorageGeneralFileHandler: storage.ReplaceStorageGeneralFileHandlerFunc(func(params storage.ReplaceStorageGeneralFileParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.ReplaceStorageGeneralFile has not yet been implemented")
 		}),
@@ -1003,11 +1039,20 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TCPCheckReplaceTCPCheckHandler: tcp_check.ReplaceTCPCheckHandlerFunc(func(params tcp_check.ReplaceTCPCheckParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.ReplaceTCPCheck has not yet been implemented")
 		}),
+		TCPCheckReplaceTCPChecksHandler: tcp_check.ReplaceTCPChecksHandlerFunc(func(params tcp_check.ReplaceTCPChecksParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_check.ReplaceTCPChecks has not yet been implemented")
+		}),
 		TCPRequestRuleReplaceTCPRequestRuleHandler: tcp_request_rule.ReplaceTCPRequestRuleHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRule has not yet been implemented")
 		}),
+		TCPRequestRuleReplaceTCPRequestRulesHandler: tcp_request_rule.ReplaceTCPRequestRulesHandlerFunc(func(params tcp_request_rule.ReplaceTCPRequestRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_request_rule.ReplaceTCPRequestRules has not yet been implemented")
+		}),
 		TCPResponseRuleReplaceTCPResponseRuleHandler: tcp_response_rule.ReplaceTCPResponseRuleHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRuleParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_response_rule.ReplaceTCPResponseRule has not yet been implemented")
+		}),
+		TCPResponseRuleReplaceTCPResponseRulesHandler: tcp_response_rule.ReplaceTCPResponseRulesHandlerFunc(func(params tcp_response_rule.ReplaceTCPResponseRulesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation tcp_response_rule.ReplaceTCPResponseRules has not yet been implemented")
 		}),
 		TableReplaceTableHandler: table.ReplaceTableHandlerFunc(func(params table.ReplaceTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.ReplaceTable has not yet been implemented")
@@ -1597,10 +1642,14 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryReplaceAWSRegionHandler service_discovery.ReplaceAWSRegionHandler
 	// ACLReplaceACLHandler sets the operation handler for the replace Acl operation
 	ACLReplaceACLHandler acl.ReplaceACLHandler
+	// ACLReplaceAclsHandler sets the operation handler for the replace acls operation
+	ACLReplaceAclsHandler acl.ReplaceAclsHandler
 	// BackendReplaceBackendHandler sets the operation handler for the replace backend operation
 	BackendReplaceBackendHandler backend.ReplaceBackendHandler
 	// BackendSwitchingRuleReplaceBackendSwitchingRuleHandler sets the operation handler for the replace backend switching rule operation
 	BackendSwitchingRuleReplaceBackendSwitchingRuleHandler backend_switching_rule.ReplaceBackendSwitchingRuleHandler
+	// BackendSwitchingRuleReplaceBackendSwitchingRulesHandler sets the operation handler for the replace backend switching rules operation
+	BackendSwitchingRuleReplaceBackendSwitchingRulesHandler backend_switching_rule.ReplaceBackendSwitchingRulesHandler
 	// BindReplaceBindHandler sets the operation handler for the replace bind operation
 	BindReplaceBindHandler bind.ReplaceBindHandler
 	// CacheReplaceCacheHandler sets the operation handler for the replace cache operation
@@ -1609,6 +1658,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
 	// DeclareCaptureReplaceDeclareCaptureHandler sets the operation handler for the replace declare capture operation
 	DeclareCaptureReplaceDeclareCaptureHandler declare_capture.ReplaceDeclareCaptureHandler
+	// DeclareCaptureReplaceDeclareCapturesHandler sets the operation handler for the replace declare captures operation
+	DeclareCaptureReplaceDeclareCapturesHandler declare_capture.ReplaceDeclareCapturesHandler
 	// DefaultsReplaceDefaultsSectionHandler sets the operation handler for the replace defaults section operation
 	DefaultsReplaceDefaultsSectionHandler defaults.ReplaceDefaultsSectionHandler
 	// DgramBindReplaceDgramBindHandler sets the operation handler for the replace dgram bind operation
@@ -1617,6 +1668,8 @@ type DataPlaneAPI struct {
 	FCGIAppReplaceFCGIAppHandler fcgi_app.ReplaceFCGIAppHandler
 	// FilterReplaceFilterHandler sets the operation handler for the replace filter operation
 	FilterReplaceFilterHandler filter.ReplaceFilterHandler
+	// FilterReplaceFiltersHandler sets the operation handler for the replace filters operation
+	FilterReplaceFiltersHandler filter.ReplaceFiltersHandler
 	// FrontendReplaceFrontendHandler sets the operation handler for the replace frontend operation
 	FrontendReplaceFrontendHandler frontend.ReplaceFrontendHandler
 	// GlobalReplaceGlobalHandler sets the operation handler for the replace global operation
@@ -1625,20 +1678,32 @@ type DataPlaneAPI struct {
 	GroupReplaceGroupHandler group.ReplaceGroupHandler
 	// HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler sets the operation handler for the replace HTTP after response rule operation
 	HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler http_after_response_rule.ReplaceHTTPAfterResponseRuleHandler
+	// HTTPAfterResponseRuleReplaceHTTPAfterResponseRulesHandler sets the operation handler for the replace HTTP after response rules operation
+	HTTPAfterResponseRuleReplaceHTTPAfterResponseRulesHandler http_after_response_rule.ReplaceHTTPAfterResponseRulesHandler
 	// HTTPCheckReplaceHTTPCheckHandler sets the operation handler for the replace HTTP check operation
 	HTTPCheckReplaceHTTPCheckHandler http_check.ReplaceHTTPCheckHandler
+	// HTTPCheckReplaceHTTPChecksHandler sets the operation handler for the replace HTTP checks operation
+	HTTPCheckReplaceHTTPChecksHandler http_check.ReplaceHTTPChecksHandler
 	// HTTPErrorRuleReplaceHTTPErrorRuleHandler sets the operation handler for the replace HTTP error rule operation
 	HTTPErrorRuleReplaceHTTPErrorRuleHandler http_error_rule.ReplaceHTTPErrorRuleHandler
+	// HTTPErrorRuleReplaceHTTPErrorRulesHandler sets the operation handler for the replace HTTP error rules operation
+	HTTPErrorRuleReplaceHTTPErrorRulesHandler http_error_rule.ReplaceHTTPErrorRulesHandler
 	// HTTPErrorsReplaceHTTPErrorsSectionHandler sets the operation handler for the replace HTTP errors section operation
 	HTTPErrorsReplaceHTTPErrorsSectionHandler http_errors.ReplaceHTTPErrorsSectionHandler
 	// HTTPRequestRuleReplaceHTTPRequestRuleHandler sets the operation handler for the replace HTTP request rule operation
 	HTTPRequestRuleReplaceHTTPRequestRuleHandler http_request_rule.ReplaceHTTPRequestRuleHandler
+	// HTTPRequestRuleReplaceHTTPRequestRulesHandler sets the operation handler for the replace HTTP request rules operation
+	HTTPRequestRuleReplaceHTTPRequestRulesHandler http_request_rule.ReplaceHTTPRequestRulesHandler
 	// HTTPResponseRuleReplaceHTTPResponseRuleHandler sets the operation handler for the replace HTTP response rule operation
 	HTTPResponseRuleReplaceHTTPResponseRuleHandler http_response_rule.ReplaceHTTPResponseRuleHandler
+	// HTTPResponseRuleReplaceHTTPResponseRulesHandler sets the operation handler for the replace HTTP response rules operation
+	HTTPResponseRuleReplaceHTTPResponseRulesHandler http_response_rule.ReplaceHTTPResponseRulesHandler
 	// LogForwardReplaceLogForwardHandler sets the operation handler for the replace log forward operation
 	LogForwardReplaceLogForwardHandler log_forward.ReplaceLogForwardHandler
 	// LogTargetReplaceLogTargetHandler sets the operation handler for the replace log target operation
 	LogTargetReplaceLogTargetHandler log_target.ReplaceLogTargetHandler
+	// LogTargetReplaceLogTargetsHandler sets the operation handler for the replace log targets operation
+	LogTargetReplaceLogTargetsHandler log_target.ReplaceLogTargetsHandler
 	// MailerEntryReplaceMailerEntryHandler sets the operation handler for the replace mailer entry operation
 	MailerEntryReplaceMailerEntryHandler mailer_entry.ReplaceMailerEntryHandler
 	// NameserverReplaceNameserverHandler sets the operation handler for the replace nameserver operation
@@ -1659,6 +1724,8 @@ type DataPlaneAPI struct {
 	ServerReplaceServerHandler serverops.ReplaceServerHandler
 	// ServerSwitchingRuleReplaceServerSwitchingRuleHandler sets the operation handler for the replace server switching rule operation
 	ServerSwitchingRuleReplaceServerSwitchingRuleHandler server_switching_rule.ReplaceServerSwitchingRuleHandler
+	// ServerSwitchingRuleReplaceServerSwitchingRulesHandler sets the operation handler for the replace server switching rules operation
+	ServerSwitchingRuleReplaceServerSwitchingRulesHandler server_switching_rule.ReplaceServerSwitchingRulesHandler
 	// ServerTemplateReplaceServerTemplateHandler sets the operation handler for the replace server template operation
 	ServerTemplateReplaceServerTemplateHandler server_template.ReplaceServerTemplateHandler
 	// SitesReplaceSiteHandler sets the operation handler for the replace site operation
@@ -1671,6 +1738,8 @@ type DataPlaneAPI struct {
 	SpoeReplaceSpoeMessageHandler spoe.ReplaceSpoeMessageHandler
 	// StickRuleReplaceStickRuleHandler sets the operation handler for the replace stick rule operation
 	StickRuleReplaceStickRuleHandler stick_rule.ReplaceStickRuleHandler
+	// StickRuleReplaceStickRulesHandler sets the operation handler for the replace stick rules operation
+	StickRuleReplaceStickRulesHandler stick_rule.ReplaceStickRulesHandler
 	// StorageReplaceStorageGeneralFileHandler sets the operation handler for the replace storage general file operation
 	StorageReplaceStorageGeneralFileHandler storage.ReplaceStorageGeneralFileHandler
 	// StorageReplaceStorageMapFileHandler sets the operation handler for the replace storage map file operation
@@ -1679,10 +1748,16 @@ type DataPlaneAPI struct {
 	StorageReplaceStorageSSLCertificateHandler storage.ReplaceStorageSSLCertificateHandler
 	// TCPCheckReplaceTCPCheckHandler sets the operation handler for the replace TCP check operation
 	TCPCheckReplaceTCPCheckHandler tcp_check.ReplaceTCPCheckHandler
+	// TCPCheckReplaceTCPChecksHandler sets the operation handler for the replace TCP checks operation
+	TCPCheckReplaceTCPChecksHandler tcp_check.ReplaceTCPChecksHandler
 	// TCPRequestRuleReplaceTCPRequestRuleHandler sets the operation handler for the replace TCP request rule operation
 	TCPRequestRuleReplaceTCPRequestRuleHandler tcp_request_rule.ReplaceTCPRequestRuleHandler
+	// TCPRequestRuleReplaceTCPRequestRulesHandler sets the operation handler for the replace TCP request rules operation
+	TCPRequestRuleReplaceTCPRequestRulesHandler tcp_request_rule.ReplaceTCPRequestRulesHandler
 	// TCPResponseRuleReplaceTCPResponseRuleHandler sets the operation handler for the replace TCP response rule operation
 	TCPResponseRuleReplaceTCPResponseRuleHandler tcp_response_rule.ReplaceTCPResponseRuleHandler
+	// TCPResponseRuleReplaceTCPResponseRulesHandler sets the operation handler for the replace TCP response rules operation
+	TCPResponseRuleReplaceTCPResponseRulesHandler tcp_response_rule.ReplaceTCPResponseRulesHandler
 	// TableReplaceTableHandler sets the operation handler for the replace table operation
 	TableReplaceTableHandler table.ReplaceTableHandler
 	// UserReplaceUserHandler sets the operation handler for the replace user operation
@@ -2547,11 +2622,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ACLReplaceACLHandler == nil {
 		unregistered = append(unregistered, "acl.ReplaceACLHandler")
 	}
+	if o.ACLReplaceAclsHandler == nil {
+		unregistered = append(unregistered, "acl.ReplaceAclsHandler")
+	}
 	if o.BackendReplaceBackendHandler == nil {
 		unregistered = append(unregistered, "backend.ReplaceBackendHandler")
 	}
 	if o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "backend_switching_rule.ReplaceBackendSwitchingRuleHandler")
+	}
+	if o.BackendSwitchingRuleReplaceBackendSwitchingRulesHandler == nil {
+		unregistered = append(unregistered, "backend_switching_rule.ReplaceBackendSwitchingRulesHandler")
 	}
 	if o.BindReplaceBindHandler == nil {
 		unregistered = append(unregistered, "bind.ReplaceBindHandler")
@@ -2565,6 +2646,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.DeclareCaptureReplaceDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.ReplaceDeclareCaptureHandler")
 	}
+	if o.DeclareCaptureReplaceDeclareCapturesHandler == nil {
+		unregistered = append(unregistered, "declare_capture.ReplaceDeclareCapturesHandler")
+	}
 	if o.DefaultsReplaceDefaultsSectionHandler == nil {
 		unregistered = append(unregistered, "defaults.ReplaceDefaultsSectionHandler")
 	}
@@ -2576,6 +2660,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.FilterReplaceFilterHandler == nil {
 		unregistered = append(unregistered, "filter.ReplaceFilterHandler")
+	}
+	if o.FilterReplaceFiltersHandler == nil {
+		unregistered = append(unregistered, "filter.ReplaceFiltersHandler")
 	}
 	if o.FrontendReplaceFrontendHandler == nil {
 		unregistered = append(unregistered, "frontend.ReplaceFrontendHandler")
@@ -2589,11 +2676,20 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_after_response_rule.ReplaceHTTPAfterResponseRuleHandler")
 	}
+	if o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRulesHandler == nil {
+		unregistered = append(unregistered, "http_after_response_rule.ReplaceHTTPAfterResponseRulesHandler")
+	}
 	if o.HTTPCheckReplaceHTTPCheckHandler == nil {
 		unregistered = append(unregistered, "http_check.ReplaceHTTPCheckHandler")
 	}
+	if o.HTTPCheckReplaceHTTPChecksHandler == nil {
+		unregistered = append(unregistered, "http_check.ReplaceHTTPChecksHandler")
+	}
 	if o.HTTPErrorRuleReplaceHTTPErrorRuleHandler == nil {
 		unregistered = append(unregistered, "http_error_rule.ReplaceHTTPErrorRuleHandler")
+	}
+	if o.HTTPErrorRuleReplaceHTTPErrorRulesHandler == nil {
+		unregistered = append(unregistered, "http_error_rule.ReplaceHTTPErrorRulesHandler")
 	}
 	if o.HTTPErrorsReplaceHTTPErrorsSectionHandler == nil {
 		unregistered = append(unregistered, "http_errors.ReplaceHTTPErrorsSectionHandler")
@@ -2601,14 +2697,23 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.HTTPRequestRuleReplaceHTTPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRuleHandler")
 	}
+	if o.HTTPRequestRuleReplaceHTTPRequestRulesHandler == nil {
+		unregistered = append(unregistered, "http_request_rule.ReplaceHTTPRequestRulesHandler")
+	}
 	if o.HTTPResponseRuleReplaceHTTPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRuleHandler")
+	}
+	if o.HTTPResponseRuleReplaceHTTPResponseRulesHandler == nil {
+		unregistered = append(unregistered, "http_response_rule.ReplaceHTTPResponseRulesHandler")
 	}
 	if o.LogForwardReplaceLogForwardHandler == nil {
 		unregistered = append(unregistered, "log_forward.ReplaceLogForwardHandler")
 	}
 	if o.LogTargetReplaceLogTargetHandler == nil {
 		unregistered = append(unregistered, "log_target.ReplaceLogTargetHandler")
+	}
+	if o.LogTargetReplaceLogTargetsHandler == nil {
+		unregistered = append(unregistered, "log_target.ReplaceLogTargetsHandler")
 	}
 	if o.MailerEntryReplaceMailerEntryHandler == nil {
 		unregistered = append(unregistered, "mailer_entry.ReplaceMailerEntryHandler")
@@ -2640,6 +2745,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServerSwitchingRuleReplaceServerSwitchingRuleHandler == nil {
 		unregistered = append(unregistered, "server_switching_rule.ReplaceServerSwitchingRuleHandler")
 	}
+	if o.ServerSwitchingRuleReplaceServerSwitchingRulesHandler == nil {
+		unregistered = append(unregistered, "server_switching_rule.ReplaceServerSwitchingRulesHandler")
+	}
 	if o.ServerTemplateReplaceServerTemplateHandler == nil {
 		unregistered = append(unregistered, "server_template.ReplaceServerTemplateHandler")
 	}
@@ -2658,6 +2766,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StickRuleReplaceStickRuleHandler == nil {
 		unregistered = append(unregistered, "stick_rule.ReplaceStickRuleHandler")
 	}
+	if o.StickRuleReplaceStickRulesHandler == nil {
+		unregistered = append(unregistered, "stick_rule.ReplaceStickRulesHandler")
+	}
 	if o.StorageReplaceStorageGeneralFileHandler == nil {
 		unregistered = append(unregistered, "storage.ReplaceStorageGeneralFileHandler")
 	}
@@ -2670,11 +2781,20 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TCPCheckReplaceTCPCheckHandler == nil {
 		unregistered = append(unregistered, "tcp_check.ReplaceTCPCheckHandler")
 	}
+	if o.TCPCheckReplaceTCPChecksHandler == nil {
+		unregistered = append(unregistered, "tcp_check.ReplaceTCPChecksHandler")
+	}
 	if o.TCPRequestRuleReplaceTCPRequestRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRuleHandler")
 	}
+	if o.TCPRequestRuleReplaceTCPRequestRulesHandler == nil {
+		unregistered = append(unregistered, "tcp_request_rule.ReplaceTCPRequestRulesHandler")
+	}
 	if o.TCPResponseRuleReplaceTCPResponseRuleHandler == nil {
 		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRuleHandler")
+	}
+	if o.TCPResponseRuleReplaceTCPResponseRulesHandler == nil {
+		unregistered = append(unregistered, "tcp_response_rule.ReplaceTCPResponseRulesHandler")
 	}
 	if o.TableReplaceTableHandler == nil {
 		unregistered = append(unregistered, "table.ReplaceTableHandler")
@@ -2855,7 +2975,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/acls"] = acl.NewCreateACL(o.context, o.ACLCreateACLHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/acls/{index}"] = acl.NewCreateACL(o.context, o.ACLCreateACLHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2863,7 +2983,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/backend_switching_rules"] = backend_switching_rule.NewCreateBackendSwitchingRule(o.context, o.BackendSwitchingRuleCreateBackendSwitchingRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewCreateBackendSwitchingRule(o.context, o.BackendSwitchingRuleCreateBackendSwitchingRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2879,7 +2999,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/captures"] = declare_capture.NewCreateDeclareCapture(o.context, o.DeclareCaptureCreateDeclareCaptureHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/captures/{index}"] = declare_capture.NewCreateDeclareCapture(o.context, o.DeclareCaptureCreateDeclareCaptureHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -2895,7 +3015,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/filters"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/filters/{index}"] = filter.NewCreateFilter(o.context, o.FilterCreateFilterHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2907,15 +3027,15 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/http_after_response_rules"] = http_after_response_rule.NewCreateHTTPAfterResponseRule(o.context, o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/http_after_response_rules/{index}"] = http_after_response_rule.NewCreateHTTPAfterResponseRule(o.context, o.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/http_checks"] = http_check.NewCreateHTTPCheck(o.context, o.HTTPCheckCreateHTTPCheckHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/http_checks/{index}"] = http_check.NewCreateHTTPCheck(o.context, o.HTTPCheckCreateHTTPCheckHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/http_error_rules"] = http_error_rule.NewCreateHTTPErrorRule(o.context, o.HTTPErrorRuleCreateHTTPErrorRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/http_error_rules/{index}"] = http_error_rule.NewCreateHTTPErrorRule(o.context, o.HTTPErrorRuleCreateHTTPErrorRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2923,11 +3043,11 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/http_request_rules"] = http_request_rule.NewCreateHTTPRequestRule(o.context, o.HTTPRequestRuleCreateHTTPRequestRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/http_request_rules/{index}"] = http_request_rule.NewCreateHTTPRequestRule(o.context, o.HTTPRequestRuleCreateHTTPRequestRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/http_response_rules"] = http_response_rule.NewCreateHTTPResponseRule(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewCreateHTTPResponseRule(o.context, o.HTTPResponseRuleCreateHTTPResponseRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2935,7 +3055,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/log_targets"] = log_target.NewCreateLogTarget(o.context, o.LogTargetCreateLogTargetHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewCreateLogTarget(o.context, o.LogTargetCreateLogTargetHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -2975,7 +3095,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/server_switching_rules"] = server_switching_rule.NewCreateServerSwitchingRule(o.context, o.ServerSwitchingRuleCreateServerSwitchingRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/server_switching_rules/{index}"] = server_switching_rule.NewCreateServerSwitchingRule(o.context, o.ServerSwitchingRuleCreateServerSwitchingRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -3007,7 +3127,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewCreateStickRule(o.context, o.StickRuleCreateStickRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/stick_rules/{index}"] = stick_rule.NewCreateStickRule(o.context, o.StickRuleCreateStickRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -3023,15 +3143,15 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/tcp_checks"] = tcp_check.NewCreateTCPCheck(o.context, o.TCPCheckCreateTCPCheckHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/tcp_checks/{index}"] = tcp_check.NewCreateTCPCheck(o.context, o.TCPCheckCreateTCPCheckHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewCreateTCPRequestRule(o.context, o.TCPRequestRuleCreateTCPRequestRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewCreateTCPRequestRule(o.context, o.TCPRequestRuleCreateTCPRequestRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
+	o.handlers["POST"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewCreateTCPResponseRule(o.context, o.TCPResponseRuleCreateTCPResponseRuleHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -3815,11 +3935,19 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/acls"] = acl.NewReplaceAcls(o.context, o.ACLReplaceAclsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{name}"] = backend.NewReplaceBackend(o.context, o.BackendReplaceBackendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backend_switching_rules/{index}"] = backend_switching_rule.NewReplaceBackendSwitchingRule(o.context, o.BackendSwitchingRuleReplaceBackendSwitchingRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/backend_switching_rules"] = backend_switching_rule.NewReplaceBackendSwitchingRules(o.context, o.BackendSwitchingRuleReplaceBackendSwitchingRulesHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -3839,6 +3967,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/captures"] = declare_capture.NewReplaceDeclareCaptures(o.context, o.DeclareCaptureReplaceDeclareCapturesHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{name}"] = defaults.NewReplaceDefaultsSection(o.context, o.DefaultsReplaceDefaultsSectionHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -3852,6 +3984,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/filters/{index}"] = filter.NewReplaceFilter(o.context, o.FilterReplaceFilterHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/filters"] = filter.NewReplaceFilters(o.context, o.FilterReplaceFiltersHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -3871,11 +4007,23 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/http_after_response_rules"] = http_after_response_rule.NewReplaceHTTPAfterResponseRules(o.context, o.HTTPAfterResponseRuleReplaceHTTPAfterResponseRulesHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_checks/{index}"] = http_check.NewReplaceHTTPCheck(o.context, o.HTTPCheckReplaceHTTPCheckHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/http_checks"] = http_check.NewReplaceHTTPChecks(o.context, o.HTTPCheckReplaceHTTPChecksHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_error_rules/{index}"] = http_error_rule.NewReplaceHTTPErrorRule(o.context, o.HTTPErrorRuleReplaceHTTPErrorRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/http_error_rules"] = http_error_rule.NewReplaceHTTPErrorRules(o.context, o.HTTPErrorRuleReplaceHTTPErrorRulesHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -3887,7 +4035,15 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/http_request_rules"] = http_request_rule.NewReplaceHTTPRequestRules(o.context, o.HTTPRequestRuleReplaceHTTPRequestRulesHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules/{index}"] = http_response_rule.NewReplaceHTTPResponseRule(o.context, o.HTTPResponseRuleReplaceHTTPResponseRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/http_response_rules"] = http_response_rule.NewReplaceHTTPResponseRules(o.context, o.HTTPResponseRuleReplaceHTTPResponseRulesHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -3896,6 +4052,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/log_targets/{index}"] = log_target.NewReplaceLogTarget(o.context, o.LogTargetReplaceLogTargetHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/log_targets"] = log_target.NewReplaceLogTargets(o.context, o.LogTargetReplaceLogTargetsHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -3939,6 +4099,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/server_switching_rules"] = server_switching_rule.NewReplaceServerSwitchingRules(o.context, o.ServerSwitchingRuleReplaceServerSwitchingRulesHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/server_templates/{prefix}"] = server_template.NewReplaceServerTemplate(o.context, o.ServerTemplateReplaceServerTemplateHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -3963,6 +4127,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/stick_rules"] = stick_rule.NewReplaceStickRules(o.context, o.StickRuleReplaceStickRulesHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/storage/general/{name}"] = storage.NewReplaceStorageGeneralFile(o.context, o.StorageReplaceStorageGeneralFileHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -3979,11 +4147,23 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_checks"] = tcp_check.NewReplaceTCPChecks(o.context, o.TCPCheckReplaceTCPChecksHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/tcp_request_rules/{index}"] = tcp_request_rule.NewReplaceTCPRequestRule(o.context, o.TCPRequestRuleReplaceTCPRequestRuleHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_request_rules"] = tcp_request_rule.NewReplaceTCPRequestRules(o.context, o.TCPRequestRuleReplaceTCPRequestRulesHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules/{index}"] = tcp_response_rule.NewReplaceTCPResponseRule(o.context, o.TCPResponseRuleReplaceTCPResponseRuleHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/tcp_response_rules"] = tcp_response_rule.NewReplaceTCPResponseRules(o.context, o.TCPResponseRuleReplaceTCPResponseRulesHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

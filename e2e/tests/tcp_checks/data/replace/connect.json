@@ -1,5 +1,4 @@
 {
   "action": "connect",
-  "log_message": "replace",
-  "index": 0
+  "check_comment": "replace"
 }

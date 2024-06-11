@@ -34,3 +34,26 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".type")" "content"
 	assert_equal "$(get_json_path "$BODY" ".action")" "reject"
 }
+
+@test "tcp_response_rules: Replace all TCP Response Rule" {
+  resource_put "$_TCP_RES_RULES_CERTS_BASE_PATH" "data/replace-all.json" "backend=test_backend"
+	assert_equal "$SC" 202
+
+  resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH" "backend=test_backend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 2
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+}
+
+@test "tcp_response_rules: Replace all TCP Response Rule (>=2.7)" {
+  if haproxy_version_ge "2.7"
+  then
+  resource_put "$_TCP_RES_RULES_CERTS_BASE_PATH" "data/replace-all-27.json" "backend=test_backend"
+	assert_equal "$SC" 202
+
+  resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH" "backend=test_backend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 4
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all-27.json")" ".")"
+  fi
+}

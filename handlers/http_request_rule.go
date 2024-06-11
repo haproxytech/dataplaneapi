@@ -53,6 +53,12 @@ type ReplaceHTTPRequestRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+// ReplaceHTTPRequestRulesHandlerImpl implementation of the ReplaceHTTPRequestRulesHandler interface using client-native client
+type ReplaceHTTPRequestRulesHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // Handle executing the request and returning a response
 func (h *CreateHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.CreateHTTPRequestRuleParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -80,7 +86,7 @@ func (h *CreateHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.Creat
 		return http_request_rule.NewCreateHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateHTTPRequestRule(params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.CreateHTTPRequestRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_request_rule.NewCreateHTTPRequestRuleDefault(int(*e.Code)).WithPayload(e)
@@ -238,4 +244,51 @@ func (h *ReplaceHTTPRequestRuleHandlerImpl) Handle(params http_request_rule.Repl
 		return http_request_rule.NewReplaceHTTPRequestRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return http_request_rule.NewReplaceHTTPRequestRuleAccepted().WithPayload(params.Data)
+}
+
+// Handle executing the request and returning a response
+func (h *ReplaceHTTPRequestRulesHandlerImpl) Handle(params http_request_rule.ReplaceHTTPRequestRulesParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return http_request_rule.NewReplaceHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_request_rule.NewReplaceHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.ReplaceHTTPRequestRules(params.ParentType, params.ParentName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_request_rule.NewReplaceHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return http_request_rule.NewReplaceHTTPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+			}
+			return http_request_rule.NewReplaceHTTPRequestRulesOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return http_request_rule.NewReplaceHTTPRequestRulesAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return http_request_rule.NewReplaceHTTPRequestRulesAccepted().WithPayload(params.Data)
 }

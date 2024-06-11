@@ -27,7 +27,7 @@ load 'utils/_helpers'
 		skip "http-after-response is not supported in HAProxy 2.1"
 	fi
 
-	resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+	resource_post "$_RES_RULES_BASE_PATH/0" "data/post.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
 	assert_equal "$SC" 400
 }
 
@@ -36,6 +36,6 @@ load 'utils/_helpers'
 		skip "http-after-response is not supported in HAProxy 2.1"
 	fi
 
-	resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=ghost&force_reload=true"
+	resource_post "$_RES_RULES_BASE_PATH/0" "data/post.json" "parent_type=backend&parent_name=ghost&force_reload=true"
 	assert_equal "$SC" 400
 }

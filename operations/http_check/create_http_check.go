@@ -45,7 +45,7 @@ func NewCreateHTTPCheck(ctx *middleware.Context, handler CreateHTTPCheckHandler)
 }
 
 /*
-	CreateHTTPCheck swagger:route POST /services/haproxy/configuration/http_checks HTTPCheck createHttpCheck
+	CreateHTTPCheck swagger:route POST /services/haproxy/configuration/http_checks/{index} HTTPCheck createHttpCheck
 
 # Add a new HTTP check
 

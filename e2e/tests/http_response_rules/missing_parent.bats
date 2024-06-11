@@ -23,11 +23,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_response_rules: Fail creating a HTTP Response rule when frontend doesn't exist" {
-  resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+  resource_post "$_RES_RULES_BASE_PATH/0" "data/post.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
 	assert_equal "$SC" 400
 }
 
 @test "http_response_rules: Fail creating a HTTP Response rule when backend doesn't exist" {
-  resource_post "$_RES_RULES_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=ghost&force_reload=true"
+  resource_post "$_RES_RULES_BASE_PATH/0" "data/post.json" "parent_type=backend&parent_name=ghost&force_reload=true"
 	assert_equal "$SC" 400
 }

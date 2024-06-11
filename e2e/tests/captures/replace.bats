@@ -37,3 +37,12 @@ load 'utils/_helpers'
     resource_put "$_CAPTURES_BASE_PATH/0" "data/replace.json" "frontend=fake"
     assert_equal "$SC" 404
 }
+
+@test "captures: Replace all existing declare capture" {
+    resource_put "$_CAPTURES_BASE_PATH" "data/replace-all.json" "frontend=test_replace"
+    assert_equal "$SC" 202
+
+    resource_get "$_CAPTURES_BASE_PATH" "frontend=test_replace"
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 3
+	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+}

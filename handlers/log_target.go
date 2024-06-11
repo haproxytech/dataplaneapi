@@ -22,6 +22,7 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
 )
 
@@ -49,6 +50,12 @@ type GetLogTargetsHandlerImpl struct {
 
 // ReplaceLogTargetHandlerImpl implementation of the ReplaceLogTargetHandler interface using client-native client
 type ReplaceLogTargetHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
+// ReplaceLogTargetsHandlerImpl implementation of the ReplaceLogTargetsHandler interface using client-native client
+type ReplaceLogTargetsHandlerImpl struct {
 	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
@@ -94,7 +101,7 @@ func (h *CreateLogTargetHandlerImpl) Handle(params log_target.CreateLogTargetPar
 		return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateLogTarget(params.ParentType, pName, params.Data, t, v)
+	err = configuration.CreateLogTarget(params.Index, params.ParentType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
@@ -269,7 +276,7 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 		return log_target.NewReplaceLogTargetDefault(int(*e.Code)).WithPayload(e)
 	}
 	pName := ""
-	if params.ParentType == "frontend" || params.ParentType == "backend" || params.ParentType == "peers" {
+	if logTargetParentTypeRequiresParentName(params.ParentType) {
 		if params.ParentName == nil {
 			msg := "parent_name in query is required"
 			c := misc.ErrHTTPBadRequest
@@ -306,4 +313,70 @@ func (h *ReplaceLogTargetHandlerImpl) Handle(params log_target.ReplaceLogTargetP
 		return log_target.NewReplaceLogTargetAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return log_target.NewReplaceLogTargetAccepted().WithPayload(params.Data)
+}
+
+func logTargetParentTypeRequiresParentName(parentType string) bool {
+	return (parentType == "frontend" || parentType == "backend" || parentType == "peers" || parentType == "log_forward")
+}
+
+// Handle executing the request and returning a response
+func (h *ReplaceLogTargetsHandlerImpl) Handle(params log_target.ReplaceLogTargetsParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return log_target.NewReplaceLogTargetsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return log_target.NewReplaceLogTargetsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	pName := ""
+	if logTargetParentTypeRequiresParentName(params.ParentType) {
+		if params.ParentName == nil {
+			msg := "parent_name in query is required"
+			c := misc.ErrHTTPBadRequest
+			e := &models.Error{
+				Message: &msg,
+				Code:    &c,
+			}
+			return log_target.NewCreateLogTargetDefault(int(*e.Code)).WithPayload(e)
+		}
+		pName = *params.ParentName
+	}
+
+	err = configuration.ReplaceLogTargets(params.ParentType, pName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return log_target.NewReplaceLogTargetsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+			}
+			return log_target.NewReplaceLogTargetsOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return log_target.NewReplaceLogTargetsAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return log_target.NewReplaceLogTargetsAccepted().WithPayload(params.Data)
 }

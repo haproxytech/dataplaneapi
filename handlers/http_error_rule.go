@@ -53,19 +53,21 @@ type ReplaceHTTPErrorRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+// ReplaceHTTPErrorRulesHandlerImpl implementation of the ReplaceHTTPErrorRulesHandler interface using client-native client
+type ReplaceHTTPErrorRulesHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // Handle executing the request and returning a response
 func (h *CreateHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.CreateHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
-	pName := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
 	if params.Version != nil {
 		v = *params.Version
-	}
-	if params.ParentName != nil {
-		pName = *params.ParentName
 	}
 
 	if t != "" && *params.ForceReload {
@@ -84,7 +86,7 @@ func (h *CreateHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.CreateHTT
 		return http_error_rule.NewCreateHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateHTTPErrorRule(params.ParentType, pName, params.Data, t, v)
+	err = configuration.CreateHTTPErrorRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_error_rule.NewCreateHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
@@ -109,15 +111,11 @@ func (h *CreateHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.CreateHTT
 func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.DeleteHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
-	pName := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
 	if params.Version != nil {
 		v = *params.Version
-	}
-	if params.ParentName != nil {
-		pName = *params.ParentName
 	}
 
 	if t != "" && *params.ForceReload {
@@ -136,7 +134,7 @@ func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.DeleteHTT
 		return http_error_rule.NewDeleteHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteHTTPErrorRule(params.Index, params.ParentType, pName, t, v)
+	err = configuration.DeleteHTTPErrorRule(params.Index, params.ParentType, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_error_rule.NewDeleteHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
@@ -159,12 +157,8 @@ func (h *DeleteHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.DeleteHTT
 // Handle executing the request and returning a response
 func (h *GetHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 	t := ""
-	pName := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
-	}
-	if params.ParentName != nil {
-		pName = *params.ParentName
 	}
 
 	configuration, err := h.Client.Configuration()
@@ -173,7 +167,7 @@ func (h *GetHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.GetHTTPError
 		return http_error_rule.NewCreateHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rule, err := configuration.GetHTTPErrorRule(params.Index, params.ParentType, pName, t)
+	_, rule, err := configuration.GetHTTPErrorRule(params.Index, params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_error_rule.NewGetHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
@@ -184,12 +178,8 @@ func (h *GetHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.GetHTTPError
 // Handle executing the request and returning a response
 func (h *GetHTTPErrorRulesHandlerImpl) Handle(params http_error_rule.GetHTTPErrorRulesParams, principal interface{}) middleware.Responder {
 	t := ""
-	pName := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
-	}
-	if params.ParentName != nil {
-		pName = *params.ParentName
 	}
 
 	configuration, err := h.Client.Configuration()
@@ -198,7 +188,7 @@ func (h *GetHTTPErrorRulesHandlerImpl) Handle(params http_error_rule.GetHTTPErro
 		return http_error_rule.NewGetHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rules, err := configuration.GetHTTPErrorRules(params.ParentType, pName, t)
+	_, rules, err := configuration.GetHTTPErrorRules(params.ParentType, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -213,15 +203,11 @@ func (h *GetHTTPErrorRulesHandlerImpl) Handle(params http_error_rule.GetHTTPErro
 func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRuleParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
-	pName := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
 	if params.Version != nil {
 		v = *params.Version
-	}
-	if params.ParentName != nil {
-		pName = *params.ParentName
 	}
 
 	if t != "" && *params.ForceReload {
@@ -240,7 +226,7 @@ func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.ReplaceH
 		return http_error_rule.NewReplaceHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditHTTPErrorRule(params.Index, params.ParentType, pName, params.Data, t, v)
+	err = configuration.EditHTTPErrorRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return http_error_rule.NewReplaceHTTPErrorRuleDefault(int(*e.Code)).WithPayload(e)
@@ -258,4 +244,50 @@ func (h *ReplaceHTTPErrorRuleHandlerImpl) Handle(params http_error_rule.ReplaceH
 		return http_error_rule.NewReplaceHTTPErrorRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return http_error_rule.NewReplaceHTTPErrorRuleAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceHTTPErrorRulesHandlerImpl) Handle(params http_error_rule.ReplaceHTTPErrorRulesParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return http_error_rule.NewReplaceHTTPErrorRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_error_rule.NewReplaceHTTPErrorRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = configuration.ReplaceHTTPErrorRules(params.ParentType, params.ParentName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return http_error_rule.NewReplaceHTTPErrorRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return http_error_rule.NewReplaceHTTPErrorRulesDefault(int(*e.Code)).WithPayload(e)
+			}
+			return http_error_rule.NewReplaceHTTPErrorRulesOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return http_error_rule.NewReplaceHTTPErrorRulesAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return http_error_rule.NewReplaceHTTPErrorRulesAccepted().WithPayload(params.Data)
 }

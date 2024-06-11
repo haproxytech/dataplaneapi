@@ -22,6 +22,7 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/filter"
 )
 
@@ -53,6 +54,12 @@ type ReplaceFilterHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+// ReplaceFiltersHandlerImpl implementation of the ReplaceFiltersHandler interface using client-native client
+type ReplaceFiltersHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // Handle executing the request and returning a response
 func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -80,7 +87,7 @@ func (h *CreateFilterHandlerImpl) Handle(params filter.CreateFilterParams, princ
 		return filter.NewCreateFilterDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateFilter(params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.CreateFilter(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return filter.NewCreateFilterDefault(int(*e.Code)).WithPayload(e)
@@ -237,4 +244,51 @@ func (h *ReplaceFilterHandlerImpl) Handle(params filter.ReplaceFilterParams, pri
 		return filter.NewReplaceFilterAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return filter.NewReplaceFilterAccepted().WithPayload(params.Data)
+}
+
+// Handle executing the request and returning a response
+func (h *ReplaceFiltersHandlerImpl) Handle(params filter.ReplaceFiltersParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return filter.NewReplaceFiltersDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return filter.NewReplaceFiltersDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.ReplaceFilters(params.ParentType, params.ParentName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return filter.NewReplaceFiltersDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+			}
+			return filter.NewReplaceFiltersOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return filter.NewReplaceFiltersAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return filter.NewReplaceFiltersAccepted().WithPayload(params.Data)
 }

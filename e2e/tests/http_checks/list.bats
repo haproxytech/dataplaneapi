@@ -24,7 +24,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_checks: Return an array of all HTTP Checks from defaults" {
-    resource_get "$_CHECKS_BASE_PATH" "parent_type=defaults"
+    resource_get "$_CHECKS_BASE_PATH" "parent_type=defaults&parent_name=mydefaults"
 	assert_equal "$SC" 200
     assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 

@@ -27,7 +27,7 @@ load 'utils/_helpers'
 @test "http_error_rules: Add a new HTTP Error Rule to frontend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_post "$_ERR_RULES_BASE_PATH" "data/post.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	resource_post "$_ERR_RULES_BASE_PATH/0" "data/post.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 201
 
 	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
@@ -38,7 +38,7 @@ load 'utils/_helpers'
 @test "http_error_rules: Add a new HTTP Error Rule to backend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_post "$_ERR_RULES_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_post "$_ERR_RULES_BASE_PATH/0" "data/post.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 201
 
 	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
@@ -49,10 +49,10 @@ load 'utils/_helpers'
 @test "http_error_rules: Add a new HTTP Error Rule to defaults" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-    resource_post "$_ERR_RULES_BASE_PATH" "data/post.json" "parent_type=defaults&force_reload=true"
+    resource_post "$_ERR_RULES_BASE_PATH/0" "data/post.json" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
 	assert_equal "$SC" 201
 
-	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults"
+	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".status")" 425
 }
@@ -60,13 +60,13 @@ load 'utils/_helpers'
 @test "http_error_rules: Fail to add a new HTTP Error Rule without status code to backend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-    resource_post "$_ERR_RULES_BASE_PATH" "data/invalid_no_status_code.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+    resource_post "$_ERR_RULES_BASE_PATH/0" "data/invalid_no_status_code.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 422
 }
 
 @test "http_error_rules: Fail to add a new HTTP Error Rule with unsupported status code to frontend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-    resource_post "$_ERR_RULES_BASE_PATH" "data/invalid_bad_status_code.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    resource_post "$_ERR_RULES_BASE_PATH/0" "data/invalid_bad_status_code.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 422
 }

@@ -34,7 +34,7 @@ type DeleteHTTPErrorRuleURL struct {
 	Index int64
 
 	ForceReload   *bool
-	ParentName    *string
+	ParentName    string
 	ParentType    string
 	TransactionID *string
 	Version       *int64
@@ -88,10 +88,7 @@ func (o *DeleteHTTPErrorRuleURL) Build() (*url.URL, error) {
 		qs.Set("force_reload", forceReloadQ)
 	}
 
-	var parentNameQ string
-	if o.ParentName != nil {
-		parentNameQ = *o.ParentName
-	}
+	parentNameQ := o.ParentName
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

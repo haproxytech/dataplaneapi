@@ -53,6 +53,12 @@ type ReplaceACLHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+// ReplaceAclsHandlerImpl implementation of the ReplaceAclsHandler interface using client-native client
+type ReplaceAclsHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // Handle executing the request and returning a response
 func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -80,7 +86,7 @@ func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal inte
 		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateACL(params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.CreateACL(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
@@ -241,4 +247,51 @@ func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal in
 		return acl.NewReplaceACLAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return acl.NewReplaceACLAccepted().WithPayload(params.Data)
+}
+
+// Handle executing the request and returning a response
+func (h *ReplaceAclsHandlerImpl) Handle(params acl.ReplaceAclsParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.ReplaceAcls(params.ParentType, params.ParentName, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+			}
+			return acl.NewReplaceAclsOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return acl.NewReplaceAclsAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return acl.NewReplaceAclsAccepted().WithPayload(params.Data)
 }

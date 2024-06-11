@@ -24,11 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "log_targets: Add a new Log Target to frontend" {
-  resource_post "$_LOG_TRAGET_BASE_PATH" "data/nolog.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+  resource_post "$_LOG_TRAGET_BASE_PATH/0" "data/nolog.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
 	assert_equal "$SC" 201
 }
 
 @test "log_targets: Add a new Log Target to backend" {
-	resource_post "$_LOG_TRAGET_BASE_PATH" "data/nolog.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_post "$_LOG_TRAGET_BASE_PATH/0" "data/nolog.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
 	assert_equal "$SC" 201
 }

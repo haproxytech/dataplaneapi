@@ -24,12 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateBackendSwitchingRuleURL generates an URL for the create backend switching rule operation
 type CreateBackendSwitchingRuleURL struct {
+	Index int64
+
 	ForceReload   *bool
 	Frontend      string
 	TransactionID *string
@@ -59,7 +62,14 @@ func (o *CreateBackendSwitchingRuleURL) SetBasePath(bp string) {
 func (o *CreateBackendSwitchingRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/backend_switching_rules"
+	var _path = "/services/haproxy/configuration/backend_switching_rules/{index}"
+
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
+	} else {
+		return nil, errors.New("index is required on CreateBackendSwitchingRuleURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {

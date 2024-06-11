@@ -1,0 +1,14 @@
+[
+    {
+        "action": "accept",
+        "cond": "if",
+        "cond_test": "TRUE",
+        "type": "content"
+    },
+    {
+        "action": "reject",
+        "cond": "if",
+        "cond_test": "FALSE",
+        "type": "content"
+    }
+]

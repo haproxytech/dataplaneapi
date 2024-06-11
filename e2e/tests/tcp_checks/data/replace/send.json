@@ -1,5 +1,4 @@
 {
     "action": "send",
-    "data": "replace",
-    "index": 0
+    "data": "replace"
   }

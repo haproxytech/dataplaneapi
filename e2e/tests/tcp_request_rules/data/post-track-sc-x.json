@@ -3,7 +3,6 @@
   "action": "track-sc0",
   "cond": "if",
   "cond_test": "TRUE",
-  "index": 0,
   "track_table": "test_sticksc",
   "track_key": "src"
 }

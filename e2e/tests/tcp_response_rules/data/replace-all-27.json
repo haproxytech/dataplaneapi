@@ -1,0 +1,28 @@
+[
+    {
+        "action": "accept",
+        "cond": "if",
+        "cond_test": "TRUE",
+        "type": "content"
+    },
+    {
+        "action": "reject",
+        "cond": "if",
+        "cond_test": "FALSE",
+        "type": "content"
+    },
+    {
+        "action": "set-bandwidth-limit",
+        "bandwidth_limit_limit": "2m",
+        "bandwidth_limit_name": "my-limit-reverse",
+        "bandwidth_limit_period": "20s",
+        "type": "content"
+    },
+    {
+        "action": "set-bandwidth-limit",
+        "bandwidth_limit_limit": "1m",
+        "bandwidth_limit_name": "my-limit",
+        "bandwidth_limit_period": "10s",
+        "type": "content"
+    }
+]

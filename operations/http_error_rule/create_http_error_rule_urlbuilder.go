@@ -24,14 +24,17 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateHTTPErrorRuleURL generates an URL for the create HTTP error rule operation
 type CreateHTTPErrorRuleURL struct {
+	Index int64
+
 	ForceReload   *bool
-	ParentName    *string
+	ParentName    string
 	ParentType    string
 	TransactionID *string
 	Version       *int64
@@ -60,7 +63,14 @@ func (o *CreateHTTPErrorRuleURL) SetBasePath(bp string) {
 func (o *CreateHTTPErrorRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/http_error_rules"
+	var _path = "/services/haproxy/configuration/http_error_rules/{index}"
+
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
+	} else {
+		return nil, errors.New("index is required on CreateHTTPErrorRuleURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -78,10 +88,7 @@ func (o *CreateHTTPErrorRuleURL) Build() (*url.URL, error) {
 		qs.Set("force_reload", forceReloadQ)
 	}
 
-	var parentNameQ string
-	if o.ParentName != nil {
-		parentNameQ = *o.ParentName
-	}
+	parentNameQ := o.ParentName
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

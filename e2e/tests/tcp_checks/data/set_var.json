@@ -2,6 +2,5 @@
     "action": "set-var",
     "var_scope": "check",
     "var_name": "port",
-    "var_expr": "int(1234)",
-    "index": 0
+    "var_expr": "int(1234)"
 }

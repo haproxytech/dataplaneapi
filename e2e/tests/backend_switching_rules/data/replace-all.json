@@ -1,0 +1,17 @@
+[
+  {
+    "cond": "if",
+    "cond_test": "{ req_ssl_sni -i example1.com }",
+    "name": "first_backend"
+  },
+  {
+    "cond": "if",
+    "cond_test": "TRUE",
+    "name": "second_backend"
+  },
+  {
+    "cond": "if",
+    "cond_test": "{ req_ssl_sni -i example2.com }",
+    "name": "test_backend"
+  }
+]

@@ -26,13 +26,13 @@ load 'utils/_helpers'
 @test "http_error_rules: Fail creating a HTTP Error rule when frontend does not exist" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-  resource_post "$_ERR_RULES_BASE_PATH" "data/post.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+  resource_post "$_ERR_RULES_BASE_PATH/0" "data/post.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
   assert_equal "$SC" 400
 }
 
 @test "http_error_rules: Fail creating a HTTP Error rule when backend does not exist" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-  resource_post "$_ERR_RULES_BASE_PATH" "data/post.json" "parent_type=backend&parent_name=ghost&force_reload=true"
+  resource_post "$_ERR_RULES_BASE_PATH/0" "data/post.json" "parent_type=backend&parent_name=ghost&force_reload=true"
   assert_equal "$SC" 400
 }

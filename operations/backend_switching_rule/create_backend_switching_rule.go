@@ -45,7 +45,7 @@ func NewCreateBackendSwitchingRule(ctx *middleware.Context, handler CreateBacken
 }
 
 /*
-	CreateBackendSwitchingRule swagger:route POST /services/haproxy/configuration/backend_switching_rules BackendSwitchingRule createBackendSwitchingRule
+	CreateBackendSwitchingRule swagger:route POST /services/haproxy/configuration/backend_switching_rules/{index} BackendSwitchingRule createBackendSwitchingRule
 
 # Add a new Backend Switching Rule
 

@@ -3,7 +3,6 @@
     {
       "acl_name": "h_xff_exists",
       "criterion": "req.hdr(X-Forwarded-For)",
-      "index": 0,
       "value": "-m found"
     }
   ],

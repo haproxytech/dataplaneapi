@@ -1,6 +1,5 @@
 {
   "acl_name": "new_acl",
   "criterion": "src_port",
-  "index": 2,
   "value": "0:1048"
 }

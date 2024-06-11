@@ -1,5 +1,4 @@
 {
     "action": "comment",
-    "log_message": "test-comment-replace",
-    "index": 0
+    "check_comment": "test-comment-replace"
   }

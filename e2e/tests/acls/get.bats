@@ -29,7 +29,6 @@ load 'utils/_helpers'
 
     assert_equal "$(get_json_path "$BODY" " .acl_name")" "local_dst"
     assert_equal "$(get_json_path "$BODY" " .criterion")" "hdr(host)"
-    assert_equal "$(get_json_path "$BODY" " .index")" "2"
     assert_equal "$(get_json_path "$BODY" " .value")" "-i localhost"
 }
 

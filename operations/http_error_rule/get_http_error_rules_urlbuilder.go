@@ -28,7 +28,7 @@ import (
 
 // GetHTTPErrorRulesURL generates an URL for the get HTTP error rules operation
 type GetHTTPErrorRulesURL struct {
-	ParentName    *string
+	ParentName    string
 	ParentType    string
 	TransactionID *string
 
@@ -66,10 +66,7 @@ func (o *GetHTTPErrorRulesURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var parentNameQ string
-	if o.ParentName != nil {
-		parentNameQ = *o.ParentName
-	}
+	parentNameQ := o.ParentName
 	if parentNameQ != "" {
 		qs.Set("parent_name", parentNameQ)
 	}

@@ -53,6 +53,11 @@ type ReplaceServerSwitchingRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
+type ReplaceServerSwitchingRulesHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
 // Handle executing the request and returning a response
 func (h *CreateServerSwitchingRuleHandlerImpl) Handle(params server_switching_rule.CreateServerSwitchingRuleParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -80,7 +85,7 @@ func (h *CreateServerSwitchingRuleHandlerImpl) Handle(params server_switching_ru
 		return server_switching_rule.NewCreateServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateServerSwitchingRule(params.Backend, params.Data, t, v)
+	err = configuration.CreateServerSwitchingRule(params.Index, params.Backend, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_switching_rule.NewCreateServerSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -240,4 +245,51 @@ func (h *ReplaceServerSwitchingRuleHandlerImpl) Handle(params server_switching_r
 		return server_switching_rule.NewReplaceServerSwitchingRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return server_switching_rule.NewReplaceServerSwitchingRuleAccepted().WithPayload(params.Data)
+}
+
+// Handle executing the request and returning a response
+func (h *ReplaceServerSwitchingRulesHandlerImpl) Handle(params server_switching_rule.ReplaceServerSwitchingRulesParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return server_switching_rule.NewReplaceServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		e := misc.HandleError(err)
+		return server_switching_rule.NewReplaceServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+	err = configuration.ReplaceServerSwitchingRules(params.Backend, params.Data, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return server_switching_rule.NewReplaceServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return server_switching_rule.NewReplaceServerSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
+			}
+			return server_switching_rule.NewReplaceServerSwitchingRulesOK().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return server_switching_rule.NewReplaceServerSwitchingRulesAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return server_switching_rule.NewReplaceServerSwitchingRulesAccepted().WithPayload(params.Data)
 }

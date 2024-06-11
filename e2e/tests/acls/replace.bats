@@ -39,3 +39,17 @@ load 'utils/_helpers'
     resource_put "$_ACL_BASE_PATH/200" "data/put.json" "parent_name=fe_acl&parent_type=frontend"
     assert_equal "$SC" 404
 }
+
+@test "acls: Replace all ACLs" {
+    resource_put "$_ACL_BASE_PATH" "data/replace-all.json" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal "$SC" 202
+    #
+    # verify that ACL is actually changed
+    #
+    #
+    resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "${BODY}" ". | length")" 3
+    assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
+
+}

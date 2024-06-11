@@ -8,8 +8,7 @@
     "idle_timeout": 14000,
     "log": [
       {
-        "global": true,
-        "index": 0
+        "global": true
       }
     ],
     "max-frame-size": 5,

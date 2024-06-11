@@ -24,12 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateTCPResponseRuleURL generates an URL for the create TCP response rule operation
 type CreateTCPResponseRuleURL struct {
+	Index int64
+
 	Backend       string
 	ForceReload   *bool
 	TransactionID *string
@@ -59,7 +62,14 @@ func (o *CreateTCPResponseRuleURL) SetBasePath(bp string) {
 func (o *CreateTCPResponseRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/tcp_response_rules"
+	var _path = "/services/haproxy/configuration/tcp_response_rules/{index}"
+
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
+	} else {
+		return nil, errors.New("index is required on CreateTCPResponseRuleURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {

@@ -24,12 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateHTTPRequestRuleURL generates an URL for the create HTTP request rule operation
 type CreateHTTPRequestRuleURL struct {
+	Index int64
+
 	ForceReload   *bool
 	ParentName    string
 	ParentType    string
@@ -60,7 +63,14 @@ func (o *CreateHTTPRequestRuleURL) SetBasePath(bp string) {
 func (o *CreateHTTPRequestRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/http_request_rules"
+	var _path = "/services/haproxy/configuration/http_request_rules/{index}"
+
+	index := swag.FormatInt64(o.Index)
+	if index != "" {
+		_path = strings.Replace(_path, "{index}", index, -1)
+	} else {
+		return nil, errors.New("index is required on CreateHTTPRequestRuleURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
