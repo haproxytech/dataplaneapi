@@ -120,7 +120,7 @@ You can test it by simply running:
 ./dataplaneapi --port 5555 -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg  -d 5 -r "service haproxy reload" -s "service haproxy restart" -u dataplaneapi -t /tmp/haproxy
 ```
 
-Dataplaneapi will require write permissions to the haproxy configuration file and the directories containing additional managed files (maps, ssl, spoe). The default locations can be overriden with command-line options.
+Dataplaneapi will require write permissions to the haproxy configuration file and the directories containing additional managed files (maps, ssl, spoe). The default locations can be overridden with command-line options.
 Test it out with curl, note that you need user/pass combination setup in HAProxy userlist in haproxy configuration (in above example: /etc/haproxy/haproxy.cfg, userlist controller):
 
 ```
