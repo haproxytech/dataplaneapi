@@ -2614,6 +2614,519 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/crt_loads": {
+      "get": {
+        "description": "Returns the list of loaded certificates from the specified crt_store",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Return an array of loaded certificates",
+        "operationId": "getCrtLoads",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent crt_store name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_loads"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new load entry to the specified crt_store section in the configuration",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Add a new certificate to load",
+        "operationId": "createCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent crt_store section name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate load entry created",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_loads/{certificate}": {
+      "get": {
+        "description": "Returns one load entry by its certificate name in the specified crt_store",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Return one certificate load entry",
+        "operationId": "getCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate filename",
+            "name": "certificate",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent crt_store name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a load entry by its certificate name in the specified crt_store section",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Replace a certificate load entry",
+        "operationId": "replaceCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate filename",
+            "name": "certificate",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent crt_store section name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate load entry replaced",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a load entry by its certificate name in the specified crt_store section",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Delete a certificate load entry",
+        "operationId": "deleteCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate filename",
+            "name": "certificate",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent crt_store section name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Certificate load entry deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores": {
+      "get": {
+        "description": "Returns an array of all the configured crt_store sections in HAProxy",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return all the Certificate Stores",
+        "operationId": "getCrtStores",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_stores"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new crt_store section",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Add a new Certificate Store",
+        "operationId": "createCrtStore",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate Store created",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores/{name}": {
+      "get": {
+        "description": "Returns crt_store section by its name",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return a Certificate Store",
+        "operationId": "getCrtStore",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "crt_store name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a crt_store's configuration by its name",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Modify a Certificate Store",
+        "operationId": "editCrtStore",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "crt_store name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "crt_store configuration updated",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a crt_store section from the configuration",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Delete a Certificate Store",
+        "operationId": "deleteCrtStore",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "crt_store name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "crt_store deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults": {
       "get": {
         "description": "Returns an array of all configured defaults.",
@@ -16778,6 +17291,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "guid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
         "h1_case_adjust_bogus_server": {
           "type": "string",
           "enum": [
@@ -17597,6 +18114,14 @@ func init() {
             }
           }
         },
+        "default_crt_list": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          },
+          "x-omitempty": true
+        },
         "defer_accept": {
           "type": "boolean"
         },
@@ -17641,6 +18166,10 @@ func init() {
         "group": {
           "type": "string",
           "x-display-name": "Group name"
+        },
+        "guid_prefix": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
         },
         "id": {
           "type": "string",
@@ -18392,6 +18921,91 @@ func init() {
             "prefix"
           ]
         }
+      }
+    },
+    "crt_load": {
+      "description": "Loads a certificate from a store with options",
+      "type": "object",
+      "title": "Certificate load action",
+      "required": [
+        "certificate"
+      ],
+      "properties": {
+        "alias": {
+          "description": "Certificate alias",
+          "type": "string"
+        },
+        "certificate": {
+          "description": "Certificate filename",
+          "type": "string",
+          "x-nullable": false
+        },
+        "issuer": {
+          "description": "OCSP issuer filename",
+          "type": "string"
+        },
+        "key": {
+          "description": "Private key filename",
+          "type": "string"
+        },
+        "ocsp": {
+          "description": "OCSP response filename",
+          "type": "string"
+        },
+        "ocsp_update": {
+          "description": "Automatic OCSP response update",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "sctl": {
+          "description": "Signed Certificate Timestamp List filename",
+          "type": "string"
+        }
+      }
+    },
+    "crt_loads": {
+      "description": "List of certificates to load from a Certificate Store",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/crt_load"
+      },
+      "x-omitempty": true
+    },
+    "crt_store": {
+      "description": "Storage mechanism to load and store certificates used in the configuration",
+      "type": "object",
+      "title": "Certificate Store",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "crt_base": {
+          "description": "Default directory to fetch SSL certificates from",
+          "type": "string"
+        },
+        "key_base": {
+          "description": "Default directory to fetch SSL private keys from",
+          "type": "string"
+        },
+        "loads": {
+          "$ref": "#/definitions/crt_loads"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "crt_stores": {
+      "description": "List of Certificate Stores",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/crt_store"
       }
     },
     "default_bind": {
@@ -19893,6 +20507,10 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
         },
+        "guid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
         "h1_case_adjust_bogus_client": {
           "type": "string",
           "enum": [
@@ -20404,6 +21022,46 @@ func init() {
           "x-display-name": "Hard Stop After",
           "x-nullable": true
         },
+        "harden": {
+          "type": "object",
+          "properties": {
+            "reject_privileged_ports": {
+              "type": "object",
+              "properties": {
+                "quic": {
+                  "type": "string",
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ]
+                },
+                "tcp": {
+                  "type": "string",
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "http_err_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/http_codes"
+          },
+          "x-display-name": "Replace, reduce or extend the list of status codes that define an error",
+          "x-omitempty": true
+        },
+        "http_fail_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/http_codes"
+          },
+          "x-display-name": "Replace, reduce or extend the list of status codes that define a failure",
+          "x-omitempty": true
+        },
         "httpclient_resolvers_disabled": {
           "type": "string",
           "enum": [
@@ -20658,12 +21316,20 @@ func init() {
           "x-go-name": "PresetEnvs",
           "x-omitempty": true
         },
+        "profiling_memory": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enable or disables per-function memory profiling"
+        },
         "profiling_tasks": {
           "type": "string",
           "enum": [
             "auto",
-            "on",
-            "off"
+            "enabled",
+            "disabled"
           ],
           "x-display-name": "Enable or disables per-task CPU profiling"
         },
@@ -20894,6 +21560,11 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Provider Path"
         },
+        "ssl_security_level": {
+          "type": "integer",
+          "maximum": 5,
+          "x-nullable": true
+        },
         "ssl_server_verify": {
           "type": "string",
           "enum": [
@@ -20945,6 +21616,10 @@ func init() {
         "thread_groups": {
           "type": "integer",
           "x-display-name": "Number of Thread Groups"
+        },
+        "thread_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
         },
         "tune_options": {
           "type": "object",
@@ -22285,6 +22960,20 @@ func init() {
       "items": {
         "$ref": "#/definitions/http_check"
       }
+    },
+    "http_codes": {
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9 +\\-,]+$",
+          "x-display-name": "Value"
+        }
+      },
+      "x-go-name": "HTTPCodes"
     },
     "http_error_rule": {
       "description": "HAProxy HTTP error rule configuration (corresponds to http-error directives)",
@@ -26796,6 +27485,14 @@ func init() {
             "disabled"
           ]
         },
+        "guid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "hash_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "health_check_address": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -26936,6 +27633,10 @@ func init() {
           "enum": [
             "shutdown-backup-sessions"
           ]
+        },
+        "pool_conn_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "pool_low_conn": {
           "type": "integer",
@@ -30031,6 +30732,12 @@ func init() {
     {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
+    },
+    {
+      "name": "CrtLoad"
+    },
+    {
+      "name": "CrtStore"
     },
     {
       "name": "DeclareCapture"
@@ -34011,6 +34718,805 @@ func init() {
           },
           "204": {
             "description": "Declare Capture deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_loads": {
+      "get": {
+        "description": "Returns the list of loaded certificates from the specified crt_store",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Return an array of loaded certificates",
+        "operationId": "getCrtLoads",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent crt_store name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_loads"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new load entry to the specified crt_store section in the configuration",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Add a new certificate to load",
+        "operationId": "createCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent crt_store section name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate load entry created",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_loads/{certificate}": {
+      "get": {
+        "description": "Returns one load entry by its certificate name in the specified crt_store",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Return one certificate load entry",
+        "operationId": "getCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate filename",
+            "name": "certificate",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent crt_store name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a load entry by its certificate name in the specified crt_store section",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Replace a certificate load entry",
+        "operationId": "replaceCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate filename",
+            "name": "certificate",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent crt_store section name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate load entry replaced",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_load"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a load entry by its certificate name in the specified crt_store section",
+        "tags": [
+          "CrtLoad"
+        ],
+        "summary": "Delete a certificate load entry",
+        "operationId": "deleteCrtLoad",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate filename",
+            "name": "certificate",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent crt_store section name",
+            "name": "crt_store",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Certificate load entry deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores": {
+      "get": {
+        "description": "Returns an array of all the configured crt_store sections in HAProxy",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return all the Certificate Stores",
+        "operationId": "getCrtStores",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_stores"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new crt_store section",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Add a new Certificate Store",
+        "operationId": "createCrtStore",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate Store created",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/crt_stores/{name}": {
+      "get": {
+        "description": "Returns crt_store section by its name",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Return a Certificate Store",
+        "operationId": "getCrtStore",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "crt_store name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a crt_store's configuration by its name",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Modify a Certificate Store",
+        "operationId": "editCrtStore",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "crt_store name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "crt_store configuration updated",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/crt_store"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a crt_store section from the configuration",
+        "tags": [
+          "CrtStore"
+        ],
+        "summary": "Delete a Certificate Store",
+        "operationId": "deleteCrtStore",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "crt_store name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "crt_store deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -54928,6 +56434,49 @@ func init() {
       },
       "x-go-name": "H1CaseAdjust"
     },
+    "GlobalHarden": {
+      "type": "object",
+      "properties": {
+        "reject_privileged_ports": {
+          "type": "object",
+          "properties": {
+            "quic": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ]
+            },
+            "tcp": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalHardenRejectPrivilegedPorts": {
+      "type": "object",
+      "properties": {
+        "quic": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tcp": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        }
+      }
+    },
     "GlobalLogSendHostname": {
       "type": "object",
       "required": [
@@ -56302,6 +57851,10 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "guid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
         "h1_case_adjust_bogus_server": {
           "type": "string",
           "enum": [
@@ -57097,6 +58650,14 @@ func init() {
             }
           }
         },
+        "default_crt_list": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          },
+          "x-omitempty": true
+        },
         "defer_accept": {
           "type": "boolean"
         },
@@ -57141,6 +58702,10 @@ func init() {
         "group": {
           "type": "string",
           "x-display-name": "Group name"
+        },
+        "guid_prefix": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
         },
         "id": {
           "type": "string",
@@ -57852,6 +59417,91 @@ func init() {
             "prefix"
           ]
         }
+      }
+    },
+    "crt_load": {
+      "description": "Loads a certificate from a store with options",
+      "type": "object",
+      "title": "Certificate load action",
+      "required": [
+        "certificate"
+      ],
+      "properties": {
+        "alias": {
+          "description": "Certificate alias",
+          "type": "string"
+        },
+        "certificate": {
+          "description": "Certificate filename",
+          "type": "string",
+          "x-nullable": false
+        },
+        "issuer": {
+          "description": "OCSP issuer filename",
+          "type": "string"
+        },
+        "key": {
+          "description": "Private key filename",
+          "type": "string"
+        },
+        "ocsp": {
+          "description": "OCSP response filename",
+          "type": "string"
+        },
+        "ocsp_update": {
+          "description": "Automatic OCSP response update",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "sctl": {
+          "description": "Signed Certificate Timestamp List filename",
+          "type": "string"
+        }
+      }
+    },
+    "crt_loads": {
+      "description": "List of certificates to load from a Certificate Store",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/crt_load"
+      },
+      "x-omitempty": true
+    },
+    "crt_store": {
+      "description": "Storage mechanism to load and store certificates used in the configuration",
+      "type": "object",
+      "title": "Certificate Store",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "crt_base": {
+          "description": "Default directory to fetch SSL certificates from",
+          "type": "string"
+        },
+        "key_base": {
+          "description": "Default directory to fetch SSL private keys from",
+          "type": "string"
+        },
+        "loads": {
+          "$ref": "#/definitions/crt_loads"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_]+$",
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "crt_stores": {
+      "description": "List of Certificate Stores",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/crt_store"
       }
     },
     "default_bind": {
@@ -59353,6 +61003,10 @@ func init() {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
         },
+        "guid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
         "h1_case_adjust_bogus_client": {
           "type": "string",
           "enum": [
@@ -59837,6 +61491,46 @@ func init() {
           "x-display-name": "Hard Stop After",
           "x-nullable": true
         },
+        "harden": {
+          "type": "object",
+          "properties": {
+            "reject_privileged_ports": {
+              "type": "object",
+              "properties": {
+                "quic": {
+                  "type": "string",
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ]
+                },
+                "tcp": {
+                  "type": "string",
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "http_err_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/http_codes"
+          },
+          "x-display-name": "Replace, reduce or extend the list of status codes that define an error",
+          "x-omitempty": true
+        },
+        "http_fail_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/http_codes"
+          },
+          "x-display-name": "Replace, reduce or extend the list of status codes that define a failure",
+          "x-omitempty": true
+        },
         "httpclient_resolvers_disabled": {
           "type": "string",
           "enum": [
@@ -60050,12 +61744,20 @@ func init() {
           "x-go-name": "PresetEnvs",
           "x-omitempty": true
         },
+        "profiling_memory": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enable or disables per-function memory profiling"
+        },
         "profiling_tasks": {
           "type": "string",
           "enum": [
             "auto",
-            "on",
-            "off"
+            "enabled",
+            "disabled"
           ],
           "x-display-name": "Enable or disables per-task CPU profiling"
         },
@@ -60209,6 +61911,12 @@ func init() {
           "type": "string",
           "x-display-name": "SSL Provider Path"
         },
+        "ssl_security_level": {
+          "type": "integer",
+          "maximum": 5,
+          "minimum": 0,
+          "x-nullable": true
+        },
         "ssl_server_verify": {
           "type": "string",
           "enum": [
@@ -60245,6 +61953,10 @@ func init() {
         "thread_groups": {
           "type": "integer",
           "x-display-name": "Number of Thread Groups"
+        },
+        "thread_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
         },
         "tune_options": {
           "type": "object",
@@ -61587,6 +63299,20 @@ func init() {
       "items": {
         "$ref": "#/definitions/http_check"
       }
+    },
+    "http_codes": {
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9 +\\-,]+$",
+          "x-display-name": "Value"
+        }
+      },
+      "x-go-name": "HTTPCodes"
     },
     "http_error_rule": {
       "description": "HAProxy HTTP error rule configuration (corresponds to http-error directives)",
@@ -66099,6 +67825,14 @@ func init() {
             "disabled"
           ]
         },
+        "guid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-_.:]+$"
+        },
+        "hash_key": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
         "health_check_address": {
           "type": "string",
           "pattern": "^[^\\s]+$"
@@ -66239,6 +67973,10 @@ func init() {
           "enum": [
             "shutdown-backup-sessions"
           ]
+        },
+        "pool_conn_name": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
         },
         "pool_low_conn": {
           "type": "integer",
@@ -69228,6 +70966,12 @@ func init() {
     {
       "description": "Raw HAProxy configuration management (advanced mode)",
       "name": "Configuration"
+    },
+    {
+      "name": "CrtLoad"
+    },
+    {
+      "name": "CrtStore"
     },
     {
       "name": "DeclareCapture"

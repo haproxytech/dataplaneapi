@@ -1,0 +1,5 @@
+{
+  "certificate": "c2.pem",
+  "ocsp_update": "disabled",
+  "alias": "example.com"
+}

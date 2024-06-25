@@ -1,0 +1,5 @@
+{
+  "name": "test_store1",
+  "crt_base": "/secure/certs",
+  "key_base": "/secure/keys"
+}

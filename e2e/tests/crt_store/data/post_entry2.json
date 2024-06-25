@@ -1,0 +1,4 @@
+{
+  "certificate": "c2.pem",
+  "ocsp_update": "enabled"
+}

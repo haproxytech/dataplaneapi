@@ -663,6 +663,19 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.MapsReplaceRuntimeMapEntryHandler = &handlers.ReplaceRuntimeMapEntryHandlerImpl{Client: client}
 	api.MapsDeleteRuntimeMapEntryHandler = &handlers.DeleteRuntimeMapEntryHandlerImpl{Client: client}
 
+	// crt-store handlers
+	api.CrtStoreGetCrtStoresHandler = &handlers.GetCrtStoresHandlerImpl{Client: client}
+	api.CrtStoreGetCrtStoreHandler = &handlers.GetCrtStoreHandlerImpl{Client: client}
+	api.CrtStoreCreateCrtStoreHandler = &handlers.CreateCrtStoreHandlerImpl{Client: client, ReloadAgent: ra}
+	api.CrtStoreEditCrtStoreHandler = &handlers.EditCrtStoreHandler{Client: client, ReloadAgent: ra}
+	api.CrtStoreDeleteCrtStoreHandler = &handlers.DeleteCrtStoreHandlerImpl{Client: client, ReloadAgent: ra}
+	// crt-store load handlers
+	api.CrtLoadGetCrtLoadsHandler = &handlers.GetCrtLoadsHandlerImpl{Client: client}
+	api.CrtLoadGetCrtLoadHandler = &handlers.GetCrtLoadHandlerImpl{Client: client}
+	api.CrtLoadCreateCrtLoadHandler = &handlers.CreateCrtLoadHandlerImpl{Client: client, ReloadAgent: ra}
+	api.CrtLoadReplaceCrtLoadHandler = &handlers.ReplaceCrtLoadHandler{Client: client, ReloadAgent: ra}
+	api.CrtLoadDeleteCrtLoadHandler = &handlers.DeleteCrtLoadHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup info handler
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 

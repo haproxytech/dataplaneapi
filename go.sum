@@ -98,10 +98,10 @@ github.com/google/renameio v1.0.1 h1:Lh/jXZmvZxb0BBeSY5VKEfidcbcbenKjZFzM/q0fSeU
 github.com/google/renameio v1.0.1/go.mod h1:t/HQoYBZSsWSNK35C6CO/TpPLDVWvxOHboWUAweKUpk=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v6 v6.0.0-20240614135202-dc5bfbbe35c8 h1:FXaF+JQeq4ZkGBwdPF6s+A3N2HVty/V6obkGAZ7FLwQ=
-github.com/haproxytech/client-native/v6 v6.0.0-20240614135202-dc5bfbbe35c8/go.mod h1:accXxQL+QNmBE0X/vB3f4mk4thIJDOKRWKAy52xZI2w=
-github.com/haproxytech/config-parser/v5 v5.1.1-0.20240613093313-d1b7e6dff79a h1:5JOCSMTfVl1gAWNsAvc+QIYUjCgL0ul7vC0DTfPujx4=
-github.com/haproxytech/config-parser/v5 v5.1.1-0.20240613093313-d1b7e6dff79a/go.mod h1:hx+pWJT6LDby9tgM+lqOdbG/NFMbqmVojSMMPdUvAwQ=
+github.com/haproxytech/client-native/v6 v6.0.0-20240624193720-71696d30ca6a h1:KQF05yN9Qj8eJWJY/LTKODkF/evtaqwXbcfVFcwBU8A=
+github.com/haproxytech/client-native/v6 v6.0.0-20240624193720-71696d30ca6a/go.mod h1:Vh0dKP+AuvXRP+uRpHcUyS6EwNEvXXl6bhKyN77aGXs=
+github.com/haproxytech/config-parser/v5 v5.1.1-0.20240624075631-c75eaad880c2 h1:sdgelGYw2i16OL47z2bYEiwjuH7KDWC4P9WLQ0BFZd0=
+github.com/haproxytech/config-parser/v5 v5.1.1-0.20240624075631-c75eaad880c2/go.mod h1:uzi0JXWJYW31M1AzGsczaJtEaoG54qP0LX8B1A2iQRw=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
 github.com/haproxytech/go-logger v1.1.0/go.mod h1:OekUd8HCb7ubxMplzHUPBTHNxZmddOWfOjWclZsqIeM=
 github.com/invopop/yaml v0.3.1 h1:f0+ZpmhfBSS4MhG+4HYseMdJhoeeopbSKbq5Rpeelso=
@@ -189,8 +189,8 @@ github.com/ugorji/go/codec v1.2.7 h1:YPXUKf7fYbp/y8xloBqZOw2qaVggbfwMlI8WM3wZUJ0
 github.com/ugorji/go/codec v1.2.7/go.mod h1:WGN1fab3R1fzQlVQTkfxVtIBhWDRqOviHU95kRgeqEY=
 github.com/yusufpapurcu/wmi v1.2.4 h1:zFUKzehAFReQwLys1b/iSMl+JQGSCSjtVqQn9bBrPo0=
 github.com/yusufpapurcu/wmi v1.2.4/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQmPyzfmi0=
-go.mongodb.org/mongo-driver v1.15.0 h1:rJCKC8eEliewXjZGf0ddURtl7tTVy1TK3bfl0gkUSLc=
-go.mongodb.org/mongo-driver v1.15.0/go.mod h1:Vzb0Mk/pa7e6cWw85R4F/endUC3u0U9jGcNU603k65c=
+go.mongodb.org/mongo-driver v1.15.1 h1:l+RvoUOoMXFmADTLfYDm7On9dRm7p4T80/lEQM+r7HU=
+go.mongodb.org/mongo-driver v1.15.1/go.mod h1:Vzb0Mk/pa7e6cWw85R4F/endUC3u0U9jGcNU603k65c=
 go.uber.org/automaxprocs v1.5.3 h1:kWazyxZUrS3Gs4qUpbwo5kEIMGe/DAvi5Z4tl2NW4j8=
 go.uber.org/automaxprocs v1.5.3/go.mod h1:eRbA25aqJrxAbsLO0xy5jVwPt7FQnRgjW+efnwa1WM0=
 go.uber.org/goleak v1.1.12 h1:gZAh5/EyT/HQwlpkCy6wTpqfH9H8Lz8zbm3dZh+OyzA=

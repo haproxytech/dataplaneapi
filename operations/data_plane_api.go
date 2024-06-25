@@ -42,6 +42,8 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/cache"
 	"github.com/haproxytech/dataplaneapi/operations/cluster"
 	"github.com/haproxytech/dataplaneapi/operations/configuration"
+	"github.com/haproxytech/dataplaneapi/operations/crt_load"
+	"github.com/haproxytech/dataplaneapi/operations/crt_store"
 	"github.com/haproxytech/dataplaneapi/operations/declare_capture"
 	"github.com/haproxytech/dataplaneapi/operations/defaults"
 	"github.com/haproxytech/dataplaneapi/operations/dgram_bind"
@@ -177,6 +179,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServiceDiscoveryCreateConsulHandler: service_discovery.CreateConsulHandlerFunc(func(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.CreateConsul has not yet been implemented")
+		}),
+		CrtLoadCreateCrtLoadHandler: crt_load.CreateCrtLoadHandlerFunc(func(params crt_load.CreateCrtLoadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_load.CreateCrtLoad has not yet been implemented")
+		}),
+		CrtStoreCreateCrtStoreHandler: crt_store.CreateCrtStoreHandlerFunc(func(params crt_store.CreateCrtStoreParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_store.CreateCrtStore has not yet been implemented")
 		}),
 		DeclareCaptureCreateDeclareCaptureHandler: declare_capture.CreateDeclareCaptureHandlerFunc(func(params declare_capture.CreateDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.CreateDeclareCapture has not yet been implemented")
@@ -328,6 +336,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServiceDiscoveryDeleteConsulHandler: service_discovery.DeleteConsulHandlerFunc(func(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.DeleteConsul has not yet been implemented")
 		}),
+		CrtLoadDeleteCrtLoadHandler: crt_load.DeleteCrtLoadHandlerFunc(func(params crt_load.DeleteCrtLoadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_load.DeleteCrtLoad has not yet been implemented")
+		}),
+		CrtStoreDeleteCrtStoreHandler: crt_store.DeleteCrtStoreHandlerFunc(func(params crt_store.DeleteCrtStoreParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_store.DeleteCrtStore has not yet been implemented")
+		}),
 		DeclareCaptureDeleteDeclareCaptureHandler: declare_capture.DeleteDeclareCaptureHandlerFunc(func(params declare_capture.DeleteDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.DeleteDeclareCapture has not yet been implemented")
 		}),
@@ -469,6 +483,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ClusterEditClusterHandler: cluster.EditClusterHandlerFunc(func(params cluster.EditClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.EditCluster has not yet been implemented")
 		}),
+		CrtStoreEditCrtStoreHandler: crt_store.EditCrtStoreHandlerFunc(func(params crt_store.EditCrtStoreParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_store.EditCrtStore has not yet been implemented")
+		}),
 		MailersEditMailersSectionHandler: mailers.EditMailersSectionHandlerFunc(func(params mailers.EditMailersSectionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation mailers.EditMailersSection has not yet been implemented")
 		}),
@@ -540,6 +557,18 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServiceDiscoveryGetConsulsHandler: service_discovery.GetConsulsHandlerFunc(func(params service_discovery.GetConsulsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.GetConsuls has not yet been implemented")
+		}),
+		CrtLoadGetCrtLoadHandler: crt_load.GetCrtLoadHandlerFunc(func(params crt_load.GetCrtLoadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_load.GetCrtLoad has not yet been implemented")
+		}),
+		CrtLoadGetCrtLoadsHandler: crt_load.GetCrtLoadsHandlerFunc(func(params crt_load.GetCrtLoadsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_load.GetCrtLoads has not yet been implemented")
+		}),
+		CrtStoreGetCrtStoreHandler: crt_store.GetCrtStoreHandlerFunc(func(params crt_store.GetCrtStoreParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_store.GetCrtStore has not yet been implemented")
+		}),
+		CrtStoreGetCrtStoresHandler: crt_store.GetCrtStoresHandlerFunc(func(params crt_store.GetCrtStoresParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_store.GetCrtStores has not yet been implemented")
 		}),
 		DeclareCaptureGetDeclareCaptureHandler: declare_capture.GetDeclareCaptureHandlerFunc(func(params declare_capture.GetDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.GetDeclareCapture has not yet been implemented")
@@ -901,6 +930,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServiceDiscoveryReplaceConsulHandler: service_discovery.ReplaceConsulHandlerFunc(func(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.ReplaceConsul has not yet been implemented")
 		}),
+		CrtLoadReplaceCrtLoadHandler: crt_load.ReplaceCrtLoadHandlerFunc(func(params crt_load.ReplaceCrtLoadParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation crt_load.ReplaceCrtLoad has not yet been implemented")
+		}),
 		DeclareCaptureReplaceDeclareCaptureHandler: declare_capture.ReplaceDeclareCaptureHandlerFunc(func(params declare_capture.ReplaceDeclareCaptureParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation declare_capture.ReplaceDeclareCapture has not yet been implemented")
 		}),
@@ -1174,6 +1206,10 @@ type DataPlaneAPI struct {
 	CacheCreateCacheHandler cache.CreateCacheHandler
 	// ServiceDiscoveryCreateConsulHandler sets the operation handler for the create consul operation
 	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
+	// CrtLoadCreateCrtLoadHandler sets the operation handler for the create crt load operation
+	CrtLoadCreateCrtLoadHandler crt_load.CreateCrtLoadHandler
+	// CrtStoreCreateCrtStoreHandler sets the operation handler for the create crt store operation
+	CrtStoreCreateCrtStoreHandler crt_store.CreateCrtStoreHandler
 	// DeclareCaptureCreateDeclareCaptureHandler sets the operation handler for the create declare capture operation
 	DeclareCaptureCreateDeclareCaptureHandler declare_capture.CreateDeclareCaptureHandler
 	// DefaultsCreateDefaultsSectionHandler sets the operation handler for the create defaults section operation
@@ -1274,6 +1310,10 @@ type DataPlaneAPI struct {
 	ClusterDeleteClusterHandler cluster.DeleteClusterHandler
 	// ServiceDiscoveryDeleteConsulHandler sets the operation handler for the delete consul operation
 	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
+	// CrtLoadDeleteCrtLoadHandler sets the operation handler for the delete crt load operation
+	CrtLoadDeleteCrtLoadHandler crt_load.DeleteCrtLoadHandler
+	// CrtStoreDeleteCrtStoreHandler sets the operation handler for the delete crt store operation
+	CrtStoreDeleteCrtStoreHandler crt_store.DeleteCrtStoreHandler
 	// DeclareCaptureDeleteDeclareCaptureHandler sets the operation handler for the delete declare capture operation
 	DeclareCaptureDeleteDeclareCaptureHandler declare_capture.DeleteDeclareCaptureHandler
 	// DefaultsDeleteDefaultsSectionHandler sets the operation handler for the delete defaults section operation
@@ -1368,6 +1408,8 @@ type DataPlaneAPI struct {
 	UserlistDeleteUserlistHandler userlist.DeleteUserlistHandler
 	// ClusterEditClusterHandler sets the operation handler for the edit cluster operation
 	ClusterEditClusterHandler cluster.EditClusterHandler
+	// CrtStoreEditCrtStoreHandler sets the operation handler for the edit crt store operation
+	CrtStoreEditCrtStoreHandler crt_store.EditCrtStoreHandler
 	// MailersEditMailersSectionHandler sets the operation handler for the edit mailers section operation
 	MailersEditMailersSectionHandler mailers.EditMailersSectionHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
@@ -1416,6 +1458,14 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryGetConsulHandler service_discovery.GetConsulHandler
 	// ServiceDiscoveryGetConsulsHandler sets the operation handler for the get consuls operation
 	ServiceDiscoveryGetConsulsHandler service_discovery.GetConsulsHandler
+	// CrtLoadGetCrtLoadHandler sets the operation handler for the get crt load operation
+	CrtLoadGetCrtLoadHandler crt_load.GetCrtLoadHandler
+	// CrtLoadGetCrtLoadsHandler sets the operation handler for the get crt loads operation
+	CrtLoadGetCrtLoadsHandler crt_load.GetCrtLoadsHandler
+	// CrtStoreGetCrtStoreHandler sets the operation handler for the get crt store operation
+	CrtStoreGetCrtStoreHandler crt_store.GetCrtStoreHandler
+	// CrtStoreGetCrtStoresHandler sets the operation handler for the get crt stores operation
+	CrtStoreGetCrtStoresHandler crt_store.GetCrtStoresHandler
 	// DeclareCaptureGetDeclareCaptureHandler sets the operation handler for the get declare capture operation
 	DeclareCaptureGetDeclareCaptureHandler declare_capture.GetDeclareCaptureHandler
 	// DeclareCaptureGetDeclareCapturesHandler sets the operation handler for the get declare captures operation
@@ -1656,6 +1706,8 @@ type DataPlaneAPI struct {
 	CacheReplaceCacheHandler cache.ReplaceCacheHandler
 	// ServiceDiscoveryReplaceConsulHandler sets the operation handler for the replace consul operation
 	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
+	// CrtLoadReplaceCrtLoadHandler sets the operation handler for the replace crt load operation
+	CrtLoadReplaceCrtLoadHandler crt_load.ReplaceCrtLoadHandler
 	// DeclareCaptureReplaceDeclareCaptureHandler sets the operation handler for the replace declare capture operation
 	DeclareCaptureReplaceDeclareCaptureHandler declare_capture.ReplaceDeclareCaptureHandler
 	// DeclareCaptureReplaceDeclareCapturesHandler sets the operation handler for the replace declare captures operation
@@ -1920,6 +1972,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServiceDiscoveryCreateConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.CreateConsulHandler")
 	}
+	if o.CrtLoadCreateCrtLoadHandler == nil {
+		unregistered = append(unregistered, "crt_load.CreateCrtLoadHandler")
+	}
+	if o.CrtStoreCreateCrtStoreHandler == nil {
+		unregistered = append(unregistered, "crt_store.CreateCrtStoreHandler")
+	}
 	if o.DeclareCaptureCreateDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.CreateDeclareCaptureHandler")
 	}
@@ -2070,6 +2128,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServiceDiscoveryDeleteConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.DeleteConsulHandler")
 	}
+	if o.CrtLoadDeleteCrtLoadHandler == nil {
+		unregistered = append(unregistered, "crt_load.DeleteCrtLoadHandler")
+	}
+	if o.CrtStoreDeleteCrtStoreHandler == nil {
+		unregistered = append(unregistered, "crt_store.DeleteCrtStoreHandler")
+	}
 	if o.DeclareCaptureDeleteDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.DeleteDeclareCaptureHandler")
 	}
@@ -2211,6 +2275,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ClusterEditClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.EditClusterHandler")
 	}
+	if o.CrtStoreEditCrtStoreHandler == nil {
+		unregistered = append(unregistered, "crt_store.EditCrtStoreHandler")
+	}
 	if o.MailersEditMailersSectionHandler == nil {
 		unregistered = append(unregistered, "mailers.EditMailersSectionHandler")
 	}
@@ -2282,6 +2349,18 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServiceDiscoveryGetConsulsHandler == nil {
 		unregistered = append(unregistered, "service_discovery.GetConsulsHandler")
+	}
+	if o.CrtLoadGetCrtLoadHandler == nil {
+		unregistered = append(unregistered, "crt_load.GetCrtLoadHandler")
+	}
+	if o.CrtLoadGetCrtLoadsHandler == nil {
+		unregistered = append(unregistered, "crt_load.GetCrtLoadsHandler")
+	}
+	if o.CrtStoreGetCrtStoreHandler == nil {
+		unregistered = append(unregistered, "crt_store.GetCrtStoreHandler")
+	}
+	if o.CrtStoreGetCrtStoresHandler == nil {
+		unregistered = append(unregistered, "crt_store.GetCrtStoresHandler")
 	}
 	if o.DeclareCaptureGetDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.GetDeclareCaptureHandler")
@@ -2643,6 +2722,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServiceDiscoveryReplaceConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.ReplaceConsulHandler")
 	}
+	if o.CrtLoadReplaceCrtLoadHandler == nil {
+		unregistered = append(unregistered, "crt_load.ReplaceCrtLoadHandler")
+	}
 	if o.DeclareCaptureReplaceDeclareCaptureHandler == nil {
 		unregistered = append(unregistered, "declare_capture.ReplaceDeclareCaptureHandler")
 	}
@@ -2999,6 +3081,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/crt_loads"] = crt_load.NewCreateCrtLoad(o.context, o.CrtLoadCreateCrtLoadHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/crt_stores"] = crt_store.NewCreateCrtStore(o.context, o.CrtStoreCreateCrtStoreHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/captures/{index}"] = declare_capture.NewCreateDeclareCapture(o.context, o.DeclareCaptureCreateDeclareCaptureHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -3199,6 +3289,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/crt_loads/{certificate}"] = crt_load.NewDeleteCrtLoad(o.context, o.CrtLoadDeleteCrtLoadHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/crt_stores/{name}"] = crt_store.NewDeleteCrtStore(o.context, o.CrtStoreDeleteCrtStoreHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/captures/{index}"] = declare_capture.NewDeleteDeclareCapture(o.context, o.DeclareCaptureDeleteDeclareCaptureHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -3387,6 +3485,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/crt_stores/{name}"] = crt_store.NewEditCrtStore(o.context, o.CrtStoreEditCrtStoreHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/mailers_section/{name}"] = mailers.NewEditMailersSection(o.context, o.MailersEditMailersSectionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -3480,6 +3582,22 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/service_discovery/consul"] = service_discovery.NewGetConsuls(o.context, o.ServiceDiscoveryGetConsulsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/crt_loads/{certificate}"] = crt_load.NewGetCrtLoad(o.context, o.CrtLoadGetCrtLoadHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/crt_loads"] = crt_load.NewGetCrtLoads(o.context, o.CrtLoadGetCrtLoadsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/crt_stores/{name}"] = crt_store.NewGetCrtStore(o.context, o.CrtStoreGetCrtStoreHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/crt_stores"] = crt_store.NewGetCrtStores(o.context, o.CrtStoreGetCrtStoresHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -3960,6 +4078,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/service_discovery/consul/{id}"] = service_discovery.NewReplaceConsul(o.context, o.ServiceDiscoveryReplaceConsulHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/crt_loads/{certificate}"] = crt_load.NewReplaceCrtLoad(o.context, o.CrtLoadReplaceCrtLoadHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

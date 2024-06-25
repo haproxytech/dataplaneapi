@@ -1,0 +1,5 @@
+{
+  "certificate": "c1.pem",
+  "key": "k1.pem",
+  "ocsp_update": "disabled"
+}
