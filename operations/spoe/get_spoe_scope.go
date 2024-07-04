@@ -45,7 +45,7 @@ func NewGetSpoeScope(ctx *middleware.Context, handler GetSpoeScopeHandler) *GetS
 }
 
 /*
-	GetSpoeScope swagger:route GET /services/haproxy/spoe/spoe_scopes/{name} Spoe getSpoeScope
+	GetSpoeScope swagger:route GET /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{name} Spoe getSpoeScope
 
 # Return one SPOE scope
 

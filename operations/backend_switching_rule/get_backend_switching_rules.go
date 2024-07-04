@@ -45,7 +45,7 @@ func NewGetBackendSwitchingRules(ctx *middleware.Context, handler GetBackendSwit
 }
 
 /*
-	GetBackendSwitchingRules swagger:route GET /services/haproxy/configuration/backend_switching_rules BackendSwitchingRule getBackendSwitchingRules
+	GetBackendSwitchingRules swagger:route GET /services/haproxy/configuration/frontends/{parent_name}/backend_switching_rules BackendSwitchingRule getBackendSwitchingRules
 
 # Return an array of all Backend Switching Rules
 

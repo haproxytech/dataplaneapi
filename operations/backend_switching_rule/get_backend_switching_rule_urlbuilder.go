@@ -31,9 +31,9 @@ import (
 
 // GetBackendSwitchingRuleURL generates an URL for the get backend switching rule operation
 type GetBackendSwitchingRuleURL struct {
-	Index int64
+	Index      int64
+	ParentName string
 
-	Frontend      string
 	TransactionID *string
 
 	_basePath string
@@ -60,13 +60,20 @@ func (o *GetBackendSwitchingRuleURL) SetBasePath(bp string) {
 func (o *GetBackendSwitchingRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/backend_switching_rules/{index}"
+	var _path = "/services/haproxy/configuration/frontends/{parent_name}/backend_switching_rules/{index}"
 
 	index := swag.FormatInt64(o.Index)
 	if index != "" {
 		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
 		return nil, errors.New("index is required on GetBackendSwitchingRuleURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetBackendSwitchingRuleURL")
 	}
 
 	_basePath := o._basePath
@@ -76,11 +83,6 @@ func (o *GetBackendSwitchingRuleURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	frontendQ := o.Frontend
-	if frontendQ != "" {
-		qs.Set("frontend", frontendQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

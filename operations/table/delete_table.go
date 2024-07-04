@@ -45,7 +45,7 @@ func NewDeleteTable(ctx *middleware.Context, handler DeleteTableHandler) *Delete
 }
 
 /*
-	DeleteTable swagger:route DELETE /services/haproxy/configuration/tables/{name} Table deleteTable
+	DeleteTable swagger:route DELETE /services/haproxy/configuration/peers/{parent_name}/tables/{name} Table deleteTable
 
 # Delete a table
 

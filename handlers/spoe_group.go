@@ -34,7 +34,7 @@ func (h *SpoeCreateSpoeGroupHandlerImpl) Handle(params spoe.CreateSpoeGroupParam
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -47,7 +47,7 @@ func (h *SpoeCreateSpoeGroupHandlerImpl) Handle(params spoe.CreateSpoeGroupParam
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.CreateGroup(params.Scope, params.Data, t, v)
+	err = ss.CreateGroup(params.ScopeName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -67,7 +67,7 @@ func (h *SpoeDeleteSpoeGroupHandlerImpl) Handle(params spoe.DeleteSpoeGroupParam
 		return spoe.NewDeleteSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -80,7 +80,7 @@ func (h *SpoeDeleteSpoeGroupHandlerImpl) Handle(params spoe.DeleteSpoeGroupParam
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.DeleteGroup(params.Scope, params.Name, t, v)
+	err = ss.DeleteGroup(params.ScopeName, params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -88,34 +88,34 @@ func (h *SpoeDeleteSpoeGroupHandlerImpl) Handle(params spoe.DeleteSpoeGroupParam
 	return spoe.NewDeleteSpoeAgentNoContent()
 }
 
-// SpoeGetSpoeGroupsHandlerImpl implementation of the SpoeGetSpoeGroupsHandler interface
-type SpoeGetSpoeGroupsHandlerImpl struct {
+// SpoeGetAllSpoeGroupHandlerImpl implementation of the SpoeGetSpoeGroupsHandler interface
+type SpoeGetAllSpoeGroupHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-// SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetSpoeGroupsHandlerImpl) Handle(params spoe.GetSpoeGroupsParams, principal interface{}) middleware.Responder {
+// SpoeGetAllSpoeGroupHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
+func (h *SpoeGetAllSpoeGroupHandlerImpl) Handle(params spoe.GetAllSpoeGroupParams, principal interface{}) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
-		return spoe.NewGetSpoeGroupsDefault(int(*e.Code)).WithPayload(e)
+		return spoe.NewGetAllSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return spoe.NewGetSpoeGroupsDefault(int(*e.Code)).WithPayload(e)
+		return spoe.NewGetAllSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, groups, err := ss.GetGroups(params.Scope, t)
+	_, groups, err := ss.GetGroups(params.ScopeName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return spoe.NewGetSpoeGroupsDefault(int(*e.Code)).WithPayload(e)
+		return spoe.NewGetAllSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
-	return spoe.NewGetSpoeGroupsOK().WithPayload(groups)
+	return spoe.NewGetAllSpoeGroupOK().WithPayload(groups)
 }
 
 // SpoeGetSpoeGroupHandlerImpl implementation of the SpoeGetSpoeGroupHandler interface
@@ -130,7 +130,7 @@ func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c i
 		return spoe.NewGetSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -139,7 +139,7 @@ func (h *SpoeGetSpoeGroupHandlerImpl) Handle(params spoe.GetSpoeGroupParams, c i
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, group, err := ss.GetGroup(params.Scope, params.Name, t)
+	_, group, err := ss.GetGroup(params.ScopeName, params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -162,7 +162,7 @@ func (h *SpoeReplaceSpoeGroupHandlerImpl) Handle(params spoe.ReplaceSpoeGroupPar
 		return spoe.NewReplaceSpoeGroupDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeGroupDefault(int(*e.Code)).WithPayload(e)
@@ -175,7 +175,7 @@ func (h *SpoeReplaceSpoeGroupHandlerImpl) Handle(params spoe.ReplaceSpoeGroupPar
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.EditGroup(params.Scope, params.Data, params.Name, t, v)
+	err = ss.EditGroup(params.ScopeName, params.Data, params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeGroupDefault(int(*e.Code)).WithPayload(e)

@@ -24,12 +24,24 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "acls: Add a new ACL" {
-    resource_post "$_ACL_BASE_PATH"/2 "data/post.json" "index=2&parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/2" "data/post.json"
     assert_equal "$SC" 202
     #
     # verify that ACL is actually added
     #
-    resource_get "$_ACL_BASE_PATH/2" "parent_name=fe_acl&parent_type=frontend"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/2"
+    assert_equal "$SC" 200
+
+    assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
+}
+
+@test "acls: Add a newACL for fcgi-app" {
+    PARENT_NAME="test_1"
+    resource_post "$_FCGIAPP_BASE_PATH/$PARENT_NAME/acls/0" "data/post.json"
+    assert_equal "$SC" 202
+
+    resource_get "$_FCGIAPP_BASE_PATH/$PARENT_NAME/acls/0"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"

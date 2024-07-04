@@ -27,7 +27,8 @@ load 'utils/_helpers'
 @test "http_error_rules: Return an array of all HTTP Error Rules from defaults" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH" "parent_type=defaults&parent_name=mydefaults"
+	PARENT_NAME="mydefaults"
+	resource_get "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_error_rules"
 	assert_equal "$SC" 200
 	assert_equal 1 "$(get_json_path "$BODY" ". | length")"
 	assert_equal "$(get_json_path "$BODY" ".[0].type")" "status"
@@ -40,7 +41,8 @@ load 'utils/_helpers'
 @test "http_error_rules: Return an array of all HTTP Error Rules from frontend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
+	PARENT_NAME="test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_error_rules"
 	assert_equal "$SC" 200
 	assert_equal 1 "$(get_json_path "$BODY" ". | length")"
 	assert_equal "$(get_json_path "$BODY" ".[0].type")" "status"
@@ -50,7 +52,8 @@ load 'utils/_helpers'
 @test "http_error_rules: Return an array of all HTTP Error Rules from backend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_error_rules"
 	assert_equal "$SC" 200
 	assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 	assert_equal "$(get_json_path "$BODY" ".[0].type")" "status"

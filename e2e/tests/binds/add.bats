@@ -25,16 +25,47 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "binds: Add a new bind" {
+  PARENT_NAME="test_frontend"
   if haproxy_version_ge "2.5"
   then
-    resource_post "$_BIND_BASE_PATH" "data/post_2.5.json" "frontend=test_frontend&force_reload=true"
+    resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds" "data/post_2.5.json" "force_reload=true"
   else
-    resource_post "$_BIND_BASE_PATH" "data/post.json" "frontend=test_frontend&force_reload=true"
+    resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds" "data/post.json" "force_reload=true"
   fi
   assert_equal "$SC" 201
   if haproxy_version_ge "2.5"
   then
-    resource_get "$_BIND_BASE_PATH/test_bind" "frontend=test_frontend&force_reload=true"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds/test_bind" "force_reload=true"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "$BODY" '.name')" "test_bind"
+    assert_equal "1/all" "$(get_json_path "$BODY" ".thread")"
+    assert_equal "$(get_json_path "$BODY" '.ca_verify_file')" "/certs/ca-verify.pem"
+  fi
+}
+
+@test "binds: Add a new bind for log_forward" {
+  PARENT_NAME="sylog-loadb"
+  if haproxy_version_ge "2.5"
+  then
+    resource_post "$_LOGFORWARD_BASE_PATH/$PARENT_NAME/binds" "data/post_2.5.json" "force_reload=true"
+    assert_equal "$SC" 201
+
+    resource_get "$_LOGFORWARD_BASE_PATH/$PARENT_NAME/binds/test_bind" "force_reload=true"
+    assert_equal "$SC" 200
+    assert_equal "$(get_json_path "$BODY" '.name')" "test_bind"
+    assert_equal "1/all" "$(get_json_path "$BODY" ".thread")"
+    assert_equal "$(get_json_path "$BODY" '.ca_verify_file')" "/certs/ca-verify.pem"
+  fi
+}
+
+@test "binds: Add a new bind for peers" {
+  PARENT_NAME="fusion"
+  if haproxy_version_ge "2.5"
+  then
+    resource_post "$_PEER_BASE_PATH/$PARENT_NAME/binds" "data/post_2.5.json" "force_reload=true"
+    assert_equal "$SC" 201
+
+    resource_get "$_PEER_BASE_PATH/$PARENT_NAME/binds/test_bind" "force_reload=true"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" '.name')" "test_bind"
     assert_equal "1/all" "$(get_json_path "$BODY" ".thread")"

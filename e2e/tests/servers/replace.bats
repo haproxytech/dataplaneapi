@@ -24,10 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "servers: Replace a server" {
-  resource_put "$_SERVER_BASE_PATH/server_01" "data/put.json" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/servers/server_01" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 
-	resource_get "$_SERVER_BASE_PATH/server_01" "backend=test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/servers/server_01" "backend=test_backend"
   assert_equal "$SC" 200
   assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat $BATS_TEST_DIRNAME/data/put.json)" ".")"
 }

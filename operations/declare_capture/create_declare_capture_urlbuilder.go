@@ -31,10 +31,10 @@ import (
 
 // CreateDeclareCaptureURL generates an URL for the create declare capture operation
 type CreateDeclareCaptureURL struct {
-	Index int64
+	Index      int64
+	ParentName string
 
 	ForceReload   *bool
-	Frontend      string
 	TransactionID *string
 	Version       *int64
 
@@ -62,13 +62,20 @@ func (o *CreateDeclareCaptureURL) SetBasePath(bp string) {
 func (o *CreateDeclareCaptureURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/captures/{index}"
+	var _path = "/services/haproxy/configuration/frontends/{parent_name}/captures/{index}"
 
 	index := swag.FormatInt64(o.Index)
 	if index != "" {
 		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
 		return nil, errors.New("index is required on CreateDeclareCaptureURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CreateDeclareCaptureURL")
 	}
 
 	_basePath := o._basePath
@@ -85,11 +92,6 @@ func (o *CreateDeclareCaptureURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	frontendQ := o.Frontend
-	if frontendQ != "" {
-		qs.Set("frontend", frontendQ)
 	}
 
 	var transactionIDQ string

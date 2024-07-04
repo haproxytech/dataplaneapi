@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_DGRAMBIND_BASE_PATH="/services/haproxy/configuration/dgram_binds"
+_LOGFORWARD_BASE_PATH="/services/haproxy/configuration/log_forwards"

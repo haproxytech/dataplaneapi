@@ -22,7 +22,6 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
-	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/stick_rule"
 )
 
@@ -87,7 +86,7 @@ func (h *CreateStickRuleHandlerImpl) Handle(params stick_rule.CreateStickRulePar
 		return stick_rule.NewCreateStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateStickRule(params.Index, params.Backend, params.Data, t, v)
+	err = configuration.CreateStickRule(params.Index, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewCreateStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -134,7 +133,7 @@ func (h *DeleteStickRuleHandlerImpl) Handle(params stick_rule.DeleteStickRulePar
 		return stick_rule.NewDeleteStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteStickRule(params.Index, params.Backend, t, v)
+	err = configuration.DeleteStickRule(params.Index, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewDeleteStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -168,7 +167,7 @@ func (h *GetStickRuleHandlerImpl) Handle(params stick_rule.GetStickRuleParams, p
 		return stick_rule.NewGetStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rule, err := configuration.GetStickRule(params.Index, params.Backend, t)
+	_, rule, err := configuration.GetStickRule(params.Index, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewGetStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -189,7 +188,7 @@ func (h *GetStickRulesHandlerImpl) Handle(params stick_rule.GetStickRulesParams,
 		return stick_rule.NewGetStickRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rules, err := configuration.GetStickRules(params.Backend, t)
+	_, rules, err := configuration.GetStickRules(params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -227,7 +226,7 @@ func (h *ReplaceStickRuleHandlerImpl) Handle(params stick_rule.ReplaceStickRuleP
 		return stick_rule.NewReplaceStickRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditStickRule(params.Index, params.Backend, params.Data, t, v)
+	err = configuration.EditStickRule(params.Index, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewReplaceStickRuleDefault(int(*e.Code)).WithPayload(e)
@@ -274,7 +273,7 @@ func (h *ReplaceStickRulesHandlerImpl) Handle(params stick_rule.ReplaceStickRule
 		e := misc.HandleError(err)
 		return stick_rule.NewReplaceStickRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.ReplaceStickRules(params.Backend, params.Data, t, v)
+	err = configuration.ReplaceStickRules(params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_rule.NewReplaceStickRulesDefault(int(*e.Code)).WithPayload(e)
@@ -285,7 +284,7 @@ func (h *ReplaceStickRulesHandlerImpl) Handle(params stick_rule.ReplaceStickRule
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+				return stick_rule.NewReplaceStickRuleDefault(int(*e.Code)).WithPayload(e)
 			}
 			return stick_rule.NewReplaceStickRulesOK().WithPayload(params.Data)
 		}

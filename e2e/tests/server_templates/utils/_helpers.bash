@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_SERVER_TEMPLATE_BASE_PATH="/services/haproxy/configuration/server_templates"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"

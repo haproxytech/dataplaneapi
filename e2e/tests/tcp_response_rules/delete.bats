@@ -24,17 +24,18 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "tcp_response_rules: Delete a TCP Response Rule" {
-  resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 
-	resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 
   if haproxy_version_ge "2.8"; then
-      resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+      resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0" "force_reload=true"
       assert_equal "$SC" 204
   fi
 
-	resource_delete "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 404
 }

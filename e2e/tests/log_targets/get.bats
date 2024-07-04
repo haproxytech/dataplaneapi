@@ -24,14 +24,15 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "log_targets: Return one Log Target from frontend" {
-  resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
+	PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
 	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
 	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
 	assert_equal "$(get_json_path "$BODY" ".level")" "warning"
 
-	resource_get "$_LOG_TRAGET_BASE_PATH/1" "parent_type=frontend&parent_name=test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/1"
 	assert_equal "$SC" 200
   assert_equal "$(get_json_path "${BODY}" ".address")" "10.0.0.1"
 	assert_equal "$(get_json_path "${BODY}" ".facility")" "user"
@@ -40,14 +41,15 @@ load 'utils/_helpers'
 }
 
 @test "log_targets: Return one Log Target from backend" {
-  resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/0" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
 	assert_equal "$(get_json_path "$BODY" ".facility")" "user"
 	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
 	assert_equal "$(get_json_path "$BODY" ".level")" "warning"
 
-	resource_get "$_LOG_TRAGET_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/1"
 	assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" ".address")" "10.0.0.1"
 	assert_equal "$(get_json_path "$BODY" ".facility")" "user"

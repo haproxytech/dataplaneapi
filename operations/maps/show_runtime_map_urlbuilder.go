@@ -24,11 +24,12 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // ShowRuntimeMapURL generates an URL for the show runtime map operation
 type ShowRuntimeMapURL struct {
-	Map string
+	ParentName string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -54,22 +55,20 @@ func (o *ShowRuntimeMapURL) SetBasePath(bp string) {
 func (o *ShowRuntimeMapURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/maps_entries"
+	var _path = "/services/haproxy/runtime/maps/{parent_name}/entries"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ShowRuntimeMapURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/v3"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
-
-	qs := make(url.Values)
-
-	mapVarQ := o.Map
-	if mapVarQ != "" {
-		qs.Set("map", mapVarQ)
-	}
-
-	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

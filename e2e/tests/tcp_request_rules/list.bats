@@ -25,7 +25,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_request_rules: Return an array of all TCP Request Rules from frontend" {
-  resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
+  PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules"
 	assert_equal "$SC" 200
 
     if haproxy_version_ge "2.8"; then
@@ -46,8 +47,9 @@ load 'utils/_helpers'
     fi
 }
 
-@test "tcp_request_rules: Return one TCP Request Rule from backend" {
-  resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+@test "tcp_request_rules: Return an array of all TCP Request Rules from backend" {
+  PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules"
 	assert_equal "$SC" 200
 
   assert_equal "$(get_json_path "$BODY" ".[] | select(.type | contains(\"inspect-delay\") ).type")" "inspect-delay"

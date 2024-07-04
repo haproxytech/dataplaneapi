@@ -24,21 +24,24 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "runtime_maps_entries: Deletes all the map entries from the map by its id" {
-    resource_delete "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=mapfile1.map"
+    PARENT_NAME="mapfile1.map"
+    resource_delete "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries/key1"
     assert_equal "$SC" 204
     #
     # verify that entry is actually deleted
     #
-    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=mapfile1.map"
+    resource_get "$_RUNTIME_MAPS_BASE_PATH/$PARENT_NAME/entries/key1"
     assert_equal "$SC" 404
 }
 
 @test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/160 with non existing key" {
-    resource_delete "$_RUNTIME_MAP_ENTRIES_BASE_PATH/not-exists" "map=mapfile1.map"
+    PARENT_NAME="mapfile1.map"
+    resource_delete "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries/not-exists"
     assert_equal "$SC" 404
 }
 
 @test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/160 with non existing map file" {
-    resource_delete "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=not-exists.map"
+    PARENT_NAME="not-exists.map"
+    resource_delete "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries/key1"
     assert_equal "$SC" 404
 }

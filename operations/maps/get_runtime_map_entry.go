@@ -45,7 +45,7 @@ func NewGetRuntimeMapEntry(ctx *middleware.Context, handler GetRuntimeMapEntryHa
 }
 
 /*
-	GetRuntimeMapEntry swagger:route GET /services/haproxy/runtime/maps_entries/{id} Maps getRuntimeMapEntry
+	GetRuntimeMapEntry swagger:route GET /services/haproxy/runtime/maps/{parent_name}/entries/{id} Maps getRuntimeMapEntry
 
 # Return one map runtime setting
 

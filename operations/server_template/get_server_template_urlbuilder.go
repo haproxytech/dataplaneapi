@@ -29,9 +29,9 @@ import (
 
 // GetServerTemplateURL generates an URL for the get server template operation
 type GetServerTemplateURL struct {
-	Prefix string
+	ParentName string
+	Prefix     string
 
-	Backend       string
 	TransactionID *string
 
 	_basePath string
@@ -58,7 +58,14 @@ func (o *GetServerTemplateURL) SetBasePath(bp string) {
 func (o *GetServerTemplateURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/server_templates/{prefix}"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/server_templates/{prefix}"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetServerTemplateURL")
+	}
 
 	prefix := o.Prefix
 	if prefix != "" {
@@ -74,11 +81,6 @@ func (o *GetServerTemplateURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

@@ -42,10 +42,12 @@ teardown() {
 }
 
 @test "spoe_agents: Replace a spoe agent" {
-    resource_put "$_SPOE_AGENTS_BASE_PATH/iprep-agent" "data/put.json" "spoe=spoefile_example2.cfg&scope=\[ip-reputation\]"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_put "$_SPOE_BASE_PATH/${PARENT_NAME}/scopes/${SCOPE_NAME}/agents/iprep-agent" "data/put.json"
     assert_equal "$SC" 200
 
-    resource_get "$_SPOE_AGENTS_BASE_PATH/iprep-agent" "spoe=spoefile_example2.cfg&scope=\[ip-reputation\]"
+    resource_get "$_SPOE_BASE_PATH/${PARENT_NAME}/scopes/${SCOPE_NAME}/agents/iprep-agent"
     assert_equal "$SC" 200
 
     assert_equal $(get_json_path "${BODY}" ". | .[]") $(cat ${BATS_TEST_DIRNAME}/data/put.json)

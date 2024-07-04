@@ -23,11 +23,13 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_request_rules: Add a new TCP Request Rule to frontend" {
-  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/accept.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "data/accept.json" "force_reload=true"
 	assert_equal "$SC" 201
 }
 
 @test "tcp_request_rules: Add a new TCP Request Rule to backend" {
-  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/accept.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "data/accept.json" "force_reload=true"
 	assert_equal "$SC" 201
 }

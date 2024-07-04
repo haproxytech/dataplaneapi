@@ -45,7 +45,7 @@ func NewDeleteStickRule(ctx *middleware.Context, handler DeleteStickRuleHandler)
 }
 
 /*
-	DeleteStickRule swagger:route DELETE /services/haproxy/configuration/stick_rules/{index} StickRule deleteStickRule
+	DeleteStickRule swagger:route DELETE /services/haproxy/configuration/backends/{parent_name}/stick_rules/{index} StickRule deleteStickRule
 
 # Delete a Stick Rule
 

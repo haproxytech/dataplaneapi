@@ -42,16 +42,18 @@ teardown() {
 }
 
 @test "spoe_groups: Add a spoe group" {
-    resource_post "$_SPOE_GROUPS_BASE_PATH" "data/post.json" "spoe=spoefile_example.cfg&scope=\[ip-reputation\]"
+    PARENT_NAME="spoefile_example.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups" "data/post.json"
     assert_equal "$SC" 201
 
-    resource_get "$_SPOE_GROUPS_BASE_PATH/group1" "scope=\[ip-reputation\]&spoe=spoefile_example.cfg"
+    resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups/group1"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
 
     # refuse adding an existing spoe group
-    resource_post "$_SPOE_GROUPS_BASE_PATH" "/data/post.json" "spoe=spoefile_example.cfg&scope=%5Bip-reputation%5D"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups" "/data/post.json"
     assert_success
 
     dpa_curl_status_body '$output'

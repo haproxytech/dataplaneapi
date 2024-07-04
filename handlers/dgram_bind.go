@@ -80,7 +80,7 @@ func (h *CreateDgramBindHandlerImpl) Handle(params dgram_bind.CreateDgramBindPar
 		return dgram_bind.NewCreateDgramBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateDgramBind(params.LogForward, params.Data, t, v)
+	err = configuration.CreateDgramBind(params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewCreateDgramBindDefault(int(*e.Code)).WithPayload(e)
@@ -128,7 +128,7 @@ func (h *DeleteDgramBindHandlerImpl) Handle(params dgram_bind.DeleteDgramBindPar
 		return dgram_bind.NewDeleteDgramBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteDgramBind(params.Name, params.LogForward, t, v)
+	err = configuration.DeleteDgramBind(params.Name, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewDeleteDgramBindDefault(int(*e.Code)).WithPayload(e)
@@ -161,7 +161,7 @@ func (h *GetDgramBindHandlerImpl) Handle(params dgram_bind.GetDgramBindParams, p
 		return dgram_bind.NewGetDgramBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, bck, err := configuration.GetDgramBind(params.Name, params.LogForward, t)
+	_, bck, err := configuration.GetDgramBind(params.Name, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewGetDgramBindDefault(int(*e.Code)).WithPayload(e)
@@ -182,7 +182,7 @@ func (h *GetDgramBindsHandlerImpl) Handle(params dgram_bind.GetDgramBindsParams,
 		return dgram_bind.NewGetDgramBindsDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, bcks, err := configuration.GetDgramBinds(params.LogForward, t)
+	_, bcks, err := configuration.GetDgramBinds(params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewGetDgramBindsDefault(int(*e.Code)).WithPayload(e)
@@ -217,7 +217,7 @@ func (h *ReplaceDgramBindHandlerImpl) Handle(params dgram_bind.ReplaceDgramBindP
 		return dgram_bind.NewReplaceDgramBindDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditDgramBind(params.Name, params.LogForward, params.Data, t, v)
+	err = configuration.EditDgramBind(params.Name, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return dgram_bind.NewReplaceDgramBindDefault(int(*e.Code)).WithPayload(e)

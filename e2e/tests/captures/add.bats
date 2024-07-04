@@ -24,16 +24,19 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "captures: Add a new declare capture" {
-    resource_post "$_CAPTURES_BASE_PATH"/0 "data/add.json" "frontend=test_add"
+    PARENT_NAME="test_add"
+    resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures/0" "data/add.json"
     assert_equal "$SC" 202
 }
 
 @test "captures: Add a new declare capture with empty data" {
-    resource_post "$_CAPTURES_BASE_PATH"/0 "data/empty.json" "frontend=test_add"
+    PARENT_NAME="test_add"
+    resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures/0" "data/empty.json"
     assert_equal "$SC" 422
 }
 
 @test "captures: Add a new declare capture to a non existing frontend" {
-    resource_post "$_CAPTURES_BASE_PATH"/0 "data/add.json" "frontend=fake"
+    PARENT_NAME="fake"
+    resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures/0" "data/add.json"
     assert_equal "$SC" 404
 }

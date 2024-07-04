@@ -42,7 +42,8 @@ teardown() {
 }
 
 @test "spoe_scopes: List all spoe scopes" {
-    resource_get "$_SPOE_SCOPES_BASE_PATH" "spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    resource_get "$_SPOE_BASE_PATH/${PARENT_NAME}/scopes"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ". | length")" 2

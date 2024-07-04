@@ -41,7 +41,7 @@ func (h *SpoeGetSpoeConfigurationVersionHandlerImpl) Handle(params spoe.GetSpoeC
 		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return spoe.NewGetSpoeScopeDefault(status).WithPayload(misc.SetError(status, err.Error()))

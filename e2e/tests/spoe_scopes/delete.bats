@@ -42,14 +42,16 @@ teardown() {
 }
 
 @test "spoe_scopes: Delete a spoe scope" {
-    resource_delete "$_SPOE_SCOPES_BASE_PATH/%5Bip-reputation%5D" "spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    resource_delete "$_SPOE_BASE_PATH/${PARENT_NAME}/scopes/%5Bip-reputation%5D"
     assert_equal "$SC" 204
 
-    resource_get "$_SPOE_SCOPES_BASE_PATH/%5Bip-reputation%5D" "spoe=spoefile_example2.cfg"
+    resource_get "$_SPOE_BASE_PATH/${PARENT_NAME}/scopes/%5Bip-reputation%5D"
     assert_equal "$SC" 404
 }
 
 @test "spoe_scopes: Return an error when trying to delete non existing spoe scope" {
-    resource_delete "$_SPOE_SCOPES_BASE_PATH/%5Bnot-exists%5D" "spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    resource_delete "$_SPOE_BASE_PATH/${PARENT_NAME}/scopes/%5Bnot-exists%5D" "spoe=spoefile_example2.cfg"
     assert_equal "$SC" 404
 }

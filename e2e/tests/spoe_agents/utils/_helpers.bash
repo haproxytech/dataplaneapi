@@ -15,5 +15,4 @@
 # limitations under the License.
 #
 
-_SPOE_AGENTS_BASE_PATH="/services/haproxy/spoe/spoe_agents"
-
+_SPOE_BASE_PATH="/services/haproxy/spoe/spoe_files"

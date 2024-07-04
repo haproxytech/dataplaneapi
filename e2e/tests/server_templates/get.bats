@@ -24,7 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "server_templates: Return one server template" {
-  resource_get "$_SERVER_TEMPLATE_BASE_PATH/srv_google" "backend=test_backend"
+  PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/srv_google"
   assert_equal "$SC" 200
 
   assert_equal "srv_google" "$(get_json_path "$BODY" '.prefix')"
@@ -32,7 +33,7 @@ load 'utils/_helpers'
   assert_equal "google.com" "$(get_json_path "$BODY" '.fqdn')"
   assert_equal "443" "$(get_json_path "$BODY" '.port')"
 
-  resource_get "$_SERVER_TEMPLATE_BASE_PATH/srv_bing" "backend=test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/srv_bing"
   assert_equal "$SC" 200
 
   assert_equal "srv_bing" "$(get_json_path "$BODY" '.prefix')"
@@ -42,6 +43,7 @@ load 'utils/_helpers'
 }
 
 @test "server_templates: Return a non existing server template" {
-  resource_get "$_SERVER_TEMPLATE_BASE_PATH/ghost" "backend=test_backend"
+  PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/ghost"
   assert_equal "$SC" 404
 }

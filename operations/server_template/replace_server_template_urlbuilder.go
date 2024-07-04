@@ -31,9 +31,9 @@ import (
 
 // ReplaceServerTemplateURL generates an URL for the replace server template operation
 type ReplaceServerTemplateURL struct {
-	Prefix string
+	ParentName string
+	Prefix     string
 
-	Backend       string
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -62,7 +62,14 @@ func (o *ReplaceServerTemplateURL) SetBasePath(bp string) {
 func (o *ReplaceServerTemplateURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/server_templates/{prefix}"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/server_templates/{prefix}"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceServerTemplateURL")
+	}
 
 	prefix := o.Prefix
 	if prefix != "" {
@@ -78,11 +85,6 @@ func (o *ReplaceServerTemplateURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {

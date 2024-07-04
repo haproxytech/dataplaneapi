@@ -24,14 +24,16 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // ReplaceBackendSwitchingRulesURL generates an URL for the replace backend switching rules operation
 type ReplaceBackendSwitchingRulesURL struct {
+	ParentName string
+
 	ForceReload   *bool
-	Frontend      string
 	TransactionID *string
 	Version       *int64
 
@@ -59,7 +61,14 @@ func (o *ReplaceBackendSwitchingRulesURL) SetBasePath(bp string) {
 func (o *ReplaceBackendSwitchingRulesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/backend_switching_rules"
+	var _path = "/services/haproxy/configuration/frontends/{parent_name}/backend_switching_rules"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceBackendSwitchingRulesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -75,11 +84,6 @@ func (o *ReplaceBackendSwitchingRulesURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	frontendQ := o.Frontend
-	if frontendQ != "" {
-		qs.Set("frontend", frontendQ)
 	}
 
 	var transactionIDQ string

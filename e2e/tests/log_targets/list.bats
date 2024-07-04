@@ -24,7 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "log_targets: Return an array of all Log Targets from frontend" {
-  resource_get "$_LOG_TRAGET_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
+	PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets"
 	assert_equal "$SC" 200
 
 	assert_equal "$(get_json_path "${BODY}" ". | length")" 2
@@ -41,7 +42,8 @@ load 'utils/_helpers'
 }
 
 @test "log_targets: Return an array of all Log Targets from backend" {
-  resource_get "$_LOG_TRAGET_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets" "parent_type=backend&parent_name=test_backend"
   assert_equal "$SC" 200
 
   assert_equal "$(get_json_path "${BODY}" ". | length")" 2

@@ -45,7 +45,7 @@ func NewReplaceRuntimeServer(ctx *middleware.Context, handler ReplaceRuntimeServ
 }
 
 /*
-	ReplaceRuntimeServer swagger:route PUT /services/haproxy/runtime/servers/{name} Server replaceRuntimeServer
+	ReplaceRuntimeServer swagger:route PUT /services/haproxy/runtime/backends/{parent_name}/servers/{name} Server replaceRuntimeServer
 
 # Replace server transient settings
 

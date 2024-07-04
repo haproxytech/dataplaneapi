@@ -27,7 +27,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 )
 
 // NewGetServerSwitchingRulesParams creates a new GetServerSwitchingRulesParams object
@@ -47,11 +46,11 @@ type GetServerSwitchingRulesParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Backend name
+	/*Parent name
 	  Required: true
-	  In: query
+	  In: path
 	*/
-	Backend string
+	ParentName string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -69,8 +68,8 @@ func (o *GetServerSwitchingRulesParams) BindRequest(r *http.Request, route *midd
 
 	qs := runtime.Values(r.URL.Query())
 
-	qBackend, qhkBackend, _ := qs.GetOK("backend")
-	if err := o.bindBackend(qBackend, qhkBackend, route.Formats); err != nil {
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -84,23 +83,16 @@ func (o *GetServerSwitchingRulesParams) BindRequest(r *http.Request, route *midd
 	return nil
 }
 
-// bindBackend binds and validates parameter Backend from query.
-func (o *GetServerSwitchingRulesParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("backend", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *GetServerSwitchingRulesParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("backend", "query", raw); err != nil {
-		return err
-	}
-	o.Backend = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

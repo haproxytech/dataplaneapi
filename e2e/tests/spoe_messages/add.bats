@@ -42,16 +42,18 @@ teardown() {
 }
 
 @test "spoe_messages: Add a spoe message" {
-    resource_post "$_SPOE_MESSAGES_BASE_PATH" "data/post.json" "spoe=spoefile_example.cfg&scope=\[ip-reputation\]"
+    PARENT_NAME="spoefile_example.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/messages" "data/post.json"
     assert_equal "$SC" 201
 
-    resource_get "$_SPOE_MESSAGES_BASE_PATH/message1" "spoe=spoefile_example.cfg&scope=\[ip-reputation\]"
+    resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/messages/message1"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/post.json)"
 
     # refuse adding an existing spoe message
-    resource_post "$_SPOE_MESSAGES_BASE_PATH" "/data/post.json" "spoe=spoefile_example.cfg&scope=%5Bip-reputation%5D"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/messages" "/data/post.json"
     assert_success
 
     dpa_curl_status_body '$output'

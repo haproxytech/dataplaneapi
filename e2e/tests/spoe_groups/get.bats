@@ -42,13 +42,17 @@ teardown() {
 }
 
 @test "spoe_groups: Get one spoe group" {
-    resource_get "$_SPOE_GROUPS_BASE_PATH/newgroup" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups/newgroup"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" ".")" "$(cat "${BATS_TEST_DIRNAME}"/data/get.json)"
 }
 
 @test "spoe_groups: Return an error when trying to get non existing spoe group" {
-    resource_get "$_SPOE_GROUPS_BASE_PATH/not-exists" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_get "$$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups/not-exists"
     assert_equal "$SC" 404
 }

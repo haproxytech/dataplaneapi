@@ -15,4 +15,9 @@
 # limitations under the License.
 #
 
-_LOG_TRAGET_BASE_PATH="/services/haproxy/configuration/log_targets"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"
+_DEFAULT_BASE_PATH="/services/haproxy/configuration/defaults"
+_LOGFORWARD_BASE_PATH="/services/haproxy/configuration/log_forwards"
+_PEER_BASE_PATH="/services/haproxy/configuration/peers"
+_GLOBAL_BASE_PATH="/services/haproxy/configuration/global"

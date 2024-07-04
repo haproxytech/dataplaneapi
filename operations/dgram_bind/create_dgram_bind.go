@@ -45,7 +45,7 @@ func NewCreateDgramBind(ctx *middleware.Context, handler CreateDgramBindHandler)
 }
 
 /*
-	CreateDgramBind swagger:route POST /services/haproxy/configuration/dgram_binds DgramBind createDgramBind
+	CreateDgramBind swagger:route POST /services/haproxy/configuration/log_forwards/{parent_name}/dgram_binds DgramBind createDgramBind
 
 # Add a new dgram bind
 

@@ -24,14 +24,16 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // ReplaceDeclareCapturesURL generates an URL for the replace declare captures operation
 type ReplaceDeclareCapturesURL struct {
+	ParentName string
+
 	ForceReload   *bool
-	Frontend      string
 	TransactionID *string
 	Version       *int64
 
@@ -59,7 +61,14 @@ func (o *ReplaceDeclareCapturesURL) SetBasePath(bp string) {
 func (o *ReplaceDeclareCapturesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/captures"
+	var _path = "/services/haproxy/configuration/frontends/{parent_name}/captures"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceDeclareCapturesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -75,11 +84,6 @@ func (o *ReplaceDeclareCapturesURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	frontendQ := o.Frontend
-	if frontendQ != "" {
-		qs.Set("frontend", frontendQ)
 	}
 
 	var transactionIDQ string

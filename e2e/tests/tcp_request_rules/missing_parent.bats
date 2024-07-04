@@ -22,11 +22,13 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_request_rules: Fail creating a TCP request rule when frontend doesn't exist" {
-  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/accept.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+  PARENT_NAME="ghost"
+  resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "data/accept.json" "force_reload=true"
 	assert_equal "$SC" 400
 }
 
 @test "tcp_request_rules: Fail creating a TCP request rule when backend doesn't exist" {
-  resource_post "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/accept.json" "parent_type=backend&parent_name=ghost&force_reload=true"
+  PARENT_NAME="ghost"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "data/accept.json" "force_reload=true"
 	assert_equal "$SC" 400
 }

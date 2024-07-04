@@ -24,21 +24,25 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "captures: Delete a declare capture by it's index" {
-    resource_delete "$_CAPTURES_BASE_PATH/1" "frontend=test_delete"
+    PARENT_NAME="test_delete"
+    resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures/1"
     assert_equal "$SC" 202
 }
 
 @test "captures: Delete a declare capture by it's index and reload" {
-    resource_delete "$_CAPTURES_BASE_PATH/0" "frontend=test_delete&force_reload=true"
+    PARENT_NAME="test_delete"
+    resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures/0" "force_reload=true"
     assert_equal "$SC" 204
 }
 
 @test "captures: Delete a non existing declare capture by it's index" {
-    resource_delete "$_CAPTURES_BASE_PATH/1000" "frontend=test_delete"
+    PARENT_NAME="test_delete"
+    resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures/1000"
     assert_equal "$SC" 404
 }
 
 @test "captures: Delete a non existing declare capture in a non existant frotnend by it's index" {
-    resource_delete "$_CAPTURES_BASE_PATH/0" "frontend=fake"
+    PARENT_NAME="fake"
+    resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures/0"
     assert_equal "$SC" 400
 }

@@ -24,11 +24,13 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // GetDeclareCapturesURL generates an URL for the get declare captures operation
 type GetDeclareCapturesURL struct {
-	Frontend      string
+	ParentName string
+
 	TransactionID *string
 
 	_basePath string
@@ -55,7 +57,14 @@ func (o *GetDeclareCapturesURL) SetBasePath(bp string) {
 func (o *GetDeclareCapturesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/captures"
+	var _path = "/services/haproxy/configuration/frontends/{parent_name}/captures"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetDeclareCapturesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -64,11 +73,6 @@ func (o *GetDeclareCapturesURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	frontendQ := o.Frontend
-	if frontendQ != "" {
-		qs.Set("frontend", frontendQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

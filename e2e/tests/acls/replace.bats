@@ -24,30 +24,33 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "acls: Replace one ACL" {
-    resource_put "$_ACL_BASE_PATH/2" "data/put.json" "parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/2" "data/put.json"
     assert_equal "$SC" 202
     #
     # verify that ACL is actually changed
     #
-    resource_get "$_ACL_BASE_PATH/2" "parent_name=fe_acl&parent_type=frontend"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/2"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" " ." )" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
 }
 
 @test "acls: Return an error when trying to replace non existing ACL" {
-    resource_put "$_ACL_BASE_PATH/200" "data/put.json" "parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/200" "data/put.json"
     assert_equal "$SC" 404
 }
 
 @test "acls: Replace all ACLs" {
-    resource_put "$_ACL_BASE_PATH" "data/replace-all.json" "parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls" "data/replace-all.json"
     assert_equal "$SC" 202
     #
     # verify that ACL is actually changed
     #
     #
-    resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "${BODY}" ". | length")" 3
     assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"

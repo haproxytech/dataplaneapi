@@ -41,11 +41,12 @@ teardown() {
 }
 
 @test "spoe_scopes: Add a spoe scope" {
-    resource_post "$_SPOE_SCOPES_BASE_PATH" "data/add_scope.txt" "spoe=spoefile_example.cfg"
+    PARENT_NAME="spoefile_example.cfg"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes" "data/add_scope.txt"
     assert_equal "$SC" 201
 
     # refuse adding an existing spoe scope
-    resource_post "$_SPOE_SCOPES_BASE_PATH" "/data/add_scope.txt" "spoe=spoefile_example.cfg"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes" "/data/add_scope.txt"
     assert_success
 
     dpa_curl_status_body '$output'
@@ -53,14 +54,16 @@ teardown() {
 }
 
 @test "spoe_scopes: Return an error when spoe file doesn't exists" {
-    resource_post "$_SPOE_SCOPES_BASE_PATH" "data/add_scope.txt" "spoe=not_exists.cfg"
+    PARENT_NAME="not_exists.cfg"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes" "data/add_scope.txt"
     assert_equal "$SC" 500
 }
 
 @test "spoe_scopes: Return an error when version not matched" {
-    run dpa_curl POST "/services/haproxy/spoe/spoe_scopes?spoe=spoefile_example.cfg&version=10000" /data/new_scope.txt
+    PARENT_NAME="spoefile_example.cfg"
+    run dpa_curl POST "$_SPOE_BASE_PATH/$PARENT_NAME/scopes&version=10000" "/data/new_scope.txt"
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal $SC 409
+    assert_equal $SC 404
 }

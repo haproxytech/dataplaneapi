@@ -16,3 +16,6 @@
 #
 
 _BIND_BASE_PATH="/services/haproxy/configuration/binds"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"
+_LOGFORWARD_BASE_PATH="/services/haproxy/configuration/log_forwards"
+_PEER_BASE_PATH="/services/haproxy/configuration/peers"

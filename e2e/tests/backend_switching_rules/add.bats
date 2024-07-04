@@ -24,11 +24,12 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "backend_switching_rules: Add a new Backend Switching Rule" {
-  resource_post "$_BSR_BASE_PATH/0" "data/post.json" "frontend=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0" "data/post.json" "force_reload=true"
 	assert_equal "$SC" 201
   #
   # Checking the presence of applied backend switching rule
   #
-	resource_get "$_BSR_BASE_PATH/0" "frontend=test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0"
 	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat $BATS_TEST_DIRNAME/data/post.json)" ".")"
 }

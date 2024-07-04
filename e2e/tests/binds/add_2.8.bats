@@ -27,10 +27,11 @@ load 'utils/_helpers'
 @test "binds: Add a new bind (>=2.8)" {
   if haproxy_version_ge "2.8"
   then
-    resource_post "$_BIND_BASE_PATH" "data/post_2.8.json" "frontend=test_frontend&force_reload=true"
+    PARENT_NAME="test_frontend"
+    resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds" "data/post_2.8.json" "force_reload=true"
     assert_equal "$SC" 201
 
-    resource_get "$_BIND_BASE_PATH/test_bind" "frontend=test_frontend&force_reload=true"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds/test_bind" "force_reload=true"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" '.name')" "test_bind"
     assert_equal "$(get_json_path "$BODY" ".no_alpn")" "true"

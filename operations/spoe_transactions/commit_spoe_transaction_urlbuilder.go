@@ -31,10 +31,10 @@ import (
 
 // CommitSpoeTransactionURL generates an URL for the commit spoe transaction operation
 type CommitSpoeTransactionURL struct {
-	ID string
+	ID         string
+	ParentName string
 
 	ForceReload *bool
-	Spoe        string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -60,13 +60,20 @@ func (o *CommitSpoeTransactionURL) SetBasePath(bp string) {
 func (o *CommitSpoeTransactionURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe_transactions/{id}"
+	var _path = "/services/haproxy/spoe/spoe_files/{parent_name}/transactions/{id}"
 
 	id := o.ID
 	if id != "" {
 		_path = strings.Replace(_path, "{id}", id, -1)
 	} else {
 		return nil, errors.New("id is required on CommitSpoeTransactionURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CommitSpoeTransactionURL")
 	}
 
 	_basePath := o._basePath
@@ -83,11 +90,6 @@ func (o *CommitSpoeTransactionURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
 	}
 
 	_result.RawQuery = qs.Encode()

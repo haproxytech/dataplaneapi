@@ -29,7 +29,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -56,16 +55,16 @@ type CreateSpoeMessageParams struct {
 	  In: body
 	*/
 	Data *models.SpoeMessage
-	/*Spoe scope
+	/*Parent name
 	  Required: true
-	  In: query
+	  In: path
 	*/
-	Scope string
-	/*Spoe file name
+	ParentName string
+	/*Spoe scope name
 	  Required: true
-	  In: query
+	  In: path
 	*/
-	Spoe string
+	ScopeName string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -110,13 +109,13 @@ func (o *CreateSpoeMessageParams) BindRequest(r *http.Request, route *middleware
 		res = append(res, errors.Required("data", "body", ""))
 	}
 
-	qScope, qhkScope, _ := qs.GetOK("scope")
-	if err := o.bindScope(qScope, qhkScope, route.Formats); err != nil {
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
-	qSpoe, qhkSpoe, _ := qs.GetOK("spoe")
-	if err := o.bindSpoe(qSpoe, qhkSpoe, route.Formats); err != nil {
+	rScopeName, rhkScopeName, _ := route.Params.GetOK("scope_name")
+	if err := o.bindScopeName(rScopeName, rhkScopeName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -135,44 +134,30 @@ func (o *CreateSpoeMessageParams) BindRequest(r *http.Request, route *middleware
 	return nil
 }
 
-// bindScope binds and validates parameter Scope from query.
-func (o *CreateSpoeMessageParams) bindScope(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("scope", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *CreateSpoeMessageParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("scope", "query", raw); err != nil {
-		return err
-	}
-	o.Scope = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }
 
-// bindSpoe binds and validates parameter Spoe from query.
-func (o *CreateSpoeMessageParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("spoe", "query", rawData)
-	}
+// bindScopeName binds and validates parameter ScopeName from path.
+func (o *CreateSpoeMessageParams) bindScopeName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("spoe", "query", raw); err != nil {
-		return err
-	}
-	o.Spoe = raw
+	// Parameter is provided by construction from the route
+	o.ScopeName = raw
 
 	return nil
 }

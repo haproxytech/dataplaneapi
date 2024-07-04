@@ -25,7 +25,8 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "tcp_response_rules: Return one TCP Response Rule from backend" {
-  resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH" "backend=test_backend"
+	PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules"
 	assert_equal "$SC" 200
 
     if haproxy_version_ge "2.8"; then

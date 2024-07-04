@@ -29,9 +29,9 @@ import (
 
 // GetTableURL generates an URL for the get table operation
 type GetTableURL struct {
-	Name string
+	Name       string
+	ParentName string
 
-	PeerSection   string
 	TransactionID *string
 
 	_basePath string
@@ -58,13 +58,20 @@ func (o *GetTableURL) SetBasePath(bp string) {
 func (o *GetTableURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/tables/{name}"
+	var _path = "/services/haproxy/configuration/peers/{parent_name}/tables/{name}"
 
 	name := o.Name
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
 		return nil, errors.New("name is required on GetTableURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetTableURL")
 	}
 
 	_basePath := o._basePath
@@ -74,11 +81,6 @@ func (o *GetTableURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	peerSectionQ := o.PeerSection
-	if peerSectionQ != "" {
-		qs.Set("peer_section", peerSectionQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

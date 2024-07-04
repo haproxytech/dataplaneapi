@@ -24,13 +24,15 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_request_rules: Replace a TCP Request Rule of frontend" {
-  resource_put "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/put.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "${BODY}" ".action")" "reject"
 }
 
 @test "tcp_request_rules: Replace a TCP Request Rule of backend" {
-  resource_put "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "data/reject.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "data/reject.json" "force_reload=true"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "${BODY}" ".action")" "reject"
 	assert_equal "$(get_json_path "${BODY}" ".cond_test")" "{ src 10.0.0.0/8 }"
@@ -39,7 +41,8 @@ load 'utils/_helpers'
 @test "tcp_request_rules: Replace all TCP Request Rule of frontend (>=2.8)" {
   if haproxy_version_ge "2.8"
   then
-  resource_put "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/replace-all.json" "parent_type=frontend&parent_name=test_frontend"
+  PARENT_NAME="test_frontend"
+  resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules" "data/replace-all.json"
 	assert_equal "$SC" 202
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH" "parent_name=test_frontend&parent_type=frontend"
     assert_equal "$SC" 200
@@ -51,7 +54,8 @@ load 'utils/_helpers'
 @test "tcp_request_rules: Replace all TCP Request Rule of backend (>= 2.8)" {
   if haproxy_version_ge "2.8"
   then
-  resource_put "$_TCP_REQ_RULES_CERTS_BASE_PATH" "data/replace-all.json" "parent_type=backend&parent_name=test_backend"
+  PARENT_NAME="test_backend"
+  resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules" "data/replace-all.json"
 	assert_equal "$SC" 202
   resource_get "$_TCP_REQ_RULES_CERTS_BASE_PATH" "parent_name=test_backend&parent_type=backend"
     assert_equal "$SC" 200

@@ -42,7 +42,9 @@ teardown() {
 }
 
 @test "spoe_messages: List all spoe messages" {
-    resource_get "$_SPOE_MESSAGES_BASE_PATH" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/messages"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ". | length")" 1

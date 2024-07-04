@@ -1,0 +1,49 @@
+// Copyright 2019 HAProxy Technologies
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//	http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+package handlers
+
+import (
+	"github.com/go-openapi/runtime/middleware"
+
+	cnconstants "github.com/haproxytech/client-native/v6/configuration/parents"
+	"github.com/haproxytech/dataplaneapi/operations/{{ .OperationPackage }}"
+)
+
+{{$out := .}}
+
+{{ range $i, $op := $out.Operations -}}
+type (
+
+{{ range parents $out.ChildType -}}
+  {{ $op }}{{ $out.GoChildType }}{{ .ParentType }}HandlerImpl {{ $op }}{{ $out.GoChildType }}HandlerImpl
+{{ end -}}
+)
+{{ end -}}
+
+
+
+
+{{ range $i, $op := $out.Operations -}}
+{{ range parents $out.ChildType -}}
+func (h *{{ $op }}{{ $out.GoChildType }}{{ .ParentType }}HandlerImpl) Handle(params {{ $out.OperationPackage }}.{{ $op }}{{ $out.GoChildType }}{{ .ParentType }}Params, principal interface{}) middleware.Responder {
+	g := {{ $op }}{{ $out.GoChildType }}HandlerImpl(*h)
+	{{ if not .IsGenericParent -}}
+	pg := {{ $out.OperationPackage }}.{{ $op }}{{ $out.GoChildType }}{{ .GenericParentType }}Params(params)
+	return g.Handle(cnconstants.{{ .ParentType }}ParentType, pg, principal)
+	{{ else -}}
+	return g.Handle(cnconstants.{{ .ParentType }}ParentType, params, principal)
+	{{ end -}}
+}
+{{ end -}}
+{{ end -}}

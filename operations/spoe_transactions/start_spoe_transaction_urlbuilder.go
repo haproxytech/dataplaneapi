@@ -24,13 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // StartSpoeTransactionURL generates an URL for the start spoe transaction operation
 type StartSpoeTransactionURL struct {
-	Spoe    string
+	ParentName string
+
 	Version int64
 
 	_basePath string
@@ -57,7 +59,14 @@ func (o *StartSpoeTransactionURL) SetBasePath(bp string) {
 func (o *StartSpoeTransactionURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe_transactions"
+	var _path = "/services/haproxy/spoe/spoe_files/{parent_name}/transactions"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on StartSpoeTransactionURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -66,11 +75,6 @@ func (o *StartSpoeTransactionURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
-	}
 
 	versionQ := swag.FormatInt64(o.Version)
 	if versionQ != "" {

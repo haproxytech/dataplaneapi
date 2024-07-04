@@ -103,7 +103,7 @@ func (h *SetStickTableEntriesHandlerImpl) Handle(params stick_table.SetStickTabl
 		return stick_table.NewSetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = runtime.SetTableEntry(params.StickTable, *params.StickTableEntry.Key, *params.StickTableEntry.DataType)
+	err = runtime.SetTableEntry(params.ParentName, *params.StickTableEntry.Key, *params.StickTableEntry.DataType)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewSetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
@@ -129,7 +129,7 @@ func (h *GetStickTableEntriesHandlerImpl) Handle(params stick_table.GetStickTabl
 		return stick_table.NewGetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	stkEntries, err := runtime.GetTableEntries(params.StickTable, filter, key)
+	stkEntries, err := runtime.GetTableEntries(params.ParentName, filter, key)
 	if err != nil {
 		e := misc.HandleError(err)
 		return stick_table.NewGetStickTableEntriesDefault(int(*e.Code)).WithPayload(e)

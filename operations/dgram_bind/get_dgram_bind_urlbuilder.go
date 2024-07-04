@@ -29,9 +29,9 @@ import (
 
 // GetDgramBindURL generates an URL for the get dgram bind operation
 type GetDgramBindURL struct {
-	Name string
+	Name       string
+	ParentName string
 
-	LogForward    string
 	TransactionID *string
 
 	_basePath string
@@ -58,13 +58,20 @@ func (o *GetDgramBindURL) SetBasePath(bp string) {
 func (o *GetDgramBindURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/dgram_binds/{name}"
+	var _path = "/services/haproxy/configuration/log_forwards/{parent_name}/dgram_binds/{name}"
 
 	name := o.Name
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
 		return nil, errors.New("name is required on GetDgramBindURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetDgramBindURL")
 	}
 
 	_basePath := o._basePath
@@ -74,11 +81,6 @@ func (o *GetDgramBindURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	logForwardQ := o.LogForward
-	if logForwardQ != "" {
-		qs.Set("log_forward", logForwardQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

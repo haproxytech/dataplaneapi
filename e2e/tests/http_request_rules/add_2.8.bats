@@ -29,10 +29,11 @@ load 'utils/_helpers'
   if haproxy_version_ge "2.8"
   then
   # Using new track-sc with track_sc_stick_counter
-  resource_post "$_REQ_RULES_BASE_PATH/0" "data/post-track-sc.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
+  PARENT_NAME="test_sticksc"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/http_request_rules/0" "data/post-track-sc.json" "force_reload=true"
 	assert_equal "$SC" 201
 
-  resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_request_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
@@ -48,7 +49,8 @@ load 'utils/_helpers'
   # Fail due to missing track_sc_stick_counter
   if haproxy_version_ge "2.8"
   then
-  resource_post "$_REQ_RULES_BASE_PATH/0" "data/post-track-sc-fail.json" "parent_type=backend&parent_name=test_sticksc&force_reload=true"
+  PARENT_NAME="test_sticksc"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/http_request_rules/0" "data/post-track-sc-fail.json" "force_reload=true"
 	assert_equal "$SC" 400
   fi
 }

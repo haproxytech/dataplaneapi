@@ -35,7 +35,7 @@ func (h *SpoeCreateSpoeScopeHandlerImpl) Handle(params spoe.CreateSpoeScopeParam
 		return spoe.NewCreateSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeScopeDefault(int(*e.Code)).WithPayload(e)
@@ -68,7 +68,7 @@ func (h *SpoeDeleteSpoeScopeHandlerImpl) Handle(params spoe.DeleteSpoeScopeParam
 		return spoe.NewDeleteSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeScopeDefault(int(*e.Code)).WithPayload(e)
@@ -89,20 +89,20 @@ func (h *SpoeDeleteSpoeScopeHandlerImpl) Handle(params spoe.DeleteSpoeScopeParam
 	return spoe.NewDeleteSpoeScopeNoContent()
 }
 
-// SpoeGetSpoeScopesHandlerImpl implementation of the SpoeGetSpoeScopesHandler interface
-type SpoeGetSpoeScopesHandlerImpl struct {
+// SpoeGetAllSpoeScopeHandlerImpl implementation of the SpoeGetSpoeScopesHandler interface
+type SpoeGetAllSpoeScopeHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetSpoeScopesHandlerImpl) Handle(params spoe.GetSpoeScopesParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetAllSpoeScopeHandlerImpl) Handle(params spoe.GetAllSpoeScopeParams, principal interface{}) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
@@ -116,7 +116,7 @@ func (h *SpoeGetSpoeScopesHandlerImpl) Handle(params spoe.GetSpoeScopesParams, p
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return spoe.NewGetSpoeScopesOK().WithPayload(scopes)
+	return spoe.NewGetAllSpoeScopeOK().WithPayload(scopes)
 }
 
 // SpoeGetSpoeScopeHandlerImpl implementation of the SpoeGetSpoeScopeHandler interface
@@ -131,7 +131,7 @@ func (h *SpoeGetSpoeScopeHandlerImpl) Handle(params spoe.GetSpoeScopeParams, pri
 		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeScopeDefault(int(*e.Code)).WithPayload(e)

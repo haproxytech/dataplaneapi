@@ -16,3 +16,5 @@
 #
 
 _REQ_RULES_BASE_PATH="/services/haproxy/configuration/http_request_rules"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"

@@ -24,11 +24,12 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // AddPayloadRuntimeACLURL generates an URL for the add payload runtime ACL operation
 type AddPayloadRuntimeACLURL struct {
-	ACLID string
+	ParentName string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -54,22 +55,20 @@ func (o *AddPayloadRuntimeACLURL) SetBasePath(bp string) {
 func (o *AddPayloadRuntimeACLURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/acl_file_entries"
+	var _path = "/services/haproxy/runtime/acls/{parent_name}/entries"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on AddPayloadRuntimeACLURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/v3"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
-
-	qs := make(url.Values)
-
-	aCLIDQ := o.ACLID
-	if aCLIDQ != "" {
-		qs.Set("acl_id", aCLIDQ)
-	}
-
-	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

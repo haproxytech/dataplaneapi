@@ -24,7 +24,8 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "acls: Return one ACL" {
-    resource_get "$_ACL_BASE_PATH/2" "parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/2"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" " .acl_name")" "local_dst"
@@ -33,6 +34,17 @@ load 'utils/_helpers'
 }
 
 @test "acls: Return an error when ACL doesn't exists at a given index" {
-    resource_get "$_ACL_BASE_PATH/100" "parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/100"
     assert_equal "$SC" 404
+}
+
+@test "acls: Return one ACL for fcgi-app" {
+    PARENT_NAME="test_1"
+    resource_get "$_FCGIAPP_BASE_PATH/$PARENT_NAME/acls/0"
+    assert_equal "$SC" 200
+
+    assert_equal "$(get_json_path "$BODY" " .acl_name")" "local_dst"
+    assert_equal "$(get_json_path "$BODY" " .criterion")" "hdr(host)"
+    assert_equal "$(get_json_path "$BODY" " .value")" "-i localhost"
 }

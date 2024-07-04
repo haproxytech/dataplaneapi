@@ -31,10 +31,10 @@ import (
 
 // ReplaceTableURL generates an URL for the replace table operation
 type ReplaceTableURL struct {
-	Name string
+	Name       string
+	ParentName string
 
 	ForceReload   *bool
-	PeerSection   string
 	TransactionID *string
 	Version       *int64
 
@@ -62,13 +62,20 @@ func (o *ReplaceTableURL) SetBasePath(bp string) {
 func (o *ReplaceTableURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/tables/{name}"
+	var _path = "/services/haproxy/configuration/peers/{parent_name}/tables/{name}"
 
 	name := o.Name
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
 		return nil, errors.New("name is required on ReplaceTableURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceTableURL")
 	}
 
 	_basePath := o._basePath
@@ -85,11 +92,6 @@ func (o *ReplaceTableURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	peerSectionQ := o.PeerSection
-	if peerSectionQ != "" {
-		qs.Set("peer_section", peerSectionQ)
 	}
 
 	var transactionIDQ string

@@ -24,16 +24,18 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "runtime_maps_entries: Adds an entry into the map file" {
-    resource_post "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "data/post.json" "map=mapfile1.map"
+    PARENT_NAME="mapfile1.map"
+    resource_post "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries" "data/post.json"
     assert_equal "$SC" 201
     #
     # verify that entry is actually added
     #
-    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/newkey" "map=mapfile1.map"
+    resource_get "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries/newkey"
     assert_equal "$SC" 200
 }
 
 @test "runtime_maps_entries: Refuse adding an existing map entry into the map file" {
-    resource_post "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "data/existing.json" "map=mapfile1.map"
+    PARENT_NAME="mapfile1.map"
+    resource_post "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries" "data/existing.json"
     assert_equal "$SC" 409
 }

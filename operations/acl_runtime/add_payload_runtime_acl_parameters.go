@@ -28,7 +28,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -50,16 +49,16 @@ type AddPayloadRuntimeACLParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*ACL ID
-	  Required: true
-	  In: query
-	*/
-	ACLID string
 	/*
 	  Required: true
 	  In: body
 	*/
 	Data models.ACLFilesEntries
+	/*Parent name
+	  Required: true
+	  In: path
+	*/
+	ParentName string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -70,13 +69,6 @@ func (o *AddPayloadRuntimeACLParams) BindRequest(r *http.Request, route *middlew
 	var res []error
 
 	o.HTTPRequest = r
-
-	qs := runtime.Values(r.URL.Query())
-
-	qACLID, qhkACLID, _ := qs.GetOK("acl_id")
-	if err := o.bindACLID(qACLID, qhkACLID, route.Formats); err != nil {
-		res = append(res, err)
-	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -100,29 +92,27 @@ func (o *AddPayloadRuntimeACLParams) BindRequest(r *http.Request, route *middlew
 	} else {
 		res = append(res, errors.Required("data", "body", ""))
 	}
+
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
+		res = append(res, err)
+	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
 	return nil
 }
 
-// bindACLID binds and validates parameter ACLID from query.
-func (o *AddPayloadRuntimeACLParams) bindACLID(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("acl_id", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *AddPayloadRuntimeACLParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("acl_id", "query", raw); err != nil {
-		return err
-	}
-	o.ACLID = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

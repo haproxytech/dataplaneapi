@@ -45,7 +45,7 @@ func NewDeleteRuntimeMapEntry(ctx *middleware.Context, handler DeleteRuntimeMapE
 }
 
 /*
-	DeleteRuntimeMapEntry swagger:route DELETE /services/haproxy/runtime/maps_entries/{id} Maps deleteRuntimeMapEntry
+	DeleteRuntimeMapEntry swagger:route DELETE /services/haproxy/runtime/maps/{parent_name}/entries/{id} Maps deleteRuntimeMapEntry
 
 # Deletes all the map entries from the map by its id
 

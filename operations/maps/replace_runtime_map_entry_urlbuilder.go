@@ -31,10 +31,10 @@ import (
 
 // ReplaceRuntimeMapEntryURL generates an URL for the replace runtime map entry operation
 type ReplaceRuntimeMapEntryURL struct {
-	ID string
+	ID         string
+	ParentName string
 
 	ForceSync *bool
-	Map       string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -60,13 +60,20 @@ func (o *ReplaceRuntimeMapEntryURL) SetBasePath(bp string) {
 func (o *ReplaceRuntimeMapEntryURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/maps_entries/{id}"
+	var _path = "/services/haproxy/runtime/maps/{parent_name}/entries/{id}"
 
 	id := o.ID
 	if id != "" {
 		_path = strings.Replace(_path, "{id}", id, -1)
 	} else {
 		return nil, errors.New("id is required on ReplaceRuntimeMapEntryURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceRuntimeMapEntryURL")
 	}
 
 	_basePath := o._basePath
@@ -83,11 +90,6 @@ func (o *ReplaceRuntimeMapEntryURL) Build() (*url.URL, error) {
 	}
 	if forceSyncQ != "" {
 		qs.Set("force_sync", forceSyncQ)
-	}
-
-	mapVarQ := o.Map
-	if mapVarQ != "" {
-		qs.Set("map", mapVarQ)
 	}
 
 	_result.RawQuery = qs.Encode()

@@ -45,7 +45,7 @@ func NewCreateServerSwitchingRule(ctx *middleware.Context, handler CreateServerS
 }
 
 /*
-	CreateServerSwitchingRule swagger:route POST /services/haproxy/configuration/server_switching_rules/{index} ServerSwitchingRule createServerSwitchingRule
+	CreateServerSwitchingRule swagger:route POST /services/haproxy/configuration/backends/{parent_name}/server_switching_rules/{index} ServerSwitchingRule createServerSwitchingRule
 
 # Add a new Server Switching Rule
 

@@ -31,10 +31,10 @@ import (
 
 // ReplaceDgramBindURL generates an URL for the replace dgram bind operation
 type ReplaceDgramBindURL struct {
-	Name string
+	Name       string
+	ParentName string
 
 	ForceReload   *bool
-	LogForward    string
 	TransactionID *string
 	Version       *int64
 
@@ -62,13 +62,20 @@ func (o *ReplaceDgramBindURL) SetBasePath(bp string) {
 func (o *ReplaceDgramBindURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/dgram_binds/{name}"
+	var _path = "/services/haproxy/configuration/log_forwards/{parent_name}/dgram_binds/{name}"
 
 	name := o.Name
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
 		return nil, errors.New("name is required on ReplaceDgramBindURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceDgramBindURL")
 	}
 
 	_basePath := o._basePath
@@ -85,11 +92,6 @@ func (o *ReplaceDgramBindURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	logForwardQ := o.LogForward
-	if logForwardQ != "" {
-		qs.Set("log_forward", logForwardQ)
 	}
 
 	var transactionIDQ string

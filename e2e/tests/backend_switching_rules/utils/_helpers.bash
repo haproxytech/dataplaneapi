@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_BSR_BASE_PATH="/services/haproxy/configuration/backend_switching_rules"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"

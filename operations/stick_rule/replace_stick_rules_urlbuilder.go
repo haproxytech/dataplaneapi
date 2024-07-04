@@ -24,13 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // ReplaceStickRulesURL generates an URL for the replace stick rules operation
 type ReplaceStickRulesURL struct {
-	Backend       string
+	ParentName string
+
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -59,7 +61,14 @@ func (o *ReplaceStickRulesURL) SetBasePath(bp string) {
 func (o *ReplaceStickRulesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/stick_rules"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/stick_rules"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceStickRulesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -68,11 +77,6 @@ func (o *ReplaceStickRulesURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {

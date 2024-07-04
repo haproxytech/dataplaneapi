@@ -24,13 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateSpoeScopeURL generates an URL for the create spoe scope operation
 type CreateSpoeScopeURL struct {
-	Spoe          string
+	ParentName string
+
 	TransactionID *string
 	Version       *int64
 
@@ -58,7 +60,14 @@ func (o *CreateSpoeScopeURL) SetBasePath(bp string) {
 func (o *CreateSpoeScopeURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe/spoe_scopes"
+	var _path = "/services/haproxy/spoe/spoe_files/{parent_name}/scopes"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CreateSpoeScopeURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -67,11 +76,6 @@ func (o *CreateSpoeScopeURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

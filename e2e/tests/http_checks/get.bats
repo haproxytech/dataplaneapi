@@ -24,39 +24,44 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_checks: Return one HTTP Check from defaults" {
-  	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults"
+	PARENT_NAME="mydefaults"
+  	resource_get "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_checks/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "send-state"
 
-	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=defaults&parent_name=mydefaults"
+	resource_get "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_checks/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "disable-on-404"
 }
 
 @test "http_checks: Return one HTTP Check from backend" {
-	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/0"
     assert_equal "$(get_json_path "$BODY" ".type")" "send"
     assert_equal 1 "$(get_json_path "$BODY" ".headers | length")"
     assert_equal "$(get_json_path "$BODY" ".headers[0].name")" "host"
     assert_equal "$(get_json_path "$BODY" ".headers[0].fmt")" "haproxy.1wt.eu"
 
-	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/1"
     assert_equal "$(get_json_path "$BODY" ".type")" "expect"
     assert_equal "$(get_json_path "$BODY" ".match")" "status"
     assert_equal "$(get_json_path "$BODY" ".pattern")" "200-399"
 }
 
-@test "http_checks: Return 422 when fetching HTTP Check from frontend" {
-	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
-	assert_equal "$SC" 422
+@test "http_checks: Return 404 when fetching HTTP Check from frontend" {
+	PARENT_NAME="test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_checks/0"
+	assert_equal "$SC" 404
 }
 
 @test "http_checks: Return 400 when fetching HTTP Check from unexisting backend" {
-    resource_get "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=i_am_not_here"
+	PARENT_NAME="i_am_not_here"
+    resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/0"
 	assert_equal "$SC" 400
 }
 
 @test "http_checks: Return 404 when fetching unexisting HTTP Check" {
-    resource_get "$_CHECKS_BASE_PATH/1000" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+    resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/1000"
 	assert_equal "$SC" 404
 }

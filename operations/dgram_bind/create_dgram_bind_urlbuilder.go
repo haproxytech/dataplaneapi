@@ -24,14 +24,16 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateDgramBindURL generates an URL for the create dgram bind operation
 type CreateDgramBindURL struct {
+	ParentName string
+
 	ForceReload   *bool
-	LogForward    string
 	TransactionID *string
 	Version       *int64
 
@@ -59,7 +61,14 @@ func (o *CreateDgramBindURL) SetBasePath(bp string) {
 func (o *CreateDgramBindURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/dgram_binds"
+	var _path = "/services/haproxy/configuration/log_forwards/{parent_name}/dgram_binds"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CreateDgramBindURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -75,11 +84,6 @@ func (o *CreateDgramBindURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	logForwardQ := o.LogForward
-	if logForwardQ != "" {
-		qs.Set("log_forward", logForwardQ)
 	}
 
 	var transactionIDQ string

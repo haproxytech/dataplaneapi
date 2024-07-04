@@ -25,35 +25,41 @@ load '../../libs/get_json_path'
 load 'utils/_helpers'
 
 @test "tcp_checks: Add a new connect TCP check to a backend" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/connect.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/connect.json" "force_reload=true"
 	assert_equal "$SC" 201
 }
 
 @test "tcp_checks: Add a new send TCP check to a backend" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/send.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/send.json" "force_reload=true"
 	assert_equal "$SC" 201
 }
 
 @test "tcp_checks: Add a new expect TCP check to a backend" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/expect.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/expect.json" "force_reload=true"
 	assert_equal "$SC" 201
 }
 
 @test "tcp_checks: Add a new send-binary TCP check to a backend" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/send_binary.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/send_binary.json" "force_reload=true"
 	assert_equal "$SC" 201
 }
 
 @test "tcp_checks: Add a new comment TCP check to a backend" {
     if haproxy_version_ge "2.2"
     then
-    resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/comment.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+    PARENT_NAME="test_backend_add"
+    resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/comment.json" "force_reload=true"
     assert_equal "$SC" 201
   fi
 }
 
 @test "tcp_checks: Add a new send-lf TCP check to a backend" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/send_lf.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/send_lf.json" "force_reload=true"
   if haproxy_version_ge "2.2"
   then
     assert_equal "$SC" 201
@@ -63,7 +69,8 @@ load 'utils/_helpers'
 }
 
 @test "tcp_checks: Add a new send-binary-lf TCP check to a backend" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/send_binary_lf.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/send_binary_lf.json" "force_reload=true"
   if haproxy_version_ge "2.2"
   then
     assert_equal "$SC" 201
@@ -73,14 +80,15 @@ load 'utils/_helpers'
 }
 
 @test "tcp_checks: Add a new set-var and uset-var TCP check to a backend" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/set_var.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/set_var.json" "force_reload=true"
   if haproxy_version_ge "2.2"
   then
     assert_equal "$SC" 201
   else
     assert_equal "$SC" 400
   fi
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/unset_var.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/unset_var.json" "force_reload=true"
   if haproxy_version_ge "2.2"
   then
     assert_equal "$SC" 201
@@ -90,7 +98,8 @@ load 'utils/_helpers'
 }
 
 @test "tcp_checks: Add an empty TCP check to a backend/0" {
-  resource_post "$_TCP_CHECKS_BASE_PATH/0" "data/empty.json" "parent_type=backend&parent_name=test_backend_add&force_reload=true"
+  PARENT_NAME="test_backend_add"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_checks/0" "data/empty.json" "force_reload=true"
   if haproxy_version_ge "2.2"
   then
     assert_equal "$SC" 422

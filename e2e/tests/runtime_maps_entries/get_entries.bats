@@ -24,7 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "runtime_maps_entries: Return one map runtime entries" {
-    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "map=mapfile1.map"
+    PARENT_NAME="mapfile1.map"
+    resource_get "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" " .[] | select(.key | contains(\"key1\") ).key" )" "key1"
@@ -35,12 +36,14 @@ load 'utils/_helpers'
 }
 
 @test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/159" {
-    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "map=not-exists.map"
+    PARENT_NAME="not-exists.map"
+    resource_get "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries"
     assert_equal "$SC" 404
 }
 
 @test "runtime_maps_entries: https://github.com/haproxytech/dataplaneapi/issues/234" {
-    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH" "map=empty.map"
+    PARENT_NAME="empty.map"
+    resource_get "$_RUNTIME_MAP_BASE_PATH"/"$PARENT_NAME/entries"
     assert_equal "$SC" 200
     assert_equal "$($BODY)" ""
 }

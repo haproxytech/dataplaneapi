@@ -24,9 +24,10 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "table: Replace table values in peers" {
-  resource_put "$_REQ_RULES_BASE_PATH/t1" "data/put.json" "peer_section=mycluster&force_reload=true"
+	PARENT_NAME="mycluster"
+  resource_put "$_PEERS_BASE_PATH/$PARENT_NAME/tables/t1" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
-  resource_get "$_REQ_RULES_BASE_PATH/t1" "peer_section=mycluster"
+  resource_get "$_PEERS_BASE_PATH/$PARENT_NAME/tables/t1"
   	assert_equal "$SC" 200
   	assert_equal "$(get_json_path "$BODY" ".name")" "t1"
   	assert_equal "$(get_json_path "$BODY" ".type")" "ip"

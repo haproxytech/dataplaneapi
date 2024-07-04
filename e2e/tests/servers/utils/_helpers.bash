@@ -15,5 +15,7 @@
 # limitations under the License.
 #
 
-_SERVER_BASE_PATH="/services/haproxy/configuration/servers"
-_RUNTIME_SERVER_BASE_PATH="/services/haproxy/runtime/servers"
+_RUNTIME_BACKEND_BASE_PATH="/services/haproxy/runtime/backends"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"
+_PEER_BASE_PATH="/services/haproxy/configuration/peers"
+_RING_BASE_PATH="/services/haproxy/configuration/rings"

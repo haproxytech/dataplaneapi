@@ -23,7 +23,8 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "acls: Return ACL list" {
-    resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls"
     assert_equal $SC "200"
 
     assert_equal "$(get_json_path "$BODY" " . | .[2].acl_name" )" "local_dst"
@@ -32,7 +33,8 @@ load 'utils/_helpers'
 }
 
 @test "acls: Return ACL list by its name" {
-    resource_get "$_ACL_BASE_PATH" "parent_name=fe_acl&parent_type=frontend&acl_name=invalid_src"
+    PARENT_NAME="fe_acl"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls" "acl_name=invalid_src"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" " . | .[1].acl_name" )" "invalid_src"

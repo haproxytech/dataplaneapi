@@ -24,10 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "server_templates: Add a new server template 1" {
-  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/first/post.json" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates" "data/first/post.json" "force_reload=true"
 	assert_equal "$SC" 201
 
-  resource_get "$_SERVER_TEMPLATE_BASE_PATH/first" "backend=test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/first"
   assert_equal "$SC" 200
 
   assert_equal "first" "$(get_json_path "$BODY" '.prefix')"
@@ -37,10 +38,11 @@ load 'utils/_helpers'
 }
 
 @test "server_templates: Add a new server template 2" {
-  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/second/post.json" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates" "data/second/post.json" "force_reload=true"
 	assert_equal "$SC" 201
 
-  resource_get "$_SERVER_TEMPLATE_BASE_PATH/second" "backend=test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/second"
   assert_equal "$SC" 200
 
   assert_equal "second" "$(get_json_path "$BODY" '.prefix')"
@@ -50,6 +52,7 @@ load 'utils/_helpers'
 }
 
 @test "server_templates: Add a new server template when missing frontend" {
-  resource_post "$_SERVER_TEMPLATE_BASE_PATH" "data/second/post.json" "backend=ghost&force_reload=true"
+  PARENT_NAME="ghost"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates" "data/second/post.json" "force_reload=true"
 	assert_equal "$SC" 400
 }

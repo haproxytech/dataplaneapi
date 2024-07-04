@@ -24,24 +24,28 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "captures: Return an array of all declare captures from the test frontend" {
-  resource_get "$_CAPTURES_BASE_PATH" "frontend=test"
+  PARENT_NAME="test"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures"
 	assert_equal "$SC" 200
   assert_equal "$(get_json_path "${BODY}" ". | length")" 2
 }
 
 @test "captures: Return an array of all declare captures from the test_second frontend" {
-  resource_get "$_CAPTURES_BASE_PATH" "frontend=test_second"
+  PARENT_NAME="test_second"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures"
 	assert_equal "$SC" 200
   assert_equal "$(get_json_path "${BODY}" ". | length")" 4
 }
 
 @test "captures: Return an array of all declare captures from the test_empty frontend" {
-  resource_get "$_CAPTURES_BASE_PATH" "frontend=test_empty"
+  PARENT_NAME="test_empty"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures"
 	assert_equal "$SC" 200
   assert_equal "$(get_json_path "${BODY}" ". | length")" 0
 }
 
 @test "captures: Return an array of all declare captures from a non existing frontend" {
-  resource_get "$_CAPTURES_BASE_PATH" "frontend=fake"
+  PARENT_NAME="fake"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/captures"
 	assert_equal "$SC" 404
 }

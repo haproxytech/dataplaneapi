@@ -27,7 +27,8 @@ load 'utils/_helpers'
 @test "http_error_rules: Return one HTTP Error Rule from frontend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
+	PARENT_NAME="test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_error_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "status"
 	assert_equal "$(get_json_path "$BODY" ".status")" 400
@@ -36,7 +37,8 @@ load 'utils/_helpers'
 @test "http_error_rules: Return one HTTP Error Rule from backend" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_error_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "status"
 	assert_equal "$(get_json_path "$BODY" ".status")" 200
@@ -46,7 +48,7 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].name")" "Some-Header"
 	assert_equal "$(get_json_path "$BODY" ".return_hdrs[0].fmt")" "value"
 
-	resource_get "$_ERR_RULES_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_error_rules/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "status"
 	assert_equal "$(get_json_path "$BODY" ".status")" 503
@@ -62,7 +64,8 @@ load 'utils/_helpers'
 @test "http_error_rules: Return one HTTP Error Rule from defaults" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults"
+	PARENT_NAME="mydefaults"
+	resource_get "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_error_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "status"
 	assert_equal "$(get_json_path "$BODY" ".status")" 503
@@ -74,13 +77,15 @@ load 'utils/_helpers'
 @test "http_error_rules: Fail to return a HTTP Error Rule when backend does not exist" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH/0" "parent_type=backend&parent_name=ghost"
+	PARENT_NAME="ghost"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_error_rules/0"
 	assert_equal "$SC" 400
 }
 
 @test "http_error_rules: Fail to return a backend HTTP Error Rule that does not exist" {
 	haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-	resource_get "$_ERR_RULES_BASE_PATH/1000" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_error_rules/1000" "parent_type=backend&parent_name=test_backend"
 	assert_equal "$SC" 404
 }

@@ -27,7 +27,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 )
 
 // NewGetDgramBindParams creates a new GetDgramBindParams object
@@ -47,16 +46,16 @@ type GetDgramBindParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Parent log forward name
-	  Required: true
-	  In: query
-	*/
-	LogForward string
 	/*Bind name
 	  Required: true
 	  In: path
 	*/
 	Name string
+	/*Parent name
+	  Required: true
+	  In: path
+	*/
+	ParentName string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -74,13 +73,13 @@ func (o *GetDgramBindParams) BindRequest(r *http.Request, route *middleware.Matc
 
 	qs := runtime.Values(r.URL.Query())
 
-	qLogForward, qhkLogForward, _ := qs.GetOK("log_forward")
-	if err := o.bindLogForward(qLogForward, qhkLogForward, route.Formats); err != nil {
+	rName, rhkName, _ := route.Params.GetOK("name")
+	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
-	rName, rhkName, _ := route.Params.GetOK("name")
-	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -94,27 +93,6 @@ func (o *GetDgramBindParams) BindRequest(r *http.Request, route *middleware.Matc
 	return nil
 }
 
-// bindLogForward binds and validates parameter LogForward from query.
-func (o *GetDgramBindParams) bindLogForward(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("log_forward", "query", rawData)
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("log_forward", "query", raw); err != nil {
-		return err
-	}
-	o.LogForward = raw
-
-	return nil
-}
-
 // bindName binds and validates parameter Name from path.
 func (o *GetDgramBindParams) bindName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
@@ -125,6 +103,20 @@ func (o *GetDgramBindParams) bindName(rawData []string, hasKey bool, formats str
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	return nil
+}
+
+// bindParentName binds and validates parameter ParentName from path.
+func (o *GetDgramBindParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

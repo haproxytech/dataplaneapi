@@ -37,6 +37,6 @@ function deprecated_auth_curl() {
 }
 
 function get_version() {
-  resource_get "/services/haproxy/spoe/version" "spoe=$SPOE_FILE"
+  resource_get "/services/haproxy/spoe/$SPOE_FILE/version"
   eval VERSION="'$BODY'"
 }

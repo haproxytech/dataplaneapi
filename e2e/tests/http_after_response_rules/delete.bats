@@ -32,64 +32,65 @@ load 'utils/_helpers'
 	#
 	# Deleting the first one
 	#
-	resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    PARENT_NAME="test_frontend"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
 	# Deleting the second one
 	#
-	resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
 	if haproxy_version_ge "2.8"; then
         # Deleting the third one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	    resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the fourth one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+     	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the fifth one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the sixth one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the seventh one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+        resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the eighth one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the ninth one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the tenth one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
         # Deleting the eleventh one
         #
-        resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+    	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
         assert_equal "$SC" 204
         #
     fi
     # No more HTTP after response rules, not found!
 	#
-	resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 404
 }
 
@@ -101,16 +102,17 @@ load 'utils/_helpers'
 	#
 	# Deleting the first one
 	#
-	resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+    PARENT_NAME="test_backend"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
 	# Deleting the second one
 	#
-	resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
 	# No more HTTP after response rules, not found!
 	#
-	resource_delete "$_RES_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/http_after_response_rules/0" "force_reload=true"
 	assert_equal "$SC" 404
 }

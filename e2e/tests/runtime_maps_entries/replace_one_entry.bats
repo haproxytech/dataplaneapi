@@ -24,18 +24,20 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "runtime_maps_entries: Replace the value corresponding to each id in a map" {
-    resource_put "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "data/put.json" "map=mapfile1.map&force_sync=true"
+    PARENT_NAME="mapfile1.map"
+    resource_put "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries/key1" "data/put.json" "force_sync=true"
     assert_equal "$SC" 200
     #
     # verify that entry is actually changed
     #
-    resource_get "$_RUNTIME_MAP_ENTRIES_BASE_PATH/key1" "map=mapfile1.map"
+    resource_get "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries/key1"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" " select(.value | contains(\"replacedvalue\") ).value" )" "replacedvalue"
 }
 
 @test "runtime_maps_entries: Return an error when trying to replace non existing map key" {
-    resource_put "$_RUNTIME_MAP_ENTRIES_BASE_PATH/not-exists" "data/put.json" "map=mapfile1.map&force_sync=true"
+    PARENT_NAME="mapfile1.map"
+    resource_put "$_RUNTIME_MAP_BASE_PATH/$PARENT_NAME/entries/not-exists" "data/put.json" "force_sync=true"
     assert_equal "$SC" 404
 }

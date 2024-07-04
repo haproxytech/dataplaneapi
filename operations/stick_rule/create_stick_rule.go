@@ -45,7 +45,7 @@ func NewCreateStickRule(ctx *middleware.Context, handler CreateStickRuleHandler)
 }
 
 /*
-	CreateStickRule swagger:route POST /services/haproxy/configuration/stick_rules/{index} StickRule createStickRule
+	CreateStickRule swagger:route POST /services/haproxy/configuration/backends/{parent_name}/stick_rules/{index} StickRule createStickRule
 
 # Add a new Stick Rule
 

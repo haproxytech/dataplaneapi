@@ -45,7 +45,7 @@ func NewReplaceSpoeAgent(ctx *middleware.Context, handler ReplaceSpoeAgentHandle
 }
 
 /*
-	ReplaceSpoeAgent swagger:route PUT /services/haproxy/spoe/spoe_agents/{name} Spoe replaceSpoeAgent
+	ReplaceSpoeAgent swagger:route PUT /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/agents/{name} Spoe replaceSpoeAgent
 
 # Replace a SPOE agent
 

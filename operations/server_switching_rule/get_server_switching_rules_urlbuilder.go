@@ -24,11 +24,13 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // GetServerSwitchingRulesURL generates an URL for the get server switching rules operation
 type GetServerSwitchingRulesURL struct {
-	Backend       string
+	ParentName string
+
 	TransactionID *string
 
 	_basePath string
@@ -55,7 +57,14 @@ func (o *GetServerSwitchingRulesURL) SetBasePath(bp string) {
 func (o *GetServerSwitchingRulesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/server_switching_rules"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/server_switching_rules"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetServerSwitchingRulesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -64,11 +73,6 @@ func (o *GetServerSwitchingRulesURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

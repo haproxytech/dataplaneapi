@@ -33,8 +33,8 @@ type GetRuntimeServerHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-// GetRuntimeServersHandlerImpl implementation of the GetRuntimeServersHandler interface using client-native client
-type GetRuntimeServersHandlerImpl struct {
+// GetAllRuntimeServerHandlerImpl implementation of the GetRuntimeServersHandler interface using client-native client
+type GetAllRuntimeServerHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
@@ -61,7 +61,7 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 		return server.NewGetRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	rs, err := rn.GetServerState(params.Backend, params.Name)
+	rs, err := rn.GetServerState(params.ParentName, params.Name)
 	if err != nil {
 		if isNotFoundError(err) {
 			code := int64(404)
@@ -74,7 +74,7 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 
 	if rs == nil {
 		code := int64(404)
-		msg := fmt.Sprintf("Runtime server %s not found in backend %s", params.Name, params.Backend)
+		msg := fmt.Sprintf("Runtime server %s not found in backend %s", params.Name, params.ParentName)
 		return server.NewGetRuntimeServerNotFound().WithPayload(&models.Error{Code: &code, Message: &msg})
 	}
 
@@ -82,23 +82,23 @@ func (h *GetRuntimeServerHandlerImpl) Handle(params server.GetRuntimeServerParam
 }
 
 // Handle executing the request and returning a response
-func (h *GetRuntimeServersHandlerImpl) Handle(params server.GetRuntimeServersParams, principal interface{}) middleware.Responder {
+func (h *GetAllRuntimeServerHandlerImpl) Handle(params server.GetAllRuntimeServerParams, principal interface{}) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetRuntimeServersDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetAllRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	rs, err := runtime.GetServersState(params.Backend)
+	rs, err := runtime.GetServersState(params.ParentName)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return server.NewGetRuntimeServersOK().WithPayload(models.RuntimeServers{})
+			return server.NewGetAllRuntimeServerOK().WithPayload(models.RuntimeServers{})
 		}
-		return server.NewGetRuntimeServersDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetAllRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return server.NewGetRuntimeServersOK().WithPayload(rs)
+	return server.NewGetAllRuntimeServerOK().WithPayload(rs)
 }
 
 // Handle executing the request and returning a response
@@ -109,7 +109,7 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 		return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	rs, err := runtime.GetServerState(params.Backend, params.Name)
+	rs, err := runtime.GetServerState(params.ParentName, params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -117,13 +117,13 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 
 	if rs == nil {
 		code := int64(404)
-		msg := fmt.Sprintf("Runtime server %s not found in backend %s", params.Name, params.Backend)
+		msg := fmt.Sprintf("Runtime server %s not found in backend %s", params.Name, params.ParentName)
 		return server.NewReplaceRuntimeServerNotFound().WithPayload(&models.Error{Code: &code, Message: &msg})
 	}
 
 	// change operational state
 	if params.Data.OperationalState != "" && rs.OperationalState != params.Data.OperationalState {
-		err = runtime.SetServerHealth(params.Backend, params.Name, params.Data.OperationalState)
+		err = runtime.SetServerHealth(params.ParentName, params.Name, params.Data.OperationalState)
 		if err != nil {
 			e := misc.HandleError(err)
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -132,18 +132,18 @@ func (h *ReplaceRuntimeServerHandlerImpl) Handle(params server.ReplaceRuntimeSer
 
 	// change admin state
 	if params.Data.AdminState != "" && rs.AdminState != params.Data.AdminState {
-		err = runtime.SetServerState(params.Backend, params.Name, params.Data.AdminState)
+		err = runtime.SetServerState(params.ParentName, params.Name, params.Data.AdminState)
 		if err != nil {
 			e := misc.HandleError(err)
 
 			// try to revert operational state and fall silently
 			//nolint:errcheck
-			runtime.SetServerHealth(params.Backend, params.Name, rs.OperationalState)
+			runtime.SetServerHealth(params.ParentName, params.Name, rs.OperationalState)
 			return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
 		}
 	}
 
-	rs, err = runtime.GetServerState(params.Backend, params.Name)
+	rs, err = runtime.GetServerState(params.ParentName, params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewReplaceRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -168,7 +168,7 @@ func (h *AddRuntimeServerHandlerImpl) Handle(params server.AddRuntimeServerParam
 		return server.NewAddRuntimeServerBadRequest().WithPayload(&models.Error{Code: &code, Message: &msg})
 	}
 
-	err = runtime.AddServer(params.Backend, params.Data.Name, SerializeRuntimeAddServer(params.Data))
+	err = runtime.AddServer(params.ParentName, params.Data.Name, SerializeRuntimeAddServer(params.Data))
 	if err != nil {
 		msg := err.Error()
 		switch {
@@ -202,7 +202,7 @@ func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServe
 	}
 
 	// Check if this server exists.
-	rs, err := runtime.GetServerState(params.Backend, params.Name)
+	rs, err := runtime.GetServerState(params.ParentName, params.Name)
 	if err != nil {
 		if isNotFoundError(err) {
 			code := int64(404)
@@ -215,7 +215,7 @@ func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServe
 
 	// Put the server in maintenance state before deleting it.
 	if rs.AdminState != "maint" {
-		err = runtime.DisableServer(params.Backend, params.Name)
+		err = runtime.DisableServer(params.ParentName, params.Name)
 		if err != nil {
 			e := misc.HandleError(err)
 			return server.NewDeleteRuntimeServerDefault(int(*e.Code)).WithPayload(e)
@@ -224,7 +224,7 @@ func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServe
 
 	// TODO: wait for connections to drain. This is not yet possible with HAProxy 2.6.
 
-	err = runtime.DeleteServer(params.Backend, params.Name)
+	err = runtime.DeleteServer(params.ParentName, params.Name)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server.NewDeleteRuntimeServerDefault(int(*e.Code)).WithPayload(e)

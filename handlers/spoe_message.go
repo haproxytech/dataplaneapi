@@ -35,7 +35,7 @@ func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageP
 		return spoe.NewCreateSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -48,7 +48,7 @@ func (h *SpoeCreateSpoeMessageHandlerImpl) Handle(params spoe.CreateSpoeMessageP
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.CreateMessage(params.Scope, params.Data, t, v)
+	err = ss.CreateMessage(params.ScopeName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -68,7 +68,7 @@ func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageP
 		return spoe.NewDeleteSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -81,7 +81,7 @@ func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageP
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.DeleteMessage(params.Scope, params.Name, t, v)
+	err = ss.DeleteMessage(params.ScopeName, params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -89,34 +89,34 @@ func (h *SpoeDeleteSpoeMessageHandlerImpl) Handle(params spoe.DeleteSpoeMessageP
 	return spoe.NewDeleteSpoeAgentNoContent()
 }
 
-// SpoeGetSpoeMessagesHandlerImpl implementation of the SpoeGetSpoeMessagesHandler interface
-type SpoeGetSpoeMessagesHandlerImpl struct {
+// SpoeGetAllSpoeMessageHandlerImpl implementation of the SpoeGetSpoeMessagesHandler interface
+type SpoeGetAllSpoeMessageHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-// SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetSpoeMessagesHandlerImpl) Handle(params spoe.GetSpoeMessagesParams, principal interface{}) middleware.Responder {
+// SpoeGetAllSpoeMessageHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
+func (h *SpoeGetAllSpoeMessageHandlerImpl) Handle(params spoe.GetAllSpoeMessageParams, principal interface{}) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
-		return spoe.NewGetSpoeMessagesDefault(int(*e.Code)).WithPayload(e)
+		return spoe.NewGetAllSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return spoe.NewGetSpoeMessagesDefault(int(*e.Code)).WithPayload(e)
+		return spoe.NewGetAllSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, messages, err := ss.GetMessages(params.Scope, t)
+	_, messages, err := ss.GetMessages(params.ScopeName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return spoe.NewGetSpoeMessagesDefault(int(*e.Code)).WithPayload(e)
+		return spoe.NewGetAllSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
-	return spoe.NewGetSpoeMessagesOK().WithPayload(messages)
+	return spoe.NewGetAllSpoeMessageOK().WithPayload(messages)
 }
 
 // SpoeGetSpoeMessageHandlerImpl implementation of the SpoeGetSpoeMessageHandler interface
@@ -131,7 +131,7 @@ func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams,
 		return spoe.NewGetSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -140,7 +140,7 @@ func (h *SpoeGetSpoeMessageHandlerImpl) Handle(params spoe.GetSpoeMessageParams,
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, message, err := ss.GetMessage(params.Scope, params.Name, t)
+	_, message, err := ss.GetMessage(params.ScopeName, params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -163,7 +163,7 @@ func (h *SpoeReplaceSpoeMessageHandlerImpl) Handle(params spoe.ReplaceSpoeMessag
 		return spoe.NewReplaceSpoeMessageDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeMessageDefault(int(*e.Code)).WithPayload(e)
@@ -176,7 +176,7 @@ func (h *SpoeReplaceSpoeMessageHandlerImpl) Handle(params spoe.ReplaceSpoeMessag
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.EditMessage(params.Scope, params.Data, params.Name, t, v)
+	err = ss.EditMessage(params.ScopeName, params.Data, params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeMessageDefault(int(*e.Code)).WithPayload(e)

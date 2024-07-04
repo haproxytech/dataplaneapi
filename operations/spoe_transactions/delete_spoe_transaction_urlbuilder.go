@@ -29,9 +29,8 @@ import (
 
 // DeleteSpoeTransactionURL generates an URL for the delete spoe transaction operation
 type DeleteSpoeTransactionURL struct {
-	ID string
-
-	Spoe string
+	ID         string
+	ParentName string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -57,7 +56,7 @@ func (o *DeleteSpoeTransactionURL) SetBasePath(bp string) {
 func (o *DeleteSpoeTransactionURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe_transactions/{id}"
+	var _path = "/services/haproxy/spoe/spoe_files/{parent_name}/transactions/{id}"
 
 	id := o.ID
 	if id != "" {
@@ -66,20 +65,18 @@ func (o *DeleteSpoeTransactionURL) Build() (*url.URL, error) {
 		return nil, errors.New("id is required on DeleteSpoeTransactionURL")
 	}
 
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on DeleteSpoeTransactionURL")
+	}
+
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/v3"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
-
-	qs := make(url.Values)
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
-	}
-
-	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

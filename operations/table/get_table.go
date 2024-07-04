@@ -45,7 +45,7 @@ func NewGetTable(ctx *middleware.Context, handler GetTableHandler) *GetTable {
 }
 
 /*
-	GetTable swagger:route GET /services/haproxy/configuration/tables/{name} Table getTable
+	GetTable swagger:route GET /services/haproxy/configuration/peers/{parent_name}/tables/{name} Table getTable
 
 # Return one table
 

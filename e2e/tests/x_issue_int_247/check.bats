@@ -22,21 +22,24 @@ load '../../libs/haproxy_config_setup'
 load '../../libs/version'
 
 @test "x_issue_int_247: runtime admin-state of backend app2" {
-    resource_get "/services/haproxy/runtime/servers/app2" "backend=bug_int_247"
+    PARENT_NAME="bug_int_247"
+    resource_get "/services/haproxy/runtime/backends/$PARENT_NAME/servers/app2"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" '.admin_state')" "maint"
 }
 
 @test "x_issue_int_247: runtime admin-state of backend app1" {
-    resource_get "/services/haproxy/runtime/servers/app1" "backend=bug_int_247"
+    PARENT_NAME="bug_int_247"
+    resource_get "/services/haproxy/runtime/backends/$PARENT_NAME/servers/app1"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" '.admin_state')" "ready"
 }
 
 @test "x_issue_int_247: admin-state always reports admin_state of maint if disabled keyword is used" {
-    resource_put "/services/haproxy/runtime/servers/app2" "data/enable.json" "backend=bug_int_247"
+    PARENT_NAME="bug_int_247"
+    resource_put "/services/haproxy/runtime/backends/$PARENT_NAME/servers/app2" "data/enable.json"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" '.admin_state')" "ready"

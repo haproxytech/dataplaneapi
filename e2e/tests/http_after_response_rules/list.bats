@@ -29,7 +29,8 @@ load 'utils/_helpers'
 		skip "http-after-response is not supported in HAProxy 2.1"
 	fi
 
-	resource_get "$_RES_RULES_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
+    PARENT_NAME="test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_after_response_rules"
 	assert_equal "$SC" 200
 	if haproxy_version_ge "2.8"; then
 	    assert_equal "$(get_json_path "$BODY" ". | length")" 11
@@ -91,7 +92,8 @@ load 'utils/_helpers'
 		skip "http-after-response is not supported in HAProxy 2.1"
 	fi
 
-	resource_get "$_RES_RULES_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+    PARENT_NAME="test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_after_response_rules"
 	assert_equal "$SC" 200
 	assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 	assert_equal "$(get_json_path "$BODY" ".[0].type")" "add-header"

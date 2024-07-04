@@ -45,7 +45,7 @@ func NewReplaceStickRule(ctx *middleware.Context, handler ReplaceStickRuleHandle
 }
 
 /*
-	ReplaceStickRule swagger:route PUT /services/haproxy/configuration/stick_rules/{index} StickRule replaceStickRule
+	ReplaceStickRule swagger:route PUT /services/haproxy/configuration/backends/{parent_name}/stick_rules/{index} StickRule replaceStickRule
 
 # Replace a Stick Rule
 

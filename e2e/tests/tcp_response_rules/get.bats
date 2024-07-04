@@ -24,11 +24,12 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_response_rules: Return one TCP Response Rule" {
-  resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "backend=test_backend"
+	PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".action")" "accept"
 
-	resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH/1" "backend=test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".action")" "reject"
 }

@@ -27,7 +27,8 @@ load 'utils/_helpers'
 @test "dgram_binds: Add a dgram bind" {
   if haproxy_version_ge "2.3"
   then
-    resource_post "$_DGRAMBIND_BASE_PATH" "data/post.json" "log_forward=sylog-loadb&force_reload=true"
+    PARENT_NAME="sylog-loadb"
+    resource_post "$_LOGFORWARD_BASE_PATH/$PARENT_NAME/dgram_binds" "data/post.json" "force_reload=true"
     assert_equal "$SC" "201"
   fi
 }
@@ -35,7 +36,8 @@ load 'utils/_helpers'
 @test "dgram_binds: Return a dgram bind" {
   if haproxy_version_ge "2.3"
   then
-    resource_get "$_DGRAMBIND_BASE_PATH/test_dgram_bind" "log_forward=sylog-loadb"
+    PARENT_NAME="sylog-loadb"
+    resource_get "$_LOGFORWARD_BASE_PATH/$PARENT_NAME/dgram_binds/test_dgram_bind"
     assert_equal "$SC" 200
     assert_equal "test_dgram_bind" "$(get_json_path "$BODY" '.name')"
   fi
@@ -44,7 +46,8 @@ load 'utils/_helpers'
 @test "dgram_binds: Replace a dgram bind" {
   if haproxy_version_ge "2.3"
   then
-    resource_put "$_DGRAMBIND_BASE_PATH/test_dgram_bind" "data/put.json" "log_forward=sylog-loadb&force_reload=true"
+    PARENT_NAME="sylog-loadb"
+    resource_put "$_LOGFORWARD_BASE_PATH/$PARENT_NAME/dgram_binds/test_dgram_bind" "data/put.json" "log_forward=sylog-loadb&force_reload=true"
     assert_equal "$SC" 200
   fi
 }
@@ -52,7 +55,8 @@ load 'utils/_helpers'
 @test "dgram_binds: Return an array of dgram binds" {
   if haproxy_version_ge "2.3"
   then
-    resource_get "$_DGRAMBIND_BASE_PATH" "log_forward=sylog-loadb"
+    PARENT_NAME="sylog-loadb"
+    resource_get "$_LOGFORWARD_BASE_PATH/$PARENT_NAME/dgram_binds"
     assert_equal "$SC" 200
     assert_equal "test_dgram_bind" "$(get_json_path "$BODY" '.[0].name')"
   fi
@@ -61,7 +65,8 @@ load 'utils/_helpers'
 @test "dgram_binds: Delete a dgram bind" {
   if haproxy_version_ge "2.3"
   then
-    resource_delete "$_DGRAMBIND_BASE_PATH/test_dgram_bind" "log_forward=sylog-loadb&force_reload=true"
+    PARENT_NAME="sylog-loadb"
+    resource_delete "$_LOGFORWARD_BASE_PATH/$PARENT_NAME/dgram_binds/test_dgram_bind" "force_reload=true"
     assert_equal "$SC" 204
   fi
 }

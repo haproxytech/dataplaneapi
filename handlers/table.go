@@ -80,7 +80,7 @@ func (h *CreateTableHandlerImpl) Handle(params table.CreateTableParams, principa
 		return table.NewCreateTableDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateTable(params.PeerSection, params.Data, t, v)
+	err = configuration.CreateTable(params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return table.NewCreateTableDefault(int(*e.Code)).WithPayload(e)
@@ -127,7 +127,7 @@ func (h *DeleteTableHandlerImpl) Handle(params table.DeleteTableParams, principa
 		return table.NewDeleteTableDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteTable(params.Name, params.PeerSection, t, v)
+	err = configuration.DeleteTable(params.Name, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return table.NewDeleteTableDefault(int(*e.Code)).WithPayload(e)
@@ -160,7 +160,7 @@ func (h *GetTableHandlerImpl) Handle(params table.GetTableParams, principal inte
 		return table.NewGetTableDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, ta, err := configuration.GetTable(params.Name, params.PeerSection, t)
+	_, ta, err := configuration.GetTable(params.Name, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return table.NewGetTableDefault(int(*e.Code)).WithPayload(e)
@@ -181,7 +181,7 @@ func (h *GetTablesHandlerImpl) Handle(params table.GetTablesParams, principal in
 		return table.NewGetTablesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, tables, err := configuration.GetTables(params.PeerSection, t)
+	_, tables, err := configuration.GetTables(params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return table.NewGetTablesDefault(int(*e.Code)).WithPayload(e)
@@ -216,7 +216,7 @@ func (h *ReplaceTableHandlerImpl) Handle(params table.ReplaceTableParams, princi
 		return table.NewReplaceTableDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditTable(params.Name, params.PeerSection, params.Data, t, v)
+	err = configuration.EditTable(params.Name, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return table.NewReplaceTableDefault(int(*e.Code)).WithPayload(e)

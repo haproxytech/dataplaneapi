@@ -45,7 +45,7 @@ func NewCreateDeclareCapture(ctx *middleware.Context, handler CreateDeclareCaptu
 }
 
 /*
-	CreateDeclareCapture swagger:route POST /services/haproxy/configuration/captures/{index} DeclareCapture createDeclareCapture
+	CreateDeclareCapture swagger:route POST /services/haproxy/configuration/frontends/{parent_name}/captures/{index} DeclareCapture createDeclareCapture
 
 # Add a new declare capture
 

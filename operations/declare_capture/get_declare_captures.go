@@ -45,7 +45,7 @@ func NewGetDeclareCaptures(ctx *middleware.Context, handler GetDeclareCapturesHa
 }
 
 /*
-	GetDeclareCaptures swagger:route GET /services/haproxy/configuration/captures DeclareCapture getDeclareCaptures
+	GetDeclareCaptures swagger:route GET /services/haproxy/configuration/frontends/{parent_name}/captures DeclareCapture getDeclareCaptures
 
 # Return an array of declare captures
 

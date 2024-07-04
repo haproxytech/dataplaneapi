@@ -24,7 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "table: Return one table from peers" {
-  resource_get "$_REQ_RULES_BASE_PATH/t1" "peer_section=mycluster"
+	PARENT_NAME="mycluster"
+  resource_get "$_PEERS_BASE_PATH/$PARENT_NAME/tables/t1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".name")" "t1"
 	assert_equal "$(get_json_path "$BODY" ".type")" "string"

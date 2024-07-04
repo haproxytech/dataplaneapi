@@ -23,6 +23,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_response_rules: Add a new TCP Response Rule to backend" {
-  resource_post "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "data/if.json" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0" "data/if.json" "force_reload=true"
 	assert_equal "$SC" 201
 }

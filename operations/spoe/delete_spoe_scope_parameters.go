@@ -28,7 +28,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // NewDeleteSpoeScopeParams creates a new DeleteSpoeScopeParams object
@@ -53,11 +52,11 @@ type DeleteSpoeScopeParams struct {
 	  In: path
 	*/
 	Name string
-	/*Spoe file name
+	/*Parent name
 	  Required: true
-	  In: query
+	  In: path
 	*/
-	Spoe string
+	ParentName string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -84,8 +83,8 @@ func (o *DeleteSpoeScopeParams) BindRequest(r *http.Request, route *middleware.M
 		res = append(res, err)
 	}
 
-	qSpoe, qhkSpoe, _ := qs.GetOK("spoe")
-	if err := o.bindSpoe(qSpoe, qhkSpoe, route.Formats); err != nil {
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -118,23 +117,16 @@ func (o *DeleteSpoeScopeParams) bindName(rawData []string, hasKey bool, formats 
 	return nil
 }
 
-// bindSpoe binds and validates parameter Spoe from query.
-func (o *DeleteSpoeScopeParams) bindSpoe(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("spoe", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *DeleteSpoeScopeParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("spoe", "query", raw); err != nil {
-		return err
-	}
-	o.Spoe = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

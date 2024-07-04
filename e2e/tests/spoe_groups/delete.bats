@@ -42,14 +42,18 @@ teardown() {
 }
 
 @test "spoe_groups: Delete a spoe group" {
-    resource_delete "$_SPOE_GROUPS_BASE_PATH/newgroup" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_delete "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups/newgroup"
     assert_equal "$SC" 204
 
-    resource_get "$_SPOE_GROUPS_BASE_PATH/newgroup" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups/newgroup"
     assert_equal "$SC" 404
 }
 
 @test "spoe_groups: Return an error when trying to delete non existing spoe group" {
-    resource_delete "$_SPOE_GROUPS_BASE_PATH/not-exists" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_delete "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/groups/not-exists"
     assert_equal "$SC" 404
 }

@@ -45,7 +45,7 @@ func NewReplaceTable(ctx *middleware.Context, handler ReplaceTableHandler) *Repl
 }
 
 /*
-	ReplaceTable swagger:route PUT /services/haproxy/configuration/tables/{name} Table replaceTable
+	ReplaceTable swagger:route PUT /services/haproxy/configuration/peers/{parent_name}/tables/{name} Table replaceTable
 
 # Replace a table
 

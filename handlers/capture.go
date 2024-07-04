@@ -77,14 +77,14 @@ func (h *CreateDeclareCaptureHandlerImpl) Handle(params capture.CreateDeclareCap
 		e := misc.HandleError(err)
 		return capture.NewGetDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
-	_, frontend, err := configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := configuration.GetFrontend(params.ParentName, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	err = configuration.CreateDeclareCapture(params.Index, params.Frontend, params.Data, t, v)
+	err = configuration.CreateDeclareCapture(params.Index, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewCreateDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
@@ -128,7 +128,7 @@ func (h *DeleteDeclareCaptureHandlerImpl) Handle(params capture.DeleteDeclareCap
 		e := misc.HandleError(err)
 		return capture.NewDeleteDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.DeleteDeclareCapture(params.Index, params.Frontend, t, v)
+	err = configuration.DeleteDeclareCapture(params.Index, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewDeleteDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
@@ -160,14 +160,14 @@ func (h *GetDeclareCaptureHandlerImpl) Handle(params capture.GetDeclareCapturePa
 		return capture.NewGetDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, frontend, err := configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := configuration.GetFrontend(params.ParentName, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	_, data, err := configuration.GetDeclareCapture(params.Index, params.Frontend, t)
+	_, data, err := configuration.GetDeclareCapture(params.Index, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewGetDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
@@ -187,14 +187,14 @@ func (h *GetDeclareCapturesHandlerImpl) Handle(params capture.GetDeclareCaptures
 		return capture.NewGetDeclareCapturesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, frontend, err := configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := configuration.GetFrontend(params.ParentName, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	_, data, err := configuration.GetDeclareCaptures(params.Frontend, t)
+	_, data, err := configuration.GetDeclareCaptures(params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -230,14 +230,14 @@ func (h *ReplaceDeclareCaptureHandlerImpl) Handle(params capture.ReplaceDeclareC
 		return capture.NewReplaceDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, frontend, err := configuration.GetFrontend(params.Frontend, t)
+	_, frontend, err := configuration.GetFrontend(params.ParentName, t)
 	if frontend == nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
 	if err != nil {
 		return capture.NewGetDeclareCaptureNotFound()
 	}
-	err = configuration.EditDeclareCapture(params.Index, params.Frontend, params.Data, t, v)
+	err = configuration.EditDeclareCapture(params.Index, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewReplaceDeclareCaptureDefault(int(*e.Code)).WithPayload(e)
@@ -283,7 +283,7 @@ func (h *ReplaceDeclareCapturesHandlerImpl) Handle(params capture.ReplaceDeclare
 		e := misc.HandleError(err)
 		return capture.NewReplaceDeclareCapturesDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.ReplaceDeclareCaptures(params.Frontend, params.Data, t, v)
+	err = configuration.ReplaceDeclareCaptures(params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return capture.NewReplaceDeclareCapturesDefault(int(*e.Code)).WithPayload(e)

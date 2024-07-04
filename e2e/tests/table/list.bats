@@ -24,7 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "table: Return an array of all tables from peers" {
-    resource_get "$_REQ_RULES_BASE_PATH" "peer_section=mycluster"
+    PARENT_NAME="mycluster"
+    resource_get "$_PEERS_BASE_PATH/$PARENT_NAME/tables"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" ".[0].name")" "t1"
     assert_equal "$(get_json_path "$BODY" ".[0].type")" "string"

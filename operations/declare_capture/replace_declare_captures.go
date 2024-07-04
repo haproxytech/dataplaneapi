@@ -45,7 +45,7 @@ func NewReplaceDeclareCaptures(ctx *middleware.Context, handler ReplaceDeclareCa
 }
 
 /*
-	ReplaceDeclareCaptures swagger:route PUT /services/haproxy/configuration/captures DeclareCapture replaceDeclareCaptures
+	ReplaceDeclareCaptures swagger:route PUT /services/haproxy/configuration/frontends/{parent_name}/captures DeclareCapture replaceDeclareCaptures
 
 # Replace a declare capture list
 

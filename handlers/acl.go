@@ -18,6 +18,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v6"
+	cnconstants "github.com/haproxytech/client-native/v6/configuration/parents"
 	"github.com/haproxytech/client-native/v6/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -42,8 +43,8 @@ type GetACLHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-// GetAclsHandlerImpl implementation of the GetAclsHandler interface using client-native client
-type GetAclsHandlerImpl struct {
+// GetAllACLHandlerImpl implementation of the GetAclsHandler interface using client-native client
+type GetAllACLHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
@@ -53,14 +54,14 @@ type ReplaceACLHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-// ReplaceAclsHandlerImpl implementation of the ReplaceAclsHandler interface using client-native client
-type ReplaceAclsHandlerImpl struct {
+// ReplaceAllACLHandlerImpl implementation of the ReplaceAclsHandler interface using client-native client
+type ReplaceAllACLHandlerImpl struct {
 	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // Handle executing the request and returning a response
-func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal interface{}) middleware.Responder {
+func (h *CreateACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.CreateACLBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -77,19 +78,19 @@ func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal inte
 			Message: &msg,
 			Code:    &c,
 		}
-		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewCreateACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewCreateACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateACL(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.CreateACL(params.Index, string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewCreateACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -97,18 +98,18 @@ func (h *CreateACLHandlerImpl) Handle(params acl.CreateACLParams, principal inte
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return acl.NewCreateACLDefault(int(*e.Code)).WithPayload(e)
+				return acl.NewCreateACLBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return acl.NewCreateACLCreated().WithPayload(params.Data)
+			return acl.NewCreateACLBackendCreated().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return acl.NewCreateACLAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return acl.NewCreateACLBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return acl.NewCreateACLAccepted().WithPayload(params.Data)
+	return acl.NewCreateACLBackendAccepted().WithPayload(params.Data)
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal interface{}) middleware.Responder {
+func (h *DeleteACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.DeleteACLBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -125,36 +126,36 @@ func (h *DeleteACLHandlerImpl) Handle(params acl.DeleteACLParams, principal inte
 			Message: &msg,
 			Code:    &c,
 		}
-		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewDeleteACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewDeleteACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteACL(params.Index, params.ParentType, params.ParentName, t, v)
+	err = configuration.DeleteACL(params.Index, string(parentType), params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewDeleteACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
 		if *params.ForceReload {
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return acl.NewDeleteACLDefault(int(*e.Code)).WithPayload(e)
+				return acl.NewDeleteACLBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return acl.NewDeleteACLNoContent()
+			return acl.NewDeleteACLBackendNoContent()
 		}
 		rID := h.ReloadAgent.Reload()
-		return acl.NewDeleteACLAccepted().WithReloadID(rID)
+		return acl.NewDeleteACLBackendAccepted().WithReloadID(rID)
 	}
-	return acl.NewDeleteACLAccepted()
+	return acl.NewDeleteACLBackendAccepted()
 }
 
 // Handle executing the request and returning a response
-func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{}) middleware.Responder {
+func (h *GetACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.GetACLBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -163,20 +164,20 @@ func (h *GetACLHandlerImpl) Handle(params acl.GetACLParams, principal interface{
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewGetACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rule, err := configuration.GetACL(params.Index, params.ParentType, params.ParentName, t)
+	_, rule, err := configuration.GetACL(params.Index, string(parentType), params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewGetACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return acl.NewGetACLOK().WithPayload(rule)
+	return acl.NewGetACLBackendOK().WithPayload(rule)
 }
 
 // Handle executing the request and returning a response
-func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interface{}) middleware.Responder {
+func (h *GetAllACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.GetAllACLBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -189,22 +190,22 @@ func (h *GetAclsHandlerImpl) Handle(params acl.GetAclsParams, principal interfac
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewGetACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewGetACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rules, err := configuration.GetACLs(params.ParentType, params.ParentName, t, aclName...)
+	_, rules, err := configuration.GetACLs(string(parentType), params.ParentName, t, aclName...)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return acl.NewGetAclsOK().WithPayload(rules)
+			return acl.NewGetAllACLBackendOK().WithPayload(rules)
 		}
-		return acl.NewGetAclsDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewGetAllACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return acl.NewGetAclsOK().WithPayload(rules)
+	return acl.NewGetAllACLBackendOK().WithPayload(rules)
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal interface{}) middleware.Responder {
+func (h *ReplaceACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.ReplaceACLBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -221,36 +222,36 @@ func (h *ReplaceACLHandlerImpl) Handle(params acl.ReplaceACLParams, principal in
 			Message: &msg,
 			Code:    &c,
 		}
-		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewReplaceACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewReplaceACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.EditACL(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.EditACL(params.Index, string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewReplaceACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
 		if *params.ForceReload {
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return acl.NewReplaceACLDefault(int(*e.Code)).WithPayload(e)
+				return acl.NewReplaceACLBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return acl.NewReplaceACLOK().WithPayload(params.Data)
+			return acl.NewReplaceACLBackendOK().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return acl.NewReplaceACLAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return acl.NewReplaceACLBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return acl.NewReplaceACLAccepted().WithPayload(params.Data)
+	return acl.NewReplaceACLBackendAccepted().WithPayload(params.Data)
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceAclsHandlerImpl) Handle(params acl.ReplaceAclsParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllACLHandlerImpl) Handle(parentType cnconstants.CnParentType, params acl.ReplaceAllACLBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -267,18 +268,18 @@ func (h *ReplaceAclsHandlerImpl) Handle(params acl.ReplaceAclsParams, principal 
 			Message: &msg,
 			Code:    &c,
 		}
-		return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewReplaceAllACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewReplaceAllACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.ReplaceAcls(params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.ReplaceAcls(string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+		return acl.NewReplaceAllACLBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -286,12 +287,12 @@ func (h *ReplaceAclsHandlerImpl) Handle(params acl.ReplaceAclsParams, principal 
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+				return acl.NewReplaceAllACLBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return acl.NewReplaceAclsOK().WithPayload(params.Data)
+			return acl.NewReplaceAllACLBackendOK().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return acl.NewReplaceAclsAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return acl.NewReplaceAllACLBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return acl.NewReplaceAclsAccepted().WithPayload(params.Data)
+	return acl.NewReplaceAllACLBackendAccepted().WithPayload(params.Data)
 }

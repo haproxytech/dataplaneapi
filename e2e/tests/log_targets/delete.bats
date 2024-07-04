@@ -27,17 +27,18 @@ load 'utils/_helpers'
   #
   # Deleting first entry
   #
-  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Deleting second entry
   #
-  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+  resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 204
   #
   # No further log target, not found!
   #
-	resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 404
 }
 
@@ -45,16 +46,17 @@ load 'utils/_helpers'
   #
   # Deleting first entry
   #
-  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Deleting second entry
   #
-  resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 204
   #
   # No further log target, not found!
   #
-	resource_delete "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 404
 }

@@ -45,7 +45,7 @@ func NewGetStickRules(ctx *middleware.Context, handler GetStickRulesHandler) *Ge
 }
 
 /*
-	GetStickRules swagger:route GET /services/haproxy/configuration/stick_rules StickRule getStickRules
+	GetStickRules swagger:route GET /services/haproxy/configuration/backends/{parent_name}/stick_rules StickRule getStickRules
 
 # Return an array of all Stick Rules
 

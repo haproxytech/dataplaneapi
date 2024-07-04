@@ -28,7 +28,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // NewDeleteTableParams creates a new DeleteTableParams object
@@ -65,11 +64,11 @@ type DeleteTableParams struct {
 	  In: path
 	*/
 	Name string
-	/*Parent peers name
+	/*Parent name
 	  Required: true
-	  In: query
+	  In: path
 	*/
-	PeerSection string
+	ParentName string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -101,8 +100,8 @@ func (o *DeleteTableParams) BindRequest(r *http.Request, route *middleware.Match
 		res = append(res, err)
 	}
 
-	qPeerSection, qhkPeerSection, _ := qs.GetOK("peer_section")
-	if err := o.bindPeerSection(qPeerSection, qhkPeerSection, route.Formats); err != nil {
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -159,23 +158,16 @@ func (o *DeleteTableParams) bindName(rawData []string, hasKey bool, formats strf
 	return nil
 }
 
-// bindPeerSection binds and validates parameter PeerSection from query.
-func (o *DeleteTableParams) bindPeerSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("peer_section", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *DeleteTableParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("peer_section", "query", raw); err != nil {
-		return err
-	}
-	o.PeerSection = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

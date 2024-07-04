@@ -5,9 +5,9 @@ import (
 	client_native "github.com/haproxytech/client-native/v6"
 	"github.com/haproxytech/client-native/v6/models"
 
+	cnconstants "github.com/haproxytech/client-native/v6/configuration/parents"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
-	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/http_after_response_rule"
 )
 
@@ -16,7 +16,7 @@ type CreateHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.CreateHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.CreateHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -32,34 +32,34 @@ func (c CreateHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_respons
 			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
 			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
 		}
-		return http_after_response_rule.NewCreateHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewCreateHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := c.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewCreateHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewCreateHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	if err = configuration.CreateHTTPAfterResponseRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v); err != nil {
+	if err = configuration.CreateHTTPAfterResponseRule(params.Index, string(parentType), params.ParentName, params.Data, t, v); err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewCreateHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewCreateHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
 		if *params.ForceReload {
 			if err = c.ReloadAgent.ForceReload(); err != nil {
 				e := misc.HandleError(err)
-				return http_after_response_rule.NewCreateHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+				return http_after_response_rule.NewCreateHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
 
-			return http_after_response_rule.NewCreateHTTPAfterResponseRuleCreated().WithPayload(params.Data)
+			return http_after_response_rule.NewCreateHTTPAfterResponseRuleBackendCreated().WithPayload(params.Data)
 		}
 
-		return http_after_response_rule.NewCreateHTTPAfterResponseRuleAccepted().WithReloadID(c.ReloadAgent.Reload()).WithPayload(params.Data)
+		return http_after_response_rule.NewCreateHTTPAfterResponseRuleBackendAccepted().WithReloadID(c.ReloadAgent.Reload()).WithPayload(params.Data)
 	}
 
-	return http_after_response_rule.NewCreateHTTPAfterResponseRuleAccepted().WithPayload(params.Data)
+	return http_after_response_rule.NewCreateHTTPAfterResponseRuleBackendAccepted().WithPayload(params.Data)
 }
 
 type DeleteHTTPAfterResponseRuleHandlerImpl struct {
@@ -67,7 +67,7 @@ type DeleteHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.DeleteHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.DeleteHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -83,41 +83,41 @@ func (d DeleteHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_respons
 			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
 			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
 		}
-		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := d.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	if err = configuration.DeleteHTTPAfterResponseRule(params.Index, params.ParentType, params.ParentName, t, v); err != nil {
+	if err = configuration.DeleteHTTPAfterResponseRule(params.Index, string(parentType), params.ParentName, t, v); err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
 		if *params.ForceReload {
 			if err = d.ReloadAgent.ForceReload(); err != nil {
 				e := misc.HandleError(err)
-				return http_after_response_rule.NewDeleteHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+				return http_after_response_rule.NewDeleteHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
 
-			return http_after_response_rule.NewDeleteHTTPAfterResponseRuleNoContent()
+			return http_after_response_rule.NewDeleteHTTPAfterResponseRuleBackendNoContent()
 		}
 
-		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleAccepted().WithReloadID(d.ReloadAgent.Reload())
+		return http_after_response_rule.NewDeleteHTTPAfterResponseRuleBackendAccepted().WithReloadID(d.ReloadAgent.Reload())
 	}
 
-	return http_after_response_rule.NewDeleteHTTPAfterResponseRuleAccepted()
+	return http_after_response_rule.NewDeleteHTTPAfterResponseRuleBackendAccepted()
 }
 
 type GetHTTPAfterResponseRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.GetHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -127,23 +127,23 @@ func (g GetHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_r
 	configuration, err := g.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewGetHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewGetHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rule, err := configuration.GetHTTPAfterResponseRule(params.Index, params.ParentType, params.ParentName, t)
+	_, rule, err := configuration.GetHTTPAfterResponseRule(params.Index, string(parentType), params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewGetHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewGetHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return http_after_response_rule.NewGetHTTPAfterResponseRuleOK().WithPayload(rule)
+	return http_after_response_rule.NewGetHTTPAfterResponseRuleBackendOK().WithPayload(rule)
 }
 
-type GetHTTPAfterResponseRulesHandlerImpl struct {
+type GetAllHTTPAfterResponseRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (g GetHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_response_rule.GetHTTPAfterResponseRulesParams, _ interface{}) middleware.Responder {
+func (g GetAllHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.GetAllHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
 	var t string
 
 	if params.TransactionID != nil {
@@ -153,16 +153,16 @@ func (g GetHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_response_
 	configuration, err := g.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewGetHTTPAfterResponseRulesDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewGetAllHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rules, err := configuration.GetHTTPAfterResponseRules(params.ParentType, params.ParentName, t)
+	_, rules, err := configuration.GetHTTPAfterResponseRules(string(parentType), params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewGetHTTPAfterResponseRulesDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewGetAllHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return http_after_response_rule.NewGetHTTPAfterResponseRulesOK().WithPayload(rules)
+	return http_after_response_rule.NewGetAllHTTPAfterResponseRuleBackendOK().WithPayload(rules)
 }
 
 type ReplaceHTTPAfterResponseRuleHandlerImpl struct {
@@ -170,7 +170,7 @@ type ReplaceHTTPAfterResponseRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_response_rule.ReplaceHTTPAfterResponseRuleParams, _ interface{}) middleware.Responder {
+func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.ReplaceHTTPAfterResponseRuleBackendParams, _ interface{}) middleware.Responder {
 	t, v := "", int64(0)
 
 	if params.TransactionID != nil {
@@ -186,43 +186,43 @@ func (r ReplaceHTTPAfterResponseRuleHandlerImpl) Handle(params http_after_respon
 			Message: misc.StringP("Both force_reload and transaction specified, specify only one"),
 			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
 		}
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := r.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	if err = configuration.EditHTTPAfterResponseRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v); err != nil {
+	if err = configuration.EditHTTPAfterResponseRule(params.Index, string(parentType), params.ParentName, params.Data, t, v); err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
 		if *params.ForceReload {
 			if err = r.ReloadAgent.ForceReload(); err != nil {
 				e := misc.HandleError(err)
-				return http_after_response_rule.NewReplaceHTTPAfterResponseRuleDefault(int(*e.Code)).WithPayload(e)
+				return http_after_response_rule.NewReplaceHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
 
-			return http_after_response_rule.NewReplaceHTTPAfterResponseRuleOK().WithPayload(params.Data)
+			return http_after_response_rule.NewReplaceHTTPAfterResponseRuleBackendOK().WithPayload(params.Data)
 		}
 
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleAccepted().WithReloadID(r.ReloadAgent.Reload()).WithPayload(params.Data)
+		return http_after_response_rule.NewReplaceHTTPAfterResponseRuleBackendAccepted().WithReloadID(r.ReloadAgent.Reload()).WithPayload(params.Data)
 	}
 
-	return http_after_response_rule.NewReplaceHTTPAfterResponseRuleAccepted().WithPayload(params.Data)
+	return http_after_response_rule.NewReplaceHTTPAfterResponseRuleBackendAccepted().WithPayload(params.Data)
 }
 
-type ReplaceHTTPAfterResponseRulesHandlerImpl struct {
+type ReplaceAllHTTPAfterResponseRuleHandlerImpl struct {
 	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_response_rule.ReplaceHTTPAfterResponseRulesParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllHTTPAfterResponseRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params http_after_response_rule.ReplaceAllHTTPAfterResponseRuleBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -239,18 +239,18 @@ func (h *ReplaceHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_resp
 			Message: &msg,
 			Code:    &c,
 		}
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRulesDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRulesDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.ReplaceHTTPAfterResponseRules(params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.ReplaceHTTPAfterResponseRules(string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRulesDefault(int(*e.Code)).WithPayload(e)
+		return http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -258,12 +258,12 @@ func (h *ReplaceHTTPAfterResponseRulesHandlerImpl) Handle(params http_after_resp
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+				return http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return http_after_response_rule.NewReplaceHTTPAfterResponseRulesOK().WithPayload(params.Data)
+			return http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackendOK().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return http_after_response_rule.NewReplaceHTTPAfterResponseRulesAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return http_after_response_rule.NewReplaceHTTPAfterResponseRulesAccepted().WithPayload(params.Data)
+	return http_after_response_rule.NewReplaceAllHTTPAfterResponseRuleBackendAccepted().WithPayload(params.Data)
 }

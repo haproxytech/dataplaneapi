@@ -22,7 +22,6 @@ import (
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/misc"
-	"github.com/haproxytech/dataplaneapi/operations/acl"
 	"github.com/haproxytech/dataplaneapi/operations/backend_switching_rule"
 )
 
@@ -85,7 +84,7 @@ func (h *CreateBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.CreateBackendSwitchingRule(params.Index, params.Frontend, params.Data, t, v)
+	err = configuration.CreateBackendSwitchingRule(params.Index, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -132,7 +131,7 @@ func (h *DeleteBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_
 		return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteBackendSwitchingRule(params.Index, params.Frontend, t, v)
+	err = configuration.DeleteBackendSwitchingRule(params.Index, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewDeleteBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -166,7 +165,7 @@ func (h *GetBackendSwitchingRuleHandlerImpl) Handle(params backend_switching_rul
 		return backend_switching_rule.NewCreateBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, bckRule, err := configuration.GetBackendSwitchingRule(params.Index, params.Frontend, t)
+	_, bckRule, err := configuration.GetBackendSwitchingRule(params.Index, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewGetBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -187,7 +186,7 @@ func (h *GetBackendSwitchingRulesHandlerImpl) Handle(params backend_switching_ru
 		return backend_switching_rule.NewGetBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, bckRules, err := configuration.GetBackendSwitchingRules(params.Frontend, t)
+	_, bckRules, err := configuration.GetBackendSwitchingRules(params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -225,7 +224,7 @@ func (h *ReplaceBackendSwitchingRuleHandlerImpl) Handle(params backend_switching
 		return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditBackendSwitchingRule(params.Index, params.Frontend, params.Data, t, v)
+	err = configuration.EditBackendSwitchingRule(params.Index, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewReplaceBackendSwitchingRuleDefault(int(*e.Code)).WithPayload(e)
@@ -269,9 +268,9 @@ func (h *ReplaceBackendSwitchingRulesHandlerImpl) Handle(params backend_switchin
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl.NewReplaceAclsDefault(int(*e.Code)).WithPayload(e)
+		return backend_switching_rule.NewReplaceBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.ReplaceBackendSwitchingRules(params.Frontend, params.Data, t, v)
+	err = configuration.ReplaceBackendSwitchingRules(params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend_switching_rule.NewReplaceBackendSwitchingRulesDefault(int(*e.Code)).WithPayload(e)

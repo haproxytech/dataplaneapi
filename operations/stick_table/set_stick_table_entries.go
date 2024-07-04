@@ -52,7 +52,7 @@ func NewSetStickTableEntries(ctx *middleware.Context, handler SetStickTableEntri
 }
 
 /*
-	SetStickTableEntries swagger:route POST /services/haproxy/runtime/stick_table_entries StickTable setStickTableEntries
+	SetStickTableEntries swagger:route POST /services/haproxy/runtime/stick_tables/{parent_name}/entries StickTable setStickTableEntries
 
 # Set Entry to Stick Table
 

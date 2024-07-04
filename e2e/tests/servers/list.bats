@@ -19,12 +19,14 @@ load '../../libs/dataplaneapi'
 load "../../libs/get_json_path"
 load '../../libs/haproxy_config_setup'
 load '../../libs/resource_client'
+load '../../libs/haproxy_version'
 load '../../libs/version'
 
 load 'utils/_helpers'
 
-@test "servers: Return an array of servers" {
-  resource_get "$_SERVER_BASE_PATH" "backend=test_backend"
+@test "servers: Return an array of backend servers" {
+	PARENT_NAME="test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/servers"
 	assert_equal "$SC" 200
 
 	assert_equal "$(get_json_path "$BODY" ". | length")" "5"
@@ -39,4 +41,22 @@ load 'utils/_helpers'
     fi
     let INDEX=${INDEX}+1
   done
+}
+
+@test "servers: Return an array of peers servers" {
+	PARENT_NAME="fusion"
+  resource_get "$_PEER_BASE_PATH/$PARENT_NAME/servers"
+	assert_equal "$SC" 200
+
+	assert_equal "$(get_json_path "$BODY" ". | length")" "1"
+}
+
+@test "servers: Return an array of ring servers" {
+  haproxy_version_ge 2.2 || skip "requires HAProxy 2.2+"
+
+  PARENT_NAME="logbuffer"
+  resource_get "$_RING_BASE_PATH/$PARENT_NAME/servers"
+	assert_equal "$SC" 200
+
+	assert_equal "$(get_json_path "$BODY" ". | length")" "1"
 }

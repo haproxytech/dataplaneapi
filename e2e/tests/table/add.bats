@@ -24,6 +24,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "table: Add a new table to peers" {
-  resource_post "$_REQ_RULES_BASE_PATH" "data/post.json" "peer_section=mycluster&force_reload=true"
+  PARENT_NAME="mycluster"
+  resource_post "$_PEERS_BASE_PATH/$PARENT_NAME/tables" "data/post.json" "force_reload=true"
 	assert_equal "$SC" 201
 }

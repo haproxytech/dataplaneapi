@@ -24,7 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_checks: Return an array of all HTTP Checks from defaults" {
-    resource_get "$_CHECKS_BASE_PATH" "parent_type=defaults&parent_name=mydefaults"
+    PARENT_NAME="mydefaults"
+    resource_get "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_checks"
 	assert_equal "$SC" 200
     assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 
@@ -34,7 +35,8 @@ load 'utils/_helpers'
 }
 
 @test "http_checks: Return an array of HTTP Checks from backend" {
-    resource_get "$_CHECKS_BASE_PATH" "parent_type=backend&parent_name=test_backend"
+    PARENT_NAME="test_backend"
+    resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks"
 	assert_equal "$SC" 200
 	assert_equal 2 "$(get_json_path "$BODY" ". | length")"
 
@@ -48,7 +50,8 @@ load 'utils/_helpers'
     assert_equal "$(get_json_path "$BODY" ".[1].pattern")" "200-399"
 }
 
-@test "http_checks: Return 422 for frontend" {
-    resource_get "$_CHECKS_BASE_PATH" "parent_type=frontend&parent_name=test_frontend"
-	assert_equal "$SC" 422
+@test "http_checks: Return 404 for frontend" {
+    PARENT_NAME="test_frontend"
+    resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_check"
+	assert_equal "$SC" 404
 }

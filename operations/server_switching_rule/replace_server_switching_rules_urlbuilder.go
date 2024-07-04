@@ -24,13 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // ReplaceServerSwitchingRulesURL generates an URL for the replace server switching rules operation
 type ReplaceServerSwitchingRulesURL struct {
-	Backend       string
+	ParentName string
+
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -59,7 +61,14 @@ func (o *ReplaceServerSwitchingRulesURL) SetBasePath(bp string) {
 func (o *ReplaceServerSwitchingRulesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/server_switching_rules"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/server_switching_rules"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on ReplaceServerSwitchingRulesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -68,11 +77,6 @@ func (o *ReplaceServerSwitchingRulesURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {

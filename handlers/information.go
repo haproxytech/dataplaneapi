@@ -97,7 +97,6 @@ func (h *GetInfoHandlerImpl) Handle(params information.GetInfoParams, principal 
 			sys.MemInfo.TotalMemory = int64(mem.Total)
 			sys.MemInfo.FreeMemory = int64(mem.Free)
 		}
-		//nolint:govet
 		if uptime, err := host.Uptime(); err == nil {
 			uptimeInt64 := int64(uptime)
 			sys.Uptime = &uptimeInt64

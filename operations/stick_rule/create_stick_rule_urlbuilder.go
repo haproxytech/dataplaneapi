@@ -31,9 +31,9 @@ import (
 
 // CreateStickRuleURL generates an URL for the create stick rule operation
 type CreateStickRuleURL struct {
-	Index int64
+	Index      int64
+	ParentName string
 
-	Backend       string
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -62,13 +62,20 @@ func (o *CreateStickRuleURL) SetBasePath(bp string) {
 func (o *CreateStickRuleURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/stick_rules/{index}"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/stick_rules/{index}"
 
 	index := swag.FormatInt64(o.Index)
 	if index != "" {
 		_path = strings.Replace(_path, "{index}", index, -1)
 	} else {
 		return nil, errors.New("index is required on CreateStickRuleURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CreateStickRuleURL")
 	}
 
 	_basePath := o._basePath
@@ -78,11 +85,6 @@ func (o *CreateStickRuleURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {

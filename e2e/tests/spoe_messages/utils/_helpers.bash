@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_SPOE_MESSAGES_BASE_PATH="/services/haproxy/spoe/spoe_messages"
+_SPOE_BASE_PATH="/services/haproxy/spoe/spoe_files"

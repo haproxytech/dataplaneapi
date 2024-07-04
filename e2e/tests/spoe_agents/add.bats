@@ -43,16 +43,19 @@ teardown() {
 }
 
 @test "spoe_agents: Add a spoe agent" {
-    resource_post "$_SPOE_AGENTS_BASE_PATH" "data/post.json" "spoe=spoefile_example.cfg&scope=\[ip-reputation\]"
+    PARENT_NAME="spoefile_example.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/agents" "data/post.json" "version=1"
     assert_equal "$SC" 201
 
-    resource_get "$_SPOE_AGENTS_BASE_PATH/post_agent1" "scope=\[ip-reputation\]&spoe=spoefile_example.cfg"
+    resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/agents/post_agent1"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME"/data/post.json)" ".")"
 
     # refuse adding an existing spoe agent
-    resource_post "$_SPOE_AGENTS_BASE_PATH" "/data/post.json" "spoe=spoefile_example.cfg&scope=%5Bip-reputation%5D"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_post "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/agents" "/data/post.json"
     assert_success
 
     dpa_curl_status_body '$output'

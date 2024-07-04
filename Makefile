@@ -38,6 +38,15 @@ build:
 e2e: build
 	TESTNAME=$(TESTNAME) TESTNUMBER=$(TESTNUMBER) TESTDESCRIPTION="$(TESTDESCRIPTION)" SKIP_CLEANUP=$(SKIP_CLEANUP) PREWIPE=$(PREWIPE) HAPROXY_VERSION=$(HAPROXY_VERSION) ./e2e/run.bash
 
+.PHONY: generate-parent-aliases_no_formatting
+generate-parent-aliases_no_formatting:
+	rm -f handlers/parent_*_generated.go
+	go run generate/parents/*.go
+
+.PHONY: generate-parent-aliases
+generate-parent-aliases: generate-parent-aliases_no_formatting gofumpt
+
+
 .PHONY: generate
 generate:
 	cd generate/swagger;docker build \

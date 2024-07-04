@@ -45,7 +45,7 @@ func NewGetTables(ctx *middleware.Context, handler GetTablesHandler) *GetTables 
 }
 
 /*
-	GetTables swagger:route GET /services/haproxy/configuration/tables Table getTables
+	GetTables swagger:route GET /services/haproxy/configuration/peers/{parent_name}/tables Table getTables
 
 # Return an array of tables
 

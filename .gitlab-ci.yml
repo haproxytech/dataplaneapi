@@ -29,6 +29,20 @@ diff:
     - make generate-native
     - test -z "$(git diff 2> /dev/null)" || exit "Specification is not generated, issue \`make generate\` and commit the result"
     - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Specification generation created untracked files, cannot proceed"
+diff-spec-parent:
+  stage: lint
+  image:
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    entrypoint: [""]
+  tags:
+    - go
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
+  script:
+    - make generate-parent-aliases
+    - test -z "$(git diff 2> /dev/null)" || exit "Parent aliases are not generated, issue \`make generate-parent-aliases\` and commit the result"
+    - test -z "$(git ls-files --others --exclude-standard 2> /dev/null)" || exit "Parent aliases created untracked files, cannot proceed"
 golangci-lint:
   stage: lint
   artifacts:

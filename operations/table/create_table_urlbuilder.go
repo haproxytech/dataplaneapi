@@ -24,14 +24,16 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateTableURL generates an URL for the create table operation
 type CreateTableURL struct {
+	ParentName string
+
 	ForceReload   *bool
-	PeerSection   string
 	TransactionID *string
 	Version       *int64
 
@@ -59,7 +61,14 @@ func (o *CreateTableURL) SetBasePath(bp string) {
 func (o *CreateTableURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/tables"
+	var _path = "/services/haproxy/configuration/peers/{parent_name}/tables"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CreateTableURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -75,11 +84,6 @@ func (o *CreateTableURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
-	}
-
-	peerSectionQ := o.PeerSection
-	if peerSectionQ != "" {
-		qs.Set("peer_section", peerSectionQ)
 	}
 
 	var transactionIDQ string

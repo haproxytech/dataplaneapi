@@ -16,3 +16,5 @@
 #
 
 _TCP_REQ_RULES_CERTS_BASE_PATH="/services/haproxy/configuration/tcp_request_rules"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"

@@ -22,6 +22,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_response_rules: Fail creating a TCP Response rule when backend doesn't exist" {
-  resource_post "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "data/unless.json" "backend=ghost&force_reload=true"
+  PARENT_NAME="ghost"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0" "data/unless.json" "force_reload=true"
 	assert_equal "$SC" 400
 }

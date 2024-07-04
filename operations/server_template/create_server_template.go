@@ -45,7 +45,7 @@ func NewCreateServerTemplate(ctx *middleware.Context, handler CreateServerTempla
 }
 
 /*
-	CreateServerTemplate swagger:route POST /services/haproxy/configuration/server_templates ServerTemplate createServerTemplate
+	CreateServerTemplate swagger:route POST /services/haproxy/configuration/backends/{parent_name}/server_templates ServerTemplate createServerTemplate
 
 # Add a new server template
 

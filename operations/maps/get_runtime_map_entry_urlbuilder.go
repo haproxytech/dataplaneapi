@@ -29,9 +29,8 @@ import (
 
 // GetRuntimeMapEntryURL generates an URL for the get runtime map entry operation
 type GetRuntimeMapEntryURL struct {
-	ID string
-
-	Map string
+	ID         string
+	ParentName string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -57,7 +56,7 @@ func (o *GetRuntimeMapEntryURL) SetBasePath(bp string) {
 func (o *GetRuntimeMapEntryURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/maps_entries/{id}"
+	var _path = "/services/haproxy/runtime/maps/{parent_name}/entries/{id}"
 
 	id := o.ID
 	if id != "" {
@@ -66,20 +65,18 @@ func (o *GetRuntimeMapEntryURL) Build() (*url.URL, error) {
 		return nil, errors.New("id is required on GetRuntimeMapEntryURL")
 	}
 
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetRuntimeMapEntryURL")
+	}
+
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/v3"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
-
-	qs := make(url.Values)
-
-	mapVarQ := o.Map
-	if mapVarQ != "" {
-		qs.Set("map", mapVarQ)
-	}
-
-	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

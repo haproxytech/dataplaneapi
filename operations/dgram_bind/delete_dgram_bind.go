@@ -45,7 +45,7 @@ func NewDeleteDgramBind(ctx *middleware.Context, handler DeleteDgramBindHandler)
 }
 
 /*
-	DeleteDgramBind swagger:route DELETE /services/haproxy/configuration/dgram_binds/{name} DgramBind deleteDgramBind
+	DeleteDgramBind swagger:route DELETE /services/haproxy/configuration/log_forwards/{parent_name}/dgram_binds/{name} DgramBind deleteDgramBind
 
 # Delete a dgram bind
 

@@ -29,7 +29,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -58,11 +57,6 @@ type ReplaceServerSwitchingRulesParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Backend name
-	  Required: true
-	  In: query
-	*/
-	Backend string
 	/*
 	  Required: true
 	  In: body
@@ -73,6 +67,11 @@ type ReplaceServerSwitchingRulesParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*Parent name
+	  Required: true
+	  In: path
+	*/
+	ParentName string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -93,11 +92,6 @@ func (o *ReplaceServerSwitchingRulesParams) BindRequest(r *http.Request, route *
 	o.HTTPRequest = r
 
 	qs := runtime.Values(r.URL.Query())
-
-	qBackend, qhkBackend, _ := qs.GetOK("backend")
-	if err := o.bindBackend(qBackend, qhkBackend, route.Formats); err != nil {
-		res = append(res, err)
-	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -127,6 +121,11 @@ func (o *ReplaceServerSwitchingRulesParams) BindRequest(r *http.Request, route *
 		res = append(res, err)
 	}
 
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qTransactionID, qhkTransactionID, _ := qs.GetOK("transaction_id")
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
@@ -139,27 +138,6 @@ func (o *ReplaceServerSwitchingRulesParams) BindRequest(r *http.Request, route *
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindBackend binds and validates parameter Backend from query.
-func (o *ReplaceServerSwitchingRulesParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("backend", "query", rawData)
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("backend", "query", raw); err != nil {
-		return err
-	}
-	o.Backend = raw
-
 	return nil
 }
 
@@ -183,6 +161,20 @@ func (o *ReplaceServerSwitchingRulesParams) bindForceReload(rawData []string, ha
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindParentName binds and validates parameter ParentName from path.
+func (o *ReplaceServerSwitchingRulesParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

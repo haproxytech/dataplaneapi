@@ -48,7 +48,7 @@ func NewStartSpoeTransaction(ctx *middleware.Context, handler StartSpoeTransacti
 }
 
 /*
-	StartSpoeTransaction swagger:route POST /services/haproxy/spoe_transactions SpoeTransactions startSpoeTransaction
+	StartSpoeTransaction swagger:route POST /services/haproxy/spoe/spoe_files/{parent_name}/transactions SpoeTransactions startSpoeTransaction
 
 # Start a new transaction
 

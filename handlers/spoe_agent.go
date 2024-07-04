@@ -35,7 +35,7 @@ func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParam
 		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -48,7 +48,7 @@ func (h *SpoeCreateSpoeAgentHandlerImpl) Handle(params spoe.CreateSpoeAgentParam
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.CreateAgent(params.Scope, params.Data, t, v)
+	err = ss.CreateAgent(params.ScopeName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewCreateSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -67,7 +67,7 @@ func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParam
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -80,7 +80,7 @@ func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParam
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.DeleteAgent(params.Scope, params.Name, t, v)
+	err = ss.DeleteAgent(params.ScopeName, params.Name, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewDeleteSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -88,20 +88,20 @@ func (h *SpoeDeleteSpoeAgentHandlerImpl) Handle(params spoe.DeleteSpoeAgentParam
 	return spoe.NewDeleteSpoeAgentNoContent()
 }
 
-// SpoeGetSpoeAgentsHandlerImpl implementation of the SpoeGetSpoeAgentsHandler interface
-type SpoeGetSpoeAgentsHandlerImpl struct {
+// SpoeGetAllSpoeAgentHandlerImpl implementation of the SpoeGetSpoeAgentsHandler interface
+type SpoeGetAllSpoeAgentHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
 // SpoeGetAllSpoeFilesHandlerImpl implementation of the SpoeGetAllSpoeFilesHandler
-func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, principal interface{}) middleware.Responder {
+func (h *SpoeGetAllSpoeAgentHandlerImpl) Handle(params spoe.GetAllSpoeAgentParams, principal interface{}) middleware.Responder {
 	spoeStorage, err := h.Client.Spoe()
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
@@ -110,12 +110,12 @@ func (h *SpoeGetSpoeAgentsHandlerImpl) Handle(params spoe.GetSpoeAgentsParams, p
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, agents, err := ss.GetAgents(params.Scope, t)
+	_, agents, err := ss.GetAgents(params.ScopeName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetAllSpoeFilesDefault(int(*e.Code)).WithPayload(e)
 	}
-	return spoe.NewGetSpoeAgentsOK().WithPayload(agents)
+	return spoe.NewGetAllSpoeAgentOK().WithPayload(agents)
 }
 
 // SpoeGetSpoeAgentHandlerImpl implementation of the SpoeGetSpoeAgentHandler interface
@@ -130,7 +130,7 @@ func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, pri
 		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -139,7 +139,7 @@ func (h *SpoeGetSpoeAgentHandlerImpl) Handle(params spoe.GetSpoeAgentParams, pri
 	if params.TransactionID != nil {
 		t = *params.TransactionID
 	}
-	_, agent, err := ss.GetAgent(params.Scope, params.Name, t)
+	_, agent, err := ss.GetAgent(params.ScopeName, params.Name, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewGetSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -162,7 +162,7 @@ func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentPar
 		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	ss, err := spoeStorage.GetSingleSpoe(params.Spoe)
+	ss, err := spoeStorage.GetSingleSpoe(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)
@@ -175,7 +175,7 @@ func (h *SpoeReplaceSpoeAgentHandlerImpl) Handle(params spoe.ReplaceSpoeAgentPar
 	if params.Version != nil {
 		v = *params.Version
 	}
-	err = ss.EditAgent(params.Scope, params.Data, t, v)
+	err = ss.EditAgent(params.ScopeName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return spoe.NewReplaceSpoeAgentDefault(int(*e.Code)).WithPayload(e)

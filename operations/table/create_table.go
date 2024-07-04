@@ -45,7 +45,7 @@ func NewCreateTable(ctx *middleware.Context, handler CreateTableHandler) *Create
 }
 
 /*
-	CreateTable swagger:route POST /services/haproxy/configuration/tables Table createTable
+	CreateTable swagger:route POST /services/haproxy/configuration/peers/{parent_name}/tables Table createTable
 
 # Add a new table
 

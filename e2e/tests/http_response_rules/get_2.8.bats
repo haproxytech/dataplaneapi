@@ -28,7 +28,8 @@ load 'utils/_helpers'
 @test "http_response_rules: Return one track-sc HTTP Response Rule from frontend" {
   if haproxy_version_ge "2.8"
   then
-  resource_get "$_RES_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_sticksc"
+  PARENT_NAME="test_sticksc"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_response_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
@@ -37,7 +38,7 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".track_sc_table")" "test_sticksc"
 	assert_equal "$(get_json_path "$BODY" ".track_sc_stick_counter")" 0
 
-  resource_get "$_RES_RULES_BASE_PATH/1" "parent_type=frontend&parent_name=test_sticksc"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_response_rules/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
@@ -51,7 +52,8 @@ load 'utils/_helpers'
 @test "http_response_rules: Return one track-sc HTTP Response Rule from backend" {
   if haproxy_version_ge "2.8"
   then
-  resource_get "$_RES_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_sticksc"
+  PARENT_NAME="test_sticksc"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_response_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
@@ -60,7 +62,7 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".track_sc_table")" "test_sticksc"
 	assert_equal "$(get_json_path "$BODY" ".track_sc_stick_counter")" 0
 
-  resource_get "$_RES_RULES_BASE_PATH/1" "parent_type=backend&parent_name=test_sticksc"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_response_rules/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "track-sc"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "if"

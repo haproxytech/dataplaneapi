@@ -25,7 +25,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "acl_runtime: Return ACL file entries list" {
-  resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=0"
+  PARENT_NAME="0"
+  resource_get "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries"
   assert_equal "$SC" 200
 
   assert_equal "$(get_json_path "${BODY}" " .[0].value" )" "/static"
@@ -35,7 +36,8 @@ load 'utils/_helpers'
 }
 
 @test "acl_runtime: Return ACL file entries by their ID" {
-  resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=0"
+  PARENT_NAME="0"
+  resource_get "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries"
   assert_equal "$SC" 200
 
   local list; list=$BODY
@@ -44,35 +46,37 @@ load 'utils/_helpers'
     local id; id="$(get_json_path "${list}" ".[${index}].id" )"
     local value; value="$(get_json_path "${list}" ".[${index}].value" )"
 
-    resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH/$id" "acl_id=0"
+    resource_get "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries/$id"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "${BODY}" ".value" )" "$value"
   done
 }
 
 @test "acl_runtime: Add an ACL file entry" {
-  resource_post "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "data/post.json" "acl_id=0"
+  PARENT_NAME="0"
+  resource_post "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries" "data/post.json"
   assert_equal "$SC" 201
   assert_equal "$(get_json_path "${BODY}" " .value" )" "/js"
 }
 
 @test "acl_runtime: Delete an ACL file entry by its ID" {
+  PARENT_NAME="1"
   if haproxy_version_ge "2.9"; then
     skip "cause: bug in HAPRoxy 2.9"
   fi
 	# checking items and retrieving first ID
-	resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=1"
+	resource_get "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries"
   assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ". | length" )" "5"
 
 	local id; id="$(get_json_path "$BODY" ".[0].id")"
 
 	# deleting the entry file by its ID
-	resource_delete "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH/$id" "acl_id=1"
+	resource_delete "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries/$id"
   assert_equal "$SC" 204
 
 	# checking the file entry has been deleted counting the items
-	resource_get "$_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH" "acl_id=1"
+	resource_get "$_RUNTIME_ACL_BASE_PATH/$PARENT_NAME/entries"
   assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ". | length" )" "4"
 }

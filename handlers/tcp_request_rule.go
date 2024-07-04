@@ -18,6 +18,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v6"
+	cnconstants "github.com/haproxytech/client-native/v6/configuration/parents"
 	"github.com/haproxytech/client-native/v6/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -42,8 +43,8 @@ type GetTCPRequestRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-// GetTCPRequestRulesHandlerImpl implementation of the GetTCPRequestRulesHandler interface using client-native client
-type GetTCPRequestRulesHandlerImpl struct {
+// GetAllTCPRequestRuleHandlerImpl implementation of the GetTCPRequestRulesHandler interface using client-native client
+type GetAllTCPRequestRuleHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
@@ -53,14 +54,14 @@ type ReplaceTCPRequestRuleHandlerImpl struct {
 	ReloadAgent haproxy.IReloadAgent
 }
 
-// ReplaceTCPRequestRulesHandlerImpl implementation of the ReplaceTCPRequestRulesHandler interface using client-native client
-type ReplaceTCPRequestRulesHandlerImpl struct {
+// ReplaceAllTCPRequestRuleHandlerImpl implementation of the ReplaceTCPRequestRulesHandler interface using client-native client
+type ReplaceAllTCPRequestRuleHandlerImpl struct {
 	Client      client_native.HAProxyClient
 	ReloadAgent haproxy.IReloadAgent
 }
 
 // Handle executing the request and returning a response
-func (h *CreateTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.CreateTCPRequestRuleParams, principal interface{}) middleware.Responder {
+func (h *CreateTCPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_request_rule.CreateTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -77,37 +78,37 @@ func (h *CreateTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.CreateT
 			Message: &msg,
 			Code:    &c,
 		}
-		return tcp_request_rule.NewCreateTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewCreateTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewCreateTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewCreateTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateTCPRequestRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.CreateTCPRequestRule(params.Index, string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewCreateTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewCreateTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
 		if *params.ForceReload {
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return tcp_request_rule.NewCreateTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+				return tcp_request_rule.NewCreateTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return tcp_request_rule.NewCreateTCPRequestRuleCreated().WithPayload(params.Data)
+			return tcp_request_rule.NewCreateTCPRequestRuleBackendCreated().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return tcp_request_rule.NewCreateTCPRequestRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return tcp_request_rule.NewCreateTCPRequestRuleBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return tcp_request_rule.NewCreateTCPRequestRuleAccepted().WithPayload(params.Data)
+	return tcp_request_rule.NewCreateTCPRequestRuleBackendAccepted().WithPayload(params.Data)
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.DeleteTCPRequestRuleParams, principal interface{}) middleware.Responder {
+func (h *DeleteTCPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_request_rule.DeleteTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -124,19 +125,19 @@ func (h *DeleteTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.DeleteT
 			Message: &msg,
 			Code:    &c,
 		}
-		return tcp_request_rule.NewDeleteTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewDeleteTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewDeleteTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewDeleteTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteTCPRequestRule(params.Index, params.ParentType, params.ParentName, t, v)
+	err = configuration.DeleteTCPRequestRule(params.Index, string(parentType), params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewDeleteTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewDeleteTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -144,18 +145,18 @@ func (h *DeleteTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.DeleteT
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return tcp_request_rule.NewDeleteTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+				return tcp_request_rule.NewDeleteTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return tcp_request_rule.NewDeleteTCPRequestRuleNoContent()
+			return tcp_request_rule.NewDeleteTCPRequestRuleBackendNoContent()
 		}
 		rID := h.ReloadAgent.Reload()
-		return tcp_request_rule.NewDeleteTCPRequestRuleAccepted().WithReloadID(rID)
+		return tcp_request_rule.NewDeleteTCPRequestRuleBackendAccepted().WithReloadID(rID)
 	}
-	return tcp_request_rule.NewDeleteTCPRequestRuleAccepted()
+	return tcp_request_rule.NewDeleteTCPRequestRuleBackendAccepted()
 }
 
 // Handle executing the request and returning a response
-func (h *GetTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRuleParams, principal interface{}) middleware.Responder {
+func (h *GetTCPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_request_rule.GetTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -164,19 +165,19 @@ func (h *GetTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.GetTCPRequ
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewGetTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewGetTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rule, err := configuration.GetTCPRequestRule(params.Index, params.ParentType, params.ParentName, t)
+	_, rule, err := configuration.GetTCPRequestRule(params.Index, string(parentType), params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewGetTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewGetTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return tcp_request_rule.NewGetTCPRequestRuleOK().WithPayload(rule)
+	return tcp_request_rule.NewGetTCPRequestRuleBackendOK().WithPayload(rule)
 }
 
 // Handle executing the request and returning a response
-func (h *GetTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.GetTCPRequestRulesParams, principal interface{}) middleware.Responder {
+func (h *GetAllTCPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_request_rule.GetAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -185,22 +186,22 @@ func (h *GetTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.GetTCPReq
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewGetTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewGetAllTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, rules, err := configuration.GetTCPRequestRules(params.ParentType, params.ParentName, t)
+	_, rules, err := configuration.GetTCPRequestRules(string(parentType), params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(models.TCPRequestRules{})
+			return tcp_request_rule.NewGetAllTCPRequestRuleBackendOK().WithPayload(models.TCPRequestRules{})
 		}
-		return tcp_request_rule.NewGetTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewGetAllTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return tcp_request_rule.NewGetTCPRequestRulesOK().WithPayload(rules)
+	return tcp_request_rule.NewGetAllTCPRequestRuleBackendOK().WithPayload(rules)
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRuleParams, principal interface{}) middleware.Responder {
+func (h *ReplaceTCPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_request_rule.ReplaceTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -217,19 +218,19 @@ func (h *ReplaceTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.Replac
 			Message: &msg,
 			Code:    &c,
 		}
-		return tcp_request_rule.NewReplaceTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewReplaceTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewReplaceTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewReplaceTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditTCPRequestRule(params.Index, params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.EditTCPRequestRule(params.Index, string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewReplaceTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewReplaceTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -237,18 +238,18 @@ func (h *ReplaceTCPRequestRuleHandlerImpl) Handle(params tcp_request_rule.Replac
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return tcp_request_rule.NewReplaceTCPRequestRuleDefault(int(*e.Code)).WithPayload(e)
+				return tcp_request_rule.NewReplaceTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return tcp_request_rule.NewReplaceTCPRequestRuleOK().WithPayload(params.Data)
+			return tcp_request_rule.NewReplaceTCPRequestRuleBackendOK().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return tcp_request_rule.NewReplaceTCPRequestRuleAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return tcp_request_rule.NewReplaceTCPRequestRuleBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return tcp_request_rule.NewReplaceTCPRequestRuleAccepted().WithPayload(params.Data)
+	return tcp_request_rule.NewReplaceTCPRequestRuleBackendAccepted().WithPayload(params.Data)
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.ReplaceTCPRequestRulesParams, principal interface{}) middleware.Responder {
+func (h *ReplaceAllTCPRequestRuleHandlerImpl) Handle(parentType cnconstants.CnParentType, params tcp_request_rule.ReplaceAllTCPRequestRuleBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -265,18 +266,18 @@ func (h *ReplaceTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.Repla
 			Message: &msg,
 			Code:    &c,
 		}
-		return tcp_request_rule.NewReplaceTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewReplaceAllTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewReplaceTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewReplaceAllTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	err = configuration.ReplaceTCPRequestRules(params.ParentType, params.ParentName, params.Data, t, v)
+	err = configuration.ReplaceTCPRequestRules(string(parentType), params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return tcp_request_rule.NewReplaceTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+		return tcp_request_rule.NewReplaceAllTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -284,12 +285,12 @@ func (h *ReplaceTCPRequestRulesHandlerImpl) Handle(params tcp_request_rule.Repla
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return tcp_request_rule.NewReplaceTCPRequestRulesDefault(int(*e.Code)).WithPayload(e)
+				return tcp_request_rule.NewReplaceAllTCPRequestRuleBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return tcp_request_rule.NewReplaceTCPRequestRulesOK().WithPayload(params.Data)
+			return tcp_request_rule.NewReplaceAllTCPRequestRuleBackendOK().WithPayload(params.Data)
 		}
 		rID := h.ReloadAgent.Reload()
-		return tcp_request_rule.NewReplaceTCPRequestRulesAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return tcp_request_rule.NewReplaceAllTCPRequestRuleBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return tcp_request_rule.NewReplaceTCPRequestRulesAccepted().WithPayload(params.Data)
+	return tcp_request_rule.NewReplaceAllTCPRequestRuleBackendAccepted().WithPayload(params.Data)
 }

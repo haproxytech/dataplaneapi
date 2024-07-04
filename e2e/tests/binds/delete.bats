@@ -25,9 +25,10 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "binds: Delete a bind" {
-  resource_delete "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds/fixture" "force_reload=true"
   assert_equal "$SC" 204
 
-  resource_delete "$_BIND_BASE_PATH/loopback" "frontend=test_frontend&force_reload=true"
+  resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds/loopback" "force_reload=true"
   assert_equal "$SC" 204
 }

@@ -29,9 +29,9 @@ import (
 
 // GetSpoeScopeURL generates an URL for the get spoe scope operation
 type GetSpoeScopeURL struct {
-	Name string
+	Name       string
+	ParentName string
 
-	Spoe          string
 	TransactionID *string
 
 	_basePath string
@@ -58,13 +58,20 @@ func (o *GetSpoeScopeURL) SetBasePath(bp string) {
 func (o *GetSpoeScopeURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe/spoe_scopes/{name}"
+	var _path = "/services/haproxy/spoe/spoe_files/{parent_name}/scopes/{name}"
 
 	name := o.Name
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
 		return nil, errors.New("name is required on GetSpoeScopeURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetSpoeScopeURL")
 	}
 
 	_basePath := o._basePath
@@ -74,11 +81,6 @@ func (o *GetSpoeScopeURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

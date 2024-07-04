@@ -24,18 +24,21 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "servers: Delete a server" {
+  PARENT_NAME="test_backend"
   for name in "server_01" "server_02" "server_03" "server_04"; do
-    resource_delete "$_SERVER_BASE_PATH/$name" "backend=test_backend&force_reload=true"
+    resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/servers/$name" "force_reload=true"
 	  assert_equal "$SC" 204
   done
 }
 
 @test "servers: Delete a non existing server" {
-  resource_delete "$_SERVER_BASE_PATH/ghost" "backend=test_backend"
+  PARENT_NAME=test_backend
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/servers/ghost"
   assert_equal "$SC" 404
 }
 
 @test "servers: Delete a server on a non existing backend" {
-  resource_delete "$_SERVER_BASE_PATH/server_01" "backend=ghost"
+  PARENT_NAME=ghost
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/servers/server_01"
   assert_equal "$SC" 404
 }

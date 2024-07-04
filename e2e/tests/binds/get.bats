@@ -25,7 +25,8 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "binds: Return one bind" {
-  resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds/fixture" "force_reload=true"
   assert_equal "$SC" 200
   assert_equal "$(get_json_path "$BODY" '.name')" "fixture"
   if haproxy_version_ge "2.5"

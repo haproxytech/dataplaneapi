@@ -24,13 +24,15 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateServerTemplateURL generates an URL for the create server template operation
 type CreateServerTemplateURL struct {
-	Backend       string
+	ParentName string
+
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -59,7 +61,14 @@ func (o *CreateServerTemplateURL) SetBasePath(bp string) {
 func (o *CreateServerTemplateURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/server_templates"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/server_templates"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CreateServerTemplateURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -68,11 +77,6 @@ func (o *CreateServerTemplateURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {

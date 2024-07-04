@@ -323,7 +323,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.SpoeTransactionsStartSpoeTransactionHandler = &handlers.SpoeTransactionsStartSpoeTransactionHandlerImpl{Client: client}
 	api.SpoeTransactionsDeleteSpoeTransactionHandler = &handlers.SpoeTransactionsDeleteSpoeTransactionHandlerImpl{Client: client}
 	api.SpoeTransactionsGetSpoeTransactionHandler = &handlers.SpoeTransactionsGetSpoeTransactionHandlerImpl{Client: client}
-	api.SpoeTransactionsGetSpoeTransactionsHandler = &handlers.SpoeTransactionsGetSpoeTransactionsHandlerImpl{Client: client}
+	api.SpoeTransactionsGetAllSpoeTransactionHandler = &handlers.SpoeTransactionsGetAllSpoeTransactionHandlerImpl{Client: client}
 	api.SpoeTransactionsCommitSpoeTransactionHandler = &handlers.SpoeTransactionsCommitSpoeTransactionHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup sites handlers
@@ -389,11 +389,26 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.GroupReplaceGroupHandler = &handlers.ReplaceGroupHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup server handlers
-	api.ServerCreateServerHandler = &handlers.CreateServerHandlerImpl{Client: client, ReloadAgent: ra}
-	api.ServerDeleteServerHandler = &handlers.DeleteServerHandlerImpl{Client: client, ReloadAgent: ra}
-	api.ServerGetServerHandler = &handlers.GetServerHandlerImpl{Client: client}
-	api.ServerGetServersHandler = &handlers.GetServersHandlerImpl{Client: client}
-	api.ServerReplaceServerHandler = &handlers.ReplaceServerHandlerImpl{Client: client, ReloadAgent: ra}
+	// Create
+	api.ServerCreateServerBackendHandler = &handlers.CreateServerBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerCreateServerPeerHandler = &handlers.CreateServerPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerCreateServerRingHandler = &handlers.CreateServerRingHandlerImpl{Client: client, ReloadAgent: ra}
+	// Get all
+	api.ServerGetAllServerBackendHandler = &handlers.GetAllServerBackendHandlerImpl{Client: client}
+	api.ServerGetAllServerPeerHandler = &handlers.GetAllServerPeerHandlerImpl{Client: client}
+	api.ServerGetAllServerRingHandler = &handlers.GetAllServerRingHandlerImpl{Client: client}
+	// Delete one
+	api.ServerDeleteServerBackendHandler = &handlers.DeleteServerBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerDeleteServerPeerHandler = &handlers.DeleteServerPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerDeleteServerRingHandler = &handlers.DeleteServerRingHandlerImpl{Client: client, ReloadAgent: ra}
+	// Get one
+	api.ServerGetServerBackendHandler = &handlers.GetServerBackendHandlerImpl{Client: client}
+	api.ServerGetServerPeerHandler = &handlers.GetServerPeerHandlerImpl{Client: client}
+	api.ServerGetServerRingHandler = &handlers.GetServerRingHandlerImpl{Client: client}
+	// Replace one
+	api.ServerReplaceServerBackendHandler = &handlers.ReplaceServerBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerReplaceServerPeerHandler = &handlers.ReplaceServerPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ServerReplaceServerRingHandler = &handlers.ReplaceServerRingHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup server template handlers
 	api.ServerTemplateCreateServerTemplateHandler = &handlers.CreateServerTemplateHandlerImpl{Client: client, ReloadAgent: ra}
@@ -403,75 +418,141 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.ServerTemplateReplaceServerTemplateHandler = &handlers.ReplaceServerTemplateHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup bind handlers
-	api.BindCreateBindHandler = &handlers.CreateBindHandlerImpl{Client: client, ReloadAgent: ra}
-	api.BindDeleteBindHandler = &handlers.DeleteBindHandlerImpl{Client: client, ReloadAgent: ra}
-	api.BindGetBindHandler = &handlers.GetBindHandlerImpl{Client: client}
-	api.BindGetBindsHandler = &handlers.GetBindsHandlerImpl{Client: client}
-	api.BindReplaceBindHandler = &handlers.ReplaceBindHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindCreateBindFrontendHandler = &handlers.CreateBindFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindDeleteBindFrontendHandler = &handlers.DeleteBindFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindGetBindFrontendHandler = &handlers.GetBindFrontendHandlerImpl{Client: client}
+	api.BindGetAllBindFrontendHandler = &handlers.GetAllBindFrontendHandlerImpl{Client: client}
+	api.BindReplaceBindFrontendHandler = &handlers.ReplaceBindFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.BindCreateBindPeerHandler = &handlers.CreateBindPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindDeleteBindPeerHandler = &handlers.DeleteBindPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindGetBindPeerHandler = &handlers.GetBindPeerHandlerImpl{Client: client}
+	api.BindGetAllBindPeerHandler = &handlers.GetAllBindPeerHandlerImpl{Client: client}
+	api.BindReplaceBindPeerHandler = &handlers.ReplaceBindPeerHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.BindCreateBindLogForwardHandler = &handlers.CreateBindLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindDeleteBindLogForwardHandler = &handlers.DeleteBindLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+	api.BindGetBindLogForwardHandler = &handlers.GetBindLogForwardHandlerImpl{Client: client}
+	api.BindGetAllBindLogForwardHandler = &handlers.GetAllBindLogForwardHandlerImpl{Client: client}
+	api.BindReplaceBindLogForwardHandler = &handlers.ReplaceBindLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http check handlers
-	api.HTTPCheckGetHTTPCheckHandler = &handlers.GetHTTPCheckHandlerImpl{Client: client}
-	api.HTTPCheckGetHTTPChecksHandler = &handlers.GetHTTPChecksHandlerImpl{Client: client}
-	api.HTTPCheckCreateHTTPCheckHandler = &handlers.CreateHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPCheckReplaceHTTPCheckHandler = &handlers.ReplaceHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPCheckDeleteHTTPCheckHandler = &handlers.DeleteHTTPCheckHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPCheckReplaceHTTPChecksHandler = &handlers.ReplaceHTTPChecksHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckGetHTTPCheckBackendHandler = &handlers.GetHTTPCheckBackendHandlerImpl{Client: client}
+	api.HTTPCheckGetAllHTTPCheckBackendHandler = &handlers.GetAllHTTPCheckBackendHandlerImpl{Client: client}
+	api.HTTPCheckCreateHTTPCheckBackendHandler = &handlers.CreateHTTPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceHTTPCheckBackendHandler = &handlers.ReplaceHTTPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckDeleteHTTPCheckBackendHandler = &handlers.DeleteHTTPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceAllHTTPCheckBackendHandler = &handlers.ReplaceAllHTTPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckGetHTTPCheckDefaultsHandler = &handlers.GetHTTPCheckDefaultsHandlerImpl{Client: client}
+	api.HTTPCheckGetAllHTTPCheckDefaultsHandler = &handlers.GetAllHTTPCheckDefaultsHandlerImpl{Client: client}
+	api.HTTPCheckCreateHTTPCheckDefaultsHandler = &handlers.CreateHTTPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceHTTPCheckDefaultsHandler = &handlers.ReplaceHTTPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckDeleteHTTPCheckDefaultsHandler = &handlers.DeleteHTTPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPCheckReplaceAllHTTPCheckDefaultsHandler = &handlers.ReplaceAllHTTPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http request rule handlers
-	api.HTTPRequestRuleCreateHTTPRequestRuleHandler = &handlers.CreateHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPRequestRuleDeleteHTTPRequestRuleHandler = &handlers.DeleteHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPRequestRuleGetHTTPRequestRuleHandler = &handlers.GetHTTPRequestRuleHandlerImpl{Client: client}
-	api.HTTPRequestRuleGetHTTPRequestRulesHandler = &handlers.GetHTTPRequestRulesHandlerImpl{Client: client}
-	api.HTTPRequestRuleReplaceHTTPRequestRuleHandler = &handlers.ReplaceHTTPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPRequestRuleReplaceHTTPRequestRulesHandler = &handlers.ReplaceHTTPRequestRulesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleCreateHTTPRequestRuleBackendHandler = &handlers.CreateHTTPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleDeleteHTTPRequestRuleBackendHandler = &handlers.DeleteHTTPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleGetHTTPRequestRuleBackendHandler = &handlers.GetHTTPRequestRuleBackendHandlerImpl{Client: client}
+	api.HTTPRequestRuleGetAllHTTPRequestRuleBackendHandler = &handlers.GetAllHTTPRequestRuleBackendHandlerImpl{Client: client}
+	api.HTTPRequestRuleReplaceHTTPRequestRuleBackendHandler = &handlers.ReplaceHTTPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleReplaceAllHTTPRequestRuleBackendHandler = &handlers.ReplaceAllHTTPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleCreateHTTPRequestRuleFrontendHandler = &handlers.CreateHTTPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleDeleteHTTPRequestRuleFrontendHandler = &handlers.DeleteHTTPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleGetHTTPRequestRuleFrontendHandler = &handlers.GetHTTPRequestRuleFrontendHandlerImpl{Client: client}
+	api.HTTPRequestRuleGetAllHTTPRequestRuleFrontendHandler = &handlers.GetAllHTTPRequestRuleFrontendHandlerImpl{Client: client}
+	api.HTTPRequestRuleReplaceHTTPRequestRuleFrontendHandler = &handlers.ReplaceHTTPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPRequestRuleReplaceAllHTTPRequestRuleFrontendHandler = &handlers.ReplaceAllHTTPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http after response rule handlers
-	api.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleHandler = &handlers.CreateHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleHandler = &handlers.DeleteHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPAfterResponseRuleGetHTTPAfterResponseRuleHandler = &handlers.GetHTTPAfterResponseRuleHandlerImpl{Client: client}
-	api.HTTPAfterResponseRuleGetHTTPAfterResponseRulesHandler = &handlers.GetHTTPAfterResponseRulesHandlerImpl{Client: client}
-	api.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleHandler = &handlers.ReplaceHTTPAfterResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPAfterResponseRuleReplaceHTTPAfterResponseRulesHandler = &handlers.ReplaceHTTPAfterResponseRulesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleBackendHandler = &handlers.CreateHTTPAfterResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleBackendHandler = &handlers.DeleteHTTPAfterResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleGetHTTPAfterResponseRuleBackendHandler = &handlers.GetHTTPAfterResponseRuleBackendHandlerImpl{Client: client}
+	api.HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleBackendHandler = &handlers.GetAllHTTPAfterResponseRuleBackendHandlerImpl{Client: client}
+	api.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleBackendHandler = &handlers.ReplaceHTTPAfterResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleBackendHandler = &handlers.ReplaceAllHTTPAfterResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.HTTPAfterResponseRuleCreateHTTPAfterResponseRuleFrontendHandler = &handlers.CreateHTTPAfterResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleDeleteHTTPAfterResponseRuleFrontendHandler = &handlers.DeleteHTTPAfterResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleGetHTTPAfterResponseRuleFrontendHandler = &handlers.GetHTTPAfterResponseRuleFrontendHandlerImpl{Client: client}
+	api.HTTPAfterResponseRuleGetAllHTTPAfterResponseRuleFrontendHandler = &handlers.GetAllHTTPAfterResponseRuleFrontendHandlerImpl{Client: client}
+	api.HTTPAfterResponseRuleReplaceHTTPAfterResponseRuleFrontendHandler = &handlers.ReplaceHTTPAfterResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPAfterResponseRuleReplaceAllHTTPAfterResponseRuleFrontendHandler = &handlers.ReplaceAllHTTPAfterResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http response rule handlers
-	api.HTTPResponseRuleCreateHTTPResponseRuleHandler = &handlers.CreateHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPResponseRuleDeleteHTTPResponseRuleHandler = &handlers.DeleteHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPResponseRuleGetHTTPResponseRuleHandler = &handlers.GetHTTPResponseRuleHandlerImpl{Client: client}
-	api.HTTPResponseRuleGetHTTPResponseRulesHandler = &handlers.GetHTTPResponseRulesHandlerImpl{Client: client}
-	api.HTTPResponseRuleReplaceHTTPResponseRuleHandler = &handlers.ReplaceHTTPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPResponseRuleReplaceHTTPResponseRulesHandler = &handlers.ReplaceHTTPResponseRulesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleCreateHTTPResponseRuleBackendHandler = &handlers.CreateHTTPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleDeleteHTTPResponseRuleBackendHandler = &handlers.DeleteHTTPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleGetHTTPResponseRuleBackendHandler = &handlers.GetHTTPResponseRuleBackendHandlerImpl{Client: client}
+	api.HTTPResponseRuleGetAllHTTPResponseRuleBackendHandler = &handlers.GetAllHTTPResponseRuleBackendHandlerImpl{Client: client}
+	api.HTTPResponseRuleReplaceHTTPResponseRuleBackendHandler = &handlers.ReplaceHTTPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleReplaceAllHTTPResponseRuleBackendHandler = &handlers.ReplaceAllHTTPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler = &handlers.CreateHTTPResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler = &handlers.DeleteHTTPResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleGetHTTPResponseRuleFrontendHandler = &handlers.GetHTTPResponseRuleFrontendHandlerImpl{Client: client}
+	api.HTTPResponseRuleGetAllHTTPResponseRuleFrontendHandler = &handlers.GetAllHTTPResponseRuleFrontendHandlerImpl{Client: client}
+	api.HTTPResponseRuleReplaceHTTPResponseRuleFrontendHandler = &handlers.ReplaceHTTPResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPResponseRuleReplaceAllHTTPResponseRuleFrontendHandler = &handlers.ReplaceAllHTTPResponseRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup http error rule handlers
-	api.HTTPErrorRuleCreateHTTPErrorRuleHandler = &handlers.CreateHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPErrorRuleDeleteHTTPErrorRuleHandler = &handlers.DeleteHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPErrorRuleGetHTTPErrorRuleHandler = &handlers.GetHTTPErrorRuleHandlerImpl{Client: client}
-	api.HTTPErrorRuleGetHTTPErrorRulesHandler = &handlers.GetHTTPErrorRulesHandlerImpl{Client: client}
-	api.HTTPErrorRuleReplaceHTTPErrorRuleHandler = &handlers.ReplaceHTTPErrorRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.HTTPErrorRuleReplaceHTTPErrorRulesHandler = &handlers.ReplaceHTTPErrorRulesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleCreateHTTPErrorRuleBackendHandler = &handlers.CreateHTTPErrorRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleDeleteHTTPErrorRuleBackendHandler = &handlers.DeleteHTTPErrorRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleGetHTTPErrorRuleBackendHandler = &handlers.GetHTTPErrorRuleBackendHandlerImpl{Client: client}
+	api.HTTPErrorRuleGetAllHTTPErrorRuleBackendHandler = &handlers.GetAllHTTPErrorRuleBackendHandlerImpl{Client: client}
+	api.HTTPErrorRuleReplaceHTTPErrorRuleBackendHandler = &handlers.ReplaceHTTPErrorRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleReplaceAllHTTPErrorRuleBackendHandler = &handlers.ReplaceAllHTTPErrorRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.HTTPErrorRuleCreateHTTPErrorRuleFrontendHandler = &handlers.CreateHTTPErrorRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleDeleteHTTPErrorRuleFrontendHandler = &handlers.DeleteHTTPErrorRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleGetHTTPErrorRuleFrontendHandler = &handlers.GetHTTPErrorRuleFrontendHandlerImpl{Client: client}
+	api.HTTPErrorRuleGetAllHTTPErrorRuleFrontendHandler = &handlers.GetAllHTTPErrorRuleFrontendHandlerImpl{Client: client}
+	api.HTTPErrorRuleReplaceHTTPErrorRuleFrontendHandler = &handlers.ReplaceHTTPErrorRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleReplaceAllHTTPErrorRuleFrontendHandler = &handlers.ReplaceAllHTTPErrorRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.HTTPErrorRuleCreateHTTPErrorRuleDefaultsHandler = &handlers.CreateHTTPErrorRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleDeleteHTTPErrorRuleDefaultsHandler = &handlers.DeleteHTTPErrorRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleGetHTTPErrorRuleDefaultsHandler = &handlers.GetHTTPErrorRuleDefaultsHandlerImpl{Client: client}
+	api.HTTPErrorRuleGetAllHTTPErrorRuleDefaultsHandler = &handlers.GetAllHTTPErrorRuleDefaultsHandlerImpl{Client: client}
+	api.HTTPErrorRuleReplaceHTTPErrorRuleDefaultsHandler = &handlers.ReplaceHTTPErrorRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.HTTPErrorRuleReplaceAllHTTPErrorRuleDefaultsHandler = &handlers.ReplaceAllHTTPErrorRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp content rule handlers
-	api.TCPRequestRuleCreateTCPRequestRuleHandler = &handlers.CreateTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPRequestRuleDeleteTCPRequestRuleHandler = &handlers.DeleteTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPRequestRuleGetTCPRequestRuleHandler = &handlers.GetTCPRequestRuleHandlerImpl{Client: client}
-	api.TCPRequestRuleGetTCPRequestRulesHandler = &handlers.GetTCPRequestRulesHandlerImpl{Client: client}
-	api.TCPRequestRuleReplaceTCPRequestRuleHandler = &handlers.ReplaceTCPRequestRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPRequestRuleReplaceTCPRequestRulesHandler = &handlers.ReplaceTCPRequestRulesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleCreateTCPRequestRuleBackendHandler = &handlers.CreateTCPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleDeleteTCPRequestRuleBackendHandler = &handlers.DeleteTCPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleGetTCPRequestRuleBackendHandler = &handlers.GetTCPRequestRuleBackendHandlerImpl{Client: client}
+	api.TCPRequestRuleGetAllTCPRequestRuleBackendHandler = &handlers.GetAllTCPRequestRuleBackendHandlerImpl{Client: client}
+	api.TCPRequestRuleReplaceTCPRequestRuleBackendHandler = &handlers.ReplaceTCPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleReplaceAllTCPRequestRuleBackendHandler = &handlers.ReplaceAllTCPRequestRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.TCPRequestRuleCreateTCPRequestRuleFrontendHandler = &handlers.CreateTCPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleDeleteTCPRequestRuleFrontendHandler = &handlers.DeleteTCPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleGetTCPRequestRuleFrontendHandler = &handlers.GetTCPRequestRuleFrontendHandlerImpl{Client: client}
+	api.TCPRequestRuleGetAllTCPRequestRuleFrontendHandler = &handlers.GetAllTCPRequestRuleFrontendHandlerImpl{Client: client}
+	api.TCPRequestRuleReplaceTCPRequestRuleFrontendHandler = &handlers.ReplaceTCPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPRequestRuleReplaceAllTCPRequestRuleFrontendHandler = &handlers.ReplaceAllTCPRequestRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp connection rule handlers
-	api.TCPResponseRuleCreateTCPResponseRuleHandler = &handlers.CreateTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPResponseRuleDeleteTCPResponseRuleHandler = &handlers.DeleteTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPResponseRuleGetTCPResponseRuleHandler = &handlers.GetTCPResponseRuleHandlerImpl{Client: client}
-	api.TCPResponseRuleGetTCPResponseRulesHandler = &handlers.GetTCPResponseRulesHandlerImpl{Client: client}
-	api.TCPResponseRuleReplaceTCPResponseRuleHandler = &handlers.ReplaceTCPResponseRuleHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPResponseRuleReplaceTCPResponseRulesHandler = &handlers.ReplaceTCPResponseRulesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleCreateTCPResponseRuleBackendHandler = &handlers.CreateTCPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleDeleteTCPResponseRuleBackendHandler = &handlers.DeleteTCPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleGetTCPResponseRuleBackendHandler = &handlers.GetTCPResponseRuleBackendHandlerImpl{Client: client}
+	api.TCPResponseRuleGetAllTCPResponseRuleBackendHandler = &handlers.GetAllTCPResponseRuleBackendHandlerImpl{Client: client}
+	api.TCPResponseRuleReplaceTCPResponseRuleBackendHandler = &handlers.ReplaceTCPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPResponseRuleReplaceAllTCPResponseRuleBackendHandler = &handlers.ReplaceAllTCPResponseRuleBackendHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup tcp check handlers
-	api.TCPCheckCreateTCPCheckHandler = &handlers.CreateTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPCheckDeleteTCPCheckHandler = &handlers.DeleteTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPCheckGetTCPCheckHandler = &handlers.GetTCPCheckHandlerImpl{Client: client}
-	api.TCPCheckGetTCPChecksHandler = &handlers.GetTCPChecksHandlerImpl{Client: client}
-	api.TCPCheckReplaceTCPCheckHandler = &handlers.ReplaceTCPCheckHandlerImpl{Client: client, ReloadAgent: ra}
-	api.TCPCheckReplaceTCPChecksHandler = &handlers.ReplaceTCPChecksHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckCreateTCPCheckBackendHandler = &handlers.CreateTCPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckDeleteTCPCheckBackendHandler = &handlers.DeleteTCPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckGetTCPCheckBackendHandler = &handlers.GetTCPCheckBackendHandlerImpl{Client: client}
+	api.TCPCheckGetAllTCPCheckBackendHandler = &handlers.GetAllTCPCheckBackendHandlerImpl{Client: client}
+	api.TCPCheckReplaceTCPCheckBackendHandler = &handlers.ReplaceTCPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckReplaceAllTCPCheckBackendHandler = &handlers.ReplaceAllTCPCheckBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.TCPCheckCreateTCPCheckDefaultsHandler = &handlers.CreateTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckDeleteTCPCheckDefaultsHandler = &handlers.DeleteTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckGetTCPCheckDefaultsHandler = &handlers.GetTCPCheckDefaultsHandlerImpl{Client: client}
+	api.TCPCheckGetAllTCPCheckDefaultsHandler = &handlers.GetAllTCPCheckDefaultsHandlerImpl{Client: client}
+	api.TCPCheckReplaceTCPCheckDefaultsHandler = &handlers.ReplaceTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TCPCheckReplaceAllTCPCheckDefaultsHandler = &handlers.ReplaceAllTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup declare capture handlers
 	api.DeclareCaptureCreateDeclareCaptureHandler = &handlers.CreateDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
@@ -498,12 +579,19 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.ServerSwitchingRuleReplaceServerSwitchingRulesHandler = &handlers.ReplaceServerSwitchingRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup filter handlers
-	api.FilterCreateFilterHandler = &handlers.CreateFilterHandlerImpl{Client: client, ReloadAgent: ra}
-	api.FilterDeleteFilterHandler = &handlers.DeleteFilterHandlerImpl{Client: client, ReloadAgent: ra}
-	api.FilterGetFilterHandler = &handlers.GetFilterHandlerImpl{Client: client}
-	api.FilterGetFiltersHandler = &handlers.GetFiltersHandlerImpl{Client: client}
-	api.FilterReplaceFilterHandler = &handlers.ReplaceFilterHandlerImpl{Client: client, ReloadAgent: ra}
-	api.FilterReplaceFiltersHandler = &handlers.ReplaceFiltersHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterCreateFilterBackendHandler = &handlers.CreateFilterBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterDeleteFilterBackendHandler = &handlers.DeleteFilterBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterGetFilterBackendHandler = &handlers.GetFilterBackendHandlerImpl{Client: client}
+	api.FilterGetAllFilterBackendHandler = &handlers.GetAllFilterBackendHandlerImpl{Client: client}
+	api.FilterReplaceFilterBackendHandler = &handlers.ReplaceFilterBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterReplaceAllFilterBackendHandler = &handlers.ReplaceAllFilterBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.FilterCreateFilterFrontendHandler = &handlers.CreateFilterFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterDeleteFilterFrontendHandler = &handlers.DeleteFilterFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterGetFilterFrontendHandler = &handlers.GetFilterFrontendHandlerImpl{Client: client}
+	api.FilterGetAllFilterFrontendHandler = &handlers.GetAllFilterFrontendHandlerImpl{Client: client}
+	api.FilterReplaceFilterFrontendHandler = &handlers.ReplaceFilterFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.FilterReplaceAllFilterFrontendHandler = &handlers.ReplaceAllFilterFrontendHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup stick rule handlers
 	api.StickRuleCreateStickRuleHandler = &handlers.CreateStickRuleHandlerImpl{Client: client, ReloadAgent: ra}
@@ -514,20 +602,69 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.StickRuleReplaceStickRulesHandler = &handlers.ReplaceStickRulesHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup log target handlers
-	api.LogTargetCreateLogTargetHandler = &handlers.CreateLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
-	api.LogTargetDeleteLogTargetHandler = &handlers.DeleteLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
-	api.LogTargetGetLogTargetHandler = &handlers.GetLogTargetHandlerImpl{Client: client}
-	api.LogTargetGetLogTargetsHandler = &handlers.GetLogTargetsHandlerImpl{Client: client}
-	api.LogTargetReplaceLogTargetHandler = &handlers.ReplaceLogTargetHandlerImpl{Client: client, ReloadAgent: ra}
-	api.LogTargetReplaceLogTargetsHandler = &handlers.ReplaceLogTargetsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetCreateLogTargetBackendHandler = &handlers.CreateLogTargetBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetDeleteLogTargetBackendHandler = &handlers.DeleteLogTargetBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetGetLogTargetBackendHandler = &handlers.GetLogTargetBackendHandlerImpl{Client: client}
+	api.LogTargetGetAllLogTargetBackendHandler = &handlers.GetAllLogTargetBackendHandlerImpl{Client: client}
+	api.LogTargetReplaceLogTargetBackendHandler = &handlers.ReplaceLogTargetBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetReplaceAllLogTargetBackendHandler = &handlers.ReplaceAllLogTargetBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.LogTargetCreateLogTargetFrontendHandler = &handlers.CreateLogTargetFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetDeleteLogTargetFrontendHandler = &handlers.DeleteLogTargetFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetGetLogTargetFrontendHandler = &handlers.GetLogTargetFrontendHandlerImpl{Client: client}
+	api.LogTargetGetAllLogTargetFrontendHandler = &handlers.GetAllLogTargetFrontendHandlerImpl{Client: client}
+	api.LogTargetReplaceLogTargetFrontendHandler = &handlers.ReplaceLogTargetFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetReplaceAllLogTargetFrontendHandler = &handlers.ReplaceAllLogTargetFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.LogTargetCreateLogTargetDefaultsHandler = &handlers.CreateLogTargetDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetDeleteLogTargetDefaultsHandler = &handlers.DeleteLogTargetDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetGetLogTargetDefaultsHandler = &handlers.GetLogTargetDefaultsHandlerImpl{Client: client}
+	api.LogTargetGetAllLogTargetDefaultsHandler = &handlers.GetAllLogTargetDefaultsHandlerImpl{Client: client}
+	api.LogTargetReplaceLogTargetDefaultsHandler = &handlers.ReplaceLogTargetDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetReplaceAllLogTargetDefaultsHandler = &handlers.ReplaceAllLogTargetDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.LogTargetCreateLogTargetLogForwardHandler = &handlers.CreateLogTargetLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetDeleteLogTargetLogForwardHandler = &handlers.DeleteLogTargetLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetGetLogTargetLogForwardHandler = &handlers.GetLogTargetLogForwardHandlerImpl{Client: client}
+	api.LogTargetGetAllLogTargetLogForwardHandler = &handlers.GetAllLogTargetLogForwardHandlerImpl{Client: client}
+	api.LogTargetReplaceLogTargetLogForwardHandler = &handlers.ReplaceLogTargetLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetReplaceAllLogTargetLogForwardHandler = &handlers.ReplaceAllLogTargetLogForwardHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.LogTargetCreateLogTargetPeerHandler = &handlers.CreateLogTargetPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetDeleteLogTargetPeerHandler = &handlers.DeleteLogTargetPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetGetLogTargetPeerHandler = &handlers.GetLogTargetPeerHandlerImpl{Client: client}
+	api.LogTargetGetAllLogTargetPeerHandler = &handlers.GetAllLogTargetPeerHandlerImpl{Client: client}
+	api.LogTargetReplaceLogTargetPeerHandler = &handlers.ReplaceLogTargetPeerHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetReplaceAllLogTargetPeerHandler = &handlers.ReplaceAllLogTargetPeerHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.LogTargetCreateLogTargetGlobalHandler = &handlers.CreateLogTargetGlobalHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetDeleteLogTargetGlobalHandler = &handlers.DeleteLogTargetGlobalHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetGetLogTargetGlobalHandler = &handlers.GetLogTargetGlobalHandlerImpl{Client: client}
+	api.LogTargetGetAllLogTargetGlobalHandler = &handlers.GetAllLogTargetGlobalHandlerImpl{Client: client}
+	api.LogTargetReplaceLogTargetGlobalHandler = &handlers.ReplaceLogTargetGlobalHandlerImpl{Client: client, ReloadAgent: ra}
+	api.LogTargetReplaceAllLogTargetGlobalHandler = &handlers.ReplaceAllLogTargetGlobalHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup acl rule handlers
-	api.ACLCreateACLHandler = &handlers.CreateACLHandlerImpl{Client: client, ReloadAgent: ra}
-	api.ACLDeleteACLHandler = &handlers.DeleteACLHandlerImpl{Client: client, ReloadAgent: ra}
-	api.ACLGetACLHandler = &handlers.GetACLHandlerImpl{Client: client}
-	api.ACLGetAclsHandler = &handlers.GetAclsHandlerImpl{Client: client}
-	api.ACLReplaceACLHandler = &handlers.ReplaceACLHandlerImpl{Client: client, ReloadAgent: ra}
-	api.ACLReplaceAclsHandler = &handlers.ReplaceAclsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLCreateACLBackendHandler = &handlers.CreateACLBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLDeleteACLBackendHandler = &handlers.DeleteACLBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLGetACLBackendHandler = &handlers.GetACLBackendHandlerImpl{Client: client}
+	api.ACLGetAllACLBackendHandler = &handlers.GetAllACLBackendHandlerImpl{Client: client}
+	api.ACLReplaceACLBackendHandler = &handlers.ReplaceACLBackendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLReplaceAllACLBackendHandler = &handlers.ReplaceAllACLBackendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.ACLCreateACLFrontendHandler = &handlers.CreateACLFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLDeleteACLFrontendHandler = &handlers.DeleteACLFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLGetACLFrontendHandler = &handlers.GetACLFrontendHandlerImpl{Client: client}
+	api.ACLGetAllACLFrontendHandler = &handlers.GetAllACLFrontendHandlerImpl{Client: client}
+	api.ACLReplaceACLFrontendHandler = &handlers.ReplaceACLFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLReplaceAllACLFrontendHandler = &handlers.ReplaceAllACLFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.ACLCreateACLFCGIAppHandler = &handlers.CreateACLFCGIAppHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLDeleteACLFCGIAppHandler = &handlers.DeleteACLFCGIAppHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLGetACLFCGIAppHandler = &handlers.GetACLFCGIAppHandlerImpl{Client: client}
+	api.ACLGetAllACLFCGIAppHandler = &handlers.GetAllACLFCGIAppHandlerImpl{Client: client}
+	api.ACLReplaceACLFCGIAppHandler = &handlers.ReplaceACLFCGIAppHandlerImpl{Client: client, ReloadAgent: ra}
+	api.ACLReplaceAllACLFCGIAppHandler = &handlers.ReplaceAllACLFCGIAppHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup resolvers handlers
 	api.ResolverCreateResolverHandler = &handlers.CreateResolverHandlerImpl{Client: client, ReloadAgent: ra}
@@ -632,7 +769,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 
 	// setup runtime server handlers
 	api.ServerGetRuntimeServerHandler = &handlers.GetRuntimeServerHandlerImpl{Client: client}
-	api.ServerGetRuntimeServersHandler = &handlers.GetRuntimeServersHandlerImpl{Client: client}
+	api.ServerGetAllRuntimeServerHandler = &handlers.GetAllRuntimeServerHandlerImpl{Client: client}
 	api.ServerReplaceRuntimeServerHandler = &handlers.ReplaceRuntimeServerHandlerImpl{Client: client}
 	api.ServerAddRuntimeServerHandler = &handlers.AddRuntimeServerHandlerImpl{Client: client}
 	api.ServerDeleteRuntimeServerHandler = &handlers.DeleteRuntimeServerHandlerImpl{Client: client}
@@ -646,10 +783,10 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	// setup ACL runtime handlers
 	api.ACLRuntimeGetServicesHaproxyRuntimeAclsHandler = &handlers.GetACLSHandlerRuntimeImpl{Client: client}
 	api.ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler = &handlers.GetACLHandlerRuntimeImpl{Client: client}
-	api.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesHandler = &handlers.GetACLFileEntriesHandlerRuntimeImpl{Client: client}
-	api.ACLRuntimePostServicesHaproxyRuntimeACLFileEntriesHandler = &handlers.PostACLFileEntryHandlerRuntimeImpl{Client: client}
-	api.ACLRuntimeGetServicesHaproxyRuntimeACLFileEntriesIDHandler = &handlers.GetACLFileEntryRuntimeImpl{Client: client}
-	api.ACLRuntimeDeleteServicesHaproxyRuntimeACLFileEntriesIDHandler = &handlers.DeleteACLFileEntryHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesHandler = &handlers.GetACLFileEntriesHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler = &handlers.PostACLFileEntryHandlerRuntimeImpl{Client: client}
+	api.ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler = &handlers.GetACLFileEntryRuntimeImpl{Client: client}
+	api.ACLRuntimeDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler = &handlers.DeleteACLFileEntryHandlerRuntimeImpl{Client: client}
 	api.ACLRuntimeAddPayloadRuntimeACLHandler = &handlers.ACLRuntimeAddPayloadRuntimeACLHandlerImpl{Client: client}
 
 	// setup map handlers
@@ -810,27 +947,27 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.SpoeGetOneSpoeFileHandler = &handlers.SpoeGetOneSpoeFileHandlerImpl{Client: client}
 
 	// SPOE scope
-	api.SpoeGetSpoeScopesHandler = &handlers.SpoeGetSpoeScopesHandlerImpl{Client: client}
+	api.SpoeGetAllSpoeScopeHandler = &handlers.SpoeGetAllSpoeScopeHandlerImpl{Client: client}
 	api.SpoeGetSpoeScopeHandler = &handlers.SpoeGetSpoeScopeHandlerImpl{Client: client}
 	api.SpoeCreateSpoeScopeHandler = &handlers.SpoeCreateSpoeScopeHandlerImpl{Client: client}
 	api.SpoeDeleteSpoeScopeHandler = &handlers.SpoeDeleteSpoeScopeHandlerImpl{Client: client}
 
 	// SPOE agent
-	api.SpoeGetSpoeAgentsHandler = &handlers.SpoeGetSpoeAgentsHandlerImpl{Client: client}
+	api.SpoeGetAllSpoeAgentHandler = &handlers.SpoeGetAllSpoeAgentHandlerImpl{Client: client}
 	api.SpoeGetSpoeAgentHandler = &handlers.SpoeGetSpoeAgentHandlerImpl{Client: client}
 	api.SpoeCreateSpoeAgentHandler = &handlers.SpoeCreateSpoeAgentHandlerImpl{Client: client}
 	api.SpoeDeleteSpoeAgentHandler = &handlers.SpoeDeleteSpoeAgentHandlerImpl{Client: client}
 	api.SpoeReplaceSpoeAgentHandler = &handlers.SpoeReplaceSpoeAgentHandlerImpl{Client: client}
 
 	// SPOE messages
-	api.SpoeGetSpoeMessagesHandler = &handlers.SpoeGetSpoeMessagesHandlerImpl{Client: client}
+	api.SpoeGetAllSpoeMessageHandler = &handlers.SpoeGetAllSpoeMessageHandlerImpl{Client: client}
 	api.SpoeGetSpoeMessageHandler = &handlers.SpoeGetSpoeMessageHandlerImpl{Client: client}
 	api.SpoeCreateSpoeMessageHandler = &handlers.SpoeCreateSpoeMessageHandlerImpl{Client: client}
 	api.SpoeDeleteSpoeMessageHandler = &handlers.SpoeDeleteSpoeMessageHandlerImpl{Client: client}
 	api.SpoeReplaceSpoeMessageHandler = &handlers.SpoeReplaceSpoeMessageHandlerImpl{Client: client}
 
 	// SPOE groups
-	api.SpoeGetSpoeGroupsHandler = &handlers.SpoeGetSpoeGroupsHandlerImpl{Client: client}
+	api.SpoeGetAllSpoeGroupHandler = &handlers.SpoeGetAllSpoeGroupHandlerImpl{Client: client}
 	api.SpoeGetSpoeGroupHandler = &handlers.SpoeGetSpoeGroupHandlerImpl{Client: client}
 	api.SpoeCreateSpoeGroupHandler = &handlers.SpoeCreateSpoeGroupHandlerImpl{Client: client}
 	api.SpoeDeleteSpoeGroupHandler = &handlers.SpoeDeleteSpoeGroupHandlerImpl{Client: client}

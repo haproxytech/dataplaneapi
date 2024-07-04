@@ -16,3 +16,6 @@
 #
 
 _ACL_BASE_PATH="/services/haproxy/configuration/acls"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"
+_FCGIAPP_BASE_PATH="/services/haproxy/configuration/fcgi_apps"

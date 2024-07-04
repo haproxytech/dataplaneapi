@@ -24,11 +24,13 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // GetTablesURL generates an URL for the get tables operation
 type GetTablesURL struct {
-	PeerSection   string
+	ParentName string
+
 	TransactionID *string
 
 	_basePath string
@@ -55,7 +57,14 @@ func (o *GetTablesURL) SetBasePath(bp string) {
 func (o *GetTablesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/tables"
+	var _path = "/services/haproxy/configuration/peers/{parent_name}/tables"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetTablesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -64,11 +73,6 @@ func (o *GetTablesURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	peerSectionQ := o.PeerSection
-	if peerSectionQ != "" {
-		qs.Set("peer_section", peerSectionQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

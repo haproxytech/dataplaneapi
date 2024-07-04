@@ -23,19 +23,13 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "log_targets: Fail creating a Log Target when frontend doesn't exist" {
-  resource_post "$_LOG_TRAGET_BASE_PATH/0" "data/nolog.json" "parent_type=frontend&parent_name=ghost&force_reload=true"
+  PARENT_NAME="ghost"
+  resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/0" "data/nolog.json" "force_reload=true"
 	assert_equal "$SC" 400
 }
 
 @test "log_targets: Fail creating a Log Target when backend doesn't exist" {
-  resource_post "$_LOG_TRAGET_BASE_PATH/0" "data/nolog.json" "parent_type=backend&parent_name=ghost&force_reload=true"
-	assert_equal "$SC" 400
-}
-
-@test "log_targets: Fail creating a Log Target when parent name is not specified" {
-  resource_post "$_LOG_TRAGET_BASE_PATH/0" "data/nolog.json" "parent_type=backend&force_reload=true"
-	assert_equal "$SC" 400
-
-  resource_post "$_LOG_TRAGET_BASE_PATH/0" "data/nolog.json" "parent_type=frontend&force_reload=true"
+  PARENT_NAME="ghost"
+  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/0" "data/nolog.json" "force_reload=true"
 	assert_equal "$SC" 400
 }

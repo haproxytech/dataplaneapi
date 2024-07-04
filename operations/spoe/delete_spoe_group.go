@@ -45,7 +45,7 @@ func NewDeleteSpoeGroup(ctx *middleware.Context, handler DeleteSpoeGroupHandler)
 }
 
 /*
-	DeleteSpoeGroup swagger:route DELETE /services/haproxy/spoe/spoe_groups/{name} Spoe deleteSpoeGroup
+	DeleteSpoeGroup swagger:route DELETE /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/groups/{name} Spoe deleteSpoeGroup
 
 # Delete a SPOE groups
 

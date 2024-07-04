@@ -24,8 +24,9 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "servers: Return one server" {
+  PARENT_NAME="test_backend"
   for name in "server_01" "server_02" "server_03"; do
-    resource_get "$_SERVER_BASE_PATH/$name" "backend=test_backend"
+    resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/servers/$name"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" '.name')" "$name"
   done
@@ -33,7 +34,8 @@ load 'utils/_helpers'
 
 
 @test "servers: Return one IPv6 server" {
-    resource_get "$_SERVER_BASE_PATH/server_ipv6" "backend=test_backend"
+    PARENT_NAME="test_backend"
+    resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/servers/server_ipv6"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "$BODY" '.address')" "fd00:6:48:c85:deb:f:62:4"
     assert_equal "$(get_json_path "$BODY" '.check')" "enabled"

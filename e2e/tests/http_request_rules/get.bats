@@ -24,14 +24,15 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "http_request_rules: Return one HTTP Request Rule from frontend" {
-  resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend"
-	assert_equal "$SC" 200
+	PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_request_rules/0"
+  	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "add-header"
 	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Add-Frontend"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "unless"
 	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
 
-	resource_get "$_REQ_RULES_BASE_PATH/1" "parent_type=frontend&parent_name=test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/http_request_rules/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "del-header"
 	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Del-Frontend"
@@ -40,15 +41,15 @@ load 'utils/_helpers'
 }
 
 @test "http_request_rules: Return one HTTP Request Rule from backend" {
-	resource_get "$_REQ_RULES_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
+	PARENT_NAME="test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_request_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".type")" "add-header"
 	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Add-Backend"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "unless"
 	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
 
-	resource_get "$_REQ_RULES_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
-	assert_equal "$SC" 200
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_request_rules/1"
 	assert_equal "$(get_json_path "$BODY" ".type")" "del-header"
 	assert_equal "$(get_json_path "$BODY" ".hdr_name")" "X-Del-Backend"
 	assert_equal "$(get_json_path "$BODY" ".cond")" "if"

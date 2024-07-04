@@ -24,11 +24,12 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // SetStickTableEntriesURL generates an URL for the set stick table entries operation
 type SetStickTableEntriesURL struct {
-	StickTable string
+	ParentName string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -54,22 +55,20 @@ func (o *SetStickTableEntriesURL) SetBasePath(bp string) {
 func (o *SetStickTableEntriesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/stick_table_entries"
+	var _path = "/services/haproxy/runtime/stick_tables/{parent_name}/entries"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on SetStickTableEntriesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/v3"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
-
-	qs := make(url.Values)
-
-	stickTableQ := o.StickTable
-	if stickTableQ != "" {
-		qs.Set("stick_table", stickTableQ)
-	}
-
-	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

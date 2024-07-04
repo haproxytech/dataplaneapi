@@ -80,7 +80,7 @@ func (h *CreateServerTemplateHandlerImpl) Handle(params server_template.CreateSe
 		return server_template.NewCreateServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.CreateServerTemplate(params.Backend, params.Data, t, v)
+	err = configuration.CreateServerTemplate(params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewCreateServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -127,7 +127,7 @@ func (h *DeleteServerTemplateHandlerImpl) Handle(params server_template.DeleteSe
 		return server_template.NewDeleteServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.DeleteServerTemplate(params.Prefix, params.Backend, t, v)
+	err = configuration.DeleteServerTemplate(params.Prefix, params.ParentName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewDeleteServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -161,7 +161,7 @@ func (h *GetServerTemplateHandlerImpl) Handle(params server_template.GetServerTe
 		return server_template.NewGetServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, template, err := configuration.GetServerTemplate(params.Prefix, params.Backend, t)
+	_, template, err := configuration.GetServerTemplate(params.Prefix, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewGetServerTemplateDefault(int(*e.Code)).WithPayload(e)
@@ -182,7 +182,7 @@ func (h *GetServerTemplatesHandlerImpl) Handle(params server_template.GetServerT
 		return server_template.NewGetServerTemplatesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, templates, err := configuration.GetServerTemplates(params.Backend, t)
+	_, templates, err := configuration.GetServerTemplates(params.ParentName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
@@ -220,19 +220,19 @@ func (h *ReplaceServerTemplateHandlerImpl) Handle(params server_template.Replace
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, ondisk, err := configuration.GetServerTemplate(params.Prefix, params.Backend, t)
+	_, ondisk, err := configuration.GetServerTemplate(params.Prefix, params.ParentName, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditServerTemplate(params.Prefix, params.Backend, params.Data, t, v)
+	err = configuration.EditServerTemplate(params.Prefix, params.ParentName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return server_template.NewReplaceServerTemplateDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
-		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, params.Backend, h.Client)
+		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, params.ParentName, h.Client)
 		if reload {
 			if *params.ForceReload {
 				err := h.ReloadAgent.ForceReload()

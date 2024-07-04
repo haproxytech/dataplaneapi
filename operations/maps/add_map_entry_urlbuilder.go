@@ -24,14 +24,16 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // AddMapEntryURL generates an URL for the add map entry operation
 type AddMapEntryURL struct {
+	ParentName string
+
 	ForceSync *bool
-	Map       string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -57,7 +59,14 @@ func (o *AddMapEntryURL) SetBasePath(bp string) {
 func (o *AddMapEntryURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/maps_entries"
+	var _path = "/services/haproxy/runtime/maps/{parent_name}/entries"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on AddMapEntryURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -73,11 +82,6 @@ func (o *AddMapEntryURL) Build() (*url.URL, error) {
 	}
 	if forceSyncQ != "" {
 		qs.Set("force_sync", forceSyncQ)
-	}
-
-	mapVarQ := o.Map
-	if mapVarQ != "" {
-		qs.Set("map", mapVarQ)
 	}
 
 	_result.RawQuery = qs.Encode()

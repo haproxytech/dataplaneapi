@@ -52,84 +52,84 @@ type GetACLFileEntriesHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetACLFileEntriesHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesParams, i interface{}) middleware.Responder {
+func (h GetACLFileEntriesHandlerRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesParams, i interface{}) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntriesDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewGetServicesHaproxyRuntimeAclsParentNameEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
-	files, err := runtime.GetACLFilesEntries(params.ACLID)
+	files, err := runtime.GetACLFilesEntries(params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntriesDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewGetServicesHaproxyRuntimeAclsParentNameEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntriesOK().WithPayload(files)
+	return acl_runtime.NewGetServicesHaproxyRuntimeAclsParentNameEntriesOK().WithPayload(files)
 }
 
 type PostACLFileEntryHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h PostACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.PostServicesHaproxyRuntimeACLFileEntriesParams, i interface{}) middleware.Responder {
+func (h PostACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesParams, i interface{}) middleware.Responder {
 	var err error
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewPostServicesHaproxyRuntimeACLFileEntriesDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewPostServicesHaproxyRuntimeAclsParentNameEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	if err = runtime.AddACLFileEntry(params.ACLID, params.Data.Value); err != nil {
+	if err = runtime.AddACLFileEntry(params.ParentName, params.Data.Value); err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewPostServicesHaproxyRuntimeACLFileEntriesDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewPostServicesHaproxyRuntimeAclsParentNameEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	var fileEntry *models.ACLFileEntry
-	fileEntry, err = runtime.GetACLFileEntry(params.ACLID, params.Data.Value)
+	fileEntry, err = runtime.GetACLFileEntry(params.ParentName, params.Data.Value)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewPostServicesHaproxyRuntimeACLFileEntriesDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewPostServicesHaproxyRuntimeAclsParentNameEntriesDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return acl_runtime.NewPostServicesHaproxyRuntimeACLFileEntriesCreated().WithPayload(fileEntry)
+	return acl_runtime.NewPostServicesHaproxyRuntimeAclsParentNameEntriesCreated().WithPayload(fileEntry)
 }
 
 type GetACLFileEntryRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h GetACLFileEntryRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeACLFileEntriesIDParams, i interface{}) middleware.Responder {
+func (h GetACLFileEntryRuntimeImpl) Handle(params acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDParams, i interface{}) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntriesIDDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewGetServicesHaproxyRuntimeAclsParentNameEntriesIDDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	fileEntry, err := runtime.GetACLFileEntry(params.ACLID, params.ID)
+	fileEntry, err := runtime.GetACLFileEntry(params.ParentName, params.ID)
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntriesIDDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewGetServicesHaproxyRuntimeAclsParentNameEntriesIDDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return acl_runtime.NewGetServicesHaproxyRuntimeACLFileEntriesIDOK().WithPayload(fileEntry)
+	return acl_runtime.NewGetServicesHaproxyRuntimeAclsParentNameEntriesIDOK().WithPayload(fileEntry)
 }
 
 type DeleteACLFileEntryHandlerRuntimeImpl struct {
 	Client client_native.HAProxyClient
 }
 
-func (h DeleteACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.DeleteServicesHaproxyRuntimeACLFileEntriesIDParams, i interface{}) middleware.Responder {
+func (h DeleteACLFileEntryHandlerRuntimeImpl) Handle(params acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams, i interface{}) middleware.Responder {
 	runtime, err := h.Client.Runtime()
 	if err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewDeleteServicesHaproxyRuntimeACLFileEntriesIDDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDDefault(int(*e.Code)).WithPayload(e)
 	}
-	if err := runtime.DeleteACLFileEntry(params.ACLID, "#"+params.ID); err != nil {
+	if err := runtime.DeleteACLFileEntry(params.ParentName, "#"+params.ID); err != nil {
 		e := misc.HandleError(err)
-		return acl_runtime.NewDeleteServicesHaproxyRuntimeACLFileEntriesIDDefault(int(*e.Code)).WithPayload(e)
+		return acl_runtime.NewDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	return acl_runtime.NewDeleteServicesHaproxyRuntimeACLFileEntriesIDNoContent()
+	return acl_runtime.NewDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDNoContent()
 }
 
 type ACLRuntimeAddPayloadRuntimeACLHandlerImpl struct {
@@ -143,7 +143,7 @@ func (h ACLRuntimeAddPayloadRuntimeACLHandlerImpl) Handle(params acl_runtime.Add
 		return acl_runtime.NewAddPayloadRuntimeACLDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = runtime.AddACLAtomic(params.ACLID, params.Data)
+	err = runtime.AddACLAtomic(params.ParentName, params.Data)
 	if err != nil {
 		status := misc.GetHTTPStatusFromErr(err)
 		return acl_runtime.NewAddPayloadRuntimeACLDefault(status).WithPayload(misc.SetError(status, err.Error()))

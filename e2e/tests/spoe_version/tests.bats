@@ -22,6 +22,7 @@ load 'utils/_helpers'
 
 setup() {
 
+    SPOE_FILE="spoefile_example.cfg"
     refute dpa_docker_exec 'ls /etc/haproxy/spoe/spoefile_example.cfg'
 
     run dpa_curl_file_upload POST "/services/haproxy/spoe/spoe_files" "@${BATS_TEST_DIRNAME}/data/spoefile_example.cfg;filename=spoefile_example.cfg"
@@ -36,7 +37,8 @@ teardown() {
 }
 
 @test "spoe_version: Get a spoe version" {
-    run dpa_curl GET "$_SPOE_VERSIONS_BASE_PATH?spoe=spoefile_example.cfg"
+    PARENT_NAME="spoefile_example.cfg"
+    run dpa_curl GET "$_SPOE_BASE_PATH/$PARENT_NAME/version"
     assert_success
 
     dpa_curl_status_body '$output'
@@ -46,9 +48,10 @@ teardown() {
 }
 
 @test "spoe_version: Return error when getting version for non existing spoe transaction" {
-    run dpa_curl GET "$_SPOE_VERSIONS_BASE_PATH?spoe=spoefile_example.cfg?transaction_id=263166c2-3093-40ff-a750-4a4d114dfd99"
+    PARENT_NAME="spoefile_example.cfg"
+    run dpa_curl GET "$_SPOE_BASE_PATH/$PARENT_NAME/version?transaction_id=263166c2-3093-40ff-a750-4a4d114dfd99"
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal $SC 500
+    assert_equal $SC 400
 }

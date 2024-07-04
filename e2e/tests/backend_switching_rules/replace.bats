@@ -24,16 +24,18 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "backend_switching_rules: Replace a Backend Switching Rule" {
-  resource_put "$_BSR_BASE_PATH/0" "data/put.json" "frontend=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/put.json")" ".")"
 }
 
 @test "backend_switching_rules: Replace all Backend Switching Rule" {
-  resource_put "$_BSR_BASE_PATH" "data/replace-all.json" "frontend=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules" "data/replace-all.json" "force_reload=true"
 	assert_equal "$SC" 200
 
-  resource_get "$_BSR_BASE_PATH" "frontend=test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules"
     assert_equal "$(get_json_path "${BODY}" ". | length")" 3
 	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
 }

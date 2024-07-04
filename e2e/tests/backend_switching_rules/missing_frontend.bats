@@ -22,6 +22,7 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "backend_switching_rules: Fail creating a Backend Switching Rule rule when frontend doesn't exist" {
-  resource_post "$_BSR_BASE_PATH/0" "data/post.json" "frontend=ghost&force_reload=true"
+  PARENT_NAME="ghost"
+  resource_post "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0" "data/post.json" "force_reload=true"
 	assert_equal "$SC" 400
 }

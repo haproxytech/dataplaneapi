@@ -24,10 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "log_targets: Replace a Log Target of frontend" {
-  resource_put "$_LOG_TRAGET_BASE_PATH/0" "data/put.json" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	PARENT_NAME="test_frontend"
+  resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/0" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 
-	resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
 	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
@@ -36,10 +37,11 @@ load 'utils/_helpers'
 }
 
 @test "log_targets: Replace a Log Target of backend" {
-	resource_put "$_LOG_TRAGET_BASE_PATH/0" "data/put.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	PARENT_NAME="test_backend"
+	resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/0" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 
-	resource_get "$_LOG_TRAGET_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets/0" "force_reload=true"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".address")" "localhost"
 	assert_equal "$(get_json_path "$BODY" ".format")" "raw"
@@ -49,13 +51,14 @@ load 'utils/_helpers'
 
 
 @test "log_targets: Replace all Log Targets of backend" {
-	resource_put "$_LOG_TRAGET_BASE_PATH" "data/replace-all.json" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	PARENT_NAME="test_backend"
+	resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets" "data/replace-all.json" "force_reload=true"
     assert_equal "$SC" 200
     #
     # verify that Log Targets is actually changed
     #
     #
-    resource_get "$_LOG_TRAGET_BASE_PATH" "parent_name=test_backend&parent_type=backend"
+    resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/log_targets"
     assert_equal "$(get_json_path "${BODY}" ". | length")" 3
 	assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
 }

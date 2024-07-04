@@ -45,7 +45,7 @@ func NewCreateSpoeScope(ctx *middleware.Context, handler CreateSpoeScopeHandler)
 }
 
 /*
-	CreateSpoeScope swagger:route POST /services/haproxy/spoe/spoe_scopes Spoe createSpoeScope
+	CreateSpoeScope swagger:route POST /services/haproxy/spoe/spoe_files/{parent_name}/scopes Spoe createSpoeScope
 
 # Add a new spoe scope
 

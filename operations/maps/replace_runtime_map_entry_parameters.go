@@ -29,7 +29,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // NewReplaceRuntimeMapEntryParams creates a new ReplaceRuntimeMapEntryParams object
@@ -71,11 +70,11 @@ type ReplaceRuntimeMapEntryParams struct {
 	  In: path
 	*/
 	ID string
-	/*Mapfile attribute storage_name
+	/*Parent name
 	  Required: true
-	  In: query
+	  In: path
 	*/
-	Map string
+	ParentName string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -122,8 +121,8 @@ func (o *ReplaceRuntimeMapEntryParams) BindRequest(r *http.Request, route *middl
 		res = append(res, err)
 	}
 
-	qMap, qhkMap, _ := qs.GetOK("map")
-	if err := o.bindMap(qMap, qhkMap, route.Formats); err != nil {
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 	if len(res) > 0 {
@@ -170,23 +169,16 @@ func (o *ReplaceRuntimeMapEntryParams) bindID(rawData []string, hasKey bool, for
 	return nil
 }
 
-// bindMap binds and validates parameter Map from query.
-func (o *ReplaceRuntimeMapEntryParams) bindMap(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("map", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *ReplaceRuntimeMapEntryParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("map", "query", raw); err != nil {
-		return err
-	}
-	o.Map = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

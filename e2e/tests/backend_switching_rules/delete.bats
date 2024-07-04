@@ -23,19 +23,20 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "backend_switching_rules: Delete a Backend Switching Rule" {
+  PARENT_NAME="test_frontend"
   #
   # Deleting first
   #
-  resource_delete "$_BSR_BASE_PATH/0" "frontend=test_frontend&force_reload=true"
+  resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
   #
   # Deleting second
   #
-	resource_delete "$_BSR_BASE_PATH/0" "frontend=test_frontend&force_reload=true"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
   #
   # No more backend switching rules, not found
   #
-	resource_delete "$_BSR_BASE_PATH/0" "frontend=test_frontend&force_reload=true"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0" "force_reload=true"
 	assert_equal "$SC" 404
 }

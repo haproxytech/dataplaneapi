@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_RUNTIME_MAP_ENTRIES_BASE_PATH="/services/haproxy/runtime/maps_entries"
+_RUNTIME_MAP_BASE_PATH="/services/haproxy/runtime/maps"

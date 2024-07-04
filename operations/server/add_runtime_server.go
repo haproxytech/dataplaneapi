@@ -45,7 +45,7 @@ func NewAddRuntimeServer(ctx *middleware.Context, handler AddRuntimeServerHandle
 }
 
 /*
-	AddRuntimeServer swagger:route POST /services/haproxy/runtime/servers Server addRuntimeServer
+	AddRuntimeServer swagger:route POST /services/haproxy/runtime/backends/{parent_name}/servers Server addRuntimeServer
 
 # Adds a new server to a backend
 

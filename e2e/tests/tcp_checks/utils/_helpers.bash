@@ -16,3 +16,5 @@
 #
 
 _TCP_CHECKS_BASE_PATH="/services/haproxy/configuration/tcp_checks"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"
+_DEFAULTS_BASE_PATH="/services/haproxy/configuration/defaults"

@@ -24,17 +24,19 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // GetStickTableEntriesURL generates an URL for the get stick table entries operation
 type GetStickTableEntriesURL struct {
-	Count      *int64
-	Filter     *string
-	Key        *string
-	Offset     *int64
-	StickTable string
+	ParentName string
+
+	Count  *int64
+	Filter *string
+	Key    *string
+	Offset *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -60,7 +62,14 @@ func (o *GetStickTableEntriesURL) SetBasePath(bp string) {
 func (o *GetStickTableEntriesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/stick_table_entries"
+	var _path = "/services/haproxy/runtime/stick_tables/{parent_name}/entries"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetStickTableEntriesURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -100,11 +109,6 @@ func (o *GetStickTableEntriesURL) Build() (*url.URL, error) {
 	}
 	if offsetQ != "" {
 		qs.Set("offset", offsetQ)
-	}
-
-	stickTableQ := o.StickTable
-	if stickTableQ != "" {
-		qs.Set("stick_table", stickTableQ)
 	}
 
 	_result.RawQuery = qs.Encode()

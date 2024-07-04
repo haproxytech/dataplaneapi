@@ -28,7 +28,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -50,11 +49,6 @@ type ReplaceRuntimeServerParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Parent backend name
-	  Required: true
-	  In: query
-	*/
-	Backend string
 	/*
 	  Required: true
 	  In: body
@@ -65,6 +59,11 @@ type ReplaceRuntimeServerParams struct {
 	  In: path
 	*/
 	Name string
+	/*Parent name
+	  Required: true
+	  In: path
+	*/
+	ParentName string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -75,13 +74,6 @@ func (o *ReplaceRuntimeServerParams) BindRequest(r *http.Request, route *middlew
 	var res []error
 
 	o.HTTPRequest = r
-
-	qs := runtime.Values(r.URL.Query())
-
-	qBackend, qhkBackend, _ := qs.GetOK("backend")
-	if err := o.bindBackend(qBackend, qhkBackend, route.Formats); err != nil {
-		res = append(res, err)
-	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -110,30 +102,14 @@ func (o *ReplaceRuntimeServerParams) BindRequest(r *http.Request, route *middlew
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
 	}
+
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
+		res = append(res, err)
+	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindBackend binds and validates parameter Backend from query.
-func (o *ReplaceRuntimeServerParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("backend", "query", rawData)
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("backend", "query", raw); err != nil {
-		return err
-	}
-	o.Backend = raw
-
 	return nil
 }
 
@@ -147,6 +123,20 @@ func (o *ReplaceRuntimeServerParams) bindName(rawData []string, hasKey bool, for
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	return nil
+}
+
+// bindParentName binds and validates parameter ParentName from path.
+func (o *ReplaceRuntimeServerParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

@@ -27,17 +27,18 @@ load 'utils/_helpers'
   #
   # Deleting first
   #
-  resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
+  PARENT_NAME="mydefaults"
+  resource_delete "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_checks/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Deleting second
   #
-	resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
+	resource_delete "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_checks/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Not found
   #
-  resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=defaults&parent_name=mydefaults&force_reload=true"
+  resource_delete "$_DEFAULTS_BASE_PATH/$PARENT_NAME/http_checks/0" "force_reload=true"
 	assert_equal "$SC" 404
 }
 
@@ -45,16 +46,17 @@ load 'utils/_helpers'
  	#
   # Deleting second
   #
-	resource_delete "$_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/1" "force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Deleting first
   #
-	resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/0" "force_reload=true"
 	assert_equal "$SC" 204
 	#
   # Not found
   #
-	resource_delete "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/0" "force_reload=true"
 	assert_equal "$SC" 404
 }

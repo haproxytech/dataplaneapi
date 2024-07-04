@@ -45,7 +45,7 @@ func NewReplaceServerTemplate(ctx *middleware.Context, handler ReplaceServerTemp
 }
 
 /*
-	ReplaceServerTemplate swagger:route PUT /services/haproxy/configuration/server_templates/{prefix} ServerTemplate replaceServerTemplate
+	ReplaceServerTemplate swagger:route PUT /services/haproxy/configuration/backends/{parent_name}/server_templates/{prefix} ServerTemplate replaceServerTemplate
 
 # Replace a server template
 

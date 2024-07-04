@@ -24,14 +24,16 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 
 	"github.com/go-openapi/swag"
 )
 
 // CreateSpoeMessageURL generates an URL for the create spoe message operation
 type CreateSpoeMessageURL struct {
-	Scope         string
-	Spoe          string
+	ParentName string
+	ScopeName  string
+
 	TransactionID *string
 	Version       *int64
 
@@ -59,7 +61,21 @@ func (o *CreateSpoeMessageURL) SetBasePath(bp string) {
 func (o *CreateSpoeMessageURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe/spoe_messages"
+	var _path = "/services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/messages"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on CreateSpoeMessageURL")
+	}
+
+	scopeName := o.ScopeName
+	if scopeName != "" {
+		_path = strings.Replace(_path, "{scope_name}", scopeName, -1)
+	} else {
+		return nil, errors.New("scopeName is required on CreateSpoeMessageURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -68,16 +84,6 @@ func (o *CreateSpoeMessageURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	scopeQ := o.Scope
-	if scopeQ != "" {
-		qs.Set("scope", scopeQ)
-	}
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

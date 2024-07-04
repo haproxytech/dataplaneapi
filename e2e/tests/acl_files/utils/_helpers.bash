@@ -16,4 +16,3 @@
 #
 
 _RUNTIME_ACL_BASE_PATH="/services/haproxy/runtime/acls"
-_RUNTIME_ACL_FILE_ENTRIES_BASE_PATH="/services/haproxy/runtime/acl_file_entries"

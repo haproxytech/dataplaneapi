@@ -29,9 +29,8 @@ import (
 
 // DeleteRuntimeServerURL generates an URL for the delete runtime server operation
 type DeleteRuntimeServerURL struct {
-	Name string
-
-	Backend string
+	Name       string
+	ParentName string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -57,7 +56,7 @@ func (o *DeleteRuntimeServerURL) SetBasePath(bp string) {
 func (o *DeleteRuntimeServerURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/runtime/servers/{name}"
+	var _path = "/services/haproxy/runtime/backends/{parent_name}/servers/{name}"
 
 	name := o.Name
 	if name != "" {
@@ -66,20 +65,18 @@ func (o *DeleteRuntimeServerURL) Build() (*url.URL, error) {
 		return nil, errors.New("name is required on DeleteRuntimeServerURL")
 	}
 
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on DeleteRuntimeServerURL")
+	}
+
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/v3"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
-
-	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
-
-	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

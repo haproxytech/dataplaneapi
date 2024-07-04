@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_REQ_RULES_BASE_PATH="/services/haproxy/configuration/tables"
+_PEERS_BASE_PATH="/services/haproxy/configuration/peers"

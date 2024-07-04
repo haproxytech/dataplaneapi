@@ -27,18 +27,19 @@ load 'utils/_helpers'
   #
   # Retrieving the first
   #
-  resource_get "$_BSR_BASE_PATH/0" "frontend=test_frontend"
+  PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/0"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ req_ssl_sni -i first.example.com }"
   #
   # Retrieving the second
   #
-	resource_get "$_BSR_BASE_PATH/1" "frontend=test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ req_ssl_sni -i second.example.com }"
   #
   # Not found for non existing
   #
-	resource_get "$_BSR_BASE_PATH/2" "frontend=test_frontend"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules/2"
 	assert_equal "$SC" 404
 }

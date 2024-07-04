@@ -24,11 +24,13 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // GetSpoeConfigurationVersionURL generates an URL for the get spoe configuration version operation
 type GetSpoeConfigurationVersionURL struct {
-	Spoe          string
+	ParentName string
+
 	TransactionID *string
 
 	_basePath string
@@ -55,7 +57,14 @@ func (o *GetSpoeConfigurationVersionURL) SetBasePath(bp string) {
 func (o *GetSpoeConfigurationVersionURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe/version"
+	var _path = "/services/haproxy/spoe/{parent_name}/version"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on GetSpoeConfigurationVersionURL")
+	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -64,11 +73,6 @@ func (o *GetSpoeConfigurationVersionURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

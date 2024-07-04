@@ -31,9 +31,9 @@ import (
 
 // DeleteServerTemplateURL generates an URL for the delete server template operation
 type DeleteServerTemplateURL struct {
-	Prefix string
+	ParentName string
+	Prefix     string
 
-	Backend       string
 	ForceReload   *bool
 	TransactionID *string
 	Version       *int64
@@ -62,7 +62,14 @@ func (o *DeleteServerTemplateURL) SetBasePath(bp string) {
 func (o *DeleteServerTemplateURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/configuration/server_templates/{prefix}"
+	var _path = "/services/haproxy/configuration/backends/{parent_name}/server_templates/{prefix}"
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on DeleteServerTemplateURL")
+	}
 
 	prefix := o.Prefix
 	if prefix != "" {
@@ -78,11 +85,6 @@ func (o *DeleteServerTemplateURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	backendQ := o.Backend
-	if backendQ != "" {
-		qs.Set("backend", backendQ)
-	}
 
 	var forceReloadQ string
 	if o.ForceReload != nil {

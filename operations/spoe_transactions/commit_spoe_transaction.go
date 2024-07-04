@@ -45,7 +45,7 @@ func NewCommitSpoeTransaction(ctx *middleware.Context, handler CommitSpoeTransac
 }
 
 /*
-	CommitSpoeTransaction swagger:route PUT /services/haproxy/spoe_transactions/{id} SpoeTransactions commitSpoeTransaction
+	CommitSpoeTransaction swagger:route PUT /services/haproxy/spoe/spoe_files/{parent_name}/transactions/{id} SpoeTransactions commitSpoeTransaction
 
 # Commit transaction
 

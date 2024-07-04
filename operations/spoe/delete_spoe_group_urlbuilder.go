@@ -31,10 +31,10 @@ import (
 
 // DeleteSpoeGroupURL generates an URL for the delete spoe group operation
 type DeleteSpoeGroupURL struct {
-	Name string
+	Name       string
+	ParentName string
+	ScopeName  string
 
-	Scope         string
-	Spoe          string
 	TransactionID *string
 	Version       *int64
 
@@ -62,13 +62,27 @@ func (o *DeleteSpoeGroupURL) SetBasePath(bp string) {
 func (o *DeleteSpoeGroupURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/services/haproxy/spoe/spoe_groups/{name}"
+	var _path = "/services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/groups/{name}"
 
 	name := o.Name
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
 		return nil, errors.New("name is required on DeleteSpoeGroupURL")
+	}
+
+	parentName := o.ParentName
+	if parentName != "" {
+		_path = strings.Replace(_path, "{parent_name}", parentName, -1)
+	} else {
+		return nil, errors.New("parentName is required on DeleteSpoeGroupURL")
+	}
+
+	scopeName := o.ScopeName
+	if scopeName != "" {
+		_path = strings.Replace(_path, "{scope_name}", scopeName, -1)
+	} else {
+		return nil, errors.New("scopeName is required on DeleteSpoeGroupURL")
 	}
 
 	_basePath := o._basePath
@@ -78,16 +92,6 @@ func (o *DeleteSpoeGroupURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
-
-	scopeQ := o.Scope
-	if scopeQ != "" {
-		qs.Set("scope", scopeQ)
-	}
-
-	spoeQ := o.Spoe
-	if spoeQ != "" {
-		qs.Set("spoe", spoeQ)
-	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

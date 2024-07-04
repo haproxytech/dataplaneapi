@@ -22,6 +22,7 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	client_native "github.com/haproxytech/client-native/v6"
+	cnconstants "github.com/haproxytech/client-native/v6/configuration/parents"
 	"github.com/haproxytech/client-native/v6/models"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
@@ -47,8 +48,8 @@ type GetServerHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
-// GetServersHandlerImpl implementation of the GetServersHandler interface using client-native client
-type GetServersHandlerImpl struct {
+// GetAllServerHandlerImpl implementation of the GetServersHandler interface using client-native client
+type GetAllServerHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
 
@@ -72,7 +73,7 @@ func serverTypeParams(backend *string, parentType *string, parentName *string) (
 }
 
 // Handle executing the request and returning a response
-func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, principal interface{}) middleware.Responder {
+func (h *CreateServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.CreateServerBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -89,25 +90,25 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 			Message: &msg,
 			Code:    &c,
 		}
-		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(params.Backend, params.ParentType, params.ParentName)
+	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	err = configuration.CreateServer(pType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	// Try to create the new server dynamically. This is only possible if parentType is `backend` and no `default_server`
@@ -119,12 +120,12 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 		_, defaults, errRuntime := configuration.GetDefaultsConfiguration(t)
 		if errRuntime != nil {
 			e := misc.HandleError(errRuntime)
-			return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+			return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 		}
 		_, backend, errRuntime := configuration.GetBackend(pName, t)
 		if errRuntime != nil {
 			e := misc.HandleError(errRuntime)
-			return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+			return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 		}
 		runtimeClient, errRuntime = h.Client.Runtime()
 		if errRuntime == nil && defaults.DefaultServer == nil && backend.DefaultServer == nil {
@@ -139,27 +140,27 @@ func (h *CreateServerHandlerImpl) Handle(params server.CreateServerParams, princ
 			err = h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return server.NewCreateServerDefault(int(*e.Code)).WithPayload(e)
+				return server.NewCreateServerBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return server.NewCreateServerCreated().WithPayload(params.Data)
+			return server.NewCreateServerBackendCreated().WithPayload(params.Data)
 		}
 		if useRuntime {
 			err = runtimeClient.AddServer(pName, params.Data.Name, SerializeRuntimeAddServer(ras))
 			if err == nil {
 				// No need to reload.
 				log.Debugf("backend %s: server %s added though runtime", pName, params.Data.Name)
-				return server.NewCreateServerCreated().WithPayload(params.Data)
+				return server.NewCreateServerBackendCreated().WithPayload(params.Data)
 			}
 			log.Warning("failed to add server through runtime:", err)
 		}
 		rID := h.ReloadAgent.Reload()
-		return server.NewCreateServerAccepted().WithReloadID(rID).WithPayload(params.Data)
+		return server.NewCreateServerBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
-	return server.NewCreateServerAccepted().WithPayload(params.Data)
+	return server.NewCreateServerBackendAccepted().WithPayload(params.Data)
 }
 
 // Handle executing the request and returning a response
-func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, principal interface{}) middleware.Responder {
+func (h *DeleteServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.DeleteServerBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -176,25 +177,25 @@ func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, princ
 			Message: &msg,
 			Code:    &c,
 		}
-		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewDeleteServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewDeleteServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(params.Backend, params.ParentType, params.ParentName)
+	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewDeleteServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	err = configuration.DeleteServer(params.Name, pType, pName, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewDeleteServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	if params.TransactionID == nil {
@@ -202,18 +203,18 @@ func (h *DeleteServerHandlerImpl) Handle(params server.DeleteServerParams, princ
 			err := h.ReloadAgent.ForceReload()
 			if err != nil {
 				e := misc.HandleError(err)
-				return server.NewDeleteServerDefault(int(*e.Code)).WithPayload(e)
+				return server.NewDeleteServerBackendDefault(int(*e.Code)).WithPayload(e)
 			}
-			return server.NewDeleteServerNoContent()
+			return server.NewDeleteServerBackendNoContent()
 		}
 		rID := h.ReloadAgent.Reload()
-		return server.NewDeleteServerAccepted().WithReloadID(rID)
+		return server.NewDeleteServerBackendAccepted().WithReloadID(rID)
 	}
-	return server.NewDeleteServerAccepted()
+	return server.NewDeleteServerBackendAccepted()
 }
 
 // Handle executing the request and returning a response
-func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal interface{}) middleware.Responder {
+func (h *GetServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.GetServerBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -222,25 +223,25 @@ func (h *GetServerHandlerImpl) Handle(params server.GetServerParams, principal i
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetRuntimeServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(params.Backend, params.ParentType, params.ParentName)
+	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetRuntimeServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	_, srv, err := configuration.GetServer(params.Name, pType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server.NewGetServerOK().WithPayload(srv)
+	return server.NewGetServerBackendOK().WithPayload(srv)
 }
 
 // Handle executing the request and returning a response
-func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal interface{}) middleware.Responder {
+func (h *GetAllServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.GetAllServerBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	if params.TransactionID != nil {
 		t = *params.TransactionID
@@ -249,28 +250,28 @@ func (h *GetServersHandlerImpl) Handle(params server.GetServersParams, principal
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetRuntimeServersDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetAllServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(params.Backend, params.ParentType, params.ParentName)
+	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewGetRuntimeServersDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetAllServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	_, srvs, err := configuration.GetServers(pType, pName, t)
 	if err != nil {
 		e := misc.HandleContainerGetError(err)
 		if *e.Code == misc.ErrHTTPOk {
-			return server.NewGetServersOK().WithPayload(models.Servers{})
+			return server.NewGetAllServerBackendOK().WithPayload(models.Servers{})
 		}
-		return server.NewGetServersDefault(int(*e.Code)).WithPayload(e)
+		return server.NewGetAllServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
-	return server.NewGetServersOK().WithPayload(srvs)
+	return server.NewGetAllServerBackendOK().WithPayload(srvs)
 }
 
 // Handle executing the request and returning a response
-func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, principal interface{}) middleware.Responder {
+func (h *ReplaceServerHandlerImpl) Handle(parentType cnconstants.CnParentType, params server.ReplaceServerBackendParams, principal interface{}) middleware.Responder {
 	t := ""
 	v := int64(0)
 	if params.TransactionID != nil {
@@ -287,31 +288,31 @@ func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, pri
 			Message: &msg,
 			Code:    &c,
 		}
-		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	configuration, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	pType, pName, err := serverTypeParams(params.Backend, params.ParentType, params.ParentName)
+	pType, pName, err := serverTypeParams(nil, misc.StringP(string(parentType)), &params.ParentName)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	_, ondisk, err := configuration.GetServer(params.Name, pType, pName, t)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	err = configuration.EditServer(params.Name, pType, pName, params.Data, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+		return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 	if params.TransactionID == nil {
 		reload := changeThroughRuntimeAPI(*params.Data, *ondisk, pName, h.Client)
@@ -320,14 +321,14 @@ func (h *ReplaceServerHandlerImpl) Handle(params server.ReplaceServerParams, pri
 				err := h.ReloadAgent.ForceReload()
 				if err != nil {
 					e := misc.HandleError(err)
-					return server.NewReplaceServerDefault(int(*e.Code)).WithPayload(e)
+					return server.NewReplaceServerBackendDefault(int(*e.Code)).WithPayload(e)
 				}
-				return server.NewReplaceServerOK().WithPayload(params.Data)
+				return server.NewReplaceServerBackendOK().WithPayload(params.Data)
 			}
 			rID := h.ReloadAgent.Reload()
-			return server.NewReplaceServerAccepted().WithReloadID(rID).WithPayload(params.Data)
+			return server.NewReplaceServerBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 		}
-		return server.NewReplaceServerOK().WithPayload(params.Data)
+		return server.NewReplaceServerBackendOK().WithPayload(params.Data)
 	}
-	return server.NewReplaceServerAccepted().WithPayload(params.Data)
+	return server.NewReplaceServerBackendAccepted().WithPayload(params.Data)
 }

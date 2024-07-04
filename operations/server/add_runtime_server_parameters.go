@@ -28,7 +28,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 
 	"github.com/haproxytech/client-native/v6/models"
 )
@@ -50,16 +49,16 @@ type AddRuntimeServerParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Parent backend name
-	  Required: true
-	  In: query
-	*/
-	Backend string
 	/*
 	  Required: true
 	  In: body
 	*/
 	Data *models.RuntimeAddServer
+	/*Parent name
+	  Required: true
+	  In: path
+	*/
+	ParentName string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -70,13 +69,6 @@ func (o *AddRuntimeServerParams) BindRequest(r *http.Request, route *middleware.
 	var res []error
 
 	o.HTTPRequest = r
-
-	qs := runtime.Values(r.URL.Query())
-
-	qBackend, qhkBackend, _ := qs.GetOK("backend")
-	if err := o.bindBackend(qBackend, qhkBackend, route.Formats); err != nil {
-		res = append(res, err)
-	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -100,29 +92,27 @@ func (o *AddRuntimeServerParams) BindRequest(r *http.Request, route *middleware.
 	} else {
 		res = append(res, errors.Required("data", "body", ""))
 	}
+
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
+		res = append(res, err)
+	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
 	return nil
 }
 
-// bindBackend binds and validates parameter Backend from query.
-func (o *AddRuntimeServerParams) bindBackend(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("backend", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *AddRuntimeServerParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("backend", "query", raw); err != nil {
-		return err
-	}
-	o.Backend = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

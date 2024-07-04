@@ -45,7 +45,7 @@ func NewReplaceBackendSwitchingRule(ctx *middleware.Context, handler ReplaceBack
 }
 
 /*
-	ReplaceBackendSwitchingRule swagger:route PUT /services/haproxy/configuration/backend_switching_rules/{index} BackendSwitchingRule replaceBackendSwitchingRule
+	ReplaceBackendSwitchingRule swagger:route PUT /services/haproxy/configuration/frontends/{parent_name}/backend_switching_rules/{index} BackendSwitchingRule replaceBackendSwitchingRule
 
 # Replace a Backend Switching Rule
 

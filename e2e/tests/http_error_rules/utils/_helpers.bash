@@ -17,3 +17,6 @@
 
 _ERR_RULES_BASE_PATH="/services/haproxy/configuration/http_error_rules"
 _ERR_SUPPORTED_HAPROXY_VERSION="2.2"
+_BACKEND_BASE_PATH="/services/haproxy/configuration/backends"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"
+_DEFAULTS_BASE_PATH="/services/haproxy/configuration/defaults"

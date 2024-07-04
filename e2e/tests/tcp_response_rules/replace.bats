@@ -24,10 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "tcp_response_rules: Replace a TCP Response Rule" {
-  resource_put "$_TCP_RES_RULES_CERTS_BASE_PATH/0" "data/put.json" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/0" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 
-	resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH/1" "backend=test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules/1"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
 	assert_equal "$(get_json_path "$BODY" ".cond_test")" "{ src 192.168.0.0/16 }"
@@ -36,10 +37,11 @@ load 'utils/_helpers'
 }
 
 @test "tcp_response_rules: Replace all TCP Response Rule" {
-  resource_put "$_TCP_RES_RULES_CERTS_BASE_PATH" "data/replace-all.json" "backend=test_backend"
+  PARENT_NAME="test_backend"
+  resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules" "data/replace-all.json"
 	assert_equal "$SC" 202
 
-  resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH" "backend=test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "${BODY}" ". | length")" 2
     assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all.json")" ".")"
@@ -48,10 +50,11 @@ load 'utils/_helpers'
 @test "tcp_response_rules: Replace all TCP Response Rule (>=2.7)" {
   if haproxy_version_ge "2.7"
   then
-  resource_put "$_TCP_RES_RULES_CERTS_BASE_PATH" "data/replace-all-27.json" "backend=test_backend"
+  PARENT_NAME="test_backend"
+  resource_put "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules" "data/replace-all-27.json"
 	assert_equal "$SC" 202
 
-  resource_get "$_TCP_RES_RULES_CERTS_BASE_PATH" "backend=test_backend"
+  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_response_rules"
     assert_equal "$SC" 200
     assert_equal "$(get_json_path "${BODY}" ". | length")" 4
     assert_equal "$(get_json_path "$BODY" ".")" "$(get_json_path "$(cat "$BATS_TEST_DIRNAME/data/replace-all-27.json")" ".")"

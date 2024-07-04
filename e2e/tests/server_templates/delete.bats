@@ -24,16 +24,19 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "server_templates: Delete a server template 1" {
-  resource_delete "$_SERVER_TEMPLATE_BASE_PATH/srv_google" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/srv_google" "force_reload=true"
 	assert_equal "$SC" 204
 }
 
 @test "server_templates: Delete a server template 2" {
-  resource_delete "$_SERVER_TEMPLATE_BASE_PATH/srv_bing" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/srv_bing" "force_reload=true"
 	assert_equal "$SC" 204
 }
 
 @test "server_templates: Delete a non existing server template" {
-  resource_delete "$_SERVER_TEMPLATE_BASE_PATH/ghost" "backend=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/server_templates/ghost" "force_reload=true"
 	assert_equal "$SC" 404
 }

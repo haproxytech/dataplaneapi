@@ -42,10 +42,12 @@ teardown() {
 }
 
 @test "spoe_messages: Replace a spoe message" {
-    resource_put "$_SPOE_MESSAGES_BASE_PATH/check-ip" "data/put.json" "spoe=spoefile_example2.cfg&scope=\[ip-reputation\]"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_put "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/messages/check-ip" "data/put.json"
     assert_equal "$SC" 200
 
-    resource_get "$_SPOE_MESSAGES_BASE_PATH/check-ip" "spoe=spoefile_example2.cfg&version=1&scope=\[ip-reputation\]"
+    resource_get "$_SPOE_BASE_PATH/$PARENT_NAME/scopes/$SCOPE_NAME/messages/check-ip"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ".")" "$(cat ${BATS_TEST_DIRNAME}/data/put.json)"

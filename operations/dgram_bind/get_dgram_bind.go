@@ -45,7 +45,7 @@ func NewGetDgramBind(ctx *middleware.Context, handler GetDgramBindHandler) *GetD
 }
 
 /*
-	GetDgramBind swagger:route GET /services/haproxy/configuration/dgram_binds/{name} DgramBind getDgramBind
+	GetDgramBind swagger:route GET /services/haproxy/configuration/log_forwards/{parent_name}/dgram_binds/{name} DgramBind getDgramBind
 
 # Return one dgram bind
 

@@ -24,11 +24,13 @@ load '../../libs/resource_client'
 load 'utils/_helpers'
 
 @test "acls: Delete one ACL by its index" {
-    resource_delete "$_ACL_BASE_PATH/1" "parent_name=fe_acl&parent_type=frontend"
+    PARENT_NAME="fe_acl"
+    resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/1"
     assert_equal "$SC" 202
 }
 
 @test "acls: Delete one ACL by its index and force reload" {
-  resource_delete "$_ACL_BASE_PATH/0" "parent_name=fe_acl&parent_type=frontend&force_reload=true"
+  PARENT_NAME="fe_acl"
+  resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/acls/0" "force_reload=true"
     assert_equal "$SC" 204
 }

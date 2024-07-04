@@ -25,7 +25,8 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "binds: Return an array of binds" {
-  resource_get "$_BIND_BASE_PATH" "frontend=test_frontend"
+  PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds"
   assert_equal "$SC" 200
 
   if haproxy_version_ge "2.5"

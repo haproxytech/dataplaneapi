@@ -98,8 +98,8 @@ github.com/google/renameio v1.0.1 h1:Lh/jXZmvZxb0BBeSY5VKEfidcbcbenKjZFzM/q0fSeU
 github.com/google/renameio v1.0.1/go.mod h1:t/HQoYBZSsWSNK35C6CO/TpPLDVWvxOHboWUAweKUpk=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v6 v6.0.0-20240710071238-a4cba3478712 h1:Sn2Z0sRDVIkUEuGX1bnvAhc3d5zZBcFVvW8vwpVKCAo=
-github.com/haproxytech/client-native/v6 v6.0.0-20240710071238-a4cba3478712/go.mod h1:aWP/WDs15hnzVc/niWc+jMlQ6jUjTsa7MyGayRVGesA=
+github.com/haproxytech/client-native/v6 v6.0.0-20240722133253-169188f77268 h1:FAUNGgPw+G7TF7y+jr4eqQ9Q3nsQ6UkVTHxherHkK/Y=
+github.com/haproxytech/client-native/v6 v6.0.0-20240722133253-169188f77268/go.mod h1:hmMZ2Bp+J3NcV0Trc9Zy0nJ/oRrfG3C38lwE9AwJYFw=
 github.com/haproxytech/config-parser/v5 v5.1.1-0.20240624144932-f03e520c3b70 h1:8pxJQsl770NboyHoa6t2i2hvRfzSLi8FvFwTAIlg8J4=
 github.com/haproxytech/config-parser/v5 v5.1.1-0.20240624144932-f03e520c3b70/go.mod h1:uzi0JXWJYW31M1AzGsczaJtEaoG54qP0LX8B1A2iQRw=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=

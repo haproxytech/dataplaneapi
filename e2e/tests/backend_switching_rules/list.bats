@@ -24,7 +24,8 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "backend_switching_rules: Replace a Backend Switching Rule" {
-  resource_get "$_BSR_BASE_PATH" "frontend=test_frontend"
+	PARENT_NAME="test_frontend"
+  resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/backend_switching_rules"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" ". | length")" 2
 	assert_equal "$(get_json_path "$BODY" ".[0].cond_test")" "{ req_ssl_sni -i first.example.com }"

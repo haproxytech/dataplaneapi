@@ -45,7 +45,7 @@ func NewDeleteSpoeAgent(ctx *middleware.Context, handler DeleteSpoeAgentHandler)
 }
 
 /*
-	DeleteSpoeAgent swagger:route DELETE /services/haproxy/spoe/spoe_agents/{name} Spoe deleteSpoeAgent
+	DeleteSpoeAgent swagger:route DELETE /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/agents/{name} Spoe deleteSpoeAgent
 
 # Delete a SPOE agent
 

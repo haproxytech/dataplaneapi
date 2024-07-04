@@ -45,7 +45,7 @@ func NewGetServerTemplates(ctx *middleware.Context, handler GetServerTemplatesHa
 }
 
 /*
-	GetServerTemplates swagger:route GET /services/haproxy/configuration/server_templates ServerTemplate getServerTemplates
+	GetServerTemplates swagger:route GET /services/haproxy/configuration/backends/{parent_name}/server_templates ServerTemplate getServerTemplates
 
 # Return an array of server templates
 

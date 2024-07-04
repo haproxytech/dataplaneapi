@@ -27,7 +27,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 )
 
 // NewGetDgramBindsParams creates a new GetDgramBindsParams object
@@ -47,11 +46,11 @@ type GetDgramBindsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Parent log forward name
+	/*Parent name
 	  Required: true
-	  In: query
+	  In: path
 	*/
-	LogForward string
+	ParentName string
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -69,8 +68,8 @@ func (o *GetDgramBindsParams) BindRequest(r *http.Request, route *middleware.Mat
 
 	qs := runtime.Values(r.URL.Query())
 
-	qLogForward, qhkLogForward, _ := qs.GetOK("log_forward")
-	if err := o.bindLogForward(qLogForward, qhkLogForward, route.Formats); err != nil {
+	rParentName, rhkParentName, _ := route.Params.GetOK("parent_name")
+	if err := o.bindParentName(rParentName, rhkParentName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -84,23 +83,16 @@ func (o *GetDgramBindsParams) BindRequest(r *http.Request, route *middleware.Mat
 	return nil
 }
 
-// bindLogForward binds and validates parameter LogForward from query.
-func (o *GetDgramBindsParams) bindLogForward(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("log_forward", "query", rawData)
-	}
+// bindParentName binds and validates parameter ParentName from path.
+func (o *GetDgramBindsParams) bindParentName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
 	// Required: true
-	// AllowEmptyValue: false
-
-	if err := validate.RequiredString("log_forward", "query", raw); err != nil {
-		return err
-	}
-	o.LogForward = raw
+	// Parameter is provided by construction from the route
+	o.ParentName = raw
 
 	return nil
 }

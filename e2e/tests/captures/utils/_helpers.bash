@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-_CAPTURES_BASE_PATH="/services/haproxy/configuration/captures"
+_FRONTEND_BASE_PATH="/services/haproxy/configuration/frontends"

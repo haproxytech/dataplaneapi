@@ -45,7 +45,7 @@ func NewDeleteRuntimeServer(ctx *middleware.Context, handler DeleteRuntimeServer
 }
 
 /*
-	DeleteRuntimeServer swagger:route DELETE /services/haproxy/runtime/servers/{name} Server deleteRuntimeServer
+	DeleteRuntimeServer swagger:route DELETE /services/haproxy/runtime/backends/{parent_name}/servers/{name} Server deleteRuntimeServer
 
 # Deletes a server from a backend
 

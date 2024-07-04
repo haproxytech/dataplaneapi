@@ -45,7 +45,7 @@ func NewGetServerSwitchingRules(ctx *middleware.Context, handler GetServerSwitch
 }
 
 /*
-	GetServerSwitchingRules swagger:route GET /services/haproxy/configuration/server_switching_rules ServerSwitchingRule getServerSwitchingRules
+	GetServerSwitchingRules swagger:route GET /services/haproxy/configuration/backends/{parent_name}/server_switching_rules ServerSwitchingRule getServerSwitchingRules
 
 # Return an array of all Server Switching Rules
 

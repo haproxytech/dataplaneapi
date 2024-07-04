@@ -45,7 +45,7 @@ func NewDeleteBackendSwitchingRule(ctx *middleware.Context, handler DeleteBacken
 }
 
 /*
-	DeleteBackendSwitchingRule swagger:route DELETE /services/haproxy/configuration/backend_switching_rules/{index} BackendSwitchingRule deleteBackendSwitchingRule
+	DeleteBackendSwitchingRule swagger:route DELETE /services/haproxy/configuration/frontends/{parent_name}/backend_switching_rules/{index} BackendSwitchingRule deleteBackendSwitchingRule
 
 # Delete a Backend Switching Rule
 

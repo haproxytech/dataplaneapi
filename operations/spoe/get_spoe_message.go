@@ -45,7 +45,7 @@ func NewGetSpoeMessage(ctx *middleware.Context, handler GetSpoeMessageHandler) *
 }
 
 /*
-	GetSpoeMessage swagger:route GET /services/haproxy/spoe/spoe_messages/{name} Spoe getSpoeMessage
+	GetSpoeMessage swagger:route GET /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/messages/{name} Spoe getSpoeMessage
 
 # Return a spoe message
 

@@ -45,7 +45,7 @@ func NewCreateSpoeGroup(ctx *middleware.Context, handler CreateSpoeGroupHandler)
 }
 
 /*
-	CreateSpoeGroup swagger:route POST /services/haproxy/spoe/spoe_groups Spoe createSpoeGroup
+	CreateSpoeGroup swagger:route POST /services/haproxy/spoe/spoe_files/{parent_name}/scopes/{scope_name}/groups Spoe createSpoeGroup
 
 # Add a new SPOE groups
 

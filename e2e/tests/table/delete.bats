@@ -27,11 +27,12 @@ load 'utils/_helpers'
   #
   # Deleting first
   #
-    resource_delete "$_REQ_RULES_BASE_PATH/t1" "peer_section=mycluster&force_reload=true"
+  PARENT_NAME="mycluster"
+    resource_delete "$_PEERS_BASE_PATH/$PARENT_NAME/tables/t1" "force_reload=true"
 	assert_equal "$SC" 204
   #
   # Not found
   #
-  resource_delete "$_REQ_RULES_BASE_PATH/t1" "peer_section=mycluster&force_reload=true"
+  resource_delete "$_PEERS_BASE_PATH/$PARENT_NAME/tables/t1" "force_reload=true"
 	assert_equal "$SC" 404
 }

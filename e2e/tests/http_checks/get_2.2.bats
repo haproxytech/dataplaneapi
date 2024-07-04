@@ -28,7 +28,8 @@ load 'utils/_helpers'
 @test "http_checks: Return one HTTP Check from backend (>=2.2)" {
 	if haproxy_version_ge "2.2"
     then
-	resource_get "$_CHECKS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend"
+    PARENT_NAME="test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/0"
     assert_equal "$(get_json_path "$BODY" ".type")" "send"
     assert_equal 1 "$(get_json_path "$BODY" ".headers | length")"
     assert_equal "$(get_json_path "$BODY" ".headers[0].name")" "host"
@@ -37,7 +38,7 @@ load 'utils/_helpers'
 	assert_equal "$(get_json_path "$BODY" ".uri")" "/"
 	assert_equal "$(get_json_path "$BODY" ".version")" "HTTP/1.1"
 
-	resource_get "$_CHECKS_BASE_PATH/1" "parent_type=backend&parent_name=test_backend"
+	resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/http_checks/1"
     assert_equal "$(get_json_path "$BODY" ".type")" "expect"
     assert_equal "$(get_json_path "$BODY" ".match")" "status"
     assert_equal "$(get_json_path "$BODY" ".pattern")" "200-399"

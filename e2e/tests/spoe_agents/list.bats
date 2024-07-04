@@ -40,7 +40,9 @@ teardown() {
 }
 
 @test "spoe_agents: List all spoe agents" {
-    resource_get "$_SPOE_AGENTS_BASE_PATH" "scope=\[ip-reputation\]&spoe=spoefile_example2.cfg"
+    PARENT_NAME="spoefile_example2.cfg"
+    SCOPE_NAME="%5Bip-reputation%5D"
+    resource_get "$_SPOE_BASE_PATH/${PARENT_NAME}/scopes/${SCOPE_NAME}/agents"
     assert_equal "$SC" 200
 
     assert_equal "$(get_json_path "${BODY}" ". | length")" 2

@@ -24,10 +24,11 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 @test "binds: Replace a bind" {
-  resource_put "$_BIND_BASE_PATH/fixture" "data/put.json" "frontend=test_frontend&force_reload=true"
+	PARENT_NAME="test_frontend"
+  resource_put "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds/fixture" "data/put.json" "force_reload=true"
 	assert_equal "$SC" 200
 
-	resource_get "$_BIND_BASE_PATH/fixture" "frontend=test_frontend&force_reload=true"
+	resource_get "$_FRONTEND_BASE_PATH/$PARENT_NAME/binds/fixture" "force_reload=true"
 	assert_equal "$SC" 200
 	assert_equal "$(get_json_path "$BODY" '.')" "$(cat "$BATS_TEST_DIRNAME/data/put.json")"
 }

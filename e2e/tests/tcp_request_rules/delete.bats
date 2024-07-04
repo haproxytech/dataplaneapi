@@ -24,34 +24,36 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "tcp_request_rules: Delete a TCP Request Rule from frontend" {
-  resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+  PARENT_NAME="test_frontend"
+  resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 
-	resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 
     if haproxy_version_ge "2.8"; then
-        resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+        resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
         assert_equal "$SC" 204
 
-        resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+        resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
         assert_equal "$SC" 204
 
-        resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+        resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
         assert_equal "$SC" 204
     fi
 
-	resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=frontend&parent_name=test_frontend&force_reload=true"
+	resource_delete "$_FRONTEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
 	assert_equal "$SC" 404
 }
 
 @test "tcp_request_rules: Delete a TCP Request Rule from backend" {
-  resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+  PARENT_NAME="test_backend"
+  resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 
-	resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
 	assert_equal "$SC" 204
 
-	resource_delete "$_TCP_REQ_RULES_CERTS_BASE_PATH/0" "parent_type=backend&parent_name=test_backend&force_reload=true"
+	resource_delete "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "force_reload=true"
 	assert_equal "$SC" 404
 }
