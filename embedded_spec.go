@@ -21281,6 +21281,56 @@ func init() {
             "disabled"
           ]
         },
+        "ocsp_update": {
+          "type": "object",
+          "properties": {
+            "disable": {
+              "type": "boolean",
+              "default": false,
+              "x-display-name": "Disable OCSP Update",
+              "x-nullable": true
+            },
+            "httpproxy": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "pattern": "^[^\\s]+$",
+                  "example": "127.0.0.1"
+                },
+                "port": {
+                  "type": "integer",
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "x-nullable": true,
+                  "example": 80
+                }
+              },
+              "x-display-name": "OCSP Update HTTP Proxy",
+              "x-omitempty": true
+            },
+            "maxdelay": {
+              "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
+              "type": "integer",
+              "x-display-name": "OCSP Update Maximum Delay",
+              "x-nullable": true
+            },
+            "mindelay": {
+              "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
+              "type": "integer",
+              "x-display-name": "OCSP Update Minimum Delay",
+              "x-nullable": true
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "OCSP Update Mode"
+            }
+          }
+        },
         "pidfile": {
           "type": "string",
           "x-display-name": "PID File"
@@ -22035,12 +22085,16 @@ func init() {
               "x-nullable": true
             },
             "ssl_ocsp_update_max_delay": {
+              "description": "This field is deprecated in favor of ocsp-update.maxdelay",
               "type": "integer",
+              "x-deprecated": true,
               "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
               "x-nullable": true
             },
             "ssl_ocsp_update_min_delay": {
+              "description": "This field is deprecated in favor of ocsp-update.mindelay",
               "type": "integer",
+              "x-deprecated": true,
               "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
               "x-nullable": true
             },
@@ -56530,6 +56584,75 @@ func init() {
       },
       "x-go-name": "LuaPrependPath"
     },
+    "GlobalOcspUpdate": {
+      "type": "object",
+      "properties": {
+        "disable": {
+          "type": "boolean",
+          "default": false,
+          "x-display-name": "Disable OCSP Update",
+          "x-nullable": true
+        },
+        "httpproxy": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "example": "127.0.0.1"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 80
+            }
+          },
+          "x-display-name": "OCSP Update HTTP Proxy",
+          "x-omitempty": true
+        },
+        "maxdelay": {
+          "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
+          "type": "integer",
+          "x-display-name": "OCSP Update Maximum Delay",
+          "x-nullable": true
+        },
+        "mindelay": {
+          "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
+          "type": "integer",
+          "x-display-name": "OCSP Update Minimum Delay",
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "OCSP Update Mode"
+        }
+      }
+    },
+    "GlobalOcspUpdateHttpproxy": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "example": "127.0.0.1"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true,
+          "example": 80
+        }
+      },
+      "x-display-name": "OCSP Update HTTP Proxy",
+      "x-omitempty": true
+    },
     "GlobalPresetenvItems0": {
       "type": "object",
       "required": [
@@ -57074,12 +57197,16 @@ func init() {
           "x-nullable": true
         },
         "ssl_ocsp_update_max_delay": {
+          "description": "This field is deprecated in favor of ocsp-update.maxdelay",
           "type": "integer",
+          "x-deprecated": true,
           "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
           "x-nullable": true
         },
         "ssl_ocsp_update_min_delay": {
+          "description": "This field is deprecated in favor of ocsp-update.mindelay",
           "type": "integer",
+          "x-deprecated": true,
           "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
           "x-nullable": true
         },
@@ -61724,6 +61851,56 @@ func init() {
             "disabled"
           ]
         },
+        "ocsp_update": {
+          "type": "object",
+          "properties": {
+            "disable": {
+              "type": "boolean",
+              "default": false,
+              "x-display-name": "Disable OCSP Update",
+              "x-nullable": true
+            },
+            "httpproxy": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "pattern": "^[^\\s]+$",
+                  "example": "127.0.0.1"
+                },
+                "port": {
+                  "type": "integer",
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "x-nullable": true,
+                  "example": 80
+                }
+              },
+              "x-display-name": "OCSP Update HTTP Proxy",
+              "x-omitempty": true
+            },
+            "maxdelay": {
+              "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
+              "type": "integer",
+              "x-display-name": "OCSP Update Maximum Delay",
+              "x-nullable": true
+            },
+            "mindelay": {
+              "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
+              "type": "integer",
+              "x-display-name": "OCSP Update Minimum Delay",
+              "x-nullable": true
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled"
+              ],
+              "x-display-name": "OCSP Update Mode"
+            }
+          }
+        },
         "pidfile": {
           "type": "string",
           "x-display-name": "PID File"
@@ -62374,12 +62551,16 @@ func init() {
               "x-nullable": true
             },
             "ssl_ocsp_update_max_delay": {
+              "description": "This field is deprecated in favor of ocsp-update.maxdelay",
               "type": "integer",
+              "x-deprecated": true,
               "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
               "x-nullable": true
             },
             "ssl_ocsp_update_min_delay": {
+              "description": "This field is deprecated in favor of ocsp-update.mindelay",
               "type": "integer",
+              "x-deprecated": true,
               "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
               "x-nullable": true
             },
