@@ -18,11 +18,12 @@ package configuration
 import (
 	"time"
 
-	"github.com/haproxytech/client-native/v6/models"
 	"github.com/jessevdk/go-flags"
 
+	"github.com/haproxytech/client-native/v6/models"
 	dpapilog "github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/storagetype"
 )
 
 type configTypeDataplaneapi struct {
@@ -48,7 +49,7 @@ type configTypeDataplaneapi struct {
 	Userlist         *configTypeUserlist    `yaml:"userlist,omitempty"`
 	Transaction      *configTypeTransaction `yaml:"transaction,omitempty"`
 	Resources        *configTypeResources   `yaml:"resources,omitempty"`
-	User             []configTypeUser       `yaml:"user,omitempty"`
+	Users            []storagetype.User     `yaml:"user,omitempty"`
 }
 
 type configTypeTLS struct {
@@ -61,12 +62,6 @@ type configTypeTLS struct {
 	TLSKeepAlive      *string         `yaml:"tls_keep_alive,omitempty"`
 	TLSReadTimeout    *string         `yaml:"tls_read_timeout,omitempty"`
 	TLSWriteTimeout   *string         `yaml:"tls_write_timeout,omitempty"`
-}
-
-type configTypeUser struct {
-	Name     string  `yaml:"name"`
-	Insecure *bool   `yaml:"insecure,omitempty"`
-	Password *string `yaml:"password,omitempty"`
 }
 
 type configTypeHaproxy struct {
@@ -107,30 +102,11 @@ type configTypeResources struct {
 	MapsDir              *string `yaml:"maps_dir,omitempty"`
 	SSLCertsDir          *string `yaml:"ssl_certs_dir,omitempty"`
 	GeneralStorageDir    *string `yaml:"general_storage_dir,omitempty"`
+	DataplaneStorageDir  *string `yaml:"dataplane_storage_dir,omitempty"`
 	UpdateMapFiles       *bool   `yaml:"update_map_files,omitempty"`
 	UpdateMapFilesPeriod *int64  `yaml:"update_map_files_period,omitempty"`
 	SpoeDir              *string `yaml:"spoe_dir,omitempty"`
 	SpoeTransactionDir   *string `yaml:"spoe_transaction_dir,omitempty"`
-}
-
-type configTypeCluster struct {
-	APINodesPath       *string                    `yaml:"api_nodes_path,omitempty"`
-	Token              *string                    `yaml:"token,omitempty"`
-	ClusterTLSCertDir  *string                    `yaml:"cluster_tls_dir,omitempty"`
-	ActiveBootstrapKey *string                    `yaml:"active_bootstrap_key,omitempty"`
-	APIRegisterPath    *string                    `yaml:"api_register_path,omitempty"`
-	URL                *string                    `yaml:"url,omitempty"`
-	Port               *int                       `yaml:"port,omitempty"`
-	StorageDir         *string                    `yaml:"storage_dir,omitempty"`
-	BootstrapKey       *string                    `yaml:"bootstrap_key,omitempty"`
-	ID                 *string                    `yaml:"id,omitempty"`
-	APIBasePath        *string                    `yaml:"api_base_path,omitempty"`
-	CertificateDir     *string                    `yaml:"cert_path,omitempty"`
-	CertificateFetched *bool                      `yaml:"cert_fetched,omitempty"`
-	Name               *string                    `yaml:"name,omitempty"`
-	Description        *string                    `yaml:"description,omitempty"`
-	ClusterID          *string                    `yaml:"cluster_id,omitempty" group:"cluster" save:"true"`
-	ClusterLogTargets  []*models.ClusterLogTarget `yaml:"cluster_log_targets,omitempty" group:"cluster" save:"true"`
 }
 
 type configTypeAdvertised struct {
@@ -138,12 +114,26 @@ type configTypeAdvertised struct {
 	APIPort    *int64  `yaml:"api_port,omitempty"`
 }
 
-type configTypeServiceDiscovery struct {
+type storagetypeerviceDiscovery struct {
 	Consuls    *[]*models.Consul    `yaml:"consuls,omitempty"`
 	AWSRegions *[]*models.AwsRegion `yaml:"aws_regions,omitempty"`
 }
 
-type configTypeSyslog struct {
+type configKeepalived struct {
+	ConfigFile     *string `yaml:"config_file"`
+	StartCmd       *string `yaml:"start_cmd"`
+	ReloadCmd      *string `yaml:"reload_cmd"`
+	RestartCmd     *string `yaml:"restart_cmd"`
+	StopCmd        *string `yaml:"stop_cmd"`
+	StatusCmd      *string `yaml:"status_cmd,omitempty"`
+	ValidateCmd    *string `yaml:"validate_cmd"`
+	ReloadDelay    *int    `yaml:"reload_delay"`
+	TransactionDir *string `yaml:"transaction_dir"`
+	BackupsDir     *string `yaml:"backups_dir"`
+	BackupsNumber  *int    `yaml:"backups_number"`
+}
+
+type storagetypeyslog struct {
 	SyslogAddr     *string `yaml:"syslog_address,omitempty"`
 	SyslogProto    *string `yaml:"syslog_protocol,omitempty"`
 	SyslogTag      *string `yaml:"syslog_tag,omitempty"`
@@ -157,21 +147,21 @@ type configTypeLog struct {
 	LogLevel  *string           `yaml:"log_level,omitempty"`
 	LogFormat *string           `yaml:"log_format,omitempty"`
 	ACLFormat *string           `yaml:"apache_common_log_format,omitempty"`
-	Syslog    *configTypeSyslog `yaml:"syslog,omitempty"`
+	Syslog    *storagetypeyslog `yaml:"syslog,omitempty"`
 }
 
 type StorageDataplaneAPIConfiguration struct {
-	Version                *int                        `yaml:"config_version,omitempty"`
-	Name                   *string                     `yaml:"name,omitempty"`
-	Mode                   *string                     `yaml:"mode,omitempty"`
-	DeprecatedBootstrapKey *string                     `yaml:"bootstrap_key,omitempty"`
-	Status                 *string                     `yaml:"status,omitempty"`
-	Dataplaneapi           *configTypeDataplaneapi     `yaml:"dataplaneapi,omitempty"`
-	Haproxy                *configTypeHaproxy          `yaml:"haproxy,omitempty"`
-	Cluster                *configTypeCluster          `yaml:"cluster,omitempty"`
-	ServiceDiscovery       *configTypeServiceDiscovery `yaml:"service_discovery,omitempty"`
-	Log                    *configTypeLog              `yaml:"log,omitempty"`
-	LogTargets             *dpapilog.Targets           `yaml:"log_targets,omitempty"`
+	Version                    *int                        `yaml:"config_version,omitempty"`
+	Name                       *string                     `yaml:"name,omitempty"`
+	DeprecatedMode             *string                     `yaml:"mode,omitempty"`
+	DeprecatedBootstrapKey     *string                     `yaml:"bootstrap_key,omitempty"`
+	DeprecatedStatus           *string                     `yaml:"status,omitempty"`
+	Dataplaneapi               *configTypeDataplaneapi     `yaml:"dataplaneapi,omitempty"`
+	Haproxy                    *configTypeHaproxy          `yaml:"haproxy,omitempty"`
+	DeprecatedCluster          *storagetype.Cluster        `yaml:"cluster,omitempty"`
+	DeprecatedServiceDiscovery *storagetypeerviceDiscovery `yaml:"service_discovery,omitempty"`
+	Log                        *configTypeLog              `yaml:"log,omitempty"`
+	LogTargets                 *dpapilog.Targets           `yaml:"log_targets,omitempty"`
 }
 
 func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
@@ -179,14 +169,8 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	if cfgStorage.Name != nil {
 		cfg.Name.Store(*cfgStorage.Name)
 	}
-	if cfgStorage.Mode != nil {
-		cfg.Mode.Store(*cfgStorage.Mode)
-	}
 	if cfgStorage.DeprecatedBootstrapKey != nil {
 		cfg.DeprecatedBootstrapKey.Store(*cfgStorage.DeprecatedBootstrapKey)
-	}
-	if cfgStorage.Status != nil {
-		cfg.Status.Store(*cfgStorage.Status)
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.ShowSystemInfo != nil && !misc.HasOSArg("i", "show-system-info", "") {
 		cfg.HAProxy.ShowSystemInfo = *cfgStorage.Dataplaneapi.ShowSystemInfo
@@ -206,9 +190,10 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.GID != nil && !misc.HasOSArg("", "gid", "") {
 		cfg.HAProxy.GID = *cfgStorage.Dataplaneapi.GID
 	}
-	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.User != nil {
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Users != nil {
 		cfg.Users = []User{}
-		for _, item := range cfgStorage.Dataplaneapi.User {
+		// If find users in dataplaneapi config file, then use them
+		for _, item := range cfgStorage.Dataplaneapi.Users {
 			itemUser := User{
 				Name: item.Name,
 			}
@@ -221,6 +206,7 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 			cfg.Users = append(cfg.Users, itemUser)
 		}
 	}
+
 	if cfgStorage.Haproxy != nil && cfgStorage.Haproxy.ConfigFile != nil && !misc.HasOSArg("c", "config-file", "") {
 		cfg.HAProxy.ConfigFile = *cfgStorage.Haproxy.ConfigFile
 	}
@@ -287,6 +273,9 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Resources != nil && cfgStorage.Dataplaneapi.Resources.GeneralStorageDir != nil && !misc.HasOSArg("", "general-storage-dir", "") {
 		cfg.HAProxy.GeneralStorageDir = *cfgStorage.Dataplaneapi.Resources.GeneralStorageDir
 	}
+	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Resources != nil && cfgStorage.Dataplaneapi.Resources.DataplaneStorageDir != nil && !misc.HasOSArg("", "dataplane-storage-dir", "") {
+		cfg.HAProxy.DataplaneStorageDir = *cfgStorage.Dataplaneapi.Resources.DataplaneStorageDir
+	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Resources != nil && cfgStorage.Dataplaneapi.Resources.UpdateMapFiles != nil && !misc.HasOSArg("", "update-map-files", "") {
 		cfg.HAProxy.UpdateMapFiles = *cfgStorage.Dataplaneapi.Resources.UpdateMapFiles
 	}
@@ -299,68 +288,11 @@ func copyToConfiguration(cfg *Configuration) { //nolint:cyclop,maintidx
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Resources != nil && cfgStorage.Dataplaneapi.Resources.SpoeTransactionDir != nil && !misc.HasOSArg("", "spoe-transaction-dir", "") {
 		cfg.HAProxy.SpoeTransactionDir = *cfgStorage.Dataplaneapi.Resources.SpoeTransactionDir
 	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.ClusterTLSCertDir != nil && !misc.HasOSArg("", "cluster-tls-dir", "") {
-		cfg.HAProxy.ClusterTLSCertDir = *cfgStorage.Cluster.ClusterTLSCertDir
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.ID != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.ID.Store(*cfgStorage.Cluster.ID)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.BootstrapKey != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.BootstrapKey.Store(*cfgStorage.Cluster.BootstrapKey)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.ActiveBootstrapKey != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.ActiveBootstrapKey.Store(*cfgStorage.Cluster.ActiveBootstrapKey)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.Token != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.Token.Store(*cfgStorage.Cluster.Token)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.URL != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.URL.Store(*cfgStorage.Cluster.URL)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.Port != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.Port.Store(*cfgStorage.Cluster.Port)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.APIBasePath != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.APIBasePath.Store(*cfgStorage.Cluster.APIBasePath)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.APINodesPath != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.APINodesPath.Store(*cfgStorage.Cluster.APINodesPath)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.APIRegisterPath != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.APIRegisterPath.Store(*cfgStorage.Cluster.APIRegisterPath)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.StorageDir != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.StorageDir.Store(*cfgStorage.Cluster.StorageDir)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.CertificateDir != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.CertificateDir.Store(*cfgStorage.Cluster.CertificateDir)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.CertificateFetched != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.CertificateFetched.Store(*cfgStorage.Cluster.CertificateFetched)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.Name != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.Name.Store(*cfgStorage.Cluster.Name)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.Description != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.Description.Store(*cfgStorage.Cluster.Description)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.ClusterID != nil && !misc.HasOSArg("", "", "") {
-		cfg.Cluster.ClusterID.Store(*cfgStorage.Cluster.ClusterID)
-	}
-	if cfgStorage.Cluster != nil && cfgStorage.Cluster.ClusterLogTargets != nil && len(cfgStorage.Cluster.ClusterLogTargets) > 0 {
-		cfg.Cluster.ClusterLogTargets = cfgStorage.Cluster.ClusterLogTargets
-	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Advertised != nil && cfgStorage.Dataplaneapi.Advertised.APIAddress != nil && !misc.HasOSArg("", "api-address", "") {
 		cfg.APIOptions.APIAddress = *cfgStorage.Dataplaneapi.Advertised.APIAddress
 	}
 	if cfgStorage.Dataplaneapi != nil && cfgStorage.Dataplaneapi.Advertised != nil && cfgStorage.Dataplaneapi.Advertised.APIPort != nil && !misc.HasOSArg("", "api-port", "") {
 		cfg.APIOptions.APIPort = *cfgStorage.Dataplaneapi.Advertised.APIPort
-	}
-	if cfgStorage.ServiceDiscovery != nil && cfgStorage.ServiceDiscovery.Consuls != nil && !misc.HasOSArg("", "", "") {
-		cfg.ServiceDiscovery.Consuls = *cfgStorage.ServiceDiscovery.Consuls
-	}
-	if cfgStorage.ServiceDiscovery != nil && cfgStorage.ServiceDiscovery.AWSRegions != nil && !misc.HasOSArg("", "", "") {
-		cfg.ServiceDiscovery.AWSRegions = *cfgStorage.ServiceDiscovery.AWSRegions
 	}
 	if cfgStorage.Log != nil && cfgStorage.Log.Syslog != nil && cfgStorage.Log.Syslog.SyslogAddr != nil && !misc.HasOSArg("", "syslog-address", "") {
 		cfg.Syslog.SyslogAddr = *cfgStorage.Log.Syslog.SyslogAddr
@@ -416,111 +348,6 @@ func copyConfigurationToStorage(cfg *Configuration) {
 	valueName := cfg.Name.Load()
 	cfgStorage.Name = &valueName
 
-	valueMode := cfg.Mode.Load()
-	cfgStorage.Mode = &valueMode
-
-	cfgStorage.DeprecatedBootstrapKey = nil
-
-	valueStatus := cfg.Status.Load()
-	cfgStorage.Status = &valueStatus
-
-	valueClusterNodeID := cfg.Cluster.ID.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.ID = &valueClusterNodeID
-
-	valueClusterBootstrapKey := cfg.Cluster.BootstrapKey.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.BootstrapKey = &valueClusterBootstrapKey
-
-	valueClusterActiveBootstrapKey := cfg.Cluster.ActiveBootstrapKey.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.ActiveBootstrapKey = &valueClusterActiveBootstrapKey
-
-	valueClusterToken := cfg.Cluster.Token.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.Token = &valueClusterToken
-
-	valueClusterURL := cfg.Cluster.URL.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.URL = &valueClusterURL
-
-	valueClusterPort := cfg.Cluster.Port.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.Port = &valueClusterPort
-
-	valueClusterAPIBasePath := cfg.Cluster.APIBasePath.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.APIBasePath = &valueClusterAPIBasePath
-
-	valueClusterAPINodesPath := cfg.Cluster.APINodesPath.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.APINodesPath = &valueClusterAPINodesPath
-
-	valueClusterAPIRegisterPath := cfg.Cluster.APIRegisterPath.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.APIRegisterPath = &valueClusterAPIRegisterPath
-
-	valueClusterStorageDir := cfg.Cluster.StorageDir.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.StorageDir = &valueClusterStorageDir
-
-	valueClusterCertificateDir := cfg.Cluster.CertificateDir.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.CertificateDir = &valueClusterCertificateDir
-
-	valueClusterCertificateFetched := cfg.Cluster.CertificateFetched.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	if cfgStorage.Cluster != nil {
-		cfgStorage.Cluster.CertificateFetched = &valueClusterCertificateFetched
-	}
-
-	valueClusterName := cfg.Cluster.Name.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.Name = &valueClusterName
-
-	valueClusterDescription := cfg.Cluster.Description.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.Description = &valueClusterDescription
-
-	valueClusterID := cfg.Cluster.ClusterID.Load()
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.ClusterID = &valueClusterID
-
-	if cfgStorage.Cluster == nil {
-		cfgStorage.Cluster = &configTypeCluster{}
-	}
-	cfgStorage.Cluster.ClusterLogTargets = cfg.Cluster.ClusterLogTargets
-
 	if cfgStorage.Dataplaneapi == nil {
 		cfgStorage.Dataplaneapi = &configTypeDataplaneapi{}
 	}
@@ -536,16 +363,7 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.Dataplaneapi.Advertised = &configTypeAdvertised{}
 	}
 	cfgStorage.Dataplaneapi.Advertised.APIPort = &cfg.APIOptions.APIPort
-
-	if cfgStorage.ServiceDiscovery == nil {
-		cfgStorage.ServiceDiscovery = &configTypeServiceDiscovery{}
-	}
-	cfgStorage.ServiceDiscovery.Consuls = &cfg.ServiceDiscovery.Consuls
-
-	if cfgStorage.ServiceDiscovery == nil {
-		cfgStorage.ServiceDiscovery = &configTypeServiceDiscovery{}
-	}
-	cfgStorage.ServiceDiscovery.AWSRegions = &cfg.ServiceDiscovery.AWSRegions
+	cfgStorage.Dataplaneapi.Advertised.APIPort = &cfg.APIOptions.APIPort
 
 	if cfgStorage.Haproxy == nil {
 		cfgStorage.Haproxy = &configTypeHaproxy{
@@ -559,4 +377,26 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.LogTargets = &dpapilog.Targets{}
 	}
 	cfgStorage.LogTargets = &cfg.LogTargets
+}
+
+func (cfgStorage *StorageDataplaneAPIConfiguration) emptyDeprecatedSections() {
+	cfgStorage.DeprecatedBootstrapKey = nil
+	// Remove Cluster Users from dapi configuration file
+	for i := 0; i < len(cfgStorage.Dataplaneapi.Users); {
+		if cfgStorage.Dataplaneapi.Users[i].IsClusterUser() {
+			if len(cfgStorage.Dataplaneapi.Users) > i {
+				cfgStorage.Dataplaneapi.Users = append(cfgStorage.Dataplaneapi.Users[:i], cfgStorage.Dataplaneapi.Users[i+1:]...)
+				continue
+			}
+		}
+		i++
+	}
+	// Remove Cluster
+	cfgStorage.DeprecatedCluster = nil
+	// Remove Status
+	cfgStorage.DeprecatedStatus = nil
+	// Remove Mode
+	cfgStorage.DeprecatedMode = nil
+	// Remove ServiceDiscovery Consuls and AWS Regions
+	cfgStorage.DeprecatedServiceDiscovery = nil
 }

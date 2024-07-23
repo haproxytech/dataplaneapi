@@ -1,0 +1,29 @@
+{
+    "users": [
+        {
+          "name": "dpapi-c-vU9DIiJH",
+          "insecure": false,
+          "password": "$6$nBKS6wIN2HSF4uKu$3hp8zVGf6.JaUgi3XknJogqc6v3Ls3StY0Z0.8aCGl7uR0/fuX/JarE82aE80xnKz5O/jrBwxaL07Js/Tc9xc0"
+        }
+      ],
+    "status": "active",
+    "cluster": {
+      "api_nodes_path": "/nodes",
+      "token": "01J3MCAA2W7QREFKXW6XVDNYX4",
+      "cluster_tls_dir": "/var/lib/dataplaneapi/storage",
+      "active_bootstrap_key": "eyJhZGRyZXNzIjoiMTI3LjAuMC4xIiwiYXBpLWJhc2UtcGF0aCI6Ii92MSIsImNsdXN0ZXItaWQiOiJhYjhkODVjNS00ZjEyLTRlZWMtYjI3MC03OWJmNTNkNDhkNDQiLCJkZXNjcmlwdGlvbiI6IiIsImV4cGlyaW5nLXRpbWUiOiIxNzIxOTc4MzA1IiwibmFtZSI6ImRlZmF1bHQiLCJub2Rlcy1wYXRoIjoiL25vZGVzIiwicG9ydCI6IjQ0NDkiLCJyZWdpc3Rlci1tZXRob2QiOiJQT1NUIiwicmVnaXN0ZXItcGF0aCI6Ii9jbHVzdGVycy9hYjhkODVjNS00ZjEyLTRlZWMtYjI3MC03OWJmNTNkNDhkNDQvbm9kZXMiLCJzY2hlbWEiOiJodHRwIiwic3RvcmFnZS1kaXIiOiIvdmFyL2xpYi9kYXRhcGxhbmVhcGkvc3RvcmFnZSIsInVpZCI6IjAxSjNNQzJSREJGUDQ0MVYxMVpTUENNQ1dHIn0=",
+      "api_register_path": "/clusters/ab8d85c5-4f12-4eec-b270-79bf53d48d44/nodes",
+      "url": "http://127.0.0.1",
+      "port": 4449,
+      "storage_dir": "/etc/haproxy",
+      "bootstrap_key": "eyJhZGRyZXNzIjoiMTI3LjAuMC4xIiwiYXBpLWJhc2UtcGF0aCI6Ii92MSIsImNsdXN0ZXItaWQiOiJhYjhkODVjNS00ZjEyLTRlZWMtYjI3MC03OWJmNTNkNDhkNDQiLCJkZXNjcmlwdGlvbiI6IiIsImV4cGlyaW5nLXRpbWUiOiIxNzIxOTc4MzA1IiwibmFtZSI6ImRlZmF1bHQiLCJub2Rlcy1wYXRoIjoiL25vZGVzIiwicG9ydCI6IjQ0NDkiLCJyZWdpc3Rlci1tZXRob2QiOiJQT1NUIiwicmVnaXN0ZXItcGF0aCI6Ii9jbHVzdGVycy9hYjhkODVjNS00ZjEyLTRlZWMtYjI3MC03OWJmNTNkNDhkNDQvbm9kZXMiLCJzY2hlbWEiOiJodHRwIiwic3RvcmFnZS1kaXIiOiIvdmFyL2xpYi9kYXRhcGxhbmVhcGkvc3RvcmFnZSIsInVpZCI6IjAxSjNNQzJSREJGUDQ0MVYxMVpTUENNQ1dHIn0=",
+      "id": "01J3MCAA2WAVV294QGPG750BYA",
+      "api_base_path": "/v1",
+      "cert_path": "/var/lib/dataplaneapi/storage/certs-cluster",
+      "cert_fetched": true,
+      "use_hash_storage": false,
+      "name": "hd-laptop",
+      "description": "",
+      "cluster_id": "ab8d85c5-4f12-4eec-b270-79bf53d48d44"
+    }
+  }

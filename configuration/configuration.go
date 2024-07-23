@@ -29,6 +29,8 @@ import (
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/haproxytech/client-native/v6/models"
 	"github.com/haproxytech/dataplaneapi/log"
+	"github.com/haproxytech/dataplaneapi/storage"
+	"github.com/haproxytech/dataplaneapi/storagetype"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -57,6 +59,7 @@ type HAProxyConfiguration struct {
 	SSLCertsDir          string        `long:"ssl-certs-dir" description:"Path to SSL certificates directory" default:"/etc/haproxy/ssl" group:"resources"`
 	GeneralStorageDir    string        `long:"general-storage-dir" description:"Path to general storage directory" default:"/etc/haproxy/general" group:"resources"`
 	ClusterTLSCertDir    string        `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file" group:"cluster"`
+	DataplaneStorageDir  string        `long:"dataplane-storage-dir" description:"Path to dataplane internal storage directory" default:"/etc/haproxy/dataplane" group:"resources"`
 	UpdateMapFilesPeriod int64         `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10" group:"resources"`
 	ReloadDelay          int           `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5" group:"reload"`
 	MaxOpenTransactions  int64         `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20" group:"transaction"`
@@ -116,6 +119,9 @@ func (c *ClusterConfiguration) Clear() {
 	c.Description.Store("")
 	c.ClusterID.Store("")
 	c.ClusterLogTargets = nil
+	c.URL.Store("")
+	c.StorageDir.Store("")
+	c.CertificateDir.Store("")
 }
 
 type RuntimeData struct {
@@ -141,26 +147,30 @@ type ServiceDiscovery struct {
 
 //nolint:staticcheck
 type Configuration struct {
-	Cluster                ClusterConfiguration `yaml:"-"`
-	Notify                 NotifyConfiguration  `yaml:"-"`
-	Mode                   AtomicString         `yaml:"mode" default:"single"`
-	storage                Storage              `yaml:"-"`
-	Name                   AtomicString         `yaml:"name" example:"famous_condor"`
-	Cmdline                AtomicString         `yaml:"-"`
-	Status                 AtomicString         `yaml:"status,omitempty"`
-	DeprecatedBootstrapKey AtomicString         `yaml:"bootstrap_key,omitempty" deprecated:"true"`
-	reloadSignal           chan os.Signal
-	shutdownSignal         chan os.Signal
-	MapSync                *MapSync             `yaml:"-"`
-	Syslog                 log.SyslogOptions    `yaml:"-"`
-	Logging                log.LoggingOptions   `yaml:"-"`
-	RuntimeData            RuntimeData          `yaml:"-"`
-	ServiceDiscovery       ServiceDiscovery     `yaml:"-"`
-	Users                  []User               `yaml:"-"`
-	APIOptions             APIConfiguration     `yaml:"-"`
-	LogTargets             log.Targets          `yaml:"log_targets,omitempty" group:"log"`
-	HAProxy                HAProxyConfiguration `yaml:"-"`
-	mutex                  sync.Mutex
+	Cluster                 ClusterConfiguration       `yaml:"-"`
+	Notify                  NotifyConfiguration        `yaml:"-"`
+	Mode                    AtomicString               `yaml:"mode" default:"single"`
+	storage                 Storage                    `yaml:"-"`
+	clusterModeStorage      storage.ClusterModeStorage `yaml:"-"`
+	sdConsulStorage         storage.SDConsulStorage    `yaml:"-"`
+	sdAWSRegionStorage      storage.SDAWStorage        `yaml:"-"`
+	Name                    AtomicString               `yaml:"name" example:"famous_condor"`
+	Cmdline                 AtomicString               `yaml:"-"`
+	Status                  AtomicString               `yaml:"status,omitempty"`
+	DeprecatedBootstrapKey  AtomicString               `yaml:"bootstrap_key,omitempty" deprecated:"true"`
+	reloadSignal            chan os.Signal
+	shutdownSignal          chan os.Signal
+	MapSync                 *MapSync             `yaml:"-"`
+	Syslog                  log.SyslogOptions    `yaml:"-"`
+	Logging                 log.LoggingOptions   `yaml:"-"`
+	RuntimeData             RuntimeData          `yaml:"-"`
+	ServiceDiscovery        ServiceDiscovery     `yaml:"-"`
+	Users                   []User               `yaml:"-"`
+	APIOptions              APIConfiguration     `yaml:"-"`
+	LogTargets              log.Targets          `yaml:"log_targets,omitempty" group:"log"`
+	HAProxy                 HAProxyConfiguration `yaml:"-"`
+	FlagLoadDapiStorageData bool                 `yaml:"-"`
+	mutex                   sync.Mutex
 }
 
 var cfgInitOnce sync.Once
@@ -194,6 +204,36 @@ func (c *Configuration) GetStorageData() *StorageDataplaneAPIConfiguration {
 	return c.storage.Get()
 }
 
+func (c *Configuration) GetClusterModeStorage() storage.ClusterModeStorage {
+	return c.clusterModeStorage
+}
+
+func (c *Configuration) GetUsers() storagetype.Users {
+	// SingleModeUsers + ClusterModeUsers
+	// ClusterMode users
+	users := c.clusterModeStorage.GetUsers()
+	// SingleMode users
+	for _, user := range c.Users {
+		found := false
+		for _, cmUser := range users {
+			if cmUser.Name == user.Name {
+				found = true
+				break
+			}
+		}
+		pwd := user.Password
+		insecure := user.Insecure
+		if !found {
+			users = append(users, storagetype.User{
+				Name:     user.Name,
+				Password: &pwd,
+				Insecure: &insecure,
+			})
+		}
+	}
+	return users
+}
+
 func (c *Configuration) UnSubscribeAll() {
 	c.Notify.BootstrapKeyChanged.UnSubscribeAll()
 	c.Notify.ServerStarted.UnSubscribeAll()
@@ -202,11 +242,12 @@ func (c *Configuration) UnSubscribeAll() {
 	c.Notify.Shutdown.UnSubscribeAll()
 }
 
-func (c *Configuration) Load() error {
+func (c *Configuration) Load() ([]string, error) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
 
 	var err error
+	deprecationInfoMsg := make([]string, 0)
 	if c.HAProxy.DataplaneConfig == "" {
 		c.storage = &StorageDummy{}
 		_ = c.storage.Load("")
@@ -216,18 +257,18 @@ func (c *Configuration) Load() error {
 			if errors.Is(err, fs.ErrNotExist) {
 				fmt.Printf("configuration file %s does not exists, creating one\n", c.HAProxy.DataplaneConfig)
 			} else {
-				return fmt.Errorf("configuration file %s not valid (only yaml format is supported): %w", c.HAProxy.DataplaneConfig, err)
+				return deprecationInfoMsg, fmt.Errorf("configuration file %s not valid (only yaml format is supported): %w", c.HAProxy.DataplaneConfig, err)
 			}
 		}
 	}
+
 	copyToConfiguration(c)
 
-	if c.DeprecatedBootstrapKey.Load() != "" {
-		c.Cluster.BootstrapKey.Store(c.DeprecatedBootstrapKey.Load())
-	}
-
-	if c.Mode.Load() == "" {
-		c.Mode.Store(ModeSingle)
+	if c.FlagLoadDapiStorageData {
+		deprecationInfoMsg, err = c.LoadDataplaneStorageConfig()
+		if err != nil {
+			return deprecationInfoMsg, err
+		}
 	}
 
 	if c.Name.Load() == "" {
@@ -240,10 +281,45 @@ func (c *Configuration) Load() error {
 	}
 
 	if err = validateReloadConfiguration(&c.HAProxy); err != nil {
-		return err
+		return deprecationInfoMsg, err
 	}
 
-	return nil
+	return deprecationInfoMsg, nil
+}
+
+func (c *Configuration) LoadDataplaneStorageConfig() ([]string, error) {
+	var err error
+	var deprecationInfoMsg []string
+
+	//--------------------
+	// Load from dataplane storage cluster.json: users, cluster, service_discovery
+	// It has to be after copyToConfiguration as it needs the dataplaneapi_storage_path
+	//--------------------
+	if err = c.loadClusterModeData(); err != nil {
+		return deprecationInfoMsg, err
+	}
+	if err = c.loadSDConsuls(); err != nil {
+		return deprecationInfoMsg, err
+	}
+	if err = c.loadSDAWSRegions(); err != nil {
+		return deprecationInfoMsg, err
+	}
+
+	//--------------------
+	// Deprecated fields migration
+	//--------------------
+	deprecationInfoMsg, err = c.migrateDeprecatedFields()
+	if err != nil {
+		return deprecationInfoMsg, err
+	}
+
+	if c.clusterModeStorage.IsClusterMode() {
+		c.Mode.Store(ModeCluster)
+	} else {
+		c.Mode.Store(ModeSingle)
+	}
+	log.Debugf("Mode: %s", c.Mode.Load())
+	return deprecationInfoMsg, err
 }
 
 func (c *Configuration) LoadRuntimeVars(swaggerJSON json.RawMessage, host string, port int) error {
@@ -269,31 +345,24 @@ func (c *Configuration) Save() error {
 	defer c.mutex.Unlock()
 
 	copyConfigurationToStorage(c)
-	if len(c.ServiceDiscovery.Consuls) == 0 {
-		cfg := c.storage.Get()
-		cfg.ServiceDiscovery.Consuls = nil
-	}
-	if len(c.ServiceDiscovery.AWSRegions) == 0 {
-		cfg := c.storage.Get()
-		cfg.ServiceDiscovery.AWSRegions = nil
-	}
-	if cfg.ServiceDiscovery.Consuls == nil && cfg.ServiceDiscovery.AWSRegions == nil {
-		cfg := c.storage.Get()
-		cfg.ServiceDiscovery = nil
-	}
 	if len(c.LogTargets) == 0 {
 		cfg := c.storage.Get()
 		cfg.LogTargets = nil
 	}
-	if len(c.Cluster.ClusterLogTargets) == 0 {
-		cfg := c.storage.Get()
-		cfg.Cluster.ClusterLogTargets = nil
-	}
 	// clean storage data if we are not in cluster mode or preparing to go into that mode
-	if cfg.Mode.Load() != ModeCluster && cfg.Cluster.BootstrapKey.Load() == "" {
-		storage := cfg.storage.Get()
-		storage.Cluster = nil
+	if c.Mode.Load() != ModeCluster && c.Cluster.BootstrapKey.Load() == "" {
+		storage := c.storage.Get()
+		storage.DeprecatedCluster = nil
 	}
+
+	// dataplane storage
+	if err := c.SaveClusterModeData(); err != nil {
+		return err
+	}
+	if err := c.SaveSDConsuls(); err != nil {
+		return err
+	}
+
 	return c.storage.Save()
 }
 
@@ -312,9 +381,9 @@ func (c *Configuration) GetClusterCertDir() string {
 
 func (c *Configuration) SaveConsuls(consuls []*models.Consul) error {
 	c.ServiceDiscovery.consulMu.Lock()
+	defer c.ServiceDiscovery.consulMu.Unlock()
 	c.ServiceDiscovery.Consuls = consuls
-	c.ServiceDiscovery.consulMu.Unlock()
-	return c.Save()
+	return c.SaveSDConsuls()
 }
 
 func (c *Configuration) SaveAWS(aws []*models.AwsRegion) error {
@@ -322,5 +391,5 @@ func (c *Configuration) SaveAWS(aws []*models.AwsRegion) error {
 	defer c.ServiceDiscovery.awsMu.Unlock()
 
 	c.ServiceDiscovery.AWSRegions = aws
-	return c.Save()
+	return c.SaveSDAWSRegions()
 }

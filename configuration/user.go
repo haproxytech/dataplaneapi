@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"slices"
 	"strings"
 	"sync"
 
@@ -31,6 +32,7 @@ import (
 	"github.com/haproxytech/config-parser/v5/types"
 
 	"github.com/haproxytech/dataplaneapi/misc"
+	"github.com/haproxytech/dataplaneapi/storagetype"
 )
 
 var usersStore *Users
@@ -76,13 +78,14 @@ func (u *Users) Init() error {
 	configuration := Get()
 	u.users = []types.User{}
 	mode := configuration.Mode.Load()
-	if len(configuration.Users) > 0 {
-		for _, user := range configuration.Users {
-			if mode != ModeCluster || strings.HasPrefix(user.Name, "dpapi-c-") {
+	allUsers := configuration.GetUsers() // single + cluster mode
+	if len(allUsers) > 0 {
+		for _, user := range allUsers {
+			if mode != ModeCluster || strings.HasPrefix(user.Name, storagetype.DapiClusterUserPrefix) {
 				u.users = append(u.users, types.User{
 					Name:       user.Name,
-					IsInsecure: user.Insecure,
-					Password:   user.Password,
+					IsInsecure: *user.Insecure,
+					Password:   *user.Password,
 				})
 			}
 		}
@@ -102,36 +105,33 @@ func (u *Users) Init() error {
 }
 
 func (u *Users) AddUser(user types.User) error {
-	storage := Get().GetStorageData()
+	clusterModeStorage := Get().GetClusterModeStorage()
+
 	u.users = append(u.users, user)
-	if storage.Dataplaneapi == nil {
-		storage.Dataplaneapi = &configTypeDataplaneapi{}
-	}
-	// no need to check if storage.Dataplaneapi.User is nil (slice)
-	storage.Dataplaneapi.User = append(storage.Dataplaneapi.User, configTypeUser{
+
+	err := clusterModeStorage.AddUserAndStore(storagetype.User{
 		Name:     user.Name,
 		Insecure: &user.IsInsecure,
 		Password: &user.Password,
 	})
-	return Get().Save()
+	return err
 }
 
 func (u *Users) RemoveUser(user types.User) error {
-	storage := Get().GetStorageData()
+	clusterModeStorage := Get().GetClusterModeStorage()
+
 	for i, v := range u.users {
 		if v.Name == user.Name {
-			u.users = removeFromSlice(u.users, i)
+			u.users = slices.Delete(u.users, i, i+1)
 			break
 		}
 	}
-	if storage.Dataplaneapi != nil {
-		for i, u := range storage.Dataplaneapi.User {
-			if u.Name == user.Name {
-				storage.Dataplaneapi.User = removeFromSlice(storage.Dataplaneapi.User, i)
-			}
-		}
-	}
-	return Get().Save()
+	err := clusterModeStorage.RemoveUserAndStore(storagetype.User{
+		Name:     user.Name,
+		Insecure: &user.IsInsecure,
+		Password: &user.Password,
+	})
+	return err
 }
 
 func (u *Users) getUsersFromUsersListSection(filename, userlistSection string) error {

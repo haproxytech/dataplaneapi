@@ -11,6 +11,7 @@ dataplaneapi:
     general_storage_dir: /home/testuiduser/general
     spoe_dir: /home/testuiduser/spoe
     spoe_transaction_dir: /home/testuiduser/spoe-td
+    dataplane_storage_dir: /home/testuiduser/dataplane
 haproxy:
   config_file: /home/testuiduser/haproxy.cfg
   haproxy_bin: /usr/local/sbin/haproxy

@@ -36,7 +36,11 @@ func (g DataplaneapiConfiguration) Definition() definition {
 
 func (g DataplaneapiConfiguration) Command(_ []string) (response []byte, err error) {
 	cfg := configuration.Get()
-	err = cfg.Load()
+	var loadMsg []string
+	loadMsg, err = cfg.Load()
 	b := fmt.Sprintf("%# v", pretty.Formatter(cfg))
+	if len(loadMsg) > 0 {
+		fmt.Print(loadMsg)
+	}
 	return []byte(b), err
 }

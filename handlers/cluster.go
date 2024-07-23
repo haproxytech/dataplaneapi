@@ -31,6 +31,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/haproxy"
 	"github.com/haproxytech/dataplaneapi/operations/cluster"
+	"github.com/haproxytech/dataplaneapi/storagetype"
 )
 
 // CreateClusterHandlerImpl implementation of the CreateClusterHandler interface
@@ -150,7 +151,7 @@ func (h *CreateClusterHandlerImpl) Handle(params cluster.PostClusterParams, prin
 			h.Config.Notify.BootstrapKeyChanged.Notify()
 		}()
 	}
-	err := h.Config.Save()
+	err := h.Config.SaveClusterModeData()
 	if err != nil {
 		return h.err500(err, nil)
 	}
@@ -169,7 +170,7 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 		log.Warning("clearing cluster users")
 		for _, u := range h.Users.GetUsers() {
 			// remove all users for cluster communication
-			if strings.HasPrefix(u.Name, "dpapi-c-") {
+			if strings.HasPrefix(u.Name, storagetype.DapiClusterUserPrefix) {
 				errRU := h.Users.RemoveUser(u)
 				if errRU != nil {
 					log.Error(errRU.Error())
@@ -202,22 +203,22 @@ func (h *DeleteClusterHandlerImpl) Handle(params cluster.DeleteClusterParams, pr
 			}
 			// Deleting the storage directory used by Fusion:
 			// avoiding at all entering any nil pointer dereference.
-			if storageData := h.Config.GetStorageData(); storageData != nil && storageData.Cluster != nil && storageData.Cluster.StorageDir != nil {
-				if storageErr := configuration.RemoveStorageFolder(*storageData.Cluster.StorageDir); storageErr != nil {
+			if storageData := h.Config.GetStorageData(); storageData != nil && storageData.DeprecatedCluster != nil && storageData.DeprecatedCluster.StorageDir != nil {
+				if storageErr := configuration.RemoveStorageFolder(*storageData.DeprecatedCluster.StorageDir); storageErr != nil {
 					log.Warningf("failed to clean-up the cluster storage directory: %s", storageErr.Error())
 				}
 			}
 		}
 		h.Config.Cluster.BootstrapKey.Store("")
-		h.Config.Mode.Store(configuration.ModeSingle)
 		h.Config.Status.Store("active")
+		h.Config.HAProxy.ClusterTLSCertDir = ""
 		h.Config.Cluster.Clear()
 		defer func() {
 			log.Warning("reloading to apply configuration changes")
 			h.Config.Notify.Reload.Notify()
 		}()
 	}
-	err := h.Config.Save()
+	err := h.Config.SaveClusterModeData()
 	if err != nil {
 		return h.err500(err, nil)
 	}

@@ -237,6 +237,10 @@ func Int64P(i int) *int64 {
 	return &i64
 }
 
+func PtrTo[T any](v T) *T {
+	return &v
+}
+
 // extractEnvVar extracts and returns env variable from HAProxy variable
 // provided in "${SOME_VAR}" format
 func ExtractEnvVar(pass string) string {

@@ -1,6 +1,7 @@
 stages:
   - lint
   - build
+  - test
   - e2e
 variables:
   DOCKER_HOST: tcp://docker:2375
@@ -100,6 +101,21 @@ build:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
+
+test:
+  stage: test
+  image:
+    name: $CI_REGISTRY_GO/golang:$GO_VERSION
+    entrypoint: [ "" ]
+  tags:
+    - go
+  before_script:
+    - go env -w "GONOSUMDB=gitlab.int.haproxy.com/*" "GOPROXY=http://goproxy.int.haproxy.com"
+  script:
+    - go test ./...
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: "$CI_PROJECT_NAMESPACE == 'haproxy-controller' && $CI_PIPELINE_SOURCE == 'push'"
 
 .e2e:
   stage: e2e

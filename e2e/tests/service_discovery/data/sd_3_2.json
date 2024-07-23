@@ -1,0 +1,40 @@
+{
+    "services": [
+      {
+        "id": "host-0-0",
+        "name": "test-service-0",
+        "address": "182.242.119.47",
+        "port": 8000
+      },
+      {
+        "id": "host-0-1",
+        "name": "test-service-0",
+        "address": "250.84.2.31",
+        "port": 8000
+      },
+      {
+        "id": "host-0-2",
+        "name": "test-service-0",
+        "address": "66.78.40.63",
+        "port": 8000
+      },
+      {
+        "id": "host-1-0",
+        "name": "test-service-1",
+        "address": "14.116.78.122",
+        "port": 8000
+      },
+      {
+        "id": "host-1-1",
+        "name": "test-service-1",
+        "address": "175.14.89.148",
+        "port": 8000
+      },
+      {
+        "id": "host-1-2",
+        "name": "test-service-1",
+        "address": "210.83.16.45",
+        "port": 8000
+      }
+    ]
+  }

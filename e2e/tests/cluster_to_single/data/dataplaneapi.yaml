@@ -1,0 +1,33 @@
+name: famous_condor
+dataplaneapi:
+  host: 0.0.0.0
+  port: 8080
+  userlist:
+    userlist_file: /etc/haproxy/userlist.cfg
+  resources:
+    maps_dir: /etc/haproxy/maps
+    ssl_certs_dir: /etc/haproxy/ssl
+    general_storage_dir: /etc/haproxy/general
+    dataplane_storage_dir: /etc/haproxy/dataplane
+    spoe_dir: /etc/haproxy/spoe
+    waf_dir: /etc/haproxy/waf
+haproxy:
+  config_file: /etc/haproxy/haproxy.cfg
+  haproxy_bin: /usr/local/sbin/haproxy
+  reload:
+    reload_cmd: kill -s 12 1
+    restart_cmd: kill -s 12 1
+    status_cmd: pgrep haproxy
+    start_cmd: "true"
+    stop_cmd: "false"
+log:
+  log_to: file
+  log_file: /var/log/dataplaneapi.log
+  log_level: debug
+keepalived:
+  config_file: /dev/null
+  start_cmd: /bin/true
+  reload_cmd: /bin/true
+  restart_cmd: /bin/false
+  stop_cmd: /bin/true
+  status_cmd: /bin/true

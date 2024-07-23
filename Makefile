@@ -61,3 +61,7 @@ generate:
 generate-native:
 	generate/swagger/script.sh
 	generate/post_swagger.sh
+
+.PHONY: test
+test:
+	go test ./...

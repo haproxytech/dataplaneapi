@@ -1,0 +1,24 @@
+{
+    "consuls": [
+      {
+        "address": "127.0.0.1",
+        "description": "description 1",
+        "enabled": true,
+        "id": "111",
+        "name": "existing_consul1",
+        "port": 8500,
+        "retry_timeout": 10,
+        "server_slots_base": 10
+      },
+      {
+        "address": "127.0.0.1",
+        "description": "description 7",
+        "enabled": true,
+        "id": "777",
+        "name": "consul7",
+        "port": 777,
+        "retry_timeout": 10,
+        "server_slots_base": 10
+      }
+    ]
+  }

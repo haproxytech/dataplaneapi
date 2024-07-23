@@ -1,0 +1,50 @@
+name: famous_condor
+dataplaneapi:
+  host: 0.0.0.0
+  port: 8080
+  userlist:
+    userlist_file: /etc/haproxy/userlist.cfg
+  user:
+  - name: dpapi-c-vU9DIiJH
+    insecure: false
+    password: >-
+      $6$nBKS6wIN2HSF4uKu$3hp8zVGf6.JaUgi3XknJogqc6v3Ls3StY0Z0.8aCGl7uR0/fuX/JarE82aE80xnKz5O/jrBwxaL07Js/Tc9xc0
+  resources:
+    maps_dir: /etc/haproxy/maps
+    ssl_certs_dir: /etc/haproxy/ssl
+    general_storage_dir: /etc/haproxy/general
+    dataplane_storage_dir: /etc/haproxy/dataplane
+    spoe_dir: /etc/haproxy/spoe
+    waf_dir: /etc/haproxy/waf
+haproxy:
+  config_file: /etc/haproxy/haproxy.cfg
+  haproxy_bin: /usr/local/sbin/haproxy
+  reload:
+    reload_cmd: kill -s 12 1
+    restart_cmd: kill -s 12 1
+    status_cmd: pgrep haproxy
+    start_cmd: "true"
+    stop_cmd: "false"
+log:
+  log_to: file
+  log_file: /var/log/dataplaneapi.log
+  log_level: debug
+keepalived:
+  config_file: /dev/null
+  start_cmd: /bin/true
+  reload_cmd: /bin/true
+  restart_cmd: /bin/false
+  stop_cmd: /bin/true
+  status_cmd: /bin/true
+service_discovery:
+  aws_regions:
+  - accesskeyid: AKIAIOSFODNN7EXAMPLE
+    secretaccesskey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    id: idtest2
+    region: us-east-2
+    name: famous_condor2
+  - accesskeyid: AKIAIOSFODNN7EXAMPLE
+    secretaccesskey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    id: idtest
+    region: us-east-1
+    name: famous_condor

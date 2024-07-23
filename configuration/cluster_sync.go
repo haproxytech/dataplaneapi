@@ -186,10 +186,9 @@ func (c *ClusterSync) issueRefreshRequest(url, port, basePath string, nodesPath 
 		return err
 	}
 	c.cfg.Cluster.Token.Store(resp.Header.Get("X-Node-Key"))
-	err = c.cfg.Save()
-	if err != nil {
+	if err = c.cfg.SaveClusterModeData(); err != nil {
 		log.Warning(err)
-		return err
+		return fmt.Errorf("failed to save cluster mode data: %v", err)
 	}
 	c.cfg.Notify.Reload.Notify()
 	return nil
@@ -206,7 +205,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				// do we need to delete cert here maybe?
 				log.Warningf("setting bootstrap key to empty")
 				c.cfg.Cluster.ActiveBootstrapKey.Store("")
-				err := c.cfg.Save()
+				err := c.cfg.SaveClusterModeData()
 				if err != nil {
 					log.Panic(err)
 				}
@@ -253,8 +252,11 @@ func (c *ClusterSync) monitorBootstrapKey() {
 			c.cfg.Cluster.ClusterID.Store(data["cluster-id"])
 			c.cfg.HAProxy.ClusterTLSCertDir = path.Join(data["storage-dir"], "certs-cluster")
 			c.cfg.Cluster.CertificateDir.Store(path.Join(data["storage-dir"], "certs-cluster"))
-			c.cfg.Mode.Store(ModeCluster)
-			err = c.cfg.Save()
+			err = c.cfg.SaveClusterModeData()
+			if err != nil {
+				log.Panic(err)
+			}
+
 			if err != nil {
 				log.Panic(err)
 			}
@@ -273,7 +275,7 @@ func (c *ClusterSync) monitorBootstrapKey() {
 				log.Warning(err)
 				break
 			}
-			err = c.cfg.Save()
+			err = c.cfg.SaveClusterModeData()
 			if err != nil {
 				log.Panic(err)
 			}
@@ -458,7 +460,7 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 	if err != nil {
 		return err
 	}
-	return c.cfg.Save()
+	return c.cfg.SaveClusterModeData()
 }
 
 // checkCertificate checks if we have received valid certificate or we just got CSR back
@@ -467,17 +469,17 @@ func (c *ClusterSync) issueJoinRequest(url, port, basePath string, registerPath 
 // -----BEGIN CERTIFICATE----- or -----BEGIN CERTIFICATE REQUEST-----
 func (c *ClusterSync) checkCertificate(node Node) (fetched bool, err error) {
 	if !strings.HasPrefix(node.Certificate, "-----BEGIN CERTIFICATE-----") {
-		c.cfg.Status.Store("unconfigured")
+		c.cfg.Status.Store(StatusUnconfigured)
 		return false, nil
 	}
 	err = renameio.WriteFile(path.Join(c.cfg.GetClusterCertDir(), fmt.Sprintf("dataplane-%s.crt", c.cfg.Name.Load())), []byte(node.Certificate), 0o644)
 	if err != nil {
-		c.cfg.Status.Store("unconfigured")
+		c.cfg.Status.Store(StatusUnconfigured)
 		return false, err
 	}
 	c.cfg.Cluster.CertificateFetched.Store(true)
 	c.cfg.Notify.Reload.Notify()
-	c.cfg.Status.Store("active")
+	c.cfg.Status.Store(StatusActive)
 	return true, nil
 }
 
@@ -548,7 +550,7 @@ func (c *ClusterSync) fetchCert() {
 					log.Warning(err.Error())
 					break
 				}
-				err = c.cfg.Save()
+				err = c.cfg.SaveClusterModeData()
 				if err != nil {
 					log.Warning(err)
 				}

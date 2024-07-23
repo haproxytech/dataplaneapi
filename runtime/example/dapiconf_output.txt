@@ -109,7 +109,8 @@
                 Resources: &configuration.configTypeResources{
                     MapsDir:              &"/etc/haproxy/maps",
                     SSLCertsDir:          &"/etc/haproxy/ssl",
-                    GeneralStorageDir:    (*string)(nil),
+                    DataplaneStorageDir:    (*string)(nil),
+                    ControllerStorageDir:    (*string)(nil),
                     UpdateMapFiles:       &bool(false),
                     UpdateMapFilesPeriod: &int64(10),
                     SpoeDir:              &"/etc/haproxy/spoe",

@@ -189,6 +189,8 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 
 	client := configureNativeClient(clientCtx, haproxyOptions, mWorker)
 
+	initDataplaneStorage(haproxyOptions.DataplaneStorageDir, client)
+
 	users := dataplaneapi_config.GetUsersStore()
 	// this is not part of GetUsersStore(),
 	// in case of reload we need to reread users

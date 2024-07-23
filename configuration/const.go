@@ -19,3 +19,8 @@ const (
 	ModeCluster = "cluster"
 	ModeSingle  = "single"
 )
+
+const (
+	StatusActive       = "active"
+	StatusUnconfigured = "unconfigured"
+)

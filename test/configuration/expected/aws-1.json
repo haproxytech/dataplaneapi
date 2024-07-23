@@ -1,0 +1,24 @@
+{
+  "aws_regions": [
+    {
+      "access_key_id": "AKIAIOSFODNN7EXAMPLE",
+      "secret_access_key": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+      "enabled": null,
+      "id": "idtest2",
+      "ipv4_address": null,
+      "name": "famous_condor2",
+      "region": "us-east-2",
+      "retry_timeout": null
+    },
+    {
+      "access_key_id": "AKIAIOSFODNN7EXAMPLE",
+      "secret_access_key": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+      "enabled": null,
+      "id": "idtest",
+      "ipv4_address": null,
+      "name": "famous_condor",
+      "region": "us-east-1",
+      "retry_timeout": null
+    }
+  ]
+}

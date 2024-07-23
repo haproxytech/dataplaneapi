@@ -1,0 +1,14 @@
+{
+    "consuls": [
+      {
+        "address": "ADDRESS",
+        "enabled": true,
+        "id": "c586426f-60b2-4d45-a0fc-4a1f8ef4365b",
+        "port": 8500,
+        "retry_timeout": 10,
+        "server_slots_base": 10,
+        "server_slots_growth_increment": 10,
+        "server_slots_growth_type": "linear"
+      }
+    ]
+  }

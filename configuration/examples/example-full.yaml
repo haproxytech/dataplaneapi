@@ -1,7 +1,7 @@
 config_version: 2
 name: famous_condor # string
 mode: "single" # string
-status: null # string
+status: null # string # Deprecated starting 3.0 for cluster users, see ./README.md for more information
 dataplaneapi:
   scheme: # []string
   - http
@@ -31,10 +31,10 @@ dataplaneapi:
     tls_keep_alive: 1m # time.Duration 2
     tls_read_timeout: 10s # time.Duration 2
     tls_write_timeout: 10s # time.Duration 2
-  user:
-  - name: admin # string 2
-    insecure: true # bool 2
-    password: adminpwd # string 2
+  user: # Deprecated starting 3.0 for cluster users, see ./README.md for more information
+    - name: admin # string 2
+      insecure: true # bool 2
+      password: adminpwd # string 2
   userlist:
     userlist: "controller" # string 2
     userlist_file: null # string 2
@@ -50,6 +50,7 @@ dataplaneapi:
     update_map_files_period: 10 # int64 2
     spoe_dir: "/etc/haproxy/spoe" # string 2
     spoe_transaction_dir: "/tmp/spoe-haproxy" # string 2
+    dataplane_storage_dir: "/etc/haproxy/general" # string 2
   advertised:
     api_address: 10.2.3.4 # string 2
     api_port: 80 # int64 2
@@ -70,7 +71,7 @@ haproxy:
     reload_retention: 1 # int 2
     reload_strategy: custom
     validate_cmd: null # string 2
-cluster:
+cluster: # Deprecated starting 3.0, see ./README.md for more information
   cluster_tls_dir: null # string
   id: null # string
   bootstrap_key: null # string
@@ -86,7 +87,7 @@ cluster:
   cert_fetched: false # bool
   name: null # string
   description: null # string
-service_discovery:
+service_discovery:  # Deprecated starting 3.0, see ./README.md for more information
   consuls: [] # []*models.Consul
   aws_regions: [] # []*models.AwsRegion
 log_targets:
