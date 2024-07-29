@@ -38,10 +38,13 @@ func NewDeleteDefaultsSectionParams() DeleteDefaultsSectionParams {
 		// initialize parameters with default values
 
 		forceReloadDefault = bool(false)
+		fullSectionDefault = bool(false)
 	)
 
 	return DeleteDefaultsSectionParams{
 		ForceReload: &forceReloadDefault,
+
+		FullSection: &fullSectionDefault,
 	}
 }
 
@@ -59,6 +62,11 @@ type DeleteDefaultsSectionParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*Indicates if the action affects the specified child resources as well
+	  In: query
+	  Default: false
+	*/
+	FullSection *bool
 	/*Defaults name
 	  Required: true
 	  In: path
@@ -87,6 +95,11 @@ func (o *DeleteDefaultsSectionParams) BindRequest(r *http.Request, route *middle
 
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
 	if err := o.bindForceReload(qForceReload, qhkForceReload, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qFullSection, qhkFullSection, _ := qs.GetOK("full_section")
+	if err := o.bindFullSection(qFullSection, qhkFullSection, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -130,6 +143,30 @@ func (o *DeleteDefaultsSectionParams) bindForceReload(rawData []string, hasKey b
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindFullSection binds and validates parameter FullSection from query.
+func (o *DeleteDefaultsSectionParams) bindFullSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewDeleteDefaultsSectionParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("full_section", "query", "bool", raw)
+	}
+	o.FullSection = &value
 
 	return nil
 }

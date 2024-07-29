@@ -41,10 +41,13 @@ func NewCreateMailersSectionParams() CreateMailersSectionParams {
 		// initialize parameters with default values
 
 		forceReloadDefault = bool(false)
+		fullSectionDefault = bool(false)
 	)
 
 	return CreateMailersSectionParams{
 		ForceReload: &forceReloadDefault,
+
+		FullSection: &fullSectionDefault,
 	}
 }
 
@@ -67,6 +70,11 @@ type CreateMailersSectionParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*Indicates if the action affects the specified child resources as well
+	  In: query
+	  Default: false
+	*/
+	FullSection *bool
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -116,6 +124,11 @@ func (o *CreateMailersSectionParams) BindRequest(r *http.Request, route *middlew
 		res = append(res, err)
 	}
 
+	qFullSection, qhkFullSection, _ := qs.GetOK("full_section")
+	if err := o.bindFullSection(qFullSection, qhkFullSection, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qTransactionID, qhkTransactionID, _ := qs.GetOK("transaction_id")
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
@@ -151,6 +164,30 @@ func (o *CreateMailersSectionParams) bindForceReload(rawData []string, hasKey bo
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindFullSection binds and validates parameter FullSection from query.
+func (o *CreateMailersSectionParams) bindFullSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewCreateMailersSectionParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("full_section", "query", "bool", raw)
+	}
+	o.FullSection = &value
 
 	return nil
 }

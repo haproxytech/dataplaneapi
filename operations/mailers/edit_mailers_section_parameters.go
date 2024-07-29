@@ -41,10 +41,13 @@ func NewEditMailersSectionParams() EditMailersSectionParams {
 		// initialize parameters with default values
 
 		forceReloadDefault = bool(false)
+		fullSectionDefault = bool(false)
 	)
 
 	return EditMailersSectionParams{
 		ForceReload: &forceReloadDefault,
+
+		FullSection: &fullSectionDefault,
 	}
 }
 
@@ -67,6 +70,11 @@ type EditMailersSectionParams struct {
 	  Default: false
 	*/
 	ForceReload *bool
+	/*Indicates if the action affects the specified child resources as well
+	  In: query
+	  Default: false
+	*/
+	FullSection *bool
 	/*Mailers name
 	  Required: true
 	  In: path
@@ -121,6 +129,11 @@ func (o *EditMailersSectionParams) BindRequest(r *http.Request, route *middlewar
 		res = append(res, err)
 	}
 
+	qFullSection, qhkFullSection, _ := qs.GetOK("full_section")
+	if err := o.bindFullSection(qFullSection, qhkFullSection, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
 		res = append(res, err)
@@ -161,6 +174,30 @@ func (o *EditMailersSectionParams) bindForceReload(rawData []string, hasKey bool
 		return errors.InvalidType("force_reload", "query", "bool", raw)
 	}
 	o.ForceReload = &value
+
+	return nil
+}
+
+// bindFullSection binds and validates parameter FullSection from query.
+func (o *EditMailersSectionParams) bindFullSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewEditMailersSectionParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("full_section", "query", "bool", raw)
+	}
+	o.FullSection = &value
 
 	return nil
 }

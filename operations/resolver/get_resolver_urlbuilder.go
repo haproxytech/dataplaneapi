@@ -25,12 +25,15 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetResolverURL generates an URL for the get resolver operation
 type GetResolverURL struct {
 	Name string
 
+	FullSection   *bool
 	TransactionID *string
 
 	_basePath string
@@ -73,6 +76,14 @@ func (o *GetResolverURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var fullSectionQ string
+	if o.FullSection != nil {
+		fullSectionQ = swag.FormatBool(*o.FullSection)
+	}
+	if fullSectionQ != "" {
+		qs.Set("full_section", fullSectionQ)
+	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

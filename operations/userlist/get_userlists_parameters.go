@@ -27,14 +27,22 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetUserlistsParams creates a new GetUserlistsParams object
-//
-// There are no default values defined in the spec.
+// with the default values initialized.
 func NewGetUserlistsParams() GetUserlistsParams {
 
-	return GetUserlistsParams{}
+	var (
+		// initialize parameters with default values
+
+		fullSectionDefault = bool(false)
+	)
+
+	return GetUserlistsParams{
+		FullSection: &fullSectionDefault,
+	}
 }
 
 // GetUserlistsParams contains all the bound params for the get userlists operation
@@ -46,6 +54,11 @@ type GetUserlistsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*Indicates if the action affects the specified child resources as well
+	  In: query
+	  Default: false
+	*/
+	FullSection *bool
 	/*ID of the transaction where we want to add the operation. Cannot be used when version is specified.
 	  In: query
 	*/
@@ -63,6 +76,11 @@ func (o *GetUserlistsParams) BindRequest(r *http.Request, route *middleware.Matc
 
 	qs := runtime.Values(r.URL.Query())
 
+	qFullSection, qhkFullSection, _ := qs.GetOK("full_section")
+	if err := o.bindFullSection(qFullSection, qhkFullSection, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qTransactionID, qhkTransactionID, _ := qs.GetOK("transaction_id")
 	if err := o.bindTransactionID(qTransactionID, qhkTransactionID, route.Formats); err != nil {
 		res = append(res, err)
@@ -70,6 +88,30 @@ func (o *GetUserlistsParams) BindRequest(r *http.Request, route *middleware.Matc
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindFullSection binds and validates parameter FullSection from query.
+func (o *GetUserlistsParams) bindFullSection(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetUserlistsParams()
+		return nil
+	}
+
+	value, err := swag.ConvertBool(raw)
+	if err != nil {
+		return errors.InvalidType("full_section", "query", "bool", raw)
+	}
+	o.FullSection = &value
+
 	return nil
 }
 

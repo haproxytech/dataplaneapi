@@ -34,6 +34,7 @@ type ReplaceResolverURL struct {
 	Name string
 
 	ForceReload   *bool
+	FullSection   *bool
 	TransactionID *string
 	Version       *int64
 
@@ -84,6 +85,14 @@ func (o *ReplaceResolverURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
+	}
+
+	var fullSectionQ string
+	if o.FullSection != nil {
+		fullSectionQ = swag.FormatBool(*o.FullSection)
+	}
+	if fullSectionQ != "" {
+		qs.Set("full_section", fullSectionQ)
 	}
 
 	var transactionIDQ string

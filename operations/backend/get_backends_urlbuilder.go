@@ -24,10 +24,13 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetBackendsURL generates an URL for the get backends operation
 type GetBackendsURL struct {
+	FullSection   *bool
 	TransactionID *string
 
 	_basePath string
@@ -63,6 +66,14 @@ func (o *GetBackendsURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var fullSectionQ string
+	if o.FullSection != nil {
+		fullSectionQ = swag.FormatBool(*o.FullSection)
+	}
+	if fullSectionQ != "" {
+		qs.Set("full_section", fullSectionQ)
+	}
 
 	var transactionIDQ string
 	if o.TransactionID != nil {

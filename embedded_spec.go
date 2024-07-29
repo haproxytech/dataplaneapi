@@ -697,6 +697,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -741,6 +744,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -792,6 +798,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -846,6 +855,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6323,6 +6335,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6367,6 +6382,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6418,6 +6436,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6472,6 +6493,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -6527,6 +6551,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -7830,6 +7857,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -7874,6 +7904,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -7925,6 +7958,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -7979,6 +8015,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -8392,6 +8431,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -8436,6 +8478,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -8487,6 +8532,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -8541,6 +8589,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -12061,6 +12112,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -12105,6 +12159,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -12953,6 +13010,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -12997,6 +13057,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -13048,6 +13111,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -13102,6 +13168,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -14291,6 +14360,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -14335,6 +14407,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -14386,6 +14461,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -14440,6 +14518,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -15078,6 +15159,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -15122,6 +15206,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -15173,6 +15260,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -16735,6 +16825,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -16779,6 +16872,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -16830,6 +16926,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -16884,6 +16983,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -16974,6 +17076,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -17018,6 +17123,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -17069,6 +17177,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -17123,6 +17234,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -17467,6 +17581,9 @@ func init() {
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -17511,6 +17628,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/force_reload"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -17562,6 +17682,9 @@ func init() {
           },
           {
             "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/full_section"
           }
         ],
         "responses": {
@@ -21686,9 +21809,86 @@ func init() {
       }
     },
     "backend": {
+      "description": "Backend with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/backend_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            },
+            "filter_list": {
+              "x-go-name": "FilterList",
+              "$ref": "#/definitions/filters"
+            },
+            "http_after_response_rule_list": {
+              "x-go-name": "HTTPAfterResponseRuleList",
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "http_check_list": {
+              "x-go-name": "HTTPCheckList",
+              "$ref": "#/definitions/http_checks"
+            },
+            "http_error_rule_list": {
+              "x-go-name": "HTTPErrorRuleList",
+              "$ref": "#/definitions/http_error_rules"
+            },
+            "http_request_rule_list": {
+              "x-go-name": "HTTPRequestRuleList",
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "http_response_rule_list": {
+              "x-go-name": "HTTPResponseRuleList",
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "server_switching_rule_list": {
+              "x-go-name": "ServerSwitchingRuleList",
+              "$ref": "#/definitions/server_switching_rules"
+            },
+            "server_templates": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server_template"
+              }
+            },
+            "servers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server"
+              }
+            },
+            "stick_rule_list": {
+              "x-go-name": "StickRuleList",
+              "$ref": "#/definitions/stick_rules"
+            },
+            "tcp_check_rule_list": {
+              "x-go-name": "TCPCheckRuleList",
+              "$ref": "#/definitions/tcp_checks"
+            },
+            "tcp_request_rule_list": {
+              "x-go-name": "TCPRequestRuleList",
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "tcp_response_rule_list": {
+              "x-go-name": "TCPResponseRuleList",
+              "$ref": "#/definitions/tcp_response_rules"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Backend"
+    },
+    "backend_base": {
       "description": "HAProxy backend configuration",
       "type": "object",
-      "title": "Backend",
+      "title": "Backend Base",
       "required": [
         "name"
       ],
@@ -21735,6 +21935,8 @@ func init() {
         },
         "check_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "checkcache": {
@@ -21750,6 +21952,8 @@ func init() {
         },
         "connect_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "cookie": {
@@ -21853,7 +22057,8 @@ func init() {
               "x-display-name": "Condition Test"
             }
           },
-          "x-deprecated": true
+          "x-deprecated": true,
+          "x-go-name": "BackendForcePersist"
         },
         "force_persist_list": {
           "type": "array",
@@ -21981,11 +22186,13 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_pretend_keepalive": {
@@ -22015,11 +22222,13 @@ func init() {
         },
         "http_request_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_restrict_req_hdr_names": {
@@ -22091,7 +22300,8 @@ func init() {
               "x-display-name": "Condition Test"
             }
           },
-          "x-deprecated": true
+          "x-deprecated": true,
+          "x-go-name": "BackendIgnorePersist"
         },
         "ignore_persist_list": {
           "type": "array",
@@ -22219,6 +22429,8 @@ func init() {
         },
         "queue_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "redispatch": {
@@ -22234,6 +22446,8 @@ func init() {
         },
         "server_fin_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "server_state_file_name": {
@@ -22242,6 +22456,8 @@ func init() {
         },
         "server_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "smtpchk_params": {
@@ -22307,12 +22523,16 @@ func init() {
         },
         "srvtcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "srvtcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "stats_options": {
@@ -22323,6 +22543,8 @@ func init() {
         },
         "tarpit_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tcp_smart_connect": {
@@ -22356,6 +22578,8 @@ func init() {
         },
         "tunnel_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "use_fcgi_app": {
@@ -23047,10 +23271,13 @@ func init() {
       ],
       "properties": {
         "max_age": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-duration": false
         },
         "max_object_size": {
-          "type": "integer"
+          "type": "integer",
+          "x-size": false
         },
         "max_secondary_entries": {
           "type": "integer"
@@ -23279,6 +23506,8 @@ func init() {
       "properties": {
         "expire": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "keylen": {
@@ -23296,7 +23525,8 @@ func init() {
         },
         "size": {
           "type": "integer",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "srvkey": {
           "type": "string",
@@ -23638,9 +23868,40 @@ func init() {
       ]
     },
     "defaults": {
+      "description": "Defaults with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/defaults_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "http_check_list": {
+              "x-go-name": "HTTPCheckList",
+              "$ref": "#/definitions/http_checks"
+            },
+            "http_error_rule_list": {
+              "x-go-name": "HTTPErrorRuleList",
+              "$ref": "#/definitions/http_error_rules"
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "tcp_check_rule_list": {
+              "x-go-name": "TCPCheckRuleList",
+              "$ref": "#/definitions/tcp_checks"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Defaults"
+    },
+    "defaults_base": {
       "description": "HAProxy defaults configuration",
       "type": "object",
-      "title": "Defaults",
+      "title": "Defaults Base",
       "properties": {
         "abortonclose": {
           "type": "string",
@@ -23697,6 +23958,8 @@ func init() {
         },
         "check_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "checkcache": {
@@ -23713,10 +23976,14 @@ func init() {
         },
         "client_fin_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "client_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka": {
@@ -23734,12 +24001,16 @@ func init() {
         },
         "clitcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "compression": {
@@ -23747,6 +24018,8 @@ func init() {
         },
         "connect_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "contstats": {
@@ -23892,9 +24165,6 @@ func init() {
           ],
           "x-display-name": "HTTP bufferrequest"
         },
-        "http-check": {
-          "$ref": "#/definitions/http_check"
-        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -23921,6 +24191,8 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "http_no_delay": {
@@ -23940,6 +24212,8 @@ func init() {
         },
         "http_request_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "http_restrict_req_hdr_names": {
@@ -24124,6 +24398,8 @@ func init() {
         },
         "queue_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "redispatch": {
@@ -24139,10 +24415,14 @@ func init() {
         },
         "server_fin_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "server_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "smtpchk_params": {
@@ -24203,12 +24483,16 @@ func init() {
         },
         "srvtcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "srvtcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "stats_options": {
@@ -24216,6 +24500,8 @@ func init() {
         },
         "tarpit_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tcp_smart_accept": {
@@ -24256,6 +24542,8 @@ func init() {
         },
         "tunnel_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "unique_id_format": {
@@ -24522,9 +24810,28 @@ func init() {
       }
     },
     "fcgiApp": {
+      "description": "App with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/fcgiAppBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            }
+          }
+        }
+      ],
+      "x-go-name": "FCGIApp"
+    },
+    "fcgiAppBase": {
       "description": "HAProxy FastCGI application configuration",
       "type": "object",
-      "title": "FCGI application",
+      "title": "FCGI application base",
       "required": [
         "name",
         "docroot"
@@ -24557,6 +24864,7 @@ func init() {
         "log_stderrs": {
           "type": "array",
           "items": {
+            "x-go-name": "FCGIAppLogStderr",
             "$ref": "#/definitions/fcgiLogStderr"
           },
           "x-omitempty": true
@@ -24584,6 +24892,7 @@ func init() {
         "pass_headers": {
           "type": "array",
           "items": {
+            "x-go-name": "FCGIAppLogPassHeader",
             "$ref": "#/definitions/fcgiPassHeader"
           },
           "x-omitempty": true
@@ -24777,11 +25086,13 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-size": true
         },
         "default_period": {
           "description": "The default time period used to evaluate the bandwidth limitation rate.\nIt can be specified for per-stream bandwidth limitation filters only.\nIt follows the HAProxy time format and is expressed in milliseconds.",
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "default_limit": {
               "required": true
@@ -24793,7 +25104,8 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-duration": true
         },
         "key": {
           "description": "A sample expression rule.\nIt describes what elements will be analyzed, extracted, combined, and used to select which table entry to update the counters.\nIt must be specified for shared bandwidth limitation filters only.",
@@ -24822,7 +25134,8 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-size": true
         },
         "min_size": {
           "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
@@ -24835,7 +25148,8 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-size": true
         },
         "spoe_config": {
           "type": "string",
@@ -24963,9 +25277,69 @@ func init() {
       "x-display-name": "ForwardFor"
     },
     "frontend": {
+      "description": "Frontend with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/frontend_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            },
+            "backend_switching_rule_list": {
+              "x-go-name": "BackendSwitchingRuleList",
+              "$ref": "#/definitions/backend_switching_rules"
+            },
+            "binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/bind"
+              }
+            },
+            "capture_list": {
+              "x-go-name": "CaptureList",
+              "$ref": "#/definitions/captures"
+            },
+            "filter_list": {
+              "x-go-name": "FilterList",
+              "$ref": "#/definitions/filters"
+            },
+            "http_after_response_rule_list": {
+              "x-go-name": "HTTPAfterResponseRuleList",
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "http_error_rule_list": {
+              "x-go-name": "HTTPErrorRuleList",
+              "$ref": "#/definitions/http_error_rules"
+            },
+            "http_request_rule_list": {
+              "x-go-name": "HTTPRequestRuleList",
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "http_response_rule_list": {
+              "x-go-name": "HTTPResponseRuleList",
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "tcp_request_rule_list": {
+              "x-go-name": "TCPRequestRuleList",
+              "$ref": "#/definitions/tcp_request_rules"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Frontend"
+    },
+    "frontend_base": {
       "description": "HAProxy frontend configuration",
       "type": "object",
-      "title": "Frontend",
+      "title": "Frontend Base",
       "required": [
         "name"
       ],
@@ -24994,10 +25368,14 @@ func init() {
         },
         "client_fin_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "client_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka": {
@@ -25020,12 +25398,16 @@ func init() {
         },
         "clitcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "compression": {
@@ -25175,11 +25557,13 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_no_delay": {
@@ -25192,11 +25576,13 @@ func init() {
         },
         "http_request_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_restrict_req_hdr_names": {
@@ -25353,6 +25739,8 @@ func init() {
         },
         "tarpit_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tcp_smart_accept": {
@@ -25444,9 +25832,28 @@ func init() {
       }
     },
     "global": {
+      "description": "Frontend with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/global_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Global"
+    },
+    "global_base": {
       "description": "HAProxy global configuration",
       "type": "object",
-      "title": "Global",
+      "title": "Global Base",
       "properties": {
         "anonkey": {
           "type": "integer",
@@ -25467,6 +25874,8 @@ func init() {
         },
         "close_spread_time": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "cluster_secret": {
@@ -25533,7 +25942,8 @@ func init() {
               ],
               "x-nullable": false
             }
-          }
+          },
+          "x-go-name": "GlobalDefaultPath"
         },
         "description": {
           "type": "string",
@@ -25558,7 +25968,8 @@ func init() {
               "type": "string",
               "x-display-name": "Separator"
             }
-          }
+          },
+          "x-go-name": "GlobalDeviceAtlasOptions"
         },
         "expose_experimental_directives": {
           "type": "boolean"
@@ -25586,7 +25997,8 @@ func init() {
               "type": "string",
               "x-display-name": "Property Separator"
             }
-          }
+          },
+          "x-go-name": "GlobalFiftyOneDegreesOptions"
         },
         "gid": {
           "type": "integer",
@@ -25594,7 +26006,9 @@ func init() {
         },
         "grace": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-display-name": "Defines a delay between SIGUSR1 and real soft-stop",
+          "x-duration": true,
           "x-nullable": true
         },
         "group": {
@@ -25631,7 +26045,9 @@ func init() {
         },
         "hard_stop_after": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-display-name": "Hard Stop After",
+          "x-duration": true,
           "x-nullable": true
         },
         "harden": {
@@ -25654,9 +26070,11 @@ func init() {
                     "disabled"
                   ]
                 }
-              }
+              },
+              "x-go-name": "GlobalHardenRejectPrivilegedPorts"
             }
-          }
+          },
+          "x-go-name": "GlobalHarden"
         },
         "http_err_codes": {
           "type": "array",
@@ -25714,7 +26132,9 @@ func init() {
         },
         "httpclient_timeout_connect": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-display-name": "HTTP Client Connect Timeout",
+          "x-duration": true,
           "x-nullable": true
         },
         "insecure_fork_wanted": {
@@ -25752,7 +26172,8 @@ func init() {
               "pattern": "^[^\\s]+$"
             }
           },
-          "x-display-name": "Log Send Hostname"
+          "x-display-name": "Log Send Hostname",
+          "x-go-name": "GlobalLogSendHostname"
         },
         "lua_load_per_thread": {
           "type": "string"
@@ -25804,6 +26225,8 @@ func init() {
         },
         "max_spread_checks": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "maxcompcpuusage": {
@@ -25919,18 +26342,23 @@ func init() {
                 }
               },
               "x-display-name": "OCSP Update HTTP Proxy",
+              "x-go-name": "GlobalOcspUpdateHttpproxy",
               "x-omitempty": true
             },
             "maxdelay": {
               "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
               "type": "integer",
+              "x-default-unit": "s",
               "x-display-name": "OCSP Update Maximum Delay",
+              "x-duration": false,
               "x-nullable": true
             },
             "mindelay": {
               "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
               "type": "integer",
+              "x-default-unit": "s",
               "x-display-name": "OCSP Update Minimum Delay",
+              "x-duration": false,
               "x-nullable": true
             },
             "mode": {
@@ -25941,7 +26369,8 @@ func init() {
               ],
               "x-display-name": "OCSP Update Mode"
             }
-          }
+          },
+          "x-go-name": "GlobalOcspUpdate"
         },
         "pidfile": {
           "type": "string",
@@ -26246,6 +26675,8 @@ func init() {
         },
         "stats_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "strict_limits": {
@@ -26431,7 +26862,9 @@ func init() {
             "idletimer": {
               "type": "integer",
               "maximum": 65535,
+              "x-default-unit": "ms",
               "x-display-name": "Idle Stream Duration",
+              "x-duration": true,
               "x-nullable": true
             },
             "listener_default_shards": {
@@ -26453,7 +26886,9 @@ func init() {
             },
             "lua_burst_timeout": {
               "type": "integer",
+              "x-default-unit": "ms",
               "x-display-name": "Burst execution timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "lua_forced_yield": {
@@ -26484,17 +26919,23 @@ func init() {
             },
             "lua_service_timeout": {
               "type": "integer",
+              "x-default-unit": "ms",
               "x-display-name": "Lua Service timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "lua_session_timeout": {
               "type": "integer",
+              "x-default-unit": "ms",
               "x-display-name": "Lua Session Timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "lua_task_timeout": {
               "type": "integer",
+              "x-default-unit": "ms",
               "x-display-name": "Lua Task Timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "max_checks_per_thread": {
@@ -26555,7 +26996,9 @@ func init() {
             },
             "quic_frontend_max_idle_timeout": {
               "type": "integer",
+              "x-default-unit": "ms",
               "x-display-name": "QUIC Frontend Max Idle Timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "quic_frontend_max_streams_bidi": {
@@ -26688,7 +27131,9 @@ func init() {
             },
             "ssl_lifetime": {
               "type": "integer",
+              "x-default-unit": "s",
               "x-display-name": "SSL Session Lifetime",
+              "x-duration": true,
               "x-nullable": true
             },
             "ssl_maxrecord": {
@@ -26718,27 +27163,32 @@ func init() {
             "vars_global_max_size": {
               "type": "integer",
               "x-display-name": "Variables Global Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_proc_max_size": {
               "type": "integer",
               "x-display-name": "Variables Process Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_reqres_max_size": {
               "type": "integer",
               "x-display-name": "Variables Request/Response Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_sess_max_size": {
               "type": "integer",
               "x-display-name": "Variables Session Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_txn_max_size": {
               "type": "integer",
               "x-display-name": "Variables Transaction Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "zlib_memlevel": {
               "type": "integer",
@@ -26752,7 +27202,8 @@ func init() {
               "minimum": 8,
               "x-display-name": "Zlib Window Size"
             }
-          }
+          },
+          "x-go-name": "GlobalTuneOptions"
         },
         "uid": {
           "type": "integer",
@@ -26793,7 +27244,8 @@ func init() {
               "type": "string",
               "x-display-name": "A list of WURFL patch file paths"
             }
-          }
+          },
+          "x-go-name": "GlobalWurflOptions"
         },
         "zero_warning": {
           "type": "boolean"
@@ -28720,16 +29172,19 @@ func init() {
               "value": "wait-for-body"
             }
           },
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "wait_time": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "wait-for-body"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -29456,16 +29911,19 @@ func init() {
               "value": "wait-for-body"
             }
           },
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "wait_time": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "wait-for-body"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -29605,6 +30063,35 @@ func init() {
       }
     },
     "log_forward": {
+      "description": "LogForward with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/log_forward_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/bind"
+              }
+            },
+            "dgram_binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/dgram_bind"
+              }
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            }
+          }
+        }
+      ],
+      "x-go-name": "LogForward"
+    },
+    "log_forward_base": {
       "description": "HAProxy log forward configuration",
       "type": "object",
       "title": "Log Forward",
@@ -29627,6 +30114,9 @@ func init() {
         },
         "timeout_client": {
           "type": "integer",
+          "maximum": 2147483647,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -29854,9 +30344,29 @@ func init() {
       }
     },
     "mailers_section": {
+      "description": "MailersSection with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/mailers_section_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mailer_entries": {
+              "additionalProperties": {
+                "$ref": "#/definitions/mailer_entry"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "MailersSection"
+    },
+    "mailers_section_base": {
       "description": "A list of SMTP servers used by HAProxy to send emails.",
       "type": "object",
-      "title": "Mailers Section",
+      "title": "Mailers Section Base",
       "required": [
         "name"
       ],
@@ -29868,7 +30378,9 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-display-name": "Timeout to send an email in milliseconds",
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -30790,9 +31302,43 @@ func init() {
       }
     },
     "peer_section": {
+      "description": "Peer Section with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/peer_section_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/bind"
+              }
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "peer_entries": {
+              "additionalProperties": {
+                "$ref": "#/definitions/peer_entry"
+              }
+            },
+            "servers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "PeerSection"
+    },
+    "peer_section_base": {
       "description": "HAProxy peer_section configuration",
       "type": "object",
-      "title": "Peer Section",
+      "title": "Peer Section Base",
       "required": [
         "name"
       ],
@@ -31238,9 +31784,29 @@ func init() {
       }
     },
     "resolver": {
+      "description": "Resolver with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/resolver_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameservers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/nameserver"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "Resolver"
+    },
+    "resolver_base": {
       "description": "Runtime DNS configuration",
       "type": "object",
-      "title": "Resolver",
+      "title": "Resolver Base",
       "required": [
         "name"
       ],
@@ -31252,26 +31818,38 @@ func init() {
         },
         "hold_nx": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_obsolete": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_other": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_refused": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_valid": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "name": {
@@ -31288,10 +31866,14 @@ func init() {
         },
         "timeout_resolve": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": false
         },
         "timeout_retry": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": false
         }
       }
@@ -31321,9 +31903,29 @@ func init() {
       "x-go-name": "ReturnHeader"
     },
     "ring": {
+      "description": "Ring with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ring_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "servers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "Ring"
+    },
+    "ring_base": {
       "description": "HAProxy ring configuration",
       "type": "object",
-      "title": "Ring",
+      "title": "Ring Base",
       "required": [
         "name"
       ],
@@ -31359,14 +31961,19 @@ func init() {
         "size": {
           "type": "integer",
           "x-display-name": "Optional size in bytes for the ring-buffer",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "timeout_connect": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "timeout_server": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -31409,6 +32016,8 @@ func init() {
         },
         "agent-inter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "agent-port": {
@@ -31503,6 +32112,8 @@ func init() {
         },
         "downinter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "error_limit": {
@@ -31517,6 +32128,8 @@ func init() {
         },
         "fastinter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "force_sslv3": {
@@ -31570,6 +32183,8 @@ func init() {
         },
         "inter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "maintenance": {
@@ -31683,6 +32298,8 @@ func init() {
         },
         "pool_purge_delay": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "port": {
@@ -31747,6 +32364,8 @@ func init() {
         },
         "slowstart": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "sni": {
@@ -31994,6 +32613,8 @@ func init() {
         },
         "agent-inter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "agent-port": {
@@ -32108,6 +32729,8 @@ func init() {
         },
         "downinter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "error_limit": {
@@ -32121,6 +32744,8 @@ func init() {
         },
         "fastinter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "force_sslv3": {
@@ -32183,6 +32808,8 @@ func init() {
         },
         "inter": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "log-bufsize": {
@@ -32321,6 +32948,8 @@ func init() {
         },
         "pool_purge_delay": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "proto": {
@@ -32431,6 +33060,8 @@ func init() {
         },
         "slowstart": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "sni": {
@@ -32511,6 +33142,8 @@ func init() {
         },
         "tcp_ut": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tfo": {
@@ -32962,10 +33595,14 @@ func init() {
           "type": "string"
         },
         "hello_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true
         },
         "idle_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true
         },
         "log": {
           "$ref": "#/definitions/log_targets"
@@ -33012,7 +33649,9 @@ func init() {
           ]
         },
         "processing_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true
         },
         "register-var-names": {
           "type": "string"
@@ -33444,6 +34083,8 @@ func init() {
         },
         "stats_refresh_delay": {
           "type": "integer",
+          "x-default-unit": "s",
+          "x-duration": true,
           "x-nullable": true
         },
         "stats_show_desc": {
@@ -33730,6 +34371,8 @@ func init() {
         "expire": {
           "type": "string",
           "pattern": "^\\d+(ms|s|m|h|d)?$",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "name": {
@@ -33742,7 +34385,8 @@ func init() {
         },
         "size": {
           "type": "string",
-          "pattern": "^\\d+(k|K|m|M|g|G)?$"
+          "pattern": "^\\d+(k|K|m|M|g|G)?$",
+          "x-size": true
         },
         "store": {
           "type": "string"
@@ -34614,12 +35258,14 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "inspect-delay"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "tos_value": {
@@ -35097,12 +35743,14 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "inspect-delay"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "tos_value": {
@@ -35248,9 +35896,34 @@ func init() {
       }
     },
     "userlist": {
+      "description": "Userlist with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/userlist_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "groups": {
+              "additionalProperties": {
+                "$ref": "#/definitions/group"
+              }
+            },
+            "users": {
+              "additionalProperties": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "Userlist"
+    },
+    "userlist_base": {
       "description": "HAProxy configuration of access control",
       "type": "object",
-      "title": "Userlist",
+      "title": "Userlist Base",
       "required": [
         "name"
       ],
@@ -35285,6 +35958,13 @@ func init() {
       "default": false,
       "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
       "name": "force_reload",
+      "in": "query"
+    },
+    "full_section": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indicates if the action affects the specified child resources as well",
+      "name": "full_section",
       "in": "query"
     },
     "parent_name": {
@@ -36565,6 +37245,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -36629,6 +37316,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -36711,6 +37405,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -36795,6 +37496,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -45650,6 +46358,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -45714,6 +46429,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -45796,6 +46518,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -45880,6 +46609,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -45974,6 +46710,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -48088,6 +48831,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -48152,6 +48902,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -48234,6 +48991,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -48318,6 +49082,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -48990,6 +49761,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -49054,6 +49832,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -49136,6 +49921,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -49220,6 +50012,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -54935,6 +55734,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -54999,6 +55805,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -56329,6 +57142,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -56393,6 +57213,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -56475,6 +57302,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -56559,6 +57393,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -58476,6 +59317,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -58540,6 +59388,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -58622,6 +59477,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -58706,6 +59568,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -59692,6 +60561,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -59756,6 +60632,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -59838,6 +60721,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -62325,6 +63215,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -62389,6 +63286,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -62471,6 +63375,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -62555,6 +63466,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -62707,6 +63625,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -62771,6 +63696,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -62853,6 +63785,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -62937,6 +63876,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -63506,6 +64452,13 @@ func init() {
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
+            "in": "query"
           }
         ],
         "responses": {
@@ -63570,6 +64523,13 @@ func init() {
             "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -63652,6 +64612,13 @@ func init() {
             "x-nullable": false,
             "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
             "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the action affects the specified child resources as well",
+            "name": "full_section",
             "in": "query"
           }
         ],
@@ -69813,7 +70780,7 @@ func init() {
     }
   },
   "definitions": {
-    "BackendForcePersist": {
+    "BackendBaseForcePersist": {
       "description": "This field is deprecated in favor of force_persist_list, and will be removed in a future release",
       "type": "object",
       "required": [
@@ -69839,9 +70806,10 @@ func init() {
           "x-display-name": "Condition Test"
         }
       },
-      "x-deprecated": true
+      "x-deprecated": true,
+      "x-go-name": "BackendForcePersist"
     },
-    "BackendForcePersistListItems0": {
+    "BackendBaseForcePersistListItems0": {
       "type": "object",
       "required": [
         "cond",
@@ -69868,7 +70836,7 @@ func init() {
       },
       "x-go-name": "ForcePersist"
     },
-    "BackendIgnorePersist": {
+    "BackendBaseIgnorePersist": {
       "description": "This field is deprecated in favor of ignore_persist_list, and will be removed in a future release",
       "type": "object",
       "required": [
@@ -69894,9 +70862,10 @@ func init() {
           "x-display-name": "Condition Test"
         }
       },
-      "x-deprecated": true
+      "x-deprecated": true,
+      "x-go-name": "BackendIgnorePersist"
     },
-    "BackendIgnorePersistListItems0": {
+    "BackendBaseIgnorePersistListItems0": {
       "type": "object",
       "required": [
         "cond",
@@ -70031,7 +71000,7 @@ func init() {
         }
       }
     },
-    "GlobalCPUMapsItems0": {
+    "GlobalBaseCPUMapsItems0": {
       "type": "object",
       "required": [
         "process",
@@ -70049,7 +71018,7 @@ func init() {
       },
       "x-go-name": "CPUMap"
     },
-    "GlobalDefaultPath": {
+    "GlobalBaseDefaultPath": {
       "type": "object",
       "required": [
         "type"
@@ -70074,9 +71043,10 @@ func init() {
           ],
           "x-nullable": false
         }
-      }
+      },
+      "x-go-name": "GlobalDefaultPath"
     },
-    "GlobalDeviceAtlasOptions": {
+    "GlobalBaseDeviceAtlasOptions": {
       "type": "object",
       "properties": {
         "json_file": {
@@ -70095,9 +71065,10 @@ func init() {
           "type": "string",
           "x-display-name": "Separator"
         }
-      }
+      },
+      "x-go-name": "GlobalDeviceAtlasOptions"
     },
-    "GlobalFiftyOneDegreesOptions": {
+    "GlobalBaseFiftyOneDegreesOptions": {
       "type": "object",
       "properties": {
         "cache_size": {
@@ -70116,9 +71087,10 @@ func init() {
           "type": "string",
           "x-display-name": "Property Separator"
         }
-      }
+      },
+      "x-go-name": "GlobalFiftyOneDegreesOptions"
     },
-    "GlobalH1CaseAdjustItems0": {
+    "GlobalBaseH1CaseAdjustItems0": {
       "type": "object",
       "required": [
         "from",
@@ -70134,7 +71106,7 @@ func init() {
       },
       "x-go-name": "H1CaseAdjust"
     },
-    "GlobalHarden": {
+    "GlobalBaseHarden": {
       "type": "object",
       "properties": {
         "reject_privileged_ports": {
@@ -70154,11 +71126,13 @@ func init() {
                 "disabled"
               ]
             }
-          }
+          },
+          "x-go-name": "GlobalHardenRejectPrivilegedPorts"
         }
-      }
+      },
+      "x-go-name": "GlobalHarden"
     },
-    "GlobalHardenRejectPrivilegedPorts": {
+    "GlobalBaseHardenRejectPrivilegedPorts": {
       "type": "object",
       "properties": {
         "quic": {
@@ -70175,9 +71149,10 @@ func init() {
             "disabled"
           ]
         }
-      }
+      },
+      "x-go-name": "GlobalHardenRejectPrivilegedPorts"
     },
-    "GlobalLogSendHostname": {
+    "GlobalBaseLogSendHostname": {
       "type": "object",
       "required": [
         "enabled"
@@ -70195,9 +71170,10 @@ func init() {
           "pattern": "^[^\\s]+$"
         }
       },
-      "x-display-name": "Log Send Hostname"
+      "x-display-name": "Log Send Hostname",
+      "x-go-name": "GlobalLogSendHostname"
     },
-    "GlobalLuaLoadsItems0": {
+    "GlobalBaseLuaLoadsItems0": {
       "type": "object",
       "required": [
         "file"
@@ -70210,7 +71186,7 @@ func init() {
       },
       "x-go-name": "LuaLoad"
     },
-    "GlobalLuaPrependPathItems0": {
+    "GlobalBaseLuaPrependPathItems0": {
       "type": "object",
       "required": [
         "path"
@@ -70230,7 +71206,7 @@ func init() {
       },
       "x-go-name": "LuaPrependPath"
     },
-    "GlobalOcspUpdate": {
+    "GlobalBaseOcspUpdate": {
       "type": "object",
       "properties": {
         "disable": {
@@ -70256,18 +71232,23 @@ func init() {
             }
           },
           "x-display-name": "OCSP Update HTTP Proxy",
+          "x-go-name": "GlobalOcspUpdateHttpproxy",
           "x-omitempty": true
         },
         "maxdelay": {
           "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "OCSP Update Maximum Delay",
+          "x-duration": false,
           "x-nullable": true
         },
         "mindelay": {
           "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "OCSP Update Minimum Delay",
+          "x-duration": false,
           "x-nullable": true
         },
         "mode": {
@@ -70278,9 +71259,10 @@ func init() {
           ],
           "x-display-name": "OCSP Update Mode"
         }
-      }
+      },
+      "x-go-name": "GlobalOcspUpdate"
     },
-    "GlobalOcspUpdateHttpproxy": {
+    "GlobalBaseOcspUpdateHttpproxy": {
       "type": "object",
       "properties": {
         "address": {
@@ -70297,9 +71279,10 @@ func init() {
         }
       },
       "x-display-name": "OCSP Update HTTP Proxy",
+      "x-go-name": "GlobalOcspUpdateHttpproxy",
       "x-omitempty": true
     },
-    "GlobalPresetenvItems0": {
+    "GlobalBasePresetenvItems0": {
       "type": "object",
       "required": [
         "name",
@@ -70317,7 +71300,7 @@ func init() {
       },
       "x-go-name": "PresetEnv"
     },
-    "GlobalRuntimeApisItems0": {
+    "GlobalBaseRuntimeApisItems0": {
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
@@ -70337,7 +71320,7 @@ func init() {
       ],
       "x-go-name": "RuntimeAPI"
     },
-    "GlobalSetVarFmtItems0": {
+    "GlobalBaseSetVarFmtItems0": {
       "type": "object",
       "required": [
         "name",
@@ -70355,7 +71338,7 @@ func init() {
       },
       "x-go-name": "SetVarFmt"
     },
-    "GlobalSetVarItems0": {
+    "GlobalBaseSetVarItems0": {
       "type": "object",
       "required": [
         "name",
@@ -70373,7 +71356,7 @@ func init() {
       },
       "x-go-name": "SetVar"
     },
-    "GlobalSetenvItems0": {
+    "GlobalBaseSetenvItems0": {
       "type": "object",
       "required": [
         "name",
@@ -70391,7 +71374,7 @@ func init() {
       },
       "x-go-name": "SetEnv"
     },
-    "GlobalSslEnginesItems0": {
+    "GlobalBaseSslEnginesItems0": {
       "type": "object",
       "required": [
         "name"
@@ -70409,7 +71392,7 @@ func init() {
       },
       "x-go-name": "SslEngine"
     },
-    "GlobalThreadGroupLinesItems0": {
+    "GlobalBaseThreadGroupLinesItems0": {
       "type": "object",
       "required": [
         "group",
@@ -70427,7 +71410,7 @@ func init() {
       },
       "x-go-name": "ThreadGroup"
     },
-    "GlobalTuneOptions": {
+    "GlobalBaseTuneOptions": {
       "type": "object",
       "properties": {
         "applet_zero_copy_forwarding": {
@@ -70576,7 +71559,9 @@ func init() {
           "type": "integer",
           "maximum": 65535,
           "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Idle Stream Duration",
+          "x-duration": true,
           "x-nullable": true
         },
         "listener_default_shards": {
@@ -70598,7 +71583,10 @@ func init() {
         },
         "lua_burst_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Burst execution timeout",
+          "x-duration": true,
           "x-nullable": true
         },
         "lua_forced_yield": {
@@ -70629,17 +71617,26 @@ func init() {
         },
         "lua_service_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Lua Service timeout",
+          "x-duration": true,
           "x-nullable": true
         },
         "lua_session_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Lua Session Timeout",
+          "x-duration": true,
           "x-nullable": true
         },
         "lua_task_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Lua Task Timeout",
+          "x-duration": true,
           "x-nullable": true
         },
         "max_checks_per_thread": {
@@ -70700,7 +71697,10 @@ func init() {
         },
         "quic_frontend_max_idle_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "QUIC Frontend Max Idle Timeout",
+          "x-duration": true,
           "x-nullable": true
         },
         "quic_frontend_max_streams_bidi": {
@@ -70834,7 +71834,10 @@ func init() {
         },
         "ssl_lifetime": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "s",
           "x-display-name": "SSL Session Lifetime",
+          "x-duration": true,
           "x-nullable": true
         },
         "ssl_maxrecord": {
@@ -70864,27 +71867,32 @@ func init() {
         "vars_global_max_size": {
           "type": "integer",
           "x-display-name": "Variables Global Max Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": false
         },
         "vars_proc_max_size": {
           "type": "integer",
           "x-display-name": "Variables Process Max Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": false
         },
         "vars_reqres_max_size": {
           "type": "integer",
           "x-display-name": "Variables Request/Response Max Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": false
         },
         "vars_sess_max_size": {
           "type": "integer",
           "x-display-name": "Variables Session Max Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": false
         },
         "vars_txn_max_size": {
           "type": "integer",
           "x-display-name": "Variables Transaction Max Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": false
         },
         "zlib_memlevel": {
           "type": "integer",
@@ -70898,9 +71906,10 @@ func init() {
           "minimum": 8,
           "x-display-name": "Zlib Window Size"
         }
-      }
+      },
+      "x-go-name": "GlobalTuneOptions"
     },
-    "GlobalWurflOptions": {
+    "GlobalBaseWurflOptions": {
       "type": "object",
       "properties": {
         "cache_size": {
@@ -70923,7 +71932,8 @@ func init() {
           "type": "string",
           "x-display-name": "A list of WURFL patch file paths"
         }
-      }
+      },
+      "x-go-name": "GlobalWurflOptions"
     },
     "InfoAPI": {
       "type": "object",
@@ -71431,9 +72441,86 @@ func init() {
       }
     },
     "backend": {
+      "description": "Backend with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/backend_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            },
+            "filter_list": {
+              "x-go-name": "FilterList",
+              "$ref": "#/definitions/filters"
+            },
+            "http_after_response_rule_list": {
+              "x-go-name": "HTTPAfterResponseRuleList",
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "http_check_list": {
+              "x-go-name": "HTTPCheckList",
+              "$ref": "#/definitions/http_checks"
+            },
+            "http_error_rule_list": {
+              "x-go-name": "HTTPErrorRuleList",
+              "$ref": "#/definitions/http_error_rules"
+            },
+            "http_request_rule_list": {
+              "x-go-name": "HTTPRequestRuleList",
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "http_response_rule_list": {
+              "x-go-name": "HTTPResponseRuleList",
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "server_switching_rule_list": {
+              "x-go-name": "ServerSwitchingRuleList",
+              "$ref": "#/definitions/server_switching_rules"
+            },
+            "server_templates": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server_template"
+              }
+            },
+            "servers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server"
+              }
+            },
+            "stick_rule_list": {
+              "x-go-name": "StickRuleList",
+              "$ref": "#/definitions/stick_rules"
+            },
+            "tcp_check_rule_list": {
+              "x-go-name": "TCPCheckRuleList",
+              "$ref": "#/definitions/tcp_checks"
+            },
+            "tcp_request_rule_list": {
+              "x-go-name": "TCPRequestRuleList",
+              "$ref": "#/definitions/tcp_request_rules"
+            },
+            "tcp_response_rule_list": {
+              "x-go-name": "TCPResponseRuleList",
+              "$ref": "#/definitions/tcp_response_rules"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Backend"
+    },
+    "backend_base": {
       "description": "HAProxy backend configuration",
       "type": "object",
-      "title": "Backend",
+      "title": "Backend Base",
       "required": [
         "name"
       ],
@@ -71480,6 +72567,8 @@ func init() {
         },
         "check_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "checkcache": {
@@ -71495,6 +72584,9 @@ func init() {
         },
         "connect_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "cookie": {
@@ -71598,12 +72690,13 @@ func init() {
               "x-display-name": "Condition Test"
             }
           },
-          "x-deprecated": true
+          "x-deprecated": true,
+          "x-go-name": "BackendForcePersist"
         },
         "force_persist_list": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/BackendForcePersistListItems0"
+            "$ref": "#/definitions/BackendBaseForcePersistListItems0"
           },
           "x-go-name": "ForcePersistList",
           "x-omitempty": true
@@ -71702,11 +72795,14 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_pretend_keepalive": {
@@ -71736,11 +72832,14 @@ func init() {
         },
         "http_request_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_restrict_req_hdr_names": {
@@ -71812,12 +72911,13 @@ func init() {
               "x-display-name": "Condition Test"
             }
           },
-          "x-deprecated": true
+          "x-deprecated": true,
+          "x-go-name": "BackendIgnorePersist"
         },
         "ignore_persist_list": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/BackendIgnorePersistListItems0"
+            "$ref": "#/definitions/BackendBaseIgnorePersistListItems0"
           },
           "x-go-name": "IgnorePersistList",
           "x-omitempty": true
@@ -71916,6 +73016,9 @@ func init() {
         },
         "queue_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "redispatch": {
@@ -71931,6 +73034,9 @@ func init() {
         },
         "server_fin_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "server_state_file_name": {
@@ -71939,6 +73045,9 @@ func init() {
         },
         "server_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "smtpchk_params": {
@@ -72004,12 +73113,16 @@ func init() {
         },
         "srvtcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "srvtcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "stats_options": {
@@ -72020,6 +73133,9 @@ func init() {
         },
         "tarpit_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tcp_smart_connect": {
@@ -72053,6 +73169,9 @@ func init() {
         },
         "tunnel_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "use_fcgi_app": {
@@ -72744,10 +73863,13 @@ func init() {
       ],
       "properties": {
         "max_age": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-duration": false
         },
         "max_object_size": {
-          "type": "integer"
+          "type": "integer",
+          "x-size": false
         },
         "max_secondary_entries": {
           "type": "integer"
@@ -72950,6 +74072,9 @@ func init() {
       "properties": {
         "expire": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "keylen": {
@@ -72967,7 +74092,9 @@ func init() {
         },
         "size": {
           "type": "integer",
-          "x-nullable": true
+          "minimum": 0,
+          "x-nullable": true,
+          "x-size": true
         },
         "srvkey": {
           "type": "string",
@@ -73295,9 +74422,40 @@ func init() {
       ]
     },
     "defaults": {
+      "description": "Defaults with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/defaults_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "http_check_list": {
+              "x-go-name": "HTTPCheckList",
+              "$ref": "#/definitions/http_checks"
+            },
+            "http_error_rule_list": {
+              "x-go-name": "HTTPErrorRuleList",
+              "$ref": "#/definitions/http_error_rules"
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "tcp_check_rule_list": {
+              "x-go-name": "TCPCheckRuleList",
+              "$ref": "#/definitions/tcp_checks"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Defaults"
+    },
+    "defaults_base": {
       "description": "HAProxy defaults configuration",
       "type": "object",
-      "title": "Defaults",
+      "title": "Defaults Base",
       "properties": {
         "abortonclose": {
           "type": "string",
@@ -73354,6 +74512,8 @@ func init() {
         },
         "check_timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "checkcache": {
@@ -73370,10 +74530,16 @@ func init() {
         },
         "client_fin_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "client_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka": {
@@ -73391,12 +74557,16 @@ func init() {
         },
         "clitcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "compression": {
@@ -73404,6 +74574,9 @@ func init() {
         },
         "connect_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "contstats": {
@@ -73549,9 +74722,6 @@ func init() {
           ],
           "x-display-name": "HTTP bufferrequest"
         },
-        "http-check": {
-          "$ref": "#/definitions/http_check"
-        },
         "http-use-htx": {
           "type": "string",
           "enum": [
@@ -73578,6 +74748,9 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "http_no_delay": {
@@ -73597,6 +74770,9 @@ func init() {
         },
         "http_request_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "http_restrict_req_hdr_names": {
@@ -73781,6 +74957,9 @@ func init() {
         },
         "queue_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "redispatch": {
@@ -73796,10 +74975,16 @@ func init() {
         },
         "server_fin_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "server_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "smtpchk_params": {
@@ -73860,12 +75045,16 @@ func init() {
         },
         "srvtcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "srvtcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Srvtcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "stats_options": {
@@ -73873,6 +75062,9 @@ func init() {
         },
         "tarpit_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tcp_smart_accept": {
@@ -73913,6 +75105,9 @@ func init() {
         },
         "tunnel_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "unique_id_format": {
@@ -74179,9 +75374,28 @@ func init() {
       }
     },
     "fcgiApp": {
+      "description": "App with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/fcgiAppBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            }
+          }
+        }
+      ],
+      "x-go-name": "FCGIApp"
+    },
+    "fcgiAppBase": {
       "description": "HAProxy FastCGI application configuration",
       "type": "object",
-      "title": "FCGI application",
+      "title": "FCGI application base",
       "required": [
         "name",
         "docroot"
@@ -74214,6 +75428,7 @@ func init() {
         "log_stderrs": {
           "type": "array",
           "items": {
+            "x-go-name": "FCGIAppLogStderr",
             "$ref": "#/definitions/fcgiLogStderr"
           },
           "x-omitempty": true
@@ -74241,6 +75456,7 @@ func init() {
         "pass_headers": {
           "type": "array",
           "items": {
+            "x-go-name": "FCGIAppLogPassHeader",
             "$ref": "#/definitions/fcgiPassHeader"
           },
           "x-omitempty": true
@@ -74434,11 +75650,13 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-size": true
         },
         "default_period": {
           "description": "The default time period used to evaluate the bandwidth limitation rate.\nIt can be specified for per-stream bandwidth limitation filters only.\nIt follows the HAProxy time format and is expressed in milliseconds.",
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "default_limit": {
               "required": true
@@ -74450,7 +75668,8 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-duration": true
         },
         "key": {
           "description": "A sample expression rule.\nIt describes what elements will be analyzed, extracted, combined, and used to select which table entry to update the counters.\nIt must be specified for shared bandwidth limitation filters only.",
@@ -74479,7 +75698,8 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-size": true
         },
         "min_size": {
           "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
@@ -74492,7 +75712,8 @@ func init() {
                 "bwlim-out"
               ]
             }
-          }
+          },
+          "x-size": true
         },
         "spoe_config": {
           "type": "string",
@@ -74620,9 +75841,69 @@ func init() {
       "x-display-name": "ForwardFor"
     },
     "frontend": {
+      "description": "Frontend with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/frontend_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "acl_list": {
+              "x-go-name": "AclList",
+              "$ref": "#/definitions/acls"
+            },
+            "backend_switching_rule_list": {
+              "x-go-name": "BackendSwitchingRuleList",
+              "$ref": "#/definitions/backend_switching_rules"
+            },
+            "binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/bind"
+              }
+            },
+            "capture_list": {
+              "x-go-name": "CaptureList",
+              "$ref": "#/definitions/captures"
+            },
+            "filter_list": {
+              "x-go-name": "FilterList",
+              "$ref": "#/definitions/filters"
+            },
+            "http_after_response_rule_list": {
+              "x-go-name": "HTTPAfterResponseRuleList",
+              "$ref": "#/definitions/http_after_response_rules"
+            },
+            "http_error_rule_list": {
+              "x-go-name": "HTTPErrorRuleList",
+              "$ref": "#/definitions/http_error_rules"
+            },
+            "http_request_rule_list": {
+              "x-go-name": "HTTPRequestRuleList",
+              "$ref": "#/definitions/http_request_rules"
+            },
+            "http_response_rule_list": {
+              "x-go-name": "HTTPResponseRuleList",
+              "$ref": "#/definitions/http_response_rules"
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "tcp_request_rule_list": {
+              "x-go-name": "TCPRequestRuleList",
+              "$ref": "#/definitions/tcp_request_rules"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Frontend"
+    },
+    "frontend_base": {
       "description": "HAProxy frontend configuration",
       "type": "object",
-      "title": "Frontend",
+      "title": "Frontend Base",
       "required": [
         "name"
       ],
@@ -74651,10 +75932,16 @@ func init() {
         },
         "client_fin_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "client_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka": {
@@ -74677,12 +75964,16 @@ func init() {
         },
         "clitcpka_idle": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Idle",
+          "x-duration": true,
           "x-nullable": true
         },
         "clitcpka_intvl": {
           "type": "integer",
+          "x-default-unit": "s",
           "x-display-name": "Clitcpka Intvl",
+          "x-duration": true,
           "x-nullable": true
         },
         "compression": {
@@ -74832,11 +76123,14 @@ func init() {
         },
         "http_keep_alive_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_no_delay": {
@@ -74849,11 +76143,14 @@ func init() {
         },
         "http_request_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-dependency": {
             "mode": {
               "value": "http"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "http_restrict_req_hdr_names": {
@@ -75010,6 +76307,9 @@ func init() {
         },
         "tarpit_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tcp_smart_accept": {
@@ -75101,9 +76401,28 @@ func init() {
       }
     },
     "global": {
+      "description": "Frontend with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/global_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            }
+          }
+        }
+      ],
+      "x-go-name": "Global"
+    },
+    "global_base": {
       "description": "HAProxy global configuration",
       "type": "object",
-      "title": "Global",
+      "title": "Global Base",
       "properties": {
         "anonkey": {
           "type": "integer",
@@ -75125,6 +76444,9 @@ func init() {
         },
         "close_spread_time": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "cluster_secret": {
@@ -75134,7 +76456,7 @@ func init() {
         "cpu_maps": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalCPUMapsItems0"
+            "$ref": "#/definitions/GlobalBaseCPUMapsItems0"
           },
           "x-display-name": "CPU Maps",
           "x-go-name": "CPUMaps",
@@ -75176,7 +76498,8 @@ func init() {
               ],
               "x-nullable": false
             }
-          }
+          },
+          "x-go-name": "GlobalDefaultPath"
         },
         "description": {
           "type": "string",
@@ -75201,7 +76524,8 @@ func init() {
               "type": "string",
               "x-display-name": "Separator"
             }
-          }
+          },
+          "x-go-name": "GlobalDeviceAtlasOptions"
         },
         "expose_experimental_directives": {
           "type": "boolean"
@@ -75229,7 +76553,8 @@ func init() {
               "type": "string",
               "x-display-name": "Property Separator"
             }
-          }
+          },
+          "x-go-name": "GlobalFiftyOneDegreesOptions"
         },
         "gid": {
           "type": "integer",
@@ -75237,7 +76562,10 @@ func init() {
         },
         "grace": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Defines a delay between SIGUSR1 and real soft-stop",
+          "x-duration": true,
           "x-nullable": true
         },
         "group": {
@@ -75248,7 +76576,7 @@ func init() {
         "h1_case_adjust": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalH1CaseAdjustItems0"
+            "$ref": "#/definitions/GlobalBaseH1CaseAdjustItems0"
           },
           "x-go-name": "H1CaseAdjusts",
           "x-omitempty": true
@@ -75261,7 +76589,10 @@ func init() {
         },
         "hard_stop_after": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Hard Stop After",
+          "x-duration": true,
           "x-nullable": true
         },
         "harden": {
@@ -75284,9 +76615,11 @@ func init() {
                     "disabled"
                   ]
                 }
-              }
+              },
+              "x-go-name": "GlobalHardenRejectPrivilegedPorts"
             }
-          }
+          },
+          "x-go-name": "GlobalHarden"
         },
         "http_err_codes": {
           "type": "array",
@@ -75344,7 +76677,10 @@ func init() {
         },
         "httpclient_timeout_connect": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "HTTP Client Connect Timeout",
+          "x-duration": true,
           "x-nullable": true
         },
         "insecure_fork_wanted": {
@@ -75382,7 +76718,8 @@ func init() {
               "pattern": "^[^\\s]+$"
             }
           },
-          "x-display-name": "Log Send Hostname"
+          "x-display-name": "Log Send Hostname",
+          "x-go-name": "GlobalLogSendHostname"
         },
         "lua_load_per_thread": {
           "type": "string"
@@ -75390,14 +76727,14 @@ func init() {
         "lua_loads": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalLuaLoadsItems0"
+            "$ref": "#/definitions/GlobalBaseLuaLoadsItems0"
           },
           "x-omitempty": true
         },
         "lua_prepend_path": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalLuaPrependPathItems0"
+            "$ref": "#/definitions/GlobalBaseLuaPrependPathItems0"
           },
           "x-omitempty": true
         },
@@ -75407,6 +76744,9 @@ func init() {
         },
         "max_spread_checks": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "maxcompcpuusage": {
@@ -75523,18 +76863,23 @@ func init() {
                 }
               },
               "x-display-name": "OCSP Update HTTP Proxy",
+              "x-go-name": "GlobalOcspUpdateHttpproxy",
               "x-omitempty": true
             },
             "maxdelay": {
               "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
               "type": "integer",
+              "x-default-unit": "s",
               "x-display-name": "OCSP Update Maximum Delay",
+              "x-duration": false,
               "x-nullable": true
             },
             "mindelay": {
               "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
               "type": "integer",
+              "x-default-unit": "s",
               "x-display-name": "OCSP Update Minimum Delay",
+              "x-duration": false,
               "x-nullable": true
             },
             "mode": {
@@ -75545,7 +76890,8 @@ func init() {
               ],
               "x-display-name": "OCSP Update Mode"
             }
-          }
+          },
+          "x-go-name": "GlobalOcspUpdate"
         },
         "pidfile": {
           "type": "string",
@@ -75561,7 +76907,7 @@ func init() {
         "presetenv": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalPresetenvItems0"
+            "$ref": "#/definitions/GlobalBasePresetenvItems0"
           },
           "x-display-name": "Preset environment variables",
           "x-go-name": "PresetEnvs",
@@ -75594,7 +76940,7 @@ func init() {
         "runtime_apis": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalRuntimeApisItems0"
+            "$ref": "#/definitions/GlobalBaseRuntimeApisItems0"
           },
           "x-display-name": "Runtime APIs",
           "x-go-name": "RuntimeAPIs",
@@ -75616,7 +76962,7 @@ func init() {
         "set_var": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalSetVarItems0"
+            "$ref": "#/definitions/GlobalBaseSetVarItems0"
           },
           "x-display-name": "Set variables",
           "x-go-name": "SetVars",
@@ -75625,7 +76971,7 @@ func init() {
         "set_var_fmt": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalSetVarFmtItems0"
+            "$ref": "#/definitions/GlobalBaseSetVarFmtItems0"
           },
           "x-display-name": "Set variable formats",
           "x-go-name": "SetVarFmts",
@@ -75640,7 +76986,7 @@ func init() {
         "setenv": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalSetenvItems0"
+            "$ref": "#/definitions/GlobalBaseSetenvItems0"
           },
           "x-display-name": "Set environment variables",
           "x-go-name": "SetEnvs",
@@ -75704,7 +77050,7 @@ func init() {
         "ssl_engines": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalSslEnginesItems0"
+            "$ref": "#/definitions/GlobalBaseSslEnginesItems0"
           },
           "x-display-name": "SSL Engines",
           "x-go-name": "SslEngines",
@@ -75759,6 +77105,9 @@ func init() {
         },
         "stats_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "strict_limits": {
@@ -75767,7 +77116,7 @@ func init() {
         "thread_group_lines": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GlobalThreadGroupLinesItems0"
+            "$ref": "#/definitions/GlobalBaseThreadGroupLinesItems0"
           },
           "x-display-name": "Thread Groups",
           "x-go-name": "ThreadGroupLines",
@@ -75930,7 +77279,9 @@ func init() {
               "type": "integer",
               "maximum": 65535,
               "minimum": 0,
+              "x-default-unit": "ms",
               "x-display-name": "Idle Stream Duration",
+              "x-duration": true,
               "x-nullable": true
             },
             "listener_default_shards": {
@@ -75952,7 +77303,10 @@ func init() {
             },
             "lua_burst_timeout": {
               "type": "integer",
+              "minimum": 0,
+              "x-default-unit": "ms",
               "x-display-name": "Burst execution timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "lua_forced_yield": {
@@ -75983,17 +77337,26 @@ func init() {
             },
             "lua_service_timeout": {
               "type": "integer",
+              "minimum": 0,
+              "x-default-unit": "ms",
               "x-display-name": "Lua Service timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "lua_session_timeout": {
               "type": "integer",
+              "minimum": 0,
+              "x-default-unit": "ms",
               "x-display-name": "Lua Session Timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "lua_task_timeout": {
               "type": "integer",
+              "minimum": 0,
+              "x-default-unit": "ms",
               "x-display-name": "Lua Task Timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "max_checks_per_thread": {
@@ -76054,7 +77417,10 @@ func init() {
             },
             "quic_frontend_max_idle_timeout": {
               "type": "integer",
+              "minimum": 0,
+              "x-default-unit": "ms",
               "x-display-name": "QUIC Frontend Max Idle Timeout",
+              "x-duration": true,
               "x-nullable": true
             },
             "quic_frontend_max_streams_bidi": {
@@ -76188,7 +77554,10 @@ func init() {
             },
             "ssl_lifetime": {
               "type": "integer",
+              "minimum": 0,
+              "x-default-unit": "s",
               "x-display-name": "SSL Session Lifetime",
+              "x-duration": true,
               "x-nullable": true
             },
             "ssl_maxrecord": {
@@ -76218,27 +77587,32 @@ func init() {
             "vars_global_max_size": {
               "type": "integer",
               "x-display-name": "Variables Global Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_proc_max_size": {
               "type": "integer",
               "x-display-name": "Variables Process Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_reqres_max_size": {
               "type": "integer",
               "x-display-name": "Variables Request/Response Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_sess_max_size": {
               "type": "integer",
               "x-display-name": "Variables Session Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "vars_txn_max_size": {
               "type": "integer",
               "x-display-name": "Variables Transaction Max Size",
-              "x-nullable": true
+              "x-nullable": true,
+              "x-size": false
             },
             "zlib_memlevel": {
               "type": "integer",
@@ -76252,7 +77626,8 @@ func init() {
               "minimum": 8,
               "x-display-name": "Zlib Window Size"
             }
-          }
+          },
+          "x-go-name": "GlobalTuneOptions"
         },
         "uid": {
           "type": "integer",
@@ -76293,7 +77668,8 @@ func init() {
               "type": "string",
               "x-display-name": "A list of WURFL patch file paths"
             }
-          }
+          },
+          "x-go-name": "GlobalWurflOptions"
         },
         "zero_warning": {
           "type": "boolean"
@@ -78220,16 +79596,20 @@ func init() {
               "value": "wait-for-body"
             }
           },
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "wait_time": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "wait-for-body"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -78956,16 +80336,20 @@ func init() {
               "value": "wait-for-body"
             }
           },
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "wait_time": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "wait-for-body"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -79105,6 +80489,35 @@ func init() {
       }
     },
     "log_forward": {
+      "description": "LogForward with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/log_forward_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/bind"
+              }
+            },
+            "dgram_binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/dgram_bind"
+              }
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            }
+          }
+        }
+      ],
+      "x-go-name": "LogForward"
+    },
+    "log_forward_base": {
       "description": "HAProxy log forward configuration",
       "type": "object",
       "title": "Log Forward",
@@ -79127,6 +80540,10 @@ func init() {
         },
         "timeout_client": {
           "type": "integer",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -79354,9 +80771,29 @@ func init() {
       }
     },
     "mailers_section": {
+      "description": "MailersSection with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/mailers_section_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mailer_entries": {
+              "additionalProperties": {
+                "$ref": "#/definitions/mailer_entry"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "MailersSection"
+    },
+    "mailers_section_base": {
       "description": "A list of SMTP servers used by HAProxy to send emails.",
       "type": "object",
-      "title": "Mailers Section",
+      "title": "Mailers Section Base",
       "required": [
         "name"
       ],
@@ -79369,7 +80806,9 @@ func init() {
         "timeout": {
           "type": "integer",
           "minimum": 0,
+          "x-default-unit": "ms",
           "x-display-name": "Timeout to send an email in milliseconds",
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -80291,9 +81730,43 @@ func init() {
       }
     },
     "peer_section": {
+      "description": "Peer Section with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/peer_section_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "binds": {
+              "additionalProperties": {
+                "$ref": "#/definitions/bind"
+              }
+            },
+            "log_target_list": {
+              "x-go-name": "LogTargetList",
+              "$ref": "#/definitions/log_targets"
+            },
+            "peer_entries": {
+              "additionalProperties": {
+                "$ref": "#/definitions/peer_entry"
+              }
+            },
+            "servers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "PeerSection"
+    },
+    "peer_section_base": {
       "description": "HAProxy peer_section configuration",
       "type": "object",
-      "title": "Peer Section",
+      "title": "Peer Section Base",
       "required": [
         "name"
       ],
@@ -80739,9 +82212,29 @@ func init() {
       }
     },
     "resolver": {
+      "description": "Resolver with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/resolver_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameservers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/nameserver"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "Resolver"
+    },
+    "resolver_base": {
       "description": "Runtime DNS configuration",
       "type": "object",
-      "title": "Resolver",
+      "title": "Resolver Base",
       "required": [
         "name"
       ],
@@ -80753,26 +82246,44 @@ func init() {
         },
         "hold_nx": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_obsolete": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_other": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_refused": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_timeout": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "hold_valid": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "name": {
@@ -80789,10 +82300,16 @@ func init() {
         },
         "timeout_resolve": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": false
         },
         "timeout_retry": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": false
         }
       }
@@ -80822,9 +82339,29 @@ func init() {
       "x-go-name": "ReturnHeader"
     },
     "ring": {
+      "description": "Ring with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ring_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "servers": {
+              "additionalProperties": {
+                "$ref": "#/definitions/server"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "Ring"
+    },
+    "ring_base": {
       "description": "HAProxy ring configuration",
       "type": "object",
-      "title": "Ring",
+      "title": "Ring Base",
       "required": [
         "name"
       ],
@@ -80859,15 +82396,23 @@ func init() {
         },
         "size": {
           "type": "integer",
+          "minimum": 0,
           "x-display-name": "Optional size in bytes for the ring-buffer",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "timeout_connect": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "timeout_server": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         }
       },
@@ -80910,6 +82455,9 @@ func init() {
         },
         "agent-inter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "agent-port": {
@@ -81004,6 +82552,9 @@ func init() {
         },
         "downinter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "error_limit": {
@@ -81018,6 +82569,9 @@ func init() {
         },
         "fastinter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "force_sslv3": {
@@ -81071,6 +82625,9 @@ func init() {
         },
         "inter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "maintenance": {
@@ -81184,6 +82741,9 @@ func init() {
         },
         "pool_purge_delay": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "port": {
@@ -81248,6 +82808,9 @@ func init() {
         },
         "slowstart": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "sni": {
@@ -81495,6 +83058,9 @@ func init() {
         },
         "agent-inter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "agent-port": {
@@ -81609,6 +83175,9 @@ func init() {
         },
         "downinter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "error_limit": {
@@ -81622,6 +83191,9 @@ func init() {
         },
         "fastinter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "force_sslv3": {
@@ -81684,6 +83256,9 @@ func init() {
         },
         "inter": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "log-bufsize": {
@@ -81822,6 +83397,9 @@ func init() {
         },
         "pool_purge_delay": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "proto": {
@@ -81932,6 +83510,9 @@ func init() {
         },
         "slowstart": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "sni": {
@@ -82012,6 +83593,9 @@ func init() {
         },
         "tcp_ut": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "tfo": {
@@ -82399,10 +83983,14 @@ func init() {
           "type": "string"
         },
         "hello_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true
         },
         "idle_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true
         },
         "log": {
           "$ref": "#/definitions/log_targets"
@@ -82449,7 +84037,9 @@ func init() {
           ]
         },
         "processing_timeout": {
-          "type": "integer"
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true
         },
         "register-var-names": {
           "type": "string"
@@ -82881,6 +84471,9 @@ func init() {
         },
         "stats_refresh_delay": {
           "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "s",
+          "x-duration": true,
           "x-nullable": true
         },
         "stats_show_desc": {
@@ -83125,6 +84718,8 @@ func init() {
         "expire": {
           "type": "string",
           "pattern": "^\\d+(ms|s|m|h|d)?$",
+          "x-default-unit": "ms",
+          "x-duration": true,
           "x-nullable": true
         },
         "name": {
@@ -83137,7 +84732,8 @@ func init() {
         },
         "size": {
           "type": "string",
-          "pattern": "^\\d+(k|K|m|M|g|G)?$"
+          "pattern": "^\\d+(k|K|m|M|g|G)?$",
+          "x-size": true
         },
         "store": {
           "type": "string"
@@ -84009,12 +85605,14 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "inspect-delay"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "tos_value": {
@@ -84492,12 +86090,14 @@ func init() {
         },
         "timeout": {
           "type": "integer",
+          "x-default-unit": "ms",
           "x-dependency": {
             "type": {
               "required": true,
               "value": "inspect-delay"
             }
           },
+          "x-duration": true,
           "x-nullable": true
         },
         "tos_value": {
@@ -84643,9 +86243,34 @@ func init() {
       }
     },
     "userlist": {
+      "description": "Userlist with all it's children resources",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/userlist_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "groups": {
+              "additionalProperties": {
+                "$ref": "#/definitions/group"
+              }
+            },
+            "users": {
+              "additionalProperties": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          }
+        }
+      ],
+      "x-go-name": "Userlist"
+    },
+    "userlist_base": {
       "description": "HAProxy configuration of access control",
       "type": "object",
-      "title": "Userlist",
+      "title": "Userlist Base",
       "required": [
         "name"
       ],
@@ -84680,6 +86305,13 @@ func init() {
       "default": false,
       "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
       "name": "force_reload",
+      "in": "query"
+    },
+    "full_section": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indicates if the action affects the specified child resources as well",
+      "name": "full_section",
       "in": "query"
     },
     "parent_name": {
