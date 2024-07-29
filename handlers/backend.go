@@ -178,17 +178,11 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
-	}
-
 	// Populate force_persist_list and ignore_persist_list if the corresponding
 	// deprecated fields force_persist or ignore_persist are present in the request payload.
 	handleDeprecatedBackendFields(http.MethodPost, params.Data, nil)
 
-	err = configuration.CreateBackend(params.Data, t, v)
+	err := h.createBackend(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewCreateBackendDefault(int(*e.Code)).WithPayload(e)
@@ -207,6 +201,17 @@ func (h *CreateBackendHandlerImpl) Handle(params backend.CreateBackendParams, pr
 		return backend.NewCreateBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return backend.NewCreateBackendAccepted().WithPayload(params.Data)
+}
+
+func (h *CreateBackendHandlerImpl) createBackend(params backend.CreateBackendParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredBackend(params.Data, t, v)
+	}
+	return configuration.CreateBackend(params.Data, t, v)
 }
 
 // Handle executing the request and returning a response
@@ -263,13 +268,7 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return backend.NewGetBackendDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, bck, err := configuration.GetBackend(params.Name, t)
+	_, bck, err := h.getBackend(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewGetBackendDefault(int(*e.Code)).WithPayload(e)
@@ -281,6 +280,17 @@ func (h *GetBackendHandlerImpl) Handle(params backend.GetBackendParams, principa
 	return backend.NewGetBackendOK().WithPayload(bck)
 }
 
+func (h *GetBackendHandlerImpl) getBackend(params backend.GetBackendParams, t string) (int64, *models.Backend, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredBackend(params.Name, t)
+	}
+	return configuration.GetBackend(params.Name, t)
+}
+
 // Handle executing the request and returning a response
 func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -288,13 +298,7 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return backend.NewGetBackendsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, bcks, err := configuration.GetBackends(t)
+	_, bcks, err := h.getBackends(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewGetBackendsDefault(int(*e.Code)).WithPayload(e)
@@ -306,6 +310,17 @@ func (h *GetBackendsHandlerImpl) Handle(params backend.GetBackendsParams, princi
 	}
 
 	return backend.NewGetBackendsOK().WithPayload(bcks)
+}
+
+func (h *GetBackendsHandlerImpl) getBackends(params backend.GetBackendsParams, t string) (int64, models.Backends, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredBackends(t)
+	}
+	return configuration.GetBackends(t)
 }
 
 // Handle executing the request and returning a response
@@ -346,7 +361,7 @@ func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, 
 		handleDeprecatedBackendFields(http.MethodPut, params.Data, onDisk)
 	}
 
-	err = configuration.EditBackend(params.Name, params.Data, t, v)
+	err = h.editBackend(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return backend.NewReplaceBackendDefault(int(*e.Code)).WithPayload(e)
@@ -365,4 +380,15 @@ func (h *ReplaceBackendHandlerImpl) Handle(params backend.ReplaceBackendParams, 
 		return backend.NewReplaceBackendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return backend.NewReplaceBackendAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceBackendHandlerImpl) editBackend(params backend.ReplaceBackendParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.EditStructuredBackend(params.Name, params.Data, t, v)
+	}
+	return configuration.EditBackend(params.Name, params.Data, t, v)
 }

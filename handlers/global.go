@@ -43,18 +43,23 @@ func (h *GetGlobalHandlerImpl) Handle(params global.GetGlobalParams, principal i
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, data, err := configuration.GetGlobalConfiguration(t)
+	_, data, err := h.getGlobalConfiguration(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewGetGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
 	return global.NewGetGlobalOK().WithPayload(data)
+}
+
+func (h *GetGlobalHandlerImpl) getGlobalConfiguration(params global.GetGlobalParams, t string) (int64, *models.Global, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredGlobalConfiguration(t)
+	}
+	return configuration.GetGlobalConfiguration(t)
 }
 
 // Handle executing the request and returning a response
@@ -78,13 +83,7 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.PushGlobalConfiguration(params.Data, t, v)
+	err := h.pushGlobalConfiguration(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return global.NewReplaceGlobalDefault(int(*e.Code)).WithPayload(e)
@@ -120,4 +119,15 @@ func (h *ReplaceGlobalHandlerImpl) Handle(params global.ReplaceGlobalParams, pri
 		return global.NewReplaceGlobalAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return global.NewReplaceGlobalAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceGlobalHandlerImpl) pushGlobalConfiguration(params global.ReplaceGlobalParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.PushStructuredGlobalConfiguration(params.Data, t, v)
+	}
+	return configuration.PushGlobalConfiguration(params.Data, t, v)
 }

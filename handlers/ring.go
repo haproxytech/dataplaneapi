@@ -74,13 +74,7 @@ func (h *CreateRingHandlerImpl) Handle(params ring.CreateRingParams, principal i
 		return ring.NewCreateRingDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return ring.NewCreateRingDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.CreateRing(params.Data, t, v)
+	err := h.createRing(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return ring.NewCreateRingDefault(int(*e.Code)).WithPayload(e)
@@ -99,6 +93,17 @@ func (h *CreateRingHandlerImpl) Handle(params ring.CreateRingParams, principal i
 		return ring.NewCreateRingAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return ring.NewCreateRingAccepted().WithPayload(params.Data)
+}
+
+func (h *CreateRingHandlerImpl) createRing(params ring.CreateRingParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredRing(params.Data, t, v)
+	}
+	return configuration.CreateRing(params.Data, t, v)
 }
 
 // Handle executing the request and returning a response
@@ -155,18 +160,23 @@ func (h *GetRingHandlerImpl) Handle(params ring.GetRingParams, principal interfa
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return ring.NewGetRingDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, bck, err := configuration.GetRing(params.Name, t)
+	_, bck, err := h.getRing(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return ring.NewGetRingDefault(int(*e.Code)).WithPayload(e)
 	}
 	return ring.NewGetRingOK().WithPayload(bck)
+}
+
+func (h *GetRingHandlerImpl) getRing(params ring.GetRingParams, t string) (int64, *models.Ring, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredRing(params.Name, t)
+	}
+	return configuration.GetRing(params.Name, t)
 }
 
 // Handle executing the request and returning a response
@@ -176,18 +186,23 @@ func (h *GetRingsHandlerImpl) Handle(params ring.GetRingsParams, principal inter
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return ring.NewGetRingsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, bcks, err := configuration.GetRings(t)
+	_, bcks, err := h.getRings(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return ring.NewGetRingsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return ring.NewGetRingsOK().WithPayload(bcks)
+}
+
+func (h *GetRingsHandlerImpl) getRings(params ring.GetRingsParams, t string) (int64, models.Rings, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredRings(t)
+	}
+	return configuration.GetRings(t)
 }
 
 // Handle executing the request and returning a response
@@ -211,13 +226,7 @@ func (h *ReplaceRingHandlerImpl) Handle(params ring.ReplaceRingParams, principal
 		return ring.NewReplaceRingDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return ring.NewReplaceRingDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.EditRing(params.Name, params.Data, t, v)
+	err := h.editRing(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return ring.NewReplaceRingDefault(int(*e.Code)).WithPayload(e)
@@ -236,4 +245,15 @@ func (h *ReplaceRingHandlerImpl) Handle(params ring.ReplaceRingParams, principal
 		return ring.NewReplaceRingAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return ring.NewReplaceRingAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceRingHandlerImpl) editRing(params ring.ReplaceRingParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.EditStructuredRing(params.Name, params.Data, t, v)
+	}
+	return configuration.EditRing(params.Name, params.Data, t, v)
 }

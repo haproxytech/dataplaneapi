@@ -74,13 +74,7 @@ func (h *CreateFrontendHandlerImpl) Handle(params frontend.CreateFrontendParams,
 		return frontend.NewCreateFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return frontend.NewCreateFrontendDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.CreateFrontend(params.Data, t, v)
+	err := h.createFrontend(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewCreateFrontendDefault(int(*e.Code)).WithPayload(e)
@@ -98,6 +92,17 @@ func (h *CreateFrontendHandlerImpl) Handle(params frontend.CreateFrontendParams,
 		return frontend.NewCreateFrontendAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return frontend.NewCreateFrontendAccepted().WithPayload(params.Data)
+}
+
+func (h *CreateFrontendHandlerImpl) createFrontend(params frontend.CreateFrontendParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredFrontend(params.Data, t, v)
+	}
+	return configuration.CreateFrontend(params.Data, t, v)
 }
 
 // Handle executing the request and returning a response
@@ -154,18 +159,23 @@ func (h *GetFrontendHandlerImpl) Handle(params frontend.GetFrontendParams, princ
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return frontend.NewGetFrontendDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, f, err := configuration.GetFrontend(params.Name, t)
+	_, f, err := h.getFrontend(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewGetFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 	return frontend.NewGetFrontendOK().WithPayload(f)
+}
+
+func (h *GetFrontendHandlerImpl) getFrontend(params frontend.GetFrontendParams, t string) (int64, *models.Frontend, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredFrontend(params.Name, t)
+	}
+	return configuration.GetFrontend(params.Name, t)
 }
 
 // Handle executing the request and returning a response
@@ -175,18 +185,23 @@ func (h *GetFrontendsHandlerImpl) Handle(params frontend.GetFrontendsParams, pri
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return frontend.NewGetFrontendsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, fs, err := configuration.GetFrontends(t)
+	_, fs, err := h.getFrontends(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewGetFrontendsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return frontend.NewGetFrontendsOK().WithPayload(fs)
+}
+
+func (h *GetFrontendsHandlerImpl) getFrontends(params frontend.GetFrontendsParams, t string) (int64, models.Frontends, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredFrontends(t)
+	}
+	return configuration.GetFrontends(t)
 }
 
 // Handle executing the request and returning a response
@@ -222,7 +237,7 @@ func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParam
 		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	err = configuration.EditFrontend(params.Name, params.Data, t, v)
+	err = h.editFrontend(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return frontend.NewReplaceFrontendDefault(int(*e.Code)).WithPayload(e)
@@ -244,4 +259,15 @@ func (h *ReplaceFrontendHandlerImpl) Handle(params frontend.ReplaceFrontendParam
 		return frontend.NewReplaceFrontendOK().WithPayload(params.Data)
 	}
 	return frontend.NewReplaceFrontendAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceFrontendHandlerImpl) editFrontend(params frontend.ReplaceFrontendParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.EditStructuredFrontend(params.Name, params.Data, t, v)
+	}
+	return configuration.EditFrontend(params.Name, params.Data, t, v)
 }

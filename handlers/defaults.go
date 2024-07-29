@@ -43,18 +43,23 @@ func (h *GetDefaultsHandlerImpl) Handle(params defaults.GetDefaultsSectionParams
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, data, err := configuration.GetDefaultsConfiguration(t)
+	_, data, err := h.getDefaultsConfiguration(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 	return defaults.NewGetDefaultsSectionOK().WithPayload(data)
+}
+
+func (h *GetDefaultsHandlerImpl) getDefaultsConfiguration(params defaults.GetDefaultsSectionParams, t string) (int64, *models.Defaults, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredDefaultsConfiguration(t)
+	}
+	return configuration.GetDefaultsConfiguration(t)
 }
 
 // Handle executing the request and returning a response
@@ -78,13 +83,7 @@ func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsSecti
 		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.PushDefaultsConfiguration(params.Data, t, v)
+	err := h.pushDefaultsConfiguration(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
@@ -103,6 +102,17 @@ func (h *ReplaceDefaultsHandlerImpl) Handle(params defaults.ReplaceDefaultsSecti
 		return defaults.NewReplaceDefaultsSectionAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return defaults.NewReplaceDefaultsSectionAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceDefaultsHandlerImpl) pushDefaultsConfiguration(params defaults.ReplaceDefaultsSectionParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.PushStructuredDefaultsConfiguration(params.Data, t, v)
+	}
+	return configuration.PushDefaultsConfiguration(params.Data, t, v)
 }
 
 // GetDefaultsHandlerImpl implementation of the GetDefaultsHandler interface
@@ -130,6 +140,17 @@ func (h GetDefaultsSectionsHandlerImpl) Handle(params defaults.GetDefaultsSectio
 	return defaults.NewGetDefaultsSectionsOK().WithPayload(fs)
 }
 
+func (h *GetDefaultsSectionsHandlerImpl) getDefaultsSections(params defaults.GetDefaultsSectionParams, t string) (int64, models.DefaultsSections, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredDefaultsSections(t)
+	}
+	return configuration.GetDefaultsSections(t)
+}
+
 type GetDefaultsSectionHandlerImpl struct {
 	Client client_native.HAProxyClient
 }
@@ -140,18 +161,23 @@ func (h GetDefaultsSectionHandlerImpl) Handle(params defaults.GetDefaultsSection
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, f, err := configuration.GetDefaultsSection(params.Name, t)
+	_, f, err := h.getDefaultsSection(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewGetDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 	return defaults.NewGetDefaultsSectionOK().WithPayload(f)
+}
+
+func (h *GetDefaultsSectionHandlerImpl) getDefaultsSection(params defaults.GetDefaultsSectionParams, t string) (int64, *models.Defaults, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredDefaultsSection(params.Name, t)
+	}
+	return configuration.GetDefaultsSection(params.Name, t)
 }
 
 type CreateDefaultsSectionHandlerImpl struct {
@@ -179,13 +205,7 @@ func (h CreateDefaultsSectionHandlerImpl) Handle(params defaults.CreateDefaultsS
 		return defaults.NewCreateDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return defaults.NewCreateDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.CreateDefaultsSection(params.Data, t, v)
+	err := h.createDefaultsSection(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewCreateDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
@@ -203,6 +223,17 @@ func (h CreateDefaultsSectionHandlerImpl) Handle(params defaults.CreateDefaultsS
 		return defaults.NewCreateDefaultsSectionAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return defaults.NewCreateDefaultsSectionAccepted().WithPayload(params.Data)
+}
+
+func (h *CreateDefaultsSectionHandlerImpl) createDefaultsSection(params defaults.CreateDefaultsSectionParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredDefaultsSection(params.Data, t, v)
+	}
+	return configuration.CreateDefaultsSection(params.Data, t, v)
 }
 
 // ReplaceDefaultsHandlerImpl implementation of the ReplaceDefaultsHandler interface
@@ -231,13 +262,7 @@ func (h ReplaceDefaultsSectionHandlerImpl) Handle(params defaults.ReplaceDefault
 		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.EditDefaultsSection(params.Name, params.Data, t, v)
+	err := h.editDefaultsSection(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return defaults.NewReplaceDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
@@ -255,6 +280,17 @@ func (h ReplaceDefaultsSectionHandlerImpl) Handle(params defaults.ReplaceDefault
 		return defaults.NewReplaceDefaultsSectionAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return defaults.NewReplaceDefaultsSectionAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceDefaultsSectionHandlerImpl) editDefaultsSection(params defaults.ReplaceDefaultsSectionParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.EditStructuredDefaultsSection(params.Name, params.Data, t, v)
+	}
+	return configuration.EditDefaultsSection(params.Name, params.Data, t, v)
 }
 
 type DeleteDefaultsSectionHandlerImpl struct {

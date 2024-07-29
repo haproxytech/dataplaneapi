@@ -73,13 +73,7 @@ func (h *CreateMailersSectionHandlerImpl) Handle(params mailers.CreateMailersSec
 		return mailers.NewCreateMailersSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return mailers.NewCreateMailersSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	if err = configuration.CreateMailersSection(params.Data, t, v); err != nil {
+	if err := h.createMailersSection(params, t, v); err != nil {
 		e := misc.HandleError(err)
 		return mailers.NewCreateMailersSectionDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -98,6 +92,17 @@ func (h *CreateMailersSectionHandlerImpl) Handle(params mailers.CreateMailersSec
 	}
 
 	return mailers.NewCreateMailersSectionAccepted().WithPayload(params.Data)
+}
+
+func (h *CreateMailersSectionHandlerImpl) createMailersSection(params mailers.CreateMailersSectionParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredMailersSection(params.Data, t, v)
+	}
+	return configuration.CreateMailersSection(params.Data, t, v)
 }
 
 // Handle executing the request and returning a response
@@ -155,19 +160,24 @@ func (h *GetMailersSectionHandlerImpl) Handle(params mailers.GetMailersSectionPa
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return mailers.NewGetMailersSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, ms, err := configuration.GetMailersSection(params.Name, t)
+	_, ms, err := h.getMailersSection(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return mailers.NewGetMailersSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	return mailers.NewGetMailersSectionOK().WithPayload(ms)
+}
+
+func (h *GetMailersSectionHandlerImpl) getMailersSection(params mailers.GetMailersSectionParams, t string) (int64, *models.MailersSection, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredMailersSection(params.Name, t)
+	}
+	return configuration.GetMailersSection(params.Name, t)
 }
 
 // Handle executing the request and returning a response
@@ -177,19 +187,24 @@ func (h *GetMailersSectionsHandlerImpl) Handle(params mailers.GetMailersSections
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return mailers.NewGetMailersSectionsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, ms, err := configuration.GetMailersSections(t)
+	_, ms, err := h.getMailersSections(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return mailers.NewGetMailersSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	return mailers.NewGetMailersSectionsOK().WithPayload(ms)
+}
+
+func (h *GetMailersSectionsHandlerImpl) getMailersSections(params mailers.GetMailersSectionsParams, t string) (int64, models.MailersSections, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredMailersSections(t)
+	}
+	return configuration.GetMailersSections(t)
 }
 
 func (h *EditMailersSectionHandlerImpl) Handle(params mailers.EditMailersSectionParams, principal interface{}) middleware.Responder {
@@ -212,17 +227,22 @@ func (h *EditMailersSectionHandlerImpl) Handle(params mailers.EditMailersSection
 		return mailers.NewEditMailersSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return mailers.NewEditMailersSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.EditMailersSection(params.Name, params.Data, t, v)
+	err := h.editMailersSection(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return mailers.NewEditMailersSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 
 	return mailers.NewEditMailersSectionOK().WithPayload(params.Data)
+}
+
+func (h *EditMailersSectionHandlerImpl) editMailersSection(params mailers.EditMailersSectionParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.EditStructuredMailersSection(params.Name, params.Data, t, v)
+	}
+	return configuration.EditMailersSection(params.Name, params.Data, t, v)
 }

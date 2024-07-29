@@ -101,6 +101,17 @@ func (h *CreateResolverHandlerImpl) Handle(params resolver.CreateResolverParams,
 	return resolver.NewCreateResolverAccepted().WithPayload(params.Data)
 }
 
+func (h *CreateResolverHandlerImpl) getResolver(params resolver.CreateResolverParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredResolver(params.Data, t, v)
+	}
+	return configuration.CreateResolver(params.Data, t, v)
+}
+
 // Handle executing the request and returning a response
 func (h *DeleteResolverHandlerImpl) Handle(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
 	t := ""
@@ -155,18 +166,23 @@ func (h *GetResolverHandlerImpl) Handle(params resolver.GetResolverParams, princ
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return resolver.NewGetResolverDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, r, err := configuration.GetResolver(params.Name, t)
+	_, r, err := h.getResolver(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewGetResolverDefault(int(*e.Code)).WithPayload(e)
 	}
 	return resolver.NewGetResolverOK().WithPayload(r)
+}
+
+func (h *GetResolverHandlerImpl) getResolver(params resolver.GetResolverParams, t string) (int64, *models.Resolver, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredResolver(params.Name, t)
+	}
+	return configuration.GetResolver(params.Name, t)
 }
 
 // Handle executing the request and returning a response
@@ -176,18 +192,23 @@ func (h *GetResolversHandlerImpl) Handle(params resolver.GetResolversParams, pri
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return resolver.NewGetResolversDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, rs, err := configuration.GetResolvers(t)
+	_, rs, err := h.getResolvers(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewGetResolversDefault(int(*e.Code)).WithPayload(e)
 	}
 	return resolver.NewGetResolversOK().WithPayload(rs)
+}
+
+func (h *GetResolversHandlerImpl) getResolvers(params resolver.GetResolversParams, t string) (int64, models.Resolvers, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredResolvers(t)
+	}
+	return configuration.GetResolvers(t)
 }
 
 // Handle executing the request and returning a response
@@ -211,13 +232,7 @@ func (h *ReplaceResolverHandlerImpl) Handle(params resolver.ReplaceResolverParam
 		return resolver.NewReplaceResolverDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return resolver.NewReplaceResolverDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.EditResolver(params.Name, params.Data, t, v)
+	err := h.editResolver(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return resolver.NewReplaceResolverDefault(int(*e.Code)).WithPayload(e)
@@ -236,4 +251,15 @@ func (h *ReplaceResolverHandlerImpl) Handle(params resolver.ReplaceResolverParam
 		return resolver.NewReplaceResolverAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return resolver.NewReplaceResolverAccepted().WithPayload(params.Data)
+}
+
+func (h *ReplaceResolverHandlerImpl) editResolver(params resolver.ReplaceResolverParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.EditStructuredResolver(params.Name, params.Data, t, v)
+	}
+	return configuration.EditResolver(params.Name, params.Data, t, v)
 }

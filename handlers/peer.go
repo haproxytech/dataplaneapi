@@ -74,13 +74,7 @@ func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal i
 		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.CreatePeerSection(params.Data, t, v)
+	err := h.createPeerSection(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewCreatePeerDefault(int(*e.Code)).WithPayload(e)
@@ -99,6 +93,17 @@ func (h *CreatePeerHandlerImpl) Handle(params peer.CreatePeerParams, principal i
 		return peer.NewCreatePeerAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return peer.NewCreatePeerAccepted().WithPayload(params.Data)
+}
+
+func (h *CreatePeerHandlerImpl) createPeerSection(params peer.CreatePeerParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredPeerSection(params.Data, t, v)
+	}
+	return configuration.CreatePeerSection(params.Data, t, v)
 }
 
 // Handle executing the request and returning a response
@@ -155,18 +160,23 @@ func (h *GetPeerHandlerImpl) Handle(params peer.GetPeerSectionParams, principal 
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, p, err := configuration.GetPeerSection(params.Name, t)
+	_, p, err := h.getPeerSection(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionDefault(int(*e.Code)).WithPayload(e)
 	}
 	return peer.NewGetPeerSectionOK().WithPayload(p)
+}
+
+func (h *GetPeerHandlerImpl) getPeerSection(params peer.GetPeerSectionParams, t string) (int64, *models.PeerSection, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredPeerSection(params.Name, t)
+	}
+	return configuration.GetPeerSection(params.Name, t)
 }
 
 // Handle executing the request and returning a response
@@ -176,16 +186,21 @@ func (h *GetPeersHandlerImpl) Handle(params peer.GetPeerSectionsParams, principa
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, ps, err := configuration.GetPeerSections(t)
+	_, ps, err := h.getPeerSections(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return peer.NewGetPeerSectionsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return peer.NewGetPeerSectionsOK().WithPayload(ps)
+}
+
+func (h *GetPeersHandlerImpl) getPeerSections(params peer.GetPeerSectionsParams, t string) (int64, models.PeerSections, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredPeerSections(t)
+	}
+	return configuration.GetPeerSections(t)
 }

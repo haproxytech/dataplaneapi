@@ -68,13 +68,7 @@ func (h *CreateUserListHandlerImpl) Handle(params userlist.CreateUserlistParams,
 		return userlist.NewCreateUserlistDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return userlist.NewCreateUserlistDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	err = configuration.CreateUserList(params.Data, t, v)
+	err := h.createUserList(params, t, v)
 	if err != nil {
 		e := misc.HandleError(err)
 		return userlist.NewCreateUserlistDefault(int(*e.Code)).WithPayload(e)
@@ -92,6 +86,17 @@ func (h *CreateUserListHandlerImpl) Handle(params userlist.CreateUserlistParams,
 		return userlist.NewCreateUserlistAccepted().WithReloadID(rID).WithPayload(params.Data)
 	}
 	return userlist.NewCreateUserlistAccepted().WithPayload(params.Data)
+}
+
+func (h *CreateUserListHandlerImpl) createUserList(params userlist.CreateUserlistParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredUserList(params.Data, t, v)
+	}
+	return configuration.CreateUserList(params.Data, t, v)
 }
 
 // Handle executing the request and returning a response
@@ -148,18 +153,23 @@ func (h *GetUserListHandlerImpl) Handle(params userlist.GetUserlistParams, princ
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return userlist.NewGetUserlistDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, u, err := configuration.GetUserList(params.Name, t)
+	_, u, err := h.getUserList(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return userlist.NewGetUserlistDefault(int(*e.Code)).WithPayload(e)
 	}
 	return userlist.NewGetUserlistOK().WithPayload(u)
+}
+
+func (h *GetUserListHandlerImpl) getUserList(params userlist.GetUserlistParams, t string) (int64, *models.Userlist, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredUserList(params.Name, t)
+	}
+	return configuration.GetUserList(params.Name, t)
 }
 
 // Handle executing the request and returning a response
@@ -169,16 +179,21 @@ func (h *GetUserListsHandlerImpl) Handle(params userlist.GetUserlistsParams, pri
 		t = *params.TransactionID
 	}
 
-	configuration, err := h.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return userlist.NewGetUserlistsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, userlists, err := configuration.GetUserLists(t)
+	_, userlists, err := h.getUserLists(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 		return userlist.NewGetUserlistsDefault(int(*e.Code)).WithPayload(e)
 	}
 	return userlist.NewGetUserlistsOK().WithPayload(userlists)
+}
+
+func (h *GetUserListsHandlerImpl) getUserLists(params userlist.GetUserlistsParams, t string) (int64, models.Userlists, error) {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredUserLists(t)
+	}
+	return configuration.GetUserLists(t)
 }

@@ -51,13 +51,8 @@ func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ 
 		return fcgi_app.NewCreateFCGIAppDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := c.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-		return fcgi_app.NewCreateFCGIAppDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	if err = configuration.CreateFCGIApplication(params.Data, t, v); err != nil {
+	var err error
+	if err = c.createFCGIApplication(params, t, v); err != nil {
 		e := misc.HandleError(err)
 		return fcgi_app.NewCreateFCGIAppDefault(int(*e.Code)).WithPayload(e)
 	}
@@ -76,6 +71,17 @@ func (c CreateFCGIAppHandlerImpl) Handle(params fcgi_app.CreateFCGIAppParams, _ 
 		return fcgi_app.NewCreateFCGIAppAccepted().WithReloadID(c.ReloadAgent.Reload()).WithPayload(params.Data)
 	}
 	return fcgi_app.NewCreateFCGIAppAccepted().WithPayload(params.Data)
+}
+
+func (c CreateFCGIAppHandlerImpl) createFCGIApplication(params fcgi_app.CreateFCGIAppParams, t string, v int64) error {
+	configuration, err := c.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredFCGIApplication(params.Data, t, v)
+	}
+	return configuration.CreateFCGIApplication(params.Data, t, v)
 }
 
 type DeleteFCGIAppHandlerImpl struct {
@@ -144,14 +150,7 @@ func (g GetFCGIAppHandlerImpl) Handle(params fcgi_app.GetFCGIAppParams, _ interf
 		t = *params.TransactionID
 	}
 
-	configuration, err := g.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-
-		return fcgi_app.NewGetFCGIAppDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, r, err := configuration.GetFCGIApplication(params.Name, t)
+	_, r, err := g.getFCGIApplication(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 
@@ -159,6 +158,17 @@ func (g GetFCGIAppHandlerImpl) Handle(params fcgi_app.GetFCGIAppParams, _ interf
 	}
 
 	return fcgi_app.NewGetFCGIAppOK().WithPayload(r)
+}
+
+func (g GetFCGIAppHandlerImpl) getFCGIApplication(params fcgi_app.GetFCGIAppParams, t string) (int64, *models.FCGIApp, error) {
+	configuration, err := g.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredFCGIApplication(params.Name, t)
+	}
+	return configuration.GetFCGIApplication(params.Name, t)
 }
 
 type GetFCGIAppsHandlerImpl struct {
@@ -172,14 +182,7 @@ func (g GetFCGIAppsHandlerImpl) Handle(params fcgi_app.GetFCGIAppsParams, _ inte
 		t = *params.TransactionID
 	}
 
-	configuration, err := g.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-
-		return fcgi_app.NewGetFCGIAppsDefault(int(*e.Code)).WithPayload(e)
-	}
-
-	_, r, err := configuration.GetFCGIApplications(t)
+	_, r, err := g.getFCGIApplications(params, t)
 	if err != nil {
 		e := misc.HandleError(err)
 
@@ -187,6 +190,17 @@ func (g GetFCGIAppsHandlerImpl) Handle(params fcgi_app.GetFCGIAppsParams, _ inte
 	}
 
 	return fcgi_app.NewGetFCGIAppsOK().WithPayload(r)
+}
+
+func (g GetFCGIAppsHandlerImpl) getFCGIApplications(params fcgi_app.GetFCGIAppsParams, t string) (int64, models.FCGIApps, error) {
+	configuration, err := g.Client.Configuration()
+	if err != nil {
+		return 0, nil, err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.GetStructuredFCGIApplications(t)
+	}
+	return configuration.GetFCGIApplications(t)
 }
 
 type ReplaceFCGIAppHandlerImpl struct {
@@ -217,16 +231,10 @@ func (r ReplaceFCGIAppHandlerImpl) Handle(params fcgi_app.ReplaceFCGIAppParams, 
 		return fcgi_app.NewReplaceFCGIAppDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	configuration, err := r.Client.Configuration()
-	if err != nil {
-		e := misc.HandleError(err)
-
-		return fcgi_app.NewReplaceFCGIAppDefault(int(*e.Code)).WithPayload(e)
-	}
-
 	params.Data.Name = params.Name
 
-	if err = configuration.EditFCGIApplication(params.Name, params.Data, t, v); err != nil {
+	var err error
+	if err = r.editFCGIApplication(params, t, v); err != nil {
 		e := misc.HandleError(err)
 
 		return fcgi_app.NewReplaceFCGIAppDefault(int(*e.Code)).WithPayload(e)
@@ -247,4 +255,15 @@ func (r ReplaceFCGIAppHandlerImpl) Handle(params fcgi_app.ReplaceFCGIAppParams, 
 	}
 
 	return fcgi_app.NewReplaceFCGIAppAccepted().WithPayload(params.Data)
+}
+
+func (r ReplaceFCGIAppHandlerImpl) editFCGIApplication(params fcgi_app.ReplaceFCGIAppParams, t string, v int64) error {
+	configuration, err := r.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.EditStructuredFCGIApplication(params.Name, params.Data, t, v)
+	}
+	return configuration.EditFCGIApplication(params.Name, params.Data, t, v)
 }
