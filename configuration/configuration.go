@@ -60,6 +60,7 @@ type HAProxyConfiguration struct {
 	GeneralStorageDir    string        `long:"general-storage-dir" description:"Path to general storage directory" default:"/etc/haproxy/general" group:"resources"`
 	ClusterTLSCertDir    string        `long:"cluster-tls-dir" description:"Path where cluster tls certificates will be stored. Defaults to same directory as dataplane configuration file" group:"cluster"`
 	DataplaneStorageDir  string        `long:"dataplane-storage-dir" description:"Path to dataplane internal storage directory" default:"/etc/haproxy/dataplane" group:"resources"`
+	PreferredTimeSuffix  string        `long:"time-suffix" description:"Preferred time unit to use when writing time values in configuration (nearest, none, ms, s, m, h, d)" default:"nearest" group:"haproxy"`
 	UpdateMapFilesPeriod int64         `long:"update-map-files-period" description:"Elapsed time in seconds between two maps syncing operations" default:"10" group:"resources"`
 	ReloadDelay          int           `short:"d" long:"reload-delay" description:"Minimum delay between two reloads (in s)" default:"5" group:"reload"`
 	MaxOpenTransactions  int64         `long:"max-open-transactions" description:"Limit for active transaction in pending state" default:"20" group:"transaction"`

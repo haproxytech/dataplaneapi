@@ -36,6 +36,7 @@ func ConfigureConfigurationClient(haproxyOptions dataplaneapi_config.HAProxyConf
 		configuration_options.ValidateCmd(haproxyOptions.ValidateCmd),
 		configuration_options.MasterWorker,
 		configuration_options.UseMd5Hash,
+		configuration_options.PreferredTimeSuffix(haproxyOptions.PreferredTimeSuffix),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("error setting up configuration client: %s", err.Error())
