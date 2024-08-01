@@ -122,6 +122,8 @@ test:
   artifacts:
     paths:
       - build
+      - e2e/logs/*
+    when: on_failure
   image:
     name: $CI_REGISTRY_GO/docker:$DOCKER_VERSION
     entrypoint: [""]

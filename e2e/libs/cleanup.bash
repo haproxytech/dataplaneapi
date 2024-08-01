@@ -17,5 +17,6 @@
 
 function cleanup() {
   echo ">>> Stopping ${1} docker container"
-  docker stop "$1" > /dev/null 2>&1
+  docker stop "$1" > /dev/null
+  docker rm "$1" > /dev/null
 }

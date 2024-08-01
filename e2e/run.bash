@@ -30,6 +30,13 @@ export LOCAL_IP_ADDRESS=${LOCAL_IP_ADDRESS:-127.0.0.1}
 
 source "${E2E_DIR}/libs/cleanup.bash"
 
+dump_logs() {
+    echo ">>> dumping container logs"
+    mkdir -p "${E2E_DIR}/logs"
+    docker logs "${DOCKER_CONTAINER_NAME}" &> "${E2E_DIR}/logs/haproxy.log"
+    docker cp -q "${DOCKER_CONTAINER_NAME}:/var/log/dataplaneapi.log" "${E2E_DIR}/logs/dataplaneapi.log"
+}
+
 if ! docker version > /dev/null 2>&1; then
   echo '>>> Docker is not installed: cannot proceed for e2e test suite'
 fi
@@ -58,29 +65,31 @@ if [ ! -z $(docker ps -q -f name=${DOCKER_CONTAINER_NAME}) ]; then
     echo ">>> Skipping provisioning the e2e environment, ${DOCKER_CONTAINER_NAME} already present"
 else
     echo '>>> Provisioning the e2e environment'
-    docker run \
-      --rm \
-      --detach \
+    docker create \
       --name ${DOCKER_CONTAINER_NAME} \
       --publish "${E2E_PORT}":8080 \
       --security-opt seccomp=unconfined \
-      "${DOCKER_BASE_IMAGE}" $HAPROXY_FLAGS > /dev/null 2>&1
-    docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
-    docker cp "${E2E_DIR}/fixtures/dataplaneapi${VARIANT}.yaml" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.yaml
+      --env CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 \
+      "${DOCKER_BASE_IMAGE}" $HAPROXY_FLAGS >/dev/null
     docker cp "${E2E_DIR}/fixtures/haproxy.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/haproxy.cfg
     docker cp "${E2E_DIR}/fixtures/userlist.cfg" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/userlist.cfg
-    docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "CI_DATAPLANE_RELOAD_DELAY_OVERRIDE=1 dataplaneapi -f /etc/haproxy/dataplaneapi.yaml"
+    docker start ${DOCKER_CONTAINER_NAME} >/dev/null
+    sleep 1 # sometimes 'docker start' returns too fast and the exec fails
+    docker cp "${ROOT_DIR}/build/dataplaneapi" ${DOCKER_CONTAINER_NAME}:/usr/local/bin/dataplaneapi
+    docker cp "${E2E_DIR}/fixtures/dataplaneapi${VARIANT}.yaml" ${DOCKER_CONTAINER_NAME}:/etc/haproxy/dataplaneapi.yaml
+    docker exec -d ${DOCKER_CONTAINER_NAME} sh -c "dataplaneapi -f /etc/haproxy/dataplaneapi.yaml 2>>/var/log/dataplaneapi.log"
 fi
 
 echo '>>> Waiting dataplane API to be up and running'
 count=1
 DATAPLANE_USER=$(grep insecure-password ${E2E_DIR}/fixtures/userlist.cfg | awk '{print $2}')
 DATAPLANE_PASS=$(grep insecure-password ${E2E_DIR}/fixtures/userlist.cfg | awk '{print $4}')
-until curl -s "${DATAPLANE_USER}:${DATAPLANE_PASS}@${LOCAL_IP_ADDRESS}":"${E2E_PORT}${BASE_PATH}/specification" 2>&1 1>/dev/null; do
+until curl -sS "${DATAPLANE_USER}:${DATAPLANE_PASS}@${LOCAL_IP_ADDRESS}":"${E2E_PORT}${BASE_PATH}/specification" >/dev/null; do
     sleep 1;
     ((count++))
     if [ $count -eq 10 ]; then
         echo ">>> timeout waiting for dataplaneapi to start"
+        dump_logs
         exit 1
     fi
 done
@@ -93,6 +102,9 @@ if [ ! -z $SKIP_CLEANUP ] && [ "$SKIP_CLEANUP" == "y" ]; then
 else
     trap 'cleanup ${DOCKER_CONTAINER_NAME}' EXIT
 fi
+
+# Print logs after test failure.
+trap dump_logs ERR
 
 echo '>>> Starting test suite'
 if [ ! -z $TESTNAME ]; then
