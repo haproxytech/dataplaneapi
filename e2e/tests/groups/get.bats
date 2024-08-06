@@ -44,7 +44,7 @@ load 'utils/_helpers'
 
 @test "groups: Return a non existing group from a non existing userlist" {
 	resource_get "$_GROUPS_BASE_PATH/fake" "userlist=fake"
-	assert_equal "$SC" 404
+	assert_equal "$SC" 400
 }
 
 @test "groups: Return group one from a userlist" {
