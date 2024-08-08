@@ -36,7 +36,7 @@ import (
 
 	"github.com/google/renameio"
 	client_native "github.com/haproxytech/client-native/v6"
-	"github.com/haproxytech/config-parser/v5/types"
+	"github.com/haproxytech/client-native/v6/config-parser/types"
 	jsoniter "github.com/json-iterator/go"
 
 	"github.com/haproxytech/dataplaneapi/log"

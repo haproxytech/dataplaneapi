@@ -8,12 +8,12 @@ import (
 
 	clientnative "github.com/haproxytech/client-native/v6"
 
+	parser "github.com/haproxytech/client-native/v6/config-parser"
+	"github.com/haproxytech/client-native/v6/config-parser/types"
 	"github.com/haproxytech/client-native/v6/configuration"
 	configuration_options "github.com/haproxytech/client-native/v6/configuration/options"
 	runtime_api "github.com/haproxytech/client-native/v6/runtime"
 	runtime_options "github.com/haproxytech/client-native/v6/runtime/options"
-	parser "github.com/haproxytech/config-parser/v5"
-	"github.com/haproxytech/config-parser/v5/types"
 
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"

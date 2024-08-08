@@ -28,10 +28,10 @@ import (
 	"strings"
 
 	"github.com/GehirnInc/crypt"
+	"github.com/haproxytech/client-native/v6/config-parser/types"
 	"github.com/haproxytech/client-native/v6/configuration"
 	client_errors "github.com/haproxytech/client-native/v6/errors"
 	"github.com/haproxytech/client-native/v6/models"
-	"github.com/haproxytech/config-parser/v5/types"
 	jsoniter "github.com/json-iterator/go"
 
 	"github.com/haproxytech/dataplaneapi/haproxy"
