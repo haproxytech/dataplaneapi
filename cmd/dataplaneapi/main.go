@@ -23,12 +23,10 @@ import (
 	"path/filepath"
 	"syscall"
 
+	_ "github.com/KimMachineGun/automemlimit"
 	loads "github.com/go-openapi/loads"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/security"
-	flags "github.com/jessevdk/go-flags"
-
-	_ "github.com/KimMachineGun/automemlimit"
 	"github.com/haproxytech/client-native/v6/models"
 	"github.com/haproxytech/client-native/v6/storage"
 	"github.com/haproxytech/dataplaneapi"
@@ -36,6 +34,8 @@ import (
 	"github.com/haproxytech/dataplaneapi/log"
 	"github.com/haproxytech/dataplaneapi/operations"
 	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
+	flags "github.com/jessevdk/go-flags"
+	"github.com/joho/godotenv"
 	_ "go.uber.org/automaxprocs"
 )
 
@@ -59,6 +59,7 @@ var cliOptions struct {
 }
 
 func main() {
+	_ = godotenv.Load()
 	cancelDebugServer := startRuntimeDebugServer()
 
 	cfg := configuration.Get()
