@@ -29,8 +29,8 @@ load 'utils/_helpers'
 
 	resource_get "$_GLOBAL_BASE_PATH" ""
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.maxconn')" "5000"
-	assert_equal "$(get_json_path "$BODY" '.daemon')" "enabled"
+	assert_equal "$(get_json_path "$BODY" '.performance_options.maxconn')" "5000"
+	assert_equal "$(get_json_path "$BODY" '.daemon')" "true"
 	assert_equal "$(get_json_path "$BODY" '.pidfile')" "/var/run/haproxy.pid"
 	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].address')" "/var/lib/haproxy/stats"
 	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].level')" "admin"
@@ -43,8 +43,8 @@ load 'utils/_helpers'
 
 	resource_get "$_GLOBAL_BASE_PATH" ""
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.maxconn')" "5000"
-	assert_equal "$(get_json_path "$BODY" '.daemon')" "enabled"
+	assert_equal "$(get_json_path "$BODY" '.performance_options.maxconn')" "5000"
+	assert_equal "$(get_json_path "$BODY" '.daemon')" "true"
 	assert_equal "$(get_json_path "$BODY" '.pidfile')" "/var/run/haproxy.pid"
 	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].address')" "/var/lib/haproxy/stats-new"
 	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].level')" "admin"
@@ -74,8 +74,8 @@ load 'utils/_helpers'
     # check configuration has been applied
 	resource_get "$_GLOBAL_BASE_PATH" ""
 	assert_equal "$SC" 200
-	assert_equal "$(get_json_path "$BODY" '.maxconn')" "5000"
-	assert_equal "$(get_json_path "$BODY" '.daemon')" "enabled"
+	assert_equal "$(get_json_path "$BODY" '.performance_options.maxconn')" "5000"
+	assert_equal "$(get_json_path "$BODY" '.daemon')" "true"
 	assert_equal "$(get_json_path "$BODY" '.pidfile')" "/var/run/haproxy.pid"
 	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].address')" "/var/lib/haproxy/stats-new"
 	assert_equal "$(get_json_path "$BODY" '.runtime_apis[0].level')" "admin"

@@ -1,12 +1,14 @@
 {
-    "runtime_apis": [
-      {
-        "address": "/var/lib/haproxy/stats-new",
-        "level": "admin"
-      }
-    ],
-    "daemon": "enabled",
-    "master-worker": true,
-    "maxconn": 5000,
-    "pidfile": "/var/run/haproxy.pid"
-  }
+  "runtime_apis": [
+    {
+      "address": "/var/lib/haproxy/stats-new",
+      "level": "admin"
+    }
+  ],
+  "daemon": true,
+  "master-worker": true,
+  "performance_options": {
+    "maxconn": 5000
+  },
+  "pidfile": "/var/run/haproxy.pid"
+}
