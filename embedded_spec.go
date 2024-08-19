@@ -23850,6 +23850,22 @@ func init() {
         "$ref": "#/definitions/crt_store"
       }
     },
+    "debug_options": {
+      "type": "object",
+      "properties": {
+        "anonkey": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "x-nullable": true
+        },
+        "quiet": {
+          "type": "boolean"
+        },
+        "zero_warning": {
+          "type": "boolean"
+        }
+      }
+    },
     "default_bind": {
       "description": "HAProxy default bind configuration",
       "title": "Default Bind",
@@ -24565,6 +24581,27 @@ func init() {
         "$ref": "#/definitions/defaults"
       }
     },
+    "device_atlas_options": {
+      "type": "object",
+      "properties": {
+        "json_file": {
+          "type": "string",
+          "x-display-name": "JSON file"
+        },
+        "log_level": {
+          "type": "string",
+          "x-display-name": "Log Level"
+        },
+        "properties_cookie": {
+          "type": "string",
+          "x-display-name": "Properties Cookie"
+        },
+        "separator": {
+          "type": "string",
+          "x-display-name": "Separator"
+        }
+      }
+    },
     "dgram_bind": {
       "description": "HAProxy log forward dgram bind configuration",
       "type": "object",
@@ -24686,6 +24723,67 @@ func init() {
       "title": "Endpoints Array",
       "items": {
         "$ref": "#/definitions/endpoint"
+      }
+    },
+    "environment_options": {
+      "type": "object",
+      "properties": {
+        "presetenv": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              },
+              "value": {
+                "type": "string",
+                "x-display-name": "Value"
+              }
+            },
+            "x-go-name": "PresetEnv"
+          },
+          "x-display-name": "Preset environment variables",
+          "x-go-name": "PresetEnvs",
+          "x-omitempty": true
+        },
+        "resetenv": {
+          "type": "string",
+          "x-display-name": "Remove all environment variables except the ones specified"
+        },
+        "setenv": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              },
+              "value": {
+                "type": "string",
+                "x-display-name": "Value"
+              }
+            },
+            "x-go-name": "SetEnv"
+          },
+          "x-display-name": "Set environment variables",
+          "x-go-name": "SetEnvs",
+          "x-omitempty": true
+        },
+        "unsetenv": {
+          "type": "string",
+          "x-display-name": "Removes environment variables specified in arguments"
+        }
       }
     },
     "error": {
@@ -25029,6 +25127,27 @@ func init() {
         },
         "name": {
           "type": "string"
+        }
+      }
+    },
+    "fifty_one_degrees_options": {
+      "type": "object",
+      "properties": {
+        "cache_size": {
+          "type": "integer",
+          "x-display-name": "Cache Size"
+        },
+        "data_file": {
+          "type": "string",
+          "x-display-name": "Data File"
+        },
+        "property_name_list": {
+          "type": "string",
+          "x-display-name": "Name List"
+        },
+        "property_separator": {
+          "type": "string",
+          "x-display-name": "Property Separator"
         }
       }
     },
@@ -25855,18 +25974,6 @@ func init() {
       "type": "object",
       "title": "Global Base",
       "properties": {
-        "anonkey": {
-          "type": "integer",
-          "maximum": 4294967295,
-          "x-nullable": true
-        },
-        "busy_polling": {
-          "type": "boolean"
-        },
-        "ca_base": {
-          "type": "string",
-          "x-display-name": "SSL CA Certificates Base Directory"
-        },
         "chroot": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -25906,16 +26013,11 @@ func init() {
           "x-go-name": "CPUMaps",
           "x-omitempty": true
         },
-        "crt_base": {
-          "type": "string",
-          "x-display-name": "SSL Certificates Base Directory"
-        },
         "daemon": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
+        },
+        "debug_options": {
+          "$ref": "#/definitions/debug_options"
         },
         "default_path": {
           "type": "object",
@@ -25950,26 +26052,10 @@ func init() {
           "x-display-name": "Text that describes the instance"
         },
         "device_atlas_options": {
-          "type": "object",
-          "properties": {
-            "json_file": {
-              "type": "string",
-              "x-display-name": "JSON file"
-            },
-            "log_level": {
-              "type": "string",
-              "x-display-name": "Log Level"
-            },
-            "properties_cookie": {
-              "type": "string",
-              "x-display-name": "Properties Cookie"
-            },
-            "separator": {
-              "type": "string",
-              "x-display-name": "Separator"
-            }
-          },
-          "x-go-name": "GlobalDeviceAtlasOptions"
+          "$ref": "#/definitions/device_atlas_options"
+        },
+        "environment_options": {
+          "$ref": "#/definitions/environment_options"
         },
         "expose_experimental_directives": {
           "type": "boolean"
@@ -25979,26 +26065,7 @@ func init() {
           "x-display-name": "External Check"
         },
         "fifty_one_degrees_options": {
-          "type": "object",
-          "properties": {
-            "cache_size": {
-              "type": "integer",
-              "x-display-name": "Cache Size"
-            },
-            "data_file": {
-              "type": "string",
-              "x-display-name": "Data File"
-            },
-            "property_name_list": {
-              "type": "string",
-              "x-display-name": "Name List"
-            },
-            "property_separator": {
-              "type": "string",
-              "x-display-name": "Property Separator"
-            }
-          },
-          "x-go-name": "GlobalFiftyOneDegreesOptions"
+          "$ref": "#/definitions/fifty_one_degrees_options"
         },
         "gid": {
           "type": "integer",
@@ -26076,6 +26143,9 @@ func init() {
           },
           "x-go-name": "GlobalHarden"
         },
+        "http_client_options": {
+          "$ref": "#/definitions/http_client_options"
+        },
         "http_err_codes": {
           "type": "array",
           "items": {
@@ -26092,59 +26162,11 @@ func init() {
           "x-display-name": "Replace, reduce or extend the list of status codes that define a failure",
           "x-omitempty": true
         },
-        "httpclient_resolvers_disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "HTTP Client Resolvers Disabled"
-        },
-        "httpclient_resolvers_id": {
-          "type": "string",
-          "x-display-name": "HTTP Client Resolvers ID"
-        },
-        "httpclient_resolvers_prefer": {
-          "type": "string",
-          "enum": [
-            "ipv4",
-            "ipv6"
-          ],
-          "x-display-name": "HTTP Client Resolvers Prefer"
-        },
-        "httpclient_retries": {
-          "type": "integer",
-          "x-display-name": "HTTP Client Retries"
-        },
-        "httpclient_ssl_ca_file": {
-          "type": "string",
-          "x-display-name": "HTTP Client SSL CA File"
-        },
-        "httpclient_ssl_verify": {
-          "type": "string",
-          "enum": [
-            "",
-            "none",
-            "required"
-          ],
-          "x-display-name": "HTTP Client SSL Verify",
-          "x-nullable": true
-        },
-        "httpclient_timeout_connect": {
-          "type": "integer",
-          "x-default-unit": "ms",
-          "x-display-name": "HTTP Client Connect Timeout",
-          "x-duration": true,
-          "x-nullable": true
-        },
         "insecure_fork_wanted": {
           "type": "boolean"
         },
         "insecure_setuid_wanted": {
           "type": "boolean"
-        },
-        "issuers_chain_path": {
-          "type": "string"
         },
         "limited_quic": {
           "type": "boolean"
@@ -26175,95 +26197,12 @@ func init() {
           "x-display-name": "Log Send Hostname",
           "x-go-name": "GlobalLogSendHostname"
         },
-        "lua_load_per_thread": {
-          "type": "string"
-        },
-        "lua_loads": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "file"
-            ],
-            "properties": {
-              "file": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              }
-            },
-            "x-go-name": "LuaLoad"
-          },
-          "x-omitempty": true
-        },
-        "lua_prepend_path": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "path"
-            ],
-            "properties": {
-              "path": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "path",
-                  "cpath"
-                ]
-              }
-            },
-            "x-go-name": "LuaPrependPath"
-          },
-          "x-omitempty": true
+        "lua_options": {
+          "$ref": "#/definitions/lua_options"
         },
         "master-worker": {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
-        },
-        "max_spread_checks": {
-          "type": "integer",
-          "x-default-unit": "ms",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "maxcompcpuusage": {
-          "type": "integer",
-          "x-display-name": "Maximum HAProxy CPU usage"
-        },
-        "maxcomprate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process input compression rate"
-        },
-        "maxconn": {
-          "type": "integer",
-          "x-display-name": "Max Connections"
-        },
-        "maxconnrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent connections"
-        },
-        "maxpipes": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of pipes"
-        },
-        "maxsessrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of sessions per second"
-        },
-        "maxsslconn": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent SSL connections"
-        },
-        "maxsslrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of SSL sessions per second"
-        },
-        "maxzlibmem": {
-          "type": "integer",
-          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
         "mworker_max_reloads": {
           "type": "integer",
@@ -26274,40 +26213,12 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of Threads"
         },
-        "no-quic": {
+        "no_quic": {
           "type": "boolean",
           "x-display-name": "Disable the use of the QUIC protocol"
         },
         "node": {
           "type": "string"
-        },
-        "noepoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
-        },
-        "noevports": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
-        },
-        "nogetaddrinfo": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of getaddrinfo for name resolving"
-        },
-        "nokqueue": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
-        },
-        "nopoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"poll\" event polling system"
-        },
-        "noreuseport": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of SO_REUSEPORT"
-        },
-        "nosplice": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
         "numa_cpu_mapping": {
           "type": "string",
@@ -26316,61 +26227,11 @@ func init() {
             "disabled"
           ]
         },
-        "ocsp_update": {
-          "type": "object",
-          "properties": {
-            "disable": {
-              "type": "boolean",
-              "default": false,
-              "x-display-name": "Disable OCSP Update",
-              "x-nullable": true
-            },
-            "httpproxy": {
-              "type": "object",
-              "properties": {
-                "address": {
-                  "type": "string",
-                  "pattern": "^[^\\s]+$",
-                  "example": "127.0.0.1"
-                },
-                "port": {
-                  "type": "integer",
-                  "maximum": 65535,
-                  "minimum": 1,
-                  "x-nullable": true,
-                  "example": 80
-                }
-              },
-              "x-display-name": "OCSP Update HTTP Proxy",
-              "x-go-name": "GlobalOcspUpdateHttpproxy",
-              "x-omitempty": true
-            },
-            "maxdelay": {
-              "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
-              "type": "integer",
-              "x-default-unit": "s",
-              "x-display-name": "OCSP Update Maximum Delay",
-              "x-duration": false,
-              "x-nullable": true
-            },
-            "mindelay": {
-              "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
-              "type": "integer",
-              "x-default-unit": "s",
-              "x-display-name": "OCSP Update Minimum Delay",
-              "x-duration": false,
-              "x-nullable": true
-            },
-            "mode": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "OCSP Update Mode"
-            }
-          },
-          "x-go-name": "GlobalOcspUpdate"
+        "ocsp_update_options": {
+          "$ref": "#/definitions/ocsp_update_options"
+        },
+        "performance_options": {
+          "$ref": "#/definitions/performance_options"
         },
         "pidfile": {
           "type": "string",
@@ -26379,57 +26240,9 @@ func init() {
         "pp2_never_send_local": {
           "type": "boolean"
         },
-        "prealloc-fd": {
+        "prealloc_fd": {
           "type": "boolean",
           "x-display-name": "Prealloc FD"
-        },
-        "presetenv": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "name",
-              "value"
-            ],
-            "properties": {
-              "name": {
-                "type": "string",
-                "x-display-name": "Name"
-              },
-              "value": {
-                "type": "string",
-                "x-display-name": "Value"
-              }
-            },
-            "x-go-name": "PresetEnv"
-          },
-          "x-display-name": "Preset environment variables",
-          "x-go-name": "PresetEnvs",
-          "x-omitempty": true
-        },
-        "profiling_memory": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Enable or disables per-function memory profiling"
-        },
-        "profiling_tasks": {
-          "type": "string",
-          "enum": [
-            "auto",
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Enable or disables per-task CPU profiling"
-        },
-        "quiet": {
-          "type": "boolean"
-        },
-        "resetenv": {
-          "type": "string",
-          "x-display-name": "Remove all environment variables except the ones specified"
         },
         "runtime_apis": {
           "type": "array",
@@ -26456,16 +26269,6 @@ func init() {
           "x-display-name": "Runtime APIs",
           "x-go-name": "RuntimeAPIs",
           "x-omitempty": true
-        },
-        "server_state_base": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Server State Base"
-        },
-        "server_state_file": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Server State File"
         },
         "set_dumpable": {
           "type": "boolean"
@@ -26524,149 +26327,8 @@ func init() {
           "x-display-name": "OS Capabilities",
           "x-omitempty": true
         },
-        "setenv": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "name",
-              "value"
-            ],
-            "properties": {
-              "name": {
-                "type": "string",
-                "x-display-name": "Name"
-              },
-              "value": {
-                "type": "string",
-                "x-display-name": "Value"
-              }
-            },
-            "x-go-name": "SetEnv"
-          },
-          "x-display-name": "Set environment variables",
-          "x-go-name": "SetEnvs",
-          "x-omitempty": true
-        },
-        "spread_checks": {
-          "type": "integer",
-          "x-display-name": "Add some randomness in the check interval"
-        },
-        "ssl_default_bind_ciphers": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Ciphers"
-        },
-        "ssl_default_bind_ciphersuites": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Ciphersuites"
-        },
-        "ssl_default_bind_client_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Client Sigalgs"
-        },
-        "ssl_default_bind_curves": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Curves"
-        },
-        "ssl_default_bind_options": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Options"
-        },
-        "ssl_default_bind_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Sigalgs"
-        },
-        "ssl_default_server_ciphers": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Ciphers"
-        },
-        "ssl_default_server_ciphersuites": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Ciphersuites"
-        },
-        "ssl_default_server_client_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Client Sigalgs"
-        },
-        "ssl_default_server_curves": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Curves"
-        },
-        "ssl_default_server_options": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Options"
-        },
-        "ssl_default_server_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Sigalgs"
-        },
-        "ssl_dh_param_file": {
-          "type": "string"
-        },
-        "ssl_engines": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "name"
-            ],
-            "properties": {
-              "algorithms": {
-                "type": "string",
-                "x-display-name": "Algorithms",
-                "x-nullable": true
-              },
-              "name": {
-                "type": "string",
-                "x-display-name": "Name"
-              }
-            },
-            "x-go-name": "SslEngine"
-          },
-          "x-display-name": "SSL Engines",
-          "x-go-name": "SslEngines",
-          "x-omitempty": true
-        },
-        "ssl_load_extra_files": {
-          "type": "string",
-          "x-display-name": "SSL Load Extra Files"
-        },
-        "ssl_mode_async": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Asynchronous TLS I/O operations"
-        },
-        "ssl_propquery": {
-          "type": "string",
-          "x-display-name": "SSL Query String Property"
-        },
-        "ssl_provider": {
-          "type": "string",
-          "x-display-name": "SSL Provider"
-        },
-        "ssl_provider_path": {
-          "type": "string",
-          "x-display-name": "SSL Provider Path"
-        },
-        "ssl_security_level": {
-          "type": "integer",
-          "maximum": 5,
-          "x-nullable": true
-        },
-        "ssl_server_verify": {
-          "type": "string",
-          "enum": [
-            "none",
-            "required"
-          ],
-          "x-display-name": "Verify server certificates"
-        },
-        "ssl_skip_self_issued_ca": {
-          "type": "boolean",
-          "x-display-name": "Self issued CA, aka x509 root CA"
+        "ssl_options": {
+          "$ref": "#/definitions/ssl_options"
         },
         "stats_maxconn": {
           "type": "integer",
@@ -26710,500 +26372,26 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of Thread Groups"
         },
-        "thread_hard_limit": {
-          "type": "integer",
-          "x-nullable": true
+        "tune_buffer_options": {
+          "$ref": "#/definitions/tune_buffer_options"
+        },
+        "tune_lua_options": {
+          "$ref": "#/definitions/tune_lua_options"
         },
         "tune_options": {
-          "type": "object",
-          "properties": {
-            "applet_zero_copy_forwarding": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Enables of disabled the zero-copy forwarding of data for the applets"
-            },
-            "buffers_limit": {
-              "type": "integer",
-              "x-display-name": "Buffers Limit",
-              "x-nullable": true
-            },
-            "buffers_reserve": {
-              "type": "integer",
-              "minimum": 2,
-              "x-display-name": "Buffers Reserve"
-            },
-            "bufsize": {
-              "type": "integer",
-              "x-display-name": "Buffer Size"
-            },
-            "comp_maxlevel": {
-              "type": "integer",
-              "x-display-name": "Maximum Compression Level"
-            },
-            "disable_zero_copy_forwarding": {
-              "type": "boolean",
-              "x-display-name": "Disable zero-copy forwarding"
-            },
-            "events_max_events_at_once": {
-              "type": "integer",
-              "maximum": 10000,
-              "minimum": 1
-            },
-            "fail_alloc": {
-              "type": "boolean",
-              "x-display-name": "Failed Allocation Chance"
-            },
-            "fd_edge_triggered": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Edge-triggered polling mode"
-            },
-            "h1_zero_copy_fwd_recv": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
-            },
-            "h1_zero_copy_fwd_send": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
-            },
-            "h2_be_glitches_threshold": {
-              "type": "integer",
-              "x-display-name": "Automatically kill a backend connection past a number of glitches",
-              "x-nullable": true
-            },
-            "h2_be_initial_window_size": {
-              "type": "integer",
-              "x-display-name": "Initial window size for outgoing connections"
-            },
-            "h2_be_max_concurrent_streams": {
-              "type": "integer",
-              "x-display-name": "Maximum number of concurrent streams per outgoing connection"
-            },
-            "h2_fe_glitches_threshold": {
-              "type": "integer",
-              "x-display-name": "Automatically kill a frontend connection past a number of glitches",
-              "x-nullable": true
-            },
-            "h2_fe_initial_window_size": {
-              "type": "integer",
-              "x-display-name": "Initial window size for incoming connections"
-            },
-            "h2_fe_max_concurrent_streams": {
-              "type": "integer",
-              "x-display-name": "Maximum number of concurrent streams per incoming connection"
-            },
-            "h2_fe_max_total_streams": {
-              "type": "integer",
-              "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
-              "x-nullable": true
-            },
-            "h2_header_table_size": {
-              "type": "integer",
-              "maximum": 65535,
-              "x-display-name": "HTTP/2 Dynamic Header Table Size"
-            },
-            "h2_initial_window_size": {
-              "type": "integer",
-              "x-display-name": "HTTP/2 Initial Window Size",
-              "x-nullable": true
-            },
-            "h2_max_concurrent_streams": {
-              "type": "integer",
-              "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
-            },
-            "h2_max_frame_size": {
-              "type": "integer",
-              "x-display-name": "HTTP/2 Maximum Frame Size"
-            },
-            "h2_zero_copy_fwd_send": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
-            },
-            "http_cookielen": {
-              "type": "integer",
-              "x-display-name": "Maximum Cookie Length"
-            },
-            "http_logurilen": {
-              "type": "integer",
-              "x-display-name": "Maximum URI Length"
-            },
-            "http_maxhdr": {
-              "type": "integer",
-              "maximum": 32767,
-              "minimum": 1,
-              "x-display-name": "Maximum Number of Headers"
-            },
-            "idle_pool_shared": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Share Idle Connections"
-            },
-            "idletimer": {
-              "type": "integer",
-              "maximum": 65535,
-              "x-default-unit": "ms",
-              "x-display-name": "Idle Stream Duration",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "listener_default_shards": {
-              "type": "string",
-              "enum": [
-                "by-process",
-                "by-thread",
-                "by-group"
-              ],
-              "x-display-name": "Listener Default Shards"
-            },
-            "listener_multi_queue": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Listener Multi Queue Accept"
-            },
-            "lua_burst_timeout": {
-              "type": "integer",
-              "x-default-unit": "ms",
-              "x-display-name": "Burst execution timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "lua_forced_yield": {
-              "type": "integer",
-              "x-display-name": "Lua Forced Yield"
-            },
-            "lua_log_loggers": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Send Lua Logs to the Loggers"
-            },
-            "lua_log_stderr": {
-              "type": "string",
-              "enum": [
-                "auto",
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Send Lua Logs to stderr"
-            },
-            "lua_maxmem": {
-              "type": "integer",
-              "x-display-name": "Lua Maximum Memory Usage",
-              "x-nullable": true
-            },
-            "lua_service_timeout": {
-              "type": "integer",
-              "x-default-unit": "ms",
-              "x-display-name": "Lua Service timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "lua_session_timeout": {
-              "type": "integer",
-              "x-default-unit": "ms",
-              "x-display-name": "Lua Session Timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "lua_task_timeout": {
-              "type": "integer",
-              "x-default-unit": "ms",
-              "x-display-name": "Lua Task Timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "max_checks_per_thread": {
-              "type": "integer",
-              "x-display-name": "Maximum checks per thread",
-              "x-nullable": true
-            },
-            "maxaccept": {
-              "type": "integer",
-              "x-display-name": "Maximum Accept Events"
-            },
-            "maxpollevents": {
-              "type": "integer",
-              "x-display-name": "Maximum Polled Events"
-            },
-            "maxrewrite": {
-              "type": "integer",
-              "x-display-name": "Maximum Rewrite Space"
-            },
-            "memory_hot_size": {
-              "type": "integer",
-              "x-display-name": "Per-thread Amount of Memory",
-              "x-nullable": true
-            },
-            "pattern_cache_size": {
-              "type": "integer",
-              "x-display-name": "Pattern Lookup Cache Size",
-              "x-nullable": true
-            },
-            "peers_max_updates_at_once": {
-              "type": "integer",
-              "x-display-name": "Maximum number of stick-table updates at once"
-            },
-            "pipesize": {
-              "type": "integer",
-              "x-display-name": "Pipe Buffer Size"
-            },
-            "pool_high_fd_ratio": {
-              "type": "integer",
-              "x-display-name": "Max Used High FD Ratio"
-            },
-            "pool_low_fd_ratio": {
-              "type": "integer",
-              "x-display-name": "Max Used Low FD Ratio"
-            },
-            "pt_zero_copy_forwarding": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
-            },
-            "quic_frontend_conn_tx_buffers_limit": {
-              "type": "integer",
-              "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
-              "x-nullable": true
-            },
-            "quic_frontend_max_idle_timeout": {
-              "type": "integer",
-              "x-default-unit": "ms",
-              "x-display-name": "QUIC Frontend Max Idle Timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "quic_frontend_max_streams_bidi": {
-              "type": "integer",
-              "x-display-name": "QUIC Max Number of Bidirectional Streams",
-              "x-nullable": true
-            },
-            "quic_max_frame_loss": {
-              "type": "integer",
-              "x-display-name": "QUIC Max Limit for Frame Loss",
-              "x-nullable": true
-            },
-            "quic_reorder_ratio": {
-              "type": "integer",
-              "maximum": 100,
-              "x-display-name": "Ratio applied to the packet reordering threshold",
-              "x-nullable": true
-            },
-            "quic_retry_threshold": {
-              "type": "integer",
-              "x-display-name": "QUIC Retry Threshold",
-              "x-nullable": true
-            },
-            "quic_socket_owner": {
-              "type": "string",
-              "enum": [
-                "listener",
-                "connection"
-              ],
-              "x-display-name": "QUIC Socket Owner"
-            },
-            "quic_zero_copy_fwd_send": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Enables or disables the zero-copy sends for the QUIC multiplexer"
-            },
-            "rcvbuf_backend": {
-              "type": "integer",
-              "x-display-name": "Backend Receive Buffer Size",
-              "x-nullable": true
-            },
-            "rcvbuf_client": {
-              "type": "integer",
-              "x-display-name": "Client Receive Buffer Size",
-              "x-nullable": true
-            },
-            "rcvbuf_frontend": {
-              "type": "integer",
-              "x-display-name": "Frontend Receive Buffer Size",
-              "x-nullable": true
-            },
-            "rcvbuf_server": {
-              "type": "integer",
-              "x-display-name": "Server Receive Buffer Size",
-              "x-nullable": true
-            },
-            "recv_enough": {
-              "type": "integer",
-              "x-display-name": "Receive Enough Socket Buffer Size"
-            },
-            "ring_queues": {
-              "type": "integer",
-              "x-display-name": "Number of write queues in front of ring buffers",
-              "x-nullable": true
-            },
-            "runqueue_depth": {
-              "type": "integer",
-              "x-display-name": "Max Tasks in Run Queue"
-            },
-            "sched_low_latency": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Low Latency Task Scheduler"
-            },
-            "sndbuf_backend": {
-              "type": "integer",
-              "x-display-name": "Backend Send Buffer Size",
-              "x-nullable": true
-            },
-            "sndbuf_client": {
-              "type": "integer",
-              "x-display-name": "Client Send Buffer Size",
-              "x-nullable": true
-            },
-            "sndbuf_frontend": {
-              "type": "integer",
-              "x-display-name": "Frontend Send Buffer Size",
-              "x-nullable": true
-            },
-            "sndbuf_server": {
-              "type": "integer",
-              "x-display-name": "Server Send Buffer Size",
-              "x-nullable": true
-            },
-            "ssl_cachesize": {
-              "type": "integer",
-              "x-display-name": "SSL Cache Size",
-              "x-nullable": true
-            },
-            "ssl_capture_buffer_size": {
-              "type": "integer",
-              "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
-              "x-nullable": true
-            },
-            "ssl_ctx_cache_size": {
-              "type": "integer",
-              "x-display-name": "SSL Number of Certificates in Cache"
-            },
-            "ssl_default_dh_param": {
-              "type": "integer",
-              "x-display-name": "SSL Default DH Parameter Size"
-            },
-            "ssl_force_private_cache": {
-              "type": "boolean",
-              "x-display-name": "SSL Force Private Cache"
-            },
-            "ssl_keylog": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "SSL Log TLS Keys"
-            },
-            "ssl_lifetime": {
-              "type": "integer",
-              "x-default-unit": "s",
-              "x-display-name": "SSL Session Lifetime",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "ssl_maxrecord": {
-              "type": "integer",
-              "x-display-name": "SSL Maximum Size",
-              "x-nullable": true
-            },
-            "ssl_ocsp_update_max_delay": {
-              "description": "This field is deprecated in favor of ocsp-update.maxdelay",
-              "type": "integer",
-              "x-deprecated": true,
-              "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
-              "x-nullable": true
-            },
-            "ssl_ocsp_update_min_delay": {
-              "description": "This field is deprecated in favor of ocsp-update.mindelay",
-              "type": "integer",
-              "x-deprecated": true,
-              "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
-              "x-nullable": true
-            },
-            "stick_counters": {
-              "type": "integer",
-              "x-display-name": "Number of stick-counters",
-              "x-nullable": true
-            },
-            "vars_global_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Global Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_proc_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Process Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_reqres_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Request/Response Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_sess_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Session Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_txn_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Transaction Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "zlib_memlevel": {
-              "type": "integer",
-              "maximum": 9,
-              "minimum": 1,
-              "x-display-name": "Zlib Memory Level"
-            },
-            "zlib_windowsize": {
-              "type": "integer",
-              "maximum": 15,
-              "minimum": 8,
-              "x-display-name": "Zlib Window Size"
-            }
-          },
-          "x-go-name": "GlobalTuneOptions"
+          "$ref": "#/definitions/tune_options"
+        },
+        "tune_quic_options": {
+          "$ref": "#/definitions/tune_quic_options"
+        },
+        "tune_ssl_options": {
+          "$ref": "#/definitions/tune_ssl_options"
+        },
+        "tune_vars_options": {
+          "$ref": "#/definitions/tune_vars_options"
+        },
+        "tune_zlib_options": {
+          "$ref": "#/definitions/tune_zlib_options"
         },
         "uid": {
           "type": "integer",
@@ -27212,43 +26400,13 @@ func init() {
         "ulimit_n": {
           "type": "integer"
         },
-        "unsetenv": {
-          "type": "string",
-          "x-display-name": "Removes environment variables specified in arguments"
-        },
         "user": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "User"
         },
         "wurfl_options": {
-          "type": "object",
-          "properties": {
-            "cache_size": {
-              "type": "integer",
-              "x-display-name": "Sets the WURFL Useragent cache size"
-            },
-            "data_file": {
-              "type": "string",
-              "x-display-name": "The path of the WURFL data file"
-            },
-            "information_list": {
-              "type": "string",
-              "x-display-name": "A space-delimited list of WURFL capabilities"
-            },
-            "information_list_separator": {
-              "type": "string",
-              "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
-            },
-            "patch_file": {
-              "type": "string",
-              "x-display-name": "A list of WURFL patch file paths"
-            }
-          },
-          "x-go-name": "GlobalWurflOptions"
-        },
-        "zero_warning": {
-          "type": "boolean"
+          "$ref": "#/definitions/wurfl_options"
         }
       },
       "additionalProperties": false
@@ -28077,6 +27235,56 @@ func init() {
       "title": "HTTP Checks Array",
       "items": {
         "$ref": "#/definitions/http_check"
+      }
+    },
+    "http_client_options": {
+      "type": "object",
+      "properties": {
+        "resolvers_disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Client Resolvers Disabled"
+        },
+        "resolvers_id": {
+          "type": "string",
+          "x-display-name": "HTTP Client Resolvers ID"
+        },
+        "resolvers_prefer": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-display-name": "HTTP Client Resolvers Prefer"
+        },
+        "retries": {
+          "type": "integer",
+          "x-display-name": "HTTP Client Retries"
+        },
+        "ssl_ca_file": {
+          "type": "string",
+          "x-display-name": "HTTP Client SSL CA File"
+        },
+        "ssl_verify": {
+          "type": "string",
+          "enum": [
+            "",
+            "none",
+            "required"
+          ],
+          "x-display-name": "HTTP Client SSL Verify",
+          "x-nullable": true
+        },
+        "timeout_connect": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-display-name": "HTTP Client Connect Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        }
       }
     },
     "http_codes": {
@@ -30307,6 +29515,55 @@ func init() {
         "$ref": "#/definitions/log_target"
       }
     },
+    "lua_options": {
+      "type": "object",
+      "properties": {
+        "load_per_thread": {
+          "type": "string"
+        },
+        "loads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "file"
+            ],
+            "properties": {
+              "file": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            },
+            "x-go-name": "LuaLoad"
+          },
+          "x-omitempty": true
+        },
+        "prepend_path": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "path",
+                  "cpath"
+                ]
+              }
+            },
+            "x-go-name": "LuaPrependPath"
+          },
+          "x-omitempty": true
+        }
+      }
+    },
     "mailer_entries": {
       "description": "HAProxy mailer entries",
       "type": "array",
@@ -31240,6 +30497,60 @@ func init() {
       },
       "x-omitempty": true
     },
+    "ocsp_update_options": {
+      "type": "object",
+      "properties": {
+        "disable": {
+          "type": "boolean",
+          "default": false,
+          "x-display-name": "Disable OCSP Update",
+          "x-nullable": true
+        },
+        "httpproxy": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "example": "127.0.0.1"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 80
+            }
+          },
+          "x-display-name": "OCSP Update HTTP Proxy",
+          "x-omitempty": true
+        },
+        "maxdelay": {
+          "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-display-name": "OCSP Update Maximum Delay",
+          "x-duration": false,
+          "x-nullable": true
+        },
+        "mindelay": {
+          "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-display-name": "OCSP Update Minimum Delay",
+          "x-duration": false,
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "OCSP Update Mode"
+        }
+      }
+    },
     "originalto": {
       "type": "object",
       "required": [
@@ -31373,6 +30684,111 @@ func init() {
       "title": "Peer_Section",
       "items": {
         "$ref": "#/definitions/peer_section"
+      }
+    },
+    "performance_options": {
+      "type": "object",
+      "properties": {
+        "busy_polling": {
+          "type": "boolean"
+        },
+        "max_spread_checks": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "maxcompcpuusage": {
+          "type": "integer",
+          "x-display-name": "Maximum HAProxy CPU usage"
+        },
+        "maxcomprate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process input compression rate"
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Connections"
+        },
+        "maxconnrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent connections"
+        },
+        "maxpipes": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of pipes"
+        },
+        "maxsessrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of sessions per second"
+        },
+        "maxzlibmem": {
+          "type": "integer",
+          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
+        },
+        "noepoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
+        },
+        "noevports": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
+        },
+        "nogetaddrinfo": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of getaddrinfo for name resolving"
+        },
+        "nokqueue": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
+        },
+        "nopoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"poll\" event polling system"
+        },
+        "noreuseport": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of SO_REUSEPORT"
+        },
+        "nosplice": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
+        },
+        "profiling_memory": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enable or disables per-function memory profiling"
+        },
+        "profiling_tasks": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enable or disables per-task CPU profiling"
+        },
+        "server_state_base": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State Base"
+        },
+        "server_state_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State File"
+        },
+        "spread_checks": {
+          "type": "integer",
+          "x-display-name": "Add some randomness in the check interval"
+        },
+        "thread_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        }
       }
     },
     "persist_rule": {
@@ -33954,6 +33370,146 @@ func init() {
         "$ref": "#/definitions/ssl_certificate"
       }
     },
+    "ssl_options": {
+      "type": "object",
+      "properties": {
+        "ca_base": {
+          "type": "string",
+          "x-display-name": "SSL CA Certificates Base Directory"
+        },
+        "crt_base": {
+          "type": "string",
+          "x-display-name": "SSL Certificates Base Directory"
+        },
+        "default_bind_ciphers": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphers"
+        },
+        "default_bind_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphersuites"
+        },
+        "default_bind_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Client Sigalgs"
+        },
+        "default_bind_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Curves"
+        },
+        "default_bind_options": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Options"
+        },
+        "default_bind_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Sigalgs"
+        },
+        "default_server_ciphers": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphers"
+        },
+        "default_server_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphersuites"
+        },
+        "default_server_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Client Sigalgs"
+        },
+        "default_server_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Curves"
+        },
+        "default_server_options": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Options"
+        },
+        "default_server_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Sigalgs"
+        },
+        "dh_param_file": {
+          "type": "string"
+        },
+        "engines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "algorithms": {
+                "type": "string",
+                "x-display-name": "Algorithms",
+                "x-nullable": true
+              },
+              "name": {
+                "type": "string",
+                "x-display-name": "Name"
+              }
+            },
+            "x-go-name": "SslEngine"
+          },
+          "x-display-name": "SSL Engines",
+          "x-go-name": "SslEngines",
+          "x-omitempty": true
+        },
+        "issuers_chain_path": {
+          "type": "string"
+        },
+        "load_extra_files": {
+          "type": "string",
+          "x-display-name": "SSL Load Extra Files"
+        },
+        "maxsslconn": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent SSL connections"
+        },
+        "maxsslrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of SSL sessions per second"
+        },
+        "mode_async": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Asynchronous TLS I/O operations"
+        },
+        "propquery": {
+          "type": "string",
+          "x-display-name": "SSL Query String Property"
+        },
+        "provider": {
+          "type": "string",
+          "x-display-name": "SSL Provider"
+        },
+        "provider_path": {
+          "type": "string",
+          "x-display-name": "SSL Provider Path"
+        },
+        "security_level": {
+          "type": "integer",
+          "maximum": 5,
+          "x-nullable": true
+        },
+        "server_verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-display-name": "Verify server certificates"
+        },
+        "skip_self_issued_ca": {
+          "type": "boolean",
+          "x-display-name": "Self issued CA, aka x509 root CA"
+        }
+      }
+    },
     "stats_auth": {
       "type": "object",
       "required": [
@@ -35868,6 +35424,523 @@ func init() {
         "$ref": "#/definitions/transaction"
       }
     },
+    "tune_buffer_options": {
+      "type": "object",
+      "properties": {
+        "buffers_limit": {
+          "type": "integer",
+          "x-display-name": "Buffers Limit",
+          "x-nullable": true
+        },
+        "buffers_reserve": {
+          "type": "integer",
+          "minimum": 2,
+          "x-display-name": "Buffers Reserve"
+        },
+        "bufsize": {
+          "type": "integer",
+          "x-display-name": "Buffer Size"
+        },
+        "pipesize": {
+          "type": "integer",
+          "x-display-name": "Pipe Buffer Size"
+        },
+        "rcvbuf_backend": {
+          "type": "integer",
+          "x-display-name": "Backend Receive Buffer Size",
+          "x-nullable": true
+        },
+        "rcvbuf_client": {
+          "type": "integer",
+          "x-display-name": "Client Receive Buffer Size",
+          "x-nullable": true
+        },
+        "rcvbuf_frontend": {
+          "type": "integer",
+          "x-display-name": "Frontend Receive Buffer Size",
+          "x-nullable": true
+        },
+        "rcvbuf_server": {
+          "type": "integer",
+          "x-display-name": "Server Receive Buffer Size",
+          "x-nullable": true
+        },
+        "recv_enough": {
+          "type": "integer",
+          "x-display-name": "Receive Enough Socket Buffer Size"
+        },
+        "sndbuf_backend": {
+          "type": "integer",
+          "x-display-name": "Backend Send Buffer Size",
+          "x-nullable": true
+        },
+        "sndbuf_client": {
+          "type": "integer",
+          "x-display-name": "Client Send Buffer Size",
+          "x-nullable": true
+        },
+        "sndbuf_frontend": {
+          "type": "integer",
+          "x-display-name": "Frontend Send Buffer Size",
+          "x-nullable": true
+        },
+        "sndbuf_server": {
+          "type": "integer",
+          "x-display-name": "Server Send Buffer Size",
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_lua_options": {
+      "type": "object",
+      "properties": {
+        "burst_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-display-name": "Burst execution timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "forced_yield": {
+          "type": "integer",
+          "x-display-name": "Lua Forced Yield"
+        },
+        "log_loggers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Send Lua Logs to the Loggers"
+        },
+        "log_stderr": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Send Lua Logs to stderr"
+        },
+        "maxmem": {
+          "type": "integer",
+          "x-display-name": "Lua Maximum Memory Usage",
+          "x-nullable": true
+        },
+        "service_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-display-name": "Lua Service timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "session_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-display-name": "Lua Session Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "task_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-display-name": "Lua Task Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_options": {
+      "type": "object",
+      "properties": {
+        "applet_zero_copy_forwarding": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enables of disabled the zero-copy forwarding of data for the applets"
+        },
+        "comp_maxlevel": {
+          "type": "integer",
+          "x-display-name": "Maximum Compression Level"
+        },
+        "disable_zero_copy_forwarding": {
+          "type": "boolean",
+          "x-display-name": "Disable zero-copy forwarding"
+        },
+        "events_max_events_at_once": {
+          "type": "integer",
+          "maximum": 10000,
+          "minimum": 1
+        },
+        "fail_alloc": {
+          "type": "boolean",
+          "x-display-name": "Failed Allocation Chance"
+        },
+        "fd_edge_triggered": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Edge-triggered polling mode"
+        },
+        "h1_zero_copy_fwd_recv": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
+        },
+        "h1_zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
+        },
+        "h2_be_glitches_threshold": {
+          "type": "integer",
+          "x-display-name": "Automatically kill a backend connection past a number of glitches",
+          "x-nullable": true
+        },
+        "h2_be_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "Initial window size for outgoing connections"
+        },
+        "h2_be_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of concurrent streams per outgoing connection"
+        },
+        "h2_fe_glitches_threshold": {
+          "type": "integer",
+          "x-display-name": "Automatically kill a frontend connection past a number of glitches",
+          "x-nullable": true
+        },
+        "h2_fe_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "Initial window size for incoming connections"
+        },
+        "h2_fe_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of concurrent streams per incoming connection"
+        },
+        "h2_fe_max_total_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
+          "x-nullable": true
+        },
+        "h2_header_table_size": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-display-name": "HTTP/2 Dynamic Header Table Size"
+        },
+        "h2_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Initial Window Size",
+          "x-nullable": true
+        },
+        "h2_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
+        },
+        "h2_max_frame_size": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Maximum Frame Size"
+        },
+        "h2_zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
+        },
+        "http_cookielen": {
+          "type": "integer",
+          "x-display-name": "Maximum Cookie Length"
+        },
+        "http_logurilen": {
+          "type": "integer",
+          "x-display-name": "Maximum URI Length"
+        },
+        "http_maxhdr": {
+          "type": "integer",
+          "maximum": 32767,
+          "minimum": 1,
+          "x-display-name": "Maximum Number of Headers"
+        },
+        "idle_pool_shared": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Share Idle Connections"
+        },
+        "idletimer": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-default-unit": "ms",
+          "x-display-name": "Idle Stream Duration",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "listener_default_shards": {
+          "type": "string",
+          "enum": [
+            "by-process",
+            "by-thread",
+            "by-group"
+          ],
+          "x-display-name": "Listener Default Shards"
+        },
+        "listener_multi_queue": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Listener Multi Queue Accept"
+        },
+        "max_checks_per_thread": {
+          "type": "integer",
+          "x-display-name": "Maximum checks per thread",
+          "x-nullable": true
+        },
+        "maxaccept": {
+          "type": "integer",
+          "x-display-name": "Maximum Accept Events"
+        },
+        "maxpollevents": {
+          "type": "integer",
+          "x-display-name": "Maximum Polled Events"
+        },
+        "maxrewrite": {
+          "type": "integer",
+          "x-display-name": "Maximum Rewrite Space"
+        },
+        "memory_hot_size": {
+          "type": "integer",
+          "x-display-name": "Per-thread Amount of Memory",
+          "x-nullable": true
+        },
+        "pattern_cache_size": {
+          "type": "integer",
+          "x-display-name": "Pattern Lookup Cache Size",
+          "x-nullable": true
+        },
+        "peers_max_updates_at_once": {
+          "type": "integer",
+          "x-display-name": "Maximum number of stick-table updates at once"
+        },
+        "pool_high_fd_ratio": {
+          "type": "integer",
+          "x-display-name": "Max Used High FD Ratio"
+        },
+        "pool_low_fd_ratio": {
+          "type": "integer",
+          "x-display-name": "Max Used Low FD Ratio"
+        },
+        "pt_zero_copy_forwarding": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+        },
+        "ring_queues": {
+          "type": "integer",
+          "x-display-name": "Number of write queues in front of ring buffers",
+          "x-nullable": true
+        },
+        "runqueue_depth": {
+          "type": "integer",
+          "x-display-name": "Max Tasks in Run Queue"
+        },
+        "sched_low_latency": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Low Latency Task Scheduler"
+        },
+        "stick_counters": {
+          "type": "integer",
+          "x-display-name": "Number of stick-counters",
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_quic_options": {
+      "type": "object",
+      "properties": {
+        "frontend_conn_tx_buffers_limit": {
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
+          "x-nullable": true
+        },
+        "frontend_max_idle_timeout": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-display-name": "QUIC Frontend Max Idle Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "frontend_max_streams_bidi": {
+          "type": "integer",
+          "x-display-name": "QUIC Max Number of Bidirectional Streams",
+          "x-nullable": true
+        },
+        "max_frame_loss": {
+          "type": "integer",
+          "x-display-name": "QUIC Max Limit for Frame Loss",
+          "x-nullable": true
+        },
+        "reorder_ratio": {
+          "type": "integer",
+          "maximum": 100,
+          "x-display-name": "Ratio applied to the packet reordering threshold",
+          "x-nullable": true
+        },
+        "retry_threshold": {
+          "type": "integer",
+          "x-display-name": "QUIC Retry Threshold",
+          "x-nullable": true
+        },
+        "socket_owner": {
+          "type": "string",
+          "enum": [
+            "listener",
+            "connection"
+          ],
+          "x-display-name": "QUIC Socket Owner"
+        },
+        "zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enables or disables the zero-copy sends for the QUIC multiplexer"
+        }
+      }
+    },
+    "tune_ssl_options": {
+      "type": "object",
+      "properties": {
+        "cachesize": {
+          "type": "integer",
+          "x-display-name": "SSL Cache Size",
+          "x-nullable": true
+        },
+        "capture_buffer_size": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
+          "x-nullable": true
+        },
+        "ctx_cache_size": {
+          "type": "integer",
+          "x-display-name": "SSL Number of Certificates in Cache"
+        },
+        "default_dh_param": {
+          "type": "integer",
+          "x-display-name": "SSL Default DH Parameter Size"
+        },
+        "force_private_cache": {
+          "type": "boolean",
+          "x-display-name": "SSL Force Private Cache"
+        },
+        "keylog": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "SSL Log TLS Keys"
+        },
+        "lifetime": {
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-display-name": "SSL Session Lifetime",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "maxrecord": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "ocsp_update_max_delay": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
+          "x-nullable": true
+        },
+        "ocsp_update_min_delay": {
+          "type": "integer",
+          "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_vars_options": {
+      "type": "object",
+      "properties": {
+        "global_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Global Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "proc_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Process Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "reqres_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Request/Response Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "sess_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Session Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "txn_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Transaction Max Size",
+          "x-nullable": true,
+          "x-size": false
+        }
+      }
+    },
+    "tune_zlib_options": {
+      "type": "object",
+      "properties": {
+        "memlevel": {
+          "type": "integer",
+          "maximum": 9,
+          "minimum": 1,
+          "x-display-name": "Zlib Memory Level"
+        },
+        "windowsize": {
+          "type": "integer",
+          "maximum": 15,
+          "minimum": 8,
+          "x-display-name": "Zlib Window Size"
+        }
+      }
+    },
     "user": {
       "description": "HAProxy userlist user",
       "title": "User",
@@ -35949,6 +36022,31 @@ func init() {
       "title": "Users",
       "items": {
         "$ref": "#/definitions/user"
+      }
+    },
+    "wurfl_options": {
+      "type": "object",
+      "properties": {
+        "cache_size": {
+          "type": "integer",
+          "x-display-name": "Sets the WURFL Useragent cache size"
+        },
+        "data_file": {
+          "type": "string",
+          "x-display-name": "The path of the WURFL data file"
+        },
+        "information_list": {
+          "type": "string",
+          "x-display-name": "A space-delimited list of WURFL capabilities"
+        },
+        "information_list_separator": {
+          "type": "string",
+          "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
+        },
+        "patch_file": {
+          "type": "string",
+          "x-display-name": "A list of WURFL patch file paths"
+        }
       }
     }
   },
@@ -70982,6 +71080,42 @@ func init() {
       },
       "x-go-name": "Domain"
     },
+    "EnvironmentOptionsPresetenvItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        },
+        "value": {
+          "type": "string",
+          "x-display-name": "Value"
+        }
+      },
+      "x-go-name": "PresetEnv"
+    },
+    "EnvironmentOptionsSetenvItems0": {
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        },
+        "value": {
+          "type": "string",
+          "x-display-name": "Value"
+        }
+      },
+      "x-go-name": "SetEnv"
+    },
     "FCGILogStderrSample": {
       "type": "object",
       "title": "Sample",
@@ -71045,50 +71179,6 @@ func init() {
         }
       },
       "x-go-name": "GlobalDefaultPath"
-    },
-    "GlobalBaseDeviceAtlasOptions": {
-      "type": "object",
-      "properties": {
-        "json_file": {
-          "type": "string",
-          "x-display-name": "JSON file"
-        },
-        "log_level": {
-          "type": "string",
-          "x-display-name": "Log Level"
-        },
-        "properties_cookie": {
-          "type": "string",
-          "x-display-name": "Properties Cookie"
-        },
-        "separator": {
-          "type": "string",
-          "x-display-name": "Separator"
-        }
-      },
-      "x-go-name": "GlobalDeviceAtlasOptions"
-    },
-    "GlobalBaseFiftyOneDegreesOptions": {
-      "type": "object",
-      "properties": {
-        "cache_size": {
-          "type": "integer",
-          "x-display-name": "Cache Size"
-        },
-        "data_file": {
-          "type": "string",
-          "x-display-name": "Data File"
-        },
-        "property_name_list": {
-          "type": "string",
-          "x-display-name": "Name List"
-        },
-        "property_separator": {
-          "type": "string",
-          "x-display-name": "Property Separator"
-        }
-      },
-      "x-go-name": "GlobalFiftyOneDegreesOptions"
     },
     "GlobalBaseH1CaseAdjustItems0": {
       "type": "object",
@@ -71173,133 +71263,6 @@ func init() {
       "x-display-name": "Log Send Hostname",
       "x-go-name": "GlobalLogSendHostname"
     },
-    "GlobalBaseLuaLoadsItems0": {
-      "type": "object",
-      "required": [
-        "file"
-      ],
-      "properties": {
-        "file": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        }
-      },
-      "x-go-name": "LuaLoad"
-    },
-    "GlobalBaseLuaPrependPathItems0": {
-      "type": "object",
-      "required": [
-        "path"
-      ],
-      "properties": {
-        "path": {
-          "type": "string",
-          "pattern": "^[^\\s]+$"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "path",
-            "cpath"
-          ]
-        }
-      },
-      "x-go-name": "LuaPrependPath"
-    },
-    "GlobalBaseOcspUpdate": {
-      "type": "object",
-      "properties": {
-        "disable": {
-          "type": "boolean",
-          "default": false,
-          "x-display-name": "Disable OCSP Update",
-          "x-nullable": true
-        },
-        "httpproxy": {
-          "type": "object",
-          "properties": {
-            "address": {
-              "type": "string",
-              "pattern": "^[^\\s]+$",
-              "example": "127.0.0.1"
-            },
-            "port": {
-              "type": "integer",
-              "maximum": 65535,
-              "minimum": 1,
-              "x-nullable": true,
-              "example": 80
-            }
-          },
-          "x-display-name": "OCSP Update HTTP Proxy",
-          "x-go-name": "GlobalOcspUpdateHttpproxy",
-          "x-omitempty": true
-        },
-        "maxdelay": {
-          "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
-          "type": "integer",
-          "x-default-unit": "s",
-          "x-display-name": "OCSP Update Maximum Delay",
-          "x-duration": false,
-          "x-nullable": true
-        },
-        "mindelay": {
-          "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
-          "type": "integer",
-          "x-default-unit": "s",
-          "x-display-name": "OCSP Update Minimum Delay",
-          "x-duration": false,
-          "x-nullable": true
-        },
-        "mode": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "OCSP Update Mode"
-        }
-      },
-      "x-go-name": "GlobalOcspUpdate"
-    },
-    "GlobalBaseOcspUpdateHttpproxy": {
-      "type": "object",
-      "properties": {
-        "address": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "example": "127.0.0.1"
-        },
-        "port": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 1,
-          "x-nullable": true,
-          "example": 80
-        }
-      },
-      "x-display-name": "OCSP Update HTTP Proxy",
-      "x-go-name": "GlobalOcspUpdateHttpproxy",
-      "x-omitempty": true
-    },
-    "GlobalBasePresetenvItems0": {
-      "type": "object",
-      "required": [
-        "name",
-        "value"
-      ],
-      "properties": {
-        "name": {
-          "type": "string",
-          "x-display-name": "Name"
-        },
-        "value": {
-          "type": "string",
-          "x-display-name": "Value"
-        }
-      },
-      "x-go-name": "PresetEnv"
-    },
     "GlobalBaseRuntimeApisItems0": {
       "allOf": [
         {
@@ -71356,42 +71319,6 @@ func init() {
       },
       "x-go-name": "SetVar"
     },
-    "GlobalBaseSetenvItems0": {
-      "type": "object",
-      "required": [
-        "name",
-        "value"
-      ],
-      "properties": {
-        "name": {
-          "type": "string",
-          "x-display-name": "Name"
-        },
-        "value": {
-          "type": "string",
-          "x-display-name": "Value"
-        }
-      },
-      "x-go-name": "SetEnv"
-    },
-    "GlobalBaseSslEnginesItems0": {
-      "type": "object",
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "algorithms": {
-          "type": "string",
-          "x-display-name": "Algorithms",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string",
-          "x-display-name": "Name"
-        }
-      },
-      "x-go-name": "SslEngine"
-    },
     "GlobalBaseThreadGroupLinesItems0": {
       "type": "object",
       "required": [
@@ -71409,531 +71336,6 @@ func init() {
         }
       },
       "x-go-name": "ThreadGroup"
-    },
-    "GlobalBaseTuneOptions": {
-      "type": "object",
-      "properties": {
-        "applet_zero_copy_forwarding": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Enables of disabled the zero-copy forwarding of data for the applets"
-        },
-        "buffers_limit": {
-          "type": "integer",
-          "x-display-name": "Buffers Limit",
-          "x-nullable": true
-        },
-        "buffers_reserve": {
-          "type": "integer",
-          "minimum": 2,
-          "x-display-name": "Buffers Reserve"
-        },
-        "bufsize": {
-          "type": "integer",
-          "x-display-name": "Buffer Size"
-        },
-        "comp_maxlevel": {
-          "type": "integer",
-          "x-display-name": "Maximum Compression Level"
-        },
-        "disable_zero_copy_forwarding": {
-          "type": "boolean",
-          "x-display-name": "Disable zero-copy forwarding"
-        },
-        "events_max_events_at_once": {
-          "type": "integer",
-          "maximum": 10000,
-          "minimum": 1
-        },
-        "fail_alloc": {
-          "type": "boolean",
-          "x-display-name": "Failed Allocation Chance"
-        },
-        "fd_edge_triggered": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Edge-triggered polling mode"
-        },
-        "h1_zero_copy_fwd_recv": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
-        },
-        "h1_zero_copy_fwd_send": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
-        },
-        "h2_be_glitches_threshold": {
-          "type": "integer",
-          "x-display-name": "Automatically kill a backend connection past a number of glitches",
-          "x-nullable": true
-        },
-        "h2_be_initial_window_size": {
-          "type": "integer",
-          "x-display-name": "Initial window size for outgoing connections"
-        },
-        "h2_be_max_concurrent_streams": {
-          "type": "integer",
-          "x-display-name": "Maximum number of concurrent streams per outgoing connection"
-        },
-        "h2_fe_glitches_threshold": {
-          "type": "integer",
-          "x-display-name": "Automatically kill a frontend connection past a number of glitches",
-          "x-nullable": true
-        },
-        "h2_fe_initial_window_size": {
-          "type": "integer",
-          "x-display-name": "Initial window size for incoming connections"
-        },
-        "h2_fe_max_concurrent_streams": {
-          "type": "integer",
-          "x-display-name": "Maximum number of concurrent streams per incoming connection"
-        },
-        "h2_fe_max_total_streams": {
-          "type": "integer",
-          "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
-          "x-nullable": true
-        },
-        "h2_header_table_size": {
-          "type": "integer",
-          "maximum": 65535,
-          "x-display-name": "HTTP/2 Dynamic Header Table Size"
-        },
-        "h2_initial_window_size": {
-          "type": "integer",
-          "x-display-name": "HTTP/2 Initial Window Size",
-          "x-nullable": true
-        },
-        "h2_max_concurrent_streams": {
-          "type": "integer",
-          "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
-        },
-        "h2_max_frame_size": {
-          "type": "integer",
-          "x-display-name": "HTTP/2 Maximum Frame Size"
-        },
-        "h2_zero_copy_fwd_send": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
-        },
-        "http_cookielen": {
-          "type": "integer",
-          "x-display-name": "Maximum Cookie Length"
-        },
-        "http_logurilen": {
-          "type": "integer",
-          "x-display-name": "Maximum URI Length"
-        },
-        "http_maxhdr": {
-          "type": "integer",
-          "maximum": 32767,
-          "minimum": 1,
-          "x-display-name": "Maximum Number of Headers"
-        },
-        "idle_pool_shared": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Share Idle Connections"
-        },
-        "idletimer": {
-          "type": "integer",
-          "maximum": 65535,
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-display-name": "Idle Stream Duration",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "listener_default_shards": {
-          "type": "string",
-          "enum": [
-            "by-process",
-            "by-thread",
-            "by-group"
-          ],
-          "x-display-name": "Listener Default Shards"
-        },
-        "listener_multi_queue": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Listener Multi Queue Accept"
-        },
-        "lua_burst_timeout": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-display-name": "Burst execution timeout",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "lua_forced_yield": {
-          "type": "integer",
-          "x-display-name": "Lua Forced Yield"
-        },
-        "lua_log_loggers": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Send Lua Logs to the Loggers"
-        },
-        "lua_log_stderr": {
-          "type": "string",
-          "enum": [
-            "auto",
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Send Lua Logs to stderr"
-        },
-        "lua_maxmem": {
-          "type": "integer",
-          "x-display-name": "Lua Maximum Memory Usage",
-          "x-nullable": true
-        },
-        "lua_service_timeout": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-display-name": "Lua Service timeout",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "lua_session_timeout": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-display-name": "Lua Session Timeout",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "lua_task_timeout": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-display-name": "Lua Task Timeout",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "max_checks_per_thread": {
-          "type": "integer",
-          "x-display-name": "Maximum checks per thread",
-          "x-nullable": true
-        },
-        "maxaccept": {
-          "type": "integer",
-          "x-display-name": "Maximum Accept Events"
-        },
-        "maxpollevents": {
-          "type": "integer",
-          "x-display-name": "Maximum Polled Events"
-        },
-        "maxrewrite": {
-          "type": "integer",
-          "x-display-name": "Maximum Rewrite Space"
-        },
-        "memory_hot_size": {
-          "type": "integer",
-          "x-display-name": "Per-thread Amount of Memory",
-          "x-nullable": true
-        },
-        "pattern_cache_size": {
-          "type": "integer",
-          "x-display-name": "Pattern Lookup Cache Size",
-          "x-nullable": true
-        },
-        "peers_max_updates_at_once": {
-          "type": "integer",
-          "x-display-name": "Maximum number of stick-table updates at once"
-        },
-        "pipesize": {
-          "type": "integer",
-          "x-display-name": "Pipe Buffer Size"
-        },
-        "pool_high_fd_ratio": {
-          "type": "integer",
-          "x-display-name": "Max Used High FD Ratio"
-        },
-        "pool_low_fd_ratio": {
-          "type": "integer",
-          "x-display-name": "Max Used Low FD Ratio"
-        },
-        "pt_zero_copy_forwarding": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
-        },
-        "quic_frontend_conn_tx_buffers_limit": {
-          "type": "integer",
-          "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
-          "x-nullable": true
-        },
-        "quic_frontend_max_idle_timeout": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-display-name": "QUIC Frontend Max Idle Timeout",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "quic_frontend_max_streams_bidi": {
-          "type": "integer",
-          "x-display-name": "QUIC Max Number of Bidirectional Streams",
-          "x-nullable": true
-        },
-        "quic_max_frame_loss": {
-          "type": "integer",
-          "x-display-name": "QUIC Max Limit for Frame Loss",
-          "x-nullable": true
-        },
-        "quic_reorder_ratio": {
-          "type": "integer",
-          "maximum": 100,
-          "minimum": 0,
-          "x-display-name": "Ratio applied to the packet reordering threshold",
-          "x-nullable": true
-        },
-        "quic_retry_threshold": {
-          "type": "integer",
-          "x-display-name": "QUIC Retry Threshold",
-          "x-nullable": true
-        },
-        "quic_socket_owner": {
-          "type": "string",
-          "enum": [
-            "listener",
-            "connection"
-          ],
-          "x-display-name": "QUIC Socket Owner"
-        },
-        "quic_zero_copy_fwd_send": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Enables or disables the zero-copy sends for the QUIC multiplexer"
-        },
-        "rcvbuf_backend": {
-          "type": "integer",
-          "x-display-name": "Backend Receive Buffer Size",
-          "x-nullable": true
-        },
-        "rcvbuf_client": {
-          "type": "integer",
-          "x-display-name": "Client Receive Buffer Size",
-          "x-nullable": true
-        },
-        "rcvbuf_frontend": {
-          "type": "integer",
-          "x-display-name": "Frontend Receive Buffer Size",
-          "x-nullable": true
-        },
-        "rcvbuf_server": {
-          "type": "integer",
-          "x-display-name": "Server Receive Buffer Size",
-          "x-nullable": true
-        },
-        "recv_enough": {
-          "type": "integer",
-          "x-display-name": "Receive Enough Socket Buffer Size"
-        },
-        "ring_queues": {
-          "type": "integer",
-          "x-display-name": "Number of write queues in front of ring buffers",
-          "x-nullable": true
-        },
-        "runqueue_depth": {
-          "type": "integer",
-          "x-display-name": "Max Tasks in Run Queue"
-        },
-        "sched_low_latency": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Low Latency Task Scheduler"
-        },
-        "sndbuf_backend": {
-          "type": "integer",
-          "x-display-name": "Backend Send Buffer Size",
-          "x-nullable": true
-        },
-        "sndbuf_client": {
-          "type": "integer",
-          "x-display-name": "Client Send Buffer Size",
-          "x-nullable": true
-        },
-        "sndbuf_frontend": {
-          "type": "integer",
-          "x-display-name": "Frontend Send Buffer Size",
-          "x-nullable": true
-        },
-        "sndbuf_server": {
-          "type": "integer",
-          "x-display-name": "Server Send Buffer Size",
-          "x-nullable": true
-        },
-        "ssl_cachesize": {
-          "type": "integer",
-          "x-display-name": "SSL Cache Size",
-          "x-nullable": true
-        },
-        "ssl_capture_buffer_size": {
-          "type": "integer",
-          "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
-          "x-nullable": true
-        },
-        "ssl_ctx_cache_size": {
-          "type": "integer",
-          "x-display-name": "SSL Number of Certificates in Cache"
-        },
-        "ssl_default_dh_param": {
-          "type": "integer",
-          "x-display-name": "SSL Default DH Parameter Size"
-        },
-        "ssl_force_private_cache": {
-          "type": "boolean",
-          "x-display-name": "SSL Force Private Cache"
-        },
-        "ssl_keylog": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "SSL Log TLS Keys"
-        },
-        "ssl_lifetime": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "s",
-          "x-display-name": "SSL Session Lifetime",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "ssl_maxrecord": {
-          "type": "integer",
-          "x-display-name": "SSL Maximum Size",
-          "x-nullable": true
-        },
-        "ssl_ocsp_update_max_delay": {
-          "description": "This field is deprecated in favor of ocsp-update.maxdelay",
-          "type": "integer",
-          "x-deprecated": true,
-          "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
-          "x-nullable": true
-        },
-        "ssl_ocsp_update_min_delay": {
-          "description": "This field is deprecated in favor of ocsp-update.mindelay",
-          "type": "integer",
-          "x-deprecated": true,
-          "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
-          "x-nullable": true
-        },
-        "stick_counters": {
-          "type": "integer",
-          "x-display-name": "Number of stick-counters",
-          "x-nullable": true
-        },
-        "vars_global_max_size": {
-          "type": "integer",
-          "x-display-name": "Variables Global Max Size",
-          "x-nullable": true,
-          "x-size": false
-        },
-        "vars_proc_max_size": {
-          "type": "integer",
-          "x-display-name": "Variables Process Max Size",
-          "x-nullable": true,
-          "x-size": false
-        },
-        "vars_reqres_max_size": {
-          "type": "integer",
-          "x-display-name": "Variables Request/Response Max Size",
-          "x-nullable": true,
-          "x-size": false
-        },
-        "vars_sess_max_size": {
-          "type": "integer",
-          "x-display-name": "Variables Session Max Size",
-          "x-nullable": true,
-          "x-size": false
-        },
-        "vars_txn_max_size": {
-          "type": "integer",
-          "x-display-name": "Variables Transaction Max Size",
-          "x-nullable": true,
-          "x-size": false
-        },
-        "zlib_memlevel": {
-          "type": "integer",
-          "maximum": 9,
-          "minimum": 1,
-          "x-display-name": "Zlib Memory Level"
-        },
-        "zlib_windowsize": {
-          "type": "integer",
-          "maximum": 15,
-          "minimum": 8,
-          "x-display-name": "Zlib Window Size"
-        }
-      },
-      "x-go-name": "GlobalTuneOptions"
-    },
-    "GlobalBaseWurflOptions": {
-      "type": "object",
-      "properties": {
-        "cache_size": {
-          "type": "integer",
-          "x-display-name": "Sets the WURFL Useragent cache size"
-        },
-        "data_file": {
-          "type": "string",
-          "x-display-name": "The path of the WURFL data file"
-        },
-        "information_list": {
-          "type": "string",
-          "x-display-name": "A space-delimited list of WURFL capabilities"
-        },
-        "information_list_separator": {
-          "type": "string",
-          "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
-        },
-        "patch_file": {
-          "type": "string",
-          "x-display-name": "A list of WURFL patch file paths"
-        }
-      },
-      "x-go-name": "GlobalWurflOptions"
     },
     "InfoAPI": {
       "type": "object",
@@ -72022,6 +71424,58 @@ func init() {
           "type": "integer"
         }
       }
+    },
+    "LuaOptionsLoadsItems0": {
+      "type": "object",
+      "required": [
+        "file"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "x-go-name": "LuaLoad"
+    },
+    "LuaOptionsPrependPathItems0": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "path",
+            "cpath"
+          ]
+        }
+      },
+      "x-go-name": "LuaPrependPath"
+    },
+    "OcspUpdateOptionsHttpproxy": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "example": "127.0.0.1"
+        },
+        "port": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 1,
+          "x-nullable": true,
+          "example": 80
+        }
+      },
+      "x-display-name": "OCSP Update HTTP Proxy",
+      "x-omitempty": true
     },
     "ServerParamsSetProxyV2TlvFmt": {
       "type": "object",
@@ -72182,6 +71636,24 @@ func init() {
           ]
         }
       }
+    },
+    "SslOptionsEnginesItems0": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "algorithms": {
+          "type": "string",
+          "x-display-name": "Algorithms",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "x-display-name": "Name"
+        }
+      },
+      "x-go-name": "SslEngine"
     },
     "StickTableFieldsItems0": {
       "type": "object",
@@ -74404,6 +73876,23 @@ func init() {
         "$ref": "#/definitions/crt_store"
       }
     },
+    "debug_options": {
+      "type": "object",
+      "properties": {
+        "anonkey": {
+          "type": "integer",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "quiet": {
+          "type": "boolean"
+        },
+        "zero_warning": {
+          "type": "boolean"
+        }
+      }
+    },
     "default_bind": {
       "description": "HAProxy default bind configuration",
       "title": "Default Bind",
@@ -75129,6 +74618,27 @@ func init() {
         "$ref": "#/definitions/defaults"
       }
     },
+    "device_atlas_options": {
+      "type": "object",
+      "properties": {
+        "json_file": {
+          "type": "string",
+          "x-display-name": "JSON file"
+        },
+        "log_level": {
+          "type": "string",
+          "x-display-name": "Log Level"
+        },
+        "properties_cookie": {
+          "type": "string",
+          "x-display-name": "Properties Cookie"
+        },
+        "separator": {
+          "type": "string",
+          "x-display-name": "Separator"
+        }
+      }
+    },
     "dgram_bind": {
       "description": "HAProxy log forward dgram bind configuration",
       "type": "object",
@@ -75250,6 +74760,37 @@ func init() {
       "title": "Endpoints Array",
       "items": {
         "$ref": "#/definitions/endpoint"
+      }
+    },
+    "environment_options": {
+      "type": "object",
+      "properties": {
+        "presetenv": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EnvironmentOptionsPresetenvItems0"
+          },
+          "x-display-name": "Preset environment variables",
+          "x-go-name": "PresetEnvs",
+          "x-omitempty": true
+        },
+        "resetenv": {
+          "type": "string",
+          "x-display-name": "Remove all environment variables except the ones specified"
+        },
+        "setenv": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EnvironmentOptionsSetenvItems0"
+          },
+          "x-display-name": "Set environment variables",
+          "x-go-name": "SetEnvs",
+          "x-omitempty": true
+        },
+        "unsetenv": {
+          "type": "string",
+          "x-display-name": "Removes environment variables specified in arguments"
+        }
       }
     },
     "error": {
@@ -75593,6 +75134,27 @@ func init() {
         },
         "name": {
           "type": "string"
+        }
+      }
+    },
+    "fifty_one_degrees_options": {
+      "type": "object",
+      "properties": {
+        "cache_size": {
+          "type": "integer",
+          "x-display-name": "Cache Size"
+        },
+        "data_file": {
+          "type": "string",
+          "x-display-name": "Data File"
+        },
+        "property_name_list": {
+          "type": "string",
+          "x-display-name": "Name List"
+        },
+        "property_separator": {
+          "type": "string",
+          "x-display-name": "Property Separator"
         }
       }
     },
@@ -76424,19 +75986,6 @@ func init() {
       "type": "object",
       "title": "Global Base",
       "properties": {
-        "anonkey": {
-          "type": "integer",
-          "maximum": 4294967295,
-          "minimum": 0,
-          "x-nullable": true
-        },
-        "busy_polling": {
-          "type": "boolean"
-        },
-        "ca_base": {
-          "type": "string",
-          "x-display-name": "SSL CA Certificates Base Directory"
-        },
         "chroot": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -76462,16 +76011,11 @@ func init() {
           "x-go-name": "CPUMaps",
           "x-omitempty": true
         },
-        "crt_base": {
-          "type": "string",
-          "x-display-name": "SSL Certificates Base Directory"
-        },
         "daemon": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ]
+          "type": "boolean"
+        },
+        "debug_options": {
+          "$ref": "#/definitions/debug_options"
         },
         "default_path": {
           "type": "object",
@@ -76506,26 +76050,10 @@ func init() {
           "x-display-name": "Text that describes the instance"
         },
         "device_atlas_options": {
-          "type": "object",
-          "properties": {
-            "json_file": {
-              "type": "string",
-              "x-display-name": "JSON file"
-            },
-            "log_level": {
-              "type": "string",
-              "x-display-name": "Log Level"
-            },
-            "properties_cookie": {
-              "type": "string",
-              "x-display-name": "Properties Cookie"
-            },
-            "separator": {
-              "type": "string",
-              "x-display-name": "Separator"
-            }
-          },
-          "x-go-name": "GlobalDeviceAtlasOptions"
+          "$ref": "#/definitions/device_atlas_options"
+        },
+        "environment_options": {
+          "$ref": "#/definitions/environment_options"
         },
         "expose_experimental_directives": {
           "type": "boolean"
@@ -76535,26 +76063,7 @@ func init() {
           "x-display-name": "External Check"
         },
         "fifty_one_degrees_options": {
-          "type": "object",
-          "properties": {
-            "cache_size": {
-              "type": "integer",
-              "x-display-name": "Cache Size"
-            },
-            "data_file": {
-              "type": "string",
-              "x-display-name": "Data File"
-            },
-            "property_name_list": {
-              "type": "string",
-              "x-display-name": "Name List"
-            },
-            "property_separator": {
-              "type": "string",
-              "x-display-name": "Property Separator"
-            }
-          },
-          "x-go-name": "GlobalFiftyOneDegreesOptions"
+          "$ref": "#/definitions/fifty_one_degrees_options"
         },
         "gid": {
           "type": "integer",
@@ -76621,6 +76130,9 @@ func init() {
           },
           "x-go-name": "GlobalHarden"
         },
+        "http_client_options": {
+          "$ref": "#/definitions/http_client_options"
+        },
         "http_err_codes": {
           "type": "array",
           "items": {
@@ -76637,60 +76149,11 @@ func init() {
           "x-display-name": "Replace, reduce or extend the list of status codes that define a failure",
           "x-omitempty": true
         },
-        "httpclient_resolvers_disabled": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "HTTP Client Resolvers Disabled"
-        },
-        "httpclient_resolvers_id": {
-          "type": "string",
-          "x-display-name": "HTTP Client Resolvers ID"
-        },
-        "httpclient_resolvers_prefer": {
-          "type": "string",
-          "enum": [
-            "ipv4",
-            "ipv6"
-          ],
-          "x-display-name": "HTTP Client Resolvers Prefer"
-        },
-        "httpclient_retries": {
-          "type": "integer",
-          "x-display-name": "HTTP Client Retries"
-        },
-        "httpclient_ssl_ca_file": {
-          "type": "string",
-          "x-display-name": "HTTP Client SSL CA File"
-        },
-        "httpclient_ssl_verify": {
-          "type": "string",
-          "enum": [
-            "",
-            "none",
-            "required"
-          ],
-          "x-display-name": "HTTP Client SSL Verify",
-          "x-nullable": true
-        },
-        "httpclient_timeout_connect": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-display-name": "HTTP Client Connect Timeout",
-          "x-duration": true,
-          "x-nullable": true
-        },
         "insecure_fork_wanted": {
           "type": "boolean"
         },
         "insecure_setuid_wanted": {
           "type": "boolean"
-        },
-        "issuers_chain_path": {
-          "type": "string"
         },
         "limited_quic": {
           "type": "boolean"
@@ -76721,69 +76184,12 @@ func init() {
           "x-display-name": "Log Send Hostname",
           "x-go-name": "GlobalLogSendHostname"
         },
-        "lua_load_per_thread": {
-          "type": "string"
-        },
-        "lua_loads": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GlobalBaseLuaLoadsItems0"
-          },
-          "x-omitempty": true
-        },
-        "lua_prepend_path": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GlobalBaseLuaPrependPathItems0"
-          },
-          "x-omitempty": true
+        "lua_options": {
+          "$ref": "#/definitions/lua_options"
         },
         "master-worker": {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
-        },
-        "max_spread_checks": {
-          "type": "integer",
-          "minimum": 0,
-          "x-default-unit": "ms",
-          "x-duration": true,
-          "x-nullable": true
-        },
-        "maxcompcpuusage": {
-          "type": "integer",
-          "x-display-name": "Maximum HAProxy CPU usage"
-        },
-        "maxcomprate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process input compression rate"
-        },
-        "maxconn": {
-          "type": "integer",
-          "x-display-name": "Max Connections"
-        },
-        "maxconnrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent connections"
-        },
-        "maxpipes": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of pipes"
-        },
-        "maxsessrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of sessions per second"
-        },
-        "maxsslconn": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of concurrent SSL connections"
-        },
-        "maxsslrate": {
-          "type": "integer",
-          "x-display-name": "Maximum per-process number of SSL sessions per second"
-        },
-        "maxzlibmem": {
-          "type": "integer",
-          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
         },
         "mworker_max_reloads": {
           "type": "integer",
@@ -76795,40 +76201,12 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of Threads"
         },
-        "no-quic": {
+        "no_quic": {
           "type": "boolean",
           "x-display-name": "Disable the use of the QUIC protocol"
         },
         "node": {
           "type": "string"
-        },
-        "noepoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
-        },
-        "noevports": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
-        },
-        "nogetaddrinfo": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of getaddrinfo for name resolving"
-        },
-        "nokqueue": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
-        },
-        "nopoll": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of the \"poll\" event polling system"
-        },
-        "noreuseport": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of SO_REUSEPORT"
-        },
-        "nosplice": {
-          "type": "boolean",
-          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
         },
         "numa_cpu_mapping": {
           "type": "string",
@@ -76837,61 +76215,11 @@ func init() {
             "disabled"
           ]
         },
-        "ocsp_update": {
-          "type": "object",
-          "properties": {
-            "disable": {
-              "type": "boolean",
-              "default": false,
-              "x-display-name": "Disable OCSP Update",
-              "x-nullable": true
-            },
-            "httpproxy": {
-              "type": "object",
-              "properties": {
-                "address": {
-                  "type": "string",
-                  "pattern": "^[^\\s]+$",
-                  "example": "127.0.0.1"
-                },
-                "port": {
-                  "type": "integer",
-                  "maximum": 65535,
-                  "minimum": 1,
-                  "x-nullable": true,
-                  "example": 80
-                }
-              },
-              "x-display-name": "OCSP Update HTTP Proxy",
-              "x-go-name": "GlobalOcspUpdateHttpproxy",
-              "x-omitempty": true
-            },
-            "maxdelay": {
-              "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
-              "type": "integer",
-              "x-default-unit": "s",
-              "x-display-name": "OCSP Update Maximum Delay",
-              "x-duration": false,
-              "x-nullable": true
-            },
-            "mindelay": {
-              "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
-              "type": "integer",
-              "x-default-unit": "s",
-              "x-display-name": "OCSP Update Minimum Delay",
-              "x-duration": false,
-              "x-nullable": true
-            },
-            "mode": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "OCSP Update Mode"
-            }
-          },
-          "x-go-name": "GlobalOcspUpdate"
+        "ocsp_update_options": {
+          "$ref": "#/definitions/ocsp_update_options"
+        },
+        "performance_options": {
+          "$ref": "#/definitions/performance_options"
         },
         "pidfile": {
           "type": "string",
@@ -76900,42 +76228,9 @@ func init() {
         "pp2_never_send_local": {
           "type": "boolean"
         },
-        "prealloc-fd": {
+        "prealloc_fd": {
           "type": "boolean",
           "x-display-name": "Prealloc FD"
-        },
-        "presetenv": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GlobalBasePresetenvItems0"
-          },
-          "x-display-name": "Preset environment variables",
-          "x-go-name": "PresetEnvs",
-          "x-omitempty": true
-        },
-        "profiling_memory": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Enable or disables per-function memory profiling"
-        },
-        "profiling_tasks": {
-          "type": "string",
-          "enum": [
-            "auto",
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Enable or disables per-task CPU profiling"
-        },
-        "quiet": {
-          "type": "boolean"
-        },
-        "resetenv": {
-          "type": "string",
-          "x-display-name": "Remove all environment variables except the ones specified"
         },
         "runtime_apis": {
           "type": "array",
@@ -76945,16 +76240,6 @@ func init() {
           "x-display-name": "Runtime APIs",
           "x-go-name": "RuntimeAPIs",
           "x-omitempty": true
-        },
-        "server_state_base": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Server State Base"
-        },
-        "server_state_file": {
-          "type": "string",
-          "pattern": "^[^\\s]+$",
-          "x-display-name": "Server State File"
         },
         "set_dumpable": {
           "type": "boolean"
@@ -76983,120 +76268,8 @@ func init() {
           "x-display-name": "OS Capabilities",
           "x-omitempty": true
         },
-        "setenv": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GlobalBaseSetenvItems0"
-          },
-          "x-display-name": "Set environment variables",
-          "x-go-name": "SetEnvs",
-          "x-omitempty": true
-        },
-        "spread_checks": {
-          "type": "integer",
-          "x-display-name": "Add some randomness in the check interval"
-        },
-        "ssl_default_bind_ciphers": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Ciphers"
-        },
-        "ssl_default_bind_ciphersuites": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Ciphersuites"
-        },
-        "ssl_default_bind_client_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Client Sigalgs"
-        },
-        "ssl_default_bind_curves": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Curves"
-        },
-        "ssl_default_bind_options": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Options"
-        },
-        "ssl_default_bind_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Bind Sigalgs"
-        },
-        "ssl_default_server_ciphers": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Ciphers"
-        },
-        "ssl_default_server_ciphersuites": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Ciphersuites"
-        },
-        "ssl_default_server_client_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Client Sigalgs"
-        },
-        "ssl_default_server_curves": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Curves"
-        },
-        "ssl_default_server_options": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Options"
-        },
-        "ssl_default_server_sigalgs": {
-          "type": "string",
-          "x-display-name": "SSL Default Server Sigalgs"
-        },
-        "ssl_dh_param_file": {
-          "type": "string"
-        },
-        "ssl_engines": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GlobalBaseSslEnginesItems0"
-          },
-          "x-display-name": "SSL Engines",
-          "x-go-name": "SslEngines",
-          "x-omitempty": true
-        },
-        "ssl_load_extra_files": {
-          "type": "string",
-          "x-display-name": "SSL Load Extra Files"
-        },
-        "ssl_mode_async": {
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-display-name": "Asynchronous TLS I/O operations"
-        },
-        "ssl_propquery": {
-          "type": "string",
-          "x-display-name": "SSL Query String Property"
-        },
-        "ssl_provider": {
-          "type": "string",
-          "x-display-name": "SSL Provider"
-        },
-        "ssl_provider_path": {
-          "type": "string",
-          "x-display-name": "SSL Provider Path"
-        },
-        "ssl_security_level": {
-          "type": "integer",
-          "maximum": 5,
-          "minimum": 0,
-          "x-nullable": true
-        },
-        "ssl_server_verify": {
-          "type": "string",
-          "enum": [
-            "none",
-            "required"
-          ],
-          "x-display-name": "Verify server certificates"
-        },
-        "ssl_skip_self_issued_ca": {
-          "type": "boolean",
-          "x-display-name": "Self issued CA, aka x509 root CA"
+        "ssl_options": {
+          "$ref": "#/definitions/ssl_options"
         },
         "stats_maxconn": {
           "type": "integer",
@@ -77126,508 +76299,26 @@ func init() {
           "type": "integer",
           "x-display-name": "Number of Thread Groups"
         },
-        "thread_hard_limit": {
-          "type": "integer",
-          "x-nullable": true
+        "tune_buffer_options": {
+          "$ref": "#/definitions/tune_buffer_options"
+        },
+        "tune_lua_options": {
+          "$ref": "#/definitions/tune_lua_options"
         },
         "tune_options": {
-          "type": "object",
-          "properties": {
-            "applet_zero_copy_forwarding": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Enables of disabled the zero-copy forwarding of data for the applets"
-            },
-            "buffers_limit": {
-              "type": "integer",
-              "x-display-name": "Buffers Limit",
-              "x-nullable": true
-            },
-            "buffers_reserve": {
-              "type": "integer",
-              "minimum": 2,
-              "x-display-name": "Buffers Reserve"
-            },
-            "bufsize": {
-              "type": "integer",
-              "x-display-name": "Buffer Size"
-            },
-            "comp_maxlevel": {
-              "type": "integer",
-              "x-display-name": "Maximum Compression Level"
-            },
-            "disable_zero_copy_forwarding": {
-              "type": "boolean",
-              "x-display-name": "Disable zero-copy forwarding"
-            },
-            "events_max_events_at_once": {
-              "type": "integer",
-              "maximum": 10000,
-              "minimum": 1
-            },
-            "fail_alloc": {
-              "type": "boolean",
-              "x-display-name": "Failed Allocation Chance"
-            },
-            "fd_edge_triggered": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Edge-triggered polling mode"
-            },
-            "h1_zero_copy_fwd_recv": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
-            },
-            "h1_zero_copy_fwd_send": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
-            },
-            "h2_be_glitches_threshold": {
-              "type": "integer",
-              "x-display-name": "Automatically kill a backend connection past a number of glitches",
-              "x-nullable": true
-            },
-            "h2_be_initial_window_size": {
-              "type": "integer",
-              "x-display-name": "Initial window size for outgoing connections"
-            },
-            "h2_be_max_concurrent_streams": {
-              "type": "integer",
-              "x-display-name": "Maximum number of concurrent streams per outgoing connection"
-            },
-            "h2_fe_glitches_threshold": {
-              "type": "integer",
-              "x-display-name": "Automatically kill a frontend connection past a number of glitches",
-              "x-nullable": true
-            },
-            "h2_fe_initial_window_size": {
-              "type": "integer",
-              "x-display-name": "Initial window size for incoming connections"
-            },
-            "h2_fe_max_concurrent_streams": {
-              "type": "integer",
-              "x-display-name": "Maximum number of concurrent streams per incoming connection"
-            },
-            "h2_fe_max_total_streams": {
-              "type": "integer",
-              "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
-              "x-nullable": true
-            },
-            "h2_header_table_size": {
-              "type": "integer",
-              "maximum": 65535,
-              "x-display-name": "HTTP/2 Dynamic Header Table Size"
-            },
-            "h2_initial_window_size": {
-              "type": "integer",
-              "x-display-name": "HTTP/2 Initial Window Size",
-              "x-nullable": true
-            },
-            "h2_max_concurrent_streams": {
-              "type": "integer",
-              "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
-            },
-            "h2_max_frame_size": {
-              "type": "integer",
-              "x-display-name": "HTTP/2 Maximum Frame Size"
-            },
-            "h2_zero_copy_fwd_send": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
-            },
-            "http_cookielen": {
-              "type": "integer",
-              "x-display-name": "Maximum Cookie Length"
-            },
-            "http_logurilen": {
-              "type": "integer",
-              "x-display-name": "Maximum URI Length"
-            },
-            "http_maxhdr": {
-              "type": "integer",
-              "maximum": 32767,
-              "minimum": 1,
-              "x-display-name": "Maximum Number of Headers"
-            },
-            "idle_pool_shared": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Share Idle Connections"
-            },
-            "idletimer": {
-              "type": "integer",
-              "maximum": 65535,
-              "minimum": 0,
-              "x-default-unit": "ms",
-              "x-display-name": "Idle Stream Duration",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "listener_default_shards": {
-              "type": "string",
-              "enum": [
-                "by-process",
-                "by-thread",
-                "by-group"
-              ],
-              "x-display-name": "Listener Default Shards"
-            },
-            "listener_multi_queue": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Listener Multi Queue Accept"
-            },
-            "lua_burst_timeout": {
-              "type": "integer",
-              "minimum": 0,
-              "x-default-unit": "ms",
-              "x-display-name": "Burst execution timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "lua_forced_yield": {
-              "type": "integer",
-              "x-display-name": "Lua Forced Yield"
-            },
-            "lua_log_loggers": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Send Lua Logs to the Loggers"
-            },
-            "lua_log_stderr": {
-              "type": "string",
-              "enum": [
-                "auto",
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Send Lua Logs to stderr"
-            },
-            "lua_maxmem": {
-              "type": "integer",
-              "x-display-name": "Lua Maximum Memory Usage",
-              "x-nullable": true
-            },
-            "lua_service_timeout": {
-              "type": "integer",
-              "minimum": 0,
-              "x-default-unit": "ms",
-              "x-display-name": "Lua Service timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "lua_session_timeout": {
-              "type": "integer",
-              "minimum": 0,
-              "x-default-unit": "ms",
-              "x-display-name": "Lua Session Timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "lua_task_timeout": {
-              "type": "integer",
-              "minimum": 0,
-              "x-default-unit": "ms",
-              "x-display-name": "Lua Task Timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "max_checks_per_thread": {
-              "type": "integer",
-              "x-display-name": "Maximum checks per thread",
-              "x-nullable": true
-            },
-            "maxaccept": {
-              "type": "integer",
-              "x-display-name": "Maximum Accept Events"
-            },
-            "maxpollevents": {
-              "type": "integer",
-              "x-display-name": "Maximum Polled Events"
-            },
-            "maxrewrite": {
-              "type": "integer",
-              "x-display-name": "Maximum Rewrite Space"
-            },
-            "memory_hot_size": {
-              "type": "integer",
-              "x-display-name": "Per-thread Amount of Memory",
-              "x-nullable": true
-            },
-            "pattern_cache_size": {
-              "type": "integer",
-              "x-display-name": "Pattern Lookup Cache Size",
-              "x-nullable": true
-            },
-            "peers_max_updates_at_once": {
-              "type": "integer",
-              "x-display-name": "Maximum number of stick-table updates at once"
-            },
-            "pipesize": {
-              "type": "integer",
-              "x-display-name": "Pipe Buffer Size"
-            },
-            "pool_high_fd_ratio": {
-              "type": "integer",
-              "x-display-name": "Max Used High FD Ratio"
-            },
-            "pool_low_fd_ratio": {
-              "type": "integer",
-              "x-display-name": "Max Used Low FD Ratio"
-            },
-            "pt_zero_copy_forwarding": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
-            },
-            "quic_frontend_conn_tx_buffers_limit": {
-              "type": "integer",
-              "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
-              "x-nullable": true
-            },
-            "quic_frontend_max_idle_timeout": {
-              "type": "integer",
-              "minimum": 0,
-              "x-default-unit": "ms",
-              "x-display-name": "QUIC Frontend Max Idle Timeout",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "quic_frontend_max_streams_bidi": {
-              "type": "integer",
-              "x-display-name": "QUIC Max Number of Bidirectional Streams",
-              "x-nullable": true
-            },
-            "quic_max_frame_loss": {
-              "type": "integer",
-              "x-display-name": "QUIC Max Limit for Frame Loss",
-              "x-nullable": true
-            },
-            "quic_reorder_ratio": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 0,
-              "x-display-name": "Ratio applied to the packet reordering threshold",
-              "x-nullable": true
-            },
-            "quic_retry_threshold": {
-              "type": "integer",
-              "x-display-name": "QUIC Retry Threshold",
-              "x-nullable": true
-            },
-            "quic_socket_owner": {
-              "type": "string",
-              "enum": [
-                "listener",
-                "connection"
-              ],
-              "x-display-name": "QUIC Socket Owner"
-            },
-            "quic_zero_copy_fwd_send": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Enables or disables the zero-copy sends for the QUIC multiplexer"
-            },
-            "rcvbuf_backend": {
-              "type": "integer",
-              "x-display-name": "Backend Receive Buffer Size",
-              "x-nullable": true
-            },
-            "rcvbuf_client": {
-              "type": "integer",
-              "x-display-name": "Client Receive Buffer Size",
-              "x-nullable": true
-            },
-            "rcvbuf_frontend": {
-              "type": "integer",
-              "x-display-name": "Frontend Receive Buffer Size",
-              "x-nullable": true
-            },
-            "rcvbuf_server": {
-              "type": "integer",
-              "x-display-name": "Server Receive Buffer Size",
-              "x-nullable": true
-            },
-            "recv_enough": {
-              "type": "integer",
-              "x-display-name": "Receive Enough Socket Buffer Size"
-            },
-            "ring_queues": {
-              "type": "integer",
-              "x-display-name": "Number of write queues in front of ring buffers",
-              "x-nullable": true
-            },
-            "runqueue_depth": {
-              "type": "integer",
-              "x-display-name": "Max Tasks in Run Queue"
-            },
-            "sched_low_latency": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "Low Latency Task Scheduler"
-            },
-            "sndbuf_backend": {
-              "type": "integer",
-              "x-display-name": "Backend Send Buffer Size",
-              "x-nullable": true
-            },
-            "sndbuf_client": {
-              "type": "integer",
-              "x-display-name": "Client Send Buffer Size",
-              "x-nullable": true
-            },
-            "sndbuf_frontend": {
-              "type": "integer",
-              "x-display-name": "Frontend Send Buffer Size",
-              "x-nullable": true
-            },
-            "sndbuf_server": {
-              "type": "integer",
-              "x-display-name": "Server Send Buffer Size",
-              "x-nullable": true
-            },
-            "ssl_cachesize": {
-              "type": "integer",
-              "x-display-name": "SSL Cache Size",
-              "x-nullable": true
-            },
-            "ssl_capture_buffer_size": {
-              "type": "integer",
-              "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
-              "x-nullable": true
-            },
-            "ssl_ctx_cache_size": {
-              "type": "integer",
-              "x-display-name": "SSL Number of Certificates in Cache"
-            },
-            "ssl_default_dh_param": {
-              "type": "integer",
-              "x-display-name": "SSL Default DH Parameter Size"
-            },
-            "ssl_force_private_cache": {
-              "type": "boolean",
-              "x-display-name": "SSL Force Private Cache"
-            },
-            "ssl_keylog": {
-              "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ],
-              "x-display-name": "SSL Log TLS Keys"
-            },
-            "ssl_lifetime": {
-              "type": "integer",
-              "minimum": 0,
-              "x-default-unit": "s",
-              "x-display-name": "SSL Session Lifetime",
-              "x-duration": true,
-              "x-nullable": true
-            },
-            "ssl_maxrecord": {
-              "type": "integer",
-              "x-display-name": "SSL Maximum Size",
-              "x-nullable": true
-            },
-            "ssl_ocsp_update_max_delay": {
-              "description": "This field is deprecated in favor of ocsp-update.maxdelay",
-              "type": "integer",
-              "x-deprecated": true,
-              "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
-              "x-nullable": true
-            },
-            "ssl_ocsp_update_min_delay": {
-              "description": "This field is deprecated in favor of ocsp-update.mindelay",
-              "type": "integer",
-              "x-deprecated": true,
-              "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
-              "x-nullable": true
-            },
-            "stick_counters": {
-              "type": "integer",
-              "x-display-name": "Number of stick-counters",
-              "x-nullable": true
-            },
-            "vars_global_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Global Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_proc_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Process Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_reqres_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Request/Response Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_sess_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Session Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "vars_txn_max_size": {
-              "type": "integer",
-              "x-display-name": "Variables Transaction Max Size",
-              "x-nullable": true,
-              "x-size": false
-            },
-            "zlib_memlevel": {
-              "type": "integer",
-              "maximum": 9,
-              "minimum": 1,
-              "x-display-name": "Zlib Memory Level"
-            },
-            "zlib_windowsize": {
-              "type": "integer",
-              "maximum": 15,
-              "minimum": 8,
-              "x-display-name": "Zlib Window Size"
-            }
-          },
-          "x-go-name": "GlobalTuneOptions"
+          "$ref": "#/definitions/tune_options"
+        },
+        "tune_quic_options": {
+          "$ref": "#/definitions/tune_quic_options"
+        },
+        "tune_ssl_options": {
+          "$ref": "#/definitions/tune_ssl_options"
+        },
+        "tune_vars_options": {
+          "$ref": "#/definitions/tune_vars_options"
+        },
+        "tune_zlib_options": {
+          "$ref": "#/definitions/tune_zlib_options"
         },
         "uid": {
           "type": "integer",
@@ -77636,43 +76327,13 @@ func init() {
         "ulimit_n": {
           "type": "integer"
         },
-        "unsetenv": {
-          "type": "string",
-          "x-display-name": "Removes environment variables specified in arguments"
-        },
         "user": {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "User"
         },
         "wurfl_options": {
-          "type": "object",
-          "properties": {
-            "cache_size": {
-              "type": "integer",
-              "x-display-name": "Sets the WURFL Useragent cache size"
-            },
-            "data_file": {
-              "type": "string",
-              "x-display-name": "The path of the WURFL data file"
-            },
-            "information_list": {
-              "type": "string",
-              "x-display-name": "A space-delimited list of WURFL capabilities"
-            },
-            "information_list_separator": {
-              "type": "string",
-              "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
-            },
-            "patch_file": {
-              "type": "string",
-              "x-display-name": "A list of WURFL patch file paths"
-            }
-          },
-          "x-go-name": "GlobalWurflOptions"
-        },
-        "zero_warning": {
-          "type": "boolean"
+          "$ref": "#/definitions/wurfl_options"
         }
       },
       "additionalProperties": false
@@ -78501,6 +77162,57 @@ func init() {
       "title": "HTTP Checks Array",
       "items": {
         "$ref": "#/definitions/http_check"
+      }
+    },
+    "http_client_options": {
+      "type": "object",
+      "properties": {
+        "resolvers_disabled": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "HTTP Client Resolvers Disabled"
+        },
+        "resolvers_id": {
+          "type": "string",
+          "x-display-name": "HTTP Client Resolvers ID"
+        },
+        "resolvers_prefer": {
+          "type": "string",
+          "enum": [
+            "ipv4",
+            "ipv6"
+          ],
+          "x-display-name": "HTTP Client Resolvers Prefer"
+        },
+        "retries": {
+          "type": "integer",
+          "x-display-name": "HTTP Client Retries"
+        },
+        "ssl_ca_file": {
+          "type": "string",
+          "x-display-name": "HTTP Client SSL CA File"
+        },
+        "ssl_verify": {
+          "type": "string",
+          "enum": [
+            "",
+            "none",
+            "required"
+          ],
+          "x-display-name": "HTTP Client SSL Verify",
+          "x-nullable": true
+        },
+        "timeout_connect": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "HTTP Client Connect Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        }
       }
     },
     "http_codes": {
@@ -80734,6 +79446,28 @@ func init() {
         "$ref": "#/definitions/log_target"
       }
     },
+    "lua_options": {
+      "type": "object",
+      "properties": {
+        "load_per_thread": {
+          "type": "string"
+        },
+        "loads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LuaOptionsLoadsItems0"
+          },
+          "x-omitempty": true
+        },
+        "prepend_path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LuaOptionsPrependPathItems0"
+          },
+          "x-omitempty": true
+        }
+      }
+    },
     "mailer_entries": {
       "description": "HAProxy mailer entries",
       "type": "array",
@@ -81668,6 +80402,60 @@ func init() {
       },
       "x-omitempty": true
     },
+    "ocsp_update_options": {
+      "type": "object",
+      "properties": {
+        "disable": {
+          "type": "boolean",
+          "default": false,
+          "x-display-name": "Disable OCSP Update",
+          "x-nullable": true
+        },
+        "httpproxy": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "pattern": "^[^\\s]+$",
+              "example": "127.0.0.1"
+            },
+            "port": {
+              "type": "integer",
+              "maximum": 65535,
+              "minimum": 1,
+              "x-nullable": true,
+              "example": 80
+            }
+          },
+          "x-display-name": "OCSP Update HTTP Proxy",
+          "x-omitempty": true
+        },
+        "maxdelay": {
+          "description": "Sets the maximum interval between two automatic updates of the same OCSP response.This time is expressed in seconds",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-display-name": "OCSP Update Maximum Delay",
+          "x-duration": false,
+          "x-nullable": true
+        },
+        "mindelay": {
+          "description": "Sets the minimum interval between two automatic updates of the same OCSP response. This time is expressed in seconds",
+          "type": "integer",
+          "x-default-unit": "s",
+          "x-display-name": "OCSP Update Minimum Delay",
+          "x-duration": false,
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "OCSP Update Mode"
+        }
+      }
+    },
     "originalto": {
       "type": "object",
       "required": [
@@ -81801,6 +80589,112 @@ func init() {
       "title": "Peer_Section",
       "items": {
         "$ref": "#/definitions/peer_section"
+      }
+    },
+    "performance_options": {
+      "type": "object",
+      "properties": {
+        "busy_polling": {
+          "type": "boolean"
+        },
+        "max_spread_checks": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "maxcompcpuusage": {
+          "type": "integer",
+          "x-display-name": "Maximum HAProxy CPU usage"
+        },
+        "maxcomprate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process input compression rate"
+        },
+        "maxconn": {
+          "type": "integer",
+          "x-display-name": "Max Connections"
+        },
+        "maxconnrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent connections"
+        },
+        "maxpipes": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of pipes"
+        },
+        "maxsessrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of sessions per second"
+        },
+        "maxzlibmem": {
+          "type": "integer",
+          "x-display-name": "Maximum amount of RAM in megabytes per process usable by the zlib"
+        },
+        "noepoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"epoll\" event polling system on Linux"
+        },
+        "noevports": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the event ports event polling system on SunOS system derived from Solaris 10 and later"
+        },
+        "nogetaddrinfo": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of getaddrinfo for name resolving"
+        },
+        "nokqueue": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"kqueue\" event polling system on BSD"
+        },
+        "nopoll": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of the \"poll\" event polling system"
+        },
+        "noreuseport": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of SO_REUSEPORT"
+        },
+        "nosplice": {
+          "type": "boolean",
+          "x-display-name": "Disable the use of kernel tcp splicing between sockets on Linux"
+        },
+        "profiling_memory": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enable or disables per-function memory profiling"
+        },
+        "profiling_tasks": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enable or disables per-task CPU profiling"
+        },
+        "server_state_base": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State Base"
+        },
+        "server_state_file": {
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-display-name": "Server State File"
+        },
+        "spread_checks": {
+          "type": "integer",
+          "x-display-name": "Add some randomness in the check interval"
+        },
+        "thread_hard_limit": {
+          "type": "integer",
+          "x-nullable": true
+        }
       }
     },
     "persist_rule": {
@@ -84342,6 +83236,132 @@ func init() {
         "$ref": "#/definitions/ssl_certificate"
       }
     },
+    "ssl_options": {
+      "type": "object",
+      "properties": {
+        "ca_base": {
+          "type": "string",
+          "x-display-name": "SSL CA Certificates Base Directory"
+        },
+        "crt_base": {
+          "type": "string",
+          "x-display-name": "SSL Certificates Base Directory"
+        },
+        "default_bind_ciphers": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphers"
+        },
+        "default_bind_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Ciphersuites"
+        },
+        "default_bind_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Client Sigalgs"
+        },
+        "default_bind_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Curves"
+        },
+        "default_bind_options": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Options"
+        },
+        "default_bind_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Bind Sigalgs"
+        },
+        "default_server_ciphers": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphers"
+        },
+        "default_server_ciphersuites": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Ciphersuites"
+        },
+        "default_server_client_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Client Sigalgs"
+        },
+        "default_server_curves": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Curves"
+        },
+        "default_server_options": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Options"
+        },
+        "default_server_sigalgs": {
+          "type": "string",
+          "x-display-name": "SSL Default Server Sigalgs"
+        },
+        "dh_param_file": {
+          "type": "string"
+        },
+        "engines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SslOptionsEnginesItems0"
+          },
+          "x-display-name": "SSL Engines",
+          "x-go-name": "SslEngines",
+          "x-omitempty": true
+        },
+        "issuers_chain_path": {
+          "type": "string"
+        },
+        "load_extra_files": {
+          "type": "string",
+          "x-display-name": "SSL Load Extra Files"
+        },
+        "maxsslconn": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of concurrent SSL connections"
+        },
+        "maxsslrate": {
+          "type": "integer",
+          "x-display-name": "Maximum per-process number of SSL sessions per second"
+        },
+        "mode_async": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Asynchronous TLS I/O operations"
+        },
+        "propquery": {
+          "type": "string",
+          "x-display-name": "SSL Query String Property"
+        },
+        "provider": {
+          "type": "string",
+          "x-display-name": "SSL Provider"
+        },
+        "provider_path": {
+          "type": "string",
+          "x-display-name": "SSL Provider Path"
+        },
+        "security_level": {
+          "type": "integer",
+          "maximum": 5,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "server_verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-display-name": "Verify server certificates"
+        },
+        "skip_self_issued_ca": {
+          "type": "boolean",
+          "x-display-name": "Self issued CA, aka x509 root CA"
+        }
+      }
+    },
     "stats_auth": {
       "type": "object",
       "required": [
@@ -86215,6 +85235,531 @@ func init() {
         "$ref": "#/definitions/transaction"
       }
     },
+    "tune_buffer_options": {
+      "type": "object",
+      "properties": {
+        "buffers_limit": {
+          "type": "integer",
+          "x-display-name": "Buffers Limit",
+          "x-nullable": true
+        },
+        "buffers_reserve": {
+          "type": "integer",
+          "minimum": 2,
+          "x-display-name": "Buffers Reserve"
+        },
+        "bufsize": {
+          "type": "integer",
+          "x-display-name": "Buffer Size"
+        },
+        "pipesize": {
+          "type": "integer",
+          "x-display-name": "Pipe Buffer Size"
+        },
+        "rcvbuf_backend": {
+          "type": "integer",
+          "x-display-name": "Backend Receive Buffer Size",
+          "x-nullable": true
+        },
+        "rcvbuf_client": {
+          "type": "integer",
+          "x-display-name": "Client Receive Buffer Size",
+          "x-nullable": true
+        },
+        "rcvbuf_frontend": {
+          "type": "integer",
+          "x-display-name": "Frontend Receive Buffer Size",
+          "x-nullable": true
+        },
+        "rcvbuf_server": {
+          "type": "integer",
+          "x-display-name": "Server Receive Buffer Size",
+          "x-nullable": true
+        },
+        "recv_enough": {
+          "type": "integer",
+          "x-display-name": "Receive Enough Socket Buffer Size"
+        },
+        "sndbuf_backend": {
+          "type": "integer",
+          "x-display-name": "Backend Send Buffer Size",
+          "x-nullable": true
+        },
+        "sndbuf_client": {
+          "type": "integer",
+          "x-display-name": "Client Send Buffer Size",
+          "x-nullable": true
+        },
+        "sndbuf_frontend": {
+          "type": "integer",
+          "x-display-name": "Frontend Send Buffer Size",
+          "x-nullable": true
+        },
+        "sndbuf_server": {
+          "type": "integer",
+          "x-display-name": "Server Send Buffer Size",
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_lua_options": {
+      "type": "object",
+      "properties": {
+        "burst_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "Burst execution timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "forced_yield": {
+          "type": "integer",
+          "x-display-name": "Lua Forced Yield"
+        },
+        "log_loggers": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Send Lua Logs to the Loggers"
+        },
+        "log_stderr": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Send Lua Logs to stderr"
+        },
+        "maxmem": {
+          "type": "integer",
+          "x-display-name": "Lua Maximum Memory Usage",
+          "x-nullable": true
+        },
+        "service_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "Lua Service timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "session_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "Lua Session Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "task_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "Lua Task Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_options": {
+      "type": "object",
+      "properties": {
+        "applet_zero_copy_forwarding": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enables of disabled the zero-copy forwarding of data for the applets"
+        },
+        "comp_maxlevel": {
+          "type": "integer",
+          "x-display-name": "Maximum Compression Level"
+        },
+        "disable_zero_copy_forwarding": {
+          "type": "boolean",
+          "x-display-name": "Disable zero-copy forwarding"
+        },
+        "events_max_events_at_once": {
+          "type": "integer",
+          "maximum": 10000,
+          "minimum": 1
+        },
+        "fail_alloc": {
+          "type": "boolean",
+          "x-display-name": "Failed Allocation Chance"
+        },
+        "fd_edge_triggered": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Edge-triggered polling mode"
+        },
+        "h1_zero_copy_fwd_recv": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy receives of data for the HTTP/1 multiplexer"
+        },
+        "h1_zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/1 multiplexer"
+        },
+        "h2_be_glitches_threshold": {
+          "type": "integer",
+          "x-display-name": "Automatically kill a backend connection past a number of glitches",
+          "x-nullable": true
+        },
+        "h2_be_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "Initial window size for outgoing connections"
+        },
+        "h2_be_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of concurrent streams per outgoing connection"
+        },
+        "h2_fe_glitches_threshold": {
+          "type": "integer",
+          "x-display-name": "Automatically kill a frontend connection past a number of glitches",
+          "x-nullable": true
+        },
+        "h2_fe_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "Initial window size for incoming connections"
+        },
+        "h2_fe_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of concurrent streams per incoming connection"
+        },
+        "h2_fe_max_total_streams": {
+          "type": "integer",
+          "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
+          "x-nullable": true
+        },
+        "h2_header_table_size": {
+          "type": "integer",
+          "maximum": 65535,
+          "x-display-name": "HTTP/2 Dynamic Header Table Size"
+        },
+        "h2_initial_window_size": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Initial Window Size",
+          "x-nullable": true
+        },
+        "h2_max_concurrent_streams": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Maximum Number of Concurrent Streams"
+        },
+        "h2_max_frame_size": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 Maximum Frame Size"
+        },
+        "h2_zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy sends of data for the HTTP/2 multiplexer"
+        },
+        "http_cookielen": {
+          "type": "integer",
+          "x-display-name": "Maximum Cookie Length"
+        },
+        "http_logurilen": {
+          "type": "integer",
+          "x-display-name": "Maximum URI Length"
+        },
+        "http_maxhdr": {
+          "type": "integer",
+          "maximum": 32767,
+          "minimum": 1,
+          "x-display-name": "Maximum Number of Headers"
+        },
+        "idle_pool_shared": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Share Idle Connections"
+        },
+        "idletimer": {
+          "type": "integer",
+          "maximum": 65535,
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "Idle Stream Duration",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "listener_default_shards": {
+          "type": "string",
+          "enum": [
+            "by-process",
+            "by-thread",
+            "by-group"
+          ],
+          "x-display-name": "Listener Default Shards"
+        },
+        "listener_multi_queue": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Listener Multi Queue Accept"
+        },
+        "max_checks_per_thread": {
+          "type": "integer",
+          "x-display-name": "Maximum checks per thread",
+          "x-nullable": true
+        },
+        "maxaccept": {
+          "type": "integer",
+          "x-display-name": "Maximum Accept Events"
+        },
+        "maxpollevents": {
+          "type": "integer",
+          "x-display-name": "Maximum Polled Events"
+        },
+        "maxrewrite": {
+          "type": "integer",
+          "x-display-name": "Maximum Rewrite Space"
+        },
+        "memory_hot_size": {
+          "type": "integer",
+          "x-display-name": "Per-thread Amount of Memory",
+          "x-nullable": true
+        },
+        "pattern_cache_size": {
+          "type": "integer",
+          "x-display-name": "Pattern Lookup Cache Size",
+          "x-nullable": true
+        },
+        "peers_max_updates_at_once": {
+          "type": "integer",
+          "x-display-name": "Maximum number of stick-table updates at once"
+        },
+        "pool_high_fd_ratio": {
+          "type": "integer",
+          "x-display-name": "Max Used High FD Ratio"
+        },
+        "pool_low_fd_ratio": {
+          "type": "integer",
+          "x-display-name": "Max Used Low FD Ratio"
+        },
+        "pt_zero_copy_forwarding": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+        },
+        "ring_queues": {
+          "type": "integer",
+          "x-display-name": "Number of write queues in front of ring buffers",
+          "x-nullable": true
+        },
+        "runqueue_depth": {
+          "type": "integer",
+          "x-display-name": "Max Tasks in Run Queue"
+        },
+        "sched_low_latency": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Low Latency Task Scheduler"
+        },
+        "stick_counters": {
+          "type": "integer",
+          "x-display-name": "Number of stick-counters",
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_quic_options": {
+      "type": "object",
+      "properties": {
+        "frontend_conn_tx_buffers_limit": {
+          "type": "integer",
+          "x-display-name": "QUIC Frontend Connection TX Buffer Limit",
+          "x-nullable": true
+        },
+        "frontend_max_idle_timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "QUIC Frontend Max Idle Timeout",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "frontend_max_streams_bidi": {
+          "type": "integer",
+          "x-display-name": "QUIC Max Number of Bidirectional Streams",
+          "x-nullable": true
+        },
+        "max_frame_loss": {
+          "type": "integer",
+          "x-display-name": "QUIC Max Limit for Frame Loss",
+          "x-nullable": true
+        },
+        "reorder_ratio": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-display-name": "Ratio applied to the packet reordering threshold",
+          "x-nullable": true
+        },
+        "retry_threshold": {
+          "type": "integer",
+          "x-display-name": "QUIC Retry Threshold",
+          "x-nullable": true
+        },
+        "socket_owner": {
+          "type": "string",
+          "enum": [
+            "listener",
+            "connection"
+          ],
+          "x-display-name": "QUIC Socket Owner"
+        },
+        "zero_copy_fwd_send": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Enables or disables the zero-copy sends for the QUIC multiplexer"
+        }
+      }
+    },
+    "tune_ssl_options": {
+      "type": "object",
+      "properties": {
+        "cachesize": {
+          "type": "integer",
+          "x-display-name": "SSL Cache Size",
+          "x-nullable": true
+        },
+        "capture_buffer_size": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Size of Cipherlist Buffer",
+          "x-nullable": true
+        },
+        "ctx_cache_size": {
+          "type": "integer",
+          "x-display-name": "SSL Number of Certificates in Cache"
+        },
+        "default_dh_param": {
+          "type": "integer",
+          "x-display-name": "SSL Default DH Parameter Size"
+        },
+        "force_private_cache": {
+          "type": "boolean",
+          "x-display-name": "SSL Force Private Cache"
+        },
+        "keylog": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "SSL Log TLS Keys"
+        },
+        "lifetime": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "s",
+          "x-display-name": "SSL Session Lifetime",
+          "x-duration": true,
+          "x-nullable": true
+        },
+        "maxrecord": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "ocsp_update_max_delay": {
+          "type": "integer",
+          "x-display-name": "SSL Maximum Interval Between Two Automatic Updates of the same OCSP Response",
+          "x-nullable": true
+        },
+        "ocsp_update_min_delay": {
+          "type": "integer",
+          "x-display-name": "SSL Minimum Interval Between Two Automatic Updates of the same OCSP Response",
+          "x-nullable": true
+        }
+      }
+    },
+    "tune_vars_options": {
+      "type": "object",
+      "properties": {
+        "global_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Global Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "proc_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Process Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "reqres_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Request/Response Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "sess_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Session Max Size",
+          "x-nullable": true,
+          "x-size": false
+        },
+        "txn_max_size": {
+          "type": "integer",
+          "x-display-name": "Variables Transaction Max Size",
+          "x-nullable": true,
+          "x-size": false
+        }
+      }
+    },
+    "tune_zlib_options": {
+      "type": "object",
+      "properties": {
+        "memlevel": {
+          "type": "integer",
+          "maximum": 9,
+          "minimum": 1,
+          "x-display-name": "Zlib Memory Level"
+        },
+        "windowsize": {
+          "type": "integer",
+          "maximum": 15,
+          "minimum": 8,
+          "x-display-name": "Zlib Window Size"
+        }
+      }
+    },
     "user": {
       "description": "HAProxy userlist user",
       "title": "User",
@@ -86296,6 +85841,31 @@ func init() {
       "title": "Users",
       "items": {
         "$ref": "#/definitions/user"
+      }
+    },
+    "wurfl_options": {
+      "type": "object",
+      "properties": {
+        "cache_size": {
+          "type": "integer",
+          "x-display-name": "Sets the WURFL Useragent cache size"
+        },
+        "data_file": {
+          "type": "string",
+          "x-display-name": "The path of the WURFL data file"
+        },
+        "information_list": {
+          "type": "string",
+          "x-display-name": "A space-delimited list of WURFL capabilities"
+        },
+        "information_list_separator": {
+          "type": "string",
+          "x-display-name": "A char that will be used to separate values in a response header containing WURFL results"
+        },
+        "patch_file": {
+          "type": "string",
+          "x-display-name": "A list of WURFL patch file paths"
+        }
       }
     }
   },
