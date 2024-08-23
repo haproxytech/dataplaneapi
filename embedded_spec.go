@@ -26330,6 +26330,9 @@ func init() {
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
         },
+        "stats_file": {
+          "type": "string"
+        },
         "stats_maxconn": {
           "type": "integer",
           "x-display-name": "Stats maxconn",
@@ -28291,9 +28294,6 @@ func init() {
             "silent-drop",
             "strict-mode",
             "tarpit",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service",
@@ -29054,9 +29054,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "strict-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "wait-for-body",
@@ -34365,9 +34362,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "switch-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service"
@@ -34847,9 +34841,6 @@ func init() {
             "action": {
               "required": true,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -34869,9 +34860,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -34892,9 +34880,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -76271,6 +76256,9 @@ func init() {
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
         },
+        "stats_file": {
+          "type": "string"
+        },
         "stats_maxconn": {
           "type": "integer",
           "x-display-name": "Stats maxconn",
@@ -78219,9 +78207,6 @@ func init() {
             "silent-drop",
             "strict-mode",
             "tarpit",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service",
@@ -78983,9 +78968,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "strict-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "wait-for-body",
@@ -84176,9 +84158,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "switch-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service"
@@ -84658,9 +84637,6 @@ func init() {
             "action": {
               "required": true,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -84680,9 +84656,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -84703,9 +84676,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
