@@ -70,5 +70,5 @@ The way `cluster` vs `single` is now handled is as following:
 
 | Mode |     <dataplane_storage_dir>/cluster.json content    |
 |-----------|-------------------|
-| Single| `cluster` attribute is not empty|
-| Cluster| `cluster` attribute is empty |
+| Single| `cluster` attribute is empty|
+| Cluster| `cluster` attribute is not empty |
