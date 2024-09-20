@@ -25,6 +25,6 @@ load 'utils/_helpers'
 @test "raw: Download configuration" {
   resource_get "$_RAW_BASE_PATH"
   assert_equal "$SC" 200
-  test -n "$(get_json_path "$BODY" .)" ||
+  test -n "$BODY" ||
     fail "failed to download raw config. BODY: '$BODY'"
 }

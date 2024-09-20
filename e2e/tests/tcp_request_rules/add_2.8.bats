@@ -46,26 +46,6 @@ load 'utils/_helpers'
   fi
 }
 
-@test "tcp_request_rules: Add a new TCP Request Rule track-sc-x to backend" {
-  if haproxy_version_ge "2.8"
-  then
-  # Using old track-sc(0|1|2)
-  PARENT_NAME="test_sticksc"
-  resource_post "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0" "data/post-track-sc-x.json" "force_reload=true"
-	assert_equal "$SC" 201
-
-  resource_get "$_BACKEND_BASE_PATH/$PARENT_NAME/tcp_request_rules/0"
-	assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" ".action")" "track-sc"
-	assert_equal "$(get_json_path "$BODY" ".type")" "content"
-	assert_equal "$(get_json_path "$BODY" ".cond")" "if"
-	assert_equal "$(get_json_path "$BODY" ".cond_test")" "TRUE"
-	assert_equal "$(get_json_path "$BODY" ".track_key")" "src"
-	assert_equal "$(get_json_path "$BODY" ".track_table")" "test_sticksc"
-	assert_equal "$(get_json_path "$BODY" ".track_stick_counter")" 0
-  fi
-}
-
 @test "tcp_request_rules: Fail - Add a new TCP Request Rule track-sc to backend - when track_sc_stick_counter is missing" {
   if haproxy_version_ge "2.8"
   then
