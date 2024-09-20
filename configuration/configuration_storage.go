@@ -382,14 +382,16 @@ func copyConfigurationToStorage(cfg *Configuration) {
 func (cfgStorage *StorageDataplaneAPIConfiguration) emptyDeprecatedSections() {
 	cfgStorage.DeprecatedBootstrapKey = nil
 	// Remove Cluster Users from dapi configuration file
-	for i := 0; i < len(cfgStorage.Dataplaneapi.Users); {
-		if cfgStorage.Dataplaneapi.Users[i].IsClusterUser() {
-			if len(cfgStorage.Dataplaneapi.Users) > i {
-				cfgStorage.Dataplaneapi.Users = append(cfgStorage.Dataplaneapi.Users[:i], cfgStorage.Dataplaneapi.Users[i+1:]...)
-				continue
+	if cfgStorage.Dataplaneapi != nil {
+		for i := 0; i < len(cfgStorage.Dataplaneapi.Users); {
+			if cfgStorage.Dataplaneapi.Users[i].IsClusterUser() {
+				if len(cfgStorage.Dataplaneapi.Users) > i {
+					cfgStorage.Dataplaneapi.Users = append(cfgStorage.Dataplaneapi.Users[:i], cfgStorage.Dataplaneapi.Users[i+1:]...)
+					continue
+				}
 			}
+			i++
 		}
-		i++
 	}
 	// Remove Cluster
 	cfgStorage.DeprecatedCluster = nil

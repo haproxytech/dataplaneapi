@@ -73,40 +73,42 @@ func (c *Configuration) migrateUsers() ([]string, error) {
 	clusterModeStoragePath := path.Join(c.HAProxy.DataplaneStorageDir, storage.ClusterModeDataFileName)
 
 	usersToMigrate := make([]storagetype.User, 0)
-	for _, singleModeUser := range dapiCfgStorage.Dataplaneapi.Users {
-		found := false
-		// Only migrate cluster users
-		if !singleModeUser.IsClusterUser() {
-			continue
-		}
-
-		var muser storagetype.User
-		for _, muser = range dapiStorageUsers {
-			if muser.Name == singleModeUser.Name {
-				found = true
-				break
+	if dapiCfgStorage.Dataplaneapi != nil {
+		for _, singleModeUser := range dapiCfgStorage.Dataplaneapi.Users {
+			found := false
+			// Only migrate cluster users
+			if !singleModeUser.IsClusterUser() {
+				continue
 			}
-		}
 
-		// Already migrated
-		if found {
-			msg := fmt.Sprintf("[CFG DEPRECATED] [SKIP] [User] [%s]: already migrated. Old location [%s] New location [%s]. Use only new location",
-				singleModeUser.Name,
-				c.HAProxy.DataplaneConfig,
-				clusterModeStoragePath)
-			// Logging is not done here as at startup, the logger is not yet initialized
-			// so it's done later on
-			deprecationInfoMsg = append(deprecationInfoMsg, msg)
-		} else {
-			// If not already migrated, then migrate it
-			msg := fmt.Sprintf("[CFG DEPRECATED] [MIGRATE] [User] [%s]: migrating. Old location [%s] New location [%s]. Use only new location",
-				singleModeUser.Name,
-				c.HAProxy.DataplaneConfig,
-				clusterModeStoragePath)
-			// Logging is not done here as at startup, the logger is not yet initialized
-			// so it's done later on
-			deprecationInfoMsg = append(deprecationInfoMsg, msg)
-			usersToMigrate = append(usersToMigrate, singleModeUser)
+			var muser storagetype.User
+			for _, muser = range dapiStorageUsers {
+				if muser.Name == singleModeUser.Name {
+					found = true
+					break
+				}
+			}
+
+			// Already migrated
+			if found {
+				msg := fmt.Sprintf("[CFG DEPRECATED] [SKIP] [User] [%s]: already migrated. Old location [%s] New location [%s]. Use only new location",
+					singleModeUser.Name,
+					c.HAProxy.DataplaneConfig,
+					clusterModeStoragePath)
+				// Logging is not done here as at startup, the logger is not yet initialized
+				// so it's done later on
+				deprecationInfoMsg = append(deprecationInfoMsg, msg)
+			} else {
+				// If not already migrated, then migrate it
+				msg := fmt.Sprintf("[CFG DEPRECATED] [MIGRATE] [User] [%s]: migrating. Old location [%s] New location [%s]. Use only new location",
+					singleModeUser.Name,
+					c.HAProxy.DataplaneConfig,
+					clusterModeStoragePath)
+				// Logging is not done here as at startup, the logger is not yet initialized
+				// so it's done later on
+				deprecationInfoMsg = append(deprecationInfoMsg, msg)
+				usersToMigrate = append(usersToMigrate, singleModeUser)
+			}
 		}
 	}
 	if err := c.clusterModeStorage.AddUsersAndStore(usersToMigrate); err != nil {
