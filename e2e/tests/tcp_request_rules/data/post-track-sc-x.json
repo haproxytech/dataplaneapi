@@ -1,8 +1,0 @@
-{
-  "type": "content",
-  "action": "track-sc0",
-  "cond": "if",
-  "cond_test": "TRUE",
-  "track_table": "test_sticksc",
-  "track_key": "src"
-}
