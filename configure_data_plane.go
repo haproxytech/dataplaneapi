@@ -56,7 +56,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
-	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
+	"github.com/haproxytech/dataplaneapi/operations/version3"
 	"github.com/haproxytech/dataplaneapi/rate"
 	"github.com/haproxytech/dataplaneapi/resilient"
 	socket_runtime "github.com/haproxytech/dataplaneapi/runtime"
@@ -868,7 +868,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 			data.ID = service_discovery.NewServiceDiscoveryUUID()
 		}
 		if errSD = service_discovery.ValidateConsulData(data, true); errSD != nil {
-			log.Fatalf("Error validating Consul instance: " + errSD.Error())
+			log.Fatal("Error validating Consul instance: " + errSD.Error())
 		}
 		if errSD = discovery.AddNode("consul", *data.ID, data); errSD != nil {
 			log.Warning("Error creating consul instance: " + errSD.Error())
@@ -884,7 +884,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 			data.ID = service_discovery.NewServiceDiscoveryUUID()
 		}
 		if errSD = service_discovery.ValidateAWSData(data, true); errSD != nil {
-			log.Fatalf("Error validating AWS instance: " + errSD.Error())
+			log.Fatal("Error validating AWS instance: " + errSD.Error())
 		}
 		if errSD = discovery.AddNode("aws", *data.ID, data); errSD != nil {
 			log.Warning("Error creating AWS instance: " + errSD.Error())
@@ -917,12 +917,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.StorageReplaceStorageGeneralFileHandler = &handlers.StorageReplaceStorageGeneralFileHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup OpenAPI v3 specification handler
-	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
+	api.Version3GetOpenapiv3SpecificationHandler = version3.GetOpenapiv3SpecificationHandlerFunc(func(params version3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.T{}
 		err = v2.UnmarshalJSON(SwaggerJSON)
 		if err != nil {
 			e := misc.HandleError(err)
-			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+			return version3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
 		}
 
 		// if host is empty(dynamic hosts), server prop is empty,
@@ -936,9 +936,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		v3, err = openapi2conv.ToV3(&v2)
 		if err != nil {
 			e := misc.HandleError(err)
-			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+			return version3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
 		}
-		return specification_openapiv3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
+		return version3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
 	})
 
 	// TODO: do we need a ReloadAgent for SPOE
@@ -1217,10 +1217,10 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 func reloadConfigurationFile(client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	confClient, err := cn.ConfigureConfigurationClient(haproxyOptions, mWorker)
 	if err != nil {
-		log.Fatalf(err.Error())
+		log.Fatal(err.Error())
 	}
 	if err := users.Init(); err != nil {
-		log.Fatalf(err.Error())
+		log.Fatal(err.Error())
 	}
 	log.Info("Rereading Configuration Files")
 	clientMutex.Lock()

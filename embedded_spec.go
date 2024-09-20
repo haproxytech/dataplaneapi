@@ -16655,7 +16655,7 @@ func init() {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
         "produces": [
-          "application/json"
+          "text/plain"
         ],
         "tags": [
           "Configuration"
@@ -16674,15 +16674,7 @@ func init() {
           "200": {
             "description": "Operation successful",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "type": "string"
-                }
-              }
+              "type": "string"
             },
             "headers": {
               "Cluster-Version": {
@@ -16710,7 +16702,7 @@ func init() {
           "text/plain"
         ],
         "produces": [
-          "application/json"
+          "text/plain"
         ],
         "tags": [
           "Configuration"
@@ -20774,7 +20766,7 @@ func init() {
         "parameters": [
           {
             "type": "file",
-            "x-mimetype": "text/plain",
+            "x-mimetype": "application/octet-stream",
             "description": "General use file content",
             "name": "file_upload",
             "in": "formData"
@@ -20837,7 +20829,7 @@ func init() {
       "put": {
         "description": "Replaces the contents of a managed general use file on disk",
         "consumes": [
-          "text/plain"
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -20856,12 +20848,11 @@ func init() {
             "required": true
           },
           {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "file",
+            "x-mimetype": "application/octet-stream",
+            "description": "General use file content",
+            "name": "file_upload",
+            "in": "formData"
           },
           {
             "$ref": "#/parameters/skip_reload"
@@ -26083,6 +26074,9 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "h1_accept_payload_with_any_method": {
+          "type": "boolean"
+        },
         "h1_case_adjust": {
           "type": "array",
           "items": {
@@ -26106,6 +26100,9 @@ func init() {
         },
         "h1_case_adjust_file": {
           "type": "string"
+        },
+        "h1_do_not_close_on_insecure_transfer_encoding": {
+          "type": "boolean"
         },
         "h2_workaround_bogus_websocket_clients": {
           "type": "boolean"
@@ -26329,6 +26326,9 @@ func init() {
         },
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
+        },
+        "stats_file": {
+          "type": "string"
         },
         "stats_maxconn": {
           "type": "integer",
@@ -28291,9 +28291,6 @@ func init() {
             "silent-drop",
             "strict-mode",
             "tarpit",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service",
@@ -29054,9 +29051,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "strict-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "wait-for-body",
@@ -31987,6 +31981,11 @@ func init() {
               "type": "integer",
               "x-nullable": true
             },
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
+            },
             "name": {
               "type": "string",
               "pattern": "^[^\\s]+$",
@@ -34365,9 +34364,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "switch-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service"
@@ -34847,9 +34843,6 @@ func init() {
             "action": {
               "required": true,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -34869,9 +34862,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -34892,9 +34882,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -63096,7 +63083,7 @@ func init() {
       "get": {
         "description": "Returns HAProxy configuration file in plain text",
         "produces": [
-          "application/json"
+          "text/plain"
         ],
         "tags": [
           "Configuration"
@@ -63123,15 +63110,7 @@ func init() {
           "200": {
             "description": "Operation successful",
             "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "type": "string"
-                }
-              }
+              "type": "string"
             },
             "headers": {
               "Cluster-Version": {
@@ -63168,7 +63147,7 @@ func init() {
           "text/plain"
         ],
         "produces": [
-          "application/json"
+          "text/plain"
         ],
         "tags": [
           "Configuration"
@@ -69602,7 +69581,7 @@ func init() {
         "parameters": [
           {
             "type": "file",
-            "x-mimetype": "text/plain",
+            "x-mimetype": "application/octet-stream",
             "description": "General use file content",
             "name": "file_upload",
             "in": "formData"
@@ -69710,7 +69689,7 @@ func init() {
       "put": {
         "description": "Replaces the contents of a managed general use file on disk",
         "consumes": [
-          "text/plain"
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -69729,12 +69708,11 @@ func init() {
             "required": true
           },
           {
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "file",
+            "x-mimetype": "application/octet-stream",
+            "description": "General use file content",
+            "name": "file_upload",
+            "in": "formData"
           },
           {
             "type": "boolean",
@@ -76082,6 +76060,9 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "h1_accept_payload_with_any_method": {
+          "type": "boolean"
+        },
         "h1_case_adjust": {
           "type": "array",
           "items": {
@@ -76092,6 +76073,9 @@ func init() {
         },
         "h1_case_adjust_file": {
           "type": "string"
+        },
+        "h1_do_not_close_on_insecure_transfer_encoding": {
+          "type": "boolean"
         },
         "h2_workaround_bogus_websocket_clients": {
           "type": "boolean"
@@ -76270,6 +76254,9 @@ func init() {
         },
         "ssl_options": {
           "$ref": "#/definitions/ssl_options"
+        },
+        "stats_file": {
+          "type": "string"
         },
         "stats_maxconn": {
           "type": "integer",
@@ -78219,9 +78206,6 @@ func init() {
             "silent-drop",
             "strict-mode",
             "tarpit",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service",
@@ -78983,9 +78967,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "strict-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "wait-for-body",
@@ -81910,6 +81891,11 @@ func init() {
               "type": "integer",
               "x-nullable": true
             },
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
+            },
             "name": {
               "type": "string",
               "pattern": "^[^\\s]+$",
@@ -84176,9 +84162,6 @@ func init() {
             "set-var-fmt",
             "silent-drop",
             "switch-mode",
-            "track-sc0",
-            "track-sc1",
-            "track-sc2",
             "track-sc",
             "unset-var",
             "use-service"
@@ -84658,9 +84641,6 @@ func init() {
             "action": {
               "required": true,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -84680,9 +84660,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },
@@ -84703,9 +84680,6 @@ func init() {
             "action": {
               "required": false,
               "value": [
-                "track-sc0",
-                "track-sc1",
-                "track-sc2",
                 "track-sc"
               ]
             },

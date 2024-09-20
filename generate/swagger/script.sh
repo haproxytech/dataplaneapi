@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -e
+GO_VERSION=$(go version)
+echo " ---> go version: $GO_VERSION"
 SPEC_DIR=$(mktemp -d)
 echo " ---> source folder: $SPEC_DIR"
 DST_DIR=$(mktemp -d)

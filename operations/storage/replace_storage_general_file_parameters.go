@@ -22,6 +22,7 @@ package storage
 
 import (
 	"io"
+	"mime/multipart"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -30,6 +31,13 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
+
+// ReplaceStorageGeneralFileMaxParseMemory sets the maximum size in bytes for
+// the multipart form parser for this operation.
+//
+// The default value is 32 MB.
+// The multipart parser stores up to this + 10MB.
+var ReplaceStorageGeneralFileMaxParseMemory int64 = 32 << 20
 
 // NewReplaceStorageGeneralFileParams creates a new ReplaceStorageGeneralFileParams object
 // with the default values initialized.
@@ -59,11 +67,10 @@ type ReplaceStorageGeneralFileParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
-	  Required: true
-	  In: body
+	/*General use file content
+	  In: formData
 	*/
-	Data string
+	FileUpload io.ReadCloser
 	/*If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.
 	  In: query
 	  Default: false
@@ -92,21 +99,23 @@ func (o *ReplaceStorageGeneralFileParams) BindRequest(r *http.Request, route *mi
 
 	qs := runtime.Values(r.URL.Query())
 
-	if runtime.HasBody(r) {
-		defer r.Body.Close()
-		var body string
-		if err := route.Consumer.Consume(r.Body, &body); err != nil {
-			if err == io.EOF {
-				res = append(res, errors.Required("data", "body", ""))
-			} else {
-				res = append(res, errors.NewParseError("data", "body", "", err))
-			}
-		} else {
-			// no validation required on inline body
-			o.Data = body
+	if err := r.ParseMultipartForm(ReplaceStorageGeneralFileMaxParseMemory); err != nil {
+		if err != http.ErrNotMultipart {
+			return errors.New(400, "%v", err)
+		} else if err := r.ParseForm(); err != nil {
+			return errors.New(400, "%v", err)
 		}
+	}
+
+	fileUpload, fileUploadHeader, err := r.FormFile("file_upload")
+	if err != nil && err != http.ErrMissingFile {
+		res = append(res, errors.New(400, "reading file %q failed: %v", "fileUpload", err))
+	} else if err == http.ErrMissingFile {
+		// no-op for missing but optional file parameter
+	} else if err := o.bindFileUpload(fileUpload, fileUploadHeader); err != nil {
+		res = append(res, err)
 	} else {
-		res = append(res, errors.Required("data", "body", ""))
+		o.FileUpload = &runtime.File{Data: fileUpload, Header: fileUploadHeader}
 	}
 
 	qForceReload, qhkForceReload, _ := qs.GetOK("force_reload")
@@ -126,6 +135,13 @@ func (o *ReplaceStorageGeneralFileParams) BindRequest(r *http.Request, route *mi
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindFileUpload binds file parameter FileUpload.
+//
+// The only supported validations on files are MinLength and MaxLength
+func (o *ReplaceStorageGeneralFileParams) bindFileUpload(file multipart.File, header *multipart.FileHeader) error {
 	return nil
 }
 

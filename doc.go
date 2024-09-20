@@ -35,6 +35,7 @@
 //	Produces:
 //	  - application/octet-stream
 //	  - application/json
+//	  - text/plain
 //
 // swagger:meta
 package dataplaneapi

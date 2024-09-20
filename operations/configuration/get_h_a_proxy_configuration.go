@@ -21,14 +21,9 @@ package configuration
 // Editing this file might prove futile when you re-run the generate command
 
 import (
-	"context"
 	"net/http"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // GetHAProxyConfigurationHandlerFunc turns a function with the right signature into a get h a proxy configuration handler
@@ -88,60 +83,4 @@ func (o *GetHAProxyConfiguration) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	res := o.Handler.Handle(Params, principal) // actually handle the request
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
-}
-
-// GetHAProxyConfigurationOKBody get h a proxy configuration o k body
-//
-// swagger:model GetHAProxyConfigurationOKBody
-type GetHAProxyConfigurationOKBody struct {
-
-	// data
-	// Required: true
-	Data *string `json:"data"`
-}
-
-// Validate validates this get h a proxy configuration o k body
-func (o *GetHAProxyConfigurationOKBody) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.validateData(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *GetHAProxyConfigurationOKBody) validateData(formats strfmt.Registry) error {
-
-	if err := validate.Required("getHAProxyConfigurationOK"+"."+"data", "body", o.Data); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validates this get h a proxy configuration o k body based on context it is used
-func (o *GetHAProxyConfigurationOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *GetHAProxyConfigurationOKBody) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *GetHAProxyConfigurationOKBody) UnmarshalBinary(b []byte) error {
-	var res GetHAProxyConfigurationOKBody
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
 }

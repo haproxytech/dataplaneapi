@@ -1,6 +1,6 @@
 module github.com/haproxytech/dataplaneapi
 
-go 1.22
+go 1.23
 
 require (
 	github.com/GehirnInc/crypt v0.0.0-20230320061759-8cc1b52080c5
@@ -24,7 +24,7 @@ require (
 	github.com/google/go-cmp v0.6.0
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
-	github.com/haproxytech/client-native/v6 v6.0.0
+	github.com/haproxytech/client-native/v6 v6.0.1-0.20240920064228-ba9cae20ddb6
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12
@@ -39,7 +39,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	go.uber.org/automaxprocs v1.5.3
 	golang.org/x/net v0.27.0
-	golang.org/x/sys v0.24.0
+	golang.org/x/sys v0.25.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 

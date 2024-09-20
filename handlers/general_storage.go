@@ -188,7 +188,17 @@ func (h *StorageReplaceStorageGeneralFileHandlerImpl) Handle(params storage.Repl
 		return storage.NewReplaceStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	_, err = gs.Replace(params.Name, params.Data)
+	file, ok := params.FileUpload.(*runtime.File)
+	if !ok {
+		return storage.NewReplaceStorageGeneralFileBadRequest()
+	}
+	data := []byte{}
+	if _, err := file.Read(data); err != nil {
+		e := misc.HandleError(err)
+		return storage.NewReplaceStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	_, err = gs.Replace(params.Name, string(data))
 	if err != nil {
 		e := misc.HandleError(err)
 		return storage.NewReplaceStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)

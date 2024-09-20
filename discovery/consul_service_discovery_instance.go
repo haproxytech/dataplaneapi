@@ -211,7 +211,7 @@ func (c *consulInstance) validateHealthChecks(node *serviceEntry) bool {
 }
 
 func (c *consulInstance) validateHealthChecksAny(node *serviceEntry) bool {
-	if node.Checks == nil || len(node.Checks) == 0 {
+	if len(node.Checks) == 0 {
 		return false
 	}
 
@@ -224,7 +224,7 @@ func (c *consulInstance) validateHealthChecksAny(node *serviceEntry) bool {
 }
 
 func (c *consulInstance) validateHealthChecksAll(node *serviceEntry) bool {
-	if node.Checks == nil || len(node.Checks) == 0 {
+	if len(node.Checks) == 0 {
 		return false
 	}
 
@@ -237,7 +237,7 @@ func (c *consulInstance) validateHealthChecksAll(node *serviceEntry) bool {
 }
 
 func (c *consulInstance) validateHealthChecksMin(node *serviceEntry) bool {
-	if node.Checks == nil || len(node.Checks) == 0 {
+	if len(node.Checks) == 0 {
 		return false
 	}
 

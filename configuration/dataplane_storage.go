@@ -130,7 +130,7 @@ func (c *Configuration) copyClusterToConfiguration(dapiStorageCluster *storagety
 	if dapiStorageCluster.ClusterID != nil && !misc.HasOSArg("", "", "") {
 		c.Cluster.ClusterID.Store(*dapiStorageCluster.ClusterID)
 	}
-	if dapiStorageCluster.ClusterLogTargets != nil && len(dapiStorageCluster.ClusterLogTargets) > 0 {
+	if len(dapiStorageCluster.ClusterLogTargets) > 0 {
 		c.Cluster.ClusterLogTargets = dapiStorageCluster.ClusterLogTargets
 	}
 }
