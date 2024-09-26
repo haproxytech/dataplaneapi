@@ -153,6 +153,11 @@ func (o *GetHTTPErrorsSectionOKBody) ContextValidate(ctx context.Context, format
 func (o *GetHTTPErrorsSectionOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Data != nil {
+
+		if swag.IsZero(o.Data) { // not required
+			return nil
+		}
+
 		if err := o.Data.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getHttpErrorsSectionOK" + "." + "data")

@@ -153,6 +153,11 @@ func (o *GetTableOKBody) ContextValidate(ctx context.Context, formats strfmt.Reg
 func (o *GetTableOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Data != nil {
+
+		if swag.IsZero(o.Data) { // not required
+			return nil
+		}
+
 		if err := o.Data.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getTableOK" + "." + "data")

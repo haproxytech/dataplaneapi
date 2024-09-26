@@ -56,7 +56,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations"
 	"github.com/haproxytech/dataplaneapi/operations/discovery"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
-	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
+	"github.com/haproxytech/dataplaneapi/operations/version3"
 	"github.com/haproxytech/dataplaneapi/rate"
 
 	// import various crypting algorithms
@@ -749,12 +749,12 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.StorageReplaceStorageGeneralFileHandler = &handlers.StorageReplaceStorageGeneralFileHandlerImpl{Client: client, ReloadAgent: ra}
 
 	// setup OpenAPI v3 specification handler
-	api.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler = specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
+	api.Version3GetOpenapiv3SpecificationHandler = version3.GetOpenapiv3SpecificationHandlerFunc(func(params version3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.T{}
 		err = v2.UnmarshalJSON(SwaggerJSON)
 		if err != nil {
 			e := misc.HandleError(err)
-			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+			return version3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
 		}
 
 		// if host is empty(dynamic hosts), server prop is empty,
@@ -768,9 +768,9 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 		v3, err = openapi2conv.ToV3(&v2)
 		if err != nil {
 			e := misc.HandleError(err)
-			return specification_openapiv3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
+			return version3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
 		}
-		return specification_openapiv3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
+		return version3.NewGetOpenapiv3SpecificationOK().WithPayload(v3)
 	})
 
 	// TODO: do we need a ReloadAgent for SPOE
