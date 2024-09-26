@@ -20312,6 +20312,9 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "h1_accept_payload_with_any_method": {
+          "type": "boolean"
+        },
         "h1_case_adjust": {
           "type": "array",
           "items": {
@@ -20335,6 +20338,9 @@ func init() {
         },
         "h1_case_adjust_file": {
           "type": "string"
+        },
+        "h1_do_not_close_on_insecure_transfer_encoding": {
+          "type": "boolean"
         },
         "h2_workaround_bogus_websocket_clients": {
           "type": "boolean"
@@ -22983,6 +22989,18 @@ func init() {
           "x-display-name": "Return Error Code",
           "x-nullable": true
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -23811,6 +23829,18 @@ func init() {
           },
           "x-display-name": "Return Error Code",
           "x-nullable": true
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_expr": {
           "type": "string",
@@ -25129,6 +25159,13 @@ func init() {
               "frontend",
               "backend"
             ]
+          },
+          "x-nullable": true
+        },
+        "last_agt": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
           },
           "x-nullable": true
         },
@@ -28855,19 +28892,20 @@ func init() {
             "sc-inc-gpc1",
             "sc-set-gpt",
             "sc-set-gpt0",
+            "send-spoe-group",
             "set-bandwidth-limit",
             "set-dst-port",
             "set-dst",
             "set-log-level",
             "set-mark",
             "set-nice",
-            "set-priority",
+            "set-priority-class",
+            "set-priority-offset",
             "set-src",
             "set-src-port",
             "set-tos",
             "set-var",
             "set-var-fmt",
-            "send-spoe-group",
             "silent-drop",
             "switch-mode",
             "track-sc0",
@@ -29008,7 +29046,8 @@ func init() {
                 "do-resolve",
                 "set-dst",
                 "set-dst-port",
-                "set-priority",
+                "set-priority-class",
+                "set-priority-offset",
                 "set-src",
                 "set-src-port",
                 "set-var"
@@ -29134,24 +29173,6 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
-        "priority_type": {
-          "type": "string",
-          "enum": [
-            "class",
-            "offset"
-          ],
-          "x-dependency": {
-            "action": {
-              "required": true,
-              "value": "set-priority"
-            },
-            "type": {
-              "value": [
-                "content"
-              ]
-            }
-          }
-        },
         "resolve_protocol": {
           "type": "string",
           "enum": [
@@ -29203,6 +29224,18 @@ func init() {
             }
           },
           "x-display-name": "Variable name"
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_idx": {
           "type": "string",
@@ -29544,6 +29577,8 @@ func init() {
             "set-mark",
             "set-nice",
             "set-tos",
+            "set-var",
+            "set-var-fmt",
             "silent-drop",
             "unset-var"
           ],
@@ -29720,6 +29755,18 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -29847,6 +29894,19 @@ func init() {
             "inspect-delay"
           ],
           "x-nullable": false
+        },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-var-fmt"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Var Format"
         },
         "var_name": {
           "type": "string",
@@ -59389,6 +59449,9 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-display-name": "Group"
         },
+        "h1_accept_payload_with_any_method": {
+          "type": "boolean"
+        },
         "h1_case_adjust": {
           "type": "array",
           "items": {
@@ -59399,6 +59462,9 @@ func init() {
         },
         "h1_case_adjust_file": {
           "type": "string"
+        },
+        "h1_do_not_close_on_insecure_transfer_encoding": {
+          "type": "boolean"
         },
         "h2_workaround_bogus_websocket_clients": {
           "type": "boolean"
@@ -61915,6 +61981,18 @@ func init() {
           "x-display-name": "Return Error Code",
           "x-nullable": true
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -62743,6 +62821,18 @@ func init() {
           },
           "x-display-name": "Return Error Code",
           "x-nullable": true
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_expr": {
           "type": "string",
@@ -64062,6 +64152,13 @@ func init() {
               "frontend",
               "backend"
             ]
+          },
+          "x-nullable": true
+        },
+        "last_agt": {
+          "type": "string",
+          "x-dependency": {
+            "type": "server"
           },
           "x-nullable": true
         },
@@ -67682,19 +67779,20 @@ func init() {
             "sc-inc-gpc1",
             "sc-set-gpt",
             "sc-set-gpt0",
+            "send-spoe-group",
             "set-bandwidth-limit",
             "set-dst-port",
             "set-dst",
             "set-log-level",
             "set-mark",
             "set-nice",
-            "set-priority",
+            "set-priority-class",
+            "set-priority-offset",
             "set-src",
             "set-src-port",
             "set-tos",
             "set-var",
             "set-var-fmt",
-            "send-spoe-group",
             "silent-drop",
             "switch-mode",
             "track-sc0",
@@ -67835,7 +67933,8 @@ func init() {
                 "do-resolve",
                 "set-dst",
                 "set-dst-port",
-                "set-priority",
+                "set-priority-class",
+                "set-priority-offset",
                 "set-src",
                 "set-src-port",
                 "set-var"
@@ -67961,24 +68060,6 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
-        "priority_type": {
-          "type": "string",
-          "enum": [
-            "class",
-            "offset"
-          ],
-          "x-dependency": {
-            "action": {
-              "required": true,
-              "value": "set-priority"
-            },
-            "type": {
-              "value": [
-                "content"
-              ]
-            }
-          }
-        },
         "resolve_protocol": {
           "type": "string",
           "enum": [
@@ -68030,6 +68111,18 @@ func init() {
             }
           },
           "x-display-name": "Variable name"
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_idx": {
           "type": "string",
@@ -68371,6 +68464,8 @@ func init() {
             "set-mark",
             "set-nice",
             "set-tos",
+            "set-var",
+            "set-var-fmt",
             "silent-drop",
             "unset-var"
           ],
@@ -68547,6 +68642,18 @@ func init() {
           "x-display-name": "Nice Value",
           "x-nullable": false
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -68674,6 +68781,19 @@ func init() {
             "inspect-delay"
           ],
           "x-nullable": false
+        },
+        "var_format": {
+          "type": "string",
+          "x-dependency": {
+            "action": {
+              "required": true,
+              "value": "set-var-fmt"
+            },
+            "type": {
+              "value": "content"
+            }
+          },
+          "x-display-name": "Var Format"
         },
         "var_name": {
           "type": "string",
