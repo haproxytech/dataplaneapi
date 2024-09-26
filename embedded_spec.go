@@ -28067,6 +28067,18 @@ func init() {
           "x-display-name": "Return Error Code",
           "x-nullable": true
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -28838,6 +28850,18 @@ func init() {
           },
           "x-display-name": "Return Error Code",
           "x-nullable": true
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_expr": {
           "type": "string",
@@ -34678,6 +34702,18 @@ func init() {
           },
           "x-display-name": "Variable name"
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_idx": {
           "type": "string",
           "x-dependency": {
@@ -35187,6 +35223,18 @@ func init() {
           },
           "x-display-name": "Nice Value",
           "x-nullable": false
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_expr": {
           "type": "string",
@@ -77982,6 +78030,18 @@ func init() {
           "x-display-name": "Return Error Code",
           "x-nullable": true
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_expr": {
           "type": "string",
           "x-dependency": {
@@ -78754,6 +78814,18 @@ func init() {
           },
           "x-display-name": "Return Error Code",
           "x-nullable": true
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_expr": {
           "type": "string",
@@ -84476,6 +84548,18 @@ func init() {
           },
           "x-display-name": "Variable name"
         },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
+        },
         "sc_idx": {
           "type": "string",
           "x-dependency": {
@@ -84985,6 +85069,18 @@ func init() {
           },
           "x-display-name": "Nice Value",
           "x-nullable": false
+        },
+        "rst_ttl": {
+          "type": "integer",
+          "x-dependency": {
+            "type": {
+              "required": true,
+              "value": [
+                "silent-drop"
+              ]
+            }
+          },
+          "x-display-name": "RST TTL"
         },
         "sc_expr": {
           "type": "string",
