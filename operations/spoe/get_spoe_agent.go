@@ -156,6 +156,7 @@ func (o *GetSpoeAgentOKBody) ContextValidate(ctx context.Context, formats strfmt
 func (o *GetSpoeAgentOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Data != nil {
+
 		if err := o.Data.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getSpoeAgentOK" + "." + "data")

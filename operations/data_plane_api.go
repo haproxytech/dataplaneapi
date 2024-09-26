@@ -77,7 +77,6 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/service_discovery"
 	"github.com/haproxytech/dataplaneapi/operations/sites"
 	"github.com/haproxytech/dataplaneapi/operations/specification"
-	"github.com/haproxytech/dataplaneapi/operations/specification_openapiv3"
 	"github.com/haproxytech/dataplaneapi/operations/spoe"
 	"github.com/haproxytech/dataplaneapi/operations/spoe_transactions"
 	"github.com/haproxytech/dataplaneapi/operations/stats"
@@ -91,6 +90,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
 	"github.com/haproxytech/dataplaneapi/operations/user"
 	"github.com/haproxytech/dataplaneapi/operations/userlist"
+	"github.com/haproxytech/dataplaneapi/operations/version3"
 )
 
 // NewDataPlaneAPI creates a new DataPlane instance
@@ -685,8 +685,8 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageGetOneStorageSSLCertificateHandler: storage.GetOneStorageSSLCertificateHandlerFunc(func(params storage.GetOneStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.GetOneStorageSSLCertificate has not yet been implemented")
 		}),
-		SpecificationOpenapiv3GetOpenapiv3SpecificationHandler: specification_openapiv3.GetOpenapiv3SpecificationHandlerFunc(func(params specification_openapiv3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation specification_openapiv3.GetOpenapiv3Specification has not yet been implemented")
+		Version3GetOpenapiv3SpecificationHandler: version3.GetOpenapiv3SpecificationHandlerFunc(func(params version3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation version3.GetOpenapiv3Specification has not yet been implemented")
 		}),
 		PeerEntryGetPeerEntriesHandler: peer_entry.GetPeerEntriesHandlerFunc(func(params peer_entry.GetPeerEntriesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation peer_entry.GetPeerEntries has not yet been implemented")
@@ -1473,8 +1473,8 @@ type DataPlaneAPI struct {
 	StorageGetOneStorageMapHandler storage.GetOneStorageMapHandler
 	// StorageGetOneStorageSSLCertificateHandler sets the operation handler for the get one storage s s l certificate operation
 	StorageGetOneStorageSSLCertificateHandler storage.GetOneStorageSSLCertificateHandler
-	// SpecificationOpenapiv3GetOpenapiv3SpecificationHandler sets the operation handler for the get openapiv3 specification operation
-	SpecificationOpenapiv3GetOpenapiv3SpecificationHandler specification_openapiv3.GetOpenapiv3SpecificationHandler
+	// Version3GetOpenapiv3SpecificationHandler sets the operation handler for the get openapiv3 specification operation
+	Version3GetOpenapiv3SpecificationHandler version3.GetOpenapiv3SpecificationHandler
 	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
 	PeerEntryGetPeerEntriesHandler peer_entry.GetPeerEntriesHandler
 	// PeerEntryGetPeerEntryHandler sets the operation handler for the get peer entry operation
@@ -2362,8 +2362,8 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StorageGetOneStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.GetOneStorageSSLCertificateHandler")
 	}
-	if o.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler == nil {
-		unregistered = append(unregistered, "specification_openapiv3.GetOpenapiv3SpecificationHandler")
+	if o.Version3GetOpenapiv3SpecificationHandler == nil {
+		unregistered = append(unregistered, "version3.GetOpenapiv3SpecificationHandler")
 	}
 	if o.PeerEntryGetPeerEntriesHandler == nil {
 		unregistered = append(unregistered, "peer_entry.GetPeerEntriesHandler")
@@ -3571,7 +3571,7 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/specification_openapiv3"] = specification_openapiv3.NewGetOpenapiv3Specification(o.context, o.SpecificationOpenapiv3GetOpenapiv3SpecificationHandler)
+	o.handlers["GET"]["/specification_openapiv3"] = version3.NewGetOpenapiv3Specification(o.context, o.Version3GetOpenapiv3SpecificationHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -4073,6 +4073,6 @@ func (o *DataPlaneAPI) AddMiddlewareFor(method, path string, builder middleware.
 	}
 	o.Init()
 	if h, ok := o.handlers[um][path]; ok {
-		o.handlers[method][path] = builder(h)
+		o.handlers[um][path] = builder(h)
 	}
 }

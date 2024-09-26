@@ -153,6 +153,11 @@ func (o *GetDeclareCaptureOKBody) ContextValidate(ctx context.Context, formats s
 func (o *GetDeclareCaptureOKBody) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Data != nil {
+
+		if swag.IsZero(o.Data) { // not required
+			return nil
+		}
+
 		if err := o.Data.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getDeclareCaptureOK" + "." + "data")
