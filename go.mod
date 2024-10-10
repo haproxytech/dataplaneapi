@@ -25,7 +25,6 @@ require (
 	github.com/google/renameio v1.0.1
 	github.com/google/uuid v1.6.0
 	github.com/haproxytech/client-native/v5 v5.1.14
-	github.com/haproxytech/config-parser/v5 v5.1.6
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/json-iterator/go v1.1.12
 	github.com/kr/pretty v0.3.1
