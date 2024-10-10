@@ -1,0 +1,28 @@
+mode: commit
+min_length: 3
+allowed:
+  - aspell
+  - repo
+  - yaml
+  - config
+  - Github
+  - Gitlab
+  - env
+  - failsafe
+  - golang
+  - mkdir
+  - WORKDIR
+  - apk
+  - ENTRYPOINT
+  - ubuntu
+  - golangci
+  - sudo
+  - releaser
+  - backend
+  - backends
+  - frontend
+  - frontends
+  - tcp
+  - crd
+  - linter
+  - linters

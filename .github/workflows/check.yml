@@ -1,4 +1,4 @@
-name: Commit subject
+name: HAProxy check commit message
 on:
   pull_request:
     branches:
@@ -7,7 +7,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: check-commit
-        uses: docker://haproxytech/check-commit:v2.1.0
+      - name: commit-policy
+        uses: docker://ghcr.io/haproxytech/commit-check:5.0.4
         env:
           API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

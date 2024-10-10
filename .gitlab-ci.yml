@@ -72,10 +72,10 @@ gofumpt:
   script:
     - make gofumpt
     - test -z "$(git diff 2> /dev/null)" || exit 'Go code not formatted, issue \`make gofumpt\` and commit the result'
-lint-commit-msg:
+commit-policy:
   stage: lint
   image:
-    name: $CI_REGISTRY_GO/check-commit:v2.1.0
+    name: $CI_REGISTRY_GO/commit-check:5.0.4
     entrypoint: [""]
   tags:
     - go
