@@ -10,6 +10,7 @@ SWAGGER_VERSION=${shell curl -s https://raw.githubusercontent.com/haproxytech/cl
 BUILD_DATE=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 CGO_ENABLED?=0
 GOLANGCI_LINT_VERSION=1.57.1
+CHECK_COMMIT=5.0.4
 
 all: update clean build
 
@@ -52,3 +53,12 @@ generate:
 generate-native:
 	generate/swagger/script.sh
 	generate/post_swagger.sh
+
+.PHONY: test
+test:
+	go test ./...
+
+.PHONY: check-commit
+check-commit:
+	cd bin;CHECK_COMMIT=${CHECK_COMMIT} sh check-commit.sh
+	bin/check-commit
