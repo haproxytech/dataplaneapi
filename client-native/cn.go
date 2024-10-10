@@ -10,12 +10,12 @@ import (
 	clientnative "github.com/haproxytech/client-native/v5"
 	"github.com/haproxytech/client-native/v5/models"
 
+	parser "github.com/haproxytech/client-native/v5/config-parser"
+	"github.com/haproxytech/client-native/v5/config-parser/types"
 	"github.com/haproxytech/client-native/v5/configuration"
 	configuration_options "github.com/haproxytech/client-native/v5/configuration/options"
 	runtime_api "github.com/haproxytech/client-native/v5/runtime"
 	runtime_options "github.com/haproxytech/client-native/v5/runtime/options"
-	parser "github.com/haproxytech/config-parser/v5"
-	"github.com/haproxytech/config-parser/v5/types"
 
 	dataplaneapi_config "github.com/haproxytech/dataplaneapi/configuration"
 	"github.com/haproxytech/dataplaneapi/log"

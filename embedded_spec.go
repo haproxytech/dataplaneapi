@@ -22272,7 +22272,7 @@ func init() {
         },
         "capture_sample": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
+          "pattern": "^(?:[A-Za-z]+\\(\"([A-Za-z\\s]+)\"\\)|[A-Za-z]+)",
           "x-dependency": {
             "type": {
               "value": "capture"
@@ -28643,7 +28643,7 @@ func init() {
         },
         "capture_sample": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
+          "pattern": "^(?:[A-Za-z]+\\(\"([A-Za-z\\s]+)\"\\)|[A-Za-z]+)",
           "x-dependency": {
             "action": {
               "required": true,
@@ -60813,7 +60813,7 @@ func init() {
         },
         "capture_sample": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
+          "pattern": "^(?:[A-Za-z]+\\(\"([A-Za-z\\s]+)\"\\)|[A-Za-z]+)",
           "x-dependency": {
             "type": {
               "value": "capture"
@@ -67079,7 +67079,7 @@ func init() {
         },
         "capture_sample": {
           "type": "string",
-          "pattern": "^[^\\s]+$",
+          "pattern": "^(?:[A-Za-z]+\\(\"([A-Za-z\\s]+)\"\\)|[A-Za-z]+)",
           "x-dependency": {
             "action": {
               "required": true,
