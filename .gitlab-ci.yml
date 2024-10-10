@@ -1,5 +1,6 @@
 stages:
   - lint
+  - checks
   - build
   - test
   - e2e
@@ -143,6 +144,28 @@ test:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_PIPELINE_SOURCE == 'push'
+
+govulncheck:
+  stage: checks
+  needs: []
+  image:
+    name: $CI_REGISTRY_GO/docker:$DOCKER_VERSION-go$GO_VERSION
+    entrypoint: [ "" ]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'schedule' && $SCHEDULE_TYPE == 'daily'
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      changes:
+        - go.mod
+    - if: "$CI_PROJECT_NAMESPACE == 'haproxy-controller' && $CI_PIPELINE_SOURCE == 'push'"
+      changes:
+        - go.mod
+  tags:
+    - go
+  script:
+    - go install golang.org/x/vuln/cmd/govulncheck@latest
+    - govulncheck -version
+    - go mod tidy
+    - go run cmd/govulncheck-report/main.go
 
 HAProxy_2_2:
   extends: .e2e
