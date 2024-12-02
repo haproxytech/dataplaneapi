@@ -139,7 +139,7 @@ func (c *ReplaceConsulHandlerImpl) Handle(params service_discovery.ReplaceConsul
 		e := misc.HandleError(err)
 		return service_discovery.NewReplaceConsulDefault(int(*e.Code)).WithPayload(e)
 	}
-	if *params.Data.HealthCheckPolicy == models.ConsulHealthCheckPolicyMin && params.Data.HealthCheckPolicyMin <= 0 {
+	if params.Data.HealthCheckPolicy != nil && *params.Data.HealthCheckPolicy == models.ConsulHealthCheckPolicyMin && params.Data.HealthCheckPolicyMin <= 0 {
 		e := &models.Error{
 			Message: misc.StringP("health_check_policy_min is required for 'min' health_check_policy"),
 			Code:    misc.Int64P(int(misc.ErrHTTPBadRequest)),
