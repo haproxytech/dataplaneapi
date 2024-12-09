@@ -41,6 +41,7 @@ func main() {
 		cnparents.TCPCheckChildType,
 		cnparents.TCPRequestRuleChildType,
 		cnparents.TCPResponseRuleChildType,
+		cnparents.QUICInitialRuleType,
 		cnparents.ACLChildType,
 		cnparents.BindChildType,
 		cnparents.FilterChildType,
@@ -76,6 +77,9 @@ type TmplData struct {
 }
 
 func generateAlias(childType string) bytes.Buffer {
+	// Initialisms used in child resources need to be added here for the generated parent functions to match with the operations params
+	swag.AddInitialisms("QUIC")
+
 	funcMap := template.FuncMap{
 		"parents": cnparents.Parents,
 	}

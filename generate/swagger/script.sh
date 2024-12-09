@@ -66,6 +66,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --skip-models \
     -s dataplaneapi \
     --additional-initialism=FCGI \
+    --additional-initialism=QUIC \
     --tags=Discovery \
     --tags=ServiceDiscovery \
     --tags=Information \
@@ -125,6 +126,7 @@ swagger generate server -f $SPEC_DIR/haproxy_spec.yaml \
     --tags=Table \
     --tags=CrtStore \
     --tags=CrtLoad \
+    --tags=QUICInitialRule \
     -r $SPEC_DIR/copyright.txt \
     --template-dir generate/swagger/templates
 

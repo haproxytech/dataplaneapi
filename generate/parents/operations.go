@@ -99,6 +99,15 @@ func operations(childType string) []string {
 			"Replace",
 			"ReplaceAll",
 		}
+	case cnparents.QUICInitialRuleType:
+		return []string{
+			"Create",
+			"Get",
+			"GetAll",
+			"Delete",
+			"Replace",
+			"ReplaceAll",
+		}
 	case cnparents.ACLChildType:
 		return []string{
 			"Create",

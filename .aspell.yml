@@ -28,3 +28,4 @@ allowed:
   - linters
   - govulncheck
   - dataplaneapi
+  - quic

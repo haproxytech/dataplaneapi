@@ -556,6 +556,21 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.TCPCheckReplaceTCPCheckDefaultsHandler = &handlers.ReplaceTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 	api.TCPCheckReplaceAllTCPCheckDefaultsHandler = &handlers.ReplaceAllTCPCheckDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// setup quic initia; rule handlers
+	api.QUICInitialRuleCreateQUICInitialRuleDefaultsHandler = &handlers.CreateQUICInitialRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.QUICInitialRuleDeleteQUICInitialRuleDefaultsHandler = &handlers.DeleteQUICInitialRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.QUICInitialRuleGetQUICInitialRuleDefaultsHandler = &handlers.GetQUICInitialRuleDefaultsHandlerImpl{Client: client}
+	api.QUICInitialRuleGetAllQUICInitialRuleDefaultsHandler = &handlers.GetAllQUICInitialRuleDefaultsHandlerImpl{Client: client}
+	api.QUICInitialRuleReplaceQUICInitialRuleDefaultsHandler = &handlers.ReplaceQUICInitialRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+	api.QUICInitialRuleReplaceAllQUICInitialRuleDefaultsHandler = &handlers.ReplaceAllQUICInitialRuleDefaultsHandlerImpl{Client: client, ReloadAgent: ra}
+
+	api.QUICInitialRuleCreateQUICInitialRuleFrontendHandler = &handlers.CreateQUICInitialRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.QUICInitialRuleDeleteQUICInitialRuleFrontendHandler = &handlers.DeleteQUICInitialRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.QUICInitialRuleGetQUICInitialRuleFrontendHandler = &handlers.GetQUICInitialRuleFrontendHandlerImpl{Client: client}
+	api.QUICInitialRuleGetAllQUICInitialRuleFrontendHandler = &handlers.GetAllQUICInitialRuleFrontendHandlerImpl{Client: client}
+	api.QUICInitialRuleReplaceQUICInitialRuleFrontendHandler = &handlers.ReplaceQUICInitialRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+	api.QUICInitialRuleReplaceAllQUICInitialRuleFrontendHandler = &handlers.ReplaceAllQUICInitialRuleFrontendHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup declare capture handlers
 	api.DeclareCaptureCreateDeclareCaptureHandler = &handlers.CreateDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
 	api.DeclareCaptureDeleteDeclareCaptureHandler = &handlers.DeleteDeclareCaptureHandlerImpl{Client: client, ReloadAgent: ra}
