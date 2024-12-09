@@ -70,6 +70,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/peer"
 	"github.com/haproxytech/dataplaneapi/operations/peer_entry"
 	"github.com/haproxytech/dataplaneapi/operations/process_manager"
+	"github.com/haproxytech/dataplaneapi/operations/quic_initial_rule"
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/ring"
@@ -298,6 +299,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ProcessManagerCreateProgramHandler: process_manager.CreateProgramHandlerFunc(func(params process_manager.CreateProgramParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation process_manager.CreateProgram has not yet been implemented")
 		}),
+		QUICInitialRuleCreateQUICInitialRuleDefaultsHandler: quic_initial_rule.CreateQUICInitialRuleDefaultsHandlerFunc(func(params quic_initial_rule.CreateQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.CreateQUICInitialRuleDefaults has not yet been implemented")
+		}),
+		QUICInitialRuleCreateQUICInitialRuleFrontendHandler: quic_initial_rule.CreateQUICInitialRuleFrontendHandlerFunc(func(params quic_initial_rule.CreateQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.CreateQUICInitialRuleFrontend has not yet been implemented")
+		}),
 		ResolverCreateResolverHandler: resolver.CreateResolverHandlerFunc(func(params resolver.CreateResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.CreateResolver has not yet been implemented")
 		}),
@@ -514,6 +521,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ProcessManagerDeleteProgramHandler: process_manager.DeleteProgramHandlerFunc(func(params process_manager.DeleteProgramParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation process_manager.DeleteProgram has not yet been implemented")
 		}),
+		QUICInitialRuleDeleteQUICInitialRuleDefaultsHandler: quic_initial_rule.DeleteQUICInitialRuleDefaultsHandlerFunc(func(params quic_initial_rule.DeleteQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.DeleteQUICInitialRuleDefaults has not yet been implemented")
+		}),
+		QUICInitialRuleDeleteQUICInitialRuleFrontendHandler: quic_initial_rule.DeleteQUICInitialRuleFrontendHandlerFunc(func(params quic_initial_rule.DeleteQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.DeleteQUICInitialRuleFrontend has not yet been implemented")
+		}),
 		ResolverDeleteResolverHandler: resolver.DeleteResolverHandlerFunc(func(params resolver.DeleteResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.DeleteResolver has not yet been implemented")
 		}),
@@ -702,6 +715,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		LogTargetGetAllLogTargetPeerHandler: log_target.GetAllLogTargetPeerHandlerFunc(func(params log_target.GetAllLogTargetPeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.GetAllLogTargetPeer has not yet been implemented")
+		}),
+		QUICInitialRuleGetAllQUICInitialRuleDefaultsHandler: quic_initial_rule.GetAllQUICInitialRuleDefaultsHandlerFunc(func(params quic_initial_rule.GetAllQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.GetAllQUICInitialRuleDefaults has not yet been implemented")
+		}),
+		QUICInitialRuleGetAllQUICInitialRuleFrontendHandler: quic_initial_rule.GetAllQUICInitialRuleFrontendHandlerFunc(func(params quic_initial_rule.GetAllQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.GetAllQUICInitialRuleFrontend has not yet been implemented")
 		}),
 		MapsGetAllRuntimeMapFilesHandler: maps.GetAllRuntimeMapFilesHandlerFunc(func(params maps.GetAllRuntimeMapFilesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.GetAllRuntimeMapFiles has not yet been implemented")
@@ -991,6 +1010,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ProcessManagerGetProgramsHandler: process_manager.GetProgramsHandlerFunc(func(params process_manager.GetProgramsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation process_manager.GetPrograms has not yet been implemented")
 		}),
+		QUICInitialRuleGetQUICInitialRuleDefaultsHandler: quic_initial_rule.GetQUICInitialRuleDefaultsHandlerFunc(func(params quic_initial_rule.GetQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.GetQUICInitialRuleDefaults has not yet been implemented")
+		}),
+		QUICInitialRuleGetQUICInitialRuleFrontendHandler: quic_initial_rule.GetQUICInitialRuleFrontendHandlerFunc(func(params quic_initial_rule.GetQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.GetQUICInitialRuleFrontend has not yet been implemented")
+		}),
 		ReloadsGetReloadHandler: reloads.GetReloadHandlerFunc(func(params reloads.GetReloadParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation reloads.GetReload has not yet been implemented")
 		}),
@@ -1222,6 +1247,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogTargetReplaceAllLogTargetPeerHandler: log_target.ReplaceAllLogTargetPeerHandlerFunc(func(params log_target.ReplaceAllLogTargetPeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.ReplaceAllLogTargetPeer has not yet been implemented")
 		}),
+		QUICInitialRuleReplaceAllQUICInitialRuleDefaultsHandler: quic_initial_rule.ReplaceAllQUICInitialRuleDefaultsHandlerFunc(func(params quic_initial_rule.ReplaceAllQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.ReplaceAllQUICInitialRuleDefaults has not yet been implemented")
+		}),
+		QUICInitialRuleReplaceAllQUICInitialRuleFrontendHandler: quic_initial_rule.ReplaceAllQUICInitialRuleFrontendHandlerFunc(func(params quic_initial_rule.ReplaceAllQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.ReplaceAllQUICInitialRuleFrontend has not yet been implemented")
+		}),
 		TCPCheckReplaceAllTCPCheckBackendHandler: tcp_check.ReplaceAllTCPCheckBackendHandlerFunc(func(params tcp_check.ReplaceAllTCPCheckBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.ReplaceAllTCPCheckBackend has not yet been implemented")
 		}),
@@ -1362,6 +1393,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ProcessManagerReplaceProgramHandler: process_manager.ReplaceProgramHandlerFunc(func(params process_manager.ReplaceProgramParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation process_manager.ReplaceProgram has not yet been implemented")
+		}),
+		QUICInitialRuleReplaceQUICInitialRuleDefaultsHandler: quic_initial_rule.ReplaceQUICInitialRuleDefaultsHandlerFunc(func(params quic_initial_rule.ReplaceQUICInitialRuleDefaultsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.ReplaceQUICInitialRuleDefaults has not yet been implemented")
+		}),
+		QUICInitialRuleReplaceQUICInitialRuleFrontendHandler: quic_initial_rule.ReplaceQUICInitialRuleFrontendHandlerFunc(func(params quic_initial_rule.ReplaceQUICInitialRuleFrontendParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation quic_initial_rule.ReplaceQUICInitialRuleFrontend has not yet been implemented")
 		}),
 		ResolverReplaceResolverHandler: resolver.ReplaceResolverHandlerFunc(func(params resolver.ReplaceResolverParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation resolver.ReplaceResolver has not yet been implemented")
@@ -1636,6 +1673,10 @@ type DataPlaneAPI struct {
 	PeerEntryCreatePeerEntryHandler peer_entry.CreatePeerEntryHandler
 	// ProcessManagerCreateProgramHandler sets the operation handler for the create program operation
 	ProcessManagerCreateProgramHandler process_manager.CreateProgramHandler
+	// QUICInitialRuleCreateQUICInitialRuleDefaultsHandler sets the operation handler for the create QUIC initial rule defaults operation
+	QUICInitialRuleCreateQUICInitialRuleDefaultsHandler quic_initial_rule.CreateQUICInitialRuleDefaultsHandler
+	// QUICInitialRuleCreateQUICInitialRuleFrontendHandler sets the operation handler for the create QUIC initial rule frontend operation
+	QUICInitialRuleCreateQUICInitialRuleFrontendHandler quic_initial_rule.CreateQUICInitialRuleFrontendHandler
 	// ResolverCreateResolverHandler sets the operation handler for the create resolver operation
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
 	// RingCreateRingHandler sets the operation handler for the create ring operation
@@ -1780,6 +1821,10 @@ type DataPlaneAPI struct {
 	PeerEntryDeletePeerEntryHandler peer_entry.DeletePeerEntryHandler
 	// ProcessManagerDeleteProgramHandler sets the operation handler for the delete program operation
 	ProcessManagerDeleteProgramHandler process_manager.DeleteProgramHandler
+	// QUICInitialRuleDeleteQUICInitialRuleDefaultsHandler sets the operation handler for the delete QUIC initial rule defaults operation
+	QUICInitialRuleDeleteQUICInitialRuleDefaultsHandler quic_initial_rule.DeleteQUICInitialRuleDefaultsHandler
+	// QUICInitialRuleDeleteQUICInitialRuleFrontendHandler sets the operation handler for the delete QUIC initial rule frontend operation
+	QUICInitialRuleDeleteQUICInitialRuleFrontendHandler quic_initial_rule.DeleteQUICInitialRuleFrontendHandler
 	// ResolverDeleteResolverHandler sets the operation handler for the delete resolver operation
 	ResolverDeleteResolverHandler resolver.DeleteResolverHandler
 	// RingDeleteRingHandler sets the operation handler for the delete ring operation
@@ -1906,6 +1951,10 @@ type DataPlaneAPI struct {
 	LogTargetGetAllLogTargetLogForwardHandler log_target.GetAllLogTargetLogForwardHandler
 	// LogTargetGetAllLogTargetPeerHandler sets the operation handler for the get all log target peer operation
 	LogTargetGetAllLogTargetPeerHandler log_target.GetAllLogTargetPeerHandler
+	// QUICInitialRuleGetAllQUICInitialRuleDefaultsHandler sets the operation handler for the get all QUIC initial rule defaults operation
+	QUICInitialRuleGetAllQUICInitialRuleDefaultsHandler quic_initial_rule.GetAllQUICInitialRuleDefaultsHandler
+	// QUICInitialRuleGetAllQUICInitialRuleFrontendHandler sets the operation handler for the get all QUIC initial rule frontend operation
+	QUICInitialRuleGetAllQUICInitialRuleFrontendHandler quic_initial_rule.GetAllQUICInitialRuleFrontendHandler
 	// MapsGetAllRuntimeMapFilesHandler sets the operation handler for the get all runtime map files operation
 	MapsGetAllRuntimeMapFilesHandler maps.GetAllRuntimeMapFilesHandler
 	// ServerGetAllRuntimeServerHandler sets the operation handler for the get all runtime server operation
@@ -2098,6 +2147,10 @@ type DataPlaneAPI struct {
 	ProcessManagerGetProgramHandler process_manager.GetProgramHandler
 	// ProcessManagerGetProgramsHandler sets the operation handler for the get programs operation
 	ProcessManagerGetProgramsHandler process_manager.GetProgramsHandler
+	// QUICInitialRuleGetQUICInitialRuleDefaultsHandler sets the operation handler for the get QUIC initial rule defaults operation
+	QUICInitialRuleGetQUICInitialRuleDefaultsHandler quic_initial_rule.GetQUICInitialRuleDefaultsHandler
+	// QUICInitialRuleGetQUICInitialRuleFrontendHandler sets the operation handler for the get QUIC initial rule frontend operation
+	QUICInitialRuleGetQUICInitialRuleFrontendHandler quic_initial_rule.GetQUICInitialRuleFrontendHandler
 	// ReloadsGetReloadHandler sets the operation handler for the get reload operation
 	ReloadsGetReloadHandler reloads.GetReloadHandler
 	// ReloadsGetReloadsHandler sets the operation handler for the get reloads operation
@@ -2252,6 +2305,10 @@ type DataPlaneAPI struct {
 	LogTargetReplaceAllLogTargetLogForwardHandler log_target.ReplaceAllLogTargetLogForwardHandler
 	// LogTargetReplaceAllLogTargetPeerHandler sets the operation handler for the replace all log target peer operation
 	LogTargetReplaceAllLogTargetPeerHandler log_target.ReplaceAllLogTargetPeerHandler
+	// QUICInitialRuleReplaceAllQUICInitialRuleDefaultsHandler sets the operation handler for the replace all QUIC initial rule defaults operation
+	QUICInitialRuleReplaceAllQUICInitialRuleDefaultsHandler quic_initial_rule.ReplaceAllQUICInitialRuleDefaultsHandler
+	// QUICInitialRuleReplaceAllQUICInitialRuleFrontendHandler sets the operation handler for the replace all QUIC initial rule frontend operation
+	QUICInitialRuleReplaceAllQUICInitialRuleFrontendHandler quic_initial_rule.ReplaceAllQUICInitialRuleFrontendHandler
 	// TCPCheckReplaceAllTCPCheckBackendHandler sets the operation handler for the replace all TCP check backend operation
 	TCPCheckReplaceAllTCPCheckBackendHandler tcp_check.ReplaceAllTCPCheckBackendHandler
 	// TCPCheckReplaceAllTCPCheckDefaultsHandler sets the operation handler for the replace all TCP check defaults operation
@@ -2346,6 +2403,10 @@ type DataPlaneAPI struct {
 	PeerEntryReplacePeerEntryHandler peer_entry.ReplacePeerEntryHandler
 	// ProcessManagerReplaceProgramHandler sets the operation handler for the replace program operation
 	ProcessManagerReplaceProgramHandler process_manager.ReplaceProgramHandler
+	// QUICInitialRuleReplaceQUICInitialRuleDefaultsHandler sets the operation handler for the replace QUIC initial rule defaults operation
+	QUICInitialRuleReplaceQUICInitialRuleDefaultsHandler quic_initial_rule.ReplaceQUICInitialRuleDefaultsHandler
+	// QUICInitialRuleReplaceQUICInitialRuleFrontendHandler sets the operation handler for the replace QUIC initial rule frontend operation
+	QUICInitialRuleReplaceQUICInitialRuleFrontendHandler quic_initial_rule.ReplaceQUICInitialRuleFrontendHandler
 	// ResolverReplaceResolverHandler sets the operation handler for the replace resolver operation
 	ResolverReplaceResolverHandler resolver.ReplaceResolverHandler
 	// RingReplaceRingHandler sets the operation handler for the replace ring operation
@@ -2676,6 +2737,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ProcessManagerCreateProgramHandler == nil {
 		unregistered = append(unregistered, "process_manager.CreateProgramHandler")
 	}
+	if o.QUICInitialRuleCreateQUICInitialRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.CreateQUICInitialRuleDefaultsHandler")
+	}
+	if o.QUICInitialRuleCreateQUICInitialRuleFrontendHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.CreateQUICInitialRuleFrontendHandler")
+	}
 	if o.ResolverCreateResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.CreateResolverHandler")
 	}
@@ -2892,6 +2959,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ProcessManagerDeleteProgramHandler == nil {
 		unregistered = append(unregistered, "process_manager.DeleteProgramHandler")
 	}
+	if o.QUICInitialRuleDeleteQUICInitialRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.DeleteQUICInitialRuleDefaultsHandler")
+	}
+	if o.QUICInitialRuleDeleteQUICInitialRuleFrontendHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.DeleteQUICInitialRuleFrontendHandler")
+	}
 	if o.ResolverDeleteResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.DeleteResolverHandler")
 	}
@@ -3080,6 +3153,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.LogTargetGetAllLogTargetPeerHandler == nil {
 		unregistered = append(unregistered, "log_target.GetAllLogTargetPeerHandler")
+	}
+	if o.QUICInitialRuleGetAllQUICInitialRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.GetAllQUICInitialRuleDefaultsHandler")
+	}
+	if o.QUICInitialRuleGetAllQUICInitialRuleFrontendHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.GetAllQUICInitialRuleFrontendHandler")
 	}
 	if o.MapsGetAllRuntimeMapFilesHandler == nil {
 		unregistered = append(unregistered, "maps.GetAllRuntimeMapFilesHandler")
@@ -3369,6 +3448,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ProcessManagerGetProgramsHandler == nil {
 		unregistered = append(unregistered, "process_manager.GetProgramsHandler")
 	}
+	if o.QUICInitialRuleGetQUICInitialRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.GetQUICInitialRuleDefaultsHandler")
+	}
+	if o.QUICInitialRuleGetQUICInitialRuleFrontendHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.GetQUICInitialRuleFrontendHandler")
+	}
 	if o.ReloadsGetReloadHandler == nil {
 		unregistered = append(unregistered, "reloads.GetReloadHandler")
 	}
@@ -3600,6 +3685,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.LogTargetReplaceAllLogTargetPeerHandler == nil {
 		unregistered = append(unregistered, "log_target.ReplaceAllLogTargetPeerHandler")
 	}
+	if o.QUICInitialRuleReplaceAllQUICInitialRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.ReplaceAllQUICInitialRuleDefaultsHandler")
+	}
+	if o.QUICInitialRuleReplaceAllQUICInitialRuleFrontendHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.ReplaceAllQUICInitialRuleFrontendHandler")
+	}
 	if o.TCPCheckReplaceAllTCPCheckBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_check.ReplaceAllTCPCheckBackendHandler")
 	}
@@ -3740,6 +3831,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ProcessManagerReplaceProgramHandler == nil {
 		unregistered = append(unregistered, "process_manager.ReplaceProgramHandler")
+	}
+	if o.QUICInitialRuleReplaceQUICInitialRuleDefaultsHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.ReplaceQUICInitialRuleDefaultsHandler")
+	}
+	if o.QUICInitialRuleReplaceQUICInitialRuleFrontendHandler == nil {
+		unregistered = append(unregistered, "quic_initial_rule.ReplaceQUICInitialRuleFrontendHandler")
 	}
 	if o.ResolverReplaceResolverHandler == nil {
 		unregistered = append(unregistered, "resolver.ReplaceResolverHandler")
@@ -4174,6 +4271,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewCreateQUICInitialRuleDefaults(o.context, o.QUICInitialRuleCreateQUICInitialRuleDefaultsHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewCreateQUICInitialRuleFrontend(o.context, o.QUICInitialRuleCreateQUICInitialRuleFrontendHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/resolvers"] = resolver.NewCreateResolver(o.context, o.ResolverCreateResolverHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4462,6 +4567,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewDeleteQUICInitialRuleDefaults(o.context, o.QUICInitialRuleDeleteQUICInitialRuleDefaultsHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewDeleteQUICInitialRuleFrontend(o.context, o.QUICInitialRuleDeleteQUICInitialRuleFrontendHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/resolvers/{name}"] = resolver.NewDeleteResolver(o.context, o.ResolverDeleteResolverHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -4711,6 +4824,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/peers/{parent_name}/log_targets"] = log_target.NewGetAllLogTargetPeer(o.context, o.LogTargetGetAllLogTargetPeerHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules"] = quic_initial_rule.NewGetAllQUICInitialRuleDefaults(o.context, o.QUICInitialRuleGetAllQUICInitialRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules"] = quic_initial_rule.NewGetAllQUICInitialRuleFrontend(o.context, o.QUICInitialRuleGetAllQUICInitialRuleFrontendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5098,6 +5219,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewGetQUICInitialRuleDefaults(o.context, o.QUICInitialRuleGetQUICInitialRuleDefaultsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewGetQUICInitialRuleFrontend(o.context, o.QUICInitialRuleGetQUICInitialRuleFrontendHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/reloads/{id}"] = reloads.NewGetReload(o.context, o.ReloadsGetReloadHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -5406,6 +5535,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules"] = quic_initial_rule.NewReplaceAllQUICInitialRuleDefaults(o.context, o.QUICInitialRuleReplaceAllQUICInitialRuleDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules"] = quic_initial_rule.NewReplaceAllQUICInitialRuleFrontend(o.context, o.QUICInitialRuleReplaceAllQUICInitialRuleFrontendHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/tcp_checks"] = tcp_check.NewReplaceAllTCPCheckBackend(o.context, o.TCPCheckReplaceAllTCPCheckBackendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -5591,6 +5728,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/programs/{name}"] = process_manager.NewReplaceProgram(o.context, o.ProcessManagerReplaceProgramHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewReplaceQUICInitialRuleDefaults(o.context, o.QUICInitialRuleReplaceQUICInitialRuleDefaultsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules/{index}"] = quic_initial_rule.NewReplaceQUICInitialRuleFrontend(o.context, o.QUICInitialRuleReplaceQUICInitialRuleFrontendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

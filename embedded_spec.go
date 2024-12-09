@@ -7529,6 +7529,323 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules": {
+      "get": {
+        "description": "Returns all QUIC Initial rules that are configured in specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return an array of all QUIC Initial rules",
+        "operationId": "getAllQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of QUIC Initial rules with the list given in parameter",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace an QUIC Initial rules list",
+        "operationId": "replaceAllQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TTP After Response Rules lines replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules/{index}": {
+      "get": {
+        "description": "Returns one QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return one QUIC Initial Rule",
+        "operationId": "getQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace a QUIC Initial Rule",
+        "operationId": "replaceQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "QUIC Initial Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new QUIC Initial Rule of the specified type in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Add a new QUIC Initial Rule",
+        "operationId": "createQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a QUIC Initial Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Delete a QUIC Initial Rule",
+        "operationId": "deleteQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "QUIC Initial Rule deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults/{parent_name}/tcp_checks": {
       "get": {
         "description": "Returns all TCP checks that are configured in specified parent.",
@@ -11774,6 +12091,323 @@ func init() {
           },
           "204": {
             "description": "Log Target deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules": {
+      "get": {
+        "description": "Returns all QUIC Initial rules that are configured in specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return an array of all QUIC Initial rules",
+        "operationId": "getAllQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of QUIC Initial rules with the list given in parameter",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace an QUIC Initial rules list",
+        "operationId": "replaceAllQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TTP After Response Rules lines replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules/{index}": {
+      "get": {
+        "description": "Returns one QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return one QUIC Initial Rule",
+        "operationId": "getQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace a QUIC Initial Rule",
+        "operationId": "replaceQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "QUIC Initial Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new QUIC Initial Rule of the specified type in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Add a new QUIC Initial Rule",
+        "operationId": "createQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a QUIC Initial Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Delete a QUIC Initial Rule",
+        "operationId": "deleteQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "QUIC Initial Rule deleted"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -21899,6 +22533,14 @@ func init() {
           ],
           "x-display-name": "Accept Invalid HTTP Response"
         },
+        "accept_unsafe_violations_in_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Response"
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -22964,19 +23606,29 @@ func init() {
           "type": "boolean"
         },
         "force_sslv3": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv10": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv11": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv12": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv13": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv13, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "generate_certificates": {
           "type": "boolean",
@@ -23058,12 +23710,14 @@ func init() {
           }
         },
         "no_sslv3": {
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tls_tickets": {
           "type": "boolean",
@@ -23074,36 +23728,44 @@ func init() {
           }
         },
         "no_tlsv10": {
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tlsv11": {
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tlsv12": {
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tlsv13": {
+          "description": "This field is deprecated in favor of tlsv13, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "npn": {
           "type": "string"
@@ -23192,6 +23854,18 @@ func init() {
             "TLSv1.3"
           ]
         },
+        "sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "strict_sni": {
           "type": "boolean",
           "x-dependency": {
@@ -23212,6 +23886,54 @@ func init() {
         },
         "tls_ticket_keys": {
           "type": "string"
+        },
+        "tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
+        "tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
+        "tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
+        "tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "transparent": {
           "type": "boolean"
@@ -23896,6 +24618,10 @@ func init() {
               "x-go-name": "LogTargetList",
               "$ref": "#/definitions/log_targets"
             },
+            "quic_initial_rule_list": {
+              "x-go-name": "QUICInitialRuleList",
+              "$ref": "#/definitions/quic_initial_rules"
+            },
             "tcp_check_rule_list": {
               "x-go-name": "TCPCheckRuleList",
               "$ref": "#/definitions/tcp_checks"
@@ -23932,6 +24658,22 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Accept Invalid HTTP Response"
+        },
+        "accept_unsafe_violations_in_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Request"
+        },
+        "accept_unsafe_violations_in_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Response"
         },
         "adv_check": {
           "type": "string",
@@ -24319,6 +25061,23 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "log_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "accept",
+              "request",
+              "connect",
+              "response",
+              "close",
+              "error",
+              "any"
+            ]
+          },
+          "x-go-name": "LogSteps",
+          "x-omitempty": true
         },
         "log_tag": {
           "type": "string",
@@ -25437,6 +26196,10 @@ func init() {
               "x-go-name": "LogTargetList",
               "$ref": "#/definitions/log_targets"
             },
+            "quic_initial_rule_list": {
+              "x-go-name": "QUICInitialRuleList",
+              "$ref": "#/definitions/quic_initial_rules"
+            },
             "tcp_request_rule_list": {
               "x-go-name": "TCPRequestRuleList",
               "$ref": "#/definitions/tcp_request_rules"
@@ -25461,6 +26224,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Accept Invalid HTTP Request"
+        },
+        "accept_unsafe_violations_in_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Request"
         },
         "backlog": {
           "type": "integer",
@@ -25763,6 +26534,23 @@ func init() {
             "disabled"
           ]
         },
+        "log_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "accept",
+              "request",
+              "connect",
+              "response",
+              "close",
+              "error",
+              "any"
+            ]
+          },
+          "x-go-name": "LogSteps",
+          "x-omitempty": true
+        },
         "log_tag": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
@@ -26048,6 +26836,9 @@ func init() {
         "environment_options": {
           "$ref": "#/definitions/environment_options"
         },
+        "expose_deprecated_directives": {
+          "type": "boolean"
+        },
         "expose_experimental_directives": {
           "type": "boolean"
         },
@@ -26057,6 +26848,13 @@ func init() {
         },
         "fifty_one_degrees_options": {
           "$ref": "#/definitions/fifty_one_degrees_options"
+        },
+        "force_cfg_parser_pause": {
+          "type": "integer",
+          "x-default-unit": "ms",
+          "x-display-name": "Pause the configuration parser to simulate long reloads",
+          "x-duration": true,
+          "x-nullable": true
         },
         "gid": {
           "type": "integer",
@@ -26404,6 +27202,14 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "User"
+        },
+        "warn_blocked_traffic_after": {
+          "type": "integer",
+          "minimum": 1,
+          "x-default-unit": "ms",
+          "x-display-name": "Delay after which a stuck task triggers a warning",
+          "x-duration": true,
+          "x-nullable": true
         },
         "wurfl_options": {
           "$ref": "#/definitions/wurfl_options"
@@ -26790,7 +27596,8 @@ func init() {
             "set-var",
             "set-var-fmt",
             "strict-mode",
-            "unset-var"
+            "unset-var",
+            "do-log"
           ],
           "x-nullable": false
         },
@@ -27634,7 +28441,8 @@ func init() {
                 "set-priority-class",
                 "set-priority-offset",
                 "set-src",
-                "set-src-port"
+                "set-src-port",
+                "set-retries"
               ]
             }
           },
@@ -28308,7 +29116,9 @@ func init() {
             "use-service",
             "wait-for-body",
             "wait-for-handshake",
-            "set-bandwidth-limit"
+            "set-bandwidth-limit",
+            "set-retries",
+            "do-log"
           ],
           "x-nullable": false
         },
@@ -29078,7 +29888,8 @@ func init() {
             "track-sc",
             "unset-var",
             "wait-for-body",
-            "set-bandwidth-limit"
+            "set-bandwidth-limit",
+            "do-log"
           ],
           "x-nullable": false
         },
@@ -30658,6 +31469,11 @@ func init() {
               "additionalProperties": {
                 "$ref": "#/definitions/server"
               }
+            },
+            "tables": {
+              "additionalProperties": {
+                "$ref": "#/definitions/table"
+              }
             }
           }
         }
@@ -31160,6 +31976,61 @@ func init() {
       "items": {
         "$ref": "#/definitions/program"
       }
+    },
+    "quic_initial_rule": {
+      "description": "QUIC Initial configuration",
+      "type": "object",
+      "title": "QUIC Initial",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "reject",
+            "accept",
+            "send-retry",
+            "dgram-drop"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "x-go-name": "QUICInitialRule",
+      "example": {
+        "type": "reject"
+      }
+    },
+    "quic_initial_rules": {
+      "type": "array",
+      "title": "QUIC Initials Array",
+      "items": {
+        "$ref": "#/definitions/quic_initial_rule"
+      },
+      "x-go-name": "QUICInitialRules"
     },
     "redispatch": {
       "type": "object",
@@ -32188,39 +33059,49 @@ func init() {
           "x-nullable": true
         },
         "force_sslv3": {
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv10": {
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv11": {
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv12": {
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv13": {
+          "description": "This field is deprecated in favor of tlsv13, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "guid": {
           "type": "string",
@@ -32291,39 +33172,49 @@ func init() {
           "type": "string"
         },
         "no_sslv3": {
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv10": {
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv11": {
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv12": {
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv13": {
+          "description": "This field is deprecated in favor of force_tlsv13, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_verifyhost": {
           "type": "string",
@@ -32572,6 +33463,13 @@ func init() {
             "disabled"
           ]
         },
+        "sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "stick": {
           "type": "string",
           "enum": [
@@ -32603,6 +33501,34 @@ func init() {
               "value": "enabled"
             }
           }
+        },
+        "tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "track": {
           "type": "string"
@@ -34390,7 +35316,9 @@ func init() {
             "switch-mode",
             "track-sc",
             "unset-var",
-            "use-service"
+            "use-service",
+            "set-retries",
+            "do-log"
           ],
           "x-dependency": {
             "type": {
@@ -34531,7 +35459,8 @@ func init() {
                 "set-priority-offset",
                 "set-src",
                 "set-src-port",
-                "set-var"
+                "set-var",
+                "set-retries"
               ]
             },
             "type": {
@@ -35051,7 +35980,8 @@ func init() {
             "set-var",
             "set-var-fmt",
             "silent-drop",
-            "unset-var"
+            "unset-var",
+            "do-log"
           ],
           "x-dependency": {
             "type": {
@@ -35476,6 +36406,13 @@ func init() {
           "type": "integer",
           "x-display-name": "Buffer Size"
         },
+        "bufsize_small": {
+          "type": "integer",
+          "minimum": 1,
+          "x-display-name": "Size of small buffers (for memory-restrained situations)",
+          "x-nullable": true,
+          "x-size": true
+        },
         "pipesize": {
           "type": "integer",
           "x-display-name": "Pipe Buffer Size"
@@ -35600,6 +36537,10 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum Compression Level"
         },
+        "disable_fast_forward": {
+          "type": "boolean",
+          "x-display-name": "Disable fast-forwarding"
+        },
         "disable_zero_copy_forwarding": {
           "type": "boolean",
           "x-display-name": "Disable zero-copy forwarding"
@@ -35650,6 +36591,12 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum number of concurrent streams per outgoing connection"
         },
+        "h2_be_rxbuf": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 receive buffer size for outgoing connections",
+          "x-nullable": true,
+          "x-size": true
+        },
         "h2_fe_glitches_threshold": {
           "type": "integer",
           "x-display-name": "Automatically kill a frontend connection past a number of glitches",
@@ -35667,6 +36614,12 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
           "x-nullable": true
+        },
+        "h2_fe_rxbuf": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 receive buffer size for incoming connections",
+          "x-nullable": true,
+          "x-size": true
         },
         "h2_header_table_size": {
           "type": "integer",
@@ -35787,6 +36740,20 @@ func init() {
             "disabled"
           ],
           "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+        },
+        "renice_runtime": {
+          "type": "integer",
+          "maximum": 19,
+          "minimum": -20,
+          "x-display-name": "Scheduling priority applied after the configuration parsing",
+          "x-nullable": true
+        },
+        "renice_startup": {
+          "type": "integer",
+          "maximum": 19,
+          "minimum": -20,
+          "x-display-name": "Scheduling priority applied before the rest of the configuration",
+          "x-nullable": true
         },
         "ring_queues": {
           "type": "integer",
@@ -48435,6 +49402,520 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules": {
+      "get": {
+        "description": "Returns all QUIC Initial rules that are configured in specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return an array of all QUIC Initial rules",
+        "operationId": "getAllQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of QUIC Initial rules with the list given in parameter",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace an QUIC Initial rules list",
+        "operationId": "replaceAllQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TTP After Response Rules lines replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/defaults/{parent_name}/quic_initial_rules/{index}": {
+      "get": {
+        "description": "Returns one QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return one QUIC Initial Rule",
+        "operationId": "getQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace a QUIC Initial Rule",
+        "operationId": "replaceQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "QUIC Initial Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new QUIC Initial Rule of the specified type in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Add a new QUIC Initial Rule",
+        "operationId": "createQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a QUIC Initial Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Delete a QUIC Initial Rule",
+        "operationId": "deleteQUICInitialRuleDefaults",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "QUIC Initial Rule deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/defaults/{parent_name}/tcp_checks": {
       "get": {
         "description": "Returns all TCP checks that are configured in specified parent.",
@@ -55310,6 +56791,520 @@ func init() {
           },
           "204": {
             "description": "Log Target deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules": {
+      "get": {
+        "description": "Returns all QUIC Initial rules that are configured in specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return an array of all QUIC Initial rules",
+        "operationId": "getAllQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a whole list of QUIC Initial rules with the list given in parameter",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace an QUIC Initial rules list",
+        "operationId": "replaceAllQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All TTP After Response Rules lines replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rules"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/quic_initial_rules/{index}": {
+      "get": {
+        "description": "Returns one QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Return one QUIC Initial Rule",
+        "operationId": "getQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a QUIC Initial Rule configuration by it's index in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Replace a QUIC Initial Rule",
+        "operationId": "replaceQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "QUIC Initial Rule replaced",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new QUIC Initial Rule of the specified type in the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Add a new QUIC Initial Rule",
+        "operationId": "createQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "HTTP Response Rule created",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/quic_initial_rule"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a QUIC Initial Rule configuration by it's index from the specified parent.",
+        "tags": [
+          "QUICInitialRule"
+        ],
+        "summary": "Delete a QUIC Initial Rule",
+        "operationId": "deleteQUICInitialRuleFrontend",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "QUIC Initial Rule Index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "QUIC Initial Rule deleted"
           },
           "404": {
             "description": "The specified resource was not found",
@@ -72038,6 +74033,14 @@ func init() {
           ],
           "x-display-name": "Accept Invalid HTTP Response"
         },
+        "accept_unsafe_violations_in_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Response"
+        },
         "adv_check": {
           "type": "string",
           "enum": [
@@ -73063,19 +75066,29 @@ func init() {
           "type": "boolean"
         },
         "force_sslv3": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv10": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv11": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv12": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "force_tlsv13": {
-          "type": "boolean"
+          "description": "This field is deprecated in favor of tlsv13, and will be removed in a future release",
+          "type": "boolean",
+          "x-deprecated": true
         },
         "generate_certificates": {
           "type": "boolean",
@@ -73157,12 +75170,14 @@ func init() {
           }
         },
         "no_sslv3": {
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tls_tickets": {
           "type": "boolean",
@@ -73173,36 +75188,44 @@ func init() {
           }
         },
         "no_tlsv10": {
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tlsv11": {
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tlsv12": {
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "no_tlsv13": {
+          "description": "This field is deprecated in favor of tlsv13, and will be removed in a future release",
           "type": "boolean",
           "x-dependency": {
             "ssl": {
               "value": true
             }
-          }
+          },
+          "x-deprecated": true
         },
         "npn": {
           "type": "string"
@@ -73291,6 +75314,18 @@ func init() {
             "TLSv1.3"
           ]
         },
+        "sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
         "strict_sni": {
           "type": "boolean",
           "x-dependency": {
@@ -73311,6 +75346,54 @@ func init() {
         },
         "tls_ticket_keys": {
           "type": "string"
+        },
+        "tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
+        "tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
+        "tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
+        },
+        "tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-dependency": {
+            "ssl": {
+              "value": true
+            }
+          }
         },
         "transparent": {
           "type": "boolean"
@@ -73958,6 +76041,10 @@ func init() {
               "x-go-name": "LogTargetList",
               "$ref": "#/definitions/log_targets"
             },
+            "quic_initial_rule_list": {
+              "x-go-name": "QUICInitialRuleList",
+              "$ref": "#/definitions/quic_initial_rules"
+            },
             "tcp_check_rule_list": {
               "x-go-name": "TCPCheckRuleList",
               "$ref": "#/definitions/tcp_checks"
@@ -73994,6 +76081,22 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Accept Invalid HTTP Response"
+        },
+        "accept_unsafe_violations_in_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Request"
+        },
+        "accept_unsafe_violations_in_http_response": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Response"
         },
         "adv_check": {
           "type": "string",
@@ -74386,6 +76489,23 @@ func init() {
             "enabled",
             "disabled"
           ]
+        },
+        "log_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "accept",
+              "request",
+              "connect",
+              "response",
+              "close",
+              "error",
+              "any"
+            ]
+          },
+          "x-go-name": "LogSteps",
+          "x-omitempty": true
         },
         "log_tag": {
           "type": "string",
@@ -75479,6 +77599,10 @@ func init() {
               "x-go-name": "LogTargetList",
               "$ref": "#/definitions/log_targets"
             },
+            "quic_initial_rule_list": {
+              "x-go-name": "QUICInitialRuleList",
+              "$ref": "#/definitions/quic_initial_rules"
+            },
             "tcp_request_rule_list": {
               "x-go-name": "TCPRequestRuleList",
               "$ref": "#/definitions/tcp_request_rules"
@@ -75503,6 +77627,14 @@ func init() {
             "disabled"
           ],
           "x-display-name": "Accept Invalid HTTP Request"
+        },
+        "accept_unsafe_violations_in_http_request": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-display-name": "Accept Unsafe Violations in HTTP Request"
         },
         "backlog": {
           "type": "integer",
@@ -75809,6 +77941,23 @@ func init() {
             "disabled"
           ]
         },
+        "log_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "accept",
+              "request",
+              "connect",
+              "response",
+              "close",
+              "error",
+              "any"
+            ]
+          },
+          "x-go-name": "LogSteps",
+          "x-omitempty": true
+        },
         "log_tag": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
@@ -76081,6 +78230,9 @@ func init() {
         "environment_options": {
           "$ref": "#/definitions/environment_options"
         },
+        "expose_deprecated_directives": {
+          "type": "boolean"
+        },
         "expose_experimental_directives": {
           "type": "boolean"
         },
@@ -76090,6 +78242,14 @@ func init() {
         },
         "fifty_one_degrees_options": {
           "$ref": "#/definitions/fifty_one_degrees_options"
+        },
+        "force_cfg_parser_pause": {
+          "type": "integer",
+          "minimum": 0,
+          "x-default-unit": "ms",
+          "x-display-name": "Pause the configuration parser to simulate long reloads",
+          "x-duration": true,
+          "x-nullable": true
         },
         "gid": {
           "type": "integer",
@@ -76366,6 +78526,14 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-display-name": "User"
+        },
+        "warn_blocked_traffic_after": {
+          "type": "integer",
+          "minimum": 1,
+          "x-default-unit": "ms",
+          "x-display-name": "Delay after which a stuck task triggers a warning",
+          "x-duration": true,
+          "x-nullable": true
         },
         "wurfl_options": {
           "$ref": "#/definitions/wurfl_options"
@@ -76752,7 +78920,8 @@ func init() {
             "set-var",
             "set-var-fmt",
             "strict-mode",
-            "unset-var"
+            "unset-var",
+            "do-log"
           ],
           "x-nullable": false
         },
@@ -77597,7 +79766,8 @@ func init() {
                 "set-priority-class",
                 "set-priority-offset",
                 "set-src",
-                "set-src-port"
+                "set-src-port",
+                "set-retries"
               ]
             }
           },
@@ -78271,7 +80441,9 @@ func init() {
             "use-service",
             "wait-for-body",
             "wait-for-handshake",
-            "set-bandwidth-limit"
+            "set-bandwidth-limit",
+            "set-retries",
+            "do-log"
           ],
           "x-nullable": false
         },
@@ -79042,7 +81214,8 @@ func init() {
             "track-sc",
             "unset-var",
             "wait-for-body",
-            "set-bandwidth-limit"
+            "set-bandwidth-limit",
+            "do-log"
           ],
           "x-nullable": false
         },
@@ -80598,6 +82771,11 @@ func init() {
               "additionalProperties": {
                 "$ref": "#/definitions/server"
               }
+            },
+            "tables": {
+              "additionalProperties": {
+                "$ref": "#/definitions/table"
+              }
             }
           }
         }
@@ -81101,6 +83279,61 @@ func init() {
       "items": {
         "$ref": "#/definitions/program"
       }
+    },
+    "quic_initial_rule": {
+      "description": "QUIC Initial configuration",
+      "type": "object",
+      "title": "QUIC Initial",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "cond": {
+          "type": "string",
+          "enum": [
+            "if",
+            "unless"
+          ],
+          "x-display-name": "Condition"
+        },
+        "cond_test": {
+          "type": "string",
+          "x-dependency": {
+            "cond": {
+              "required": true
+            }
+          },
+          "x-display-name": "Condition Test",
+          "x-dynamic-enum": {
+            "freeFormat": true,
+            "operation": "getACLs",
+            "property": "acl_name"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "reject",
+            "accept",
+            "send-retry",
+            "dgram-drop"
+          ],
+          "x-nullable": false
+        }
+      },
+      "additionalProperties": false,
+      "x-go-name": "QUICInitialRule",
+      "example": {
+        "type": "reject"
+      }
+    },
+    "quic_initial_rules": {
+      "type": "array",
+      "title": "QUIC Initials Array",
+      "items": {
+        "$ref": "#/definitions/quic_initial_rule"
+      },
+      "x-go-name": "QUICInitialRules"
     },
     "redispatch": {
       "type": "object",
@@ -82149,39 +84382,49 @@ func init() {
           "x-nullable": true
         },
         "force_sslv3": {
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv10": {
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv11": {
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv12": {
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "force_tlsv13": {
+          "description": "This field is deprecated in favor of tlsv13, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "guid": {
           "type": "string",
@@ -82253,39 +84496,49 @@ func init() {
           "type": "string"
         },
         "no_sslv3": {
+          "description": "This field is deprecated in favor of sslv3, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv10": {
+          "description": "This field is deprecated in favor of tlsv10, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv11": {
+          "description": "This field is deprecated in favor of tlsv11, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv12": {
+          "description": "This field is deprecated in favor of tlsv12, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_tlsv13": {
+          "description": "This field is deprecated in favor of force_tlsv13, and will be removed in a future release",
           "type": "string",
           "enum": [
             "enabled",
             "disabled"
-          ]
+          ],
+          "x-deprecated": true
         },
         "no_verifyhost": {
           "type": "string",
@@ -82536,6 +84789,13 @@ func init() {
             "disabled"
           ]
         },
+        "sslv3": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
         "stick": {
           "type": "string",
           "enum": [
@@ -82568,6 +84828,34 @@ func init() {
               "value": "enabled"
             }
           }
+        },
+        "tlsv10": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tlsv11": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tlsv12": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "tlsv13": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
         },
         "track": {
           "type": "string"
@@ -84236,7 +86524,9 @@ func init() {
             "switch-mode",
             "track-sc",
             "unset-var",
-            "use-service"
+            "use-service",
+            "set-retries",
+            "do-log"
           ],
           "x-dependency": {
             "type": {
@@ -84377,7 +86667,8 @@ func init() {
                 "set-priority-offset",
                 "set-src",
                 "set-src-port",
-                "set-var"
+                "set-var",
+                "set-retries"
               ]
             },
             "type": {
@@ -84897,7 +87188,8 @@ func init() {
             "set-var",
             "set-var-fmt",
             "silent-drop",
-            "unset-var"
+            "unset-var",
+            "do-log"
           ],
           "x-dependency": {
             "type": {
@@ -85322,6 +87614,13 @@ func init() {
           "type": "integer",
           "x-display-name": "Buffer Size"
         },
+        "bufsize_small": {
+          "type": "integer",
+          "minimum": 1,
+          "x-display-name": "Size of small buffers (for memory-restrained situations)",
+          "x-nullable": true,
+          "x-size": true
+        },
         "pipesize": {
           "type": "integer",
           "x-display-name": "Pipe Buffer Size"
@@ -85450,6 +87749,10 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum Compression Level"
         },
+        "disable_fast_forward": {
+          "type": "boolean",
+          "x-display-name": "Disable fast-forwarding"
+        },
         "disable_zero_copy_forwarding": {
           "type": "boolean",
           "x-display-name": "Disable zero-copy forwarding"
@@ -85500,6 +87803,12 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum number of concurrent streams per outgoing connection"
         },
+        "h2_be_rxbuf": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 receive buffer size for outgoing connections",
+          "x-nullable": true,
+          "x-size": true
+        },
         "h2_fe_glitches_threshold": {
           "type": "integer",
           "x-display-name": "Automatically kill a frontend connection past a number of glitches",
@@ -85517,6 +87826,12 @@ func init() {
           "type": "integer",
           "x-display-name": "Maximum number of total streams processed per incoming HTTP/2 connection",
           "x-nullable": true
+        },
+        "h2_fe_rxbuf": {
+          "type": "integer",
+          "x-display-name": "HTTP/2 receive buffer size for incoming connections",
+          "x-nullable": true,
+          "x-size": true
         },
         "h2_header_table_size": {
           "type": "integer",
@@ -85638,6 +87953,20 @@ func init() {
             "disabled"
           ],
           "x-display-name": "enable or disable the zero-copy forwarding of data for the pass-through multiplexer"
+        },
+        "renice_runtime": {
+          "type": "integer",
+          "maximum": 19,
+          "minimum": -20,
+          "x-display-name": "Scheduling priority applied after the configuration parsing",
+          "x-nullable": true
+        },
+        "renice_startup": {
+          "type": "integer",
+          "maximum": 19,
+          "minimum": -20,
+          "x-display-name": "Scheduling priority applied before the rest of the configuration",
+          "x-nullable": true
         },
         "ring_queues": {
           "type": "integer",
