@@ -831,6 +831,14 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.CrtLoadReplaceCrtLoadHandler = &handlers.ReplaceCrtLoadHandler{Client: client, ReloadAgent: ra}
 	api.CrtLoadDeleteCrtLoadHandler = &handlers.DeleteCrtLoadHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// traces handlers
+	api.TracesGetTracesHandler = &handlers.GetTracesHandlerImpl{Client: client}
+	api.TracesCreateTracesHandler = &handlers.CreateTracesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TracesReplaceTracesHandler = &handlers.ReplaceTracesHandler{Client: client, ReloadAgent: ra}
+	api.TracesDeleteTracesHandler = &handlers.DeleteTracesHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TracesCreateTraceEntryHandler = &handlers.CreateTraceEntryHandlerImpl{Client: client, ReloadAgent: ra}
+	api.TracesDeleteTraceEntryHandler = &handlers.DeleteTraceEntryHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup info handler
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 

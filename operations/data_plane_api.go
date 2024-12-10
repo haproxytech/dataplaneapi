@@ -90,6 +90,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/tcp_check"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_request_rule"
 	"github.com/haproxytech/dataplaneapi/operations/tcp_response_rule"
+	"github.com/haproxytech/dataplaneapi/operations/traces"
 	"github.com/haproxytech/dataplaneapi/operations/transactions"
 	"github.com/haproxytech/dataplaneapi/operations/user"
 	"github.com/haproxytech/dataplaneapi/operations/userlist"
@@ -374,6 +375,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TableCreateTableHandler: table.CreateTableHandlerFunc(func(params table.CreateTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.CreateTable has not yet been implemented")
 		}),
+		TracesCreateTraceEntryHandler: traces.CreateTraceEntryHandlerFunc(func(params traces.CreateTraceEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation traces.CreateTraceEntry has not yet been implemented")
+		}),
+		TracesCreateTracesHandler: traces.CreateTracesHandlerFunc(func(params traces.CreateTracesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation traces.CreateTraces has not yet been implemented")
+		}),
 		UserCreateUserHandler: user.CreateUserHandlerFunc(func(params user.CreateUserParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation user.CreateUser has not yet been implemented")
 		}),
@@ -604,6 +611,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		TableDeleteTableHandler: table.DeleteTableHandlerFunc(func(params table.DeleteTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.DeleteTable has not yet been implemented")
+		}),
+		TracesDeleteTraceEntryHandler: traces.DeleteTraceEntryHandlerFunc(func(params traces.DeleteTraceEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation traces.DeleteTraceEntry has not yet been implemented")
+		}),
+		TracesDeleteTracesHandler: traces.DeleteTracesHandlerFunc(func(params traces.DeleteTracesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation traces.DeleteTraces has not yet been implemented")
 		}),
 		TransactionsDeleteTransactionHandler: transactions.DeleteTransactionHandlerFunc(func(params transactions.DeleteTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.DeleteTransaction has not yet been implemented")
@@ -1142,6 +1155,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TableGetTablesHandler: table.GetTablesHandlerFunc(func(params table.GetTablesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.GetTables has not yet been implemented")
 		}),
+		TracesGetTracesHandler: traces.GetTracesHandlerFunc(func(params traces.GetTracesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation traces.GetTraces has not yet been implemented")
+		}),
 		TransactionsGetTransactionHandler: transactions.GetTransactionHandlerFunc(func(params transactions.GetTransactionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation transactions.GetTransaction has not yet been implemented")
 		}),
@@ -1475,6 +1491,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		TableReplaceTableHandler: table.ReplaceTableHandlerFunc(func(params table.ReplaceTableParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation table.ReplaceTable has not yet been implemented")
 		}),
+		TracesReplaceTracesHandler: traces.ReplaceTracesHandlerFunc(func(params traces.ReplaceTracesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation traces.ReplaceTraces has not yet been implemented")
+		}),
 		UserReplaceUserHandler: user.ReplaceUserHandlerFunc(func(params user.ReplaceUserParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation user.ReplaceUser has not yet been implemented")
 		}),
@@ -1723,6 +1742,10 @@ type DataPlaneAPI struct {
 	TCPResponseRuleCreateTCPResponseRuleBackendHandler tcp_response_rule.CreateTCPResponseRuleBackendHandler
 	// TableCreateTableHandler sets the operation handler for the create table operation
 	TableCreateTableHandler table.CreateTableHandler
+	// TracesCreateTraceEntryHandler sets the operation handler for the create trace entry operation
+	TracesCreateTraceEntryHandler traces.CreateTraceEntryHandler
+	// TracesCreateTracesHandler sets the operation handler for the create traces operation
+	TracesCreateTracesHandler traces.CreateTracesHandler
 	// UserCreateUserHandler sets the operation handler for the create user operation
 	UserCreateUserHandler user.CreateUserHandler
 	// UserlistCreateUserlistHandler sets the operation handler for the create userlist operation
@@ -1877,6 +1900,10 @@ type DataPlaneAPI struct {
 	TCPResponseRuleDeleteTCPResponseRuleBackendHandler tcp_response_rule.DeleteTCPResponseRuleBackendHandler
 	// TableDeleteTableHandler sets the operation handler for the delete table operation
 	TableDeleteTableHandler table.DeleteTableHandler
+	// TracesDeleteTraceEntryHandler sets the operation handler for the delete trace entry operation
+	TracesDeleteTraceEntryHandler traces.DeleteTraceEntryHandler
+	// TracesDeleteTracesHandler sets the operation handler for the delete traces operation
+	TracesDeleteTracesHandler traces.DeleteTracesHandler
 	// TransactionsDeleteTransactionHandler sets the operation handler for the delete transaction operation
 	TransactionsDeleteTransactionHandler transactions.DeleteTransactionHandler
 	// UserDeleteUserHandler sets the operation handler for the delete user operation
@@ -2235,6 +2262,8 @@ type DataPlaneAPI struct {
 	TableGetTableHandler table.GetTableHandler
 	// TableGetTablesHandler sets the operation handler for the get tables operation
 	TableGetTablesHandler table.GetTablesHandler
+	// TracesGetTracesHandler sets the operation handler for the get traces operation
+	TracesGetTracesHandler traces.GetTracesHandler
 	// TransactionsGetTransactionHandler sets the operation handler for the get transaction operation
 	TransactionsGetTransactionHandler transactions.GetTransactionHandler
 	// TransactionsGetTransactionsHandler sets the operation handler for the get transactions operation
@@ -2457,6 +2486,8 @@ type DataPlaneAPI struct {
 	TCPResponseRuleReplaceTCPResponseRuleBackendHandler tcp_response_rule.ReplaceTCPResponseRuleBackendHandler
 	// TableReplaceTableHandler sets the operation handler for the replace table operation
 	TableReplaceTableHandler table.ReplaceTableHandler
+	// TracesReplaceTracesHandler sets the operation handler for the replace traces operation
+	TracesReplaceTracesHandler traces.ReplaceTracesHandler
 	// UserReplaceUserHandler sets the operation handler for the replace user operation
 	UserReplaceUserHandler user.ReplaceUserHandler
 	// StickTableSetStickTableEntriesHandler sets the operation handler for the set stick table entries operation
@@ -2812,6 +2843,12 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TableCreateTableHandler == nil {
 		unregistered = append(unregistered, "table.CreateTableHandler")
 	}
+	if o.TracesCreateTraceEntryHandler == nil {
+		unregistered = append(unregistered, "traces.CreateTraceEntryHandler")
+	}
+	if o.TracesCreateTracesHandler == nil {
+		unregistered = append(unregistered, "traces.CreateTracesHandler")
+	}
 	if o.UserCreateUserHandler == nil {
 		unregistered = append(unregistered, "user.CreateUserHandler")
 	}
@@ -3042,6 +3079,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TableDeleteTableHandler == nil {
 		unregistered = append(unregistered, "table.DeleteTableHandler")
+	}
+	if o.TracesDeleteTraceEntryHandler == nil {
+		unregistered = append(unregistered, "traces.DeleteTraceEntryHandler")
+	}
+	if o.TracesDeleteTracesHandler == nil {
+		unregistered = append(unregistered, "traces.DeleteTracesHandler")
 	}
 	if o.TransactionsDeleteTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.DeleteTransactionHandler")
@@ -3580,6 +3623,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.TableGetTablesHandler == nil {
 		unregistered = append(unregistered, "table.GetTablesHandler")
 	}
+	if o.TracesGetTracesHandler == nil {
+		unregistered = append(unregistered, "traces.GetTracesHandler")
+	}
 	if o.TransactionsGetTransactionHandler == nil {
 		unregistered = append(unregistered, "transactions.GetTransactionHandler")
 	}
@@ -3912,6 +3958,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.TableReplaceTableHandler == nil {
 		unregistered = append(unregistered, "table.ReplaceTableHandler")
+	}
+	if o.TracesReplaceTracesHandler == nil {
+		unregistered = append(unregistered, "traces.ReplaceTracesHandler")
 	}
 	if o.UserReplaceUserHandler == nil {
 		unregistered = append(unregistered, "user.ReplaceUserHandler")
@@ -4371,6 +4420,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/traces/entries"] = traces.NewCreateTraceEntry(o.context, o.TracesCreateTraceEntryHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/traces"] = traces.NewCreateTraces(o.context, o.TracesCreateTracesHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/users"] = user.NewCreateUser(o.context, o.UserCreateUserHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4676,6 +4733,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/peers/{parent_name}/tables/{name}"] = table.NewDeleteTable(o.context, o.TableDeleteTableHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/traces/entries"] = traces.NewDeleteTraceEntry(o.context, o.TracesDeleteTraceEntryHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/traces"] = traces.NewDeleteTraces(o.context, o.TracesDeleteTracesHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -5395,6 +5460,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/configuration/traces"] = traces.NewGetTraces(o.context, o.TracesGetTracesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/transactions/{id}"] = transactions.NewGetTransaction(o.context, o.TransactionsGetTransactionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -5836,6 +5905,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/peers/{parent_name}/tables/{name}"] = table.NewReplaceTable(o.context, o.TableReplaceTableHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/traces"] = traces.NewReplaceTraces(o.context, o.TracesReplaceTracesHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
