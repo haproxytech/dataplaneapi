@@ -223,7 +223,6 @@ func startServer(cfg *configuration.Configuration) (reload configuration.AtomicB
 			if err != nil {
 				log.Fatalf("Error shutting down HAProxy Data Plane API: %s", err.Error())
 			}
-			os.Exit(0)
 		case <-dataplaneapi.ContextHandler.Context().Done():
 			return
 		}
