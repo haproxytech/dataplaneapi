@@ -18,6 +18,8 @@
 package dataplaneapi
 
 import (
+	"encoding/json"
+	"strings"
 	"testing"
 
 	"github.com/getkin/kin-openapi/openapi2"
@@ -25,12 +27,17 @@ import (
 )
 
 func TestConvOpenAPIV2ToV3(t *testing.T) {
+	v2JSONString := string(SwaggerJSON)
+	v2JSONString = strings.ReplaceAll(v2JSONString, "#/definitions", "#/components/schemas")
+	curatedV2 := json.RawMessage([]byte(v2JSONString))
+
 	var v2 openapi2.T
-	err := v2.UnmarshalJSON(SwaggerJSON)
+	err := v2.UnmarshalJSON(curatedV2)
 	if err != nil {
 		t.Error(err)
 		return
 	}
+
 	_, err = openapi2conv.ToV3(&v2)
 	if err != nil {
 		t.Error(err)
