@@ -20,6 +20,7 @@ package dataplaneapi
 import (
 	"context"
 	"crypto/tls"
+	"encoding/json"
 	"io"
 	"net/http"
 	"os"
@@ -751,7 +752,11 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	// setup OpenAPI v3 specification handler
 	api.Version3GetOpenapiv3SpecificationHandler = version3.GetOpenapiv3SpecificationHandlerFunc(func(params version3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 		v2 := openapi2.T{}
-		err = v2.UnmarshalJSON(SwaggerJSON)
+		v2JSONString := string(SwaggerJSON)
+		v2JSONString = strings.ReplaceAll(v2JSONString, "#/definitions", "#/components/schemas")
+		curatedV2 := json.RawMessage([]byte(v2JSONString))
+
+		err = v2.UnmarshalJSON(curatedV2)
 		if err != nil {
 			e := misc.HandleError(err)
 			return version3.NewGetOpenapiv3SpecificationDefault(int(*e.Code)).WithPayload(e)
