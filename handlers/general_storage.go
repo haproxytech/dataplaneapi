@@ -18,6 +18,7 @@ package handlers
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -188,16 +189,10 @@ func (h *StorageReplaceStorageGeneralFileHandlerImpl) Handle(params storage.Repl
 		return storage.NewReplaceStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)
 	}
 
-	file, ok := params.FileUpload.(*runtime.File)
-	if !ok {
+	data, err := io.ReadAll(params.FileUpload)
+	if err != nil {
 		return storage.NewReplaceStorageGeneralFileBadRequest()
 	}
-	data := []byte{}
-	if _, err := file.Read(data); err != nil {
-		e := misc.HandleError(err)
-		return storage.NewReplaceStorageGeneralFileDefault(int(*e.Code)).WithPayload(e)
-	}
-
 	_, err = gs.Replace(params.Name, string(data))
 	if err != nil {
 		e := misc.HandleError(err)
