@@ -22908,10 +22908,8 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "cookie": {
-              "dynamic": {
-                "value": true
-              }
+            "cookie.dynamic": {
+              "value": true
             }
           }
         },
@@ -30282,6 +30280,9 @@ func init() {
     "httpchk_params": {
       "type": "object",
       "properties": {
+        "host": {
+          "type": "string"
+        },
         "method": {
           "type": "string",
           "enum": [
@@ -36735,7 +36736,8 @@ func init() {
         },
         "bufsize": {
           "type": "integer",
-          "x-display-name": "Buffer Size"
+          "x-display-name": "Buffer Size",
+          "x-size": true
         },
         "bufsize_small": {
           "type": "integer",
@@ -36746,51 +36748,61 @@ func init() {
         },
         "pipesize": {
           "type": "integer",
-          "x-display-name": "Pipe Buffer Size"
+          "x-display-name": "Pipe Buffer Size",
+          "x-size": true
         },
         "rcvbuf_backend": {
           "type": "integer",
           "x-display-name": "Backend Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "rcvbuf_client": {
           "type": "integer",
           "x-display-name": "Client Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "rcvbuf_frontend": {
           "type": "integer",
           "x-display-name": "Frontend Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "rcvbuf_server": {
           "type": "integer",
           "x-display-name": "Server Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "recv_enough": {
           "type": "integer",
-          "x-display-name": "Receive Enough Socket Buffer Size"
+          "x-display-name": "Receive Enough Socket Buffer Size",
+          "x-size": true
         },
         "sndbuf_backend": {
           "type": "integer",
           "x-display-name": "Backend Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "sndbuf_client": {
           "type": "integer",
           "x-display-name": "Client Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "sndbuf_frontend": {
           "type": "integer",
           "x-display-name": "Frontend Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "sndbuf_server": {
           "type": "integer",
           "x-display-name": "Server Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         }
       }
     },
@@ -74950,10 +74962,8 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-dependency": {
-            "cookie": {
-              "dynamic": {
-                "value": true
-              }
+            "cookie.dynamic": {
+              "value": true
             }
           }
         },
@@ -82150,6 +82160,9 @@ func init() {
     "httpchk_params": {
       "type": "object",
       "properties": {
+        "host": {
+          "type": "string"
+        },
         "method": {
           "type": "string",
           "enum": [
@@ -88484,7 +88497,8 @@ func init() {
         },
         "bufsize": {
           "type": "integer",
-          "x-display-name": "Buffer Size"
+          "x-display-name": "Buffer Size",
+          "x-size": true
         },
         "bufsize_small": {
           "type": "integer",
@@ -88495,51 +88509,61 @@ func init() {
         },
         "pipesize": {
           "type": "integer",
-          "x-display-name": "Pipe Buffer Size"
+          "x-display-name": "Pipe Buffer Size",
+          "x-size": true
         },
         "rcvbuf_backend": {
           "type": "integer",
           "x-display-name": "Backend Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "rcvbuf_client": {
           "type": "integer",
           "x-display-name": "Client Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "rcvbuf_frontend": {
           "type": "integer",
           "x-display-name": "Frontend Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "rcvbuf_server": {
           "type": "integer",
           "x-display-name": "Server Receive Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "recv_enough": {
           "type": "integer",
-          "x-display-name": "Receive Enough Socket Buffer Size"
+          "x-display-name": "Receive Enough Socket Buffer Size",
+          "x-size": true
         },
         "sndbuf_backend": {
           "type": "integer",
           "x-display-name": "Backend Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "sndbuf_client": {
           "type": "integer",
           "x-display-name": "Client Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "sndbuf_frontend": {
           "type": "integer",
           "x-display-name": "Frontend Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         },
         "sndbuf_server": {
           "type": "integer",
           "x-display-name": "Server Send Buffer Size",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-size": true
         }
       }
     },
