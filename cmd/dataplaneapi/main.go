@@ -257,7 +257,6 @@ func startServer(cfg *configuration.Configuration, cancelDebugServer context.Can
 				log.Fatalf("Error shutting down HAProxy Data Plane API: %s", err.Error())
 			}
 			cancelDebugServer()
-			os.Exit(0)
 		case <-dataplaneapi.ContextHandler.Context().Done():
 			return
 		}
