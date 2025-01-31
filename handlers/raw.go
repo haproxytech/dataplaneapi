@@ -16,7 +16,9 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"strconv"
 	"strings"
 
@@ -61,7 +63,11 @@ func (h *GetRawConfigurationHandlerImpl) Handle(params configuration.GetHAProxyC
 	_, clusterVersion, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData(t, v)
 	if err != nil {
 		e := misc.HandleError(err)
-		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		errorStr, marshallError := json.Marshal(e)
+		if marshallError != nil {
+			configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+		}
+		return configuration.NewGetHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 	}
 	cVersion := ""
 	if clusterVersion != 0 {
@@ -99,25 +105,41 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		code := misc.ErrHTTPBadRequest
 		msg := "invalid configuration: no newline character found"
 		e := &models.Error{Code: &code, Message: &msg}
-		return configuration.NewPostHAProxyConfigurationBadRequest().WithPayload(e)
+		errorStr, marshallError := json.Marshal(e)
+		if marshallError != nil {
+			configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+		}
+		return configuration.NewPostHAProxyConfigurationBadRequest().WithPayload(string(errorStr))
 	}
 
 	cfg, err := h.Client.Configuration()
 	if err != nil {
 		e := misc.HandleError(err)
-		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		errorStr, marshallError := json.Marshal(e)
+		if marshallError != nil {
+			configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+		}
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 	}
 
 	err = cfg.PostRawConfiguration(&params.Data, v, skipVersion, onlyValidate)
 	if err != nil {
 		e := misc.HandleError(err)
-		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		errorStr, marshallError := json.Marshal(e)
+		if marshallError != nil {
+			configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+		}
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 	}
 
 	_, clusterVersion, md5Hash, data, err := cfg.GetRawConfigurationWithClusterData("", 0)
 	if err != nil {
 		e := misc.HandleError(err)
-		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		errorStr, marshallError := json.Marshal(e)
+		if marshallError != nil {
+			configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+		}
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 	}
 
 	cVersion := ""
@@ -132,7 +154,11 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		if params.XRuntimeActions != nil {
 			if err = executeRuntimeActions(*params.XRuntimeActions, h.Client); err != nil {
 				e := misc.HandleError(err)
-				return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+				errorStr, marshallError := json.Marshal(e)
+				if marshallError != nil {
+					configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+				}
+				return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 			}
 		}
 		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(data).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
@@ -143,7 +169,11 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		callbackNeeded, reconfigureFunc, err = cn.ReconfigureRuntime(h.Client)
 		if err != nil {
 			e := misc.HandleError(err)
-			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+			errorStr, marshallError := json.Marshal(e)
+			if marshallError != nil {
+				configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+			}
+			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 		}
 		if callbackNeeded {
 			err = h.ReloadAgent.ForceReloadWithCallback(reconfigureFunc)
@@ -152,14 +182,22 @@ func (h *PostRawConfigurationHandlerImpl) Handle(params configuration.PostHAProx
 		}
 		if err != nil {
 			e := misc.HandleError(err)
-			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+			errorStr, marshallError := json.Marshal(e)
+			if marshallError != nil {
+				configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+			}
+			return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 		}
 		return configuration.NewPostHAProxyConfigurationCreated().WithPayload(data).WithClusterVersion(cVersion).WithConfigurationChecksum(md5Hash)
 	}
 	callbackNeeded, reconfigureFunc, err := cn.ReconfigureRuntime(h.Client)
 	if err != nil {
 		e := misc.HandleError(err)
-		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(e)
+		errorStr, marshallError := json.Marshal(e)
+		if marshallError != nil {
+			configuration.NewPostHAProxyConfigurationDefault(http.StatusInternalServerError).WithPayload(marshallError.Error())
+		}
+		return configuration.NewPostHAProxyConfigurationDefault(int(*e.Code)).WithPayload(string(errorStr))
 	}
 
 	var rID string

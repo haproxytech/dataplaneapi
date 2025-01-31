@@ -16692,7 +16692,16 @@ func init() {
             }
           },
           "default": {
-            "$ref": "#/responses/DefaultError"
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
           }
         }
       },
@@ -16798,10 +16807,28 @@ func init() {
             }
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Bad request",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/DefaultError"
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
           }
         }
       }
@@ -21970,9 +21997,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "cookie": {
-              "dynamic": {
-                "value": true
-              }
+              "dynamic.value": true
             }
           }
         },
@@ -30657,6 +30682,11 @@ func init() {
             "servers": {
               "additionalProperties": {
                 "$ref": "#/definitions/server"
+              }
+            },
+            "tables": {
+              "additionalProperties": {
+                "$ref": "#/definitions/table"
               }
             }
           }
@@ -63178,7 +63208,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "$ref": "#/definitions/error"
+              "type": "string"
             },
             "headers": {
               "Configuration-Version": {
@@ -63301,7 +63331,7 @@ func init() {
           "400": {
             "description": "Bad request",
             "schema": {
-              "$ref": "#/definitions/error"
+              "type": "string"
             },
             "headers": {
               "Configuration-Version": {
@@ -63313,7 +63343,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "$ref": "#/definitions/error"
+              "type": "string"
             },
             "headers": {
               "Configuration-Version": {
@@ -72110,9 +72140,7 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-dependency": {
             "cookie": {
-              "dynamic": {
-                "value": true
-              }
+              "dynamic.value": true
             }
           }
         },
@@ -80597,6 +80625,11 @@ func init() {
             "servers": {
               "additionalProperties": {
                 "$ref": "#/definitions/server"
+              }
+            },
+            "tables": {
+              "additionalProperties": {
+                "$ref": "#/definitions/table"
               }
             }
           }
