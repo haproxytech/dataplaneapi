@@ -14717,6 +14717,7 @@ func init() {
         ],
         "summary": "Return an array of mailer_entries",
         "operationId": "getMailerEntries",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -14754,6 +14755,7 @@ func init() {
         ],
         "summary": "Add a new mailer_entry",
         "operationId": "createMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -14819,6 +14821,7 @@ func init() {
         ],
         "summary": "Return one mailer_entry",
         "operationId": "getMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -14866,6 +14869,7 @@ func init() {
         ],
         "summary": "Replace a mailer_entry",
         "operationId": "replaceMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -14936,6 +14940,7 @@ func init() {
         ],
         "summary": "Delete a mailer_entry",
         "operationId": "deleteMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -14991,6 +14996,7 @@ func init() {
         ],
         "summary": "Return an array of mailers sections",
         "operationId": "getMailersSections",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
@@ -15024,6 +15030,7 @@ func init() {
         ],
         "summary": "Add a new Mailers section",
         "operationId": "createMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "name": "data",
@@ -15085,6 +15092,7 @@ func init() {
         ],
         "summary": "Return a Mailers section",
         "operationId": "getMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -15128,6 +15136,7 @@ func init() {
         ],
         "summary": "Modify a Mailers section",
         "operationId": "editMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -15194,6 +15203,7 @@ func init() {
         ],
         "summary": "Delete a Mailers section",
         "operationId": "deleteMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -17054,6 +17064,7 @@ func init() {
         ],
         "summary": "Return an array of programs",
         "operationId": "getPrograms",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/parameters/transaction_id"
@@ -17084,6 +17095,7 @@ func init() {
         ],
         "summary": "Add a program",
         "operationId": "createProgram",
+        "deprecated": true,
         "parameters": [
           {
             "name": "data",
@@ -17142,6 +17154,7 @@ func init() {
         ],
         "summary": "Return a program",
         "operationId": "getProgram",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -17182,6 +17195,7 @@ func init() {
         ],
         "summary": "Replace a program",
         "operationId": "replaceProgram",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -17245,6 +17259,7 @@ func init() {
         ],
         "summary": "Delete a program",
         "operationId": "deleteProgram",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -17326,7 +17341,16 @@ func init() {
             }
           },
           "default": {
-            "$ref": "#/responses/DefaultError"
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
           }
         }
       },
@@ -17432,10 +17456,28 @@ func init() {
             }
           },
           "400": {
-            "$ref": "#/responses/BadRequest"
+            "description": "Bad request",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
           },
           "default": {
-            "$ref": "#/responses/DefaultError"
+            "description": "General Error",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
           }
         }
       }
@@ -24076,7 +24118,9 @@ func init() {
           "type": "string",
           "enum": [
             "cubic",
-            "newreno"
+            "newreno",
+            "bbr",
+            "nocc"
           ]
         },
         "quic-force-retry": {
@@ -24088,6 +24132,25 @@ func init() {
             "connection",
             "listener"
           ]
+        },
+        "quic_cc_algo_burst_size": {
+          "type": "integer",
+          "maximum": 1024,
+          "x-dependency": {
+            "quic-cc-algo": null
+          },
+          "x-nullable": true
+        },
+        "quic_cc_algo_max_window": {
+          "type": "integer",
+          "maximum": 4194304,
+          "minimum": 10,
+          "x-default-unit": "k",
+          "x-dependency": {
+            "quic-cc-algo": null
+          },
+          "x-nullable": true,
+          "x-size": true
         },
         "severity_output": {
           "type": "string",
@@ -33424,6 +33487,15 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": true
         },
+        "init-state": {
+          "type": "string",
+          "enum": [
+            "fully-up",
+            "up",
+            "down",
+            "fully-down"
+          ]
+        },
         "inter": {
           "type": "integer",
           "x-default-unit": "ms",
@@ -35010,7 +35082,9 @@ func init() {
                   "http_err_rate",
                   "server_id",
                   "sess_cnt",
-                  "sess_rate"
+                  "sess_rate",
+                  "glitch_rate",
+                  "glitch_cnt"
                 ]
               },
               "period": {
@@ -35098,6 +35172,14 @@ func init() {
           "x-nullable": true
         },
         "exp": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "glitch_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "glitch_rate": {
           "type": "integer",
           "x-nullable": true
         },
@@ -61367,6 +61449,7 @@ func init() {
         ],
         "summary": "Return an array of mailer_entries",
         "operationId": "getMailerEntries",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -61417,6 +61500,7 @@ func init() {
         ],
         "summary": "Add a new mailer_entry",
         "operationId": "createMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -61521,6 +61605,7 @@ func init() {
         ],
         "summary": "Return one mailer_entry",
         "operationId": "getMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -61590,6 +61675,7 @@ func init() {
         ],
         "summary": "Replace a mailer_entry",
         "operationId": "replaceMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -61699,6 +61785,7 @@ func init() {
         ],
         "summary": "Delete a mailer_entry",
         "operationId": "deleteMailerEntry",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -61784,6 +61871,7 @@ func init() {
         ],
         "summary": "Return an array of mailers sections",
         "operationId": "getMailersSections",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -61834,6 +61922,7 @@ func init() {
         ],
         "summary": "Add a new Mailers section",
         "operationId": "createMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "name": "data",
@@ -61938,6 +62027,7 @@ func init() {
         ],
         "summary": "Return a Mailers section",
         "operationId": "getMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -62007,6 +62097,7 @@ func init() {
         ],
         "summary": "Modify a Mailers section",
         "operationId": "editMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -62116,6 +62207,7 @@ func init() {
         ],
         "summary": "Delete a Mailers section",
         "operationId": "deleteMailersSection",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -65094,6 +65186,7 @@ func init() {
         ],
         "summary": "Return an array of programs",
         "operationId": "getPrograms",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -65137,6 +65230,7 @@ func init() {
         ],
         "summary": "Add a program",
         "operationId": "createProgram",
+        "deprecated": true,
         "parameters": [
           {
             "name": "data",
@@ -65234,6 +65328,7 @@ func init() {
         ],
         "summary": "Return a program",
         "operationId": "getProgram",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -65296,6 +65391,7 @@ func init() {
         ],
         "summary": "Replace a program",
         "operationId": "replaceProgram",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -65398,6 +65494,7 @@ func init() {
         ],
         "summary": "Delete a program",
         "operationId": "deleteProgram",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -65519,7 +65616,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "$ref": "#/definitions/error"
+              "type": "string"
             },
             "headers": {
               "Configuration-Version": {
@@ -65642,7 +65739,7 @@ func init() {
           "400": {
             "description": "Bad request",
             "schema": {
-              "$ref": "#/definitions/error"
+              "type": "string"
             },
             "headers": {
               "Configuration-Version": {
@@ -65654,7 +65751,7 @@ func init() {
           "default": {
             "description": "General Error",
             "schema": {
-              "$ref": "#/definitions/error"
+              "type": "string"
             },
             "headers": {
               "Configuration-Version": {
@@ -74550,7 +74647,9 @@ func init() {
             "http_err_rate",
             "server_id",
             "sess_cnt",
-            "sess_rate"
+            "sess_rate",
+            "glitch_rate",
+            "glitch_cnt"
           ]
         },
         "period": {
@@ -76089,7 +76188,9 @@ func init() {
           "type": "string",
           "enum": [
             "cubic",
-            "newreno"
+            "newreno",
+            "bbr",
+            "nocc"
           ]
         },
         "quic-force-retry": {
@@ -76101,6 +76202,26 @@ func init() {
             "connection",
             "listener"
           ]
+        },
+        "quic_cc_algo_burst_size": {
+          "type": "integer",
+          "maximum": 1024,
+          "minimum": 0,
+          "x-dependency": {
+            "quic-cc-algo": null
+          },
+          "x-nullable": true
+        },
+        "quic_cc_algo_max_window": {
+          "type": "integer",
+          "maximum": 4194304,
+          "minimum": 10,
+          "x-default-unit": "k",
+          "x-dependency": {
+            "quic-cc-algo": null
+          },
+          "x-nullable": true,
+          "x-size": true
         },
         "severity_output": {
           "type": "string",
@@ -85300,6 +85421,15 @@ func init() {
           "pattern": "^[^\\s]+$",
           "x-nullable": true
         },
+        "init-state": {
+          "type": "string",
+          "enum": [
+            "fully-up",
+            "up",
+            "down",
+            "fully-down"
+          ]
+        },
         "inter": {
           "type": "integer",
           "minimum": 0,
@@ -86859,6 +86989,14 @@ func init() {
           "x-nullable": true
         },
         "exp": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "glitch_cnt": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "glitch_rate": {
           "type": "integer",
           "x-nullable": true
         },

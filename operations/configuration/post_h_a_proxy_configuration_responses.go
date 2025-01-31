@@ -24,8 +24,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-
-	"github.com/haproxytech/client-native/v6/models"
 )
 
 // PostHAProxyConfigurationCreatedCode is the HTTP code returned for type PostHAProxyConfigurationCreated
@@ -285,7 +283,7 @@ type PostHAProxyConfigurationBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.Error `json:"body,omitempty"`
+	Payload string `json:"body,omitempty"`
 }
 
 // NewPostHAProxyConfigurationBadRequest creates PostHAProxyConfigurationBadRequest with default headers values
@@ -306,13 +304,13 @@ func (o *PostHAProxyConfigurationBadRequest) SetConfigurationVersion(configurati
 }
 
 // WithPayload adds the payload to the post h a proxy configuration bad request response
-func (o *PostHAProxyConfigurationBadRequest) WithPayload(payload *models.Error) *PostHAProxyConfigurationBadRequest {
+func (o *PostHAProxyConfigurationBadRequest) WithPayload(payload string) *PostHAProxyConfigurationBadRequest {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the post h a proxy configuration bad request response
-func (o *PostHAProxyConfigurationBadRequest) SetPayload(payload *models.Error) {
+func (o *PostHAProxyConfigurationBadRequest) SetPayload(payload string) {
 	o.Payload = payload
 }
 
@@ -327,11 +325,9 @@ func (o *PostHAProxyConfigurationBadRequest) WriteResponse(rw http.ResponseWrite
 	}
 
 	rw.WriteHeader(400)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
 
@@ -350,7 +346,7 @@ type PostHAProxyConfigurationDefault struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.Error `json:"body,omitempty"`
+	Payload string `json:"body,omitempty"`
 }
 
 // NewPostHAProxyConfigurationDefault creates PostHAProxyConfigurationDefault with default headers values
@@ -387,13 +383,13 @@ func (o *PostHAProxyConfigurationDefault) SetConfigurationVersion(configurationV
 }
 
 // WithPayload adds the payload to the post h a proxy configuration default response
-func (o *PostHAProxyConfigurationDefault) WithPayload(payload *models.Error) *PostHAProxyConfigurationDefault {
+func (o *PostHAProxyConfigurationDefault) WithPayload(payload string) *PostHAProxyConfigurationDefault {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the post h a proxy configuration default response
-func (o *PostHAProxyConfigurationDefault) SetPayload(payload *models.Error) {
+func (o *PostHAProxyConfigurationDefault) SetPayload(payload string) {
 	o.Payload = payload
 }
 
@@ -408,10 +404,8 @@ func (o *PostHAProxyConfigurationDefault) WriteResponse(rw http.ResponseWriter, 
 	}
 
 	rw.WriteHeader(o._statusCode)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }
