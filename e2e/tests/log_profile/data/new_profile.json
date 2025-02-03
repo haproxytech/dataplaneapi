@@ -1,0 +1,21 @@
+{
+  "name": "logp1",
+  "log_tag": "tag1",
+  "steps": [
+      {
+          "step": "connect",
+          "drop": "enabled"
+      },
+      {
+          "step": "error",
+          "drop": "disabled",
+          "format": "%ci: error",
+          "sd": "%T %H sd"
+      },
+      {
+          "step": "any",
+          "drop": "disabled",
+          "sd": "custom sd"
+      }
+  ]
+}

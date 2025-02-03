@@ -14709,6 +14709,245 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/log_profiles": {
+      "get": {
+        "description": "Returns an array of all the configured log_profile sections in HAProxy",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Return all the Log Profiles",
+        "operationId": "getLogProfiles",
+        "parameters": [
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/log_profiles"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new log_profile section",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Add a new Log Profile",
+        "operationId": "createLogProfile",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Profile created",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_profiles/{name}": {
+      "get": {
+        "description": "Find a log_profile section by its name",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Return a Log Profile",
+        "operationId": "getLogProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "log_profile name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a log_profile's configuration by its name",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Modify a Log Profile",
+        "operationId": "editLogProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "log_profile name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "log_profile configuration updated",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a log_profile section from the configuration",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Delete a Log Profile",
+        "operationId": "deleteLogProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "log_profile name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "log_profile deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/mailer_entries": {
       "get": {
         "description": "Returns an array of all the mailer_entries configured in the specified mailers section.",
@@ -30528,6 +30767,91 @@ func init() {
         "$ref": "#/definitions/log_forward"
       }
     },
+    "log_profile": {
+      "description": "Defines a logging profile for one or more steps.",
+      "type": "object",
+      "title": "Log Profile",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "log_tag": {
+          "description": "Override syslog log tag set by other \"log-tag\" directives.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the logging profile.",
+          "type": "string",
+          "minLength": 1,
+          "x-nullable": false
+        },
+        "steps": {
+          "$ref": "#/definitions/log_profile_steps"
+        }
+      }
+    },
+    "log_profile_step": {
+      "description": "Defines what to log for a given step.",
+      "type": "object",
+      "title": "Log Profile Step",
+      "required": [
+        "step"
+      ],
+      "properties": {
+        "drop": {
+          "description": "If enabled, no log shall be emitted for the given step.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "format": {
+          "description": "Override \"log-format\" or \"error-log-format\" strings depending on the step.",
+          "type": "string"
+        },
+        "sd": {
+          "description": "Override the \"log-format-sd\" string.",
+          "type": "string"
+        },
+        "step": {
+          "description": "Logging step name.",
+          "type": "string",
+          "enum": [
+            "accept",
+            "any",
+            "close",
+            "connect",
+            "error",
+            "request",
+            "response",
+            "http-req",
+            "http-res",
+            "http-after-res",
+            "quic-init",
+            "tcp-req-conn",
+            "tcp-req-cont",
+            "tcp-req-sess"
+          ],
+          "x-nullable": false
+        }
+      }
+    },
+    "log_profile_steps": {
+      "description": "List of steps where to override the logging.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/log_profile_step"
+      },
+      "x-omitempty": true
+    },
+    "log_profiles": {
+      "description": "List of Logging Profiles",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/log_profile"
+      }
+    },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
       "type": "object",
@@ -30668,6 +30992,9 @@ func init() {
         },
         "nolog": {
           "type": "boolean"
+        },
+        "profile": {
+          "type": "string"
         },
         "sample_range": {
           "type": "string",
@@ -37672,6 +37999,9 @@ func init() {
     },
     {
       "name": "LogForward"
+    },
+    {
+      "name": "LogProfile"
     },
     {
       "name": "LogTarget"
@@ -61441,6 +61771,388 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/log_profiles": {
+      "get": {
+        "description": "Returns an array of all the configured log_profile sections in HAProxy",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Return all the Log Profiles",
+        "operationId": "getLogProfiles",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/log_profiles"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new log_profile section",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Add a new Log Profile",
+        "operationId": "createLogProfile",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Log Profile created",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/log_profiles/{name}": {
+      "get": {
+        "description": "Find a log_profile section by its name",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Return a Log Profile",
+        "operationId": "getLogProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "log_profile name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Modifies a log_profile's configuration by its name",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Modify a Log Profile",
+        "operationId": "editLogProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "log_profile name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "log_profile configuration updated",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/log_profile"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a log_profile section from the configuration",
+        "tags": [
+          "LogProfile"
+        ],
+        "summary": "Delete a Log Profile",
+        "operationId": "deleteLogProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "log_profile name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "log_profile deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/mailer_entries": {
       "get": {
         "description": "Returns an array of all the mailer_entries configured in the specified mailers section.",
@@ -82467,6 +83179,91 @@ func init() {
         "$ref": "#/definitions/log_forward"
       }
     },
+    "log_profile": {
+      "description": "Defines a logging profile for one or more steps.",
+      "type": "object",
+      "title": "Log Profile",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "log_tag": {
+          "description": "Override syslog log tag set by other \"log-tag\" directives.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the logging profile.",
+          "type": "string",
+          "minLength": 1,
+          "x-nullable": false
+        },
+        "steps": {
+          "$ref": "#/definitions/log_profile_steps"
+        }
+      }
+    },
+    "log_profile_step": {
+      "description": "Defines what to log for a given step.",
+      "type": "object",
+      "title": "Log Profile Step",
+      "required": [
+        "step"
+      ],
+      "properties": {
+        "drop": {
+          "description": "If enabled, no log shall be emitted for the given step.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "format": {
+          "description": "Override \"log-format\" or \"error-log-format\" strings depending on the step.",
+          "type": "string"
+        },
+        "sd": {
+          "description": "Override the \"log-format-sd\" string.",
+          "type": "string"
+        },
+        "step": {
+          "description": "Logging step name.",
+          "type": "string",
+          "enum": [
+            "accept",
+            "any",
+            "close",
+            "connect",
+            "error",
+            "request",
+            "response",
+            "http-req",
+            "http-res",
+            "http-after-res",
+            "quic-init",
+            "tcp-req-conn",
+            "tcp-req-cont",
+            "tcp-req-sess"
+          ],
+          "x-nullable": false
+        }
+      }
+    },
+    "log_profile_steps": {
+      "description": "List of steps where to override the logging.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/log_profile_step"
+      },
+      "x-omitempty": true
+    },
+    "log_profiles": {
+      "description": "List of Logging Profiles",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/log_profile"
+      }
+    },
     "log_target": {
       "description": "Per-instance logging of events and traffic.",
       "type": "object",
@@ -82607,6 +83404,9 @@ func init() {
         },
         "nolog": {
           "type": "boolean"
+        },
+        "profile": {
+          "type": "string"
         },
         "sample_range": {
           "type": "string",
@@ -89497,6 +90297,9 @@ func init() {
     },
     {
       "name": "LogForward"
+    },
+    {
+      "name": "LogProfile"
     },
     {
       "name": "LogTarget"

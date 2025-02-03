@@ -62,6 +62,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/http_response_rule"
 	"github.com/haproxytech/dataplaneapi/operations/information"
 	"github.com/haproxytech/dataplaneapi/operations/log_forward"
+	"github.com/haproxytech/dataplaneapi/operations/log_profile"
 	"github.com/haproxytech/dataplaneapi/operations/log_target"
 	"github.com/haproxytech/dataplaneapi/operations/mailer_entry"
 	"github.com/haproxytech/dataplaneapi/operations/mailers"
@@ -263,6 +264,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		LogForwardCreateLogForwardHandler: log_forward.CreateLogForwardHandlerFunc(func(params log_forward.CreateLogForwardParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_forward.CreateLogForward has not yet been implemented")
+		}),
+		LogProfileCreateLogProfileHandler: log_profile.CreateLogProfileHandlerFunc(func(params log_profile.CreateLogProfileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_profile.CreateLogProfile has not yet been implemented")
 		}),
 		LogTargetCreateLogTargetBackendHandler: log_target.CreateLogTargetBackendHandlerFunc(func(params log_target.CreateLogTargetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.CreateLogTargetBackend has not yet been implemented")
@@ -492,6 +496,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		LogForwardDeleteLogForwardHandler: log_forward.DeleteLogForwardHandlerFunc(func(params log_forward.DeleteLogForwardParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_forward.DeleteLogForward has not yet been implemented")
 		}),
+		LogProfileDeleteLogProfileHandler: log_profile.DeleteLogProfileHandlerFunc(func(params log_profile.DeleteLogProfileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_profile.DeleteLogProfile has not yet been implemented")
+		}),
 		LogTargetDeleteLogTargetBackendHandler: log_target.DeleteLogTargetBackendHandlerFunc(func(params log_target.DeleteLogTargetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.DeleteLogTargetBackend has not yet been implemented")
 		}),
@@ -632,6 +639,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		CrtStoreEditCrtStoreHandler: crt_store.EditCrtStoreHandlerFunc(func(params crt_store.EditCrtStoreParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation crt_store.EditCrtStore has not yet been implemented")
+		}),
+		LogProfileEditLogProfileHandler: log_profile.EditLogProfileHandlerFunc(func(params log_profile.EditLogProfileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_profile.EditLogProfile has not yet been implemented")
 		}),
 		MailersEditMailersSectionHandler: mailers.EditMailersSectionHandlerFunc(func(params mailers.EditMailersSectionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation mailers.EditMailersSection has not yet been implemented")
@@ -950,6 +960,12 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		LogForwardGetLogForwardsHandler: log_forward.GetLogForwardsHandlerFunc(func(params log_forward.GetLogForwardsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_forward.GetLogForwards has not yet been implemented")
+		}),
+		LogProfileGetLogProfileHandler: log_profile.GetLogProfileHandlerFunc(func(params log_profile.GetLogProfileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_profile.GetLogProfile has not yet been implemented")
+		}),
+		LogProfileGetLogProfilesHandler: log_profile.GetLogProfilesHandlerFunc(func(params log_profile.GetLogProfilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation log_profile.GetLogProfiles has not yet been implemented")
 		}),
 		LogTargetGetLogTargetBackendHandler: log_target.GetLogTargetBackendHandlerFunc(func(params log_target.GetLogTargetBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation log_target.GetLogTargetBackend has not yet been implemented")
@@ -1668,6 +1684,8 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleCreateHTTPResponseRuleFrontendHandler http_response_rule.CreateHTTPResponseRuleFrontendHandler
 	// LogForwardCreateLogForwardHandler sets the operation handler for the create log forward operation
 	LogForwardCreateLogForwardHandler log_forward.CreateLogForwardHandler
+	// LogProfileCreateLogProfileHandler sets the operation handler for the create log profile operation
+	LogProfileCreateLogProfileHandler log_profile.CreateLogProfileHandler
 	// LogTargetCreateLogTargetBackendHandler sets the operation handler for the create log target backend operation
 	LogTargetCreateLogTargetBackendHandler log_target.CreateLogTargetBackendHandler
 	// LogTargetCreateLogTargetDefaultsHandler sets the operation handler for the create log target defaults operation
@@ -1820,6 +1838,8 @@ type DataPlaneAPI struct {
 	HTTPResponseRuleDeleteHTTPResponseRuleFrontendHandler http_response_rule.DeleteHTTPResponseRuleFrontendHandler
 	// LogForwardDeleteLogForwardHandler sets the operation handler for the delete log forward operation
 	LogForwardDeleteLogForwardHandler log_forward.DeleteLogForwardHandler
+	// LogProfileDeleteLogProfileHandler sets the operation handler for the delete log profile operation
+	LogProfileDeleteLogProfileHandler log_profile.DeleteLogProfileHandler
 	// LogTargetDeleteLogTargetBackendHandler sets the operation handler for the delete log target backend operation
 	LogTargetDeleteLogTargetBackendHandler log_target.DeleteLogTargetBackendHandler
 	// LogTargetDeleteLogTargetDefaultsHandler sets the operation handler for the delete log target defaults operation
@@ -1914,6 +1934,8 @@ type DataPlaneAPI struct {
 	ClusterEditClusterHandler cluster.EditClusterHandler
 	// CrtStoreEditCrtStoreHandler sets the operation handler for the edit crt store operation
 	CrtStoreEditCrtStoreHandler crt_store.EditCrtStoreHandler
+	// LogProfileEditLogProfileHandler sets the operation handler for the edit log profile operation
+	LogProfileEditLogProfileHandler log_profile.EditLogProfileHandler
 	// MailersEditMailersSectionHandler sets the operation handler for the edit mailers section operation
 	MailersEditMailersSectionHandler mailers.EditMailersSectionHandler
 	// DiscoveryGetAPIEndpointsHandler sets the operation handler for the get API endpoints operation
@@ -2126,6 +2148,10 @@ type DataPlaneAPI struct {
 	LogForwardGetLogForwardHandler log_forward.GetLogForwardHandler
 	// LogForwardGetLogForwardsHandler sets the operation handler for the get log forwards operation
 	LogForwardGetLogForwardsHandler log_forward.GetLogForwardsHandler
+	// LogProfileGetLogProfileHandler sets the operation handler for the get log profile operation
+	LogProfileGetLogProfileHandler log_profile.GetLogProfileHandler
+	// LogProfileGetLogProfilesHandler sets the operation handler for the get log profiles operation
+	LogProfileGetLogProfilesHandler log_profile.GetLogProfilesHandler
 	// LogTargetGetLogTargetBackendHandler sets the operation handler for the get log target backend operation
 	LogTargetGetLogTargetBackendHandler log_target.GetLogTargetBackendHandler
 	// LogTargetGetLogTargetDefaultsHandler sets the operation handler for the get log target defaults operation
@@ -2732,6 +2758,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.LogForwardCreateLogForwardHandler == nil {
 		unregistered = append(unregistered, "log_forward.CreateLogForwardHandler")
 	}
+	if o.LogProfileCreateLogProfileHandler == nil {
+		unregistered = append(unregistered, "log_profile.CreateLogProfileHandler")
+	}
 	if o.LogTargetCreateLogTargetBackendHandler == nil {
 		unregistered = append(unregistered, "log_target.CreateLogTargetBackendHandler")
 	}
@@ -2960,6 +2989,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.LogForwardDeleteLogForwardHandler == nil {
 		unregistered = append(unregistered, "log_forward.DeleteLogForwardHandler")
 	}
+	if o.LogProfileDeleteLogProfileHandler == nil {
+		unregistered = append(unregistered, "log_profile.DeleteLogProfileHandler")
+	}
 	if o.LogTargetDeleteLogTargetBackendHandler == nil {
 		unregistered = append(unregistered, "log_target.DeleteLogTargetBackendHandler")
 	}
@@ -3100,6 +3132,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.CrtStoreEditCrtStoreHandler == nil {
 		unregistered = append(unregistered, "crt_store.EditCrtStoreHandler")
+	}
+	if o.LogProfileEditLogProfileHandler == nil {
+		unregistered = append(unregistered, "log_profile.EditLogProfileHandler")
 	}
 	if o.MailersEditMailersSectionHandler == nil {
 		unregistered = append(unregistered, "mailers.EditMailersSectionHandler")
@@ -3418,6 +3453,12 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.LogForwardGetLogForwardsHandler == nil {
 		unregistered = append(unregistered, "log_forward.GetLogForwardsHandler")
+	}
+	if o.LogProfileGetLogProfileHandler == nil {
+		unregistered = append(unregistered, "log_profile.GetLogProfileHandler")
+	}
+	if o.LogProfileGetLogProfilesHandler == nil {
+		unregistered = append(unregistered, "log_profile.GetLogProfilesHandler")
 	}
 	if o.LogTargetGetLogTargetBackendHandler == nil {
 		unregistered = append(unregistered, "log_target.GetLogTargetBackendHandler")
@@ -4272,6 +4313,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/log_profiles"] = log_profile.NewCreateLogProfile(o.context, o.LogProfileCreateLogProfileHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends/{parent_name}/log_targets/{index}"] = log_target.NewCreateLogTargetBackend(o.context, o.LogTargetCreateLogTargetBackendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4576,6 +4621,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/log_profiles/{name}"] = log_profile.NewDeleteLogProfile(o.context, o.LogProfileDeleteLogProfileHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{parent_name}/log_targets/{index}"] = log_target.NewDeleteLogTargetBackend(o.context, o.LogTargetDeleteLogTargetBackendHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -4761,6 +4810,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/crt_stores/{name}"] = crt_store.NewEditCrtStore(o.context, o.CrtStoreEditCrtStoreHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/log_profiles/{name}"] = log_profile.NewEditLogProfile(o.context, o.LogProfileEditLogProfileHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -5185,6 +5238,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/log_forwards"] = log_forward.NewGetLogForwards(o.context, o.LogForwardGetLogForwardsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/log_profiles/{name}"] = log_profile.NewGetLogProfile(o.context, o.LogProfileGetLogProfileHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/log_profiles"] = log_profile.NewGetLogProfiles(o.context, o.LogProfileGetLogProfilesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
