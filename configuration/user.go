@@ -19,6 +19,7 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
+	"net/http"
 	"os"
 	"slices"
 	"strings"
@@ -34,6 +35,8 @@ import (
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/storagetype"
 )
+
+const mockPass = "$2a$10$e.I1x5KPNu7xy9u0zSzJaOcr5it8kR1Awnaf3boOtYno9y4DolER."
 
 var usersStore *Users
 
@@ -164,32 +167,41 @@ func findUser(userName string, users []types.User) (*types.User, error) {
 func AuthenticateUser(user string, pass string) (interface{}, error) {
 	users := GetUsersStore().GetUsers()
 	if len(users) == 0 {
-		return nil, api_errors.New(401, "no configured users")
+		return nil, api_errors.New(http.StatusUnauthorized, "no configured users")
 	}
 
+	unatuhorized := false
 	u, err := findUser(user, users)
 	if err != nil {
-		return nil, err
+		unatuhorized = true
 	}
 
-	userPass := u.Password
-	if strings.HasPrefix(u.Password, "\"${") && strings.HasSuffix(u.Password, "}\"") {
+	userPass := mockPass
+	if u != nil {
+		userPass = u.Password
+	}
+
+	if strings.HasPrefix(userPass, "\"${") && strings.HasSuffix(userPass, "}\"") {
 		userPass = os.Getenv(misc.ExtractEnvVar(userPass))
 		if userPass == "" {
-			return nil, api_errors.New(401, "%s %s", "can not read password from env variable:", u.Password)
+			unatuhorized = true
+			userPass = mockPass
 		}
 	}
 
-	if u.IsInsecure {
-		if pass == userPass {
-			return user, nil
+	if u != nil && u.IsInsecure {
+		if pass != userPass {
+			unatuhorized = true
 		}
-		return nil, api_errors.New(401, "%s %s", "invalid password:", pass)
+	} else {
+		if !checkPassword(pass, userPass) {
+			unatuhorized = true
+		}
 	}
-	if checkPassword(pass, userPass) {
-		return user, nil
+	if unatuhorized {
+		return nil, api_errors.New(http.StatusUnauthorized, "unauthorized")
 	}
-	return nil, api_errors.New(401, "%s %s", "invalid password:", pass)
+	return user, nil
 }
 
 func checkPassword(pass, storedPass string) bool {
