@@ -24,19 +24,18 @@ load '../../libs/version'
 load 'utils/_helpers'
 
 
-@test "defaults: Return a list of defaults configurations" {
-  resource_get "$_DEFAULTS_BASE_PATH"
-  assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.[0].name')" "unnamed_defaults_1"
+@test "backends: Replace a defaults" {
+	resource_put "$_DEFAULTS_BASE_PATH/unnamed_defaults_1" "data/put.json" "force_reload=true"
+	assert_equal "$SC" 200
+
+	resource_get "$_DEFAULTS_BASE_PATH/unnamed_defaults_1"  assert_equal "$SC" 200
+  assert_equal "$(get_json_path "$BODY" ".name")" "unnamed_defaults_1"
+  assert_equal "$(get_json_path "$BODY" ".mode")" "tcp"
+  assert_equal "$(get_json_path "$BODY" ".client_timeout")" 25000
+  assert_equal "$(get_json_path "$BODY" ".server_timeout")" 25000
 }
 
-@test "defaults: Return a defaults configuration" {
-  resource_get "$_DEFAULTS_BASE_PATH/unnamed_defaults_1"
-  assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.name')" "unnamed_defaults_1"
-}
-
-@test "defaults: Return a named defaults configuration that does not exist" {
-  resource_get "$_DEFAULTS_BASE_PATH/nothing_to_see_here"
+@test "defaults: Replace a defaults configuration that doesn't exist" {
+  resource_get "$_DEFAULTS_BASE_PATH/these_arent_the_droids_youre_looking_for"
   assert_equal "$SC" 404
 }

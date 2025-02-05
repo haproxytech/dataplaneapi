@@ -142,6 +142,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler: acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesHandlerFunc(func(params acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntries has not yet been implemented")
 		}),
+		DefaultsAddDefaultsSectionHandler: defaults.AddDefaultsSectionHandlerFunc(func(params defaults.AddDefaultsSectionParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation defaults.AddDefaultsSection has not yet been implemented")
+		}),
 		MapsAddMapEntryHandler: maps.AddMapEntryHandlerFunc(func(params maps.AddMapEntryParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation maps.AddMapEntry has not yet been implemented")
 		}),
@@ -1602,6 +1605,8 @@ type DataPlaneAPI struct {
 	ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler
 	// ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler sets the operation handler for the post services haproxy runtime acls parent name entries operation
 	ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesHandler
+	// DefaultsAddDefaultsSectionHandler sets the operation handler for the add defaults section operation
+	DefaultsAddDefaultsSectionHandler defaults.AddDefaultsSectionHandler
 	// MapsAddMapEntryHandler sets the operation handler for the add map entry operation
 	MapsAddMapEntryHandler maps.AddMapEntryHandler
 	// ACLRuntimeAddPayloadRuntimeACLHandler sets the operation handler for the add payload runtime ACL operation
@@ -2634,6 +2639,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler == nil {
 		unregistered = append(unregistered, "acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesHandler")
+	}
+	if o.DefaultsAddDefaultsSectionHandler == nil {
+		unregistered = append(unregistered, "defaults.AddDefaultsSectionHandler")
 	}
 	if o.MapsAddMapEntryHandler == nil {
 		unregistered = append(unregistered, "maps.AddMapEntryHandler")
@@ -4146,6 +4154,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/runtime/acls/{parent_name}/entries"] = acl_runtime.NewPostServicesHaproxyRuntimeAclsParentNameEntries(o.context, o.ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/configuration/defaults"] = defaults.NewAddDefaultsSection(o.context, o.DefaultsAddDefaultsSectionHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

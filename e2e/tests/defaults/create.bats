@@ -26,7 +26,7 @@ load '../../libs/haproxy_version'
 load 'utils/_helpers'
 
 @test "defaults: Create a named defaults configuration" {
-  resource_put "$_DEFAULTS_BASE_PATH" "data/post.json" ""
+  resource_post "$_DEFAULTS_BASE_PATH" "data/post.json" ""
   assert_equal "$SC" 202
 
   resource_get "$_DEFAULTS_BASE_PATH/created"
@@ -39,20 +39,20 @@ load 'utils/_helpers'
 }
 
 @test "defaults: Create a named defaults configuration that already exists" {
-  resource_put "$_DEFAULTS_BASE_PATH" "data/post_existing.json" ""
+  resource_post "$_DEFAULTS_BASE_PATH" "data/post_existing.json" ""
   assert_equal "$SC" 409
 }
 
 @test "defaults: Create a named defaults configuration with from" {
   haproxy_version_ge $_ERR_SUPPORTED_HAPROXY_VERSION || skip "requires HAProxy $_ERR_SUPPORTED_HAPROXY_VERSION+"
 
-  resource_put "$_DEFAULTS_BASE_PATH" "data/post.json" ""
+  resource_post "$_DEFAULTS_BASE_PATH" "data/post.json" ""
   assert_equal "$SC" 202
 
   resource_get "$_DEFAULTS_BASE_PATH/created"
   assert_equal "$SC" 200
 
-  resource_put "$_DEFAULTS_BASE_PATH" "data/post_with_from.json" ""
+  resource_post "$_DEFAULTS_BASE_PATH" "data/post_with_from.json" ""
   assert_equal "$SC" 202
 
   resource_get "$_DEFAULTS_BASE_PATH/created_with_from"

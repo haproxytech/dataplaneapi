@@ -776,6 +776,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 
 	// setup defaults configuration handlers
 	api.DefaultsCreateDefaultsSectionHandler = &handlers.CreateDefaultsSectionHandlerImpl{Client: client, ReloadAgent: ra}
+	api.DefaultsAddDefaultsSectionHandler = &handlers.AddDefaultsSectionHandlerImpl{Client: client, ReloadAgent: ra}
 	api.DefaultsDeleteDefaultsSectionHandler = &handlers.DeleteDefaultsSectionHandlerImpl{Client: client, ReloadAgent: ra}
 	api.DefaultsReplaceDefaultsSectionHandler = &handlers.ReplaceDefaultsSectionHandlerImpl{Client: client, ReloadAgent: ra}
 	api.DefaultsGetDefaultsSectionHandler = &handlers.GetDefaultsSectionHandlerImpl{Client: client}

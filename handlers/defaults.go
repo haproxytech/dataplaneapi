@@ -236,6 +236,62 @@ func (h *CreateDefaultsSectionHandlerImpl) createDefaultsSection(params defaults
 	return configuration.CreateDefaultsSection(params.Data, t, v)
 }
 
+type AddDefaultsSectionHandlerImpl struct {
+	Client      client_native.HAProxyClient
+	ReloadAgent haproxy.IReloadAgent
+}
+
+func (h AddDefaultsSectionHandlerImpl) Handle(params defaults.AddDefaultsSectionParams, principal interface{}) middleware.Responder {
+	t := ""
+	v := int64(0)
+	if params.TransactionID != nil {
+		t = *params.TransactionID
+	}
+	if params.Version != nil {
+		v = *params.Version
+	}
+
+	if t != "" && *params.ForceReload {
+		msg := "Both force_reload and transaction specified, specify only one"
+		c := misc.ErrHTTPBadRequest
+		e := &models.Error{
+			Message: &msg,
+			Code:    &c,
+		}
+		return defaults.NewAddDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err := h.createDefaultsSection(params, t, v)
+	if err != nil {
+		e := misc.HandleError(err)
+		return defaults.NewAddDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
+	}
+	if params.TransactionID == nil {
+		if *params.ForceReload {
+			err := h.ReloadAgent.ForceReload()
+			if err != nil {
+				e := misc.HandleError(err)
+				return defaults.NewAddDefaultsSectionDefault(int(*e.Code)).WithPayload(e)
+			}
+			return defaults.NewAddDefaultsSectionCreated().WithPayload(params.Data)
+		}
+		rID := h.ReloadAgent.Reload()
+		return defaults.NewAddDefaultsSectionAccepted().WithReloadID(rID).WithPayload(params.Data)
+	}
+	return defaults.NewAddDefaultsSectionAccepted().WithPayload(params.Data)
+}
+
+func (h *AddDefaultsSectionHandlerImpl) createDefaultsSection(params defaults.AddDefaultsSectionParams, t string, v int64) error {
+	configuration, err := h.Client.Configuration()
+	if err != nil {
+		return err
+	}
+	if params.FullSection != nil && *params.FullSection {
+		return configuration.CreateStructuredDefaultsSection(params.Data, t, v)
+	}
+	return configuration.CreateDefaultsSection(params.Data, t, v)
+}
+
 // ReplaceDefaultsHandlerImpl implementation of the ReplaceDefaultsHandler interface
 type ReplaceDefaultsSectionHandlerImpl struct {
 	Client      client_native.HAProxyClient
