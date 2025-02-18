@@ -62,6 +62,7 @@ haproxy:
   master_worker_mode: false # bool
   delayed_start_max: 30s # time.Duration
   delayed_start_tick: 500ms # time.Duration
+  preferred_time_suffix: nearest # enum [nearest, none, ms, s, m, h, d]
   reload:
     reload_delay: 5 # int 2
     reload_cmd: "systemctl reload haproxy"
