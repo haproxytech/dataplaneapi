@@ -355,22 +355,19 @@ func copyConfigurationToStorage(cfg *Configuration) {
 		cfgStorage.Dataplaneapi.Advertised = &configTypeAdvertised{}
 	}
 	cfgStorage.Dataplaneapi.Advertised.APIAddress = &cfg.APIOptions.APIAddress
+	cfgStorage.Dataplaneapi.Advertised.APIPort = &cfg.APIOptions.APIPort
 
-	if cfgStorage.Dataplaneapi == nil {
-		cfgStorage.Dataplaneapi = &configTypeDataplaneapi{}
+	if cfgStorage.Dataplaneapi.Userlist == nil {
+		cfgStorage.Dataplaneapi.Userlist = &configTypeUserlist{}
 	}
-	if cfgStorage.Dataplaneapi.Advertised == nil {
-		cfgStorage.Dataplaneapi.Advertised = &configTypeAdvertised{}
-	}
-	cfgStorage.Dataplaneapi.Advertised.APIPort = &cfg.APIOptions.APIPort
-	cfgStorage.Dataplaneapi.Advertised.APIPort = &cfg.APIOptions.APIPort
+	cfgStorage.Dataplaneapi.Userlist.Userlist = &cfg.HAProxy.Userlist
+	cfgStorage.Dataplaneapi.Userlist.UserListFile = &cfg.HAProxy.UserListFile
 
 	if cfgStorage.Haproxy == nil {
 		cfgStorage.Haproxy = &configTypeHaproxy{
 			Reload: &configTypeReload{},
 		}
 	}
-
 	cfgStorage.Haproxy.Reload.ReloadStrategy = &cfg.HAProxy.ReloadStrategy
 
 	if cfgStorage.LogTargets == nil {
