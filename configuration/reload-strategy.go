@@ -35,7 +35,7 @@ const (
 	s6ReloadCmd      = "s6-svc -2"
 	s6RestartCmd     = "s6-svc -r"
 	s6StatusCmd      = "s6-svstat -u"
-	s6DefaultService = "/etc/service.d/haproxy"
+	s6DefaultService = "/var/run/service/haproxy"
 )
 
 // Set a default value to a string.
