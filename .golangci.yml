@@ -60,10 +60,9 @@ linters:
     - tagalign
     - depguard
     - mnd
-    - gomnd
     - err113
-    - execinquery
-    - exportloopref
+    - tenv # deprecated
+    - recvcheck
 
 issues:
   exclude:
