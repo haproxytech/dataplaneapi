@@ -704,7 +704,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 			data.ID = service_discovery.NewServiceDiscoveryUUID()
 		}
 		if errSD = service_discovery.ValidateConsulData(data, true); errSD != nil {
-			log.Fatalf("Error validating Consul instance: " + errSD.Error())
+			log.Fatal("Error validating Consul instance: " + errSD.Error())
 		}
 		if errSD = discovery.AddNode("consul", *data.ID, data); errSD != nil {
 			log.Warning("Error creating consul instance: " + errSD.Error())
@@ -720,7 +720,7 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 			data.ID = service_discovery.NewServiceDiscoveryUUID()
 		}
 		if errSD = service_discovery.ValidateAWSData(data, true); errSD != nil {
-			log.Fatalf("Error validating AWS instance: " + errSD.Error())
+			log.Fatal("Error validating AWS instance: " + errSD.Error())
 		}
 		if errSD = discovery.AddNode("aws", *data.ID, data); errSD != nil {
 			log.Warning("Error creating AWS instance: " + errSD.Error())
@@ -1057,10 +1057,10 @@ func handleSignals(ctx context.Context, cancel context.CancelFunc, sigs chan os.
 func reloadConfigurationFile(client client_native.HAProxyClient, haproxyOptions dataplaneapi_config.HAProxyConfiguration, users *dataplaneapi_config.Users) {
 	confClient, err := cn.ConfigureConfigurationClient(haproxyOptions, mWorker)
 	if err != nil {
-		log.Fatalf(err.Error())
+		log.Fatal(err.Error())
 	}
 	if err := users.Init(); err != nil {
-		log.Fatalf(err.Error())
+		log.Fatal(err.Error())
 	}
 	log.Info("Rereading Configuration Files")
 	clientMutex.Lock()

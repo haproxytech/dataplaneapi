@@ -176,7 +176,7 @@ func AuthenticateUser(user string, pass string) (interface{}, error) {
 	if strings.HasPrefix(u.Password, "\"${") && strings.HasSuffix(u.Password, "}\"") {
 		userPass = os.Getenv(misc.ExtractEnvVar(userPass))
 		if userPass == "" {
-			return nil, api_errors.New(401, fmt.Sprintf("%s %s", "can not read password from env variable:", u.Password))
+			return nil, api_errors.New(401, "%s %s", "can not read password from env variable:", u.Password)
 		}
 	}
 
@@ -184,12 +184,12 @@ func AuthenticateUser(user string, pass string) (interface{}, error) {
 		if pass == userPass {
 			return user, nil
 		}
-		return nil, api_errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
+		return nil, api_errors.New(401, "%s %s", "invalid password:", pass)
 	}
 	if checkPassword(pass, userPass) {
 		return user, nil
 	}
-	return nil, api_errors.New(401, fmt.Sprintf("%s %s", "invalid password:", pass))
+	return nil, api_errors.New(401, "%s %s", "invalid password:", pass)
 }
 
 func checkPassword(pass, storedPass string) bool {

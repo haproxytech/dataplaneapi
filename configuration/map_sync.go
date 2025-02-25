@@ -124,7 +124,7 @@ func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 		return false
 	}
 
-	max := 0
+	maxNo := 0
 	switch l := len(rEntries); {
 	case l > 19:
 		for i := l - 20; i < l; i++ {
@@ -132,21 +132,21 @@ func equalSomeEntries(fEntries, rEntries models.MapEntries, index ...int) bool {
 				return false
 			}
 		}
-		max = l - 19
+		maxNo = l - 19
 	case l == 0:
 		return true
 	default:
-		max = l
+		maxNo = l
 	}
 
 	maxRandom := 10
-	if max < 10 {
-		maxRandom = max
+	if maxNo < 10 {
+		maxRandom = maxNo
 	}
 
 	for range maxRandom {
 		// There's no need for strong number generation, here, just need for performance
-		r := rand.Intn(max)
+		r := rand.Intn(maxNo)
 		if len(index) > 0 {
 			r = index[0]
 		}

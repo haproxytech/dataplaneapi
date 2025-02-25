@@ -125,7 +125,6 @@ func ConfigureRuntimeClient(ctx context.Context, confClient configuration.Config
 			// else try to find process specific sockets and set them up
 			sockets := make(map[int]string)
 			for _, r := range runtimeAPIs {
-				//nolint:govet
 				if misc.IsUnixSocketAddr(*r.Address) && r.Process != "" {
 					process, err := strconv.ParseInt(r.Process, 10, 64)
 					if err == nil {

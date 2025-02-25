@@ -1,6 +1,6 @@
 linters-settings:
   govet:
-    check-shadowing: true
+    shadow: true
   golint:
     min-confidence: 0
   gocyclo:
@@ -24,7 +24,6 @@ linters:
   disable:
     - dupl
     - exhaustive
-    - exhaustivestruct
     - funlen
     - gci
     - gochecknoglobals
@@ -32,8 +31,6 @@ linters:
     - goconst
     - gocyclo
     - godot
-    - goerr113
-    - gomnd
     - lll
     - nestif
     - nlreturn
@@ -43,18 +40,9 @@ linters:
     - paralleltest
     - testpackage
     - varnamelen
-    - nosnakecase
     - exhaustruct
     - nonamedreturns
     - forcetypeassert
-    - golint #deprecated
-    - varcheck #deprecated
-    - ifshort #deprecated
-    - structcheck #deprecated
-    - maligned #deprecated
-    - scopelint #deprecated
-    - interfacer #deprecated
-    - deadcode #deprecated
     - rowserrcheck #rowserrcheck is disabled because of generics
     - sqlclosecheck #rowserrcheck is disabled because of generics
     - wastedassign #rowserrcheck is disabled because of generics
@@ -73,6 +61,10 @@ linters:
     - gocritic
     - tagalign
     - depguard
+    - mnd
+    - err113
+    - tenv # deprecated
+    - recvcheck
 
 issues:
   exclude:
