@@ -26,8 +26,8 @@ import (
 )
 
 func TestReloadAgentDoesntMissReloads(t *testing.T) {
-	ctx, cancel := context.WithCancel(context.Background())
-	f, err := os.CreateTemp("", "config.cfg")
+	ctx, cancel := context.WithCancel(t.Context())
+	f, err := os.CreateTemp(t.TempDir(), "config.cfg")
 	require.NoError(t, err)
 	assert.NotNil(t, f)
 	t.Cleanup(func() {
