@@ -30,3 +30,4 @@ allowed:
   - dataplaneapi
   - quic
   - userlist
+  - cve
