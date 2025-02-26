@@ -7,8 +7,8 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.36.2
 	github.com/aws/aws-sdk-go-v2/config v1.29.7
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.60
-	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.47.0
-	github.com/aws/aws-sdk-go-v2/service/ec2 v1.203.1
+	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.51.13
+	github.com/aws/aws-sdk-go-v2/service/ec2 v1.204.0
 	github.com/docker/go-units v0.5.0
 	github.com/dustinkirkland/golang-petname v0.0.0-20240428194347-eebcea082ee0
 	github.com/fsnotify/fsnotify v1.8.0
@@ -61,7 +61,6 @@ require (
 	github.com/gofrs/flock v0.12.1 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/haproxytech/go-logger v1.1.0 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/kr/text v0.2.0 // indirect
