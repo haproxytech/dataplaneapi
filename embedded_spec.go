@@ -20465,6 +20465,739 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/ssl_ca_files": {
+      "get": {
+        "description": "Returns all SSL CA files using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an array of all SSL CA files",
+        "operationId": "getAllCaFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_ca_files"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new SSL CA file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Creates a new SSL CA file",
+        "operationId": "createCaFile",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "CA certificate file",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SSL CA file created"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_ca_files/{name}": {
+      "get": {
+        "description": "Returns an SSL CA file by name using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an SSL CA file",
+        "operationId": "getCaFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_ca_file"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replace the contents of a CA file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Update the contents of a CA file",
+        "operationId": "setCaFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SSL CA payload added"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a CA file",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Deletes a CA file",
+        "operationId": "deleteCaFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "SSL CA deleted"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_ca_files/{name}/entries": {
+      "post": {
+        "description": "Adds an entry to an existing CA file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Add a certificate to a CA file",
+        "operationId": "addCaEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "Payload of the cert entry",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_ca_files/{name}/entries/{index}": {
+      "get": {
+        "description": "Returns an SSL CA file cert entry.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an SSL CA file cert entry",
+        "operationId": "getCaEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "SSL CA file index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_certs": {
+      "get": {
+        "description": "Returns certificate files descriptions from runtime.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return a list of SSL certificate files",
+        "operationId": "getAllCerts",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificates"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new SSL certificate file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Create a new SSL certificate file",
+        "operationId": "createCert",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "Certificate file",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate created"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_certs/{name}": {
+      "get": {
+        "description": "Returns one structured certificate using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return one structured certificate",
+        "operationId": "getCert",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Sets a certificate payload using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Replace the contents of a certificate",
+        "operationId": "replaceCert",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File updated"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a certificate using the runtime socket.",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Delete a certificate",
+        "operationId": "deleteCert",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "File deleted"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crl_files": {
+      "get": {
+        "description": "Returns all the certificate revocation list files using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an array of all the CRL files",
+        "operationId": "getAllCrl",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crls"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new CRL file with its contents using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Create a new CRL file",
+        "operationId": "createCrl",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "CRL file",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CRL file created"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crl_files/{name}": {
+      "get": {
+        "description": "Returns one or all entries in a CRL file using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Get the contents of a CRL file",
+        "operationId": "getCrl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "CRL file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "x-nullable": true,
+            "description": "Entry index to return. Starts at 1. If not provided, all entries are returned.",
+            "name": "index",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crl_entries"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces the contents of a CRL file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Replace the contents of a CRL file",
+        "operationId": "replaceCrl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "CRL file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "CRL file contents",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File modified"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a CRL file using the runtime socket.",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Delete a CRL file",
+        "operationId": "deleteCrl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "CRL file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "File deleted"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crt_lists": {
+      "get": {
+        "description": "Returns an array of crt-list file descriptions from runtime.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Get the list of all crt-list files",
+        "operationId": "getAllCrtLists",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_lists"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crt_lists/entries": {
+      "get": {
+        "description": "Returns an array of entries present inside the given crt-list file. Their index can be used to delete them.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Get all the entries inside a crt-list",
+        "operationId": "getAllCrtListEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list filename",
+            "name": "name",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entries"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Appends an entry to the given crt-list using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Add an entry into a crt-list",
+        "operationId": "addCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list filename",
+            "name": "name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a single entry from the given crt-list using the runtime socket.",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Delete an entry from a crt-list",
+        "operationId": "deleteCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt list name",
+            "name": "name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "SSL cert entry name",
+            "name": "cert_file",
+            "in": "query",
+            "required": true
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "x-nullable": true,
+            "description": "The line number where the entry is located, in case several entries share the same certificate.",
+            "name": "line_number",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/stick_tables": {
       "get": {
         "description": "Returns an array of all stick tables.",
@@ -22846,6 +23579,378 @@ func init() {
         }
       }
     },
+    "/services/haproxy/storage/ssl_crt_lists": {
+      "get": {
+        "description": "Returns all available certificate lists on disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return all available certificate lists on disk",
+        "operationId": "getAllStorageSSLCrtListFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_files"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a certificate list.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Create a certificate list",
+        "operationId": "createStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The certificate list to upload",
+            "name": "file_upload",
+            "in": "formData"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate list created",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            }
+          },
+          "202": {
+            "description": "Certificate list created requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/ssl_crt_lists/{name}": {
+      "get": {
+        "description": "Returns one certificate list from disk.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return one certificate list from disk",
+        "operationId": "getOneStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a certificate list on disk.",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Replace a certificate lists on disk",
+        "operationId": "replaceStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/parameters/skip_reload"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate list replaced",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            }
+          },
+          "202": {
+            "description": "Certificate list replaced and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a certificate list from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Delete a certificate list from disk",
+        "operationId": "deleteStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/skip_reload"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Certificate list deleted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Certificate list deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/ssl_crt_lists/{name}/entries": {
+      "get": {
+        "description": "Returns all the entries in a certificate list.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Returns all the entries in a CrtList",
+        "operationId": "GetStorageSSLCrtListEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list file",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entries"
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new entry in a certificate list.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Creates a new entry in a CrtList",
+        "operationId": "CreateStorageSSLCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list file",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "SSL crt-list entry",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entry"
+            }
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "New entry added",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an entry from a certificate list.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Deletes an entry from CrtList file",
+        "operationId": "DeleteStorageSSLCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "SSL certificate filename",
+            "name": "certificate",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "The line number in the crt-list",
+            "name": "line_number",
+            "in": "query",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/transactions": {
       "get": {
         "description": "Returns a list of HAProxy configuration transactions. Transactions can be filtered by their status.",
@@ -23134,6 +24239,11 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "value": {
           "type": "string",
@@ -23894,6 +25004,11 @@ func init() {
           "x-display-name": "Maximum keep alive queue",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mode": {
           "type": "string",
           "enum": [
@@ -24161,6 +25276,11 @@ func init() {
             "property": "acl_name"
           }
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -24347,6 +25467,11 @@ func init() {
               "type": "string",
               "pattern": "^[^\\s]+$",
               "example": "127.0.0.1"
+            },
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
             },
             "port": {
               "type": "integer",
@@ -24909,6 +26034,11 @@ func init() {
         "max_secondary_entries": {
           "type": "integer"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
@@ -24943,6 +26073,11 @@ func init() {
         "length": {
           "type": "integer",
           "x-nullable": false
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "type": {
           "type": "string",
@@ -25141,6 +26276,11 @@ func init() {
           "type": "integer",
           "x-display-name": "Key Length",
           "x-nullable": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "nopurge": {
           "type": "boolean",
@@ -25417,6 +26557,11 @@ func init() {
           "description": "Private key filename",
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "ocsp": {
           "description": "OCSP response filename",
           "type": "string"
@@ -25462,6 +26607,11 @@ func init() {
         "loads": {
           "$ref": "#/definitions/crt_loads"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_]+$",
@@ -25499,6 +26649,16 @@ func init() {
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          }
         }
       ]
     },
@@ -26015,6 +27175,11 @@ func init() {
           "x-display-name": "Max Connections",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mode": {
           "type": "string",
           "enum": [
@@ -26278,6 +27443,11 @@ func init() {
         "interface": {
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -26343,6 +27513,11 @@ func init() {
           "x-dynamic-enum": {
             "operation": "getMailersSections",
             "property": "name"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
           }
         },
         "myhostname": {
@@ -26532,6 +27707,11 @@ func init() {
           },
           "x-omitempty": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string"
         }
@@ -26565,6 +27745,11 @@ func init() {
             503,
             504
           ]
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "url": {
           "type": "string"
@@ -26636,6 +27821,11 @@ func init() {
           "type": "integer",
           "default": 1,
           "minimum": 1
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "mpxs_conns": {
           "description": "Enables or disables the support of connection multiplexing. If the FastCGI application retrieves the variable FCGI_MPXS_CONNS during connection establishment, it can override this option.",
@@ -26919,6 +28109,11 @@ func init() {
             }
           },
           "x-size": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "min_size": {
           "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
@@ -27486,6 +28681,11 @@ func init() {
           "x-display-name": "Max Connections",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mode": {
           "type": "string",
           "enum": [
@@ -27917,6 +29117,11 @@ func init() {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mworker_max_reloads": {
           "type": "integer",
           "x-display-name": "The number of times a worker can survive a reload",
@@ -28143,6 +29348,11 @@ func init() {
         "name"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -28400,6 +29610,11 @@ func init() {
             }
           },
           "x-display-name": "Map Value Format"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "sc_expr": {
           "type": "string",
@@ -28713,6 +29928,11 @@ func init() {
             }
           },
           "x-display-name": "Expect Match"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "method": {
           "type": "string",
@@ -29035,6 +30255,11 @@ func init() {
         "status"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "return_content": {
           "type": "string",
           "x-dependency": {
@@ -29163,6 +30388,11 @@ func init() {
             "$ref": "#/definitions/errorfile"
           },
           "x-go-name": "ErrorFiles"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -29529,6 +30759,11 @@ func init() {
             }
           },
           "x-display-name": "Mark Value"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "method_fmt": {
           "type": "string",
@@ -30435,6 +31670,11 @@ func init() {
           },
           "x-display-name": "Mark Value"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "nice_value": {
           "type": "integer",
           "maximum": 1024,
@@ -31066,6 +32306,11 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -31101,6 +32346,11 @@ func init() {
           "description": "Override syslog log tag set by other \"log-tag\" directives.",
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "description": "Name of the logging profile.",
           "type": "string",
@@ -31131,6 +32381,11 @@ func init() {
         "format": {
           "description": "Override \"log-format\" or \"error-log-format\" strings depending on the step.",
           "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "sd": {
           "description": "Override the \"log-format-sd\" string.",
@@ -31288,6 +32543,11 @@ func init() {
             }
           }
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "minlevel": {
           "type": "string",
           "enum": [
@@ -31426,6 +32686,11 @@ func init() {
           "pattern": "^\\S+$",
           "x-nullable": false
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_]+$",
@@ -31467,6 +32732,11 @@ func init() {
         "name"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_]+$",
@@ -31603,6 +32873,11 @@ func init() {
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -32435,6 +33710,11 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -32509,6 +33789,11 @@ func init() {
         },
         "enabled": {
           "type": "boolean"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -32955,6 +34240,11 @@ func init() {
           "description": "The group to run the command as, if different than the HAProxy group.",
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -33015,6 +34305,11 @@ func init() {
             "freeFormat": true,
             "operation": "getACLs",
             "property": "acl_name"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
           }
         },
         "type": {
@@ -33167,6 +34462,11 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -33267,6 +34567,11 @@ func init() {
           "type": "integer",
           "x-display-name": "The maximum length of an event message stored into the ring",
           "x-nullable": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -34620,6 +35925,11 @@ func init() {
             "property": "acl_name"
           }
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "target_server": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -34667,6 +35977,11 @@ func init() {
             "id": {
               "type": "integer",
               "x-nullable": true
+            },
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
             },
             "num_or_range": {
               "type": "string",
@@ -35206,53 +36521,28 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
-    "ssl_cert_entry": {
-      "description": "One SSL/TLS certificate",
+    "ssl_ca_file": {
+      "description": "A file containing one or more SSL/TLS certificates and keys",
       "type": "object",
-      "title": "One SSL Certificate Entry",
+      "title": "SSL File",
       "properties": {
-        "algorithm": {
+        "count": {
           "type": "string"
         },
-        "chain_issuer": {
-          "type": "string"
-        },
-        "chain_subject": {
-          "type": "string"
-        },
-        "issuer": {
-          "type": "string"
-        },
-        "not_after": {
-          "type": "string",
-          "format": "date"
-        },
-        "not_before": {
-          "type": "string",
-          "format": "date"
-        },
-        "serial": {
-          "type": "string"
-        },
-        "sha1_finger_print": {
-          "type": "string"
-        },
-        "status": {
+        "file": {
           "type": "string"
         },
         "storage_name": {
           "type": "string"
-        },
-        "subject": {
-          "type": "string"
-        },
-        "subject_alternative_names": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-omitempty": true
         }
+      }
+    },
+    "ssl_ca_files": {
+      "description": "Array of SSL CA files",
+      "type": "array",
+      "title": "SSL CA Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_ca_file"
       }
     },
     "ssl_certificate": {
@@ -35265,6 +36555,14 @@ func init() {
         },
         "authority_key_id": {
           "type": "string"
+        },
+        "chain_issuer": {
+          "type": "string",
+          "x-omitempty": true
+        },
+        "chain_subject": {
+          "type": "string",
+          "x-omitempty": true
         },
         "description": {
           "type": "string"
@@ -35316,6 +36614,12 @@ func init() {
           "x-nullable": true,
           "readOnly": true
         },
+        "status": {
+          "description": "Only set when using the runtime API.",
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
+        },
         "storage_name": {
           "type": "string"
         },
@@ -35330,12 +36634,201 @@ func init() {
         }
       }
     },
+    "ssl_certificate_id": {
+      "description": "SSL Certificate ID",
+      "type": "object",
+      "title": "SSL Certificate ID",
+      "properties": {
+        "certificate_id": {
+          "type": "object",
+          "properties": {
+            "hash_algorithm": {
+              "type": "string"
+            },
+            "issuer_key_hash": {
+              "type": "string"
+            },
+            "issuer_name_hash": {
+              "type": "string"
+            },
+            "serial_number": {
+              "type": "string"
+            }
+          },
+          "x-go-name": "CertificateId"
+        },
+        "certificate_id_key": {
+          "type": "string"
+        },
+        "certificate_path": {
+          "type": "string"
+        }
+      }
+    },
     "ssl_certificates": {
       "description": "Array of ssl certificate files",
       "type": "array",
-      "title": "SSL Files Array",
+      "title": "SSL Certificate Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
+      }
+    },
+    "ssl_crl": {
+      "description": "A file containing one or more SSL/TLS CRLs",
+      "type": "object",
+      "title": "SSL CRL File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crl_entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ssl_crl_entry"
+      }
+    },
+    "ssl_crl_entry": {
+      "description": "A certificate revocation list entry.",
+      "type": "object",
+      "title": "One CRL Entry",
+      "properties": {
+        "issuer": {
+          "type": "string"
+        },
+        "last_update": {
+          "type": "string",
+          "format": "date"
+        },
+        "next_update": {
+          "type": "string",
+          "format": "date"
+        },
+        "revoked_certificates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "revocation_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "serial_number": {
+                "type": "string"
+              }
+            },
+            "x-go-name": "RevokedCertificates"
+          },
+          "x-omitempty": true
+        },
+        "signature_algorithm": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crls": {
+      "description": "Array of ssl crl files",
+      "type": "array",
+      "title": "SSL CRL Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crl"
+      }
+    },
+    "ssl_crt_list": {
+      "description": "SSL Crt List file",
+      "type": "object",
+      "title": "SSL Crt List",
+      "properties": {
+        "file": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_entries": {
+      "description": "Array of SSL Crt List Entry",
+      "type": "array",
+      "title": "SSL Crt List Entry Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_entry"
+      }
+    },
+    "ssl_crt_list_entry": {
+      "description": "SSL Crt List Entry",
+      "type": "object",
+      "title": "SSL Crt List Entry",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "line_number": {
+          "type": "integer",
+          "x-nullable": false
+        },
+        "sni_filter": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "SNIFilter",
+          "x-omitempty": true
+        },
+        "ssl_bind_config": {
+          "type": "string",
+          "x-go-name": "SSLBindConfig"
+        }
+      }
+    },
+    "ssl_crt_list_file": {
+      "description": "A file referencing one or more certificates with their configuration.",
+      "type": "object",
+      "title": "SSL CRT List File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_files": {
+      "description": "List of SSL certificate list files (crt-list)",
+      "type": "array",
+      "title": "List of SSL certificate list files",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_file"
+      }
+    },
+    "ssl_crt_lists": {
+      "description": "Array of SSL Crt List",
+      "type": "array",
+      "title": "SSL Crt List Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "ssl_front_use": {
@@ -35387,6 +36880,11 @@ func init() {
         "key": {
           "description": "Private key filename",
           "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "no_alpn": {
           "type": "boolean"
@@ -35454,6 +36952,91 @@ func init() {
       },
       "x-go-name": "SSLFrontUses",
       "x-omitempty": true
+    },
+    "ssl_ocsp_response": {
+      "description": "SSL OCSP Response",
+      "type": "object",
+      "title": "SSL OCSP Response",
+      "properties": {
+        "base64_response": {
+          "type": "string"
+        },
+        "ocsp_response_status": {
+          "type": "string"
+        },
+        "produced_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "responder_id": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "response_type": {
+          "type": "string"
+        },
+        "responses": {
+          "type": "object",
+          "properties": {
+            "cert_status": {
+              "type": "string"
+            },
+            "certificate_id": {
+              "$ref": "#/definitions/ssl_certificate_id/properties/certificate_id"
+            },
+            "next_update": {
+              "type": "string",
+              "format": "date"
+            },
+            "revocation_reason": {
+              "type": "string",
+              "x-omitempty": true
+            },
+            "this_update": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "x-go-name": "OCSPResponses"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_ocsp_update": {
+      "description": "SSL OCSP Update",
+      "type": "object",
+      "title": "SSL OCSP Update",
+      "properties": {
+        "cert_id": {
+          "type": "string"
+        },
+        "failures": {
+          "type": "integer"
+        },
+        "last_update": {
+          "type": "string"
+        },
+        "last_update_status": {
+          "type": "integer"
+        },
+        "last_update_status_str": {
+          "type": "string"
+        },
+        "next_update": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "successes": {
+          "type": "integer"
+        }
+      }
     },
     "ssl_options": {
       "type": "object",
@@ -35592,6 +37175,19 @@ func init() {
         "skip_self_issued_ca": {
           "type": "boolean",
           "x-display-name": "Self issued CA, aka x509 root CA"
+        }
+      }
+    },
+    "ssl_providers": {
+      "description": "SSL Providers",
+      "type": "object",
+      "title": "SSL Providers",
+      "properties": {
+        "providers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -35781,6 +37377,11 @@ func init() {
             "freeFormat": true,
             "operation": "getACLs",
             "property": "acl_name"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
           }
         },
         "pattern": {
@@ -36026,6 +37627,11 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "x-nullable": false
@@ -36224,6 +37830,11 @@ func init() {
             }
           },
           "x-display-name": "Expect Match"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "min_recv": {
           "type": "integer",
@@ -36708,6 +38319,11 @@ func init() {
             }
           },
           "x-display-name": "Mark Value"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "nice_value": {
           "type": "integer",
@@ -37284,6 +38900,11 @@ func init() {
           },
           "x-display-name": "Mark Value"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "nice_value": {
           "type": "integer",
           "maximum": 1024,
@@ -37514,6 +39135,11 @@ func init() {
         "trace"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "trace": {
           "description": "Trace parameters",
           "type": "string",
@@ -37528,6 +39154,11 @@ func init() {
       "properties": {
         "entries": {
           "$ref": "#/definitions/trace_entries"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         }
       },
       "additionalProperties": false,
@@ -38147,6 +39778,11 @@ func init() {
           "type": "string",
           "x-nullable": false
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "password": {
           "type": "string",
           "x-nullable": false
@@ -38194,6 +39830,11 @@ func init() {
         "name"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -71388,6 +73029,1109 @@ func init() {
         }
       }
     },
+    "/services/haproxy/runtime/ssl_ca_files": {
+      "get": {
+        "description": "Returns all SSL CA files using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an array of all SSL CA files",
+        "operationId": "getAllCaFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_ca_files"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new SSL CA file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Creates a new SSL CA file",
+        "operationId": "createCaFile",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "CA certificate file",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SSL CA file created"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_ca_files/{name}": {
+      "get": {
+        "description": "Returns an SSL CA file by name using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an SSL CA file",
+        "operationId": "getCaFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_ca_file"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replace the contents of a CA file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Update the contents of a CA file",
+        "operationId": "setCaFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SSL CA payload added"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a CA file",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Deletes a CA file",
+        "operationId": "deleteCaFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "SSL CA deleted"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_ca_files/{name}/entries": {
+      "post": {
+        "description": "Adds an entry to an existing CA file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Add a certificate to a CA file",
+        "operationId": "addCaEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "Payload of the cert entry",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_ca_files/{name}/entries/{index}": {
+      "get": {
+        "description": "Returns an SSL CA file cert entry.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an SSL CA file cert entry",
+        "operationId": "getCaEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL CA file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "description": "SSL CA file index",
+            "name": "index",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_certs": {
+      "get": {
+        "description": "Returns certificate files descriptions from runtime.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return a list of SSL certificate files",
+        "operationId": "getAllCerts",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificates"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new SSL certificate file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Create a new SSL certificate file",
+        "operationId": "createCert",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "Certificate file",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate created"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_certs/{name}": {
+      "get": {
+        "description": "Returns one structured certificate using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return one structured certificate",
+        "operationId": "getCert",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_certificate"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Sets a certificate payload using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Replace the contents of a certificate",
+        "operationId": "replaceCert",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File updated"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a certificate using the runtime socket.",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Delete a certificate",
+        "operationId": "deleteCert",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL certificate name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "File deleted"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crl_files": {
+      "get": {
+        "description": "Returns all the certificate revocation list files using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Return an array of all the CRL files",
+        "operationId": "getAllCrl",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crls"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new CRL file with its contents using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Create a new CRL file",
+        "operationId": "createCrl",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "CRL file",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CRL file created"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crl_files/{name}": {
+      "get": {
+        "description": "Returns one or all entries in a CRL file using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Get the contents of a CRL file",
+        "operationId": "getCrl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "CRL file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "x-nullable": true,
+            "description": "Entry index to return. Starts at 1. If not provided, all entries are returned.",
+            "name": "index",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crl_entries"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces the contents of a CRL file using the runtime socket.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Replace the contents of a CRL file",
+        "operationId": "replaceCrl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "CRL file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "CRL file contents",
+            "name": "file_upload",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File modified"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a CRL file using the runtime socket.",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Delete a CRL file",
+        "operationId": "deleteCrl",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "CRL file name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "File deleted"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crt_lists": {
+      "get": {
+        "description": "Returns an array of crt-list file descriptions from runtime.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Get the list of all crt-list files",
+        "operationId": "getAllCrtLists",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_lists"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/runtime/ssl_crt_lists/entries": {
+      "get": {
+        "description": "Returns an array of entries present inside the given crt-list file. Their index can be used to delete them.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Get all the entries inside a crt-list",
+        "operationId": "getAllCrtListEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list filename",
+            "name": "name",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entries"
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Appends an entry to the given crt-list using the runtime socket.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Add an entry into a crt-list",
+        "operationId": "addCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list filename",
+            "name": "name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a single entry from the given crt-list using the runtime socket.",
+        "tags": [
+          "SSLRuntime"
+        ],
+        "summary": "Delete an entry from a crt-list",
+        "operationId": "deleteCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt list name",
+            "name": "name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "SSL cert entry name",
+            "name": "cert_file",
+            "in": "query",
+            "required": true
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "x-nullable": true,
+            "description": "The line number where the entry is located, in case several entries share the same certificate.",
+            "name": "line_number",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/runtime/stick_tables": {
       "get": {
         "description": "Returns an array of all stick tables.",
@@ -75142,6 +77886,587 @@ func init() {
         }
       }
     },
+    "/services/haproxy/storage/ssl_crt_lists": {
+      "get": {
+        "description": "Returns all available certificate lists on disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return all available certificate lists on disk",
+        "operationId": "getAllStorageSSLCrtListFiles",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_files"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a certificate list.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Create a certificate list",
+        "operationId": "createStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "file",
+            "x-mimetype": "text/plain",
+            "description": "The certificate list to upload",
+            "name": "file_upload",
+            "in": "formData"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Certificate list created",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            }
+          },
+          "202": {
+            "description": "Certificate list created requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/ssl_crt_lists/{name}": {
+      "get": {
+        "description": "Returns one certificate list from disk.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Return one certificate list from disk",
+        "operationId": "getOneStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces a certificate list on disk.",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Replace a certificate lists on disk",
+        "operationId": "replaceStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate list replaced",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            }
+          },
+          "202": {
+            "description": "Certificate list replaced and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_file"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a certificate list from disk.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Delete a certificate list from disk",
+        "operationId": "deleteStorageSSLCrtListFile",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Certificate list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Certificate list deleted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Certificate list deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/storage/ssl_crt_lists/{name}/entries": {
+      "get": {
+        "description": "Returns all the entries in a certificate list.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Returns all the entries in a CrtList",
+        "operationId": "GetStorageSSLCrtListEntries",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list file",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entries"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new entry in a certificate list.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Creates a new entry in a CrtList",
+        "operationId": "CreateStorageSSLCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt-list file",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "SSL crt-list entry",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entry"
+            }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "New entry added",
+            "schema": {
+              "$ref": "#/definitions/ssl_crt_list_entry"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an entry from a certificate list.",
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Deletes an entry from CrtList file",
+        "operationId": "DeleteStorageSSLCrtListEntry",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "SSL crt list name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "SSL certificate filename",
+            "name": "certificate",
+            "in": "query",
+            "required": true
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "description": "The line number in the crt-list",
+            "name": "line_number",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/transactions": {
       "get": {
         "description": "Returns a list of HAProxy configuration transactions. Transactions can be filtered by their status.",
@@ -76283,6 +79608,43 @@ func init() {
         }
       }
     },
+    "SslCrlEntryRevokedCertificatesItems0": {
+      "type": "object",
+      "properties": {
+        "revocation_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "serial_number": {
+          "type": "string"
+        }
+      },
+      "x-go-name": "RevokedCertificates"
+    },
+    "SslOcspResponseResponses": {
+      "type": "object",
+      "properties": {
+        "cert_status": {
+          "type": "string"
+        },
+        "certificate_id": {
+          "$ref": "#/definitions/sslCertificateIdCertificateId"
+        },
+        "next_update": {
+          "type": "string",
+          "format": "date"
+        },
+        "revocation_reason": {
+          "type": "string",
+          "x-omitempty": true
+        },
+        "this_update": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "x-go-name": "OCSPResponses"
+    },
     "SslOptionsEnginesItems0": {
       "type": "object",
       "required": [
@@ -76366,6 +79728,11 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$",
           "x-nullable": false
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "value": {
           "type": "string",
@@ -77081,6 +80448,11 @@ func init() {
           "x-display-name": "Maximum keep alive queue",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mode": {
           "type": "string",
           "enum": [
@@ -77353,6 +80725,11 @@ func init() {
             "property": "acl_name"
           }
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -77539,6 +80916,11 @@ func init() {
               "type": "string",
               "pattern": "^[^\\s]+$",
               "example": "127.0.0.1"
+            },
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
             },
             "port": {
               "type": "integer",
@@ -78102,6 +81484,11 @@ func init() {
         "max_secondary_entries": {
           "type": "integer"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$"
@@ -78136,6 +81523,11 @@ func init() {
         "length": {
           "type": "integer",
           "x-nullable": false
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "type": {
           "type": "string",
@@ -78309,6 +81701,11 @@ func init() {
           "type": "integer",
           "x-display-name": "Key Length",
           "x-nullable": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "nopurge": {
           "type": "boolean",
@@ -78572,6 +81969,11 @@ func init() {
           "description": "Private key filename",
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "ocsp": {
           "description": "OCSP response filename",
           "type": "string"
@@ -78617,6 +82019,11 @@ func init() {
         "loads": {
           "$ref": "#/definitions/crt_loads"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_]+$",
@@ -78655,6 +82062,16 @@ func init() {
       "allOf": [
         {
           "$ref": "#/definitions/bind_params"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          }
         }
       ]
     },
@@ -79176,6 +82593,11 @@ func init() {
           "x-display-name": "Max Connections",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mode": {
           "type": "string",
           "enum": [
@@ -79444,6 +82866,11 @@ func init() {
         "interface": {
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -79509,6 +82936,11 @@ func init() {
           "x-dynamic-enum": {
             "operation": "getMailersSections",
             "property": "name"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
           }
         },
         "myhostname": {
@@ -79668,6 +83100,11 @@ func init() {
           },
           "x-omitempty": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string"
         }
@@ -79701,6 +83138,11 @@ func init() {
             503,
             504
           ]
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "url": {
           "type": "string"
@@ -79772,6 +83214,11 @@ func init() {
           "type": "integer",
           "default": 1,
           "minimum": 1
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "mpxs_conns": {
           "description": "Enables or disables the support of connection multiplexing. If the FastCGI application retrieves the variable FCGI_MPXS_CONNS during connection establishment, it can override this option.",
@@ -80055,6 +83502,11 @@ func init() {
             }
           },
           "x-size": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "min_size": {
           "description": "The optional minimum number of bytes forwarded at a time by a stream excluding the last packet that may be smaller.\nThis value can be specified for per-stream and shared bandwidth limitation filters.\nIt follows the HAProxy size format and is expressed in bytes.",
@@ -80626,6 +84078,11 @@ func init() {
           "x-display-name": "Max Connections",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mode": {
           "type": "string",
           "enum": [
@@ -81034,6 +84491,11 @@ func init() {
           "type": "boolean",
           "x-display-name": "Master Worker Mode"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "mworker_max_reloads": {
           "type": "integer",
           "minimum": 0,
@@ -81200,6 +84662,11 @@ func init() {
         "name"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -81457,6 +84924,11 @@ func init() {
             }
           },
           "x-display-name": "Map Value Format"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "sc_expr": {
           "type": "string",
@@ -81770,6 +85242,11 @@ func init() {
             }
           },
           "x-display-name": "Expect Match"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "method": {
           "type": "string",
@@ -82093,6 +85570,11 @@ func init() {
         "status"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "return_content": {
           "type": "string",
           "x-dependency": {
@@ -82221,6 +85703,11 @@ func init() {
             "$ref": "#/definitions/errorfile"
           },
           "x-go-name": "ErrorFiles"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -82587,6 +86074,11 @@ func init() {
             }
           },
           "x-display-name": "Mark Value"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "method_fmt": {
           "type": "string",
@@ -83494,6 +86986,11 @@ func init() {
           },
           "x-display-name": "Mark Value"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "nice_value": {
           "type": "integer",
           "maximum": 1024,
@@ -84126,6 +87623,11 @@ func init() {
           "type": "integer",
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -84162,6 +87664,11 @@ func init() {
           "description": "Override syslog log tag set by other \"log-tag\" directives.",
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "description": "Name of the logging profile.",
           "type": "string",
@@ -84192,6 +87699,11 @@ func init() {
         "format": {
           "description": "Override \"log-format\" or \"error-log-format\" strings depending on the step.",
           "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "sd": {
           "description": "Override the \"log-format-sd\" string.",
@@ -84349,6 +87861,11 @@ func init() {
             }
           }
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "minlevel": {
           "type": "string",
           "enum": [
@@ -84460,6 +87977,11 @@ func init() {
           "pattern": "^\\S+$",
           "x-nullable": false
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_]+$",
@@ -84501,6 +88023,11 @@ func init() {
         "name"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_]+$",
@@ -84638,6 +88165,11 @@ func init() {
         "address": {
           "type": "string",
           "pattern": "^[^\\s]+$"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -85470,6 +89002,11 @@ func init() {
           "type": "string",
           "pattern": "^[^\\s]+$"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -85544,6 +89081,11 @@ func init() {
         },
         "enabled": {
           "type": "boolean"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -85991,6 +89533,11 @@ func init() {
           "description": "The group to run the command as, if different than the HAProxy group.",
           "type": "string"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -86051,6 +89598,11 @@ func init() {
             "freeFormat": true,
             "operation": "getACLs",
             "property": "acl_name"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
           }
         },
         "type": {
@@ -86209,6 +89761,11 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",
@@ -86311,6 +89868,11 @@ func init() {
           "type": "integer",
           "x-display-name": "The maximum length of an event message stored into the ring",
           "x-nullable": true
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "name": {
           "type": "string",
@@ -87680,6 +91242,11 @@ func init() {
             "property": "acl_name"
           }
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "target_server": {
           "type": "string",
           "pattern": "^[^\\s]+$",
@@ -87727,6 +91294,11 @@ func init() {
             "id": {
               "type": "integer",
               "x-nullable": true
+            },
+            "metadata": {
+              "additionalProperties": {
+                "type": "object"
+              }
             },
             "num_or_range": {
               "type": "string",
@@ -88202,53 +91774,47 @@ func init() {
         "$ref": "#/definitions/spoe_transaction"
       }
     },
-    "ssl_cert_entry": {
-      "description": "One SSL/TLS certificate",
+    "sslCertificateIdCertificateId": {
       "type": "object",
-      "title": "One SSL Certificate Entry",
       "properties": {
-        "algorithm": {
+        "hash_algorithm": {
           "type": "string"
         },
-        "chain_issuer": {
+        "issuer_key_hash": {
           "type": "string"
         },
-        "chain_subject": {
+        "issuer_name_hash": {
           "type": "string"
         },
-        "issuer": {
+        "serial_number": {
+          "type": "string"
+        }
+      },
+      "x-go-gen-location": "models",
+      "x-go-name": "CertificateId"
+    },
+    "ssl_ca_file": {
+      "description": "A file containing one or more SSL/TLS certificates and keys",
+      "type": "object",
+      "title": "SSL File",
+      "properties": {
+        "count": {
           "type": "string"
         },
-        "not_after": {
-          "type": "string",
-          "format": "date"
-        },
-        "not_before": {
-          "type": "string",
-          "format": "date"
-        },
-        "serial": {
-          "type": "string"
-        },
-        "sha1_finger_print": {
-          "type": "string"
-        },
-        "status": {
+        "file": {
           "type": "string"
         },
         "storage_name": {
           "type": "string"
-        },
-        "subject": {
-          "type": "string"
-        },
-        "subject_alternative_names": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-omitempty": true
         }
+      }
+    },
+    "ssl_ca_files": {
+      "description": "Array of SSL CA files",
+      "type": "array",
+      "title": "SSL CA Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_ca_file"
       }
     },
     "ssl_certificate": {
@@ -88261,6 +91827,14 @@ func init() {
         },
         "authority_key_id": {
           "type": "string"
+        },
+        "chain_issuer": {
+          "type": "string",
+          "x-omitempty": true
+        },
+        "chain_subject": {
+          "type": "string",
+          "x-omitempty": true
         },
         "description": {
           "type": "string"
@@ -88312,6 +91886,12 @@ func init() {
           "x-nullable": true,
           "readOnly": true
         },
+        "status": {
+          "description": "Only set when using the runtime API.",
+          "type": "string",
+          "x-omitempty": true,
+          "readOnly": true
+        },
         "storage_name": {
           "type": "string"
         },
@@ -88326,12 +91906,177 @@ func init() {
         }
       }
     },
+    "ssl_certificate_id": {
+      "description": "SSL Certificate ID",
+      "type": "object",
+      "title": "SSL Certificate ID",
+      "properties": {
+        "certificate_id": {
+          "$ref": "#/definitions/sslCertificateIdCertificateId"
+        },
+        "certificate_id_key": {
+          "type": "string"
+        },
+        "certificate_path": {
+          "type": "string"
+        }
+      }
+    },
     "ssl_certificates": {
       "description": "Array of ssl certificate files",
       "type": "array",
-      "title": "SSL Files Array",
+      "title": "SSL Certificate Files Array",
       "items": {
         "$ref": "#/definitions/ssl_certificate"
+      }
+    },
+    "ssl_crl": {
+      "description": "A file containing one or more SSL/TLS CRLs",
+      "type": "object",
+      "title": "SSL CRL File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crl_entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ssl_crl_entry"
+      }
+    },
+    "ssl_crl_entry": {
+      "description": "A certificate revocation list entry.",
+      "type": "object",
+      "title": "One CRL Entry",
+      "properties": {
+        "issuer": {
+          "type": "string"
+        },
+        "last_update": {
+          "type": "string",
+          "format": "date"
+        },
+        "next_update": {
+          "type": "string",
+          "format": "date"
+        },
+        "revoked_certificates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SslCrlEntryRevokedCertificatesItems0"
+          },
+          "x-omitempty": true
+        },
+        "signature_algorithm": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "storage_name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crls": {
+      "description": "Array of ssl crl files",
+      "type": "array",
+      "title": "SSL CRL Files Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crl"
+      }
+    },
+    "ssl_crt_list": {
+      "description": "SSL Crt List file",
+      "type": "object",
+      "title": "SSL Crt List",
+      "properties": {
+        "file": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_entries": {
+      "description": "Array of SSL Crt List Entry",
+      "type": "array",
+      "title": "SSL Crt List Entry Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_entry"
+      }
+    },
+    "ssl_crt_list_entry": {
+      "description": "SSL Crt List Entry",
+      "type": "object",
+      "title": "SSL Crt List Entry",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "line_number": {
+          "type": "integer",
+          "minimum": 0,
+          "x-nullable": false
+        },
+        "sni_filter": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "SNIFilter",
+          "x-omitempty": true
+        },
+        "ssl_bind_config": {
+          "type": "string",
+          "x-go-name": "SSLBindConfig"
+        }
+      }
+    },
+    "ssl_crt_list_file": {
+      "description": "A file referencing one or more certificates with their configuration.",
+      "type": "object",
+      "title": "SSL CRT List File",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "size": {
+          "description": "File size in bytes.",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "storage_name": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_crt_list_files": {
+      "description": "List of SSL certificate list files (crt-list)",
+      "type": "array",
+      "title": "List of SSL certificate list files",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list_file"
+      }
+    },
+    "ssl_crt_lists": {
+      "description": "Array of SSL Crt List",
+      "type": "array",
+      "title": "SSL Crt List Array",
+      "items": {
+        "$ref": "#/definitions/ssl_crt_list"
       }
     },
     "ssl_front_use": {
@@ -88383,6 +92128,11 @@ func init() {
         "key": {
           "description": "Private key filename",
           "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "no_alpn": {
           "type": "boolean"
@@ -88450,6 +92200,91 @@ func init() {
       },
       "x-go-name": "SSLFrontUses",
       "x-omitempty": true
+    },
+    "ssl_ocsp_response": {
+      "description": "SSL OCSP Response",
+      "type": "object",
+      "title": "SSL OCSP Response",
+      "properties": {
+        "base64_response": {
+          "type": "string"
+        },
+        "ocsp_response_status": {
+          "type": "string"
+        },
+        "produced_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "responder_id": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-omitempty": true
+        },
+        "response_type": {
+          "type": "string"
+        },
+        "responses": {
+          "type": "object",
+          "properties": {
+            "cert_status": {
+              "type": "string"
+            },
+            "certificate_id": {
+              "$ref": "#/definitions/sslCertificateIdCertificateId"
+            },
+            "next_update": {
+              "type": "string",
+              "format": "date"
+            },
+            "revocation_reason": {
+              "type": "string",
+              "x-omitempty": true
+            },
+            "this_update": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "x-go-name": "OCSPResponses"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "ssl_ocsp_update": {
+      "description": "SSL OCSP Update",
+      "type": "object",
+      "title": "SSL OCSP Update",
+      "properties": {
+        "cert_id": {
+          "type": "string"
+        },
+        "failures": {
+          "type": "integer"
+        },
+        "last_update": {
+          "type": "string"
+        },
+        "last_update_status": {
+          "type": "integer"
+        },
+        "last_update_status_str": {
+          "type": "string"
+        },
+        "next_update": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "successes": {
+          "type": "integer"
+        }
+      }
     },
     "ssl_options": {
       "type": "object",
@@ -88574,6 +92409,19 @@ func init() {
         "skip_self_issued_ca": {
           "type": "boolean",
           "x-display-name": "Self issued CA, aka x509 root CA"
+        }
+      }
+    },
+    "ssl_providers": {
+      "description": "SSL Providers",
+      "type": "object",
+      "title": "SSL Providers",
+      "properties": {
+        "providers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -88764,6 +92612,11 @@ func init() {
             "freeFormat": true,
             "operation": "getACLs",
             "property": "acl_name"
+          }
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
           }
         },
         "pattern": {
@@ -88965,6 +92818,11 @@ func init() {
           "x-duration": true,
           "x-nullable": true
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "x-nullable": false
@@ -89163,6 +93021,11 @@ func init() {
             }
           },
           "x-display-name": "Expect Match"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "min_recv": {
           "type": "integer",
@@ -89647,6 +93510,11 @@ func init() {
             }
           },
           "x-display-name": "Mark Value"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "nice_value": {
           "type": "integer",
@@ -90223,6 +94091,11 @@ func init() {
           },
           "x-display-name": "Mark Value"
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "nice_value": {
           "type": "integer",
           "maximum": 1024,
@@ -90453,6 +94326,11 @@ func init() {
         "trace"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "trace": {
           "description": "Trace parameters",
           "type": "string",
@@ -90467,6 +94345,11 @@ func init() {
       "properties": {
         "entries": {
           "$ref": "#/definitions/trace_entries"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
         }
       },
       "additionalProperties": false,
@@ -91094,6 +94977,11 @@ func init() {
           "type": "string",
           "x-nullable": false
         },
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "password": {
           "type": "string",
           "x-nullable": false
@@ -91141,6 +95029,11 @@ func init() {
         "name"
       ],
       "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "pattern": "^[A-Za-z0-9-_.:]+$",

@@ -32,3 +32,6 @@ allowed:
   - userlist
   - cve
   - ssl
+  - crl
+  - crt
+  - ocsp

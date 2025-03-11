@@ -50,8 +50,8 @@ github.com/fsnotify/fsnotify v1.9.0 h1:2Ml+OJNzbYCTzsxtv8vKSFD9PbJjmhYF14k/jKC7S
 github.com/fsnotify/fsnotify v1.9.0/go.mod h1:8jBTzvmWwFyi3Pb8djgCCO5IBqzKJ/Jwo8TRcHyHii0=
 github.com/getkin/kin-openapi v0.132.0 h1:3ISeLMsQzcb5v26yeJrBcdTCEQTag36ZjaGk7MIRUwk=
 github.com/getkin/kin-openapi v0.132.0/go.mod h1:3OlG51PCYNsPByuiMB0t4fjnNlIDnaEDsjiKUV8nL58=
-github.com/go-faker/faker/v4 v4.6.0 h1:6aOPzNptRiDwD14HuAnEtlTa+D1IfFuEHO8+vEFwjTs=
-github.com/go-faker/faker/v4 v4.6.0/go.mod h1:ZmrHuVtTTm2Em9e0Du6CJ9CADaLEzGXW62z1YqFH0m0=
+github.com/go-faker/faker/v4 v4.6.1 h1:xUyVpAjEtB04l6XFY0V/29oR332rOSPWV4lU8RwDt4k=
+github.com/go-faker/faker/v4 v4.6.1/go.mod h1:arSdxNCSt7mOhdk8tEolvHeIJ7eX4OX80wXjKKvkKBY=
 github.com/go-ole/go-ole v1.2.6/go.mod h1:pprOEPIfldk/42T2oK7lQ4v4JSDwmV0As9GaiUsvbm0=
 github.com/go-ole/go-ole v1.3.0 h1:Dt6ye7+vXGIKZ7Xtk4s6/xVdGDQynvom7xCFEdWr6uE=
 github.com/go-ole/go-ole v1.3.0/go.mod h1:5LS6F96DhAwUc7C+1HLexzMXY1xGRSryjyPPKW6zv78=
@@ -86,14 +86,8 @@ github.com/google/renameio v1.0.1 h1:Lh/jXZmvZxb0BBeSY5VKEfidcbcbenKjZFzM/q0fSeU
 github.com/google/renameio v1.0.1/go.mod h1:t/HQoYBZSsWSNK35C6CO/TpPLDVWvxOHboWUAweKUpk=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/haproxytech/client-native/v5 v5.1.15 h1:oMqyDlh+vL3yRKiaapc6SESetCIir/Of3F75vtpG1Nk=
-github.com/haproxytech/client-native/v5 v5.1.15/go.mod h1:6eT7/KOsczPHFE/op1TDwfo0jQAsMffl7PuXkKJ+Mt0=
-github.com/haproxytech/client-native/v6 v6.1.1-0.20250509125208-49e94b02cdcf h1:Q7xvEUu1mo6Up9XqigJZq3aWzTsufPcWlsGMjtC0Pok=
-github.com/haproxytech/client-native/v6 v6.1.1-0.20250509125208-49e94b02cdcf/go.mod h1:d8fdkQUD+FFjQtWjno8ACXRrWoQ2FOfRV9o6N5Kshdk=
-github.com/haproxytech/client-native/v6 v6.1.1-0.20250509130228-1f2c3c33c8b7 h1:amM98+5SmkJ7DstuNS9jSjqdPdsMBGQW0NEn3RdFoUk=
-github.com/haproxytech/client-native/v6 v6.1.1-0.20250509130228-1f2c3c33c8b7/go.mod h1:d8fdkQUD+FFjQtWjno8ACXRrWoQ2FOfRV9o6N5Kshdk=
-github.com/haproxytech/client-native/v6 v6.1.5 h1:NZhqAiqzaCXh2nKevwLkKn84KKjcgPWx0uhr3F/X76A=
-github.com/haproxytech/client-native/v6 v6.1.5/go.mod h1:9DfctWwuRuHPPj5T01N+eFguIqWLzukF8msykecSSOk=
+github.com/haproxytech/client-native/v6 v6.1.1-0.20250512124316-6fa1f9776b04 h1:CVSB4YfZSKDOapT6iWMLpiS1fY79YJFMRU9tqEs5kSU=
+github.com/haproxytech/client-native/v6 v6.1.1-0.20250512124316-6fa1f9776b04/go.mod h1:9oSa/7gU3+/cyQKaugiELyExVpHh2hJ7zXSA6kOxRuA=
 github.com/haproxytech/go-logger v1.1.0 h1:HgGtYaI1ApkvbQdsm7f9AzQQoxTB7w37criTflh7IQE=
 github.com/haproxytech/go-logger v1.1.0/go.mod h1:OekUd8HCb7ubxMplzHUPBTHNxZmddOWfOjWclZsqIeM=
 github.com/jessevdk/go-flags v1.6.1 h1:Cvu5U8UGrLay1rZfv/zP7iLpSHGUZ/Ou68T0iX1bBK4=

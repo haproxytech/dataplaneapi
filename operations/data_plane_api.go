@@ -76,6 +76,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/ring"
 	"github.com/haproxytech/dataplaneapi/operations/s_s_l_front_use"
+	"github.com/haproxytech/dataplaneapi/operations/s_s_l_runtime"
 	serverops "github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/server_template"
@@ -125,8 +126,14 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		JSONProducer: runtime.JSONProducer(),
 		TxtProducer:  runtime.TextProducer(),
 
+		StorageCreateStorageSSLCrtListEntryHandler: storage.CreateStorageSSLCrtListEntryHandlerFunc(func(params storage.CreateStorageSSLCrtListEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateStorageSSLCrtListEntry has not yet been implemented")
+		}),
 		ACLRuntimeDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler: acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandlerFunc(func(params acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesID has not yet been implemented")
+		}),
+		StorageDeleteStorageSSLCrtListEntryHandler: storage.DeleteStorageSSLCrtListEntryHandlerFunc(func(params storage.DeleteStorageSSLCrtListEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.DeleteStorageSSLCrtListEntry has not yet been implemented")
 		}),
 		ACLRuntimeGetServicesHaproxyRuntimeAclsHandler: acl_runtime.GetServicesHaproxyRuntimeAclsHandlerFunc(func(params acl_runtime.GetServicesHaproxyRuntimeAclsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl_runtime.GetServicesHaproxyRuntimeAcls has not yet been implemented")
@@ -140,8 +147,17 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler: acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDHandlerFunc(func(params acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesID has not yet been implemented")
 		}),
+		StorageGetStorageSSLCrtListEntriesHandler: storage.GetStorageSSLCrtListEntriesHandlerFunc(func(params storage.GetStorageSSLCrtListEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetStorageSSLCrtListEntries has not yet been implemented")
+		}),
 		ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler: acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesHandlerFunc(func(params acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntries has not yet been implemented")
+		}),
+		SslRuntimeAddCaEntryHandler: s_s_l_runtime.AddCaEntryHandlerFunc(func(params s_s_l_runtime.AddCaEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.AddCaEntry has not yet been implemented")
+		}),
+		SslRuntimeAddCrtListEntryHandler: s_s_l_runtime.AddCrtListEntryHandlerFunc(func(params s_s_l_runtime.AddCrtListEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.AddCrtListEntry has not yet been implemented")
 		}),
 		DefaultsAddDefaultsSectionHandler: defaults.AddDefaultsSectionHandlerFunc(func(params defaults.AddDefaultsSectionParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation defaults.AddDefaultsSection has not yet been implemented")
@@ -194,11 +210,20 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindCreateBindPeerHandler: bind.CreateBindPeerHandlerFunc(func(params bind.CreateBindPeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.CreateBindPeer has not yet been implemented")
 		}),
+		SslRuntimeCreateCaFileHandler: s_s_l_runtime.CreateCaFileHandlerFunc(func(params s_s_l_runtime.CreateCaFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.CreateCaFile has not yet been implemented")
+		}),
 		CacheCreateCacheHandler: cache.CreateCacheHandlerFunc(func(params cache.CreateCacheParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cache.CreateCache has not yet been implemented")
 		}),
+		SslRuntimeCreateCertHandler: s_s_l_runtime.CreateCertHandlerFunc(func(params s_s_l_runtime.CreateCertParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.CreateCert has not yet been implemented")
+		}),
 		ServiceDiscoveryCreateConsulHandler: service_discovery.CreateConsulHandlerFunc(func(params service_discovery.CreateConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.CreateConsul has not yet been implemented")
+		}),
+		SslRuntimeCreateCrlHandler: s_s_l_runtime.CreateCrlHandlerFunc(func(params s_s_l_runtime.CreateCrlParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.CreateCrl has not yet been implemented")
 		}),
 		CrtLoadCreateCrtLoadHandler: crt_load.CreateCrtLoadHandlerFunc(func(params crt_load.CreateCrtLoadParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation crt_load.CreateCrtLoad has not yet been implemented")
@@ -368,6 +393,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageCreateStorageSSLCertificateHandler: storage.CreateStorageSSLCertificateHandlerFunc(func(params storage.CreateStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.CreateStorageSSLCertificate has not yet been implemented")
 		}),
+		StorageCreateStorageSSLCrtListFileHandler: storage.CreateStorageSSLCrtListFileHandlerFunc(func(params storage.CreateStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.CreateStorageSSLCrtListFile has not yet been implemented")
+		}),
 		TCPCheckCreateTCPCheckBackendHandler: tcp_check.CreateTCPCheckBackendHandlerFunc(func(params tcp_check.CreateTCPCheckBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.CreateTCPCheckBackend has not yet been implemented")
 		}),
@@ -425,14 +453,26 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindDeleteBindPeerHandler: bind.DeleteBindPeerHandlerFunc(func(params bind.DeleteBindPeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.DeleteBindPeer has not yet been implemented")
 		}),
+		SslRuntimeDeleteCaFileHandler: s_s_l_runtime.DeleteCaFileHandlerFunc(func(params s_s_l_runtime.DeleteCaFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.DeleteCaFile has not yet been implemented")
+		}),
 		CacheDeleteCacheHandler: cache.DeleteCacheHandlerFunc(func(params cache.DeleteCacheParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cache.DeleteCache has not yet been implemented")
+		}),
+		SslRuntimeDeleteCertHandler: s_s_l_runtime.DeleteCertHandlerFunc(func(params s_s_l_runtime.DeleteCertParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.DeleteCert has not yet been implemented")
 		}),
 		ClusterDeleteClusterHandler: cluster.DeleteClusterHandlerFunc(func(params cluster.DeleteClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.DeleteCluster has not yet been implemented")
 		}),
 		ServiceDiscoveryDeleteConsulHandler: service_discovery.DeleteConsulHandlerFunc(func(params service_discovery.DeleteConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.DeleteConsul has not yet been implemented")
+		}),
+		SslRuntimeDeleteCrlHandler: s_s_l_runtime.DeleteCrlHandlerFunc(func(params s_s_l_runtime.DeleteCrlParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.DeleteCrl has not yet been implemented")
+		}),
+		SslRuntimeDeleteCrtListEntryHandler: s_s_l_runtime.DeleteCrtListEntryHandlerFunc(func(params s_s_l_runtime.DeleteCrtListEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.DeleteCrtListEntry has not yet been implemented")
 		}),
 		CrtLoadDeleteCrtLoadHandler: crt_load.DeleteCrtLoadHandlerFunc(func(params crt_load.DeleteCrtLoadParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation crt_load.DeleteCrtLoad has not yet been implemented")
@@ -611,6 +651,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageDeleteStorageSSLCertificateHandler: storage.DeleteStorageSSLCertificateHandlerFunc(func(params storage.DeleteStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.DeleteStorageSSLCertificate has not yet been implemented")
 		}),
+		StorageDeleteStorageSSLCrtListFileHandler: storage.DeleteStorageSSLCrtListFileHandlerFunc(func(params storage.DeleteStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.DeleteStorageSSLCrtListFile has not yet been implemented")
+		}),
 		TCPCheckDeleteTCPCheckBackendHandler: tcp_check.DeleteTCPCheckBackendHandlerFunc(func(params tcp_check.DeleteTCPCheckBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.DeleteTCPCheckBackend has not yet been implemented")
 		}),
@@ -691,6 +734,21 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		BindGetAllBindPeerHandler: bind.GetAllBindPeerHandlerFunc(func(params bind.GetAllBindPeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.GetAllBindPeer has not yet been implemented")
+		}),
+		SslRuntimeGetAllCaFilesHandler: s_s_l_runtime.GetAllCaFilesHandlerFunc(func(params s_s_l_runtime.GetAllCaFilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetAllCaFiles has not yet been implemented")
+		}),
+		SslRuntimeGetAllCertsHandler: s_s_l_runtime.GetAllCertsHandlerFunc(func(params s_s_l_runtime.GetAllCertsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetAllCerts has not yet been implemented")
+		}),
+		SslRuntimeGetAllCrlHandler: s_s_l_runtime.GetAllCrlHandlerFunc(func(params s_s_l_runtime.GetAllCrlParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetAllCrl has not yet been implemented")
+		}),
+		SslRuntimeGetAllCrtListEntriesHandler: s_s_l_runtime.GetAllCrtListEntriesHandlerFunc(func(params s_s_l_runtime.GetAllCrtListEntriesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetAllCrtListEntries has not yet been implemented")
+		}),
+		SslRuntimeGetAllCrtListsHandler: s_s_l_runtime.GetAllCrtListsHandlerFunc(func(params s_s_l_runtime.GetAllCrtListsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetAllCrtLists has not yet been implemented")
 		}),
 		FilterGetAllFilterBackendHandler: filter.GetAllFilterBackendHandlerFunc(func(params filter.GetAllFilterBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation filter.GetAllFilterBackend has not yet been implemented")
@@ -800,6 +858,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageGetAllStorageSSLCertificatesHandler: storage.GetAllStorageSSLCertificatesHandlerFunc(func(params storage.GetAllStorageSSLCertificatesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.GetAllStorageSSLCertificates has not yet been implemented")
 		}),
+		StorageGetAllStorageSSLCrtListFilesHandler: storage.GetAllStorageSSLCrtListFilesHandlerFunc(func(params storage.GetAllStorageSSLCrtListFilesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetAllStorageSSLCrtListFiles has not yet been implemented")
+		}),
 		TCPCheckGetAllTCPCheckBackendHandler: tcp_check.GetAllTCPCheckBackendHandlerFunc(func(params tcp_check.GetAllTCPCheckBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.GetAllTCPCheckBackend has not yet been implemented")
 		}),
@@ -836,11 +897,20 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		BindGetBindPeerHandler: bind.GetBindPeerHandlerFunc(func(params bind.GetBindPeerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation bind.GetBindPeer has not yet been implemented")
 		}),
+		SslRuntimeGetCaEntryHandler: s_s_l_runtime.GetCaEntryHandlerFunc(func(params s_s_l_runtime.GetCaEntryParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetCaEntry has not yet been implemented")
+		}),
+		SslRuntimeGetCaFileHandler: s_s_l_runtime.GetCaFileHandlerFunc(func(params s_s_l_runtime.GetCaFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetCaFile has not yet been implemented")
+		}),
 		CacheGetCacheHandler: cache.GetCacheHandlerFunc(func(params cache.GetCacheParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cache.GetCache has not yet been implemented")
 		}),
 		CacheGetCachesHandler: cache.GetCachesHandlerFunc(func(params cache.GetCachesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cache.GetCaches has not yet been implemented")
+		}),
+		SslRuntimeGetCertHandler: s_s_l_runtime.GetCertHandlerFunc(func(params s_s_l_runtime.GetCertParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetCert has not yet been implemented")
 		}),
 		ClusterGetClusterHandler: cluster.GetClusterHandlerFunc(func(params cluster.GetClusterParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cluster.GetCluster has not yet been implemented")
@@ -856,6 +926,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServiceDiscoveryGetConsulsHandler: service_discovery.GetConsulsHandlerFunc(func(params service_discovery.GetConsulsParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.GetConsuls has not yet been implemented")
+		}),
+		SslRuntimeGetCrlHandler: s_s_l_runtime.GetCrlHandlerFunc(func(params s_s_l_runtime.GetCrlParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.GetCrl has not yet been implemented")
 		}),
 		CrtLoadGetCrtLoadHandler: crt_load.GetCrtLoadHandlerFunc(func(params crt_load.GetCrtLoadParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation crt_load.GetCrtLoad has not yet been implemented")
@@ -1030,6 +1103,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		StorageGetOneStorageSSLCertificateHandler: storage.GetOneStorageSSLCertificateHandlerFunc(func(params storage.GetOneStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.GetOneStorageSSLCertificate has not yet been implemented")
+		}),
+		StorageGetOneStorageSSLCrtListFileHandler: storage.GetOneStorageSSLCrtListFileHandlerFunc(func(params storage.GetOneStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.GetOneStorageSSLCrtListFile has not yet been implemented")
 		}),
 		Version3GetOpenapiv3SpecificationHandler: version3.GetOpenapiv3SpecificationHandlerFunc(func(params version3.GetOpenapiv3SpecificationParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation version3.GetOpenapiv3Specification has not yet been implemented")
@@ -1337,8 +1413,14 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		CacheReplaceCacheHandler: cache.ReplaceCacheHandlerFunc(func(params cache.ReplaceCacheParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation cache.ReplaceCache has not yet been implemented")
 		}),
+		SslRuntimeReplaceCertHandler: s_s_l_runtime.ReplaceCertHandlerFunc(func(params s_s_l_runtime.ReplaceCertParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.ReplaceCert has not yet been implemented")
+		}),
 		ServiceDiscoveryReplaceConsulHandler: service_discovery.ReplaceConsulHandlerFunc(func(params service_discovery.ReplaceConsulParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation service_discovery.ReplaceConsul has not yet been implemented")
+		}),
+		SslRuntimeReplaceCrlHandler: s_s_l_runtime.ReplaceCrlHandlerFunc(func(params s_s_l_runtime.ReplaceCrlParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.ReplaceCrl has not yet been implemented")
 		}),
 		CrtLoadReplaceCrtLoadHandler: crt_load.ReplaceCrtLoadHandlerFunc(func(params crt_load.ReplaceCrtLoadParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation crt_load.ReplaceCrtLoad has not yet been implemented")
@@ -1508,6 +1590,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		StorageReplaceStorageSSLCertificateHandler: storage.ReplaceStorageSSLCertificateHandlerFunc(func(params storage.ReplaceStorageSSLCertificateParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation storage.ReplaceStorageSSLCertificate has not yet been implemented")
 		}),
+		StorageReplaceStorageSSLCrtListFileHandler: storage.ReplaceStorageSSLCrtListFileHandlerFunc(func(params storage.ReplaceStorageSSLCrtListFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReplaceStorageSSLCrtListFile has not yet been implemented")
+		}),
 		TCPCheckReplaceTCPCheckBackendHandler: tcp_check.ReplaceTCPCheckBackendHandlerFunc(func(params tcp_check.ReplaceTCPCheckBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation tcp_check.ReplaceTCPCheckBackend has not yet been implemented")
 		}),
@@ -1531,6 +1616,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		UserReplaceUserHandler: user.ReplaceUserHandlerFunc(func(params user.ReplaceUserParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation user.ReplaceUser has not yet been implemented")
+		}),
+		SslRuntimeSetCaFileHandler: s_s_l_runtime.SetCaFileHandlerFunc(func(params s_s_l_runtime.SetCaFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_runtime.SetCaFile has not yet been implemented")
 		}),
 		StickTableSetStickTableEntriesHandler: stick_table.SetStickTableEntriesHandlerFunc(func(params stick_table.SetStickTableEntriesParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation stick_table.SetStickTableEntries has not yet been implemented")
@@ -1609,8 +1697,12 @@ type DataPlaneAPI struct {
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
 
+	// StorageCreateStorageSSLCrtListEntryHandler sets the operation handler for the create storage s s l crt list entry operation
+	StorageCreateStorageSSLCrtListEntryHandler storage.CreateStorageSSLCrtListEntryHandler
 	// ACLRuntimeDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler sets the operation handler for the delete services haproxy runtime acls parent name entries ID operation
 	ACLRuntimeDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler
+	// StorageDeleteStorageSSLCrtListEntryHandler sets the operation handler for the delete storage s s l crt list entry operation
+	StorageDeleteStorageSSLCrtListEntryHandler storage.DeleteStorageSSLCrtListEntryHandler
 	// ACLRuntimeGetServicesHaproxyRuntimeAclsHandler sets the operation handler for the get services haproxy runtime acls operation
 	ACLRuntimeGetServicesHaproxyRuntimeAclsHandler acl_runtime.GetServicesHaproxyRuntimeAclsHandler
 	// ACLRuntimeGetServicesHaproxyRuntimeAclsIDHandler sets the operation handler for the get services haproxy runtime acls ID operation
@@ -1619,8 +1711,14 @@ type DataPlaneAPI struct {
 	ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesHandler acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesHandler
 	// ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler sets the operation handler for the get services haproxy runtime acls parent name entries ID operation
 	ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler
+	// StorageGetStorageSSLCrtListEntriesHandler sets the operation handler for the get storage s s l crt list entries operation
+	StorageGetStorageSSLCrtListEntriesHandler storage.GetStorageSSLCrtListEntriesHandler
 	// ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler sets the operation handler for the post services haproxy runtime acls parent name entries operation
 	ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesHandler
+	// SslRuntimeAddCaEntryHandler sets the operation handler for the add ca entry operation
+	SslRuntimeAddCaEntryHandler s_s_l_runtime.AddCaEntryHandler
+	// SslRuntimeAddCrtListEntryHandler sets the operation handler for the add crt list entry operation
+	SslRuntimeAddCrtListEntryHandler s_s_l_runtime.AddCrtListEntryHandler
 	// DefaultsAddDefaultsSectionHandler sets the operation handler for the add defaults section operation
 	DefaultsAddDefaultsSectionHandler defaults.AddDefaultsSectionHandler
 	// MapsAddMapEntryHandler sets the operation handler for the add map entry operation
@@ -1655,10 +1753,16 @@ type DataPlaneAPI struct {
 	BindCreateBindLogForwardHandler bind.CreateBindLogForwardHandler
 	// BindCreateBindPeerHandler sets the operation handler for the create bind peer operation
 	BindCreateBindPeerHandler bind.CreateBindPeerHandler
+	// SslRuntimeCreateCaFileHandler sets the operation handler for the create ca file operation
+	SslRuntimeCreateCaFileHandler s_s_l_runtime.CreateCaFileHandler
 	// CacheCreateCacheHandler sets the operation handler for the create cache operation
 	CacheCreateCacheHandler cache.CreateCacheHandler
+	// SslRuntimeCreateCertHandler sets the operation handler for the create cert operation
+	SslRuntimeCreateCertHandler s_s_l_runtime.CreateCertHandler
 	// ServiceDiscoveryCreateConsulHandler sets the operation handler for the create consul operation
 	ServiceDiscoveryCreateConsulHandler service_discovery.CreateConsulHandler
+	// SslRuntimeCreateCrlHandler sets the operation handler for the create crl operation
+	SslRuntimeCreateCrlHandler s_s_l_runtime.CreateCrlHandler
 	// CrtLoadCreateCrtLoadHandler sets the operation handler for the create crt load operation
 	CrtLoadCreateCrtLoadHandler crt_load.CreateCrtLoadHandler
 	// CrtStoreCreateCrtStoreHandler sets the operation handler for the create crt store operation
@@ -1771,6 +1875,8 @@ type DataPlaneAPI struct {
 	StorageCreateStorageMapFileHandler storage.CreateStorageMapFileHandler
 	// StorageCreateStorageSSLCertificateHandler sets the operation handler for the create storage s s l certificate operation
 	StorageCreateStorageSSLCertificateHandler storage.CreateStorageSSLCertificateHandler
+	// StorageCreateStorageSSLCrtListFileHandler sets the operation handler for the create storage s s l crt list file operation
+	StorageCreateStorageSSLCrtListFileHandler storage.CreateStorageSSLCrtListFileHandler
 	// TCPCheckCreateTCPCheckBackendHandler sets the operation handler for the create TCP check backend operation
 	TCPCheckCreateTCPCheckBackendHandler tcp_check.CreateTCPCheckBackendHandler
 	// TCPCheckCreateTCPCheckDefaultsHandler sets the operation handler for the create TCP check defaults operation
@@ -1809,12 +1915,20 @@ type DataPlaneAPI struct {
 	BindDeleteBindLogForwardHandler bind.DeleteBindLogForwardHandler
 	// BindDeleteBindPeerHandler sets the operation handler for the delete bind peer operation
 	BindDeleteBindPeerHandler bind.DeleteBindPeerHandler
+	// SslRuntimeDeleteCaFileHandler sets the operation handler for the delete ca file operation
+	SslRuntimeDeleteCaFileHandler s_s_l_runtime.DeleteCaFileHandler
 	// CacheDeleteCacheHandler sets the operation handler for the delete cache operation
 	CacheDeleteCacheHandler cache.DeleteCacheHandler
+	// SslRuntimeDeleteCertHandler sets the operation handler for the delete cert operation
+	SslRuntimeDeleteCertHandler s_s_l_runtime.DeleteCertHandler
 	// ClusterDeleteClusterHandler sets the operation handler for the delete cluster operation
 	ClusterDeleteClusterHandler cluster.DeleteClusterHandler
 	// ServiceDiscoveryDeleteConsulHandler sets the operation handler for the delete consul operation
 	ServiceDiscoveryDeleteConsulHandler service_discovery.DeleteConsulHandler
+	// SslRuntimeDeleteCrlHandler sets the operation handler for the delete crl operation
+	SslRuntimeDeleteCrlHandler s_s_l_runtime.DeleteCrlHandler
+	// SslRuntimeDeleteCrtListEntryHandler sets the operation handler for the delete crt list entry operation
+	SslRuntimeDeleteCrtListEntryHandler s_s_l_runtime.DeleteCrtListEntryHandler
 	// CrtLoadDeleteCrtLoadHandler sets the operation handler for the delete crt load operation
 	CrtLoadDeleteCrtLoadHandler crt_load.DeleteCrtLoadHandler
 	// CrtStoreDeleteCrtStoreHandler sets the operation handler for the delete crt store operation
@@ -1933,6 +2047,8 @@ type DataPlaneAPI struct {
 	StorageDeleteStorageMapHandler storage.DeleteStorageMapHandler
 	// StorageDeleteStorageSSLCertificateHandler sets the operation handler for the delete storage s s l certificate operation
 	StorageDeleteStorageSSLCertificateHandler storage.DeleteStorageSSLCertificateHandler
+	// StorageDeleteStorageSSLCrtListFileHandler sets the operation handler for the delete storage s s l crt list file operation
+	StorageDeleteStorageSSLCrtListFileHandler storage.DeleteStorageSSLCrtListFileHandler
 	// TCPCheckDeleteTCPCheckBackendHandler sets the operation handler for the delete TCP check backend operation
 	TCPCheckDeleteTCPCheckBackendHandler tcp_check.DeleteTCPCheckBackendHandler
 	// TCPCheckDeleteTCPCheckDefaultsHandler sets the operation handler for the delete TCP check defaults operation
@@ -1987,6 +2103,16 @@ type DataPlaneAPI struct {
 	BindGetAllBindLogForwardHandler bind.GetAllBindLogForwardHandler
 	// BindGetAllBindPeerHandler sets the operation handler for the get all bind peer operation
 	BindGetAllBindPeerHandler bind.GetAllBindPeerHandler
+	// SslRuntimeGetAllCaFilesHandler sets the operation handler for the get all ca files operation
+	SslRuntimeGetAllCaFilesHandler s_s_l_runtime.GetAllCaFilesHandler
+	// SslRuntimeGetAllCertsHandler sets the operation handler for the get all certs operation
+	SslRuntimeGetAllCertsHandler s_s_l_runtime.GetAllCertsHandler
+	// SslRuntimeGetAllCrlHandler sets the operation handler for the get all crl operation
+	SslRuntimeGetAllCrlHandler s_s_l_runtime.GetAllCrlHandler
+	// SslRuntimeGetAllCrtListEntriesHandler sets the operation handler for the get all crt list entries operation
+	SslRuntimeGetAllCrtListEntriesHandler s_s_l_runtime.GetAllCrtListEntriesHandler
+	// SslRuntimeGetAllCrtListsHandler sets the operation handler for the get all crt lists operation
+	SslRuntimeGetAllCrtListsHandler s_s_l_runtime.GetAllCrtListsHandler
 	// FilterGetAllFilterBackendHandler sets the operation handler for the get all filter backend operation
 	FilterGetAllFilterBackendHandler filter.GetAllFilterBackendHandler
 	// FilterGetAllFilterFrontendHandler sets the operation handler for the get all filter frontend operation
@@ -2059,6 +2185,8 @@ type DataPlaneAPI struct {
 	StorageGetAllStorageMapFilesHandler storage.GetAllStorageMapFilesHandler
 	// StorageGetAllStorageSSLCertificatesHandler sets the operation handler for the get all storage s s l certificates operation
 	StorageGetAllStorageSSLCertificatesHandler storage.GetAllStorageSSLCertificatesHandler
+	// StorageGetAllStorageSSLCrtListFilesHandler sets the operation handler for the get all storage s s l crt list files operation
+	StorageGetAllStorageSSLCrtListFilesHandler storage.GetAllStorageSSLCrtListFilesHandler
 	// TCPCheckGetAllTCPCheckBackendHandler sets the operation handler for the get all TCP check backend operation
 	TCPCheckGetAllTCPCheckBackendHandler tcp_check.GetAllTCPCheckBackendHandler
 	// TCPCheckGetAllTCPCheckDefaultsHandler sets the operation handler for the get all TCP check defaults operation
@@ -2083,10 +2211,16 @@ type DataPlaneAPI struct {
 	BindGetBindLogForwardHandler bind.GetBindLogForwardHandler
 	// BindGetBindPeerHandler sets the operation handler for the get bind peer operation
 	BindGetBindPeerHandler bind.GetBindPeerHandler
+	// SslRuntimeGetCaEntryHandler sets the operation handler for the get ca entry operation
+	SslRuntimeGetCaEntryHandler s_s_l_runtime.GetCaEntryHandler
+	// SslRuntimeGetCaFileHandler sets the operation handler for the get ca file operation
+	SslRuntimeGetCaFileHandler s_s_l_runtime.GetCaFileHandler
 	// CacheGetCacheHandler sets the operation handler for the get cache operation
 	CacheGetCacheHandler cache.GetCacheHandler
 	// CacheGetCachesHandler sets the operation handler for the get caches operation
 	CacheGetCachesHandler cache.GetCachesHandler
+	// SslRuntimeGetCertHandler sets the operation handler for the get cert operation
+	SslRuntimeGetCertHandler s_s_l_runtime.GetCertHandler
 	// ClusterGetClusterHandler sets the operation handler for the get cluster operation
 	ClusterGetClusterHandler cluster.GetClusterHandler
 	// DiscoveryGetConfigurationEndpointsHandler sets the operation handler for the get configuration endpoints operation
@@ -2097,6 +2231,8 @@ type DataPlaneAPI struct {
 	ServiceDiscoveryGetConsulHandler service_discovery.GetConsulHandler
 	// ServiceDiscoveryGetConsulsHandler sets the operation handler for the get consuls operation
 	ServiceDiscoveryGetConsulsHandler service_discovery.GetConsulsHandler
+	// SslRuntimeGetCrlHandler sets the operation handler for the get crl operation
+	SslRuntimeGetCrlHandler s_s_l_runtime.GetCrlHandler
 	// CrtLoadGetCrtLoadHandler sets the operation handler for the get crt load operation
 	CrtLoadGetCrtLoadHandler crt_load.GetCrtLoadHandler
 	// CrtLoadGetCrtLoadsHandler sets the operation handler for the get crt loads operation
@@ -2213,6 +2349,8 @@ type DataPlaneAPI struct {
 	StorageGetOneStorageMapHandler storage.GetOneStorageMapHandler
 	// StorageGetOneStorageSSLCertificateHandler sets the operation handler for the get one storage s s l certificate operation
 	StorageGetOneStorageSSLCertificateHandler storage.GetOneStorageSSLCertificateHandler
+	// StorageGetOneStorageSSLCrtListFileHandler sets the operation handler for the get one storage s s l crt list file operation
+	StorageGetOneStorageSSLCrtListFileHandler storage.GetOneStorageSSLCrtListFileHandler
 	// Version3GetOpenapiv3SpecificationHandler sets the operation handler for the get openapiv3 specification operation
 	Version3GetOpenapiv3SpecificationHandler version3.GetOpenapiv3SpecificationHandler
 	// PeerEntryGetPeerEntriesHandler sets the operation handler for the get peer entries operation
@@ -2417,8 +2555,12 @@ type DataPlaneAPI struct {
 	BindReplaceBindPeerHandler bind.ReplaceBindPeerHandler
 	// CacheReplaceCacheHandler sets the operation handler for the replace cache operation
 	CacheReplaceCacheHandler cache.ReplaceCacheHandler
+	// SslRuntimeReplaceCertHandler sets the operation handler for the replace cert operation
+	SslRuntimeReplaceCertHandler s_s_l_runtime.ReplaceCertHandler
 	// ServiceDiscoveryReplaceConsulHandler sets the operation handler for the replace consul operation
 	ServiceDiscoveryReplaceConsulHandler service_discovery.ReplaceConsulHandler
+	// SslRuntimeReplaceCrlHandler sets the operation handler for the replace crl operation
+	SslRuntimeReplaceCrlHandler s_s_l_runtime.ReplaceCrlHandler
 	// CrtLoadReplaceCrtLoadHandler sets the operation handler for the replace crt load operation
 	CrtLoadReplaceCrtLoadHandler crt_load.ReplaceCrtLoadHandler
 	// DeclareCaptureReplaceDeclareCaptureHandler sets the operation handler for the replace declare capture operation
@@ -2531,6 +2673,8 @@ type DataPlaneAPI struct {
 	StorageReplaceStorageMapFileHandler storage.ReplaceStorageMapFileHandler
 	// StorageReplaceStorageSSLCertificateHandler sets the operation handler for the replace storage s s l certificate operation
 	StorageReplaceStorageSSLCertificateHandler storage.ReplaceStorageSSLCertificateHandler
+	// StorageReplaceStorageSSLCrtListFileHandler sets the operation handler for the replace storage s s l crt list file operation
+	StorageReplaceStorageSSLCrtListFileHandler storage.ReplaceStorageSSLCrtListFileHandler
 	// TCPCheckReplaceTCPCheckBackendHandler sets the operation handler for the replace TCP check backend operation
 	TCPCheckReplaceTCPCheckBackendHandler tcp_check.ReplaceTCPCheckBackendHandler
 	// TCPCheckReplaceTCPCheckDefaultsHandler sets the operation handler for the replace TCP check defaults operation
@@ -2547,6 +2691,8 @@ type DataPlaneAPI struct {
 	TracesReplaceTracesHandler traces.ReplaceTracesHandler
 	// UserReplaceUserHandler sets the operation handler for the replace user operation
 	UserReplaceUserHandler user.ReplaceUserHandler
+	// SslRuntimeSetCaFileHandler sets the operation handler for the set ca file operation
+	SslRuntimeSetCaFileHandler s_s_l_runtime.SetCaFileHandler
 	// StickTableSetStickTableEntriesHandler sets the operation handler for the set stick table entries operation
 	StickTableSetStickTableEntriesHandler stick_table.SetStickTableEntriesHandler
 	// MapsShowRuntimeMapHandler sets the operation handler for the show runtime map operation
@@ -2648,8 +2794,14 @@ func (o *DataPlaneAPI) Validate() error {
 		unregistered = append(unregistered, "BasicAuthAuth")
 	}
 
+	if o.StorageCreateStorageSSLCrtListEntryHandler == nil {
+		unregistered = append(unregistered, "storage.CreateStorageSSLCrtListEntryHandler")
+	}
 	if o.ACLRuntimeDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler == nil {
 		unregistered = append(unregistered, "acl_runtime.DeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler")
+	}
+	if o.StorageDeleteStorageSSLCrtListEntryHandler == nil {
+		unregistered = append(unregistered, "storage.DeleteStorageSSLCrtListEntryHandler")
 	}
 	if o.ACLRuntimeGetServicesHaproxyRuntimeAclsHandler == nil {
 		unregistered = append(unregistered, "acl_runtime.GetServicesHaproxyRuntimeAclsHandler")
@@ -2663,8 +2815,17 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler == nil {
 		unregistered = append(unregistered, "acl_runtime.GetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler")
 	}
+	if o.StorageGetStorageSSLCrtListEntriesHandler == nil {
+		unregistered = append(unregistered, "storage.GetStorageSSLCrtListEntriesHandler")
+	}
 	if o.ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler == nil {
 		unregistered = append(unregistered, "acl_runtime.PostServicesHaproxyRuntimeAclsParentNameEntriesHandler")
+	}
+	if o.SslRuntimeAddCaEntryHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.AddCaEntryHandler")
+	}
+	if o.SslRuntimeAddCrtListEntryHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.AddCrtListEntryHandler")
 	}
 	if o.DefaultsAddDefaultsSectionHandler == nil {
 		unregistered = append(unregistered, "defaults.AddDefaultsSectionHandler")
@@ -2717,11 +2878,20 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindCreateBindPeerHandler == nil {
 		unregistered = append(unregistered, "bind.CreateBindPeerHandler")
 	}
+	if o.SslRuntimeCreateCaFileHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.CreateCaFileHandler")
+	}
 	if o.CacheCreateCacheHandler == nil {
 		unregistered = append(unregistered, "cache.CreateCacheHandler")
 	}
+	if o.SslRuntimeCreateCertHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.CreateCertHandler")
+	}
 	if o.ServiceDiscoveryCreateConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.CreateConsulHandler")
+	}
+	if o.SslRuntimeCreateCrlHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.CreateCrlHandler")
 	}
 	if o.CrtLoadCreateCrtLoadHandler == nil {
 		unregistered = append(unregistered, "crt_load.CreateCrtLoadHandler")
@@ -2891,6 +3061,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StorageCreateStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.CreateStorageSSLCertificateHandler")
 	}
+	if o.StorageCreateStorageSSLCrtListFileHandler == nil {
+		unregistered = append(unregistered, "storage.CreateStorageSSLCrtListFileHandler")
+	}
 	if o.TCPCheckCreateTCPCheckBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_check.CreateTCPCheckBackendHandler")
 	}
@@ -2948,14 +3121,26 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindDeleteBindPeerHandler == nil {
 		unregistered = append(unregistered, "bind.DeleteBindPeerHandler")
 	}
+	if o.SslRuntimeDeleteCaFileHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.DeleteCaFileHandler")
+	}
 	if o.CacheDeleteCacheHandler == nil {
 		unregistered = append(unregistered, "cache.DeleteCacheHandler")
+	}
+	if o.SslRuntimeDeleteCertHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.DeleteCertHandler")
 	}
 	if o.ClusterDeleteClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.DeleteClusterHandler")
 	}
 	if o.ServiceDiscoveryDeleteConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.DeleteConsulHandler")
+	}
+	if o.SslRuntimeDeleteCrlHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.DeleteCrlHandler")
+	}
+	if o.SslRuntimeDeleteCrtListEntryHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.DeleteCrtListEntryHandler")
 	}
 	if o.CrtLoadDeleteCrtLoadHandler == nil {
 		unregistered = append(unregistered, "crt_load.DeleteCrtLoadHandler")
@@ -3134,6 +3319,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StorageDeleteStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.DeleteStorageSSLCertificateHandler")
 	}
+	if o.StorageDeleteStorageSSLCrtListFileHandler == nil {
+		unregistered = append(unregistered, "storage.DeleteStorageSSLCrtListFileHandler")
+	}
 	if o.TCPCheckDeleteTCPCheckBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_check.DeleteTCPCheckBackendHandler")
 	}
@@ -3214,6 +3402,21 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.BindGetAllBindPeerHandler == nil {
 		unregistered = append(unregistered, "bind.GetAllBindPeerHandler")
+	}
+	if o.SslRuntimeGetAllCaFilesHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetAllCaFilesHandler")
+	}
+	if o.SslRuntimeGetAllCertsHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetAllCertsHandler")
+	}
+	if o.SslRuntimeGetAllCrlHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetAllCrlHandler")
+	}
+	if o.SslRuntimeGetAllCrtListEntriesHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetAllCrtListEntriesHandler")
+	}
+	if o.SslRuntimeGetAllCrtListsHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetAllCrtListsHandler")
 	}
 	if o.FilterGetAllFilterBackendHandler == nil {
 		unregistered = append(unregistered, "filter.GetAllFilterBackendHandler")
@@ -3323,6 +3526,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StorageGetAllStorageSSLCertificatesHandler == nil {
 		unregistered = append(unregistered, "storage.GetAllStorageSSLCertificatesHandler")
 	}
+	if o.StorageGetAllStorageSSLCrtListFilesHandler == nil {
+		unregistered = append(unregistered, "storage.GetAllStorageSSLCrtListFilesHandler")
+	}
 	if o.TCPCheckGetAllTCPCheckBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_check.GetAllTCPCheckBackendHandler")
 	}
@@ -3359,11 +3565,20 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.BindGetBindPeerHandler == nil {
 		unregistered = append(unregistered, "bind.GetBindPeerHandler")
 	}
+	if o.SslRuntimeGetCaEntryHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetCaEntryHandler")
+	}
+	if o.SslRuntimeGetCaFileHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetCaFileHandler")
+	}
 	if o.CacheGetCacheHandler == nil {
 		unregistered = append(unregistered, "cache.GetCacheHandler")
 	}
 	if o.CacheGetCachesHandler == nil {
 		unregistered = append(unregistered, "cache.GetCachesHandler")
+	}
+	if o.SslRuntimeGetCertHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetCertHandler")
 	}
 	if o.ClusterGetClusterHandler == nil {
 		unregistered = append(unregistered, "cluster.GetClusterHandler")
@@ -3379,6 +3594,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServiceDiscoveryGetConsulsHandler == nil {
 		unregistered = append(unregistered, "service_discovery.GetConsulsHandler")
+	}
+	if o.SslRuntimeGetCrlHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.GetCrlHandler")
 	}
 	if o.CrtLoadGetCrtLoadHandler == nil {
 		unregistered = append(unregistered, "crt_load.GetCrtLoadHandler")
@@ -3553,6 +3771,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.StorageGetOneStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.GetOneStorageSSLCertificateHandler")
+	}
+	if o.StorageGetOneStorageSSLCrtListFileHandler == nil {
+		unregistered = append(unregistered, "storage.GetOneStorageSSLCrtListFileHandler")
 	}
 	if o.Version3GetOpenapiv3SpecificationHandler == nil {
 		unregistered = append(unregistered, "version3.GetOpenapiv3SpecificationHandler")
@@ -3860,8 +4081,14 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.CacheReplaceCacheHandler == nil {
 		unregistered = append(unregistered, "cache.ReplaceCacheHandler")
 	}
+	if o.SslRuntimeReplaceCertHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.ReplaceCertHandler")
+	}
 	if o.ServiceDiscoveryReplaceConsulHandler == nil {
 		unregistered = append(unregistered, "service_discovery.ReplaceConsulHandler")
+	}
+	if o.SslRuntimeReplaceCrlHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.ReplaceCrlHandler")
 	}
 	if o.CrtLoadReplaceCrtLoadHandler == nil {
 		unregistered = append(unregistered, "crt_load.ReplaceCrtLoadHandler")
@@ -4031,6 +4258,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.StorageReplaceStorageSSLCertificateHandler == nil {
 		unregistered = append(unregistered, "storage.ReplaceStorageSSLCertificateHandler")
 	}
+	if o.StorageReplaceStorageSSLCrtListFileHandler == nil {
+		unregistered = append(unregistered, "storage.ReplaceStorageSSLCrtListFileHandler")
+	}
 	if o.TCPCheckReplaceTCPCheckBackendHandler == nil {
 		unregistered = append(unregistered, "tcp_check.ReplaceTCPCheckBackendHandler")
 	}
@@ -4054,6 +4284,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.UserReplaceUserHandler == nil {
 		unregistered = append(unregistered, "user.ReplaceUserHandler")
+	}
+	if o.SslRuntimeSetCaFileHandler == nil {
+		unregistered = append(unregistered, "s_s_l_runtime.SetCaFileHandler")
 	}
 	if o.StickTableSetStickTableEntriesHandler == nil {
 		unregistered = append(unregistered, "stick_table.SetStickTableEntriesHandler")
@@ -4171,10 +4404,18 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/storage/ssl_crt_lists/{name}/entries"] = storage.NewCreateStorageSSLCrtListEntry(o.context, o.StorageCreateStorageSSLCrtListEntryHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/services/haproxy/runtime/acls/{parent_name}/entries/{id}"] = acl_runtime.NewDeleteServicesHaproxyRuntimeAclsParentNameEntriesID(o.context, o.ACLRuntimeDeleteServicesHaproxyRuntimeAclsParentNameEntriesIDHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/storage/ssl_crt_lists/{name}/entries"] = storage.NewDeleteStorageSSLCrtListEntry(o.context, o.StorageDeleteStorageSSLCrtListEntryHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -4191,10 +4432,22 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/acls/{parent_name}/entries/{id}"] = acl_runtime.NewGetServicesHaproxyRuntimeAclsParentNameEntriesID(o.context, o.ACLRuntimeGetServicesHaproxyRuntimeAclsParentNameEntriesIDHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/ssl_crt_lists/{name}/entries"] = storage.NewGetStorageSSLCrtListEntries(o.context, o.StorageGetStorageSSLCrtListEntriesHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/services/haproxy/runtime/acls/{parent_name}/entries"] = acl_runtime.NewPostServicesHaproxyRuntimeAclsParentNameEntries(o.context, o.ACLRuntimePostServicesHaproxyRuntimeAclsParentNameEntriesHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/ssl_ca_files/{name}/entries"] = s_s_l_runtime.NewAddCaEntry(o.context, o.SslRuntimeAddCaEntryHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/ssl_crt_lists/entries"] = s_s_l_runtime.NewAddCrtListEntry(o.context, o.SslRuntimeAddCrtListEntryHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -4266,11 +4519,23 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/runtime/ssl_ca_files"] = s_s_l_runtime.NewCreateCaFile(o.context, o.SslRuntimeCreateCaFileHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/caches"] = cache.NewCreateCache(o.context, o.CacheCreateCacheHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/runtime/ssl_certs"] = s_s_l_runtime.NewCreateCert(o.context, o.SslRuntimeCreateCertHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/service_discovery/consul"] = service_discovery.NewCreateConsul(o.context, o.ServiceDiscoveryCreateConsulHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/services/haproxy/runtime/ssl_crl_files"] = s_s_l_runtime.NewCreateCrl(o.context, o.SslRuntimeCreateCrlHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -4498,6 +4763,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/storage/ssl_crt_lists"] = storage.NewCreateStorageSSLCrtListFile(o.context, o.StorageCreateStorageSSLCrtListFileHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends/{parent_name}/tcp_checks/{index}"] = tcp_check.NewCreateTCPCheckBackend(o.context, o.TCPCheckCreateTCPCheckBackendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4574,7 +4843,15 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/ssl_ca_files/{name}"] = s_s_l_runtime.NewDeleteCaFile(o.context, o.SslRuntimeDeleteCaFileHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/caches/{name}"] = cache.NewDeleteCache(o.context, o.CacheDeleteCacheHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/ssl_certs/{name}"] = s_s_l_runtime.NewDeleteCert(o.context, o.SslRuntimeDeleteCertHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -4583,6 +4860,14 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/service_discovery/consul/{id}"] = service_discovery.NewDeleteConsul(o.context, o.ServiceDiscoveryDeleteConsulHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/ssl_crl_files/{name}"] = s_s_l_runtime.NewDeleteCrl(o.context, o.SslRuntimeDeleteCrlHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/services/haproxy/runtime/ssl_crt_lists/entries"] = s_s_l_runtime.NewDeleteCrtListEntry(o.context, o.SslRuntimeDeleteCrtListEntryHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -4822,6 +5107,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/storage/ssl_crt_lists/{name}"] = storage.NewDeleteStorageSSLCrtListFile(o.context, o.StorageDeleteStorageSSLCrtListFileHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{parent_name}/tcp_checks/{index}"] = tcp_check.NewDeleteTCPCheckBackend(o.context, o.TCPCheckDeleteTCPCheckBackendHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -4927,6 +5216,26 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/peers/{parent_name}/binds"] = bind.NewGetAllBindPeer(o.context, o.BindGetAllBindPeerHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_ca_files"] = s_s_l_runtime.NewGetAllCaFiles(o.context, o.SslRuntimeGetAllCaFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_certs"] = s_s_l_runtime.NewGetAllCerts(o.context, o.SslRuntimeGetAllCertsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_crl_files"] = s_s_l_runtime.NewGetAllCrl(o.context, o.SslRuntimeGetAllCrlHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_crt_lists/entries"] = s_s_l_runtime.NewGetAllCrtListEntries(o.context, o.SslRuntimeGetAllCrtListEntriesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_crt_lists"] = s_s_l_runtime.NewGetAllCrtLists(o.context, o.SslRuntimeGetAllCrtListsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5074,6 +5383,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/storage/ssl_crt_lists"] = storage.NewGetAllStorageSSLCrtListFiles(o.context, o.StorageGetAllStorageSSLCrtListFilesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/backends/{parent_name}/tcp_checks"] = tcp_check.NewGetAllTCPCheckBackend(o.context, o.TCPCheckGetAllTCPCheckBackendHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -5122,11 +5435,23 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_ca_files/{name}/entries/{index}"] = s_s_l_runtime.NewGetCaEntry(o.context, o.SslRuntimeGetCaEntryHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_ca_files/{name}"] = s_s_l_runtime.NewGetCaFile(o.context, o.SslRuntimeGetCaFileHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/services/haproxy/configuration/caches/{name}"] = cache.NewGetCache(o.context, o.CacheGetCacheHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/configuration/caches"] = cache.NewGetCaches(o.context, o.CacheGetCachesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_certs/{name}"] = s_s_l_runtime.NewGetCert(o.context, o.SslRuntimeGetCertHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5147,6 +5472,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/service_discovery/consul"] = service_discovery.NewGetConsuls(o.context, o.ServiceDiscoveryGetConsulsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/runtime/ssl_crl_files/{name}"] = s_s_l_runtime.NewGetCrl(o.context, o.SslRuntimeGetCrlHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5379,6 +5708,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/storage/ssl_certificates/{name}"] = storage.NewGetOneStorageSSLCertificate(o.context, o.StorageGetOneStorageSSLCertificateHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/storage/ssl_crt_lists/{name}"] = storage.NewGetOneStorageSSLCrtListFile(o.context, o.StorageGetOneStorageSSLCrtListFileHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5790,7 +6123,15 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/runtime/ssl_certs/{name}"] = s_s_l_runtime.NewReplaceCert(o.context, o.SslRuntimeReplaceCertHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/service_discovery/consul/{id}"] = service_discovery.NewReplaceConsul(o.context, o.ServiceDiscoveryReplaceConsulHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/runtime/ssl_crl_files/{name}"] = s_s_l_runtime.NewReplaceCrl(o.context, o.SslRuntimeReplaceCrlHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -6018,6 +6359,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/services/haproxy/storage/ssl_crt_lists/{name}"] = storage.NewReplaceStorageSSLCrtListFile(o.context, o.StorageReplaceStorageSSLCrtListFileHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/services/haproxy/configuration/backends/{parent_name}/tcp_checks/{index}"] = tcp_check.NewReplaceTCPCheckBackend(o.context, o.TCPCheckReplaceTCPCheckBackendHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -6047,6 +6392,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/configuration/users/{username}"] = user.NewReplaceUser(o.context, o.UserReplaceUserHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/runtime/ssl_ca_files/{name}"] = s_s_l_runtime.NewSetCaFile(o.context, o.SslRuntimeSetCaFileHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

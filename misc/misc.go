@@ -100,6 +100,9 @@ func HandleError(err error) *models.Error {
 	default:
 		msg := t.Error()
 		code := ErrHTTPInternalServerError
+		if errors.Is(t, client_errors.ErrNotFound) {
+			code = ErrHTTPNotFound
+		}
 		return &models.Error{Code: &code, Message: &msg}
 	}
 }

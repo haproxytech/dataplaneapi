@@ -26,12 +26,28 @@ function resource_post() {
 	dpa_curl_status_body '$output'
 }
 
+function resource_post_no_data() {
+	local endpoint="$1"; shift
+	get_version
+	run dpa_curl POST "$endpoint?version=${VERSION}"
+	assert_success
+	dpa_curl_status_body '$output'
+}
+
 function resource_put() {
   local endpoint;  endpoint="$1"; shift
   local data;      data="$1"; shift
 	local qs_params; qs_params="$1"
    	get_version
 	run dpa_curl PUT "$endpoint?$qs_params&version=${VERSION}" "$data"
+	assert_success
+	dpa_curl_status_body '$output'
+}
+
+function resource_put_no_data() {
+	local endpoint="$1"; shift
+	get_version
+	run dpa_curl PUT "$endpoint?version=${VERSION}"
 	assert_success
 	dpa_curl_status_body '$output'
 }
@@ -50,5 +66,5 @@ function resource_get() {
   local qs_params; qs_params="$1"
   run dpa_curl GET "$endpoint?$qs_params"
 	assert_success
-	dpa_curl_status_body '$output'
+	dpa_curl_status_body_safe '$output'
 }

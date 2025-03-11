@@ -1,0 +1,5 @@
+{
+    "sni_filter": [ "mysite.local" ],
+    "ssl_bind_config": "alpn h2",
+    "file": "/ssl/1.pem"
+}

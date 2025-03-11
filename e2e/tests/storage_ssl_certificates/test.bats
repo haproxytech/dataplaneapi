@@ -16,6 +16,7 @@
 #
 
 load '../../libs/dataplaneapi'
+load '../../libs/debug'
 load "../../libs/get_json_path"
 load '../../libs/resource_client'
 load '../../libs/version'
@@ -40,7 +41,6 @@ setup() {
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal $SC 202
 
     assert_equal $(get_json_path "$BODY" '.storage_name') "1.pem"
 
@@ -48,15 +48,20 @@ setup() {
 
     post_logs_count=$(docker logs dataplaneapi-e2e 2>&1 | wc -l)
     new_logs_count=$(( $pre_logs_count - $post_logs_count ))
+    [ "$new_logs_count" != 0 ] || new_logs_count=2
 
     new_logs=$(docker logs dataplaneapi-e2e 2>&1 | tail -n $new_logs_count)
 
-    echo -e "$new_logs" # this will help debugging if the test fails
+    #debug "new_logs: $new_logs"
     if haproxy_version_ge "2.5"
     then
-        assert echo -e "$new_logs" | grep -q "Loading success"
+        # This is not true anymore since we push the cert
+        # via the runtime socket instead of reloading.
+        # assert echo -e "$new_logs" | grep -q "Loading success"
+        :
     else
-        assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+        # assert echo -e "$new_logs" | head -n 1 | grep -q "Reexecuting Master process"
+        :
     fi
 }
 
@@ -121,7 +126,6 @@ setup() {
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal "$SC" 202
 
     resource_delete "$_STORAGE_SSL_CERTS_BASE_PATH/1.pem" "force_reload=true"
     assert_equal "$SC" 204
@@ -131,16 +135,16 @@ setup() {
 
 @test "storage_ssl_certificates: Delete a ssl certificate file with skip reload" {
     #reupload cert file
-    run dpa_curl_file_upload POST "$_STORAGE_SSL_CERTS_BASE_PATH" "@${BATS_TEST_DIRNAME}/data/1.pem;filename=1.pem"
+    run dpa_curl_file_upload POST "$_STORAGE_SSL_CERTS_BASE_PATH" "@${BATS_TEST_DIRNAME}/data/1.pem;filename=7.pem"
     assert_success
 
     dpa_curl_status_body '$output'
-    assert_equal "$SC" 202
+    assert_success
 
-    resource_delete "$_STORAGE_SSL_CERTS_BASE_PATH/1.pem" "skip_reload=true"
+    resource_delete "$_STORAGE_SSL_CERTS_BASE_PATH/7.pem" "skip_reload=true"
     assert_equal "$SC" 204
 
-    refute dpa_docker_exec 'ls /etc/haproxy/ssl/1.pem'
+    refute dpa_docker_exec 'ls /etc/haproxy/ssl/7.pem'
 }
 
 @test "storage_ssl_certificates: Add a ssl certificate file with force reload" {

@@ -1,0 +1,5 @@
+{
+    "sni_filter": [ "mysite.local" ],
+    "ssl_bind_config": "allow-0rtt alpn h2",
+    "file": "/etc/haproxy/ssl/1.pem"
+}
