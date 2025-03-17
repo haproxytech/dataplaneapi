@@ -281,9 +281,18 @@ func (h *StorageCreateStorageSSLCertificateHandlerImpl) Handle(params storage.Cr
 		Serial:      info.Serial,
 	}
 
+	skipReload := false
+	if params.SkipReload != nil {
+		skipReload = *params.SkipReload
+	}
+
 	forceReload := false
 	if params.ForceReload != nil {
 		forceReload = *params.ForceReload
+	}
+
+	if skipReload {
+		return storage.NewCreateStorageSSLCertificateCreated().WithPayload(retf)
 	}
 
 	if forceReload {

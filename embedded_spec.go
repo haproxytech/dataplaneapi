@@ -22413,6 +22413,9 @@ func init() {
             "in": "formData"
           },
           {
+            "$ref": "#/parameters/skip_reload"
+          },
+          {
             "$ref": "#/parameters/force_reload"
           }
         ],
@@ -29765,6 +29768,7 @@ func init() {
             "set-tos",
             "set-uri",
             "set-var",
+            "set-var-fmt",
             "silent-drop",
             "strict-mode",
             "tarpit",
@@ -74055,6 +74059,13 @@ func init() {
           {
             "type": "boolean",
             "default": false,
+            "description": "If set, no reload will be initiated after update",
+            "name": "skip_reload",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
             "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
             "name": "force_reload",
             "in": "query"
@@ -82277,6 +82288,7 @@ func init() {
             "set-tos",
             "set-uri",
             "set-var",
+            "set-var-fmt",
             "silent-drop",
             "strict-mode",
             "tarpit",
