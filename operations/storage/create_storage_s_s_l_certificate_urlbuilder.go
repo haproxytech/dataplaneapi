@@ -31,6 +31,7 @@ import (
 // CreateStorageSSLCertificateURL generates an URL for the create storage s s l certificate operation
 type CreateStorageSSLCertificateURL struct {
 	ForceReload *bool
+	SkipReload  *bool
 
 	_basePath string
 	// avoid unkeyed usage
@@ -72,6 +73,14 @@ func (o *CreateStorageSSLCertificateURL) Build() (*url.URL, error) {
 	}
 	if forceReloadQ != "" {
 		qs.Set("force_reload", forceReloadQ)
+	}
+
+	var skipReloadQ string
+	if o.SkipReload != nil {
+		skipReloadQ = swag.FormatBool(*o.SkipReload)
+	}
+	if skipReloadQ != "" {
+		qs.Set("skip_reload", skipReloadQ)
 	}
 
 	_result.RawQuery = qs.Encode()
