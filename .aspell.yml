@@ -1,33 +1,144 @@
 mode: commit
 min_length: 3
 allowed:
-  - aspell
-  - repo
-  - yaml
-  - config
-  - Github
-  - Gitlab
-  - env
-  - failsafe
-  - golang
-  - mkdir
-  - WORKDIR
-  - apk
-  - ENTRYPOINT
-  - ubuntu
-  - golangci
-  - sudo
-  - releaser
-  - backend
-  - backends
-  - frontend
-  - frontends
-  - tcp
-  - crd
-  - linter
-  - linters
-  - govulncheck
-  - dataplaneapi
-  - quic
-  - userlist
-  - cve
+- acls
+- apk
+- aspell
+- auth
+- autofill
+- aws
+- axios
+- backend
+- backends
+- backport
+- bmarkovic
+- browserslist
+- caniuse
+- cli
+- clickhouse
+- composable
+- conf
+- config
+- const
+- crd
+- cronjob
+- cve
+- cwe
+- dapi
+- dataplane
+- dataplaneapi
+- dataplanes
+- datepicker
+- discoverability
+- dns
+- dom
+- dpapi
+- dpapis
+- dropdowns
+- dsn
+- e2e
+- entrypoint
+- enum
+- env
+- eol
+- escaper
+- eslint
+- failsafe
+- fbt
+- formatter
+- formatters
+- frontend
+- frontends
+- github
+- gitlab
+- golang
+- golangci
+- gorm
+- goroutines
+- govulncheck
+- hapee
+- haproxy
+- healthz
+- hostname
+- html
+- http
+- httpCLF
+- infos
+- ipam
+- jose
+- json
+- jsonpath
+- kasbin
+- kpi
+- kubebuilder
+- kubernetes
+- lifecycle
+- linter
+- linters
+- lookups
+- lts
+- makefile
+- maxconn
+- mexchanger
+- minimalistic
+- mixin
+- mkdir
+- multipartsearch
+- multiselect
+- mutex
+- mutexes
+- namespace
+- namespaces
+- openapi
+- optim
+- param
+- params
+- parallelize
+- passthrough
+- podman
+- pre
+- quic
+- rbac
+- reimplement
+- releaser
+- repo
+- req
+- rsync
+- ruleset
+- rulesets
+- saml
+- schemas
+- scrollbar
+- scss
+- searchselect
+- spammy
+- ssl
+- sso
+- struct
+- subnet
+- subresource
+- subresources
+- sudo
+- syslog
+- tcp
+- timeseries
+- tls
+- tooltip
+- tsconfig
+- ubuntu
+- uniq
+- unix
+- unsub
+- uri
+- url
+- userlist
+- userlists
+- utils
+- vfg
+- vite
+- vrrp
+- vue
+- waf
+- wafadvanced
+- workdir
+- yaml
