@@ -2,7 +2,10 @@
 
 ## HAProxy Data Plane API configuration file
 
+documentation can be seen at [doc](doc/README.md)
+
 example can be seen [yaml](examples/example-dataplaneapi.yaml)
+
 full examples of configuration also can be seen at [yaml](examples/example-full.yaml)
 
 # IMPORTANT information regarding migration from 2.x to 3.0 version
