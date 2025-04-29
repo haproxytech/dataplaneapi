@@ -39,12 +39,12 @@ func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) { //
 		server.EnabledListeners = *configStorage.Dataplaneapi.EnabledListeners
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.CleanupTimeout != nil && !misc.HasOSArg("", "cleanup-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.CleanupTimeout); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.CleanupTimeout); err == nil {
 			server.CleanupTimeout = d
 		}
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.GracefulTimeout != nil && !misc.HasOSArg("", "graceful-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.GracefulTimeout); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.GracefulTimeout); err == nil {
 			server.GracefulTimeout = d
 		}
 	}
@@ -67,17 +67,17 @@ func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) { //
 		server.ListenLimit = *configStorage.Dataplaneapi.ListenLimit
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.KeepAlive != nil && !misc.HasOSArg("", "keep-alive", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.KeepAlive); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.KeepAlive); err == nil {
 			server.KeepAlive = d
 		}
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.ReadTimeout != nil && !misc.HasOSArg("", "read-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.ReadTimeout); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.ReadTimeout); err == nil {
 			server.ReadTimeout = d
 		}
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.WriteTimeout != nil && !misc.HasOSArg("", "write-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.WriteTimeout); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.WriteTimeout); err == nil {
 			server.WriteTimeout = d
 		}
 	}
@@ -100,17 +100,17 @@ func SyncWithFileSettings(server *Server, cfg *configuration.Configuration) { //
 		server.TLSListenLimit = *configStorage.Dataplaneapi.TLS.TLSListenLimit
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSKeepAlive != nil && !misc.HasOSArg("", "tls-keep-alive", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSKeepAlive); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSKeepAlive); err == nil {
 			server.TLSKeepAlive = d
 		}
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSReadTimeout != nil && !misc.HasOSArg("", "tls-read-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSReadTimeout); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSReadTimeout); err == nil {
 			server.TLSReadTimeout = d
 		}
 	}
 	if configStorage.Dataplaneapi != nil && configStorage.Dataplaneapi.TLS != nil && configStorage.Dataplaneapi.TLS.TLSWriteTimeout != nil && !misc.HasOSArg("", "tls-write-timeout", "") {
-		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSWriteTimeout); err != nil {
+		if d, err := time.ParseDuration(*configStorage.Dataplaneapi.TLS.TLSWriteTimeout); err == nil {
 			server.TLSWriteTimeout = d
 		}
 	}
