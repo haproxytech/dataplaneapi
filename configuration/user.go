@@ -83,13 +83,18 @@ func (u *Users) Init() error {
 	mode := configuration.Mode.Load()
 	allUsers := configuration.GetUsers() // single + cluster mode
 	if len(allUsers) > 0 {
-		for _, user := range allUsers {
-			if mode != ModeCluster || strings.HasPrefix(user.Name, storagetype.DapiClusterUserPrefix) {
-				u.users = append(u.users, types.User{
-					Name:       user.Name,
-					IsInsecure: *user.Insecure,
-					Password:   *user.Password,
-				})
+		for _, storageUser := range allUsers {
+			if mode != ModeCluster || strings.HasPrefix(storageUser.Name, storagetype.DapiClusterUserPrefix) {
+				user := types.User{
+					Name: storageUser.Name,
+				}
+				if storageUser.Password != nil {
+					user.Password = *storageUser.Password
+				}
+				if storageUser.Insecure != nil {
+					user.IsInsecure = *storageUser.Insecure
+				}
+				u.users = append(u.users, user)
 			}
 		}
 		return nil
