@@ -31,3 +31,4 @@ allowed:
   - quic
   - userlist
   - cve
+  - ssl

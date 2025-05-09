@@ -1,4 +1,5 @@
 build/
+e2e/logs/
 vendor/
 cmd/dataplaneapi/*
 .vscode/

@@ -75,6 +75,7 @@ import (
 	"github.com/haproxytech/dataplaneapi/operations/reloads"
 	"github.com/haproxytech/dataplaneapi/operations/resolver"
 	"github.com/haproxytech/dataplaneapi/operations/ring"
+	"github.com/haproxytech/dataplaneapi/operations/s_s_l_front_use"
 	serverops "github.com/haproxytech/dataplaneapi/operations/server"
 	"github.com/haproxytech/dataplaneapi/operations/server_switching_rule"
 	"github.com/haproxytech/dataplaneapi/operations/server_template"
@@ -319,6 +320,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		RingCreateRingHandler: ring.CreateRingHandlerFunc(func(params ring.CreateRingParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation ring.CreateRing has not yet been implemented")
 		}),
+		SslFrontUseCreateSSLFrontUseHandler: s_s_l_front_use.CreateSSLFrontUseHandlerFunc(func(params s_s_l_front_use.CreateSSLFrontUseParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_front_use.CreateSSLFrontUse has not yet been implemented")
+		}),
 		ServerCreateServerBackendHandler: serverops.CreateServerBackendHandlerFunc(func(params serverops.CreateServerBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.CreateServerBackend has not yet been implemented")
 		}),
@@ -556,6 +560,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServerDeleteRuntimeServerHandler: serverops.DeleteRuntimeServerHandlerFunc(func(params serverops.DeleteRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.DeleteRuntimeServer has not yet been implemented")
 		}),
+		SslFrontUseDeleteSSLFrontUseHandler: s_s_l_front_use.DeleteSSLFrontUseHandlerFunc(func(params s_s_l_front_use.DeleteSSLFrontUseParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_front_use.DeleteSSLFrontUse has not yet been implemented")
+		}),
 		ServerDeleteServerBackendHandler: serverops.DeleteServerBackendHandlerFunc(func(params serverops.DeleteServerBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.DeleteServerBackend has not yet been implemented")
 		}),
@@ -753,6 +760,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServerGetAllRuntimeServerHandler: serverops.GetAllRuntimeServerHandlerFunc(func(params serverops.GetAllRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetAllRuntimeServer has not yet been implemented")
+		}),
+		SslFrontUseGetAllSSLFrontUsesHandler: s_s_l_front_use.GetAllSSLFrontUsesHandlerFunc(func(params s_s_l_front_use.GetAllSSLFrontUsesParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_front_use.GetAllSSLFrontUses has not yet been implemented")
 		}),
 		ServerGetAllServerBackendHandler: serverops.GetAllServerBackendHandlerFunc(func(params serverops.GetAllServerBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetAllServerBackend has not yet been implemented")
@@ -1074,6 +1084,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		}),
 		ServerGetRuntimeServerHandler: serverops.GetRuntimeServerHandlerFunc(func(params serverops.GetRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetRuntimeServer has not yet been implemented")
+		}),
+		SslFrontUseGetSSLFrontUseHandler: s_s_l_front_use.GetSSLFrontUseHandlerFunc(func(params s_s_l_front_use.GetSSLFrontUseParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_front_use.GetSSLFrontUse has not yet been implemented")
 		}),
 		ServerGetServerBackendHandler: serverops.GetServerBackendHandlerFunc(func(params serverops.GetServerBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.GetServerBackend has not yet been implemented")
@@ -1447,6 +1460,9 @@ func NewDataPlaneAPI(spec *loads.Document) *DataPlaneAPI {
 		ServerReplaceRuntimeServerHandler: serverops.ReplaceRuntimeServerHandlerFunc(func(params serverops.ReplaceRuntimeServerParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.ReplaceRuntimeServer has not yet been implemented")
 		}),
+		SslFrontUseReplaceSSLFrontUseHandler: s_s_l_front_use.ReplaceSSLFrontUseHandlerFunc(func(params s_s_l_front_use.ReplaceSSLFrontUseParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation s_s_l_front_use.ReplaceSSLFrontUse has not yet been implemented")
+		}),
 		ServerReplaceServerBackendHandler: serverops.ReplaceServerBackendHandlerFunc(func(params serverops.ReplaceServerBackendParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation server.ReplaceServerBackend has not yet been implemented")
 		}),
@@ -1723,6 +1739,8 @@ type DataPlaneAPI struct {
 	ResolverCreateResolverHandler resolver.CreateResolverHandler
 	// RingCreateRingHandler sets the operation handler for the create ring operation
 	RingCreateRingHandler ring.CreateRingHandler
+	// SslFrontUseCreateSSLFrontUseHandler sets the operation handler for the create s s l front use operation
+	SslFrontUseCreateSSLFrontUseHandler s_s_l_front_use.CreateSSLFrontUseHandler
 	// ServerCreateServerBackendHandler sets the operation handler for the create server backend operation
 	ServerCreateServerBackendHandler serverops.CreateServerBackendHandler
 	// ServerCreateServerPeerHandler sets the operation handler for the create server peer operation
@@ -1881,6 +1899,8 @@ type DataPlaneAPI struct {
 	MapsDeleteRuntimeMapEntryHandler maps.DeleteRuntimeMapEntryHandler
 	// ServerDeleteRuntimeServerHandler sets the operation handler for the delete runtime server operation
 	ServerDeleteRuntimeServerHandler serverops.DeleteRuntimeServerHandler
+	// SslFrontUseDeleteSSLFrontUseHandler sets the operation handler for the delete s s l front use operation
+	SslFrontUseDeleteSSLFrontUseHandler s_s_l_front_use.DeleteSSLFrontUseHandler
 	// ServerDeleteServerBackendHandler sets the operation handler for the delete server backend operation
 	ServerDeleteServerBackendHandler serverops.DeleteServerBackendHandler
 	// ServerDeleteServerPeerHandler sets the operation handler for the delete server peer operation
@@ -2013,6 +2033,8 @@ type DataPlaneAPI struct {
 	MapsGetAllRuntimeMapFilesHandler maps.GetAllRuntimeMapFilesHandler
 	// ServerGetAllRuntimeServerHandler sets the operation handler for the get all runtime server operation
 	ServerGetAllRuntimeServerHandler serverops.GetAllRuntimeServerHandler
+	// SslFrontUseGetAllSSLFrontUsesHandler sets the operation handler for the get all s s l front uses operation
+	SslFrontUseGetAllSSLFrontUsesHandler s_s_l_front_use.GetAllSSLFrontUsesHandler
 	// ServerGetAllServerBackendHandler sets the operation handler for the get all server backend operation
 	ServerGetAllServerBackendHandler serverops.GetAllServerBackendHandler
 	// ServerGetAllServerPeerHandler sets the operation handler for the get all server peer operation
@@ -2227,6 +2249,8 @@ type DataPlaneAPI struct {
 	MapsGetRuntimeMapEntryHandler maps.GetRuntimeMapEntryHandler
 	// ServerGetRuntimeServerHandler sets the operation handler for the get runtime server operation
 	ServerGetRuntimeServerHandler serverops.GetRuntimeServerHandler
+	// SslFrontUseGetSSLFrontUseHandler sets the operation handler for the get s s l front use operation
+	SslFrontUseGetSSLFrontUseHandler s_s_l_front_use.GetSSLFrontUseHandler
 	// ServerGetServerBackendHandler sets the operation handler for the get server backend operation
 	ServerGetServerBackendHandler serverops.GetServerBackendHandler
 	// ServerGetServerPeerHandler sets the operation handler for the get server peer operation
@@ -2475,6 +2499,8 @@ type DataPlaneAPI struct {
 	MapsReplaceRuntimeMapEntryHandler maps.ReplaceRuntimeMapEntryHandler
 	// ServerReplaceRuntimeServerHandler sets the operation handler for the replace runtime server operation
 	ServerReplaceRuntimeServerHandler serverops.ReplaceRuntimeServerHandler
+	// SslFrontUseReplaceSSLFrontUseHandler sets the operation handler for the replace s s l front use operation
+	SslFrontUseReplaceSSLFrontUseHandler s_s_l_front_use.ReplaceSSLFrontUseHandler
 	// ServerReplaceServerBackendHandler sets the operation handler for the replace server backend operation
 	ServerReplaceServerBackendHandler serverops.ReplaceServerBackendHandler
 	// ServerReplaceServerPeerHandler sets the operation handler for the replace server peer operation
@@ -2817,6 +2843,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.RingCreateRingHandler == nil {
 		unregistered = append(unregistered, "ring.CreateRingHandler")
 	}
+	if o.SslFrontUseCreateSSLFrontUseHandler == nil {
+		unregistered = append(unregistered, "s_s_l_front_use.CreateSSLFrontUseHandler")
+	}
 	if o.ServerCreateServerBackendHandler == nil {
 		unregistered = append(unregistered, "server.CreateServerBackendHandler")
 	}
@@ -3054,6 +3083,9 @@ func (o *DataPlaneAPI) Validate() error {
 	if o.ServerDeleteRuntimeServerHandler == nil {
 		unregistered = append(unregistered, "server.DeleteRuntimeServerHandler")
 	}
+	if o.SslFrontUseDeleteSSLFrontUseHandler == nil {
+		unregistered = append(unregistered, "s_s_l_front_use.DeleteSSLFrontUseHandler")
+	}
 	if o.ServerDeleteServerBackendHandler == nil {
 		unregistered = append(unregistered, "server.DeleteServerBackendHandler")
 	}
@@ -3251,6 +3283,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServerGetAllRuntimeServerHandler == nil {
 		unregistered = append(unregistered, "server.GetAllRuntimeServerHandler")
+	}
+	if o.SslFrontUseGetAllSSLFrontUsesHandler == nil {
+		unregistered = append(unregistered, "s_s_l_front_use.GetAllSSLFrontUsesHandler")
 	}
 	if o.ServerGetAllServerBackendHandler == nil {
 		unregistered = append(unregistered, "server.GetAllServerBackendHandler")
@@ -3572,6 +3607,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServerGetRuntimeServerHandler == nil {
 		unregistered = append(unregistered, "server.GetRuntimeServerHandler")
+	}
+	if o.SslFrontUseGetSSLFrontUseHandler == nil {
+		unregistered = append(unregistered, "s_s_l_front_use.GetSSLFrontUseHandler")
 	}
 	if o.ServerGetServerBackendHandler == nil {
 		unregistered = append(unregistered, "server.GetServerBackendHandler")
@@ -3944,6 +3982,9 @@ func (o *DataPlaneAPI) Validate() error {
 	}
 	if o.ServerReplaceRuntimeServerHandler == nil {
 		unregistered = append(unregistered, "server.ReplaceRuntimeServerHandler")
+	}
+	if o.SslFrontUseReplaceSSLFrontUseHandler == nil {
+		unregistered = append(unregistered, "s_s_l_front_use.ReplaceSSLFrontUseHandler")
 	}
 	if o.ServerReplaceServerBackendHandler == nil {
 		unregistered = append(unregistered, "server.ReplaceServerBackendHandler")
@@ -4393,6 +4434,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses"] = s_s_l_front_use.NewCreateSSLFrontUse(o.context, o.SslFrontUseCreateSSLFrontUseHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/services/haproxy/configuration/backends/{parent_name}/servers"] = serverops.NewCreateServerBackend(o.context, o.ServerCreateServerBackendHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -4709,6 +4754,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
+	o.handlers["DELETE"]["/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses/{index}"] = s_s_l_front_use.NewDeleteSSLFrontUse(o.context, o.SslFrontUseDeleteSSLFrontUseHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
 	o.handlers["DELETE"]["/services/haproxy/configuration/backends/{parent_name}/servers/{name}"] = serverops.NewDeleteServerBackend(o.context, o.ServerDeleteServerBackendHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -4970,6 +5019,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/backends/{parent_name}/servers"] = serverops.NewGetAllRuntimeServer(o.context, o.ServerGetAllRuntimeServerHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses"] = s_s_l_front_use.NewGetAllSSLFrontUses(o.context, o.SslFrontUseGetAllSSLFrontUsesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5398,6 +5451,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/services/haproxy/runtime/backends/{parent_name}/servers/{name}"] = serverops.NewGetRuntimeServer(o.context, o.ServerGetRuntimeServerHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses/{index}"] = s_s_l_front_use.NewGetSSLFrontUse(o.context, o.SslFrontUseGetSSLFrontUseHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -5894,6 +5951,10 @@ func (o *DataPlaneAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/services/haproxy/runtime/backends/{parent_name}/servers/{name}"] = serverops.NewReplaceRuntimeServer(o.context, o.ServerReplaceRuntimeServerHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses/{index}"] = s_s_l_front_use.NewReplaceSSLFrontUse(o.context, o.SslFrontUseReplaceSSLFrontUseHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

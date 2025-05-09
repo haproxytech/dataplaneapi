@@ -847,6 +847,13 @@ func configureAPI(api *operations.DataPlaneAPI) http.Handler { //nolint:cyclop,m
 	api.LogProfileEditLogProfileHandler = &handlers.EditLogProfileHandler{Client: client, ReloadAgent: ra}
 	api.LogProfileDeleteLogProfileHandler = &handlers.DeleteLogProfileHandlerImpl{Client: client, ReloadAgent: ra}
 
+	// ssl-f-use handlers
+	api.SslFrontUseGetAllSSLFrontUsesHandler = &handlers.GetAllSSLFrontUsesHandlerImpl{Client: client}
+	api.SslFrontUseCreateSSLFrontUseHandler = &handlers.CreateSSLFrontUseHandlerImpl{Client: client, ReloadAgent: ra}
+	api.SslFrontUseGetSSLFrontUseHandler = &handlers.GetSSLFrontUseHandlerImpl{Client: client}
+	api.SslFrontUseReplaceSSLFrontUseHandler = &handlers.ReplaceSSLFrontUseHandlerImpl{Client: client, ReloadAgent: ra}
+	api.SslFrontUseDeleteSSLFrontUseHandler = &handlers.DeleteSSLFrontUseHandlerImpl{Client: client, ReloadAgent: ra}
+
 	// setup info handler
 	api.InformationGetInfoHandler = &handlers.GetInfoHandlerImpl{SystemInfo: haproxyOptions.ShowSystemInfo, BuildTime: BuildTime, Version: Version}
 

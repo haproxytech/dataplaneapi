@@ -1,0 +1,6 @@
+{
+    "certificate": "/etc/haproxy/ssl/cert.pem",
+    "allow_0rtt": false,
+    "no_alpn": true,
+    "verify": "none"
+}

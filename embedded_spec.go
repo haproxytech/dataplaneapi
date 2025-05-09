@@ -12478,6 +12478,260 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses": {
+      "get": {
+        "description": "Returns an array of all SSLFrontUses that are configured in specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Return an array of SSLFrontUses",
+        "operationId": "getAllSSLFrontUses",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_uses"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new SSLFrontUse in the specified frontend in the configuration file.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Add a new SSLFrontUse",
+        "operationId": "createSSLFrontUse",
+        "parameters": [
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SSLFrontUse created",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses/{index}": {
+      "get": {
+        "description": "Returns one SSLFrontUse configuration by its index in the specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Return one SSLFrontUse",
+        "operationId": "getSSLFrontUse",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "SSLFrontUse index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/AlreadyExists"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces an SSLFrontUse configuration by its index in the specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Replace an SSLFrontUse",
+        "operationId": "replaceSSLFrontUse",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "SSLFrontUse index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SSLFrontUse replaced",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an SSLFrontUse configuration by its index in the specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Delete an SSLFrontUse",
+        "operationId": "deleteSSLFrontUse",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "SSLFrontUse index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "$ref": "#/parameters/parent_name"
+          },
+          {
+            "$ref": "#/parameters/transaction_id"
+          },
+          {
+            "$ref": "#/parameters/version"
+          },
+          {
+            "$ref": "#/parameters/force_reload"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "SSLFrontUse deleted"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultError"
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules": {
       "get": {
         "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
@@ -26860,6 +27114,10 @@ func init() {
               "x-go-name": "QUICInitialRuleList",
               "$ref": "#/definitions/quic_initial_rules"
             },
+            "ssl_front_use_list": {
+              "x-go-name": "SSLFrontUses",
+              "$ref": "#/definitions/ssl_front_uses"
+            },
             "tcp_request_rule_list": {
               "x-go-name": "TCPRequestRuleList",
               "$ref": "#/definitions/tcp_request_rules"
@@ -35079,6 +35337,123 @@ func init() {
       "items": {
         "$ref": "#/definitions/ssl_certificate"
       }
+    },
+    "ssl_front_use": {
+      "description": "Assign a certificate to the current frontend",
+      "type": "object",
+      "title": "SSL Frontend Use certificate",
+      "required": [
+        "certificate"
+      ],
+      "properties": {
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "x-display-name": "ALPN Protocols"
+        },
+        "ca_file": {
+          "type": "string"
+        },
+        "certificate": {
+          "description": "Certificate filename",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "ciphers": {
+          "type": "string"
+        },
+        "ciphersuites": {
+          "type": "string"
+        },
+        "client_sigalgs": {
+          "type": "string"
+        },
+        "crl_file": {
+          "type": "string"
+        },
+        "curves": {
+          "type": "string"
+        },
+        "ecdhe": {
+          "type": "string"
+        },
+        "issuer": {
+          "description": "OCSP issuer filename",
+          "type": "string"
+        },
+        "key": {
+          "description": "Private key filename",
+          "type": "string"
+        },
+        "no_alpn": {
+          "type": "boolean"
+        },
+        "no_ca_names": {
+          "type": "boolean"
+        },
+        "npn": {
+          "type": "string"
+        },
+        "ocsp": {
+          "description": "OCSP response filename",
+          "type": "string"
+        },
+        "ocsp_update": {
+          "description": "Automatic OCSP response update",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "sctl": {
+          "description": "Signed Certificate Timestamp List filename",
+          "type": "string"
+        },
+        "sigalgs": {
+          "type": "string"
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "optional",
+            "required"
+          ]
+        }
+      },
+      "x-go-name": "SSLFrontUse"
+    },
+    "ssl_front_uses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ssl_front_use"
+      },
+      "x-go-name": "SSLFrontUses",
+      "x-omitempty": true
     },
     "ssl_options": {
       "type": "object",
@@ -58258,6 +58633,423 @@ func init() {
         }
       }
     },
+    "/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses": {
+      "get": {
+        "description": "Returns an array of all SSLFrontUses that are configured in specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Return an array of SSLFrontUses",
+        "operationId": "getAllSSLFrontUses",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_uses"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new SSLFrontUse in the specified frontend in the configuration file.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Add a new SSLFrontUse",
+        "operationId": "createSSLFrontUse",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SSLFrontUse created",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "409": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/haproxy/configuration/frontends/{parent_name}/ssl_front_uses/{index}": {
+      "get": {
+        "description": "Returns one SSLFrontUse configuration by its index in the specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Return one SSLFrontUse",
+        "operationId": "getSSLFrontUse",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "SSLFrontUse index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource already exists",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Replaces an SSLFrontUse configuration by its index in the specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Replace an SSLFrontUse",
+        "operationId": "replaceSSLFrontUse",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "SSLFrontUse index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SSLFrontUse replaced",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            }
+          },
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "schema": {
+              "$ref": "#/definitions/ssl_front_use"
+            },
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an SSLFrontUse configuration by its index in the specified frontend.",
+        "tags": [
+          "SSLFrontUse"
+        ],
+        "summary": "Delete an SSLFrontUse",
+        "operationId": "deleteSSLFrontUse",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "SSLFrontUse index (zero-based)",
+            "name": "index",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Parent name",
+            "name": "parent_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "ID of the transaction where we want to add the operation. Cannot be used when version is specified.",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "x-nullable": false,
+            "description": "Version used for checking configuration version. Cannot be used when transaction is specified, transaction has it's own version.",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If set, do a force reload, do not wait for the configured reload-delay. Cannot be used when transaction is specified, as changes in transaction are not applied directly to configuration.",
+            "name": "force_reload",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Configuration change accepted and reload requested",
+            "headers": {
+              "Reload-ID": {
+                "type": "string",
+                "description": "ID of the requested reload"
+              }
+            }
+          },
+          "204": {
+            "description": "SSLFrontUse deleted"
+          },
+          "404": {
+            "description": "The specified resource was not found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          },
+          "default": {
+            "description": "General Error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            },
+            "headers": {
+              "Configuration-Version": {
+                "type": "string",
+                "description": "Configuration file version"
+              }
+            }
+          }
+        }
+      }
+    },
     "/services/haproxy/configuration/frontends/{parent_name}/tcp_request_rules": {
       "get": {
         "description": "Returns all TCP Request Rules that are configured in specified parent and parent type.",
@@ -79458,6 +80250,10 @@ func init() {
               "x-go-name": "QUICInitialRuleList",
               "$ref": "#/definitions/quic_initial_rules"
             },
+            "ssl_front_use_list": {
+              "x-go-name": "SSLFrontUses",
+              "$ref": "#/definitions/ssl_front_uses"
+            },
             "tcp_request_rule_list": {
               "x-go-name": "TCPRequestRuleList",
               "$ref": "#/definitions/tcp_request_rules"
@@ -87537,6 +88333,123 @@ func init() {
       "items": {
         "$ref": "#/definitions/ssl_certificate"
       }
+    },
+    "ssl_front_use": {
+      "description": "Assign a certificate to the current frontend",
+      "type": "object",
+      "title": "SSL Frontend Use certificate",
+      "required": [
+        "certificate"
+      ],
+      "properties": {
+        "allow_0rtt": {
+          "type": "boolean"
+        },
+        "alpn": {
+          "type": "string",
+          "x-display-name": "ALPN Protocols"
+        },
+        "ca_file": {
+          "type": "string"
+        },
+        "certificate": {
+          "description": "Certificate filename",
+          "type": "string",
+          "pattern": "^[^\\s]+$",
+          "x-nullable": false
+        },
+        "ciphers": {
+          "type": "string"
+        },
+        "ciphersuites": {
+          "type": "string"
+        },
+        "client_sigalgs": {
+          "type": "string"
+        },
+        "crl_file": {
+          "type": "string"
+        },
+        "curves": {
+          "type": "string"
+        },
+        "ecdhe": {
+          "type": "string"
+        },
+        "issuer": {
+          "description": "OCSP issuer filename",
+          "type": "string"
+        },
+        "key": {
+          "description": "Private key filename",
+          "type": "string"
+        },
+        "no_alpn": {
+          "type": "boolean"
+        },
+        "no_ca_names": {
+          "type": "boolean"
+        },
+        "npn": {
+          "type": "string"
+        },
+        "ocsp": {
+          "description": "OCSP response filename",
+          "type": "string"
+        },
+        "ocsp_update": {
+          "description": "Automatic OCSP response update",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        },
+        "sctl": {
+          "description": "Signed Certificate Timestamp List filename",
+          "type": "string"
+        },
+        "sigalgs": {
+          "type": "string"
+        },
+        "ssl_max_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "ssl_min_ver": {
+          "type": "string",
+          "enum": [
+            "SSLv3",
+            "TLSv1.0",
+            "TLSv1.1",
+            "TLSv1.2",
+            "TLSv1.3"
+          ]
+        },
+        "verify": {
+          "type": "string",
+          "enum": [
+            "none",
+            "optional",
+            "required"
+          ]
+        }
+      },
+      "x-go-name": "SSLFrontUse"
+    },
+    "ssl_front_uses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ssl_front_use"
+      },
+      "x-go-name": "SSLFrontUses",
+      "x-omitempty": true
     },
     "ssl_options": {
       "type": "object",
