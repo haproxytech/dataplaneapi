@@ -145,7 +145,8 @@ func (h *CreateServerHandlerImpl) Handle(parentType cnconstants.CnParentType, pa
 			return server.NewCreateServerBackendCreated().WithPayload(params.Data)
 		}
 		if useRuntime {
-			err = runtimeClient.AddServer(pName, params.Data.Name, SerializeRuntimeAddServer(ras))
+			haversion, _ := runtimeClient.GetVersion()
+			err = runtimeClient.AddServer(pName, params.Data.Name, SerializeRuntimeAddServer(ras, &haversion))
 			if err == nil {
 				// No need to reload.
 				log.Debugf("backend %s: server %s added though runtime", pName, params.Data.Name)

@@ -23,6 +23,7 @@ import (
 	client_native "github.com/haproxytech/client-native/v6"
 	native_errors "github.com/haproxytech/client-native/v6/errors"
 	"github.com/haproxytech/client-native/v6/models"
+	cn_runtime "github.com/haproxytech/client-native/v6/runtime"
 
 	"github.com/haproxytech/dataplaneapi/misc"
 	"github.com/haproxytech/dataplaneapi/operations/server"
@@ -168,7 +169,13 @@ func (h *AddRuntimeServerHandlerImpl) Handle(params server.AddRuntimeServerParam
 		return server.NewAddRuntimeServerBadRequest().WithPayload(&models.Error{Code: &code, Message: &msg})
 	}
 
-	err = runtime.AddServer(params.ParentName, params.Data.Name, SerializeRuntimeAddServer(params.Data))
+	haversion, err := runtime.GetVersion()
+	if err != nil {
+		e := misc.HandleError(err)
+		return server.NewAddRuntimeServerDefault(int(*e.Code)).WithPayload(e)
+	}
+
+	err = runtime.AddServer(params.ParentName, params.Data.Name, SerializeRuntimeAddServer(params.Data, &haversion))
 	if err != nil {
 		msg := err.Error()
 		switch {
@@ -236,7 +243,7 @@ func (h *DeleteRuntimeServerHandlerImpl) Handle(params server.DeleteRuntimeServe
 // SerializeRuntimeAddServer returns a string in the HAProxy config format, suitable
 // for the "add server" operation over the control socket.
 // Not all the Server attributes are available in this case.
-func SerializeRuntimeAddServer(srv *models.RuntimeAddServer) string { //nolint:cyclop,maintidx
+func SerializeRuntimeAddServer(srv *models.RuntimeAddServer, version *cn_runtime.HAProxyVersion) string { //nolint:cyclop,maintidx
 	b := &strings.Builder{}
 
 	push := func(s string) {
@@ -311,7 +318,11 @@ func SerializeRuntimeAddServer(srv *models.RuntimeAddServer) string { //nolint:c
 	case srv.Downinter != nil:
 		pushi("downinter", srv.Downinter)
 	case !enabled(srv.Maintenance):
-		push("enabled")
+		required := new(cn_runtime.HAProxyVersion)
+		required.ParseHAProxyVersion("3.0.0")
+		if !cn_runtime.IsBiggerOrEqual(required, version) {
+			push("enabled")
+		}
 	case srv.ErrorLimit != nil:
 		pushi("error-limit", srv.ErrorLimit)
 	case srv.Fall != nil:
