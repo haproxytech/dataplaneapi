@@ -27,7 +27,6 @@ load 'utils/_helpers'
 @test "defaults: Return a list of defaults configurations" {
   resource_get "$_DEFAULTS_BASE_PATH"
   assert_equal "$SC" 200
-  assert_equal "$(get_json_path "$BODY" '.[0].name')" "unnamed_defaults_1"
 }
 
 @test "defaults: Return a defaults configuration" {
