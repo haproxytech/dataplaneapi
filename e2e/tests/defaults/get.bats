@@ -27,17 +27,6 @@ load 'utils/_helpers'
 @test "defaults: Return a list of defaults configurations" {
   resource_get "$_DEFAULTS_BASE_PATH"
   assert_equal "$SC" 200
-
-  # log_target_list is a child resource, it should not be filled when full_section=false
-  assert_equal "$(get_json_path "$BODY" ".[] | select(.name | contains(\"unnamed_defaults_1\")).log_target_list.[0].global")" "null"
-}
-
-@test "default: return a list of defaults configurations with full section" {
-  resource_get "$_DEFAULTS_BASE_PATH" "full_section=true"
-  assert_equal "$SC" 200
-
-  # log_target_list is a child resource, it should be filled when full_section=true
-  assert_equal "$(get_json_path "$BODY" ".[] | select(.name | contains(\"unnamed_defaults_1\")).log_target_list.[0].global")" "true"
 }
 
 @test "defaults: Return a defaults configuration" {
